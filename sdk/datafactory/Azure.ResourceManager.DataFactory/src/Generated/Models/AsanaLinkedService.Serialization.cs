@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for Asana. </summary>
     public partial class AsanaLinkedService : DataFactoryLinkedServiceProperties, IJsonModel<AsanaLinkedService>
     {
+        /// <summary> Initializes a new instance of <see cref="AsanaLinkedService"/> for deserialization. </summary>
+        internal AsanaLinkedService()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataFactoryLinkedServiceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

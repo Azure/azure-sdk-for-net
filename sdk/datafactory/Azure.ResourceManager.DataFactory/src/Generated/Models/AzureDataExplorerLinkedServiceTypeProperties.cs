@@ -28,14 +28,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="AzureDataExplorerLinkedServiceTypeProperties"/>. </summary>
         /// <param name="endpoint"> The endpoint of Azure Data Explorer (the engine's endpoint). URL will be in the format https://&lt;clusterName&gt;.&lt;regionName&gt;.kusto.windows.net. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against Azure Data Explorer. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against Kusto. </param>
         /// <param name="database"> Database name for connection. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureDataExplorerLinkedServiceTypeProperties(DataFactoryElement<string> endpoint, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> database, DataFactoryElement<string> tenant, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureDataExplorerLinkedServiceTypeProperties(DataFactoryElement<string> endpoint, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> database, DataFactoryElement<string> tenant, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             ServicePrincipalId = servicePrincipalId;
+            ServicePrincipalKey = servicePrincipalKey;
             Database = database;
             Tenant = tenant;
             Credential = credential;
@@ -47,6 +49,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The ID of the service principal used to authenticate against Azure Data Explorer. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
+
+        /// <summary> The key of the service principal used to authenticate against Kusto. </summary>
+        public DataFactorySecret ServicePrincipalKey { get; set; }
 
         /// <summary> Database name for connection. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Database { get; set; }

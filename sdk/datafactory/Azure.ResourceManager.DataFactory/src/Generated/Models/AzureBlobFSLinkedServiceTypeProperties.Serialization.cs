@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("servicePrincipalId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
+            if (Optional.IsDefined(ServicePrincipalKey))
+            {
+                writer.WritePropertyName("servicePrincipalKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalKey, options);
+            }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
@@ -114,10 +119,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalCredentialType, options);
             }
+            if (Optional.IsDefined(ServicePrincipalCredential))
+            {
+                writer.WritePropertyName("servicePrincipalCredential"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalCredential, options);
+            }
             if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUri"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(SasUri, options);
+            }
+            if (Optional.IsDefined(SasToken))
+            {
+                writer.WritePropertyName("sasToken"u8);
+                writer.WriteObjectValue<DataFactorySecret>(SasToken, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -164,12 +179,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> uri = default;
             DataFactoryElement<string> accountKey = default;
             DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecret servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryElement<string> azureCloudType = default;
             string encryptedCredential = default;
             DataFactoryCredentialReference credential = default;
             DataFactoryElement<string> servicePrincipalCredentialType = default;
+            DataFactorySecret servicePrincipalCredential = default;
             DataFactoryElement<string> sasUri = default;
+            DataFactorySecret sasToken = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -190,6 +208,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
                     ReadServicePrincipalId(prop, ref servicePrincipalId);
+                    continue;
+                }
+                if (prop.NameEquals("servicePrincipalKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servicePrincipalKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tenant"u8))
@@ -233,6 +260,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     servicePrincipalCredentialType = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("servicePrincipalCredential"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servicePrincipalCredential = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("sasUri"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -240,6 +276,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     sasUri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("sasToken"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sasToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -251,12 +296,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 uri,
                 accountKey,
                 servicePrincipalId,
+                servicePrincipalKey,
                 tenant,
                 azureCloudType,
                 encryptedCredential,
                 credential,
                 servicePrincipalCredentialType,
+                servicePrincipalCredential,
                 sasUri,
+                sasToken,
                 additionalBinaryDataProperties);
         }
     }

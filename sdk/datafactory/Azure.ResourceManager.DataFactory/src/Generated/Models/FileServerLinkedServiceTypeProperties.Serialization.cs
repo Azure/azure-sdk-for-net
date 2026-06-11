@@ -87,6 +87,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("userId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(UserId, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -136,6 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> host = default;
             DataFactoryElement<string> userId = default;
+            DataFactorySecret password = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -154,6 +160,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     userId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("encryptedCredential"u8))
                 {
                     encryptedCredential = prop.Value.GetString();
@@ -164,7 +179,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FileServerLinkedServiceTypeProperties(host, userId, encryptedCredential, additionalBinaryDataProperties);
+            return new FileServerLinkedServiceTypeProperties(host, userId, password, encryptedCredential, additionalBinaryDataProperties);
         }
     }
 }

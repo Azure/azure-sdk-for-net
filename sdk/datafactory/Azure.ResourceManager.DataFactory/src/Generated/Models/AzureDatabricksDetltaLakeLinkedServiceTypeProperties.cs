@@ -25,14 +25,16 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureDatabricksDetltaLakeLinkedServiceTypeProperties"/>. </summary>
         /// <param name="domain"> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </param>
+        /// <param name="accessToken"> Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="clusterId"> The id of an existing interactive cluster that will be used for all runs of this job. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="workspaceResourceId"> Workspace resource id for databricks REST API. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureDatabricksDetltaLakeLinkedServiceTypeProperties(DataFactoryElement<string> domain, DataFactoryElement<string> clusterId, string encryptedCredential, DataFactoryCredentialReference credential, DataFactoryElement<string> workspaceResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureDatabricksDetltaLakeLinkedServiceTypeProperties(DataFactoryElement<string> domain, DataFactorySecret accessToken, DataFactoryElement<string> clusterId, string encryptedCredential, DataFactoryCredentialReference credential, DataFactoryElement<string> workspaceResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Domain = domain;
+            AccessToken = accessToken;
             ClusterId = clusterId;
             EncryptedCredential = encryptedCredential;
             Credential = credential;
@@ -42,6 +44,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Domain { get; set; }
+
+        /// <summary> Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        public DataFactorySecret AccessToken { get; set; }
 
         /// <summary> The id of an existing interactive cluster that will be used for all runs of this job. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClusterId { get; set; }

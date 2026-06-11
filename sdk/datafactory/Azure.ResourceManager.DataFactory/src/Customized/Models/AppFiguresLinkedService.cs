@@ -7,24 +7,52 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/59298 :
-    // identity-aliased Azure.Core.Expressions.DataFactory model types can be omitted from generated
-    // model surfaces. This partial restores the GA API surface for compatibility.
-    // TODO: remove once the generator preserves members whose types use @@alternateType identity (#59298).
+    // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/59298 and
+    // https://github.com/Azure/azure-sdk-for-net/issues/59852 :
+    // Identity-aliased Azure.Core.Expressions.DataFactory members are dropped from the generated public
+    // surface (#59298) and the emitter no longer emits the public constructor for these flattened types
+    // (#59852). This partial restores the GA properties (routed through TypeProperties) and the public ctor.
+    // TODO: remove once the generator restores both (#59298, #59852).
     public partial class AppFiguresLinkedService
     {
-        /// <summary> Property restored as workaround for issue #59298. </summary>
-        public DataFactorySecret ClientKey { get; set; }
-
-        /// <summary> Property restored as workaround for issue #59298. </summary>
-        public DataFactorySecret Password { get; set; }
-
-        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public AppFiguresLinkedService(DataFactoryElement<string> userName, DataFactorySecret password, DataFactorySecret clientKey)
-            : this(userName)
+        /// <summary> Property restored as workaround for issues #59298 and #59852. </summary>
+        public DataFactorySecret ClientKey
         {
-            Password = password;
-            ClientKey = clientKey;
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ClientKey;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AppFiguresLinkedServiceTypeProperties();
+                }
+                TypeProperties.ClientKey = value;
+            }
+        }
+
+        /// <summary> Property restored as workaround for issues #59298 and #59852. </summary>
+        public DataFactorySecret Password
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Password;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AppFiguresLinkedServiceTypeProperties();
+                }
+                TypeProperties.Password = value;
+            }
+        }
+
+        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
+        public AppFiguresLinkedService(DataFactoryElement<string> userName, DataFactorySecret password, DataFactorySecret clientKey) : base("AppFigures")
+        {
+            TypeProperties = new AppFiguresLinkedServiceTypeProperties(userName, password, clientKey);
         }
     }
 }

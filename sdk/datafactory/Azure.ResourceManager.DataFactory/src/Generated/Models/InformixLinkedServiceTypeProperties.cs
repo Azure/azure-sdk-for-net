@@ -26,14 +26,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="InformixLinkedServiceTypeProperties"/>. </summary>
         /// <param name="connectionString"> The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, or SecureString, or AzureKeyVaultSecretReference, or Expression with resultType string. </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the Informix as ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with resultType string). </param>
+        /// <param name="credential"> The access credential portion of the connection string specified in driver-specific property-value format. </param>
         /// <param name="userName"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password for Basic authentication. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InformixLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> authenticationType, DataFactoryElement<string> userName, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InformixLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> authenticationType, DataFactorySecret credential, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             AuthenticationType = authenticationType;
+            Credential = credential;
             UserName = userName;
+            Password = password;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -44,8 +48,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Type of authentication used to connect to the Informix as ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AuthenticationType { get; set; }
 
+        /// <summary> The access credential portion of the connection string specified in driver-specific property-value format. </summary>
+        public DataFactorySecret Credential { get; set; }
+
         /// <summary> User name for Basic authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
+
+        /// <summary> Password for Basic authentication. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

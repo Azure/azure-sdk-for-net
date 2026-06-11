@@ -8,23 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Linked service for Quickbase. </summary>
     public partial class QuickbaseLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedService"/>. </summary>
-        /// <param name="uri"> The url to connect Quickbase source. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public QuickbaseLinkedService(DataFactoryElement<string> uri) : base("Quickbase")
-        {
-            Argument.AssertNotNull(uri, nameof(uri));
-
-            TypeProperties = new QuickbaseLinkedServiceTypeProperties(uri);
-        }
-
         /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>

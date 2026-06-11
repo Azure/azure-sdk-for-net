@@ -19,12 +19,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="DynamicsAXLinkedServiceTypeProperties"/>. </summary>
         /// <param name="uri"> The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint. </param>
         /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey"> Specify the application's key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string). </param>
         /// <param name="aadResourceId"> Specify the resource you are requesting authorization. Type: string (or Expression with resultType string). </param>
-        public DynamicsAXLinkedServiceTypeProperties(DataFactoryElement<string> uri, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> tenant, DataFactoryElement<string> aadResourceId)
+        public DynamicsAXLinkedServiceTypeProperties(DataFactoryElement<string> uri, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> aadResourceId)
         {
             Uri = uri;
             ServicePrincipalId = servicePrincipalId;
+            ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             AadResourceId = aadResourceId;
         }
@@ -32,14 +34,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="DynamicsAXLinkedServiceTypeProperties"/>. </summary>
         /// <param name="uri"> The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint. </param>
         /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey"> Specify the application's key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string). </param>
         /// <param name="aadResourceId"> Specify the resource you are requesting authorization. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DynamicsAXLinkedServiceTypeProperties(DataFactoryElement<string> uri, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> tenant, DataFactoryElement<string> aadResourceId, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DynamicsAXLinkedServiceTypeProperties(DataFactoryElement<string> uri, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> aadResourceId, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             ServicePrincipalId = servicePrincipalId;
+            ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             AadResourceId = aadResourceId;
             EncryptedCredential = encryptedCredential;
@@ -51,6 +55,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Specify the application's client ID. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
+
+        /// <summary> Specify the application's key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string). </summary>
+        public DataFactorySecret ServicePrincipalKey { get; set; }
 
         /// <summary> Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Tenant { get; set; }

@@ -80,6 +80,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(HDInsightStreamingActivityTypeProperties)} does not support writing '{format}' format.");
             }
+            if (Optional.IsCollectionDefined(StorageLinkedServices))
+            {
+                writer.WritePropertyName("storageLinkedServices"u8);
+                writer.WriteStartArray();
+                foreach (DataFactoryLinkedServiceReference item in StorageLinkedServices)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue<DataFactoryLinkedServiceReference>(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
@@ -134,6 +149,11 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(FileLinkedService))
+            {
+                writer.WritePropertyName("fileLinkedService"u8);
+                writer.WriteObjectValue<DataFactoryLinkedServiceReference>(FileLinkedService, options);
+            }
             if (Optional.IsDefined(Combiner))
             {
                 writer.WritePropertyName("combiner"u8);
@@ -226,6 +246,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
+            IList<DataFactoryLinkedServiceReference> storageLinkedServices = default;
             IList<BinaryData> arguments = default;
             HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default;
             DataFactoryElement<string> mapper = default;
@@ -233,12 +254,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> input = default;
             DataFactoryElement<string> output = default;
             IList<BinaryData> filePaths = default;
+            DataFactoryLinkedServiceReference fileLinkedService = default;
             DataFactoryElement<string> combiner = default;
             IList<BinaryData> commandEnvironment = default;
             IDictionary<string, BinaryData> defines = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("storageLinkedServices"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default));
+                        }
+                    }
+                    storageLinkedServices = array;
+                    continue;
+                }
                 if (prop.NameEquals("arguments"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -306,6 +349,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     filePaths = array;
                     continue;
                 }
+                if (prop.NameEquals("fileLinkedService"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fileLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("combiner"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -363,6 +415,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             return new HDInsightStreamingActivityTypeProperties(
+                storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
                 arguments ?? new ChangeTrackingList<BinaryData>(),
                 getDebugInfo,
                 mapper,
@@ -370,6 +423,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 input,
                 output,
                 filePaths,
+                fileLinkedService,
                 combiner,
                 commandEnvironment ?? new ChangeTrackingList<BinaryData>(),
                 defines ?? new ChangeTrackingDictionary<string, BinaryData>(),

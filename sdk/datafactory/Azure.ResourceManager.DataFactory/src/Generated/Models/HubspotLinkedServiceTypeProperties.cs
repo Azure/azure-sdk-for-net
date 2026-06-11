@@ -30,14 +30,20 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="HubspotLinkedServiceTypeProperties"/>. </summary>
         /// <param name="clientId"> The client ID associated with your Hubspot application. </param>
+        /// <param name="clientSecret"> The client secret associated with your Hubspot application. </param>
+        /// <param name="accessToken"> The access token obtained when initially authenticating your OAuth integration. </param>
+        /// <param name="refreshToken"> The refresh token obtained when initially authenticating your OAuth integration. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HubspotLinkedServiceTypeProperties(DataFactoryElement<string> clientId, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HubspotLinkedServiceTypeProperties(DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactorySecret accessToken, DataFactorySecret refreshToken, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClientId = clientId;
+            ClientSecret = clientSecret;
+            AccessToken = accessToken;
+            RefreshToken = refreshToken;
             UseEncryptedEndpoints = useEncryptedEndpoints;
             UseHostVerification = useHostVerification;
             UsePeerVerification = usePeerVerification;
@@ -47,6 +53,15 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The client ID associated with your Hubspot application. </summary>
         public DataFactoryElement<string> ClientId { get; set; }
+
+        /// <summary> The client secret associated with your Hubspot application. </summary>
+        public DataFactorySecret ClientSecret { get; set; }
+
+        /// <summary> The access token obtained when initially authenticating your OAuth integration. </summary>
+        public DataFactorySecret AccessToken { get; set; }
+
+        /// <summary> The refresh token obtained when initially authenticating your OAuth integration. </summary>
+        public DataFactorySecret RefreshToken { get; set; }
 
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }

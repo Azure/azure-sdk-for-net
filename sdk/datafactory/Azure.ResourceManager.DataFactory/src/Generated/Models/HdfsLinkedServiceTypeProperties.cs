@@ -28,13 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="authenticationType"> Type of authentication used to connect to the HDFS. Possible values are: Anonymous and Windows. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="userName"> User name for Windows authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password for Windows authentication. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HdfsLinkedServiceTypeProperties(DataFactoryElement<string> uri, DataFactoryElement<string> authenticationType, string encryptedCredential, DataFactoryElement<string> userName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HdfsLinkedServiceTypeProperties(DataFactoryElement<string> uri, DataFactoryElement<string> authenticationType, string encryptedCredential, DataFactoryElement<string> userName, DataFactorySecret password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             AuthenticationType = authenticationType;
             EncryptedCredential = encryptedCredential;
             UserName = userName;
+            Password = password;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,5 +51,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> User name for Windows authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
+
+        /// <summary> Password for Windows authentication. </summary>
+        public DataFactorySecret Password { get; set; }
     }
 }

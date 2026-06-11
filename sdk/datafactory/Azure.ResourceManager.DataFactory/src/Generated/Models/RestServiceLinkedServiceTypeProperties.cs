@@ -30,37 +30,47 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="enableServerCertificateValidation"> Whether to validate server side SSL certificate when connecting to the endpoint.The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the REST service. </param>
         /// <param name="userName"> The user name used in Basic authentication type. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> The password used in Basic authentication type. </param>
         /// <param name="authHeaders"> The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object). </param>
         /// <param name="servicePrincipalId"> The application's client ID used in AadServicePrincipal authentication type. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey"> The application's key used in AadServicePrincipal authentication type. </param>
         /// <param name="tenant"> The tenant information (domain name or tenant ID) used in AadServicePrincipal authentication type under which your application resides. Type: string (or Expression with resultType string). </param>
         /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
         /// <param name="aadResourceId"> The resource you are requesting authorization to use. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="clientId"> The client ID associated with your application. Type: string (or Expression with resultType string). </param>
+        /// <param name="clientSecret"> The client secret associated with your application. </param>
         /// <param name="tokenEndpoint"> The token endpoint of the authorization server to acquire access token. Type: string (or Expression with resultType string). </param>
         /// <param name="resource"> The target service or resource to which the access will be requested. Type: string (or Expression with resultType string). </param>
         /// <param name="scope"> The scope of the access required. It describes what kind of access will be requested. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalEmbeddedCert"> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalEmbeddedCertPassword"> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestServiceLinkedServiceTypeProperties(DataFactoryElement<string> uri, DataFactoryElement<bool> enableServerCertificateValidation, RestServiceAuthenticationType authenticationType, DataFactoryElement<string> userName, DataFactoryElement<BinaryData> authHeaders, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, DataFactoryElement<string> aadResourceId, string encryptedCredential, DataFactoryCredentialReference credential, DataFactoryElement<string> clientId, DataFactoryElement<string> tokenEndpoint, DataFactoryElement<string> resource, DataFactoryElement<string> scope, DataFactoryElement<string> servicePrincipalCredentialType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestServiceLinkedServiceTypeProperties(DataFactoryElement<string> uri, DataFactoryElement<bool> enableServerCertificateValidation, RestServiceAuthenticationType authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, DataFactoryElement<BinaryData> authHeaders, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, DataFactoryElement<string> aadResourceId, string encryptedCredential, DataFactoryCredentialReference credential, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> tokenEndpoint, DataFactoryElement<string> resource, DataFactoryElement<string> scope, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecret servicePrincipalEmbeddedCert, DataFactorySecret servicePrincipalEmbeddedCertPassword, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             EnableServerCertificateValidation = enableServerCertificateValidation;
             AuthenticationType = authenticationType;
             UserName = userName;
+            Password = password;
             AuthHeaders = authHeaders;
             ServicePrincipalId = servicePrincipalId;
+            ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             AzureCloudType = azureCloudType;
             AadResourceId = aadResourceId;
             EncryptedCredential = encryptedCredential;
             Credential = credential;
             ClientId = clientId;
+            ClientSecret = clientSecret;
             TokenEndpoint = tokenEndpoint;
             Resource = resource;
             Scope = scope;
             ServicePrincipalCredentialType = servicePrincipalCredentialType;
+            ServicePrincipalEmbeddedCert = servicePrincipalEmbeddedCert;
+            ServicePrincipalEmbeddedCertPassword = servicePrincipalEmbeddedCertPassword;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -76,11 +86,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The user name used in Basic authentication type. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
 
+        /// <summary> The password used in Basic authentication type. </summary>
+        public DataFactorySecret Password { get; set; }
+
         /// <summary> The additional HTTP headers in the request to RESTful API used for authorization. Type: object (or Expression with resultType object). </summary>
         public DataFactoryElement<BinaryData> AuthHeaders { get; set; }
 
         /// <summary> The application's client ID used in AadServicePrincipal authentication type. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
+
+        /// <summary> The application's key used in AadServicePrincipal authentication type. </summary>
+        public DataFactorySecret ServicePrincipalKey { get; set; }
 
         /// <summary> The tenant information (domain name or tenant ID) used in AadServicePrincipal authentication type under which your application resides. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Tenant { get; set; }
@@ -100,6 +116,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The client ID associated with your application. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClientId { get; set; }
 
+        /// <summary> The client secret associated with your application. </summary>
+        public DataFactorySecret ClientSecret { get; set; }
+
         /// <summary> The token endpoint of the authorization server to acquire access token. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TokenEndpoint { get; set; }
 
@@ -111,5 +130,11 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
+
+        /// <summary> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
+        public DataFactorySecret ServicePrincipalEmbeddedCert { get; set; }
+
+        /// <summary> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </summary>
+        public DataFactorySecret ServicePrincipalEmbeddedCertPassword { get; set; }
     }
 }

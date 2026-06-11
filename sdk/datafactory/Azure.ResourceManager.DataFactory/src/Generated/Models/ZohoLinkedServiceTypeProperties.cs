@@ -26,15 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="ZohoLinkedServiceTypeProperties"/>. </summary>
         /// <param name="connectionProperties"> Properties used to connect to Zoho. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="endpoint"> The endpoint of the Zoho server. (i.e. crm.zoho.com/crm/private). </param>
+        /// <param name="accessToken"> The access token for Zoho authentication. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ZohoLinkedServiceTypeProperties(BinaryData connectionProperties, DataFactoryElement<string> endpoint, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ZohoLinkedServiceTypeProperties(BinaryData connectionProperties, DataFactoryElement<string> endpoint, DataFactorySecret accessToken, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionProperties = connectionProperties;
             Endpoint = endpoint;
+            AccessToken = accessToken;
             UseEncryptedEndpoints = useEncryptedEndpoints;
             UseHostVerification = useHostVerification;
             UsePeerVerification = usePeerVerification;
@@ -72,6 +74,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The endpoint of the Zoho server. (i.e. crm.zoho.com/crm/private). </summary>
         public DataFactoryElement<string> Endpoint { get; set; }
+
+        /// <summary> The access token for Zoho authentication. </summary>
+        public DataFactorySecret AccessToken { get; set; }
 
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }

@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("url"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(Uri, options);
+            if (Optional.IsDefined(Key))
+            {
+                writer.WritePropertyName("key"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Key, options);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -129,6 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> uri = default;
+            DataFactorySecret key = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -136,6 +142,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("url"u8))
                 {
                     ReadUri(prop, ref uri);
+                    continue;
+                }
+                if (prop.NameEquals("key"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    key = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -148,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureSearchLinkedServiceTypeProperties(uri, encryptedCredential, additionalBinaryDataProperties);
+            return new AzureSearchLinkedServiceTypeProperties(uri, key, encryptedCredential, additionalBinaryDataProperties);
         }
     }
 }

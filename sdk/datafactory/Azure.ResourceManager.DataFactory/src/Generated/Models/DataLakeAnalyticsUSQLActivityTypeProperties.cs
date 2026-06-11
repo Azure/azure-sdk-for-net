@@ -21,26 +21,31 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsUSQLActivityTypeProperties"/>. </summary>
         /// <param name="scriptPath"> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scriptPath"/> is null. </exception>
-        public DataLakeAnalyticsUSQLActivityTypeProperties(DataFactoryElement<string> scriptPath)
+        /// <param name="scriptLinkedService"> Script linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptPath"/> or <paramref name="scriptLinkedService"/> is null. </exception>
+        public DataLakeAnalyticsUSQLActivityTypeProperties(DataFactoryElement<string> scriptPath, DataFactoryLinkedServiceReference scriptLinkedService)
         {
             Argument.AssertNotNull(scriptPath, nameof(scriptPath));
+            Argument.AssertNotNull(scriptLinkedService, nameof(scriptLinkedService));
 
             ScriptPath = scriptPath;
+            ScriptLinkedService = scriptLinkedService;
             Parameters = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataLakeAnalyticsUSQLActivityTypeProperties"/>. </summary>
         /// <param name="scriptPath"> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </param>
+        /// <param name="scriptLinkedService"> Script linked service reference. </param>
         /// <param name="degreeOfParallelism"> The maximum number of nodes simultaneously used to run the job. Default value is 1. Type: integer (or Expression with resultType integer), minimum: 1. </param>
         /// <param name="priority"> Determines which jobs out of all that are queued should be selected to run first. The lower the number, the higher the priority. Default value is 1000. Type: integer (or Expression with resultType integer), minimum: 1. </param>
         /// <param name="parameters"> Parameters for U-SQL job request. </param>
         /// <param name="runtimeVersion"> Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string). </param>
         /// <param name="compilationMode"> Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataLakeAnalyticsUSQLActivityTypeProperties(DataFactoryElement<string> scriptPath, DataFactoryElement<int> degreeOfParallelism, DataFactoryElement<int> priority, IDictionary<string, BinaryData> parameters, DataFactoryElement<string> runtimeVersion, DataFactoryElement<string> compilationMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataLakeAnalyticsUSQLActivityTypeProperties(DataFactoryElement<string> scriptPath, DataFactoryLinkedServiceReference scriptLinkedService, DataFactoryElement<int> degreeOfParallelism, DataFactoryElement<int> priority, IDictionary<string, BinaryData> parameters, DataFactoryElement<string> runtimeVersion, DataFactoryElement<string> compilationMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScriptPath = scriptPath;
+            ScriptLinkedService = scriptLinkedService;
             DegreeOfParallelism = degreeOfParallelism;
             Priority = priority;
             Parameters = parameters;
@@ -51,6 +56,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ScriptPath { get; set; }
+
+        /// <summary> Script linked service reference. </summary>
+        public DataFactoryLinkedServiceReference ScriptLinkedService { get; set; }
 
         /// <summary> The maximum number of nodes simultaneously used to run the job. Default value is 1. Type: integer (or Expression with resultType integer), minimum: 1. </summary>
         public DataFactoryElement<int> DegreeOfParallelism { get; set; }

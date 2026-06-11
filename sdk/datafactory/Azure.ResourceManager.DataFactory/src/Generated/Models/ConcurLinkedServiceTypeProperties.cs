@@ -30,16 +30,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionProperties"> Properties used to connect to Concur. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="clientId"> Application client_id supplied by Concur App Management. </param>
         /// <param name="username"> The user name that you use to access Concur Service. </param>
+        /// <param name="password"> The password corresponding to the user name that you provided in the username field. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConcurLinkedServiceTypeProperties(BinaryData connectionProperties, DataFactoryElement<string> clientId, DataFactoryElement<string> username, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConcurLinkedServiceTypeProperties(BinaryData connectionProperties, DataFactoryElement<string> clientId, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionProperties = connectionProperties;
             ClientId = clientId;
             Username = username;
+            Password = password;
             UseEncryptedEndpoints = useEncryptedEndpoints;
             UseHostVerification = useHostVerification;
             UsePeerVerification = usePeerVerification;
@@ -80,6 +82,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The user name that you use to access Concur Service. </summary>
         public DataFactoryElement<string> Username { get; set; }
+
+        /// <summary> The password corresponding to the user name that you provided in the username field. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }

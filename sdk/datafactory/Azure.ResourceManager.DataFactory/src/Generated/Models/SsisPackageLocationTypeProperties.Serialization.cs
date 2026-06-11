@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(SSISPackageLocationTypeProperties)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(PackagePassword))
+            {
+                writer.WritePropertyName("packagePassword"u8);
+                writer.WriteObjectValue<DataFactorySecret>(PackagePassword, options);
+            }
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
@@ -156,6 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
+            DataFactorySecret packagePassword = default;
             SsisAccessCredential accessCredential = default;
             DataFactoryElement<string> configurationPath = default;
             SsisAccessCredential configurationAccessCredential = default;
@@ -166,6 +172,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("packagePassword"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    packagePassword = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("accessCredential"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -228,6 +243,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             return new SSISPackageLocationTypeProperties(
+                packagePassword,
                 accessCredential,
                 configurationPath,
                 configurationAccessCredential,

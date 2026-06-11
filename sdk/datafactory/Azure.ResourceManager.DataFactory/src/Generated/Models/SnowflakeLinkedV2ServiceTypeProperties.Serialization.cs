@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("user"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(User, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             writer.WritePropertyName("database"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             writer.WritePropertyName("warehouse"u8);
@@ -100,6 +105,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ClientId, options);
             }
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WritePropertyName("clientSecret"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ClientSecret, options);
+            }
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
@@ -109,6 +119,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(Scope, options);
+            }
+            if (Optional.IsDefined(PrivateKey))
+            {
+                writer.WritePropertyName("privateKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(PrivateKey, options);
+            }
+            if (Optional.IsDefined(PrivateKeyPassphrase))
+            {
+                writer.WritePropertyName("privateKeyPassphrase"u8);
+                writer.WriteObjectValue<DataFactorySecret>(PrivateKeyPassphrase, options);
             }
             if (Optional.IsDefined(Role))
             {
@@ -179,12 +199,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> accountIdentifier = default;
             DataFactoryElement<string> user = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> database = default;
             DataFactoryElement<string> warehouse = default;
             SnowflakeAuthenticationType? authenticationType = default;
             DataFactoryElement<string> clientId = default;
+            DataFactorySecret clientSecret = default;
             DataFactoryElement<string> tenantId = default;
             DataFactoryElement<string> scope = default;
+            DataFactorySecret privateKey = default;
+            DataFactorySecret privateKeyPassphrase = default;
             DataFactoryElement<string> role = default;
             DataFactoryElement<string> host = default;
             DataFactoryElement<string> schema = default;
@@ -205,6 +229,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     user = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("database"u8))
@@ -235,6 +268,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     clientId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("clientSecret"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientSecret = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("tenantId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -251,6 +293,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     scope = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("privateKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("privateKeyPassphrase"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateKeyPassphrase = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("role"u8))
@@ -298,12 +358,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SnowflakeLinkedV2ServiceTypeProperties(
                 accountIdentifier,
                 user,
+                password,
                 database,
                 warehouse,
                 authenticationType,
                 clientId,
+                clientSecret,
                 tenantId,
                 scope,
+                privateKey,
+                privateKeyPassphrase,
                 role,
                 host,
                 schema,

@@ -18,24 +18,31 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedServiceTypeProperties"/>. </summary>
         /// <param name="uri"> The url to connect Quickbase source. Type: string (or Expression with resultType string). </param>
-        public QuickbaseLinkedServiceTypeProperties(DataFactoryElement<string> uri)
+        /// <param name="userToken"> The user token for the Quickbase source. </param>
+        public QuickbaseLinkedServiceTypeProperties(DataFactoryElement<string> uri, DataFactorySecret userToken)
         {
             Uri = uri;
+            UserToken = userToken;
         }
 
         /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedServiceTypeProperties"/>. </summary>
         /// <param name="uri"> The url to connect Quickbase source. Type: string (or Expression with resultType string). </param>
+        /// <param name="userToken"> The user token for the Quickbase source. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuickbaseLinkedServiceTypeProperties(DataFactoryElement<string> uri, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuickbaseLinkedServiceTypeProperties(DataFactoryElement<string> uri, DataFactorySecret userToken, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
+            UserToken = userToken;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The url to connect Quickbase source. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Uri { get; set; }
+
+        /// <summary> The user token for the Quickbase source. </summary>
+        public DataFactorySecret UserToken { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

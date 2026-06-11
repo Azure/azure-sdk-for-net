@@ -29,16 +29,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="host"> The IP address or host name of the Jira service. (e.g. jira.example.com). </param>
         /// <param name="port"> The TCP port that the Jira server uses to listen for client connections. The default value is 443 if connecting through HTTPS, or 8080 if connecting through HTTP. </param>
         /// <param name="username"> The user name that you use to access Jira Service. </param>
+        /// <param name="password"> The password corresponding to the user name that you provided in the username field. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JiraLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JiraLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             Port = port;
             Username = username;
+            Password = password;
             UseEncryptedEndpoints = useEncryptedEndpoints;
             UseHostVerification = useHostVerification;
             UsePeerVerification = usePeerVerification;
@@ -54,6 +56,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The user name that you use to access Jira Service. </summary>
         public DataFactoryElement<string> Username { get; set; }
+
+        /// <summary> The password corresponding to the user name that you provided in the username field. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }

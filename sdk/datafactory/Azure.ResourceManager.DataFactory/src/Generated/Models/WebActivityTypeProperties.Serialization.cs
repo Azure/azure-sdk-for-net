@@ -141,6 +141,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(LinkedServices))
+            {
+                writer.WritePropertyName("linkedServices"u8);
+                writer.WriteStartArray();
+                foreach (DataFactoryLinkedServiceReference item in LinkedServices)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue<DataFactoryLinkedServiceReference>(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
@@ -197,6 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> httpRequestTimeout = default;
             bool? turnOffAsync = default;
             IList<DatasetReference> datasets = default;
+            IList<DataFactoryLinkedServiceReference> linkedServices = default;
             IntegrationRuntimeReference connectVia = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -287,6 +303,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                     datasets = array;
                     continue;
                 }
+                if (prop.NameEquals("linkedServices"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default));
+                        }
+                    }
+                    linkedServices = array;
+                    continue;
+                }
                 if (prop.NameEquals("connectVia"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -311,6 +348,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 httpRequestTimeout,
                 turnOffAsync,
                 datasets ?? new ChangeTrackingList<DatasetReference>(),
+                linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
                 connectVia,
                 additionalBinaryDataProperties);
         }

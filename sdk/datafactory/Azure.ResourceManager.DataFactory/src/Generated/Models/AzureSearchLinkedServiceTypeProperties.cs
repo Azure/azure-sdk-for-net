@@ -25,17 +25,22 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureSearchLinkedServiceTypeProperties"/>. </summary>
         /// <param name="uri"> URL for Azure Search service. Type: string (or Expression with resultType string). </param>
+        /// <param name="key"> Admin Key for Azure Search service. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureSearchLinkedServiceTypeProperties(DataFactoryElement<string> uri, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureSearchLinkedServiceTypeProperties(DataFactoryElement<string> uri, DataFactorySecret key, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
+            Key = key;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> URL for Azure Search service. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Uri { get; set; }
+
+        /// <summary> Admin Key for Azure Search service. </summary>
+        public DataFactorySecret Key { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

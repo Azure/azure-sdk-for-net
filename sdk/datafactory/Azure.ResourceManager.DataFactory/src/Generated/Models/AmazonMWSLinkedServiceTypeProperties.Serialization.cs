@@ -86,8 +86,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteObjectValue<DataFactoryElement<string>>(MarketplaceId, options);
             writer.WritePropertyName("sellerID"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(SellerId, options);
+            if (Optional.IsDefined(MwsAuthToken))
+            {
+                writer.WritePropertyName("mwsAuthToken"u8);
+                writer.WriteObjectValue<DataFactorySecret>(MwsAuthToken, options);
+            }
             writer.WritePropertyName("accessKeyId"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(AccessKeyId, options);
+            if (Optional.IsDefined(SecretKey))
+            {
+                writer.WritePropertyName("secretKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(SecretKey, options);
+            }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
@@ -153,7 +163,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> endpoint = default;
             DataFactoryElement<string> marketplaceId = default;
             DataFactoryElement<string> sellerId = default;
+            DataFactorySecret mwsAuthToken = default;
             DataFactoryElement<string> accessKeyId = default;
+            DataFactorySecret secretKey = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             DataFactoryElement<bool> useHostVerification = default;
             DataFactoryElement<bool> usePeerVerification = default;
@@ -176,9 +188,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                     sellerId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("mwsAuthToken"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mwsAuthToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("accessKeyId"u8))
                 {
                     accessKeyId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("secretKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    secretKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("useEncryptedEndpoints"u8))
@@ -222,7 +252,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 endpoint,
                 marketplaceId,
                 sellerId,
+                mwsAuthToken,
                 accessKeyId,
+                secretKey,
                 useEncryptedEndpoints,
                 useHostVerification,
                 usePeerVerification,

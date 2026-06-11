@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for Dataworld. </summary>
     public partial class DataworldLinkedService : DataFactoryLinkedServiceProperties, IJsonModel<DataworldLinkedService>
     {
+        /// <summary> Initializes a new instance of <see cref="DataworldLinkedService"/> for deserialization. </summary>
+        internal DataworldLinkedService()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataFactoryLinkedServiceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

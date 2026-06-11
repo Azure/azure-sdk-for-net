@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="AzureFileStorageLinkedServiceTypeProperties"/>. </summary>
         /// <param name="host"> Host name of the server. Type: string (or Expression with resultType string). </param>
         /// <param name="userId"> User ID to logon the server. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password to logon the server. </param>
         /// <param name="connectionString"> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="sasUri"> SAS URI of the Azure File resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="fileShare"> The azure file share name. It is required when auth with accountKey/sasToken. Type: string (or Expression with resultType string). </param>
@@ -33,10 +34,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="serviceEndpoint"> File service endpoint of the Azure File Storage resource. It is mutually exclusive with connectionString, sasUri property. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFileStorageLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> userId, DataFactoryElement<string> connectionString, DataFactoryElement<string> sasUri, DataFactoryElement<string> fileShare, DataFactoryElement<string> snapshot, string encryptedCredential, DataFactoryElement<string> serviceEndpoint, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFileStorageLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> userId, DataFactorySecret password, DataFactoryElement<string> connectionString, DataFactoryElement<string> sasUri, DataFactoryElement<string> fileShare, DataFactoryElement<string> snapshot, string encryptedCredential, DataFactoryElement<string> serviceEndpoint, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             UserId = userId;
+            Password = password;
             ConnectionString = connectionString;
             SasUri = sasUri;
             FileShare = fileShare;
@@ -52,6 +54,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> User ID to logon the server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserId { get; set; }
+
+        /// <summary> Password to logon the server. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }

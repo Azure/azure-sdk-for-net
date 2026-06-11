@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(AuthSource))
             {
                 writer.WritePropertyName("authSource"u8);
@@ -164,6 +169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             MongoDBAuthenticationType? authenticationType = default;
             DataFactoryElement<string> databaseName = default;
             DataFactoryElement<string> username = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> authSource = default;
             DataFactoryElement<int> port = default;
             DataFactoryElement<bool> enableSsl = default;
@@ -194,6 +200,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("username"u8))
                 {
                     ReadUsername(prop, ref username);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("authSource"u8))
@@ -247,6 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 authenticationType,
                 databaseName,
                 username,
+                password,
                 authSource,
                 port,
                 enableSsl,

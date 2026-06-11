@@ -83,6 +83,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteObjectValue<DataFactoryElement<string>>(Host, options);
             writer.WritePropertyName("username"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
+            writer.WritePropertyName("password"u8);
+            writer.WriteObjectValue<DataFactorySecret>(Password, options);
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
@@ -147,6 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> host = default;
             DataFactoryElement<string> username = default;
+            DataFactorySecret password = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             DataFactoryElement<bool> useHostVerification = default;
             DataFactoryElement<bool> usePeerVerification = default;
@@ -162,6 +165,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("username"u8))
                 {
                     ReadUsername(prop, ref username);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("useEncryptedEndpoints"u8))
@@ -204,6 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new OracleServiceCloudLinkedServiceTypeProperties(
                 host,
                 username,
+                password,
                 useEncryptedEndpoints,
                 useHostVerification,
                 usePeerVerification,

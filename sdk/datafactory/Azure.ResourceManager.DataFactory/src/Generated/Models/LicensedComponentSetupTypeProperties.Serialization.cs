@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -81,6 +82,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("componentName"u8);
             writer.WriteStringValue(ComponentName);
+            if (Optional.IsDefined(LicenseKey))
+            {
+                writer.WritePropertyName("licenseKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(LicenseKey, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -124,6 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string componentName = default;
+            DataFactorySecret licenseKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,12 +139,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                     componentName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("licenseKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    licenseKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LicensedComponentSetupTypeProperties(componentName, additionalBinaryDataProperties);
+            return new LicensedComponentSetupTypeProperties(componentName, licenseKey, additionalBinaryDataProperties);
         }
     }
 }

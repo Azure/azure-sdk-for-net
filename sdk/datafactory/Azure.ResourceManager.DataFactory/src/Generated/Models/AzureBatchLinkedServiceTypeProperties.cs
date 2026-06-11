@@ -22,30 +22,37 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
         /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
         /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="batchUri"/> or <paramref name="poolName"/> is null. </exception>
-        public AzureBatchLinkedServiceTypeProperties(DataFactoryElement<string> accountName, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName)
+        /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="batchUri"/>, <paramref name="poolName"/> or <paramref name="linkedServiceName"/> is null. </exception>
+        public AzureBatchLinkedServiceTypeProperties(DataFactoryElement<string> accountName, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, DataFactoryLinkedServiceReference linkedServiceName)
         {
             Argument.AssertNotNull(accountName, nameof(accountName));
             Argument.AssertNotNull(batchUri, nameof(batchUri));
             Argument.AssertNotNull(poolName, nameof(poolName));
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             AccountName = accountName;
             BatchUri = batchUri;
             PoolName = poolName;
+            LinkedServiceName = linkedServiceName;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureBatchLinkedServiceTypeProperties"/>. </summary>
         /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
+        /// <param name="accessKey"> The Azure Batch account access key. </param>
         /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
         /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureBatchLinkedServiceTypeProperties(DataFactoryElement<string> accountName, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, string encryptedCredential, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureBatchLinkedServiceTypeProperties(DataFactoryElement<string> accountName, DataFactorySecret accessKey, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, DataFactoryLinkedServiceReference linkedServiceName, string encryptedCredential, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountName = accountName;
+            AccessKey = accessKey;
             BatchUri = batchUri;
             PoolName = poolName;
+            LinkedServiceName = linkedServiceName;
             EncryptedCredential = encryptedCredential;
             Credential = credential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -54,11 +61,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The Azure Batch account name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AccountName { get; set; }
 
+        /// <summary> The Azure Batch account access key. </summary>
+        public DataFactorySecret AccessKey { get; set; }
+
         /// <summary> The Azure Batch URI. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> BatchUri { get; set; }
 
         /// <summary> The Azure Batch pool name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PoolName { get; set; }
+
+        /// <summary> The Azure Storage linked service reference. </summary>
+        public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

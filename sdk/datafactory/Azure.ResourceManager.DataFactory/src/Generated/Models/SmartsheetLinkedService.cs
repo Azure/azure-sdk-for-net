@@ -14,12 +14,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SmartsheetLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="SmartsheetLinkedService"/>. </summary>
-        public SmartsheetLinkedService() : base("Smartsheet")
-        {
-
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SmartsheetLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>

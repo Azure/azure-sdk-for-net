@@ -8,39 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> HDInsight ondemand linked service. </summary>
     public partial class HDInsightOnDemandLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of <see cref="HDInsightOnDemandLinkedService"/>. </summary>
-        /// <param name="clusterSize"> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: int (or Expression with resultType int). </param>
-        /// <param name="timeToLiveExpression"> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </param>
-        /// <param name="version"> Version of the HDInsight cluster.  Type: string (or Expression with resultType string). </param>
-        /// <param name="hostSubscriptionId"> The customer’s subscription to host the cluster. Type: string (or Expression with resultType string). </param>
-        /// <param name="tenant"> The Tenant id/name to which the service principal belongs. Type: string (or Expression with resultType string). </param>
-        /// <param name="clusterResourceGroup"> The resource group where the cluster belongs. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterSize"/>, <paramref name="timeToLiveExpression"/>, <paramref name="version"/>, <paramref name="hostSubscriptionId"/>, <paramref name="tenant"/> or <paramref name="clusterResourceGroup"/> is null. </exception>
-        public HDInsightOnDemandLinkedService(DataFactoryElement<int> clusterSize, DataFactoryElement<string> timeToLiveExpression, DataFactoryElement<string> version, DataFactoryElement<string> hostSubscriptionId, DataFactoryElement<string> tenant, DataFactoryElement<string> clusterResourceGroup) : base("HDInsightOnDemand")
-        {
-            Argument.AssertNotNull(clusterSize, nameof(clusterSize));
-            Argument.AssertNotNull(timeToLiveExpression, nameof(timeToLiveExpression));
-            Argument.AssertNotNull(version, nameof(version));
-            Argument.AssertNotNull(hostSubscriptionId, nameof(hostSubscriptionId));
-            Argument.AssertNotNull(tenant, nameof(tenant));
-            Argument.AssertNotNull(clusterResourceGroup, nameof(clusterResourceGroup));
-
-            TypeProperties = new HDInsightOnDemandLinkedServiceTypeProperties(
-                clusterSize,
-                timeToLiveExpression,
-                version,
-                hostSubscriptionId,
-                tenant,
-                clusterResourceGroup);
-        }
-
         /// <summary> Initializes a new instance of <see cref="HDInsightOnDemandLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>

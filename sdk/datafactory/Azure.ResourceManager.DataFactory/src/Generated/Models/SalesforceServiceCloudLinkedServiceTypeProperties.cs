@@ -24,14 +24,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="SalesforceServiceCloudLinkedServiceTypeProperties"/>. </summary>
         /// <param name="environmentUri"> The URL of Salesforce Service Cloud instance. Default is 'https://login.salesforce.com'. To copy data from sandbox, specify 'https://test.salesforce.com'. To copy data from custom domain, specify, for example, 'https://[domain].my.salesforce.com'. Type: string (or Expression with resultType string). </param>
         /// <param name="username"> The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> The password for Basic authentication of the Salesforce instance. </param>
+        /// <param name="securityToken"> The security token is optional to remotely access Salesforce instance. </param>
         /// <param name="apiVersion"> The Salesforce API version used in ADF. Type: string (or Expression with resultType string). </param>
         /// <param name="extendedProperties"> Extended properties appended to the connection string. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SalesforceServiceCloudLinkedServiceTypeProperties(DataFactoryElement<string> environmentUri, DataFactoryElement<string> username, DataFactoryElement<string> apiVersion, DataFactoryElement<string> extendedProperties, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SalesforceServiceCloudLinkedServiceTypeProperties(DataFactoryElement<string> environmentUri, DataFactoryElement<string> username, DataFactorySecret password, DataFactorySecret securityToken, DataFactoryElement<string> apiVersion, DataFactoryElement<string> extendedProperties, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnvironmentUri = environmentUri;
             Username = username;
+            Password = password;
+            SecurityToken = securityToken;
             ApiVersion = apiVersion;
             ExtendedProperties = extendedProperties;
             EncryptedCredential = encryptedCredential;
@@ -43,6 +47,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The username for Basic authentication of the Salesforce instance. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }
+
+        /// <summary> The password for Basic authentication of the Salesforce instance. </summary>
+        public DataFactorySecret Password { get; set; }
+
+        /// <summary> The security token is optional to remotely access Salesforce instance. </summary>
+        public DataFactorySecret SecurityToken { get; set; }
 
         /// <summary> The Salesforce API version used in ADF. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ApiVersion { get; set; }

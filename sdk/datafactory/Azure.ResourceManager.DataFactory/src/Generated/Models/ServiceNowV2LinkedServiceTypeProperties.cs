@@ -29,16 +29,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="endpoint"> The endpoint of the ServiceNowV2 server. (i.e. &lt;instance&gt;.service-now.com). </param>
         /// <param name="authenticationType"> The authentication type to use. </param>
         /// <param name="username"> The user name used to connect to the ServiceNowV2 server for Basic and OAuth2 authentication. </param>
+        /// <param name="password"> The password corresponding to the user name for Basic and OAuth2 authentication. </param>
         /// <param name="clientId"> The client id for OAuth2 authentication. </param>
+        /// <param name="clientSecret"> The client secret for OAuth2 authentication. </param>
         /// <param name="grantType"> GrantType for OAuth2 authentication. Default value is password. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceNowV2LinkedServiceTypeProperties(DataFactoryElement<string> endpoint, ServiceNowV2AuthenticationType authenticationType, DataFactoryElement<string> username, DataFactoryElement<string> clientId, DataFactoryElement<string> grantType, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceNowV2LinkedServiceTypeProperties(DataFactoryElement<string> endpoint, ServiceNowV2AuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> grantType, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             AuthenticationType = authenticationType;
             Username = username;
+            Password = password;
             ClientId = clientId;
+            ClientSecret = clientSecret;
             GrantType = grantType;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -53,8 +57,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The user name used to connect to the ServiceNowV2 server for Basic and OAuth2 authentication. </summary>
         public DataFactoryElement<string> Username { get; set; }
 
+        /// <summary> The password corresponding to the user name for Basic and OAuth2 authentication. </summary>
+        public DataFactorySecret Password { get; set; }
+
         /// <summary> The client id for OAuth2 authentication. </summary>
         public DataFactoryElement<string> ClientId { get; set; }
+
+        /// <summary> The client secret for OAuth2 authentication. </summary>
+        public DataFactorySecret ClientSecret { get; set; }
 
         /// <summary> GrantType for OAuth2 authentication. Default value is password. </summary>
         public DataFactoryElement<string> GrantType { get; set; }

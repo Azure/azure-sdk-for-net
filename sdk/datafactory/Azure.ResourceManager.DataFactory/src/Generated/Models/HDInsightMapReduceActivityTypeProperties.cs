@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(className, nameof(className));
             Argument.AssertNotNull(jarFilePath, nameof(jarFilePath));
 
+            StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
             Arguments = new ChangeTrackingList<BinaryData>();
             ClassName = className;
             JarFilePath = jarFilePath;
@@ -36,23 +37,30 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightMapReduceActivityTypeProperties"/>. </summary>
+        /// <param name="storageLinkedServices"> Storage linked service references. </param>
         /// <param name="arguments"> User specified arguments to HDInsightActivity. </param>
         /// <param name="getDebugInfo"> Debug info option. </param>
         /// <param name="className"> Class name. Type: string (or Expression with resultType string). </param>
         /// <param name="jarFilePath"> Jar path. Type: string (or Expression with resultType string). </param>
+        /// <param name="jarLinkedService"> Jar linked service reference. </param>
         /// <param name="jarLibs"> Jar libs. </param>
         /// <param name="defines"> Allows user to specify defines for the MapReduce job request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightMapReduceActivityTypeProperties(IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> className, DataFactoryElement<string> jarFilePath, IList<BinaryData> jarLibs, IDictionary<string, BinaryData> defines, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightMapReduceActivityTypeProperties(IList<DataFactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> className, DataFactoryElement<string> jarFilePath, DataFactoryLinkedServiceReference jarLinkedService, IList<BinaryData> jarLibs, IDictionary<string, BinaryData> defines, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
             GetDebugInfo = getDebugInfo;
             ClassName = className;
             JarFilePath = jarFilePath;
+            JarLinkedService = jarLinkedService;
             JarLibs = jarLibs;
             Defines = defines;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Storage linked service references. </summary>
+        public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; } = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
 
         /// <summary>
         /// User specified arguments to HDInsightActivity.
@@ -90,6 +98,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Jar path. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> JarFilePath { get; set; }
+
+        /// <summary> Jar linked service reference. </summary>
+        public DataFactoryLinkedServiceReference JarLinkedService { get; set; }
 
         /// <summary>
         /// Jar libs.

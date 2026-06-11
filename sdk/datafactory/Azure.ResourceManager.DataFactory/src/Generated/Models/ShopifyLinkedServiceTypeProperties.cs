@@ -30,14 +30,16 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="ShopifyLinkedServiceTypeProperties"/>. </summary>
         /// <param name="host"> The endpoint of the Shopify server. (i.e. mystore.myshopify.com). </param>
+        /// <param name="accessToken"> The API access token that can be used to access Shopify’s data. The token won't expire if it is offline mode. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ShopifyLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ShopifyLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactorySecret accessToken, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
+            AccessToken = accessToken;
             UseEncryptedEndpoints = useEncryptedEndpoints;
             UseHostVerification = useHostVerification;
             UsePeerVerification = usePeerVerification;
@@ -47,6 +49,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The endpoint of the Shopify server. (i.e. mystore.myshopify.com). </summary>
         public DataFactoryElement<string> Host { get; set; }
+
+        /// <summary> The API access token that can be used to access Shopify’s data. The token won't expire if it is offline mode. </summary>
+        public DataFactorySecret AccessToken { get; set; }
 
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }

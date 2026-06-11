@@ -83,6 +83,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteObjectValue<DataFactoryElement<string>>(Uri, options);
             writer.WritePropertyName("servicePrincipalId"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
+            writer.WritePropertyName("servicePrincipalKey"u8);
+            writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalKey, options);
             writer.WritePropertyName("tenant"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(Tenant, options);
             writer.WritePropertyName("aadResourceId"u8);
@@ -136,6 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> uri = default;
             DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecret servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryElement<string> aadResourceId = default;
             string encryptedCredential = default;
@@ -150,6 +153,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
                     ReadServicePrincipalId(prop, ref servicePrincipalId);
+                    continue;
+                }
+                if (prop.NameEquals("servicePrincipalKey"u8))
+                {
+                    servicePrincipalKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tenant"u8))
@@ -175,6 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DynamicsAXLinkedServiceTypeProperties(
                 uri,
                 servicePrincipalId,
+                servicePrincipalKey,
                 tenant,
                 aadResourceId,
                 encryptedCredential,

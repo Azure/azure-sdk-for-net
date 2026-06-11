@@ -8,24 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Trigger that runs every time the selected Blob container changes. </summary>
     public partial class DataFactoryBlobTrigger : MultiplePipelineTrigger
     {
-        /// <summary> Initializes a new instance of <see cref="DataFactoryBlobTrigger"/>. </summary>
-        /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
-        /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> is null. </exception>
-        public DataFactoryBlobTrigger(string folderPath, int maxConcurrency)
-        {
-            Argument.AssertNotNull(folderPath, nameof(folderPath));
-
-            TypeProperties = new BlobTriggerTypeProperties(folderPath, maxConcurrency);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DataFactoryBlobTrigger"/>. </summary>
         /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>

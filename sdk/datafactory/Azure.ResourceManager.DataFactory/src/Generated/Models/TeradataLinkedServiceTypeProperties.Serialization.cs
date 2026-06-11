@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(SslMode))
             {
                 writer.WritePropertyName("sslMode"u8);
@@ -175,6 +180,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> server = default;
             TeradataAuthenticationType? authenticationType = default;
             DataFactoryElement<string> username = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> sslMode = default;
             DataFactoryElement<int> portNumber = default;
             DataFactoryElement<int> httpsPortNumber = default;
@@ -215,6 +221,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("username"u8))
                 {
                     ReadUsername(prop, ref username);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sslMode"u8))
@@ -286,6 +301,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 server,
                 authenticationType,
                 username,
+                password,
                 sslMode,
                 portNumber,
                 httpsPortNumber,

@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteObjectValue<DataFactoryElement<string>>(Endpoint, options);
             writer.WritePropertyName("clientId"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(ClientId, options);
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WritePropertyName("clientSecret"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ClientSecret, options);
+            }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
@@ -148,6 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> endpoint = default;
             DataFactoryElement<string> clientId = default;
+            DataFactorySecret clientSecret = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             DataFactoryElement<bool> useHostVerification = default;
             DataFactoryElement<bool> usePeerVerification = default;
@@ -163,6 +169,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("clientId"u8))
                 {
                     clientId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("clientSecret"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientSecret = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("useEncryptedEndpoints"u8))
@@ -205,6 +220,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new MarketoLinkedServiceTypeProperties(
                 endpoint,
                 clientId,
+                clientSecret,
                 useEncryptedEndpoints,
                 useHostVerification,
                 usePeerVerification,

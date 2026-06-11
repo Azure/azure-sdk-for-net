@@ -82,6 +82,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("host"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(Host, options);
+            if (Optional.IsDefined(AccessToken))
+            {
+                writer.WritePropertyName("accessToken"u8);
+                writer.WriteObjectValue<DataFactorySecret>(AccessToken, options);
+            }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
@@ -145,6 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> host = default;
+            DataFactorySecret accessToken = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             DataFactoryElement<bool> useHostVerification = default;
             DataFactoryElement<bool> usePeerVerification = default;
@@ -155,6 +161,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("host"u8))
                 {
                     host = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("accessToken"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accessToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("useEncryptedEndpoints"u8))
@@ -196,6 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new ShopifyLinkedServiceTypeProperties(
                 host,
+                accessToken,
                 useEncryptedEndpoints,
                 useHostVerification,
                 usePeerVerification,

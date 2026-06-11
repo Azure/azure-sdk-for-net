@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(output, nameof(output));
             Argument.AssertNotNull(filePaths, nameof(filePaths));
 
+            StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
             Arguments = new ChangeTrackingList<BinaryData>();
             Mapper = mapper;
             Reducer = reducer;
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightStreamingActivityTypeProperties"/>. </summary>
+        /// <param name="storageLinkedServices"> Storage linked service references. </param>
         /// <param name="arguments"> User specified arguments to HDInsightActivity. </param>
         /// <param name="getDebugInfo"> Debug info option. </param>
         /// <param name="mapper"> Mapper executable name. Type: string (or Expression with resultType string). </param>
@@ -53,12 +55,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="input"> Input blob path. Type: string (or Expression with resultType string). </param>
         /// <param name="output"> Output blob path. Type: string (or Expression with resultType string). </param>
         /// <param name="filePaths"> Paths to streaming job files. Can be directories. </param>
+        /// <param name="fileLinkedService"> Linked service reference where the files are located. </param>
         /// <param name="combiner"> Combiner executable name. Type: string (or Expression with resultType string). </param>
         /// <param name="commandEnvironment"> Command line environment values. </param>
         /// <param name="defines"> Allows user to specify defines for streaming job request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightStreamingActivityTypeProperties(IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> mapper, DataFactoryElement<string> reducer, DataFactoryElement<string> input, DataFactoryElement<string> output, IList<BinaryData> filePaths, DataFactoryElement<string> combiner, IList<BinaryData> commandEnvironment, IDictionary<string, BinaryData> defines, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightStreamingActivityTypeProperties(IList<DataFactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> mapper, DataFactoryElement<string> reducer, DataFactoryElement<string> input, DataFactoryElement<string> output, IList<BinaryData> filePaths, DataFactoryLinkedServiceReference fileLinkedService, DataFactoryElement<string> combiner, IList<BinaryData> commandEnvironment, IDictionary<string, BinaryData> defines, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
             GetDebugInfo = getDebugInfo;
             Mapper = mapper;
@@ -66,11 +70,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             Input = input;
             Output = output;
             FilePaths = filePaths;
+            FileLinkedService = fileLinkedService;
             Combiner = combiner;
             CommandEnvironment = commandEnvironment;
             Defines = defines;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Storage linked service references. </summary>
+        public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; } = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
 
         /// <summary>
         /// User specified arguments to HDInsightActivity.
@@ -142,6 +150,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public IList<BinaryData> FilePaths { get; } = new ChangeTrackingList<BinaryData>();
+
+        /// <summary> Linked service reference where the files are located. </summary>
+        public DataFactoryLinkedServiceReference FileLinkedService { get; set; }
 
         /// <summary> Combiner executable name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Combiner { get; set; }

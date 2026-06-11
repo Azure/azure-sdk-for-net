@@ -86,10 +86,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(AuthenticationType, options);
             }
+            if (Optional.IsDefined(Credential))
+            {
+                writer.WritePropertyName("credential"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Credential, options);
+            }
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
+            }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -140,7 +150,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> connectionString = default;
             DataFactoryElement<string> authenticationType = default;
+            DataFactorySecret credential = default;
             DataFactoryElement<string> userName = default;
+            DataFactorySecret password = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,9 +171,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                     authenticationType = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("credential"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    credential = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("userName"u8))
                 {
                     ReadUserName(prop, ref userName);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -174,7 +204,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OdbcLinkedServiceTypeProperties(connectionString, authenticationType, userName, encryptedCredential, additionalBinaryDataProperties);
+            return new OdbcLinkedServiceTypeProperties(
+                connectionString,
+                authenticationType,
+                credential,
+                userName,
+                password,
+                encryptedCredential,
+                additionalBinaryDataProperties);
         }
     }
 }

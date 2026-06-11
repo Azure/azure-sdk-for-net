@@ -28,15 +28,17 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="CustomActivityTypeProperties"/>. </summary>
         /// <param name="command"> Command for custom activity Type: string (or Expression with resultType string). </param>
+        /// <param name="resourceLinkedService"> Resource linked service reference. </param>
         /// <param name="folderPath"> Folder path for resource files Type: string (or Expression with resultType string). </param>
         /// <param name="referenceObjects"> Reference objects. </param>
         /// <param name="extendedProperties"> User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined. </param>
         /// <param name="retentionTimeInDays"> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </param>
         /// <param name="autoUserSpecification"> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomActivityTypeProperties(DataFactoryElement<string> command, DataFactoryElement<string> folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, BinaryData> extendedProperties, BinaryData retentionTimeInDays, DataFactoryElement<string> autoUserSpecification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomActivityTypeProperties(DataFactoryElement<string> command, DataFactoryLinkedServiceReference resourceLinkedService, DataFactoryElement<string> folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, BinaryData> extendedProperties, BinaryData retentionTimeInDays, DataFactoryElement<string> autoUserSpecification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Command = command;
+            ResourceLinkedService = resourceLinkedService;
             FolderPath = folderPath;
             ReferenceObjects = referenceObjects;
             ExtendedProperties = extendedProperties;
@@ -47,6 +49,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Command for custom activity Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Command { get; set; }
+
+        /// <summary> Resource linked service reference. </summary>
+        public DataFactoryLinkedServiceReference ResourceLinkedService { get; set; }
 
         /// <summary> Folder path for resource files Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> FolderPath { get; set; }

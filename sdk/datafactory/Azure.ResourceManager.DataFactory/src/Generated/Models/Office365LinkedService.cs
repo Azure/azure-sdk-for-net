@@ -8,27 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Office365 linked service. </summary>
     public partial class Office365LinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of <see cref="Office365LinkedService"/>. </summary>
-        /// <param name="office365TenantId"> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalTenantId"> Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="office365TenantId"/>, <paramref name="servicePrincipalTenantId"/> or <paramref name="servicePrincipalId"/> is null. </exception>
-        public Office365LinkedService(DataFactoryElement<string> office365TenantId, DataFactoryElement<string> servicePrincipalTenantId, DataFactoryElement<string> servicePrincipalId) : base("Office365")
-        {
-            Argument.AssertNotNull(office365TenantId, nameof(office365TenantId));
-            Argument.AssertNotNull(servicePrincipalTenantId, nameof(servicePrincipalTenantId));
-            Argument.AssertNotNull(servicePrincipalId, nameof(servicePrincipalId));
-
-            TypeProperties = new Office365LinkedServiceTypeProperties(office365TenantId, servicePrincipalTenantId, servicePrincipalId);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Office365LinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>

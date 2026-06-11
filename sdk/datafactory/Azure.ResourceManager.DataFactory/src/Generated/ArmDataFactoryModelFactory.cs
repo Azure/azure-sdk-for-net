@@ -560,10 +560,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pipelines"> Pipelines that need to be started. </param>
         /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
         /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
-        /// <param name="linkedService"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> is null. </exception>
+        /// <param name="linkedService"> The Azure Storage linked service reference. </param>
+        /// <param name="linkedService0"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> or <paramref name="linkedService"/> is null. </exception>
         /// <returns> A new <see cref="Models.DataFactoryBlobTrigger"/> instance for mocking. </returns>
-        public static DataFactoryBlobTrigger DataFactoryBlobTrigger(string description = default, DataFactoryTriggerRuntimeState? runtimeState = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, IEnumerable<TriggerPipelineReference> pipelines = default, string folderPath = default, int maxConcurrency = default, DataFactoryLinkedServiceReference linkedService = default)
+        public static DataFactoryBlobTrigger DataFactoryBlobTrigger(string description = default, DataFactoryTriggerRuntimeState? runtimeState = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, IEnumerable<TriggerPipelineReference> pipelines = default, string folderPath = default, int maxConcurrency = default, DataFactoryLinkedServiceReference linkedService = default, DataFactoryLinkedServiceReference linkedService0 = default)
         {
             annotations ??= new ChangeTrackingList<BinaryData>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -577,7 +578,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 (pipelines ?? new ChangeTrackingList<TriggerPipelineReference>()).ToList(),
                 default,
-                linkedService);
+                linkedService0);
         }
 
         /// <param name="description"> Trigger description. </param>
@@ -1040,9 +1041,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <param name="componentName"> The name of the 3rd party component. </param>
+        /// <param name="licenseKey"> The license key to activate the component. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         /// <returns> A new <see cref="Models.ComponentSetup"/> instance for mocking. </returns>
-        public static ComponentSetup ComponentSetup(string componentName = default)
+        public static ComponentSetup ComponentSetup(string componentName = default, DataFactorySecret licenseKey = default)
         {
             return new ComponentSetup(default, default, default);
         }
@@ -4511,14 +4513,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
+        /// <param name="accessKey"> The Azure Batch account access key. </param>
         /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
         /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        /// <param name="linkedServiceName"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="batchUri"/> or <paramref name="poolName"/> is null. </exception>
+        /// <param name="linkedServiceName0"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="batchUri"/>, <paramref name="poolName"/> or <paramref name="linkedServiceName"/> is null. </exception>
         /// <returns> A new <see cref="Models.AzureBatchLinkedService"/> instance for mocking. </returns>
-        public static AzureBatchLinkedService AzureBatchLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> accountName = default, DataFactoryElement<string> batchUri = default, DataFactoryElement<string> poolName = default, string encryptedCredential = default, DataFactoryCredentialReference credential = default, DataFactoryLinkedServiceReference linkedServiceName = default)
+        public static AzureBatchLinkedService AzureBatchLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> accountName = default, DataFactorySecret accessKey = default, DataFactoryElement<string> batchUri = default, DataFactoryElement<string> poolName = default, DataFactoryLinkedServiceReference linkedServiceName = default, string encryptedCredential = default, DataFactoryCredentialReference credential = default, DataFactoryLinkedServiceReference linkedServiceName0 = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4533,7 +4537,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 default,
-                linkedServiceName);
+                linkedServiceName0);
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -4571,11 +4575,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="host"> Host name of the server. Type: string (or Expression with resultType string). </param>
         /// <param name="userId"> User ID to logon the server. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password to logon the server. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="password"></param>
+        /// <param name="password0"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         /// <returns> A new <see cref="Models.FileServerLinkedService"/> instance for mocking. </returns>
-        public static FileServerLinkedService FileServerLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactoryElement<string> userId = default, string encryptedCredential = default, DataFactorySecret password = default)
+        public static FileServerLinkedService FileServerLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactoryElement<string> userId = default, DataFactorySecret password = default, string encryptedCredential = default, DataFactorySecret password0 = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4590,7 +4595,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 default,
-                password);
+                password0);
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -4601,6 +4606,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="host"> Host name of the server. Type: string (or Expression with resultType string). </param>
         /// <param name="userId"> User ID to logon the server. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password to logon the server. </param>
         /// <param name="connectionString"> The connection string. It is mutually exclusive with sasUri property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="sasUri"> SAS URI of the Azure File resource. It is mutually exclusive with connectionString property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="fileShare"> The azure file share name. It is required when auth with accountKey/sasToken. Type: string (or Expression with resultType string). </param>
@@ -4608,9 +4614,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="serviceEndpoint"> File service endpoint of the Azure File Storage resource. It is mutually exclusive with connectionString, sasUri property. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        /// <param name="password"></param>
+        /// <param name="password0"></param>
         /// <returns> A new <see cref="Models.AzureFileStorageLinkedService"/> instance for mocking. </returns>
-        public static AzureFileStorageLinkedService AzureFileStorageLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactoryElement<string> userId = default, DataFactoryElement<string> connectionString = default, DataFactoryElement<string> sasUri = default, DataFactoryElement<string> fileShare = default, DataFactoryElement<string> snapshot = default, string encryptedCredential = default, DataFactoryElement<string> serviceEndpoint = default, DataFactoryCredentialReference credential = default, DataFactorySecret password = default)
+        public static AzureFileStorageLinkedService AzureFileStorageLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactoryElement<string> userId = default, DataFactorySecret password = default, DataFactoryElement<string> connectionString = default, DataFactoryElement<string> sasUri = default, DataFactoryElement<string> fileShare = default, DataFactoryElement<string> snapshot = default, string encryptedCredential = default, DataFactoryElement<string> serviceEndpoint = default, DataFactoryCredentialReference credential = default, DataFactorySecret password0 = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4625,7 +4631,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 default,
-                password);
+                password0);
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -4635,11 +4641,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="accessKeyId"> The access key identifier of the Amazon S3 Compatible Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </param>
+        /// <param name="secretAccessKey"> The secret access key of the Amazon S3 Compatible Identity and Access Management (IAM) user. </param>
         /// <param name="serviceUri"> This value specifies the endpoint to access with the Amazon S3 Compatible Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </param>
         /// <param name="forcePathStyle"> If true, use S3 path-style access instead of virtual hosted-style access. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.AmazonS3CompatibleLinkedService"/> instance for mocking. </returns>
-        public static AmazonS3CompatibleLinkedService AmazonS3CompatibleLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> accessKeyId = default, DataFactoryElement<string> serviceUri = default, DataFactoryElement<bool> forcePathStyle = default, string encryptedCredential = default)
+        public static AmazonS3CompatibleLinkedService AmazonS3CompatibleLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> accessKeyId = default, DataFactorySecret secretAccessKey = default, DataFactoryElement<string> serviceUri = default, DataFactoryElement<bool> forcePathStyle = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4663,10 +4670,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="accessKeyId"> The access key identifier of the Oracle Cloud Storage Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </param>
+        /// <param name="secretAccessKey"> The secret access key of the Oracle Cloud Storage Identity and Access Management (IAM) user. </param>
         /// <param name="serviceUri"> This value specifies the endpoint to access with the Oracle Cloud Storage Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.OracleCloudStorageLinkedService"/> instance for mocking. </returns>
-        public static OracleCloudStorageLinkedService OracleCloudStorageLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> accessKeyId = default, DataFactoryElement<string> serviceUri = default, string encryptedCredential = default)
+        public static OracleCloudStorageLinkedService OracleCloudStorageLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> accessKeyId = default, DataFactorySecret secretAccessKey = default, DataFactoryElement<string> serviceUri = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4690,10 +4698,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="accessKeyId"> The access key identifier of the Google Cloud Storage Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </param>
+        /// <param name="secretAccessKey"> The secret access key of the Google Cloud Storage Identity and Access Management (IAM) user. </param>
         /// <param name="serviceUri"> This value specifies the endpoint to access with the Google Cloud Storage Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.GoogleCloudStorageLinkedService"/> instance for mocking. </returns>
-        public static GoogleCloudStorageLinkedService GoogleCloudStorageLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> accessKeyId = default, DataFactoryElement<string> serviceUri = default, string encryptedCredential = default)
+        public static GoogleCloudStorageLinkedService GoogleCloudStorageLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> accessKeyId = default, DataFactorySecret secretAccessKey = default, DataFactoryElement<string> serviceUri = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4911,9 +4920,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
+        /// <param name="apiToken"> The api token for the Smartsheet source. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
         /// <returns> A new <see cref="Models.SmartsheetLinkedService"/> instance for mocking. </returns>
-        public static SmartsheetLinkedService SmartsheetLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, string encryptedCredential = default)
+        public static SmartsheetLinkedService SmartsheetLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactorySecret apiToken = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4936,9 +4947,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
+        /// <param name="apiToken"> The api token for the Dataworld source. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
         /// <returns> A new <see cref="Models.DataworldLinkedService"/> instance for mocking. </returns>
-        public static DataworldLinkedService DataworldLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, string encryptedCredential = default)
+        public static DataworldLinkedService DataworldLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactorySecret apiToken = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4961,9 +4974,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
+        /// <param name="apiToken"> The api token for the Asana source. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
         /// <returns> A new <see cref="Models.AsanaLinkedService"/> instance for mocking. </returns>
-        public static AsanaLinkedService AsanaLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, string encryptedCredential = default)
+        public static AsanaLinkedService AsanaLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactorySecret apiToken = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -4986,9 +5001,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
+        /// <param name="apiToken"> The api token for the GoogleSheets source. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
         /// <returns> A new <see cref="Models.GoogleSheetsLinkedService"/> instance for mocking. </returns>
-        public static GoogleSheetsLinkedService GoogleSheetsLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, string encryptedCredential = default)
+        public static GoogleSheetsLinkedService GoogleSheetsLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactorySecret apiToken = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5013,10 +5030,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="authenticationType"> The authentication type of S3. Allowed value: AccessKey (default) or TemporarySecurityCredentials. Type: string (or Expression with resultType string). </param>
         /// <param name="accessKeyId"> The access key identifier of the Amazon S3 Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </param>
+        /// <param name="secretAccessKey"> The secret access key of the Amazon S3 Identity and Access Management (IAM) user. </param>
         /// <param name="serviceUri"> This value specifies the endpoint to access with the S3 Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </param>
+        /// <param name="sessionToken"> The session token for the S3 temporary security credential. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.AmazonS3LinkedService"/> instance for mocking. </returns>
-        public static AmazonS3LinkedService AmazonS3LinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> authenticationType = default, DataFactoryElement<string> accessKeyId = default, DataFactoryElement<string> serviceUri = default, string encryptedCredential = default)
+        public static AmazonS3LinkedService AmazonS3LinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> authenticationType = default, DataFactoryElement<string> accessKeyId = default, DataFactorySecret secretAccessKey = default, DataFactoryElement<string> serviceUri = default, DataFactorySecret sessionToken = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5030,7 +5049,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                authenticationType is null ? default : new AmazonS3LinkedServiceTypeProperties(authenticationType, default, default, default, default));
+                authenticationType is null ? default : new AmazonS3LinkedServiceTypeProperties(
+                    authenticationType,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5068,10 +5094,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="server"> Host name of the SAP HANA server. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to be used to connect to the SAP HANA server. </param>
         /// <param name="userName"> Username to access the SAP HANA server. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password to access the SAP HANA server. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <param name="password"></param>
+        /// <param name="password0"></param>
         /// <returns> A new <see cref="Models.SapHanaLinkedService"/> instance for mocking. </returns>
-        public static SapHanaLinkedService SapHanaLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryElement<string> server = default, SapHanaAuthenticationType? authenticationType = default, DataFactoryElement<string> userName = default, string encryptedCredential = default, DataFactorySecret password = default)
+        public static SapHanaLinkedService SapHanaLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryElement<string> server = default, SapHanaAuthenticationType? authenticationType = default, DataFactoryElement<string> userName = default, DataFactorySecret password = default, string encryptedCredential = default, DataFactorySecret password0 = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5091,23 +5118,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                     authenticationType,
                     default,
                     default,
+                    default,
                     default),
-                password);
+                password0);
         }
 
         /// <param name="connectionString"> SAP HANA ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="server"> Host name of the SAP HANA server. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to be used to connect to the SAP HANA server. </param>
         /// <param name="userName"> Username to access the SAP HANA server. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password to access the SAP HANA server. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.SapHanaLinkedServiceProperties"/> instance for mocking. </returns>
-        public static SapHanaLinkedServiceProperties SapHanaLinkedServiceProperties(DataFactoryElement<string> connectionString = default, DataFactoryElement<string> server = default, SapHanaAuthenticationType? authenticationType = default, DataFactoryElement<string> userName = default, string encryptedCredential = default)
+        public static SapHanaLinkedServiceProperties SapHanaLinkedServiceProperties(DataFactoryElement<string> connectionString = default, DataFactoryElement<string> server = default, SapHanaAuthenticationType? authenticationType = default, DataFactoryElement<string> userName = default, DataFactorySecret password = default, string encryptedCredential = default)
         {
             return new SapHanaLinkedServiceProperties(
                 connectionString,
                 server,
                 authenticationType,
                 userName,
+                password,
                 encryptedCredential,
                 default);
         }
@@ -5121,14 +5151,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="endpoint"> The endpoint of the Amazon MWS server, (i.e. mws.amazonservices.com). </param>
         /// <param name="marketplaceId"> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </param>
         /// <param name="sellerId"> The Amazon seller ID. </param>
+        /// <param name="mwsAuthToken"> The Amazon MWS authentication token. </param>
         /// <param name="accessKeyId"> The access key id used to access data. </param>
+        /// <param name="secretKey"> The secret key used to access data. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="marketplaceId"/>, <paramref name="sellerId"/> or <paramref name="accessKeyId"/> is null. </exception>
         /// <returns> A new <see cref="Models.AmazonMwsLinkedService"/> instance for mocking. </returns>
-        public static AmazonMwsLinkedService AmazonMwsLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> endpoint = default, DataFactoryElement<string> marketplaceId = default, DataFactoryElement<string> sellerId = default, DataFactoryElement<string> accessKeyId = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
+        public static AmazonMwsLinkedService AmazonMwsLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> endpoint = default, DataFactoryElement<string> marketplaceId = default, DataFactoryElement<string> sellerId = default, DataFactorySecret mwsAuthToken = default, DataFactoryElement<string> accessKeyId = default, DataFactorySecret secretKey = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5206,10 +5238,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="projectId"> The default BigQuery project id to query against. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. </param>
         /// <param name="clientId"> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </param>
+        /// <param name="clientSecret"> The client secret of the google application used to acquire the refresh token. </param>
+        /// <param name="refreshToken"> The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication. </param>
+        /// <param name="keyFileContent"> The content of the .json key file that is used to authenticate the service account. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectId"/> is null. </exception>
         /// <returns> A new <see cref="Models.GoogleBigQueryV2LinkedService"/> instance for mocking. </returns>
-        public static GoogleBigQueryV2LinkedService GoogleBigQueryV2LinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> projectId = default, GoogleBigQueryV2AuthenticationType authenticationType = default, DataFactoryElement<string> clientId = default, string encryptedCredential = default)
+        public static GoogleBigQueryV2LinkedService GoogleBigQueryV2LinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> projectId = default, GoogleBigQueryV2AuthenticationType authenticationType = default, DataFactoryElement<string> clientId = default, DataFactorySecret clientSecret = default, DataFactorySecret refreshToken = default, DataFactorySecret keyFileContent = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5223,7 +5258,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                new GoogleBigQueryV2LinkedServiceTypeProperties(default, authenticationType, default, default, default));
+                new GoogleBigQueryV2LinkedServiceTypeProperties(
+                    default,
+                    authenticationType,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5233,13 +5276,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="clientId"> The client ID associated with your Hubspot application. </param>
+        /// <param name="clientSecret"> The client secret associated with your Hubspot application. </param>
+        /// <param name="accessToken"> The access token obtained when initially authenticating your OAuth integration. </param>
+        /// <param name="refreshToken"> The refresh token obtained when initially authenticating your OAuth integration. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> is null. </exception>
         /// <returns> A new <see cref="Models.HubspotLinkedService"/> instance for mocking. </returns>
-        public static HubspotLinkedService HubspotLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> clientId = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
+        public static HubspotLinkedService HubspotLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> clientId = default, DataFactorySecret clientSecret = default, DataFactorySecret accessToken = default, DataFactorySecret refreshToken = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5263,13 +5309,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="host"> The URL of the Magento instance. (i.e. 192.168.222.110/magento3). </param>
+        /// <param name="accessToken"> The access token from Magento. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         /// <returns> A new <see cref="Models.MagentoLinkedService"/> instance for mocking. </returns>
-        public static MagentoLinkedService MagentoLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
+        public static MagentoLinkedService MagentoLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactorySecret accessToken = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5320,13 +5367,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="endpoint"> The endpoint of the Marketo server. (i.e. 123-ABC-321.mktorest.com). </param>
         /// <param name="clientId"> The client Id of your Marketo service. </param>
+        /// <param name="clientSecret"> The client secret of your Marketo service. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="clientId"/> is null. </exception>
         /// <returns> A new <see cref="Models.MarketoLinkedService"/> instance for mocking. </returns>
-        public static MarketoLinkedService MarketoLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> endpoint = default, DataFactoryElement<string> clientId = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
+        public static MarketoLinkedService MarketoLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> endpoint = default, DataFactoryElement<string> clientId = default, DataFactorySecret clientSecret = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5351,13 +5399,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="host"> The URL of the PayPal instance. (i.e. api.sandbox.paypal.com). </param>
         /// <param name="clientId"> The client ID associated with your PayPal application. </param>
+        /// <param name="clientSecret"> The client secret associated with your PayPal application. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="clientId"/> is null. </exception>
         /// <returns> A new <see cref="Models.PaypalLinkedService"/> instance for mocking. </returns>
-        public static PaypalLinkedService PaypalLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactoryElement<string> clientId = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
+        public static PaypalLinkedService PaypalLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactoryElement<string> clientId = default, DataFactorySecret clientSecret = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5384,10 +5433,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="endpoint"> The endpoint of the QuickBooks server. (i.e. quickbooks.api.intuit.com). </param>
         /// <param name="companyId"> The company ID of the QuickBooks company to authorize. </param>
         /// <param name="consumerKey"> The consumer key for OAuth 2.0 authentication. </param>
+        /// <param name="consumerSecret"> The consumer secret for OAuth 2.0 authentication. </param>
+        /// <param name="accessToken"> The access token for OAuth 2.0 authentication. </param>
+        /// <param name="accessTokenSecret"> The access token secret is deprecated for OAuth 1.0 authentication. Only used for version 1.0. </param>
+        /// <param name="refreshToken"> The refresh token for OAuth 2.0 authentication. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Only used for version 1.0. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.QuickBooksLinkedService"/> instance for mocking. </returns>
-        public static QuickBooksLinkedService QuickBooksLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData connectionProperties = default, DataFactoryElement<string> endpoint = default, DataFactoryElement<string> companyId = default, DataFactoryElement<string> consumerKey = default, DataFactoryElement<bool> useEncryptedEndpoints = default, string encryptedCredential = default)
+        public static QuickBooksLinkedService QuickBooksLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData connectionProperties = default, DataFactoryElement<string> endpoint = default, DataFactoryElement<string> companyId = default, DataFactoryElement<string> consumerKey = default, DataFactorySecret consumerSecret = default, DataFactorySecret accessToken = default, DataFactorySecret accessTokenSecret = default, DataFactorySecret refreshToken = default, DataFactoryElement<bool> useEncryptedEndpoints = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5411,13 +5464,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="host"> The endpoint of the Shopify server. (i.e. mystore.myshopify.com). </param>
+        /// <param name="accessToken"> The API access token that can be used to access Shopify’s data. The token won't expire if it is offline mode. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         /// <returns> A new <see cref="Models.ShopifyLinkedService"/> instance for mocking. </returns>
-        public static ShopifyLinkedService ShopifyLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
+        public static ShopifyLinkedService ShopifyLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactorySecret accessToken = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5443,13 +5497,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionProperties"> Properties used to connect to Square. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="host"> The URL of the Square instance. (i.e. mystore.mysquare.com). </param>
         /// <param name="clientId"> The client ID associated with your Square application. </param>
+        /// <param name="clientSecret"> The client secret associated with your Square application. </param>
         /// <param name="redirectUri"> The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500). </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.SquareLinkedService"/> instance for mocking. </returns>
-        public static SquareLinkedService SquareLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData connectionProperties = default, DataFactoryElement<string> host = default, DataFactoryElement<string> clientId = default, DataFactoryElement<string> redirectUri = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
+        public static SquareLinkedService SquareLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData connectionProperties = default, DataFactoryElement<string> host = default, DataFactoryElement<string> clientId = default, DataFactorySecret clientSecret = default, DataFactoryElement<string> redirectUri = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5474,12 +5529,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="connectionProperties"> Properties used to connect to Xero. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="host"> The endpoint of the Xero server. (i.e. api.xero.com). </param>
+        /// <param name="consumerKey"> The consumer key associated with the Xero application. </param>
+        /// <param name="privateKey">
+        /// The private key from the .pem file that was generated for your Xero private application. You must include all the text from the .pem file, including the Unix line endings(
+        /// ).
+        /// </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.XeroLinkedService"/> instance for mocking. </returns>
-        public static XeroLinkedService XeroLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData connectionProperties = default, DataFactoryElement<string> host = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
+        public static XeroLinkedService XeroLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData connectionProperties = default, DataFactoryElement<string> host = default, DataFactorySecret consumerKey = default, DataFactorySecret privateKey = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5504,12 +5564,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="connectionProperties"> Properties used to connect to Zoho. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="endpoint"> The endpoint of the Zoho server. (i.e. crm.zoho.com/crm/private). </param>
+        /// <param name="accessToken"> The access token for Zoho authentication. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.ZohoLinkedService"/> instance for mocking. </returns>
-        public static ZohoLinkedService ZohoLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData connectionProperties = default, DataFactoryElement<string> endpoint = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
+        public static ZohoLinkedService ZohoLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData connectionProperties = default, DataFactoryElement<string> endpoint = default, DataFactorySecret accessToken = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5595,12 +5656,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="connectionProperties"> Properties used to connect to Salesforce Marketing Cloud. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="clientId"> The client ID associated with the Salesforce Marketing Cloud application. Type: string (or Expression with resultType string). </param>
+        /// <param name="clientSecret"> The client secret associated with the Salesforce Marketing Cloud application. Type: string (or Expression with resultType string). </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.SalesforceMarketingCloudLinkedService"/> instance for mocking. </returns>
-        public static SalesforceMarketingCloudLinkedService SalesforceMarketingCloudLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData connectionProperties = default, DataFactoryElement<string> clientId = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
+        public static SalesforceMarketingCloudLinkedService SalesforceMarketingCloudLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData connectionProperties = default, DataFactoryElement<string> clientId = default, DataFactorySecret clientSecret = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5635,13 +5697,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="endpoint"> The endpoint of the Responsys server. </param>
         /// <param name="clientId"> The client ID associated with the Responsys application. Type: string (or Expression with resultType string). </param>
+        /// <param name="clientSecret"> The client secret associated with the Responsys application. Type: string (or Expression with resultType string). </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="clientId"/> is null. </exception>
         /// <returns> A new <see cref="Models.ResponsysLinkedService"/> instance for mocking. </returns>
-        public static ResponsysLinkedService ResponsysLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> endpoint = default, DataFactoryElement<string> clientId = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
+        public static ResponsysLinkedService ResponsysLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> endpoint = default, DataFactoryElement<string> clientId = default, DataFactorySecret clientSecret = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5666,18 +5729,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="connectionProperties"> (Deprecated) Properties used to connect to GoogleAds. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="clientCustomerId"> The Client customer ID of the AdWords account that you want to fetch report data for. Type: string (or Expression with resultType string). </param>
+        /// <param name="developerToken"> The developer token associated with the manager account that you use to grant access to the AdWords API. </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
+        /// <param name="refreshToken"> The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication. </param>
         /// <param name="clientId"> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </param>
+        /// <param name="clientSecret"> The client secret of the google application used to acquire the refresh token. </param>
         /// <param name="email"> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </param>
         /// <param name="keyFilePath"> (Deprecated) The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </param>
         /// <param name="trustedCertPath"> (Deprecated) The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Type: string (or Expression with resultType string). </param>
         /// <param name="useSystemTrustStore"> (Deprecated) Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="privateKey"> The private key that is used to authenticate the service account email address and can only be used on self-hosted IR. </param>
         /// <param name="loginCustomerId"> The customer ID of the Google Ads Manager account through which you want to fetch report data of specific Customer. Type: string (or Expression with resultType string). </param>
         /// <param name="googleAdsApiVersion"> The Google Ads API major version such as v14. The supported major versions could be found on https://developers.google.com/google-ads/api/docs/release-notes. Type: string (or Expression with resultType string). </param>
         /// <param name="supportLegacyDataTypes"> Specifies whether to use the legacy data type mappings, which maps float, int32 and int64 from Google to string. Do not set this to true unless you want to keep backward compatibility with legacy driver's data type mappings. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.GoogleAdWordsLinkedService"/> instance for mocking. </returns>
-        public static GoogleAdWordsLinkedService GoogleAdWordsLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData connectionProperties = default, DataFactoryElement<string> clientCustomerId = default, GoogleAdWordsAuthenticationType? authenticationType = default, DataFactoryElement<string> clientId = default, DataFactoryElement<string> email = default, DataFactoryElement<string> keyFilePath = default, DataFactoryElement<string> trustedCertPath = default, DataFactoryElement<bool> useSystemTrustStore = default, DataFactoryElement<string> loginCustomerId = default, DataFactoryElement<string> googleAdsApiVersion = default, DataFactoryElement<bool> supportLegacyDataTypes = default, string encryptedCredential = default)
+        public static GoogleAdWordsLinkedService GoogleAdWordsLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, BinaryData connectionProperties = default, DataFactoryElement<string> clientCustomerId = default, DataFactorySecret developerToken = default, GoogleAdWordsAuthenticationType? authenticationType = default, DataFactorySecret refreshToken = default, DataFactoryElement<string> clientId = default, DataFactorySecret clientSecret = default, DataFactoryElement<string> email = default, DataFactoryElement<string> keyFilePath = default, DataFactoryElement<string> trustedCertPath = default, DataFactoryElement<bool> useSystemTrustStore = default, DataFactorySecret privateKey = default, DataFactoryElement<string> loginCustomerId = default, DataFactoryElement<string> googleAdsApiVersion = default, DataFactoryElement<bool> supportLegacyDataTypes = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5694,7 +5761,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 authenticationType is null && supportLegacyDataTypes is null ? default : new GoogleAdWordsLinkedServiceTypeProperties(
                     default,
                     default,
+                    default,
                     authenticationType,
+                    default,
+                    default,
+                    default,
                     default,
                     default,
                     default,
@@ -5714,13 +5785,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="functionAppUri"> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. Type: string (or Expression with resultType string). </param>
+        /// <param name="functionKey"> Function or Host key for Azure Function App. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="resourceId"> Allowed token audiences for azure function. Type: string (or Expression with resultType string). </param>
         /// <param name="authentication"> Type of authentication (Required to specify MSI) used to connect to AzureFunction. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionAppUri"/> is null. </exception>
         /// <returns> A new <see cref="Models.AzureFunctionLinkedService"/> instance for mocking. </returns>
-        public static AzureFunctionLinkedService AzureFunctionLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> functionAppUri = default, string encryptedCredential = default, DataFactoryCredentialReference credential = default, DataFactoryElement<string> resourceId = default, DataFactoryElement<string> authentication = default)
+        public static AzureFunctionLinkedService AzureFunctionLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> functionAppUri = default, DataFactorySecret functionKey = default, string encryptedCredential = default, DataFactoryCredentialReference credential = default, DataFactoryElement<string> resourceId = default, DataFactoryElement<string> authentication = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5801,10 +5873,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="environmentUri"> The URL of Salesforce instance. For example, 'https://[domain].my.salesforce.com'. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to be used to connect to the Salesforce. Currently, we only support OAuth2ClientCredentials, it is also the default value. </param>
         /// <param name="clientId"> The client Id for OAuth 2.0 Client Credentials Flow authentication of the Salesforce instance. Type: string (or Expression with resultType string). </param>
+        /// <param name="clientSecret"> The client secret for OAuth 2.0 Client Credentials Flow authentication of the Salesforce instance. </param>
         /// <param name="apiVersion"> The Salesforce API version used in ADF. The version must be larger than or equal to 47.0 which is required by Salesforce BULK API 2.0. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.SalesforceV2LinkedService"/> instance for mocking. </returns>
-        public static SalesforceV2LinkedService SalesforceV2LinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> environmentUri = default, DataFactoryElement<string> authenticationType = default, DataFactoryElement<string> clientId = default, DataFactoryElement<string> apiVersion = default, string encryptedCredential = default)
+        public static SalesforceV2LinkedService SalesforceV2LinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> environmentUri = default, DataFactoryElement<string> authenticationType = default, DataFactoryElement<string> clientId = default, DataFactorySecret clientSecret = default, DataFactoryElement<string> apiVersion = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5824,6 +5897,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     default,
                     default,
                     default,
+                    default,
                     default));
         }
 
@@ -5836,10 +5910,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="environmentUri"> The URL of Salesforce Service Cloud instance. For example, 'https://[domain].my.salesforce.com'. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to be used to connect to the Salesforce. Currently, we only support OAuth2ClientCredentials, it is also the default value. </param>
         /// <param name="clientId"> The client Id for OAuth 2.0 Client Credentials Flow authentication of the Salesforce instance. Type: string (or Expression with resultType string). </param>
+        /// <param name="clientSecret"> The client secret for OAuth 2.0 Client Credentials Flow authentication of the Salesforce instance. </param>
         /// <param name="apiVersion"> The Salesforce API version used in ADF. The version must be larger than or equal to 47.0 which is required by Salesforce BULK API 2.0. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <returns> A new <see cref="Models.SalesforceServiceCloudV2LinkedService"/> instance for mocking. </returns>
-        public static SalesforceServiceCloudV2LinkedService SalesforceServiceCloudV2LinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> environmentUri = default, DataFactoryElement<string> authenticationType = default, DataFactoryElement<string> clientId = default, DataFactoryElement<string> apiVersion = default, string encryptedCredential = default)
+        public static SalesforceServiceCloudV2LinkedService SalesforceServiceCloudV2LinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> environmentUri = default, DataFactoryElement<string> authenticationType = default, DataFactoryElement<string> clientId = default, DataFactorySecret clientSecret = default, DataFactoryElement<string> apiVersion = default, string encryptedCredential = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, EntityParameterSpecification>();
             annotations ??= new ChangeTrackingList<BinaryData>();
@@ -5856,6 +5931,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 authenticationType is null ? default : new SalesforceServiceCloudV2LinkedServiceTypeProperties(
                     default,
                     authenticationType,
+                    default,
                     default,
                     default,
                     default,
@@ -12338,14 +12414,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
+        /// <param name="storageLinkedServices"> Storage linked service references. </param>
         /// <param name="arguments"> User specified arguments to HDInsightActivity. </param>
         /// <param name="getDebugInfo"> Debug info option. </param>
         /// <param name="scriptPath"> Script path. Type: string (or Expression with resultType string). </param>
+        /// <param name="scriptLinkedService"> Script linked service reference. </param>
         /// <param name="defines"> Allows user to specify defines for Hive job request. </param>
         /// <param name="variables"> User specified arguments under hivevar namespace. </param>
         /// <param name="queryTimeout"> Query timeout value (in minutes).  Effective when the HDInsight cluster is with ESP (Enterprise Security Package). </param>
         /// <returns> A new <see cref="Models.HDInsightHiveActivity"/> instance for mocking. </returns>
-        public static HDInsightHiveActivity HDInsightHiveActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> scriptPath = default, IDictionary<string, BinaryData> defines = default, IDictionary<string, BinaryData> variables = default, int? queryTimeout = default)
+        public static HDInsightHiveActivity HDInsightHiveActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, IEnumerable<DataFactoryLinkedServiceReference> storageLinkedServices = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> scriptPath = default, DataFactoryLinkedServiceReference scriptLinkedService = default, IDictionary<string, BinaryData> defines = default, IDictionary<string, BinaryData> variables = default, int? queryTimeout = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -12374,12 +12452,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
+        /// <param name="storageLinkedServices"> Storage linked service references. </param>
         /// <param name="arguments"> User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array). </param>
         /// <param name="getDebugInfo"> Debug info option. </param>
         /// <param name="scriptPath"> Script path. Type: string (or Expression with resultType string). </param>
+        /// <param name="scriptLinkedService"> Script linked service reference. </param>
         /// <param name="defines"> Allows user to specify defines for Pig job request. </param>
         /// <returns> A new <see cref="Models.HDInsightPigActivity"/> instance for mocking. </returns>
-        public static HDInsightPigActivity HDInsightPigActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<IList<string>> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> scriptPath = default, IDictionary<string, BinaryData> defines = default)
+        public static HDInsightPigActivity HDInsightPigActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, IEnumerable<DataFactoryLinkedServiceReference> storageLinkedServices = default, DataFactoryElement<IList<string>> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> scriptPath = default, DataFactoryLinkedServiceReference scriptLinkedService = default, IDictionary<string, BinaryData> defines = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -12408,15 +12488,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
+        /// <param name="storageLinkedServices"> Storage linked service references. </param>
         /// <param name="arguments"> User specified arguments to HDInsightActivity. </param>
         /// <param name="getDebugInfo"> Debug info option. </param>
         /// <param name="className"> Class name. Type: string (or Expression with resultType string). </param>
         /// <param name="jarFilePath"> Jar path. Type: string (or Expression with resultType string). </param>
+        /// <param name="jarLinkedService"> Jar linked service reference. </param>
         /// <param name="jarLibs"> Jar libs. </param>
         /// <param name="defines"> Allows user to specify defines for the MapReduce job request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="className"/> or <paramref name="jarFilePath"/> is null. </exception>
         /// <returns> A new <see cref="Models.HDInsightMapReduceActivity"/> instance for mocking. </returns>
-        public static HDInsightMapReduceActivity HDInsightMapReduceActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> className = default, DataFactoryElement<string> jarFilePath = default, IEnumerable<BinaryData> jarLibs = default, IDictionary<string, BinaryData> defines = default)
+        public static HDInsightMapReduceActivity HDInsightMapReduceActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, IEnumerable<DataFactoryLinkedServiceReference> storageLinkedServices = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> className = default, DataFactoryElement<string> jarFilePath = default, DataFactoryLinkedServiceReference jarLinkedService = default, IEnumerable<BinaryData> jarLibs = default, IDictionary<string, BinaryData> defines = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -12445,6 +12527,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
+        /// <param name="storageLinkedServices"> Storage linked service references. </param>
         /// <param name="arguments"> User specified arguments to HDInsightActivity. </param>
         /// <param name="getDebugInfo"> Debug info option. </param>
         /// <param name="mapper"> Mapper executable name. Type: string (or Expression with resultType string). </param>
@@ -12452,12 +12535,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="input"> Input blob path. Type: string (or Expression with resultType string). </param>
         /// <param name="output"> Output blob path. Type: string (or Expression with resultType string). </param>
         /// <param name="filePaths"> Paths to streaming job files. Can be directories. </param>
+        /// <param name="fileLinkedService"> Linked service reference where the files are located. </param>
         /// <param name="combiner"> Combiner executable name. Type: string (or Expression with resultType string). </param>
         /// <param name="commandEnvironment"> Command line environment values. </param>
         /// <param name="defines"> Allows user to specify defines for streaming job request. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mapper"/>, <paramref name="reducer"/>, <paramref name="input"/>, <paramref name="output"/> or <paramref name="filePaths"/> is null. </exception>
         /// <returns> A new <see cref="Models.HDInsightStreamingActivity"/> instance for mocking. </returns>
-        public static HDInsightStreamingActivity HDInsightStreamingActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> mapper = default, DataFactoryElement<string> reducer = default, DataFactoryElement<string> input = default, DataFactoryElement<string> output = default, IEnumerable<BinaryData> filePaths = default, DataFactoryElement<string> combiner = default, IEnumerable<BinaryData> commandEnvironment = default, IDictionary<string, BinaryData> defines = default)
+        public static HDInsightStreamingActivity HDInsightStreamingActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, IEnumerable<DataFactoryLinkedServiceReference> storageLinkedServices = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> mapper = default, DataFactoryElement<string> reducer = default, DataFactoryElement<string> input = default, DataFactoryElement<string> output = default, IEnumerable<BinaryData> filePaths = default, DataFactoryLinkedServiceReference fileLinkedService = default, DataFactoryElement<string> combiner = default, IEnumerable<BinaryData> commandEnvironment = default, IDictionary<string, BinaryData> defines = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -12490,12 +12574,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="entryFilePath"> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </param>
         /// <param name="arguments"> The user-specified arguments to HDInsightSparkActivity. </param>
         /// <param name="getDebugInfo"> Debug info option. </param>
+        /// <param name="sparkJobLinkedService"> The storage linked service for uploading the entry file and dependencies, and for receiving logs. </param>
         /// <param name="className"> The application's Java/Spark main class. </param>
         /// <param name="proxyUser"> The user to impersonate that will execute the job. Type: string (or Expression with resultType string). </param>
         /// <param name="sparkConfig"> Spark configuration property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rootPath"/> or <paramref name="entryFilePath"/> is null. </exception>
         /// <returns> A new <see cref="Models.HDInsightSparkActivity"/> instance for mocking. </returns>
-        public static HDInsightSparkActivity HDInsightSparkActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> rootPath = default, DataFactoryElement<string> entryFilePath = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, string className = default, DataFactoryElement<string> proxyUser = default, IDictionary<string, BinaryData> sparkConfig = default)
+        public static HDInsightSparkActivity HDInsightSparkActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> rootPath = default, DataFactoryElement<string> entryFilePath = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryLinkedServiceReference sparkJobLinkedService = default, string className = default, DataFactoryElement<string> proxyUser = default, IDictionary<string, BinaryData> sparkConfig = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -12809,10 +12894,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="trainedModelName"> Name of the Trained Model module in the Web Service experiment to be updated. Type: string (or Expression with resultType string). </param>
+        /// <param name="trainedModelLinkedServiceName"> Name of Azure Storage linked service holding the .ilearner file that will be uploaded by the update operation. </param>
         /// <param name="trainedModelFilePath"> The relative file path in trainedModelLinkedService to represent the .ilearner file that will be uploaded by the update operation.  Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trainedModelName"/> or <paramref name="trainedModelFilePath"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="trainedModelName"/>, <paramref name="trainedModelLinkedServiceName"/> or <paramref name="trainedModelFilePath"/> is null. </exception>
         /// <returns> A new <see cref="Models.AzureMLUpdateResourceActivity"/> instance for mocking. </returns>
-        public static AzureMLUpdateResourceActivity AzureMLUpdateResourceActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> trainedModelName = default, DataFactoryElement<string> trainedModelFilePath = default)
+        public static AzureMLUpdateResourceActivity AzureMLUpdateResourceActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> trainedModelName = default, DataFactoryLinkedServiceReference trainedModelLinkedServiceName = default, DataFactoryElement<string> trainedModelFilePath = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -12842,14 +12928,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="scriptPath"> Case-sensitive path to folder that contains the U-SQL script. Type: string (or Expression with resultType string). </param>
+        /// <param name="scriptLinkedService"> Script linked service reference. </param>
         /// <param name="degreeOfParallelism"> The maximum number of nodes simultaneously used to run the job. Default value is 1. Type: integer (or Expression with resultType integer), minimum: 1. </param>
         /// <param name="priority"> Determines which jobs out of all that are queued should be selected to run first. The lower the number, the higher the priority. Default value is 1000. Type: integer (or Expression with resultType integer), minimum: 1. </param>
         /// <param name="parameters"> Parameters for U-SQL job request. </param>
         /// <param name="runtimeVersion"> Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string). </param>
         /// <param name="compilationMode"> Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scriptPath"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scriptPath"/> or <paramref name="scriptLinkedService"/> is null. </exception>
         /// <returns> A new <see cref="Models.DataLakeAnalyticsUsqlActivity"/> instance for mocking. </returns>
-        public static DataLakeAnalyticsUsqlActivity DataLakeAnalyticsUsqlActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> scriptPath = default, DataFactoryElement<int> degreeOfParallelism = default, DataFactoryElement<int> priority = default, IDictionary<string, BinaryData> parameters = default, DataFactoryElement<string> runtimeVersion = default, DataFactoryElement<string> compilationMode = default)
+        public static DataLakeAnalyticsUsqlActivity DataLakeAnalyticsUsqlActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> scriptPath = default, DataFactoryLinkedServiceReference scriptLinkedService = default, DataFactoryElement<int> degreeOfParallelism = default, DataFactoryElement<int> priority = default, IDictionary<string, BinaryData> parameters = default, DataFactoryElement<string> runtimeVersion = default, DataFactoryElement<string> compilationMode = default)
         {
             dependsOn ??= new ChangeTrackingList<PipelineActivityDependency>();
             userProperties ??= new ChangeTrackingList<PipelineActivityUserProperty>();
@@ -13921,6 +14008,30 @@ namespace Azure.ResourceManager.DataFactory.Models
                 state,
                 computeProperties is null && ssisProperties is null && customerVirtualNetworkSubnetId is null && interactiveQuery is null ? default : new ManagedIntegrationRuntimeTypeProperties(computeProperties, ssisProperties, new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId, default), interactiveQuery, default),
                 managedVirtualNetwork);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataFactoryBlobTrigger"/>. </summary>
+        /// <param name="description"> Trigger description. </param>
+        /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
+        /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="pipelines"> Pipelines that need to be started. </param>
+        /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
+        /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
+        /// <param name="linkedService"> The Azure Storage linked service reference. </param>
+        /// <returns> A new <see cref="Models.DataFactoryBlobTrigger"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataFactoryBlobTrigger DataFactoryBlobTrigger(string description = default, DataFactoryTriggerRuntimeState? runtimeState = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, IEnumerable<TriggerPipelineReference> pipelines = default, string folderPath = default, int maxConcurrency = 0, DataFactoryLinkedServiceReference linkedService = default)
+        {
+            return new DataFactoryBlobTrigger(
+                default,
+                description,
+                runtimeState,
+                (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                (pipelines ?? new ChangeTrackingList<TriggerPipelineReference>()).ToList(),
+                folderPath is null ? default : new BlobTriggerTypeProperties(folderPath, maxConcurrency, default, default),
+                linkedService);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedIntegrationRuntime"/>. </summary>

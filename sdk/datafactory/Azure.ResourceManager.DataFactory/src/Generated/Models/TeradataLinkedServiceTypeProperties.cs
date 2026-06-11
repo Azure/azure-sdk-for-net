@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="server"> Server name for connection. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> AuthenticationType to be used for connection. </param>
         /// <param name="username"> Username for authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password for authentication. </param>
         /// <param name="sslMode"> SSL mode for connection. Valid values including: “Disable”, “Allow”, “Prefer”, “Require”, “Verify-CA”, “Verify-Full”. Default value is “Verify-Full”. Type: string (or Expression with resultType string). Only applied for version 2.0. </param>
         /// <param name="portNumber"> The port numbers when connecting to server through non HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only used for V2. Only applied for version 2.0. </param>
         /// <param name="httpsPortNumber"> The port numbers when connecting to server through HTTPS/TLS connections. Type: integer (or Expression with resultType integer). Only applied for version 2.0. </param>
@@ -34,12 +35,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="maxRespSize"> The maximum size of the response buffer for SQL requests, in bytes. Type: integer. Only applied for version 2.0. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TeradataLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> server, TeradataAuthenticationType? authenticationType, DataFactoryElement<string> username, DataFactoryElement<string> sslMode, DataFactoryElement<int> portNumber, DataFactoryElement<int> httpsPortNumber, DataFactoryElement<int> useDataEncryption, DataFactoryElement<string> characterSet, DataFactoryElement<int> maxRespSize, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TeradataLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> server, TeradataAuthenticationType? authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> sslMode, DataFactoryElement<int> portNumber, DataFactoryElement<int> httpsPortNumber, DataFactoryElement<int> useDataEncryption, DataFactoryElement<string> characterSet, DataFactoryElement<int> maxRespSize, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             Server = server;
             AuthenticationType = authenticationType;
             Username = username;
+            Password = password;
             SslMode = sslMode;
             PortNumber = portNumber;
             HttpsPortNumber = httpsPortNumber;
@@ -61,6 +63,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }
+
+        /// <summary> Password for authentication. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> SSL mode for connection. Valid values including: “Disable”, “Allow”, “Prefer”, “Require”, “Verify-CA”, “Verify-Full”. Default value is “Verify-Full”. Type: string (or Expression with resultType string). Only applied for version 2.0. </summary>
         public DataFactoryElement<string> SslMode { get; set; }

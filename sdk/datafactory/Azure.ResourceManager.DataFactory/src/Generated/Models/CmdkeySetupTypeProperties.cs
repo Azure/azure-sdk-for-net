@@ -19,20 +19,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="CmdkeySetupTypeProperties"/>. </summary>
         /// <param name="targetName"> The server name of data source access. Type: string. </param>
         /// <param name="userName"> The user name of data source access. Type: string. </param>
-        public CmdkeySetupTypeProperties(DataFactoryElement<string> targetName, DataFactoryElement<string> userName)
+        /// <param name="password"> The password of data source access. </param>
+        public CmdkeySetupTypeProperties(DataFactoryElement<string> targetName, DataFactoryElement<string> userName, DataFactorySecret password)
         {
             TargetName = targetName;
             UserName = userName;
+            Password = password;
         }
 
         /// <summary> Initializes a new instance of <see cref="CmdkeySetupTypeProperties"/>. </summary>
         /// <param name="targetName"> The server name of data source access. Type: string. </param>
         /// <param name="userName"> The user name of data source access. Type: string. </param>
+        /// <param name="password"> The password of data source access. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CmdkeySetupTypeProperties(DataFactoryElement<string> targetName, DataFactoryElement<string> userName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CmdkeySetupTypeProperties(DataFactoryElement<string> targetName, DataFactoryElement<string> userName, DataFactorySecret password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetName = targetName;
             UserName = userName;
+            Password = password;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,5 +45,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The user name of data source access. Type: string. </summary>
         public DataFactoryElement<string> UserName { get; set; }
+
+        /// <summary> The password of data source access. </summary>
+        public DataFactorySecret Password { get; set; }
     }
 }

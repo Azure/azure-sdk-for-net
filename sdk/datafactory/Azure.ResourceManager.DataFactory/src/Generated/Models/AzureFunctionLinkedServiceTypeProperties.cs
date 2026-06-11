@@ -30,14 +30,16 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureFunctionLinkedServiceTypeProperties"/>. </summary>
         /// <param name="functionAppUri"> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. Type: string (or Expression with resultType string). </param>
+        /// <param name="functionKey"> Function or Host key for Azure Function App. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="resourceId"> Allowed token audiences for azure function. Type: string (or Expression with resultType string). </param>
         /// <param name="authentication"> Type of authentication (Required to specify MSI) used to connect to AzureFunction. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFunctionLinkedServiceTypeProperties(DataFactoryElement<string> functionAppUri, string encryptedCredential, DataFactoryCredentialReference credential, DataFactoryElement<string> resourceId, DataFactoryElement<string> authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureFunctionLinkedServiceTypeProperties(DataFactoryElement<string> functionAppUri, DataFactorySecret functionKey, string encryptedCredential, DataFactoryCredentialReference credential, DataFactoryElement<string> resourceId, DataFactoryElement<string> authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FunctionAppUri = functionAppUri;
+            FunctionKey = functionKey;
             EncryptedCredential = encryptedCredential;
             Credential = credential;
             ResourceId = resourceId;
@@ -47,6 +49,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The endpoint of the Azure Function App. URL will be in the format https://&lt;accountName&gt;.azurewebsites.net. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> FunctionAppUri { get; set; }
+
+        /// <summary> Function or Host key for Azure Function App. </summary>
+        public DataFactorySecret FunctionKey { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

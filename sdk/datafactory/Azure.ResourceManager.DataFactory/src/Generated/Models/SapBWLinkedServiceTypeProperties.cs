@@ -32,14 +32,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="systemNumber"> System number of the BW system. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </param>
         /// <param name="clientId"> Client ID of the client on the BW system. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </param>
         /// <param name="userName"> Username to access the SAP BW server. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password to access the SAP BW server. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SapBWLinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId, DataFactoryElement<string> userName, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SapBWLinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Server = server;
             SystemNumber = systemNumber;
             ClientId = clientId;
             UserName = userName;
+            Password = password;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -55,6 +57,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Username to access the SAP BW server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
+
+        /// <summary> Password to access the SAP BW server. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

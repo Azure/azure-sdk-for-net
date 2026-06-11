@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (DataFactoryLinkedServiceReference item in LinkedServices)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue<DataFactoryLinkedServiceReference>(item, options);
                 }
                 writer.WriteEndArray();

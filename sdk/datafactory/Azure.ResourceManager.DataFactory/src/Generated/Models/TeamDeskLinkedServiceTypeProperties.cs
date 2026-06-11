@@ -29,13 +29,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="authenticationType"> The authentication type to use. </param>
         /// <param name="uri"> The url to connect TeamDesk source. Type: string (or Expression with resultType string). </param>
         /// <param name="userName"> The username of the TeamDesk source. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> The password of the TeamDesk source. </param>
+        /// <param name="apiToken"> The api token for the TeamDesk source. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TeamDeskLinkedServiceTypeProperties(TeamDeskAuthenticationType authenticationType, DataFactoryElement<string> uri, DataFactoryElement<string> userName, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TeamDeskLinkedServiceTypeProperties(TeamDeskAuthenticationType authenticationType, DataFactoryElement<string> uri, DataFactoryElement<string> userName, DataFactorySecret password, DataFactorySecret apiToken, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthenticationType = authenticationType;
             Uri = uri;
             UserName = userName;
+            Password = password;
+            ApiToken = apiToken;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,6 +52,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The username of the TeamDesk source. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
+
+        /// <summary> The password of the TeamDesk source. </summary>
+        public DataFactorySecret Password { get; set; }
+
+        /// <summary> The api token for the TeamDesk source. </summary>
+        public DataFactorySecret ApiToken { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

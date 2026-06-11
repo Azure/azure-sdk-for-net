@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("command"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(Command, options);
+            if (Optional.IsDefined(ResourceLinkedService))
+            {
+                writer.WritePropertyName("resourceLinkedService"u8);
+                writer.WriteObjectValue<DataFactoryLinkedServiceReference>(ResourceLinkedService, options);
+            }
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
@@ -174,6 +179,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> command = default;
+            DataFactoryLinkedServiceReference resourceLinkedService = default;
             DataFactoryElement<string> folderPath = default;
             CustomActivityReferenceObject referenceObjects = default;
             IDictionary<string, BinaryData> extendedProperties = default;
@@ -185,6 +191,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("command"u8))
                 {
                     command = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("resourceLinkedService"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("folderPath"u8))
@@ -247,6 +262,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new CustomActivityTypeProperties(
                 command,
+                resourceLinkedService,
                 folderPath,
                 referenceObjects,
                 extendedProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),

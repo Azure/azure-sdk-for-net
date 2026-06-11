@@ -99,6 +99,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(PackageCollection))
             {
                 writer.WritePropertyName("packageCollection"u8);
@@ -161,6 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> database = default;
             Db2AuthenticationType? authenticationType = default;
             DataFactoryElement<string> username = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> packageCollection = default;
             DataFactoryElement<string> certificateCommonName = default;
             string encryptedCredential = default;
@@ -208,6 +214,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadUsername(prop, ref username);
                     continue;
                 }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("packageCollection"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -242,6 +257,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 database,
                 authenticationType,
                 username,
+                password,
                 packageCollection,
                 certificateCommonName,
                 encryptedCredential,

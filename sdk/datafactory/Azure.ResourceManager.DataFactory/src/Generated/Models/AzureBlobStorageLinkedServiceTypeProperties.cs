@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sasUri"> SAS URI of the Azure Blob Storage resource. It is mutually exclusive with connectionString, serviceEndpoint property. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="serviceEndpoint"> Blob service endpoint of the Azure Blob Storage resource. It is mutually exclusive with connectionString, sasUri property. </param>
         /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against Azure SQL Data Warehouse. </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
         /// <param name="accountKind"> Specify the kind of your storage account. Allowed values are: Storage (general purpose v1), StorageV2 (general purpose v2), BlobStorage, or BlockBlobStorage. Type: string (or Expression with resultType string). </param>
@@ -34,12 +35,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="authenticationType"> The type used for authentication. Type: string. </param>
         /// <param name="containerUri"> Container uri of the Azure Blob Storage resource only support for anonymous access. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureBlobStorageLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> sasUri, DataFactoryElement<string> serviceEndpoint, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, DataFactoryElement<string> accountKind, string encryptedCredential, DataFactoryCredentialReference credential, AzureStorageAuthenticationType? authenticationType, DataFactoryElement<string> containerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureBlobStorageLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> sasUri, DataFactoryElement<string> serviceEndpoint, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, DataFactoryElement<string> accountKind, string encryptedCredential, DataFactoryCredentialReference credential, AzureStorageAuthenticationType? authenticationType, DataFactoryElement<string> containerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             SasUri = sasUri;
             ServiceEndpoint = serviceEndpoint;
             ServicePrincipalId = servicePrincipalId;
+            ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             AzureCloudType = azureCloudType;
             AccountKind = accountKind;
@@ -61,6 +63,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
+
+        /// <summary> The key of the service principal used to authenticate against Azure SQL Data Warehouse. </summary>
+        public DataFactorySecret ServicePrincipalKey { get; set; }
 
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Tenant { get; set; }

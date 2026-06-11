@@ -31,21 +31,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="workspaceId"> The ID of Microsoft Fabric workspace. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to use. </param>
         /// <param name="servicePrincipalId"> The ID of the application used to authenticate against Microsoft Fabric Warehouse. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey"> The Key of the application used to authenticate against Microsoft Fabric Warehouse. </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalCredential"> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WarehouseLinkedServiceTypeProperties(DataFactoryElement<string> artifactId, DataFactoryElement<string> endpoint, DataFactoryElement<string> workspaceId, WarehouseAuthenticationType? authenticationType, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> tenant, string encryptedCredential, DataFactoryElement<string> servicePrincipalCredentialType, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WarehouseLinkedServiceTypeProperties(DataFactoryElement<string> artifactId, DataFactoryElement<string> endpoint, DataFactoryElement<string> workspaceId, WarehouseAuthenticationType? authenticationType, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, string encryptedCredential, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecret servicePrincipalCredential, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ArtifactId = artifactId;
             Endpoint = endpoint;
             WorkspaceId = workspaceId;
             AuthenticationType = authenticationType;
             ServicePrincipalId = servicePrincipalId;
+            ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             EncryptedCredential = encryptedCredential;
             ServicePrincipalCredentialType = servicePrincipalCredentialType;
+            ServicePrincipalCredential = servicePrincipalCredential;
             Credential = credential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -65,6 +69,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The ID of the application used to authenticate against Microsoft Fabric Warehouse. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
 
+        /// <summary> The Key of the application used to authenticate against Microsoft Fabric Warehouse. </summary>
+        public DataFactorySecret ServicePrincipalKey { get; set; }
+
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Tenant { get; set; }
 
@@ -73,6 +80,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
+
+        /// <summary> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </summary>
+        public DataFactorySecret ServicePrincipalCredential { get; set; }
 
         /// <summary> The credential reference containing authentication information. </summary>
         public DataFactoryCredentialReference Credential { get; set; }

@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("database"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             }
+            if (Optional.IsDefined(AccountKey))
+            {
+                writer.WritePropertyName("accountKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(AccountKey, options);
+            }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
@@ -98,6 +103,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalCredentialType, options);
+            }
+            if (Optional.IsDefined(ServicePrincipalCredential))
+            {
+                writer.WritePropertyName("servicePrincipalCredential"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalCredential, options);
             }
             if (Optional.IsDefined(Tenant))
             {
@@ -169,8 +179,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> connectionString = default;
             DataFactoryElement<string> accountEndpoint = default;
             DataFactoryElement<string> database = default;
+            DataFactorySecret accountKey = default;
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactoryElement<string> servicePrincipalCredentialType = default;
+            DataFactorySecret servicePrincipalCredential = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryElement<string> azureCloudType = default;
             CosmosDBConnectionMode? connectionMode = default;
@@ -206,6 +218,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     database = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("accountKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accountKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
                     ReadServicePrincipalId(prop, ref servicePrincipalId);
@@ -218,6 +239,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     servicePrincipalCredentialType = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("servicePrincipalCredential"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servicePrincipalCredential = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tenant"u8))
@@ -270,8 +300,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 connectionString,
                 accountEndpoint,
                 database,
+                accountKey,
                 servicePrincipalId,
                 servicePrincipalCredentialType,
+                servicePrincipalCredential,
                 tenant,
                 azureCloudType,
                 connectionMode,

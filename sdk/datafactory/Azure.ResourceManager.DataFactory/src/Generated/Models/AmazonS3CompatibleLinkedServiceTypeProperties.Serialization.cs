@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("accessKeyId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(AccessKeyId, options);
             }
+            if (Optional.IsDefined(SecretAccessKey))
+            {
+                writer.WritePropertyName("secretAccessKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(SecretAccessKey, options);
+            }
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
@@ -138,6 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> accessKeyId = default;
+            DataFactorySecret secretAccessKey = default;
             DataFactoryElement<string> serviceUri = default;
             DataFactoryElement<bool> forcePathStyle = default;
             string encryptedCredential = default;
@@ -151,6 +157,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     accessKeyId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("secretAccessKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    secretAccessKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("serviceUrl"u8))
@@ -181,7 +196,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AmazonS3CompatibleLinkedServiceTypeProperties(accessKeyId, serviceUri, forcePathStyle, encryptedCredential, additionalBinaryDataProperties);
+            return new AmazonS3CompatibleLinkedServiceTypeProperties(
+                accessKeyId,
+                secretAccessKey,
+                serviceUri,
+                forcePathStyle,
+                encryptedCredential,
+                additionalBinaryDataProperties);
         }
     }
 }

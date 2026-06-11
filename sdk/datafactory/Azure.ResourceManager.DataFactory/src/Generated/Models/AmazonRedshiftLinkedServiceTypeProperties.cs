@@ -28,14 +28,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="AmazonRedshiftLinkedServiceTypeProperties"/>. </summary>
         /// <param name="server"> The name of the Amazon Redshift server. Type: string (or Expression with resultType string). </param>
         /// <param name="username"> The username of the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> The password of the Amazon Redshift source. </param>
         /// <param name="database"> The database name of the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
         /// <param name="port"> The TCP port number that the Amazon Redshift server uses to listen for client connections. The default value is 5439. Type: integer (or Expression with resultType integer). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AmazonRedshiftLinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<string> username, DataFactoryElement<string> database, DataFactoryElement<int> port, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AmazonRedshiftLinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> database, DataFactoryElement<int> port, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Server = server;
             Username = username;
+            Password = password;
             Database = database;
             Port = port;
             EncryptedCredential = encryptedCredential;
@@ -47,6 +49,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The username of the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }
+
+        /// <summary> The password of the Amazon Redshift source. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> The database name of the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Database { get; set; }

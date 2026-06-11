@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="port"> The TCP port that the Impala server uses to listen for client connections. The default value is 21050. </param>
         /// <param name="authenticationType"> The authentication type to use. </param>
         /// <param name="username"> The user name used to access the Impala server. The default value is anonymous when using SASLUsername. </param>
+        /// <param name="password"> The password corresponding to the user name when using UsernameAndPassword. </param>
         /// <param name="thriftTransportProtocol"> The transport protocol to use in the Thrift layer (for V2 only). Default value is Binary. </param>
         /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </param>
         /// <param name="enableServerCertificateValidation"> Specify whether to enable server SSL certificate validation when you connect.Always use System Trust Store (for V2 only). The default value is true. </param>
@@ -39,12 +40,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImpalaLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<int> port, ImpalaAuthenticationType authenticationType, DataFactoryElement<string> username, ImpalaThriftTransportProtocol? thriftTransportProtocol, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> enableServerCertificateValidation, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImpalaLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<int> port, ImpalaAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecret password, ImpalaThriftTransportProtocol? thriftTransportProtocol, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> enableServerCertificateValidation, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             Port = port;
             AuthenticationType = authenticationType;
             Username = username;
+            Password = password;
             ThriftTransportProtocol = thriftTransportProtocol;
             EnableSsl = enableSsl;
             EnableServerCertificateValidation = enableServerCertificateValidation;
@@ -67,6 +69,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The user name used to access the Impala server. The default value is anonymous when using SASLUsername. </summary>
         public DataFactoryElement<string> Username { get; set; }
+
+        /// <summary> The password corresponding to the user name when using UsernameAndPassword. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> The transport protocol to use in the Thrift layer (for V2 only). Default value is Binary. </summary>
         public ImpalaThriftTransportProtocol? ThriftTransportProtocol { get; set; }

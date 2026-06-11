@@ -88,6 +88,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
+            if (Optional.IsDefined(ApiToken))
+            {
+                writer.WritePropertyName("apiToken"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ApiToken, options);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -138,6 +148,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             TeamDeskAuthenticationType authenticationType = default;
             DataFactoryElement<string> uri = default;
             DataFactoryElement<string> userName = default;
+            DataFactorySecret password = default;
+            DataFactorySecret apiToken = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -157,6 +169,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadUserName(prop, ref userName);
                     continue;
                 }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("apiToken"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    apiToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("encryptedCredential"u8))
                 {
                     encryptedCredential = prop.Value.GetString();
@@ -167,7 +197,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TeamDeskLinkedServiceTypeProperties(authenticationType, uri, userName, encryptedCredential, additionalBinaryDataProperties);
+            return new TeamDeskLinkedServiceTypeProperties(
+                authenticationType,
+                uri,
+                userName,
+                password,
+                apiToken,
+                encryptedCredential,
+                additionalBinaryDataProperties);
         }
     }
 }

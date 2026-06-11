@@ -92,6 +92,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("host"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(Host, options);
             }
+            if (Optional.IsDefined(ConsumerKey))
+            {
+                writer.WritePropertyName("consumerKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ConsumerKey, options);
+            }
+            if (Optional.IsDefined(PrivateKey))
+            {
+                writer.WritePropertyName("privateKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(PrivateKey, options);
+            }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
@@ -156,6 +166,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             BinaryData connectionProperties = default;
             DataFactoryElement<string> host = default;
+            DataFactorySecret consumerKey = default;
+            DataFactorySecret privateKey = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             DataFactoryElement<bool> useHostVerification = default;
             DataFactoryElement<bool> usePeerVerification = default;
@@ -179,6 +191,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     host = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("consumerKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    consumerKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("privateKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("useEncryptedEndpoints"u8))
@@ -221,6 +251,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new XeroLinkedServiceTypeProperties(
                 connectionProperties,
                 host,
+                consumerKey,
+                privateKey,
                 useEncryptedEndpoints,
                 useHostVerification,
                 usePeerVerification,

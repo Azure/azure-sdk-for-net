@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("servicePrincipalId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
+            if (Optional.IsDefined(ServicePrincipalKey))
+            {
+                writer.WritePropertyName("servicePrincipalKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalKey, options);
+            }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
@@ -112,6 +117,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalCredentialType, options);
+            }
+            if (Optional.IsDefined(ServicePrincipalCredential))
+            {
+                writer.WritePropertyName("servicePrincipalCredential"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalCredential, options);
             }
             if (Optional.IsDefined(Credential))
             {
@@ -165,9 +175,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> workspaceId = default;
             WarehouseAuthenticationType? authenticationType = default;
             DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecret servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             string encryptedCredential = default;
             DataFactoryElement<string> servicePrincipalCredentialType = default;
+            DataFactorySecret servicePrincipalCredential = default;
             DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -205,6 +217,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadServicePrincipalId(prop, ref servicePrincipalId);
                     continue;
                 }
+                if (prop.NameEquals("servicePrincipalKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servicePrincipalKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("tenant"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -228,6 +249,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     servicePrincipalCredentialType = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("servicePrincipalCredential"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servicePrincipalCredential = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("credential"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -248,9 +278,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 workspaceId,
                 authenticationType,
                 servicePrincipalId,
+                servicePrincipalKey,
                 tenant,
                 encryptedCredential,
                 servicePrincipalCredentialType,
+                servicePrincipalCredential,
                 credential,
                 additionalBinaryDataProperties);
         }

@@ -27,17 +27,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="database"> Database name for connection. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> AuthenticationType to be used for connection. It is mutually exclusive with connectionString property. </param>
         /// <param name="username"> Username for authentication. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password for authentication. </param>
         /// <param name="packageCollection"> Under where packages are created when querying database. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
         /// <param name="certificateCommonName"> Certificate Common Name when TLS is enabled. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. It is mutually exclusive with connectionString property. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Db2LinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<string> database, Db2AuthenticationType? authenticationType, DataFactoryElement<string> username, DataFactoryElement<string> packageCollection, DataFactoryElement<string> certificateCommonName, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Db2LinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> server, DataFactoryElement<string> database, Db2AuthenticationType? authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> packageCollection, DataFactoryElement<string> certificateCommonName, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             Server = server;
             Database = database;
             AuthenticationType = authenticationType;
             Username = username;
+            Password = password;
             PackageCollection = packageCollection;
             CertificateCommonName = certificateCommonName;
             EncryptedCredential = encryptedCredential;
@@ -58,6 +60,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Username for authentication. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }
+
+        /// <summary> Password for authentication. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> Under where packages are created when querying database. It is mutually exclusive with connectionString property. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PackageCollection { get; set; }

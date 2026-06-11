@@ -82,10 +82,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("accountName"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(AccountName, options);
+            if (Optional.IsDefined(AccessKey))
+            {
+                writer.WritePropertyName("accessKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(AccessKey, options);
+            }
             writer.WritePropertyName("batchUri"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(BatchUri, options);
             writer.WritePropertyName("poolName"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(PoolName, options);
+            writer.WritePropertyName("linkedServiceName"u8);
+            writer.WriteObjectValue<DataFactoryLinkedServiceReference>(LinkedServiceName, options);
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -139,8 +146,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> accountName = default;
+            DataFactorySecret accessKey = default;
             DataFactoryElement<string> batchUri = default;
             DataFactoryElement<string> poolName = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             string encryptedCredential = default;
             DataFactoryCredentialReference credential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -151,6 +160,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     accountName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("accessKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accessKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("batchUri"u8))
                 {
                     batchUri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
@@ -159,6 +177,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("poolName"u8))
                 {
                     poolName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("linkedServiceName"u8))
+                {
+                    linkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -182,8 +205,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new AzureBatchLinkedServiceTypeProperties(
                 accountName,
+                accessKey,
                 batchUri,
                 poolName,
+                linkedServiceName,
                 encryptedCredential,
                 credential,
                 additionalBinaryDataProperties);

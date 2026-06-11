@@ -75,6 +75,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(HDInsightHiveActivityTypeProperties)} does not support writing '{format}' format.");
             }
+            if (Optional.IsCollectionDefined(StorageLinkedServices))
+            {
+                writer.WritePropertyName("storageLinkedServices"u8);
+                writer.WriteStartArray();
+                foreach (DataFactoryLinkedServiceReference item in StorageLinkedServices)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue<DataFactoryLinkedServiceReference>(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
@@ -106,6 +121,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("scriptPath"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ScriptPath, options);
+            }
+            if (Optional.IsDefined(ScriptLinkedService))
+            {
+                writer.WritePropertyName("scriptLinkedService"u8);
+                writer.WriteObjectValue<DataFactoryLinkedServiceReference>(ScriptLinkedService, options);
             }
             if (Optional.IsCollectionDefined(Defines))
             {
@@ -200,15 +220,38 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
+            IList<DataFactoryLinkedServiceReference> storageLinkedServices = default;
             IList<BinaryData> arguments = default;
             HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default;
             DataFactoryElement<string> scriptPath = default;
+            DataFactoryLinkedServiceReference scriptLinkedService = default;
             IDictionary<string, BinaryData> defines = default;
             IDictionary<string, BinaryData> variables = default;
             int? queryTimeout = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("storageLinkedServices"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default));
+                        }
+                    }
+                    storageLinkedServices = array;
+                    continue;
+                }
                 if (prop.NameEquals("arguments"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -246,6 +289,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     scriptPath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("scriptLinkedService"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scriptLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("defines"u8))
@@ -305,9 +357,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             return new HDInsightHiveActivityTypeProperties(
+                storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
                 arguments ?? new ChangeTrackingList<BinaryData>(),
                 getDebugInfo,
                 scriptPath,
+                scriptLinkedService,
                 defines ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 variables ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 queryTimeout,

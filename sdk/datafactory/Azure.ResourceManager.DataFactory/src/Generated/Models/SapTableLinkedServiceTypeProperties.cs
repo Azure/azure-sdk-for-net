@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="language"> Language of the SAP system where the table is located. The default value is EN. Type: string (or Expression with resultType string). </param>
         /// <param name="systemId"> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </param>
         /// <param name="userName"> Username to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password to access the SAP server where the table is located. </param>
         /// <param name="messageServer"> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </param>
         /// <param name="messageServerService"> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </param>
         /// <param name="sncFlag"> SNC activation flag (Boolean) to access the SAP server where the table is located. Type: boolean (or Expression with resultType boolean). </param>
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="logonGroup"> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SapTableLinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId, DataFactoryElement<string> language, DataFactoryElement<string> systemId, DataFactoryElement<string> userName, DataFactoryElement<string> messageServer, DataFactoryElement<string> messageServerService, DataFactoryElement<bool> sncFlag, DataFactoryElement<string> sncMyName, DataFactoryElement<string> sncPartnerName, DataFactoryElement<string> sncLibraryPath, DataFactoryElement<string> sncQop, DataFactoryElement<string> logonGroup, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SapTableLinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId, DataFactoryElement<string> language, DataFactoryElement<string> systemId, DataFactoryElement<string> userName, DataFactorySecret password, DataFactoryElement<string> messageServer, DataFactoryElement<string> messageServerService, DataFactoryElement<bool> sncFlag, DataFactoryElement<string> sncMyName, DataFactoryElement<string> sncPartnerName, DataFactoryElement<string> sncLibraryPath, DataFactoryElement<string> sncQop, DataFactoryElement<string> logonGroup, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Server = server;
             SystemNumber = systemNumber;
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Language = language;
             SystemId = systemId;
             UserName = userName;
+            Password = password;
             MessageServer = messageServer;
             MessageServerService = messageServerService;
             SncFlag = sncFlag;
@@ -75,6 +77,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Username to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
+
+        /// <summary> Password to access the SAP server where the table is located. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> MessageServer { get; set; }

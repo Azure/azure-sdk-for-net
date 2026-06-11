@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             writer.WritePropertyName("database"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             if (Optional.IsDefined(Port))
@@ -142,6 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> server = default;
             DataFactoryElement<string> username = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> database = default;
             DataFactoryElement<int> port = default;
             string encryptedCredential = default;
@@ -156,6 +162,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("username"u8))
                 {
                     ReadUsername(prop, ref username);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("database"u8))
@@ -185,6 +200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AmazonRedshiftLinkedServiceTypeProperties(
                 server,
                 username,
+                password,
                 database,
                 port,
                 encryptedCredential,

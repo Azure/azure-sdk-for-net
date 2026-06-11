@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Uri = uri;
             RequestHeaders = new ChangeTrackingDictionary<string, BinaryData>();
             Datasets = new ChangeTrackingList<DatasetReference>();
+            LinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebActivityTypeProperties"/>. </summary>
@@ -39,9 +40,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="httpRequestTimeout"> Timeout for the HTTP request to get a response. Format is in TimeSpan (hh:mm:ss). This value is the timeout to get a response, not the activity timeout. The default value is 00:01:00 (1 minute). The range is from 1 to 10 minutes. </param>
         /// <param name="turnOffAsync"> Option to disable invoking HTTP GET on location given in response header of a HTTP 202 Response. If set true, it stops invoking HTTP GET on http location given in response header. If set false then continues to invoke HTTP GET call on location given in http response headers. </param>
         /// <param name="datasets"> List of datasets passed to web endpoint. </param>
+        /// <param name="linkedServices"> List of linked services passed to web endpoint. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebActivityTypeProperties(WebActivityMethod @method, DataFactoryElement<string> uri, IDictionary<string, BinaryData> requestHeaders, DataFactoryElement<string> body, WebActivityAuthentication authentication, bool? disableCertValidation, DataFactoryElement<string> httpRequestTimeout, bool? turnOffAsync, IList<DatasetReference> datasets, IntegrationRuntimeReference connectVia, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebActivityTypeProperties(WebActivityMethod @method, DataFactoryElement<string> uri, IDictionary<string, BinaryData> requestHeaders, DataFactoryElement<string> body, WebActivityAuthentication authentication, bool? disableCertValidation, DataFactoryElement<string> httpRequestTimeout, bool? turnOffAsync, IList<DatasetReference> datasets, IList<DataFactoryLinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Method = @method;
             Uri = uri;
@@ -52,6 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             HttpRequestTimeout = httpRequestTimeout;
             TurnOffAsync = turnOffAsync;
             Datasets = datasets;
+            LinkedServices = linkedServices;
             ConnectVia = connectVia;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -107,6 +110,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> List of datasets passed to web endpoint. </summary>
         public IList<DatasetReference> Datasets { get; } = new ChangeTrackingList<DatasetReference>();
+
+        /// <summary> List of linked services passed to web endpoint. </summary>
+        public IList<DataFactoryLinkedServiceReference> LinkedServices { get; } = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
 
         /// <summary> The integration runtime reference. </summary>
         public IntegrationRuntimeReference ConnectVia { get; set; }

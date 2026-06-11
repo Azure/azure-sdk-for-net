@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -150,6 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> connectionString = default;
             AmazonRdsForSqlAuthenticationType? authenticationType = default;
             DataFactoryElement<string> userName = default;
+            DataFactorySecret password = default;
             string encryptedCredential = default;
             SqlAlwaysEncryptedProperties alwaysEncryptedSettings = default;
             foreach (var prop in element.EnumerateObject())
@@ -344,6 +350,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadUserName(prop, ref userName);
                     continue;
                 }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("encryptedCredential"u8))
                 {
                     encryptedCredential = prop.Value.GetString();
@@ -387,6 +402,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 connectionString,
                 authenticationType,
                 userName,
+                password,
                 encryptedCredential,
                 alwaysEncryptedSettings);
         }

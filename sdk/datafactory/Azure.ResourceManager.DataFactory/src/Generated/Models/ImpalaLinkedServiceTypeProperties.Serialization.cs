@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(ThriftTransportProtocol))
             {
                 writer.WritePropertyName("thriftTransportProtocol"u8);
@@ -179,6 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<int> port = default;
             ImpalaAuthenticationType authenticationType = default;
             DataFactoryElement<string> username = default;
+            DataFactorySecret password = default;
             ImpalaThriftTransportProtocol? thriftTransportProtocol = default;
             DataFactoryElement<bool> enableSsl = default;
             DataFactoryElement<bool> enableServerCertificateValidation = default;
@@ -212,6 +218,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("username"u8))
                 {
                     ReadUsername(prop, ref username);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("thriftTransportProtocol"u8))
@@ -292,6 +307,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 port,
                 authenticationType,
                 username,
+                password,
                 thriftTransportProtocol,
                 enableSsl,
                 enableServerCertificateValidation,

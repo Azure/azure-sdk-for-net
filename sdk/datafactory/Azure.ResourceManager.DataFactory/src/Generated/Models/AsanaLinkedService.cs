@@ -14,12 +14,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AsanaLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="AsanaLinkedService"/>. </summary>
-        public AsanaLinkedService() : base("Asana")
-        {
-
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AsanaLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>

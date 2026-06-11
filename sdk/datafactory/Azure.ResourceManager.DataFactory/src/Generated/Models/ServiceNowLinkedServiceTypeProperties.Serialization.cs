@@ -88,10 +88,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ClientId, options);
+            }
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WritePropertyName("clientSecret"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ClientSecret, options);
             }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
@@ -158,7 +168,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> endpoint = default;
             ServiceNowAuthenticationType authenticationType = default;
             DataFactoryElement<string> username = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> clientId = default;
+            DataFactorySecret clientSecret = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             DataFactoryElement<bool> useHostVerification = default;
             DataFactoryElement<bool> usePeerVerification = default;
@@ -181,6 +193,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadUsername(prop, ref username);
                     continue;
                 }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("clientId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -188,6 +209,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     clientId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("clientSecret"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientSecret = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("useEncryptedEndpoints"u8))
@@ -231,7 +261,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 endpoint,
                 authenticationType,
                 username,
+                password,
                 clientId,
+                clientSecret,
                 useEncryptedEndpoints,
                 useHostVerification,
                 usePeerVerification,

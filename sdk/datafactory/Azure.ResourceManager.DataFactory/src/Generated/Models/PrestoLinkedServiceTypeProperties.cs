@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="port"> The TCP port that the Presto server uses to listen for client connections. The default value is 8080 when disable SSL, default value is 443 when enable SSL. </param>
         /// <param name="authenticationType"> The authentication mechanism used to connect to the Presto server. </param>
         /// <param name="username"> The user name used to connect to the Presto server. </param>
+        /// <param name="password"> The password corresponding to the user name. </param>
         /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value for legacy version is False. The default value for version 2.0 is True. </param>
         /// <param name="enableServerCertificateValidation"> Specifies whether the connections to the server will validate server certificate, the default value is True. Only used for Version 2.0. </param>
         /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Only used for Version 1.0. </param>
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="timeZoneId"> The local time zone used by the connection. Valid values for this option are specified in the IANA Time Zone Database. The default value for Version 1.0 is the client system time zone. The default value for Version 2.0 is server system timeZone. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrestoLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> serverVersion, DataFactoryElement<string> catalog, DataFactoryElement<int> port, PrestoAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> enableServerCertificateValidation, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, DataFactoryElement<string> timeZoneId, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrestoLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> serverVersion, DataFactoryElement<string> catalog, DataFactoryElement<int> port, PrestoAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> enableServerCertificateValidation, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, DataFactoryElement<string> timeZoneId, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             ServerVersion = serverVersion;
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Port = port;
             AuthenticationType = authenticationType;
             Username = username;
+            Password = password;
             EnableSsl = enableSsl;
             EnableServerCertificateValidation = enableServerCertificateValidation;
             TrustedCertPath = trustedCertPath;
@@ -79,6 +81,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The user name used to connect to the Presto server. </summary>
         public DataFactoryElement<string> Username { get; set; }
+
+        /// <summary> The password corresponding to the user name. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value for legacy version is False. The default value for version 2.0 is True. </summary>
         public DataFactoryElement<bool> EnableSsl { get; set; }

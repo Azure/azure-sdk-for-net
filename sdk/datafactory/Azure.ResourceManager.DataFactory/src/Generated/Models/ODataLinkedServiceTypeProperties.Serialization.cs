@@ -91,6 +91,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(AuthHeaders))
             {
                 writer.WritePropertyName("authHeaders"u8);
@@ -120,6 +125,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("aadServicePrincipalCredentialType"u8);
                 writer.WriteStringValue(AadServicePrincipalCredentialType.Value.ToString());
+            }
+            if (Optional.IsDefined(ServicePrincipalKey))
+            {
+                writer.WritePropertyName("servicePrincipalKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalKey, options);
+            }
+            if (Optional.IsDefined(ServicePrincipalEmbeddedCert))
+            {
+                writer.WritePropertyName("servicePrincipalEmbeddedCert"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalEmbeddedCert, options);
+            }
+            if (Optional.IsDefined(ServicePrincipalEmbeddedCertPassword))
+            {
+                writer.WritePropertyName("servicePrincipalEmbeddedCertPassword"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalEmbeddedCertPassword, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -171,12 +191,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> uri = default;
             ODataAuthenticationType? authenticationType = default;
             DataFactoryElement<string> userName = default;
+            DataFactorySecret password = default;
             DataFactoryElement<IDictionary<string, string>> authHeaders = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactoryElement<string> azureCloudType = default;
             DataFactoryElement<string> aadResourceId = default;
             ODataAadServicePrincipalCredentialType? aadServicePrincipalCredentialType = default;
+            DataFactorySecret servicePrincipalKey = default;
+            DataFactorySecret servicePrincipalEmbeddedCert = default;
+            DataFactorySecret servicePrincipalEmbeddedCertPassword = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -198,6 +222,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("userName"u8))
                 {
                     ReadUserName(prop, ref userName);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("authHeaders"u8))
@@ -250,6 +283,33 @@ namespace Azure.ResourceManager.DataFactory.Models
                     aadServicePrincipalCredentialType = new ODataAadServicePrincipalCredentialType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("servicePrincipalKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servicePrincipalKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("servicePrincipalEmbeddedCert"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servicePrincipalEmbeddedCert = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("servicePrincipalEmbeddedCertPassword"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servicePrincipalEmbeddedCertPassword = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("encryptedCredential"u8))
                 {
                     encryptedCredential = prop.Value.GetString();
@@ -264,12 +324,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 uri,
                 authenticationType,
                 userName,
+                password,
                 authHeaders,
                 tenant,
                 servicePrincipalId,
                 azureCloudType,
                 aadResourceId,
                 aadServicePrincipalCredentialType,
+                servicePrincipalKey,
+                servicePrincipalEmbeddedCert,
+                servicePrincipalEmbeddedCertPassword,
                 encryptedCredential,
                 additionalBinaryDataProperties);
         }

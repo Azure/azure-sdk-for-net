@@ -93,10 +93,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
+            if (Optional.IsDefined(RefreshToken))
+            {
+                writer.WritePropertyName("refreshToken"u8);
+                writer.WriteObjectValue<DataFactorySecret>(RefreshToken, options);
+            }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ClientId, options);
+            }
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WritePropertyName("clientSecret"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ClientSecret, options);
             }
             if (Optional.IsDefined(Email))
             {
@@ -169,7 +179,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> additionalProjects = default;
             DataFactoryElement<bool> requestGoogleDriveScope = default;
             GoogleBigQueryAuthenticationType authenticationType = default;
+            DataFactorySecret refreshToken = default;
             DataFactoryElement<string> clientId = default;
+            DataFactorySecret clientSecret = default;
             DataFactoryElement<string> email = default;
             DataFactoryElement<string> keyFilePath = default;
             DataFactoryElement<string> trustedCertPath = default;
@@ -206,6 +218,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     authenticationType = new GoogleBigQueryAuthenticationType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("refreshToken"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    refreshToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("clientId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -213,6 +234,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     clientId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("clientSecret"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientSecret = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("email"u8))
@@ -266,7 +296,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProjects,
                 requestGoogleDriveScope,
                 authenticationType,
+                refreshToken,
                 clientId,
+                clientSecret,
                 email,
                 keyFilePath,
                 trustedCertPath,

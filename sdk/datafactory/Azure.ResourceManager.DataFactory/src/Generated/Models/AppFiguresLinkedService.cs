@@ -8,23 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Linked service for AppFigures. </summary>
     public partial class AppFiguresLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of <see cref="AppFiguresLinkedService"/>. </summary>
-        /// <param name="userName"> The username of the Appfigures source. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
-        public AppFiguresLinkedService(DataFactoryElement<string> userName) : base("AppFigures")
-        {
-            Argument.AssertNotNull(userName, nameof(userName));
-
-            TypeProperties = new AppFiguresLinkedServiceTypeProperties(userName);
-        }
-
         /// <summary> Initializes a new instance of <see cref="AppFiguresLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>

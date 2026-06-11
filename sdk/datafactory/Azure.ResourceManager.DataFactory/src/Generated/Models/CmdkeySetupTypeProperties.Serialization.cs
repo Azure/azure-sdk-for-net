@@ -83,6 +83,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteObjectValue<DataFactoryElement<string>>(TargetName, options);
             writer.WritePropertyName("userName"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
+            writer.WritePropertyName("password"u8);
+            writer.WriteObjectValue<DataFactorySecret>(Password, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -127,6 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> targetName = default;
             DataFactoryElement<string> userName = default;
+            DataFactorySecret password = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -140,12 +143,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadUserName(prop, ref userName);
                     continue;
                 }
+                if (prop.NameEquals("password"u8))
+                {
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CmdkeySetupTypeProperties(targetName, userName, additionalBinaryDataProperties);
+            return new CmdkeySetupTypeProperties(targetName, userName, password, additionalBinaryDataProperties);
         }
     }
 }

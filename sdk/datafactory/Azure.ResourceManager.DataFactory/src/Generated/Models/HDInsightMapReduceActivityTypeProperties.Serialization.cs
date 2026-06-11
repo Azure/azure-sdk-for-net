@@ -80,6 +80,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 throw new FormatException($"The model {nameof(HDInsightMapReduceActivityTypeProperties)} does not support writing '{format}' format.");
             }
+            if (Optional.IsCollectionDefined(StorageLinkedServices))
+            {
+                writer.WritePropertyName("storageLinkedServices"u8);
+                writer.WriteStartArray();
+                foreach (DataFactoryLinkedServiceReference item in StorageLinkedServices)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue<DataFactoryLinkedServiceReference>(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
@@ -111,6 +126,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteObjectValue<DataFactoryElement<string>>(ClassName, options);
             writer.WritePropertyName("jarFilePath"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(JarFilePath, options);
+            if (Optional.IsDefined(JarLinkedService))
+            {
+                writer.WritePropertyName("jarLinkedService"u8);
+                writer.WriteObjectValue<DataFactoryLinkedServiceReference>(JarLinkedService, options);
+            }
             if (Optional.IsCollectionDefined(JarLibs))
             {
                 writer.WritePropertyName("jarLibs"u8);
@@ -198,15 +218,38 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
+            IList<DataFactoryLinkedServiceReference> storageLinkedServices = default;
             IList<BinaryData> arguments = default;
             HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default;
             DataFactoryElement<string> className = default;
             DataFactoryElement<string> jarFilePath = default;
+            DataFactoryLinkedServiceReference jarLinkedService = default;
             IList<BinaryData> jarLibs = default;
             IDictionary<string, BinaryData> defines = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("storageLinkedServices"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default));
+                        }
+                    }
+                    storageLinkedServices = array;
+                    continue;
+                }
                 if (prop.NameEquals("arguments"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -245,6 +288,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("jarFilePath"u8))
                 {
                     jarFilePath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("jarLinkedService"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    jarLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("jarLibs"u8))
@@ -295,10 +347,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
             }
             return new HDInsightMapReduceActivityTypeProperties(
+                storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
                 arguments ?? new ChangeTrackingList<BinaryData>(),
                 getDebugInfo,
                 className,
                 jarFilePath,
+                jarLinkedService,
                 jarLibs ?? new ChangeTrackingList<BinaryData>(),
                 defines ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 additionalBinaryDataProperties);

@@ -27,16 +27,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="clusterUri"> HDInsight cluster URI. Type: string (or Expression with resultType string). </param>
         /// <param name="clusterAuthType"> HDInsight cluster authentication type. </param>
         /// <param name="userName"> HDInsight cluster user name. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> HDInsight cluster password. </param>
+        /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
+        /// <param name="hcatalogLinkedServiceName"> A reference to the Azure SQL linked service that points to the HCatalog database. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="isEspEnabled"> Specify if the HDInsight is created with ESP (Enterprise Security Package). Type: Boolean. </param>
         /// <param name="fileSystem"> Specify the FileSystem if the main storage for the HDInsight is ADLS Gen2. Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing MI authentication information for the HDInsight cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightLinkedServiceTypeProperties(DataFactoryElement<string> clusterUri, HDInsightClusterAuthenticationType? clusterAuthType, DataFactoryElement<string> userName, string encryptedCredential, DataFactoryElement<bool> isEspEnabled, DataFactoryElement<string> fileSystem, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightLinkedServiceTypeProperties(DataFactoryElement<string> clusterUri, HDInsightClusterAuthenticationType? clusterAuthType, DataFactoryElement<string> userName, DataFactorySecret password, DataFactoryLinkedServiceReference linkedServiceName, DataFactoryLinkedServiceReference hcatalogLinkedServiceName, string encryptedCredential, DataFactoryElement<bool> isEspEnabled, DataFactoryElement<string> fileSystem, DataFactoryCredentialReference credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterUri = clusterUri;
             ClusterAuthType = clusterAuthType;
             UserName = userName;
+            Password = password;
+            LinkedServiceName = linkedServiceName;
+            HcatalogLinkedServiceName = hcatalogLinkedServiceName;
             EncryptedCredential = encryptedCredential;
             IsEspEnabled = isEspEnabled;
             FileSystem = fileSystem;
@@ -52,6 +58,15 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> HDInsight cluster user name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
+
+        /// <summary> HDInsight cluster password. </summary>
+        public DataFactorySecret Password { get; set; }
+
+        /// <summary> The Azure Storage linked service reference. </summary>
+        public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
+
+        /// <summary> A reference to the Azure SQL linked service that points to the HCatalog database. </summary>
+        public DataFactoryLinkedServiceReference HcatalogLinkedServiceName { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

@@ -81,6 +81,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("url"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(Uri, options);
+            writer.WritePropertyName("userToken"u8);
+            writer.WriteObjectValue<DataFactorySecret>(UserToken, options);
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -129,6 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> uri = default;
+            DataFactorySecret userToken = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -136,6 +139,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("url"u8))
                 {
                     ReadUri(prop, ref uri);
+                    continue;
+                }
+                if (prop.NameEquals("userToken"u8))
+                {
+                    userToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -148,7 +156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new QuickbaseLinkedServiceTypeProperties(uri, encryptedCredential, additionalBinaryDataProperties);
+            return new QuickbaseLinkedServiceTypeProperties(uri, userToken, encryptedCredential, additionalBinaryDataProperties);
         }
     }
 }

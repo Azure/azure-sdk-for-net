@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for Smartsheet. </summary>
     public partial class SmartsheetLinkedService : DataFactoryLinkedServiceProperties, IJsonModel<SmartsheetLinkedService>
     {
+        /// <summary> Initializes a new instance of <see cref="SmartsheetLinkedService"/> for deserialization. </summary>
+        internal SmartsheetLinkedService()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataFactoryLinkedServiceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

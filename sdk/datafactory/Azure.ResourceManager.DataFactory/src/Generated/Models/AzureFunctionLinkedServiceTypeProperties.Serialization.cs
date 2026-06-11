@@ -82,6 +82,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("functionAppUrl"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(FunctionAppUri, options);
+            if (Optional.IsDefined(FunctionKey))
+            {
+                writer.WritePropertyName("functionKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(FunctionKey, options);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -145,6 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> functionAppUri = default;
+            DataFactorySecret functionKey = default;
             string encryptedCredential = default;
             DataFactoryCredentialReference credential = default;
             DataFactoryElement<string> resourceId = default;
@@ -155,6 +161,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("functionAppUrl"u8))
                 {
                     functionAppUri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("functionKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    functionKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -196,6 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new AzureFunctionLinkedServiceTypeProperties(
                 functionAppUri,
+                functionKey,
                 encryptedCredential,
                 credential,
                 resourceId,

@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for GoogleSheets. </summary>
     public partial class GoogleSheetsLinkedService : DataFactoryLinkedServiceProperties, IJsonModel<GoogleSheetsLinkedService>
     {
+        /// <summary> Initializes a new instance of <see cref="GoogleSheetsLinkedService"/> for deserialization. </summary>
+        internal GoogleSheetsLinkedService()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataFactoryLinkedServiceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

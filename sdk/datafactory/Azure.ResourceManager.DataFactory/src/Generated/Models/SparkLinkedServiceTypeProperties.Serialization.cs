@@ -100,6 +100,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(HttpPath))
             {
                 writer.WritePropertyName("httpPath"u8);
@@ -188,6 +193,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             SparkThriftTransportProtocol? thriftTransportProtocol = default;
             SparkAuthenticationType authenticationType = default;
             DataFactoryElement<string> username = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> httpPath = default;
             DataFactoryElement<bool> enableSsl = default;
             DataFactoryElement<bool> enableServerCertificateValidation = default;
@@ -235,6 +241,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("username"u8))
                 {
                     ReadUsername(prop, ref username);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("httpPath"u8))
@@ -317,6 +332,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 thriftTransportProtocol,
                 authenticationType,
                 username,
+                password,
                 httpPath,
                 enableSsl,
                 enableServerCertificateValidation,

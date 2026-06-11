@@ -95,6 +95,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("servicePrincipalId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
+            if (Optional.IsDefined(ServicePrincipalKey))
+            {
+                writer.WritePropertyName("servicePrincipalKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalKey, options);
+            }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
@@ -152,6 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> mlWorkspaceName = default;
             DataFactoryElement<string> authentication = default;
             DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecret servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -186,6 +192,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadServicePrincipalId(prop, ref servicePrincipalId);
                     continue;
                 }
+                if (prop.NameEquals("servicePrincipalKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servicePrincipalKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("tenant"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -211,6 +226,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 mlWorkspaceName,
                 authentication,
                 servicePrincipalId,
+                servicePrincipalKey,
                 tenant,
                 encryptedCredential,
                 additionalBinaryDataProperties);

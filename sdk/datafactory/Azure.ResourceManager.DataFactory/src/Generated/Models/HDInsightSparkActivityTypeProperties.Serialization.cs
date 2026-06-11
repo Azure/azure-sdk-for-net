@@ -111,6 +111,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("getDebugInfo"u8);
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
+            if (Optional.IsDefined(SparkJobLinkedService))
+            {
+                writer.WritePropertyName("sparkJobLinkedService"u8);
+                writer.WriteObjectValue<DataFactoryLinkedServiceReference>(SparkJobLinkedService, options);
+            }
             if (Optional.IsDefined(ClassName))
             {
                 writer.WritePropertyName("className"u8);
@@ -190,6 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> entryFilePath = default;
             IList<BinaryData> arguments = default;
             HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default;
+            DataFactoryLinkedServiceReference sparkJobLinkedService = default;
             string className = default;
             DataFactoryElement<string> proxyUser = default;
             IDictionary<string, BinaryData> sparkConfig = default;
@@ -234,6 +240,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     getDebugInfo = new HDInsightActivityDebugInfoOptionSetting(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("sparkJobLinkedService"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sparkJobLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("className"u8))
@@ -281,6 +296,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 entryFilePath,
                 arguments ?? new ChangeTrackingList<BinaryData>(),
                 getDebugInfo,
+                sparkJobLinkedService,
                 className,
                 proxyUser,
                 sparkConfig ?? new ChangeTrackingDictionary<string, BinaryData>(),

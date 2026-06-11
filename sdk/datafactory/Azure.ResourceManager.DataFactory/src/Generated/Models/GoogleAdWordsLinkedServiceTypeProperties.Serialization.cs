@@ -92,15 +92,30 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("clientCustomerID"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ClientCustomerId, options);
             }
+            if (Optional.IsDefined(DeveloperToken))
+            {
+                writer.WritePropertyName("developerToken"u8);
+                writer.WriteObjectValue<DataFactorySecret>(DeveloperToken, options);
+            }
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
+            if (Optional.IsDefined(RefreshToken))
+            {
+                writer.WritePropertyName("refreshToken"u8);
+                writer.WriteObjectValue<DataFactorySecret>(RefreshToken, options);
+            }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ClientId, options);
+            }
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WritePropertyName("clientSecret"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ClientSecret, options);
             }
             if (Optional.IsDefined(Email))
             {
@@ -121,6 +136,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("useSystemTrustStore"u8);
                 writer.WriteObjectValue<DataFactoryElement<bool>>(UseSystemTrustStore, options);
+            }
+            if (Optional.IsDefined(PrivateKey))
+            {
+                writer.WritePropertyName("privateKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(PrivateKey, options);
             }
             if (Optional.IsDefined(LoginCustomerId))
             {
@@ -186,12 +206,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             BinaryData connectionProperties = default;
             DataFactoryElement<string> clientCustomerId = default;
+            DataFactorySecret developerToken = default;
             GoogleAdWordsAuthenticationType? authenticationType = default;
+            DataFactorySecret refreshToken = default;
             DataFactoryElement<string> clientId = default;
+            DataFactorySecret clientSecret = default;
             DataFactoryElement<string> email = default;
             DataFactoryElement<string> keyFilePath = default;
             DataFactoryElement<string> trustedCertPath = default;
             DataFactoryElement<bool> useSystemTrustStore = default;
+            DataFactorySecret privateKey = default;
             DataFactoryElement<string> loginCustomerId = default;
             DataFactoryElement<string> googleAdsApiVersion = default;
             DataFactoryElement<bool> supportLegacyDataTypes = default;
@@ -217,6 +241,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     clientCustomerId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("developerToken"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    developerToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("authenticationType"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -226,6 +259,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     authenticationType = new GoogleAdWordsAuthenticationType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("refreshToken"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    refreshToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("clientId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -233,6 +275,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     clientId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("clientSecret"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientSecret = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("email"u8))
@@ -269,6 +320,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     useSystemTrustStore = ModelReaderWriter.Read<DataFactoryElement<bool>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("privateKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("loginCustomerID"u8))
@@ -311,12 +371,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new GoogleAdWordsLinkedServiceTypeProperties(
                 connectionProperties,
                 clientCustomerId,
+                developerToken,
                 authenticationType,
+                refreshToken,
                 clientId,
+                clientSecret,
                 email,
                 keyFilePath,
                 trustedCertPath,
                 useSystemTrustStore,
+                privateKey,
                 loginCustomerId,
                 googleAdsApiVersion,
                 supportLegacyDataTypes,

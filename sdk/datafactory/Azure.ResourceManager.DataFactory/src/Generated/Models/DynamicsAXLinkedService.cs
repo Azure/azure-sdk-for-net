@@ -8,29 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Dynamics AX linked service. </summary>
     public partial class DynamicsAXLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of <see cref="DynamicsAXLinkedService"/>. </summary>
-        /// <param name="uri"> The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint. </param>
-        /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
-        /// <param name="tenant"> Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string). </param>
-        /// <param name="aadResourceId"> Specify the resource you are requesting authorization. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="servicePrincipalId"/>, <paramref name="tenant"/> or <paramref name="aadResourceId"/> is null. </exception>
-        public DynamicsAXLinkedService(DataFactoryElement<string> uri, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> tenant, DataFactoryElement<string> aadResourceId) : base("DynamicsAX")
-        {
-            Argument.AssertNotNull(uri, nameof(uri));
-            Argument.AssertNotNull(servicePrincipalId, nameof(servicePrincipalId));
-            Argument.AssertNotNull(tenant, nameof(tenant));
-            Argument.AssertNotNull(aadResourceId, nameof(aadResourceId));
-
-            TypeProperties = new DynamicsAXLinkedServiceTypeProperties(uri, servicePrincipalId, tenant, aadResourceId);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DynamicsAXLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>

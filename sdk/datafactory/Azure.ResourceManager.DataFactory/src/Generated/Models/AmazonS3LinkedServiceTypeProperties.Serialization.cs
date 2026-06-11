@@ -85,10 +85,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("accessKeyId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(AccessKeyId, options);
             }
+            if (Optional.IsDefined(SecretAccessKey))
+            {
+                writer.WritePropertyName("secretAccessKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(SecretAccessKey, options);
+            }
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ServiceUri, options);
+            }
+            if (Optional.IsDefined(SessionToken))
+            {
+                writer.WritePropertyName("sessionToken"u8);
+                writer.WriteObjectValue<DataFactorySecret>(SessionToken, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -139,7 +149,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> authenticationType = default;
             DataFactoryElement<string> accessKeyId = default;
+            DataFactorySecret secretAccessKey = default;
             DataFactoryElement<string> serviceUri = default;
+            DataFactorySecret sessionToken = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -162,6 +174,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     accessKeyId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("secretAccessKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    secretAccessKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("serviceUrl"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -169,6 +190,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     serviceUri = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("sessionToken"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sessionToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -181,7 +211,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AmazonS3LinkedServiceTypeProperties(authenticationType, accessKeyId, serviceUri, encryptedCredential, additionalBinaryDataProperties);
+            return new AmazonS3LinkedServiceTypeProperties(
+                authenticationType,
+                accessKeyId,
+                secretAccessKey,
+                serviceUri,
+                sessionToken,
+                encryptedCredential,
+                additionalBinaryDataProperties);
         }
     }
 }

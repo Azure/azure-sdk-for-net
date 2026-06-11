@@ -85,12 +85,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteObjectValue<DataFactoryElement<string>>(TimeToLiveExpression, options);
             writer.WritePropertyName("version"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(Version, options);
+            writer.WritePropertyName("linkedServiceName"u8);
+            writer.WriteObjectValue<DataFactoryLinkedServiceReference>(LinkedServiceName, options);
             writer.WritePropertyName("hostSubscriptionId"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(HostSubscriptionId, options);
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
+            }
+            if (Optional.IsDefined(ServicePrincipalKey))
+            {
+                writer.WritePropertyName("servicePrincipalKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalKey, options);
             }
             writer.WritePropertyName("tenant"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(Tenant, options);
@@ -111,10 +118,40 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("clusterUserName"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ClusterUserName, options);
             }
+            if (Optional.IsDefined(ClusterPassword))
+            {
+                writer.WritePropertyName("clusterPassword"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ClusterPassword, options);
+            }
             if (Optional.IsDefined(ClusterSshUserName))
             {
                 writer.WritePropertyName("clusterSshUserName"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ClusterSshUserName, options);
+            }
+            if (Optional.IsDefined(ClusterSshPassword))
+            {
+                writer.WritePropertyName("clusterSshPassword"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ClusterSshPassword, options);
+            }
+            if (Optional.IsCollectionDefined(AdditionalLinkedServiceNames))
+            {
+                writer.WritePropertyName("additionalLinkedServiceNames"u8);
+                writer.WriteStartArray();
+                foreach (DataFactoryLinkedServiceReference item in AdditionalLinkedServiceNames)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue<DataFactoryLinkedServiceReference>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(HcatalogLinkedServiceName))
+            {
+                writer.WritePropertyName("hcatalogLinkedServiceName"u8);
+                writer.WriteObjectValue<DataFactoryLinkedServiceReference>(HcatalogLinkedServiceName, options);
             }
             if (Optional.IsDefined(ClusterType))
             {
@@ -333,14 +370,20 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<int> clusterSize = default;
             DataFactoryElement<string> timeToLiveExpression = default;
             DataFactoryElement<string> version = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             DataFactoryElement<string> hostSubscriptionId = default;
             DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecret servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryElement<string> clusterResourceGroup = default;
             HDInsightOnDemandClusterResourceGroupAuthenticationType? clusterResourceGroupAuthType = default;
             DataFactoryElement<string> clusterNamePrefix = default;
             DataFactoryElement<string> clusterUserName = default;
+            DataFactorySecret clusterPassword = default;
             DataFactoryElement<string> clusterSshUserName = default;
+            DataFactorySecret clusterSshPassword = default;
+            IList<DataFactoryLinkedServiceReference> additionalLinkedServiceNames = default;
+            DataFactoryLinkedServiceReference hcatalogLinkedServiceName = default;
             DataFactoryElement<string> clusterType = default;
             DataFactoryElement<string> sparkVersion = default;
             BinaryData coreConfiguration = default;
@@ -377,6 +420,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadVersion(prop, ref version);
                     continue;
                 }
+                if (prop.NameEquals("linkedServiceName"u8))
+                {
+                    linkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("hostSubscriptionId"u8))
                 {
                     hostSubscriptionId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
@@ -385,6 +433,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
                     ReadServicePrincipalId(prop, ref servicePrincipalId);
+                    continue;
+                }
+                if (prop.NameEquals("servicePrincipalKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servicePrincipalKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tenant"u8))
@@ -424,6 +481,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     clusterUserName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("clusterPassword"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterPassword = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("clusterSshUserName"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -431,6 +497,45 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     clusterSshUserName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("clusterSshPassword"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterSshPassword = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("additionalLinkedServiceNames"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default));
+                        }
+                    }
+                    additionalLinkedServiceNames = array;
+                    continue;
+                }
+                if (prop.NameEquals("hcatalogLinkedServiceName"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hcatalogLinkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("clusterType"u8))
@@ -605,14 +710,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 clusterSize,
                 timeToLiveExpression,
                 version,
+                linkedServiceName,
                 hostSubscriptionId,
                 servicePrincipalId,
+                servicePrincipalKey,
                 tenant,
                 clusterResourceGroup,
                 clusterResourceGroupAuthType,
                 clusterNamePrefix,
                 clusterUserName,
+                clusterPassword,
                 clusterSshUserName,
+                clusterSshPassword,
+                additionalLinkedServiceNames ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
+                hcatalogLinkedServiceName,
                 clusterType,
                 sparkVersion,
                 coreConfiguration,

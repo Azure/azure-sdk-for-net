@@ -96,6 +96,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -157,6 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<int> port = default;
             FtpAuthenticationType? authenticationType = default;
             DataFactoryElement<string> userName = default;
+            DataFactorySecret password = default;
             string encryptedCredential = default;
             DataFactoryElement<bool> enableSsl = default;
             DataFactoryElement<bool> enableServerCertificateValidation = default;
@@ -189,6 +195,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("userName"u8))
                 {
                     ReadUserName(prop, ref userName);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -224,6 +239,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 port,
                 authenticationType,
                 userName,
+                password,
                 encryptedCredential,
                 enableSsl,
                 enableServerCertificateValidation,

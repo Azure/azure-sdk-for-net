@@ -113,6 +113,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
@@ -122,6 +127,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalCredentialType, options);
+            }
+            if (Optional.IsDefined(ServicePrincipalCredential))
+            {
+                writer.WritePropertyName("servicePrincipalCredential"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalCredential, options);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
@@ -178,8 +188,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> authenticationType = default;
             DataFactoryElement<string> domain = default;
             DataFactoryElement<string> username = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> servicePrincipalId = default;
             DataFactoryElement<string> servicePrincipalCredentialType = default;
+            DataFactorySecret servicePrincipalCredential = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -240,6 +252,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadUsername(prop, ref username);
                     continue;
                 }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
                     ReadServicePrincipalId(prop, ref servicePrincipalId);
@@ -252,6 +273,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     servicePrincipalCredentialType = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("servicePrincipalCredential"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servicePrincipalCredential = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -273,8 +303,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 authenticationType,
                 domain,
                 username,
+                password,
                 servicePrincipalId,
                 servicePrincipalCredentialType,
+                servicePrincipalCredential,
                 encryptedCredential,
                 additionalBinaryDataProperties);
         }

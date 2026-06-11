@@ -27,14 +27,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="server"> Host name of the SAP HANA server. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to be used to connect to the SAP HANA server. </param>
         /// <param name="userName"> Username to access the SAP HANA server. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password to access the SAP HANA server. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SapHanaLinkedServiceProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> server, SapHanaAuthenticationType? authenticationType, DataFactoryElement<string> userName, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SapHanaLinkedServiceProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> server, SapHanaAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             Server = server;
             AuthenticationType = authenticationType;
             UserName = userName;
+            Password = password;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -50,6 +52,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Username to access the SAP HANA server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
+
+        /// <summary> Password to access the SAP HANA server. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

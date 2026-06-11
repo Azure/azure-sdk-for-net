@@ -92,6 +92,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(Endpoint, options);
             }
+            if (Optional.IsDefined(AccessToken))
+            {
+                writer.WritePropertyName("accessToken"u8);
+                writer.WriteObjectValue<DataFactorySecret>(AccessToken, options);
+            }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
@@ -156,6 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             BinaryData connectionProperties = default;
             DataFactoryElement<string> endpoint = default;
+            DataFactorySecret accessToken = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             DataFactoryElement<bool> useHostVerification = default;
             DataFactoryElement<bool> usePeerVerification = default;
@@ -179,6 +185,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     endpoint = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("accessToken"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accessToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("useEncryptedEndpoints"u8))
@@ -221,6 +236,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ZohoLinkedServiceTypeProperties(
                 connectionProperties,
                 endpoint,
+                accessToken,
                 useEncryptedEndpoints,
                 useHostVerification,
                 usePeerVerification,

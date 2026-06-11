@@ -91,6 +91,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(AuthHeaders))
             {
                 writer.WritePropertyName("authHeaders"u8);
@@ -161,6 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> uri = default;
             HttpAuthenticationType? authenticationType = default;
             DataFactoryElement<string> userName = default;
+            DataFactorySecret password = default;
             DataFactoryElement<IDictionary<string, string>> authHeaders = default;
             DataFactoryElement<string> embeddedCertData = default;
             DataFactoryElement<string> certThumbprint = default;
@@ -186,6 +192,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("userName"u8))
                 {
                     ReadUserName(prop, ref userName);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("authHeaders"u8))
@@ -238,6 +253,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 uri,
                 authenticationType,
                 userName,
+                password,
                 authHeaders,
                 embeddedCertData,
                 certThumbprint,

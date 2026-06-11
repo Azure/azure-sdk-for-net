@@ -18,21 +18,35 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="AppFiguresLinkedServiceTypeProperties"/>. </summary>
         /// <param name="userName"> The username of the Appfigures source. Type: string (or Expression with resultType string). </param>
-        public AppFiguresLinkedServiceTypeProperties(DataFactoryElement<string> userName)
+        /// <param name="password"> The password of the AppFigures source. </param>
+        /// <param name="clientKey"> The client key for the AppFigures source. </param>
+        public AppFiguresLinkedServiceTypeProperties(DataFactoryElement<string> userName, DataFactorySecret password, DataFactorySecret clientKey)
         {
             UserName = userName;
+            Password = password;
+            ClientKey = clientKey;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppFiguresLinkedServiceTypeProperties"/>. </summary>
         /// <param name="userName"> The username of the Appfigures source. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> The password of the AppFigures source. </param>
+        /// <param name="clientKey"> The client key for the AppFigures source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppFiguresLinkedServiceTypeProperties(DataFactoryElement<string> userName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppFiguresLinkedServiceTypeProperties(DataFactoryElement<string> userName, DataFactorySecret password, DataFactorySecret clientKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UserName = userName;
+            Password = password;
+            ClientKey = clientKey;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The username of the Appfigures source. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
+
+        /// <summary> The password of the AppFigures source. </summary>
+        public DataFactorySecret Password { get; set; }
+
+        /// <summary> The client key for the AppFigures source. </summary>
+        public DataFactorySecret ClientKey { get; set; }
     }
 }

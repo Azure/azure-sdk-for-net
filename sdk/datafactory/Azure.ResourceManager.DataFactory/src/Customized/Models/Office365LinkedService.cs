@@ -7,26 +7,69 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/59298 :
-    // identity-aliased Azure.Core.Expressions.DataFactory model types can be omitted from generated
-    // model surfaces. This partial restores the GA API surface for compatibility.
-    // TODO: remove once the generator preserves members whose types use @@alternateType identity (#59298).
+    // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/59298 and
+    // https://github.com/Azure/azure-sdk-for-net/issues/59852 :
+    // Identity-aliased Azure.Core.Expressions.DataFactory members are dropped from the generated public
+    // surface (#59298) and the emitter no longer emits the public constructor for these flattened types
+    // (#59852). This partial restores the GA properties (routed through TypeProperties) and the public ctor.
+    // TODO: remove once the generator restores both (#59298, #59852).
     public partial class Office365LinkedService
     {
-        /// <summary> Property restored as workaround for issue #59298. </summary>
-        public DataFactorySecret ServicePrincipalEmbeddedCert { get; set; }
-
-        /// <summary> Property restored as workaround for issue #59298. </summary>
-        public DataFactorySecret ServicePrincipalEmbeddedCertPassword { get; set; }
-
-        /// <summary> Property restored as workaround for issue #59298. </summary>
-        public DataFactorySecret ServicePrincipalKey { get; set; }
-
-        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public Office365LinkedService(DataFactoryElement<string> office365TenantId, DataFactoryElement<string> servicePrincipalTenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey)
-            : this(office365TenantId, servicePrincipalTenantId, servicePrincipalId)
+        /// <summary> Property restored as workaround for issues #59298 and #59852. </summary>
+        public DataFactorySecret ServicePrincipalEmbeddedCert
         {
-            ServicePrincipalKey = servicePrincipalKey;
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalEmbeddedCert;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Office365LinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalEmbeddedCert = value;
+            }
+        }
+
+        /// <summary> Property restored as workaround for issues #59298 and #59852. </summary>
+        public DataFactorySecret ServicePrincipalEmbeddedCertPassword
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalEmbeddedCertPassword;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Office365LinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalEmbeddedCertPassword = value;
+            }
+        }
+
+        /// <summary> Property restored as workaround for issues #59298 and #59852. </summary>
+        public DataFactorySecret ServicePrincipalKey
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalKey;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new Office365LinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalKey = value;
+            }
+        }
+
+        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
+        public Office365LinkedService(DataFactoryElement<string> office365TenantId, DataFactoryElement<string> servicePrincipalTenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey) : base("Office365")
+        {
+            TypeProperties = new Office365LinkedServiceTypeProperties(office365TenantId, servicePrincipalTenantId, servicePrincipalId, servicePrincipalKey);
         }
     }
 }

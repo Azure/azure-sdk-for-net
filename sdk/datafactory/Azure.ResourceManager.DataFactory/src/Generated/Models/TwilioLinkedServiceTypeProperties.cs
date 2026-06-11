@@ -18,21 +18,28 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="TwilioLinkedServiceTypeProperties"/>. </summary>
         /// <param name="userName"> The Account SID of Twilio service. Type: string (or Expression with resultType string). </param>
-        public TwilioLinkedServiceTypeProperties(DataFactoryElement<string> userName)
+        /// <param name="password"> The auth token of Twilio service. </param>
+        public TwilioLinkedServiceTypeProperties(DataFactoryElement<string> userName, DataFactorySecret password)
         {
             UserName = userName;
+            Password = password;
         }
 
         /// <summary> Initializes a new instance of <see cref="TwilioLinkedServiceTypeProperties"/>. </summary>
         /// <param name="userName"> The Account SID of Twilio service. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> The auth token of Twilio service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TwilioLinkedServiceTypeProperties(DataFactoryElement<string> userName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TwilioLinkedServiceTypeProperties(DataFactoryElement<string> userName, DataFactorySecret password, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UserName = userName;
+            Password = password;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Account SID of Twilio service. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
+
+        /// <summary> The auth token of Twilio service. </summary>
+        public DataFactorySecret Password { get; set; }
     }
 }

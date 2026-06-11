@@ -26,14 +26,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="environmentUri"> The URL of Salesforce instance. For example, 'https://[domain].my.salesforce.com'. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to be used to connect to the Salesforce. Currently, we only support OAuth2ClientCredentials, it is also the default value. </param>
         /// <param name="clientId"> The client Id for OAuth 2.0 Client Credentials Flow authentication of the Salesforce instance. Type: string (or Expression with resultType string). </param>
+        /// <param name="clientSecret"> The client secret for OAuth 2.0 Client Credentials Flow authentication of the Salesforce instance. </param>
         /// <param name="apiVersion"> The Salesforce API version used in ADF. The version must be larger than or equal to 47.0 which is required by Salesforce BULK API 2.0. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SalesforceV2LinkedServiceTypeProperties(DataFactoryElement<string> environmentUri, DataFactoryElement<string> authenticationType, DataFactoryElement<string> clientId, DataFactoryElement<string> apiVersion, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SalesforceV2LinkedServiceTypeProperties(DataFactoryElement<string> environmentUri, DataFactoryElement<string> authenticationType, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> apiVersion, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnvironmentUri = environmentUri;
             AuthenticationType = authenticationType;
             ClientId = clientId;
+            ClientSecret = clientSecret;
             ApiVersion = apiVersion;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -47,6 +49,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The client Id for OAuth 2.0 Client Credentials Flow authentication of the Salesforce instance. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClientId { get; set; }
+
+        /// <summary> The client secret for OAuth 2.0 Client Credentials Flow authentication of the Salesforce instance. </summary>
+        public DataFactorySecret ClientSecret { get; set; }
 
         /// <summary> The Salesforce API version used in ADF. The version must be larger than or equal to 47.0 which is required by Salesforce BULK API 2.0. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ApiVersion { get; set; }

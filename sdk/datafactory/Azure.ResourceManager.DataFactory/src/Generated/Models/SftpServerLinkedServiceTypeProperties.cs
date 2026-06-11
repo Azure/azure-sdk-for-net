@@ -28,19 +28,25 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="port"> The TCP port number that the SFTP server uses to listen for client connections. Default value is 22. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="authenticationType"> The authentication type to be used to connect to the FTP server. </param>
         /// <param name="userName"> The username used to log on to the SFTP server. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password to logon the SFTP server for Basic authentication. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="privateKeyPath"> The SSH private key file path for SshPublicKey authentication. Only valid for on-premises copy. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath or PrivateKeyContent should be specified. SSH private key should be OpenSSH format. Type: string (or Expression with resultType string). </param>
+        /// <param name="privateKeyContent"> Base64 encoded SSH private key content for SshPublicKey authentication. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath or PrivateKeyContent should be specified. SSH private key should be OpenSSH format. </param>
+        /// <param name="passPhrase"> The password to decrypt the SSH private key if the SSH private key is encrypted. </param>
         /// <param name="skipHostKeyValidation"> If true, skip the SSH host key validation. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="hostKeyFingerprint"> The host key finger-print of the SFTP server. When SkipHostKeyValidation is false, HostKeyFingerprint should be specified. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SftpServerLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<int> port, SftpAuthenticationType? authenticationType, DataFactoryElement<string> userName, string encryptedCredential, DataFactoryElement<string> privateKeyPath, DataFactoryElement<bool> skipHostKeyValidation, DataFactoryElement<string> hostKeyFingerprint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SftpServerLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<int> port, SftpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential, DataFactoryElement<string> privateKeyPath, DataFactorySecret privateKeyContent, DataFactorySecret passPhrase, DataFactoryElement<bool> skipHostKeyValidation, DataFactoryElement<string> hostKeyFingerprint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             Port = port;
             AuthenticationType = authenticationType;
             UserName = userName;
+            Password = password;
             EncryptedCredential = encryptedCredential;
             PrivateKeyPath = privateKeyPath;
+            PrivateKeyContent = privateKeyContent;
+            PassPhrase = passPhrase;
             SkipHostKeyValidation = skipHostKeyValidation;
             HostKeyFingerprint = hostKeyFingerprint;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -58,11 +64,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The username used to log on to the SFTP server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
 
+        /// <summary> Password to logon the SFTP server for Basic authentication. </summary>
+        public DataFactorySecret Password { get; set; }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
 
         /// <summary> The SSH private key file path for SshPublicKey authentication. Only valid for on-premises copy. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath or PrivateKeyContent should be specified. SSH private key should be OpenSSH format. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> PrivateKeyPath { get; set; }
+
+        /// <summary> Base64 encoded SSH private key content for SshPublicKey authentication. For on-premises copy with SshPublicKey authentication, either PrivateKeyPath or PrivateKeyContent should be specified. SSH private key should be OpenSSH format. </summary>
+        public DataFactorySecret PrivateKeyContent { get; set; }
+
+        /// <summary> The password to decrypt the SSH private key if the SSH private key is encrypted. </summary>
+        public DataFactorySecret PassPhrase { get; set; }
 
         /// <summary> If true, skip the SSH host key validation. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> SkipHostKeyValidation { get; set; }

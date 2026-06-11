@@ -31,15 +31,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="schema"> Schema name for connection. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> AuthenticationType to be used for connection. </param>
         /// <param name="username"> Username for authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password for authentication. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SybaseLinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<string> database, DataFactoryElement<string> schema, SybaseAuthenticationType? authenticationType, DataFactoryElement<string> username, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SybaseLinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<string> database, DataFactoryElement<string> schema, SybaseAuthenticationType? authenticationType, DataFactoryElement<string> username, DataFactorySecret password, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Server = server;
             Database = database;
             Schema = schema;
             AuthenticationType = authenticationType;
             Username = username;
+            Password = password;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -58,6 +60,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }
+
+        /// <summary> Password for authentication. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

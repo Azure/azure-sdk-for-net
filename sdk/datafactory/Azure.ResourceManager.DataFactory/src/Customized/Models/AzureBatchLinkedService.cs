@@ -7,23 +7,52 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/59298 :
-    // identity-aliased Azure.Core.Expressions.DataFactory model types can be omitted from generated
-    // model surfaces. This partial restores the GA API surface for compatibility.
-    // TODO: remove once the generator preserves members whose types use @@alternateType identity (#59298).
+    // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/59298 and
+    // https://github.com/Azure/azure-sdk-for-net/issues/59852 :
+    // Identity-aliased Azure.Core.Expressions.DataFactory members are dropped from the generated public
+    // surface (#59298) and the emitter no longer emits the public constructor for these flattened types
+    // (#59852). This partial restores the GA properties (routed through TypeProperties) and the public ctor.
+    // TODO: remove once the generator restores both (#59298, #59852).
     public partial class AzureBatchLinkedService
     {
-        /// <summary> Property restored as workaround for issue #59298. </summary>
-        public DataFactorySecret AccessKey { get; set; }
-
-        /// <summary> Property restored as workaround for issue #59298. </summary>
-        public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
-
-        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public AzureBatchLinkedService(DataFactoryElement<string> accountName, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, DataFactoryLinkedServiceReference linkedServiceName)
-            : this(accountName, batchUri, poolName)
+        /// <summary> Property restored as workaround for issues #59298 and #59852. </summary>
+        public DataFactorySecret AccessKey
         {
-            LinkedServiceName = linkedServiceName;
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AccessKey;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBatchLinkedServiceTypeProperties();
+                }
+                TypeProperties.AccessKey = value;
+            }
+        }
+
+        /// <summary> Property restored as workaround for issues #59298 and #59852. </summary>
+        public DataFactoryLinkedServiceReference LinkedServiceName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.LinkedServiceName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureBatchLinkedServiceTypeProperties();
+                }
+                TypeProperties.LinkedServiceName = value;
+            }
+        }
+
+        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
+        public AzureBatchLinkedService(DataFactoryElement<string> accountName, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, DataFactoryLinkedServiceReference linkedServiceName) : base("AzureBatch")
+        {
+            TypeProperties = new AzureBatchLinkedServiceTypeProperties(accountName, batchUri, poolName, linkedServiceName);
         }
     }
 }

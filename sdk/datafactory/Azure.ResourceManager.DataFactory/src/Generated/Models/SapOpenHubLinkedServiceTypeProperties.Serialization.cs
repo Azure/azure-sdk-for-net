@@ -104,6 +104,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer"u8);
@@ -172,6 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> language = default;
             DataFactoryElement<string> systemId = default;
             DataFactoryElement<string> userName = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> messageServer = default;
             DataFactoryElement<string> messageServerService = default;
             DataFactoryElement<string> logonGroup = default;
@@ -229,6 +235,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadUserName(prop, ref userName);
                     continue;
                 }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("messageServer"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -273,6 +288,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 language,
                 systemId,
                 userName,
+                password,
                 messageServer,
                 messageServerService,
                 logonGroup,

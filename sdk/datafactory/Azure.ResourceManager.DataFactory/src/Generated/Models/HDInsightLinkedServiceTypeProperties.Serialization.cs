@@ -91,6 +91,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
+            if (Optional.IsDefined(LinkedServiceName))
+            {
+                writer.WritePropertyName("linkedServiceName"u8);
+                writer.WriteObjectValue<DataFactoryLinkedServiceReference>(LinkedServiceName, options);
+            }
+            if (Optional.IsDefined(HcatalogLinkedServiceName))
+            {
+                writer.WritePropertyName("hcatalogLinkedServiceName"u8);
+                writer.WriteObjectValue<DataFactoryLinkedServiceReference>(HcatalogLinkedServiceName, options);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -156,6 +171,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> clusterUri = default;
             HDInsightClusterAuthenticationType? clusterAuthType = default;
             DataFactoryElement<string> userName = default;
+            DataFactorySecret password = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            DataFactoryLinkedServiceReference hcatalogLinkedServiceName = default;
             string encryptedCredential = default;
             DataFactoryElement<bool> isEspEnabled = default;
             DataFactoryElement<string> fileSystem = default;
@@ -180,6 +198,33 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("userName"u8))
                 {
                     ReadUserName(prop, ref userName);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("linkedServiceName"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("hcatalogLinkedServiceName"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hcatalogLinkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -219,6 +264,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 clusterUri,
                 clusterAuthType,
                 userName,
+                password,
+                linkedServiceName,
+                hcatalogLinkedServiceName,
                 encryptedCredential,
                 isEspEnabled,
                 fileSystem,

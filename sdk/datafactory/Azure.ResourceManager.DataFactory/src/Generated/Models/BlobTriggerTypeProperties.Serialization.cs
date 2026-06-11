@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -83,6 +84,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(FolderPath);
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
+            writer.WritePropertyName("linkedService"u8);
+            writer.WriteObjectValue<DataFactoryLinkedServiceReference>(LinkedService, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -127,6 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             string folderPath = default;
             int maxConcurrency = default;
+            DataFactoryLinkedServiceReference linkedService = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -140,12 +144,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     maxConcurrency = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("linkedService"u8))
+                {
+                    linkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BlobTriggerTypeProperties(folderPath, maxConcurrency, additionalBinaryDataProperties);
+            return new BlobTriggerTypeProperties(folderPath, maxConcurrency, linkedService, additionalBinaryDataProperties);
         }
     }
 }

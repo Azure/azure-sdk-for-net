@@ -82,6 +82,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("scriptPath"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(ScriptPath, options);
+            writer.WritePropertyName("scriptLinkedService"u8);
+            writer.WriteObjectValue<DataFactoryLinkedServiceReference>(ScriptLinkedService, options);
             if (Optional.IsDefined(DegreeOfParallelism))
             {
                 writer.WritePropertyName("degreeOfParallelism"u8);
@@ -168,6 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> scriptPath = default;
+            DataFactoryLinkedServiceReference scriptLinkedService = default;
             DataFactoryElement<int> degreeOfParallelism = default;
             DataFactoryElement<int> priority = default;
             IDictionary<string, BinaryData> parameters = default;
@@ -179,6 +182,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("scriptPath"u8))
                 {
                     scriptPath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("scriptLinkedService"u8))
+                {
+                    scriptLinkedService = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("degreeOfParallelism"u8))
@@ -245,6 +253,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new DataLakeAnalyticsUSQLActivityTypeProperties(
                 scriptPath,
+                scriptLinkedService,
                 degreeOfParallelism,
                 priority,
                 parameters ?? new ChangeTrackingDictionary<string, BinaryData>(),

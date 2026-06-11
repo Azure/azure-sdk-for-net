@@ -96,6 +96,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(UserName, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -105,6 +110,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("privateKeyPath"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(PrivateKeyPath, options);
+            }
+            if (Optional.IsDefined(PrivateKeyContent))
+            {
+                writer.WritePropertyName("privateKeyContent"u8);
+                writer.WriteObjectValue<DataFactorySecret>(PrivateKeyContent, options);
+            }
+            if (Optional.IsDefined(PassPhrase))
+            {
+                writer.WritePropertyName("passPhrase"u8);
+                writer.WriteObjectValue<DataFactorySecret>(PassPhrase, options);
             }
             if (Optional.IsDefined(SkipHostKeyValidation))
             {
@@ -162,8 +177,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<int> port = default;
             SftpAuthenticationType? authenticationType = default;
             DataFactoryElement<string> userName = default;
+            DataFactorySecret password = default;
             string encryptedCredential = default;
             DataFactoryElement<string> privateKeyPath = default;
+            DataFactorySecret privateKeyContent = default;
+            DataFactorySecret passPhrase = default;
             DataFactoryElement<bool> skipHostKeyValidation = default;
             DataFactoryElement<string> hostKeyFingerprint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -197,6 +215,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadUserName(prop, ref userName);
                     continue;
                 }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("encryptedCredential"u8))
                 {
                     encryptedCredential = prop.Value.GetString();
@@ -209,6 +236,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     privateKeyPath = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("privateKeyContent"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateKeyContent = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("passPhrase"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    passPhrase = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("skipHostKeyValidation"u8))
@@ -239,8 +284,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 port,
                 authenticationType,
                 userName,
+                password,
                 encryptedCredential,
                 privateKeyPath,
+                privateKeyContent,
+                passPhrase,
                 skipHostKeyValidation,
                 hostKeyFingerprint,
                 additionalBinaryDataProperties);

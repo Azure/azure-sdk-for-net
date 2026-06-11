@@ -30,28 +30,36 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="SnowflakeLinkedV2ServiceTypeProperties"/>. </summary>
         /// <param name="accountIdentifier"> The account identifier of your Snowflake account, e.g. xy12345.east-us-2.azure. </param>
         /// <param name="user"> The name of the Snowflake user. </param>
+        /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="database"> The name of the Snowflake database. </param>
         /// <param name="warehouse"> The name of the Snowflake warehouse. </param>
         /// <param name="authenticationType"> The type used for authentication. Type: string. </param>
         /// <param name="clientId"> The client ID of the application registered in Azure Active Directory for AADServicePrincipal authentication. </param>
+        /// <param name="clientSecret"> The Azure key vault secret reference of client secret for AADServicePrincipal authentication. </param>
         /// <param name="tenantId"> The tenant ID of the application registered in Azure Active Directory for AADServicePrincipal authentication. </param>
         /// <param name="scope"> The scope of the application registered in Azure Active Directory for AADServicePrincipal authentication. </param>
+        /// <param name="privateKey"> The Azure key vault secret reference of privateKey for KeyPair auth. </param>
+        /// <param name="privateKeyPassphrase"> The Azure key vault secret reference of private key password for KeyPair auth with encrypted private key. </param>
         /// <param name="role"> The default access control role to use in the Snowflake session. Type: string (or Expression with resultType string). </param>
         /// <param name="host"> The host name of the Snowflake account. Type: string (or Expression with resultType string). </param>
         /// <param name="schema"> Schema name for connection. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="useUtcTimestamps"> Indicates whether to use UTC timezone for timestamp data types. Type: boolean. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnowflakeLinkedV2ServiceTypeProperties(DataFactoryElement<string> accountIdentifier, DataFactoryElement<string> user, DataFactoryElement<string> database, DataFactoryElement<string> warehouse, SnowflakeAuthenticationType? authenticationType, DataFactoryElement<string> clientId, DataFactoryElement<string> tenantId, DataFactoryElement<string> scope, DataFactoryElement<string> role, DataFactoryElement<string> host, DataFactoryElement<string> schema, string encryptedCredential, DataFactoryElement<bool> useUtcTimestamps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnowflakeLinkedV2ServiceTypeProperties(DataFactoryElement<string> accountIdentifier, DataFactoryElement<string> user, DataFactorySecret password, DataFactoryElement<string> database, DataFactoryElement<string> warehouse, SnowflakeAuthenticationType? authenticationType, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> tenantId, DataFactoryElement<string> scope, DataFactorySecret privateKey, DataFactorySecret privateKeyPassphrase, DataFactoryElement<string> role, DataFactoryElement<string> host, DataFactoryElement<string> schema, string encryptedCredential, DataFactoryElement<bool> useUtcTimestamps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccountIdentifier = accountIdentifier;
             User = user;
+            Password = password;
             Database = database;
             Warehouse = warehouse;
             AuthenticationType = authenticationType;
             ClientId = clientId;
+            ClientSecret = clientSecret;
             TenantId = tenantId;
             Scope = scope;
+            PrivateKey = privateKey;
+            PrivateKeyPassphrase = privateKeyPassphrase;
             Role = role;
             Host = host;
             Schema = schema;
@@ -66,6 +74,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The name of the Snowflake user. </summary>
         public DataFactoryElement<string> User { get; set; }
 
+        /// <summary> The Azure key vault secret reference of password in connection string. </summary>
+        public DataFactorySecret Password { get; set; }
+
         /// <summary> The name of the Snowflake database. </summary>
         public DataFactoryElement<string> Database { get; set; }
 
@@ -78,11 +89,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The client ID of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
         public DataFactoryElement<string> ClientId { get; set; }
 
+        /// <summary> The Azure key vault secret reference of client secret for AADServicePrincipal authentication. </summary>
+        public DataFactorySecret ClientSecret { get; set; }
+
         /// <summary> The tenant ID of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
         public DataFactoryElement<string> TenantId { get; set; }
 
         /// <summary> The scope of the application registered in Azure Active Directory for AADServicePrincipal authentication. </summary>
         public DataFactoryElement<string> Scope { get; set; }
+
+        /// <summary> The Azure key vault secret reference of privateKey for KeyPair auth. </summary>
+        public DataFactorySecret PrivateKey { get; set; }
+
+        /// <summary> The Azure key vault secret reference of private key password for KeyPair auth with encrypted private key. </summary>
+        public DataFactorySecret PrivateKeyPassphrase { get; set; }
 
         /// <summary> The default access control role to use in the Snowflake session. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Role { get; set; }

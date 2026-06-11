@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("userId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(UserId, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
@@ -164,6 +169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> host = default;
             DataFactoryElement<string> userId = default;
+            DataFactorySecret password = default;
             DataFactoryElement<string> connectionString = default;
             DataFactoryElement<string> sasUri = default;
             DataFactoryElement<string> fileShare = default;
@@ -190,6 +196,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     userId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("connectionString"u8))
@@ -259,6 +274,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AzureFileStorageLinkedServiceTypeProperties(
                 host,
                 userId,
+                password,
                 connectionString,
                 sasUri,
                 fileShare,

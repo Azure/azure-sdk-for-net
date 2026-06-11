@@ -42,13 +42,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="authenticationType"> The type used for authentication. Type: string. </param>
         /// <param name="userName"> The on-premises Windows authentication user name. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> The on-premises Windows authentication password. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="alwaysEncryptedSettings"> Sql always encrypted properties. </param>
-        internal AmazonRdsForSqlServerLinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<string> database, DataFactoryElement<string> encrypt, DataFactoryElement<bool> trustServerCertificate, DataFactoryElement<string> hostNameInCertificate, DataFactoryElement<string> applicationIntent, DataFactoryElement<int> connectTimeout, DataFactoryElement<int> connectRetryCount, DataFactoryElement<int> connectRetryInterval, DataFactoryElement<int> loadBalanceTimeout, DataFactoryElement<int> commandTimeout, DataFactoryElement<bool> integratedSecurity, DataFactoryElement<string> failoverPartner, DataFactoryElement<int> maxPoolSize, DataFactoryElement<int> minPoolSize, DataFactoryElement<bool> multipleActiveResultSets, DataFactoryElement<bool> multiSubnetFailover, DataFactoryElement<int> packetSize, DataFactoryElement<bool> pooling, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryElement<string> connectionString, AmazonRdsForSqlAuthenticationType? authenticationType, DataFactoryElement<string> userName, string encryptedCredential, SqlAlwaysEncryptedProperties alwaysEncryptedSettings) : base(server, database, encrypt, trustServerCertificate, hostNameInCertificate, applicationIntent, connectTimeout, connectRetryCount, connectRetryInterval, loadBalanceTimeout, commandTimeout, integratedSecurity, failoverPartner, maxPoolSize, minPoolSize, multipleActiveResultSets, multiSubnetFailover, packetSize, pooling, additionalBinaryDataProperties)
+        internal AmazonRdsForSqlServerLinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<string> database, DataFactoryElement<string> encrypt, DataFactoryElement<bool> trustServerCertificate, DataFactoryElement<string> hostNameInCertificate, DataFactoryElement<string> applicationIntent, DataFactoryElement<int> connectTimeout, DataFactoryElement<int> connectRetryCount, DataFactoryElement<int> connectRetryInterval, DataFactoryElement<int> loadBalanceTimeout, DataFactoryElement<int> commandTimeout, DataFactoryElement<bool> integratedSecurity, DataFactoryElement<string> failoverPartner, DataFactoryElement<int> maxPoolSize, DataFactoryElement<int> minPoolSize, DataFactoryElement<bool> multipleActiveResultSets, DataFactoryElement<bool> multiSubnetFailover, DataFactoryElement<int> packetSize, DataFactoryElement<bool> pooling, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryElement<string> connectionString, AmazonRdsForSqlAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential, SqlAlwaysEncryptedProperties alwaysEncryptedSettings) : base(server, database, encrypt, trustServerCertificate, hostNameInCertificate, applicationIntent, connectTimeout, connectRetryCount, connectRetryInterval, loadBalanceTimeout, commandTimeout, integratedSecurity, failoverPartner, maxPoolSize, minPoolSize, multipleActiveResultSets, multiSubnetFailover, packetSize, pooling, additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             AuthenticationType = authenticationType;
             UserName = userName;
+            Password = password;
             EncryptedCredential = encryptedCredential;
             AlwaysEncryptedSettings = alwaysEncryptedSettings;
         }
@@ -61,6 +63,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The on-premises Windows authentication user name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
+
+        /// <summary> The on-premises Windows authentication password. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="httpPath"> The partial URL corresponding to the Phoenix server. (i.e. /gateway/sandbox/phoenix/version). The default value is hbasephoenix if using WindowsAzureHDInsightService. </param>
         /// <param name="authenticationType"> The authentication mechanism used to connect to the Phoenix server. </param>
         /// <param name="username"> The user name used to connect to the Phoenix server. </param>
+        /// <param name="password"> The password corresponding to the user name. </param>
         /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </param>
         /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
         /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. </param>
@@ -38,13 +39,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PhoenixLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<int> port, DataFactoryElement<string> httpPath, PhoenixAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactoryElement<bool> enableSsl, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PhoenixLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<int> port, DataFactoryElement<string> httpPath, PhoenixAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<bool> enableSsl, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             Port = port;
             HttpPath = httpPath;
             AuthenticationType = authenticationType;
             Username = username;
+            Password = password;
             EnableSsl = enableSsl;
             TrustedCertPath = trustedCertPath;
             UseSystemTrustStore = useSystemTrustStore;
@@ -68,6 +70,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The user name used to connect to the Phoenix server. </summary>
         public DataFactoryElement<string> Username { get; set; }
+
+        /// <summary> The password corresponding to the user name. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </summary>
         public DataFactoryElement<bool> EnableSsl { get; set; }

@@ -41,18 +41,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="endpoint"> The endpoint of the Amazon MWS server, (i.e. mws.amazonservices.com). </param>
         /// <param name="marketplaceId"> The Amazon Marketplace ID you want to retrieve data from. To retrieve data from multiple Marketplace IDs, separate them with a comma (,). (i.e. A2EUQ1WTGCTBG2). </param>
         /// <param name="sellerId"> The Amazon seller ID. </param>
+        /// <param name="mwsAuthToken"> The Amazon MWS authentication token. </param>
         /// <param name="accessKeyId"> The access key id used to access data. </param>
+        /// <param name="secretKey"> The secret key used to access data. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AmazonMWSLinkedServiceTypeProperties(DataFactoryElement<string> endpoint, DataFactoryElement<string> marketplaceId, DataFactoryElement<string> sellerId, DataFactoryElement<string> accessKeyId, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AmazonMWSLinkedServiceTypeProperties(DataFactoryElement<string> endpoint, DataFactoryElement<string> marketplaceId, DataFactoryElement<string> sellerId, DataFactorySecret mwsAuthToken, DataFactoryElement<string> accessKeyId, DataFactorySecret secretKey, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             MarketplaceId = marketplaceId;
             SellerId = sellerId;
+            MwsAuthToken = mwsAuthToken;
             AccessKeyId = accessKeyId;
+            SecretKey = secretKey;
             UseEncryptedEndpoints = useEncryptedEndpoints;
             UseHostVerification = useHostVerification;
             UsePeerVerification = usePeerVerification;
@@ -69,8 +73,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The Amazon seller ID. </summary>
         public DataFactoryElement<string> SellerId { get; set; }
 
+        /// <summary> The Amazon MWS authentication token. </summary>
+        public DataFactorySecret MwsAuthToken { get; set; }
+
         /// <summary> The access key id used to access data. </summary>
         public DataFactoryElement<string> AccessKeyId { get; set; }
+
+        /// <summary> The secret key used to access data. </summary>
+        public DataFactorySecret SecretKey { get; set; }
 
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }

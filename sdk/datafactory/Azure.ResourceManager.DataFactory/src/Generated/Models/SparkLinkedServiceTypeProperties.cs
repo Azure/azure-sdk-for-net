@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="thriftTransportProtocol"> The transport protocol to use in the Thrift layer. </param>
         /// <param name="authenticationType"> The authentication method used to access the Spark server. </param>
         /// <param name="username"> The user name that you use to access Spark Server. </param>
+        /// <param name="password"> The password corresponding to the user name that you provided in the Username field. </param>
         /// <param name="httpPath"> The partial URL corresponding to the Spark server. </param>
         /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </param>
         /// <param name="enableServerCertificateValidation"> Specifies whether the connections to the server will validate server certificate, the default value is True. Only used for Version 2.0. </param>
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="allowSelfSignedServerCert"> Specifies whether to allow self-signed certificates from the server. The default value is false. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SparkLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<int> port, SparkServerType? serverType, SparkThriftTransportProtocol? thriftTransportProtocol, SparkAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactoryElement<string> httpPath, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> enableServerCertificateValidation, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SparkLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<int> port, SparkServerType? serverType, SparkThriftTransportProtocol? thriftTransportProtocol, SparkAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<string> httpPath, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> enableServerCertificateValidation, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<bool> allowHostNameCNMismatch, DataFactoryElement<bool> allowSelfSignedServerCert, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             Port = port;
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ThriftTransportProtocol = thriftTransportProtocol;
             AuthenticationType = authenticationType;
             Username = username;
+            Password = password;
             HttpPath = httpPath;
             EnableSsl = enableSsl;
             EnableServerCertificateValidation = enableServerCertificateValidation;
@@ -79,6 +81,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The user name that you use to access Spark Server. </summary>
         public DataFactoryElement<string> Username { get; set; }
+
+        /// <summary> The password corresponding to the user name that you provided in the Username field. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> The partial URL corresponding to the Spark server. </summary>
         public DataFactoryElement<string> HttpPath { get; set; }

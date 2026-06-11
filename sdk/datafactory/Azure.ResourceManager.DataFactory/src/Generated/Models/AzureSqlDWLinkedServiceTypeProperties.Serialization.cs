@@ -95,10 +95,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("servicePrincipalId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
+            if (Optional.IsDefined(ServicePrincipalKey))
+            {
+                writer.WritePropertyName("servicePrincipalKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalKey, options);
+            }
             if (Optional.IsDefined(ServicePrincipalCredentialType))
             {
                 writer.WritePropertyName("servicePrincipalCredentialType"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalCredentialType, options);
+            }
+            if (Optional.IsDefined(ServicePrincipalCredential))
+            {
+                writer.WritePropertyName("servicePrincipalCredential"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalCredential, options);
             }
             if (Optional.IsDefined(Tenant))
             {
@@ -171,7 +181,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             AzureSqlDWAuthenticationType? authenticationType = default;
             DataFactoryElement<string> userName = default;
             DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecret servicePrincipalKey = default;
             DataFactoryElement<string> servicePrincipalCredentialType = default;
+            DataFactorySecret servicePrincipalCredential = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryElement<string> azureCloudType = default;
             string encryptedCredential = default;
@@ -373,6 +385,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     ReadServicePrincipalId(prop, ref servicePrincipalId);
                     continue;
                 }
+                if (prop.NameEquals("servicePrincipalKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servicePrincipalKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("servicePrincipalCredentialType"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -380,6 +401,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     servicePrincipalCredentialType = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("servicePrincipalCredential"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servicePrincipalCredential = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tenant"u8))
@@ -444,7 +474,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 authenticationType,
                 userName,
                 servicePrincipalId,
+                servicePrincipalKey,
                 servicePrincipalCredentialType,
+                servicePrincipalCredential,
                 tenant,
                 azureCloudType,
                 encryptedCredential,

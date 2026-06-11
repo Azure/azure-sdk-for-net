@@ -82,6 +82,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("trainedModelName"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(TrainedModelName, options);
+            writer.WritePropertyName("trainedModelLinkedServiceName"u8);
+            writer.WriteObjectValue<DataFactoryLinkedServiceReference>(TrainedModelLinkedServiceName, options);
             writer.WritePropertyName("trainedModelFilePath"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(TrainedModelFilePath, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -127,6 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> trainedModelName = default;
+            DataFactoryLinkedServiceReference trainedModelLinkedServiceName = default;
             DataFactoryElement<string> trainedModelFilePath = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -134,6 +137,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("trainedModelName"u8))
                 {
                     trainedModelName = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("trainedModelLinkedServiceName"u8))
+                {
+                    trainedModelLinkedServiceName = ModelReaderWriter.Read<DataFactoryLinkedServiceReference>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("trainedModelFilePath"u8))
@@ -146,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureMLUpdateResourceActivityTypeProperties(trainedModelName, trainedModelFilePath, additionalBinaryDataProperties);
+            return new AzureMLUpdateResourceActivityTypeProperties(trainedModelName, trainedModelLinkedServiceName, trainedModelFilePath, additionalBinaryDataProperties);
         }
     }
 }

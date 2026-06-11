@@ -7,23 +7,52 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/59298 :
-    // identity-aliased Azure.Core.Expressions.DataFactory model types can be omitted from generated
-    // model surfaces. This partial restores the GA API surface for compatibility.
-    // TODO: remove once the generator preserves members whose types use @@alternateType identity (#59298).
+    // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/59298 and
+    // https://github.com/Azure/azure-sdk-for-net/issues/59852 :
+    // Identity-aliased Azure.Core.Expressions.DataFactory members are dropped from the generated public
+    // surface (#59298) and the emitter no longer emits the public constructor for these flattened types
+    // (#59852). This partial restores the GA properties (routed through TypeProperties) and the public ctor.
+    // TODO: remove once the generator restores both (#59298, #59852).
     public partial class AzureMLLinkedService
     {
-        /// <summary> Property restored as workaround for issue #59298. </summary>
-        public DataFactorySecret ApiKey { get; set; }
-
-        /// <summary> Property restored as workaround for issue #59298. </summary>
-        public DataFactorySecret ServicePrincipalKey { get; set; }
-
-        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
-        public AzureMLLinkedService(DataFactoryElement<string> mlEndpoint, DataFactorySecret apiKey)
-            : this(mlEndpoint)
+        /// <summary> Property restored as workaround for issues #59298 and #59852. </summary>
+        public DataFactorySecret ApiKey
         {
-            ApiKey = apiKey;
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ApiKey;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureMLLinkedServiceTypeProperties();
+                }
+                TypeProperties.ApiKey = value;
+            }
+        }
+
+        /// <summary> Property restored as workaround for issues #59298 and #59852. </summary>
+        public DataFactorySecret ServicePrincipalKey
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.ServicePrincipalKey;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new AzureMLLinkedServiceTypeProperties();
+                }
+                TypeProperties.ServicePrincipalKey = value;
+            }
+        }
+
+        /// <summary> Initializes a new instance restored as workaround for issues #59298 and #59852. </summary>
+        public AzureMLLinkedService(DataFactoryElement<string> mlEndpoint, DataFactorySecret apiKey) : base("AzureML")
+        {
+            TypeProperties = new AzureMLLinkedServiceTypeProperties(mlEndpoint, apiKey);
         }
     }
 }

@@ -86,6 +86,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("servicePrincipalId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
             }
+            if (Optional.IsDefined(ServicePrincipalKey))
+            {
+                writer.WritePropertyName("servicePrincipalKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalKey, options);
+            }
             writer.WritePropertyName("database"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(Database, options);
             if (Optional.IsDefined(Tenant))
@@ -142,6 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             DataFactoryElement<string> endpoint = default;
             DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecret servicePrincipalKey = default;
             DataFactoryElement<string> database = default;
             DataFactoryElement<string> tenant = default;
             DataFactoryCredentialReference credential = default;
@@ -156,6 +162,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
                     ReadServicePrincipalId(prop, ref servicePrincipalId);
+                    continue;
+                }
+                if (prop.NameEquals("servicePrincipalKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servicePrincipalKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("database"u8))
@@ -189,6 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AzureDataExplorerLinkedServiceTypeProperties(
                 endpoint,
                 servicePrincipalId,
+                servicePrincipalKey,
                 database,
                 tenant,
                 credential,

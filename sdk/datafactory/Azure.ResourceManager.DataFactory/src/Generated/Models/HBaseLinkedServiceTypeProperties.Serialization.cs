@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("username"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(Username, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactorySecret>(Password, options);
+            }
             if (Optional.IsDefined(EnableSsl))
             {
                 writer.WritePropertyName("enableSsl"u8);
@@ -170,6 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> httpPath = default;
             HBaseAuthenticationType authenticationType = default;
             DataFactoryElement<string> username = default;
+            DataFactorySecret password = default;
             DataFactoryElement<bool> enableSsl = default;
             DataFactoryElement<string> trustedCertPath = default;
             DataFactoryElement<bool> allowHostNameCNMismatch = default;
@@ -209,6 +215,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("username"u8))
                 {
                     ReadUsername(prop, ref username);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("enableSsl"u8))
@@ -263,6 +278,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 httpPath,
                 authenticationType,
                 username,
+                password,
                 enableSsl,
                 trustedCertPath,
                 allowHostNameCNMismatch,

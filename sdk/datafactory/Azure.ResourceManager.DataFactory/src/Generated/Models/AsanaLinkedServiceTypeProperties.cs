@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,18 +19,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AsanaLinkedServiceTypeProperties"/>. </summary>
-        public AsanaLinkedServiceTypeProperties()
+        /// <param name="apiToken"> The api token for the Asana source. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
+        public AsanaLinkedServiceTypeProperties(DataFactorySecret apiToken)
         {
+            Argument.AssertNotNull(apiToken, nameof(apiToken));
+
+            ApiToken = apiToken;
         }
 
         /// <summary> Initializes a new instance of <see cref="AsanaLinkedServiceTypeProperties"/>. </summary>
+        /// <param name="apiToken"> The api token for the Asana source. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AsanaLinkedServiceTypeProperties(string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AsanaLinkedServiceTypeProperties(DataFactorySecret apiToken, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            ApiToken = apiToken;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The api token for the Asana source. </summary>
+        public DataFactorySecret ApiToken { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

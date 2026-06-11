@@ -31,12 +31,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="FileServerLinkedServiceTypeProperties"/>. </summary>
         /// <param name="host"> Host name of the server. Type: string (or Expression with resultType string). </param>
         /// <param name="userId"> User ID to logon the server. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password to logon the server. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileServerLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> userId, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileServerLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> userId, DataFactorySecret password, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             UserId = userId;
+            Password = password;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -46,6 +48,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> User ID to logon the server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserId { get; set; }
+
+        /// <summary> Password to logon the server. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

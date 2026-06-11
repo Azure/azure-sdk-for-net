@@ -20,30 +20,38 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureMLUpdateResourceActivityTypeProperties"/>. </summary>
         /// <param name="trainedModelName"> Name of the Trained Model module in the Web Service experiment to be updated. Type: string (or Expression with resultType string). </param>
+        /// <param name="trainedModelLinkedServiceName"> Name of Azure Storage linked service holding the .ilearner file that will be uploaded by the update operation. </param>
         /// <param name="trainedModelFilePath"> The relative file path in trainedModelLinkedService to represent the .ilearner file that will be uploaded by the update operation.  Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trainedModelName"/> or <paramref name="trainedModelFilePath"/> is null. </exception>
-        public AzureMLUpdateResourceActivityTypeProperties(DataFactoryElement<string> trainedModelName, DataFactoryElement<string> trainedModelFilePath)
+        /// <exception cref="ArgumentNullException"> <paramref name="trainedModelName"/>, <paramref name="trainedModelLinkedServiceName"/> or <paramref name="trainedModelFilePath"/> is null. </exception>
+        public AzureMLUpdateResourceActivityTypeProperties(DataFactoryElement<string> trainedModelName, DataFactoryLinkedServiceReference trainedModelLinkedServiceName, DataFactoryElement<string> trainedModelFilePath)
         {
             Argument.AssertNotNull(trainedModelName, nameof(trainedModelName));
+            Argument.AssertNotNull(trainedModelLinkedServiceName, nameof(trainedModelLinkedServiceName));
             Argument.AssertNotNull(trainedModelFilePath, nameof(trainedModelFilePath));
 
             TrainedModelName = trainedModelName;
+            TrainedModelLinkedServiceName = trainedModelLinkedServiceName;
             TrainedModelFilePath = trainedModelFilePath;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureMLUpdateResourceActivityTypeProperties"/>. </summary>
         /// <param name="trainedModelName"> Name of the Trained Model module in the Web Service experiment to be updated. Type: string (or Expression with resultType string). </param>
+        /// <param name="trainedModelLinkedServiceName"> Name of Azure Storage linked service holding the .ilearner file that will be uploaded by the update operation. </param>
         /// <param name="trainedModelFilePath"> The relative file path in trainedModelLinkedService to represent the .ilearner file that will be uploaded by the update operation.  Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureMLUpdateResourceActivityTypeProperties(DataFactoryElement<string> trainedModelName, DataFactoryElement<string> trainedModelFilePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureMLUpdateResourceActivityTypeProperties(DataFactoryElement<string> trainedModelName, DataFactoryLinkedServiceReference trainedModelLinkedServiceName, DataFactoryElement<string> trainedModelFilePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TrainedModelName = trainedModelName;
+            TrainedModelLinkedServiceName = trainedModelLinkedServiceName;
             TrainedModelFilePath = trainedModelFilePath;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the Trained Model module in the Web Service experiment to be updated. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TrainedModelName { get; set; }
+
+        /// <summary> Name of Azure Storage linked service holding the .ilearner file that will be uploaded by the update operation. </summary>
+        public DataFactoryLinkedServiceReference TrainedModelLinkedServiceName { get; set; }
 
         /// <summary> The relative file path in trainedModelLinkedService to represent the .ilearner file that will be uploaded by the update operation.  Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TrainedModelFilePath { get; set; }

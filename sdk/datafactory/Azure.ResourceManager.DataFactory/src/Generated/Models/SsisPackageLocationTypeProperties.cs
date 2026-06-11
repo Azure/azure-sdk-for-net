@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SSISPackageLocationTypeProperties"/>. </summary>
+        /// <param name="packagePassword"> Password of the package. </param>
         /// <param name="accessCredential"> The package access credential. </param>
         /// <param name="configurationPath"> The configuration file of the package execution. Type: string (or Expression with resultType string). </param>
         /// <param name="configurationAccessCredential"> The configuration file access credential. </param>
@@ -32,8 +33,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="packageLastModifiedDate"> The embedded package last modified date. </param>
         /// <param name="childPackages"> The embedded child package list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SSISPackageLocationTypeProperties(SsisAccessCredential accessCredential, DataFactoryElement<string> configurationPath, SsisAccessCredential configurationAccessCredential, string packageName, DataFactoryElement<string> packageContent, string packageLastModifiedDate, IList<SsisChildPackage> childPackages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SSISPackageLocationTypeProperties(DataFactorySecret packagePassword, SsisAccessCredential accessCredential, DataFactoryElement<string> configurationPath, SsisAccessCredential configurationAccessCredential, string packageName, DataFactoryElement<string> packageContent, string packageLastModifiedDate, IList<SsisChildPackage> childPackages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            PackagePassword = packagePassword;
             AccessCredential = accessCredential;
             ConfigurationPath = configurationPath;
             ConfigurationAccessCredential = configurationAccessCredential;
@@ -43,6 +45,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             ChildPackages = childPackages;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Password of the package. </summary>
+        public DataFactorySecret PackagePassword { get; set; }
 
         /// <summary> The package access credential. </summary>
         public SsisAccessCredential AccessCredential { get; set; }

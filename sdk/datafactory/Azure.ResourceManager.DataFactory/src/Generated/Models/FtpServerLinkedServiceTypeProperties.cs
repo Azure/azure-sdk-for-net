@@ -28,16 +28,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="port"> The TCP port number that the FTP server uses to listen for client connections. Default value is 21. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="authenticationType"> The authentication type to be used to connect to the FTP server. </param>
         /// <param name="userName"> Username to logon the FTP server. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password to logon the FTP server. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="enableSsl"> If true, connect to the FTP server over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="enableServerCertificateValidation"> If true, validate the FTP server SSL certificate when connect over SSL/TLS channel. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FtpServerLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<int> port, FtpAuthenticationType? authenticationType, DataFactoryElement<string> userName, string encryptedCredential, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> enableServerCertificateValidation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FtpServerLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<int> port, FtpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential, DataFactoryElement<bool> enableSsl, DataFactoryElement<bool> enableServerCertificateValidation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             Port = port;
             AuthenticationType = authenticationType;
             UserName = userName;
+            Password = password;
             EncryptedCredential = encryptedCredential;
             EnableSsl = enableSsl;
             EnableServerCertificateValidation = enableServerCertificateValidation;
@@ -55,6 +57,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Username to logon the FTP server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
+
+        /// <summary> Password to logon the FTP server. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

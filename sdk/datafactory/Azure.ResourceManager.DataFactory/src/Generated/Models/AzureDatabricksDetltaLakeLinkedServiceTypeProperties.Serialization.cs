@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("domain"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(Domain, options);
+            if (Optional.IsDefined(AccessToken))
+            {
+                writer.WritePropertyName("accessToken"u8);
+                writer.WriteObjectValue<DataFactorySecret>(AccessToken, options);
+            }
             if (Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
@@ -144,6 +149,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> domain = default;
+            DataFactorySecret accessToken = default;
             DataFactoryElement<string> clusterId = default;
             string encryptedCredential = default;
             DataFactoryCredentialReference credential = default;
@@ -154,6 +160,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("domain"u8))
                 {
                     ReadDomain(prop, ref domain);
+                    continue;
+                }
+                if (prop.NameEquals("accessToken"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accessToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("clusterId"u8))
@@ -195,6 +210,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new AzureDatabricksDetltaLakeLinkedServiceTypeProperties(
                 domain,
+                accessToken,
                 clusterId,
                 encryptedCredential,
                 credential,

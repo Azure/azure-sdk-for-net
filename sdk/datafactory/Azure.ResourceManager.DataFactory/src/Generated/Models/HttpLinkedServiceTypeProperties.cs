@@ -27,17 +27,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="uri"> The base URL of the HTTP endpoint, e.g. https://www.microsoft.com. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to be used to connect to the HTTP server. </param>
         /// <param name="userName"> User name for Basic, Digest, or Windows authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password for Basic, Digest, Windows, or ClientCertificate with EmbeddedCertData authentication. </param>
         /// <param name="authHeaders"> The additional HTTP headers in the request to RESTful API used for authorization. Type: key value pairs (value should be string type). </param>
         /// <param name="embeddedCertData"> Base64 encoded certificate data for ClientCertificate authentication. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </param>
         /// <param name="certThumbprint"> Thumbprint of certificate for ClientCertificate authentication. Only valid for on-premises copy. For on-premises copy with ClientCertificate authentication, either CertThumbprint or EmbeddedCertData/Password should be specified. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="enableServerCertificateValidation"> If true, validate the HTTPS server SSL certificate. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HttpLinkedServiceTypeProperties(DataFactoryElement<string> uri, HttpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactoryElement<IDictionary<string, string>> authHeaders, DataFactoryElement<string> embeddedCertData, DataFactoryElement<string> certThumbprint, string encryptedCredential, DataFactoryElement<bool> enableServerCertificateValidation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HttpLinkedServiceTypeProperties(DataFactoryElement<string> uri, HttpAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, DataFactoryElement<IDictionary<string, string>> authHeaders, DataFactoryElement<string> embeddedCertData, DataFactoryElement<string> certThumbprint, string encryptedCredential, DataFactoryElement<bool> enableServerCertificateValidation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             AuthenticationType = authenticationType;
             UserName = userName;
+            Password = password;
             AuthHeaders = authHeaders;
             EmbeddedCertData = embeddedCertData;
             CertThumbprint = certThumbprint;
@@ -54,6 +56,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> User name for Basic, Digest, or Windows authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
+
+        /// <summary> Password for Basic, Digest, Windows, or ClientCertificate with EmbeddedCertData authentication. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> The additional HTTP headers in the request to RESTful API used for authorization. Type: key value pairs (value should be string type). </summary>
         public DataFactoryElement<IDictionary<string, string>> AuthHeaders { get; set; }

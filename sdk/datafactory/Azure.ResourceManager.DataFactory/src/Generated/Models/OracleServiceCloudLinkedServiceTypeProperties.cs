@@ -19,24 +19,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="OracleServiceCloudLinkedServiceTypeProperties"/>. </summary>
         /// <param name="host"> The URL of the Oracle Service Cloud instance. </param>
         /// <param name="username"> The user name that you use to access Oracle Service Cloud server. </param>
-        public OracleServiceCloudLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> username)
+        /// <param name="password"> The password corresponding to the user name that you provided in the username key. </param>
+        public OracleServiceCloudLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> username, DataFactorySecret password)
         {
             Host = host;
             Username = username;
+            Password = password;
         }
 
         /// <summary> Initializes a new instance of <see cref="OracleServiceCloudLinkedServiceTypeProperties"/>. </summary>
         /// <param name="host"> The URL of the Oracle Service Cloud instance. </param>
         /// <param name="username"> The user name that you use to access Oracle Service Cloud server. </param>
+        /// <param name="password"> The password corresponding to the user name that you provided in the username key. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OracleServiceCloudLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> username, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OracleServiceCloudLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> username, DataFactorySecret password, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Host = host;
             Username = username;
+            Password = password;
             UseEncryptedEndpoints = useEncryptedEndpoints;
             UseHostVerification = useHostVerification;
             UsePeerVerification = usePeerVerification;
@@ -49,6 +53,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The user name that you use to access Oracle Service Cloud server. </summary>
         public DataFactoryElement<string> Username { get; set; }
+
+        /// <summary> The password corresponding to the user name that you provided in the username key. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -29,14 +30,19 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="LicensedComponentSetupTypeProperties"/>. </summary>
         /// <param name="componentName"> The name of the 3rd party component. </param>
+        /// <param name="licenseKey"> The license key to activate the component. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LicensedComponentSetupTypeProperties(string componentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LicensedComponentSetupTypeProperties(string componentName, DataFactorySecret licenseKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComponentName = componentName;
+            LicenseKey = licenseKey;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the 3rd party component. </summary>
         public string ComponentName { get; set; }
+
+        /// <summary> The license key to activate the component. </summary>
+        public DataFactorySecret LicenseKey { get; set; }
     }
 }

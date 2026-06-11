@@ -30,20 +30,24 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProjects"> A comma-separated list of public BigQuery projects to access. Type: string (or Expression with resultType string). </param>
         /// <param name="requestGoogleDriveScope"> Whether to request access to Google Drive. Allowing Google Drive access enables support for federated tables that combine BigQuery data with data from Google Drive. The default value is false. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
+        /// <param name="refreshToken"> The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication. </param>
         /// <param name="clientId"> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </param>
+        /// <param name="clientSecret"> The client secret of the google application used to acquire the refresh token. </param>
         /// <param name="email"> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </param>
         /// <param name="keyFilePath"> The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </param>
         /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Type: string (or Expression with resultType string). </param>
         /// <param name="useSystemTrustStore"> Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false.Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GoogleBigQueryLinkedServiceTypeProperties(DataFactoryElement<string> project, DataFactoryElement<string> additionalProjects, DataFactoryElement<bool> requestGoogleDriveScope, GoogleBigQueryAuthenticationType authenticationType, DataFactoryElement<string> clientId, DataFactoryElement<string> email, DataFactoryElement<string> keyFilePath, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GoogleBigQueryLinkedServiceTypeProperties(DataFactoryElement<string> project, DataFactoryElement<string> additionalProjects, DataFactoryElement<bool> requestGoogleDriveScope, GoogleBigQueryAuthenticationType authenticationType, DataFactorySecret refreshToken, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> email, DataFactoryElement<string> keyFilePath, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Project = project;
             AdditionalProjects = additionalProjects;
             RequestGoogleDriveScope = requestGoogleDriveScope;
             AuthenticationType = authenticationType;
+            RefreshToken = refreshToken;
             ClientId = clientId;
+            ClientSecret = clientSecret;
             Email = email;
             KeyFilePath = keyFilePath;
             TrustedCertPath = trustedCertPath;
@@ -64,8 +68,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </summary>
         public GoogleBigQueryAuthenticationType AuthenticationType { get; set; }
 
+        /// <summary> The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication. </summary>
+        public DataFactorySecret RefreshToken { get; set; }
+
         /// <summary> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClientId { get; set; }
+
+        /// <summary> The client secret of the google application used to acquire the refresh token. </summary>
+        public DataFactorySecret ClientSecret { get; set; }
 
         /// <summary> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Email { get; set; }

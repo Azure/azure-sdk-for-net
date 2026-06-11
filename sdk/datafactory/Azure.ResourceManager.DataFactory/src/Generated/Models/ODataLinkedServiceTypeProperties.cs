@@ -27,25 +27,33 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="uri"> The URL of the OData service endpoint. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the OData service. </param>
         /// <param name="userName"> User name of the OData service. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password of the OData service. </param>
         /// <param name="authHeaders"> The additional HTTP headers in the request to RESTful API used for authorization. Type: key value pairs (value should be string type). </param>
         /// <param name="tenant"> Specify the tenant information (domain name or tenant ID) under which your application resides. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> Specify the application id of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
         /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
         /// <param name="aadResourceId"> Specify the resource you are requesting authorization to use Directory. Type: string (or Expression with resultType string). </param>
         /// <param name="aadServicePrincipalCredentialType"> Specify the credential type (key or cert) is used for service principal. </param>
+        /// <param name="servicePrincipalKey"> Specify the secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalEmbeddedCert"> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalEmbeddedCertPassword"> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ODataLinkedServiceTypeProperties(DataFactoryElement<string> uri, ODataAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactoryElement<IDictionary<string, string>> authHeaders, DataFactoryElement<string> tenant, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> azureCloudType, DataFactoryElement<string> aadResourceId, ODataAadServicePrincipalCredentialType? aadServicePrincipalCredentialType, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ODataLinkedServiceTypeProperties(DataFactoryElement<string> uri, ODataAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, DataFactoryElement<IDictionary<string, string>> authHeaders, DataFactoryElement<string> tenant, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> azureCloudType, DataFactoryElement<string> aadResourceId, ODataAadServicePrincipalCredentialType? aadServicePrincipalCredentialType, DataFactorySecret servicePrincipalKey, DataFactorySecret servicePrincipalEmbeddedCert, DataFactorySecret servicePrincipalEmbeddedCertPassword, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             AuthenticationType = authenticationType;
             UserName = userName;
+            Password = password;
             AuthHeaders = authHeaders;
             Tenant = tenant;
             ServicePrincipalId = servicePrincipalId;
             AzureCloudType = azureCloudType;
             AadResourceId = aadResourceId;
             AadServicePrincipalCredentialType = aadServicePrincipalCredentialType;
+            ServicePrincipalKey = servicePrincipalKey;
+            ServicePrincipalEmbeddedCert = servicePrincipalEmbeddedCert;
+            ServicePrincipalEmbeddedCertPassword = servicePrincipalEmbeddedCertPassword;
             EncryptedCredential = encryptedCredential;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -58,6 +66,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> User name of the OData service. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
+
+        /// <summary> Password of the OData service. </summary>
+        public DataFactorySecret Password { get; set; }
 
         /// <summary> The additional HTTP headers in the request to RESTful API used for authorization. Type: key value pairs (value should be string type). </summary>
         public DataFactoryElement<IDictionary<string, string>> AuthHeaders { get; set; }
@@ -76,6 +87,15 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Specify the credential type (key or cert) is used for service principal. </summary>
         public ODataAadServicePrincipalCredentialType? AadServicePrincipalCredentialType { get; set; }
+
+        /// <summary> Specify the secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
+        public DataFactorySecret ServicePrincipalKey { get; set; }
+
+        /// <summary> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
+        public DataFactorySecret ServicePrincipalEmbeddedCert { get; set; }
+
+        /// <summary> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </summary>
+        public DataFactorySecret ServicePrincipalEmbeddedCertPassword { get; set; }
 
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }

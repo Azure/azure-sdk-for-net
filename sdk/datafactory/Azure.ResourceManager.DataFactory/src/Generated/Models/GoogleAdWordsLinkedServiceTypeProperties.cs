@@ -26,27 +26,35 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="GoogleAdWordsLinkedServiceTypeProperties"/>. </summary>
         /// <param name="connectionProperties"> (Deprecated) Properties used to connect to GoogleAds. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="clientCustomerId"> The Client customer ID of the AdWords account that you want to fetch report data for. Type: string (or Expression with resultType string). </param>
+        /// <param name="developerToken"> The developer token associated with the manager account that you use to grant access to the AdWords API. </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
+        /// <param name="refreshToken"> The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication. </param>
         /// <param name="clientId"> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </param>
+        /// <param name="clientSecret"> The client secret of the google application used to acquire the refresh token. </param>
         /// <param name="email"> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </param>
         /// <param name="keyFilePath"> (Deprecated) The full path to the .p12 key file that is used to authenticate the service account email address and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </param>
         /// <param name="trustedCertPath"> (Deprecated) The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. Type: string (or Expression with resultType string). </param>
         /// <param name="useSystemTrustStore"> (Deprecated) Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
+        /// <param name="privateKey"> The private key that is used to authenticate the service account email address and can only be used on self-hosted IR. </param>
         /// <param name="loginCustomerId"> The customer ID of the Google Ads Manager account through which you want to fetch report data of specific Customer. Type: string (or Expression with resultType string). </param>
         /// <param name="googleAdsApiVersion"> The Google Ads API major version such as v14. The supported major versions could be found on https://developers.google.com/google-ads/api/docs/release-notes. Type: string (or Expression with resultType string). </param>
         /// <param name="supportLegacyDataTypes"> Specifies whether to use the legacy data type mappings, which maps float, int32 and int64 from Google to string. Do not set this to true unless you want to keep backward compatibility with legacy driver's data type mappings. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GoogleAdWordsLinkedServiceTypeProperties(BinaryData connectionProperties, DataFactoryElement<string> clientCustomerId, GoogleAdWordsAuthenticationType? authenticationType, DataFactoryElement<string> clientId, DataFactoryElement<string> email, DataFactoryElement<string> keyFilePath, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactoryElement<string> loginCustomerId, DataFactoryElement<string> googleAdsApiVersion, DataFactoryElement<bool> supportLegacyDataTypes, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GoogleAdWordsLinkedServiceTypeProperties(BinaryData connectionProperties, DataFactoryElement<string> clientCustomerId, DataFactorySecret developerToken, GoogleAdWordsAuthenticationType? authenticationType, DataFactorySecret refreshToken, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> email, DataFactoryElement<string> keyFilePath, DataFactoryElement<string> trustedCertPath, DataFactoryElement<bool> useSystemTrustStore, DataFactorySecret privateKey, DataFactoryElement<string> loginCustomerId, DataFactoryElement<string> googleAdsApiVersion, DataFactoryElement<bool> supportLegacyDataTypes, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionProperties = connectionProperties;
             ClientCustomerId = clientCustomerId;
+            DeveloperToken = developerToken;
             AuthenticationType = authenticationType;
+            RefreshToken = refreshToken;
             ClientId = clientId;
+            ClientSecret = clientSecret;
             Email = email;
             KeyFilePath = keyFilePath;
             TrustedCertPath = trustedCertPath;
             UseSystemTrustStore = useSystemTrustStore;
+            PrivateKey = privateKey;
             LoginCustomerId = loginCustomerId;
             GoogleAdsApiVersion = googleAdsApiVersion;
             SupportLegacyDataTypes = supportLegacyDataTypes;
@@ -85,11 +93,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The Client customer ID of the AdWords account that you want to fetch report data for. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClientCustomerId { get; set; }
 
+        /// <summary> The developer token associated with the manager account that you use to grant access to the AdWords API. </summary>
+        public DataFactorySecret DeveloperToken { get; set; }
+
         /// <summary> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </summary>
         public GoogleAdWordsAuthenticationType? AuthenticationType { get; set; }
 
+        /// <summary> The refresh token obtained from Google for authorizing access to AdWords for UserAuthentication. </summary>
+        public DataFactorySecret RefreshToken { get; set; }
+
         /// <summary> The client id of the google application used to acquire the refresh token. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ClientId { get; set; }
+
+        /// <summary> The client secret of the google application used to acquire the refresh token. </summary>
+        public DataFactorySecret ClientSecret { get; set; }
 
         /// <summary> The service account email ID that is used for ServiceAuthentication and can only be used on self-hosted IR. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Email { get; set; }
@@ -102,6 +119,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> (Deprecated) Specifies whether to use a CA certificate from the system trust store or from a specified PEM file. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> UseSystemTrustStore { get; set; }
+
+        /// <summary> The private key that is used to authenticate the service account email address and can only be used on self-hosted IR. </summary>
+        public DataFactorySecret PrivateKey { get; set; }
 
         /// <summary> The customer ID of the Google Ads Manager account through which you want to fetch report data of specific Customer. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> LoginCustomerId { get; set; }

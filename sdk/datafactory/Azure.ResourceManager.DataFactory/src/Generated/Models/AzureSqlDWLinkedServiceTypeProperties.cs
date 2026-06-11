@@ -43,18 +43,22 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="authenticationType"> The type used for authentication. Type: string. </param>
         /// <param name="userName"> The user name to be used when connecting to server. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against Azure SQL Data Warehouse. </param>
         /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalCredential"> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureSqlDWLinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<string> database, DataFactoryElement<string> encrypt, DataFactoryElement<bool> trustServerCertificate, DataFactoryElement<string> hostNameInCertificate, DataFactoryElement<string> applicationIntent, DataFactoryElement<int> connectTimeout, DataFactoryElement<int> connectRetryCount, DataFactoryElement<int> connectRetryInterval, DataFactoryElement<int> loadBalanceTimeout, DataFactoryElement<int> commandTimeout, DataFactoryElement<bool> integratedSecurity, DataFactoryElement<string> failoverPartner, DataFactoryElement<int> maxPoolSize, DataFactoryElement<int> minPoolSize, DataFactoryElement<bool> multipleActiveResultSets, DataFactoryElement<bool> multiSubnetFailover, DataFactoryElement<int> packetSize, DataFactoryElement<bool> pooling, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryElement<string> connectionString, AzureSqlDWAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> servicePrincipalCredentialType, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, string encryptedCredential, DataFactoryCredentialReference credential) : base(server, database, encrypt, trustServerCertificate, hostNameInCertificate, applicationIntent, connectTimeout, connectRetryCount, connectRetryInterval, loadBalanceTimeout, commandTimeout, integratedSecurity, failoverPartner, maxPoolSize, minPoolSize, multipleActiveResultSets, multiSubnetFailover, packetSize, pooling, additionalBinaryDataProperties)
+        internal AzureSqlDWLinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<string> database, DataFactoryElement<string> encrypt, DataFactoryElement<bool> trustServerCertificate, DataFactoryElement<string> hostNameInCertificate, DataFactoryElement<string> applicationIntent, DataFactoryElement<int> connectTimeout, DataFactoryElement<int> connectRetryCount, DataFactoryElement<int> connectRetryInterval, DataFactoryElement<int> loadBalanceTimeout, DataFactoryElement<int> commandTimeout, DataFactoryElement<bool> integratedSecurity, DataFactoryElement<string> failoverPartner, DataFactoryElement<int> maxPoolSize, DataFactoryElement<int> minPoolSize, DataFactoryElement<bool> multipleActiveResultSets, DataFactoryElement<bool> multiSubnetFailover, DataFactoryElement<int> packetSize, DataFactoryElement<bool> pooling, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataFactoryElement<string> connectionString, AzureSqlDWAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecret servicePrincipalCredential, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, string encryptedCredential, DataFactoryCredentialReference credential) : base(server, database, encrypt, trustServerCertificate, hostNameInCertificate, applicationIntent, connectTimeout, connectRetryCount, connectRetryInterval, loadBalanceTimeout, commandTimeout, integratedSecurity, failoverPartner, maxPoolSize, minPoolSize, multipleActiveResultSets, multiSubnetFailover, packetSize, pooling, additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             AuthenticationType = authenticationType;
             UserName = userName;
             ServicePrincipalId = servicePrincipalId;
+            ServicePrincipalKey = servicePrincipalKey;
             ServicePrincipalCredentialType = servicePrincipalCredentialType;
+            ServicePrincipalCredential = servicePrincipalCredential;
             Tenant = tenant;
             AzureCloudType = azureCloudType;
             EncryptedCredential = encryptedCredential;
@@ -73,8 +77,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The ID of the service principal used to authenticate against Azure SQL Data Warehouse. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
 
+        /// <summary> The key of the service principal used to authenticate against Azure SQL Data Warehouse. </summary>
+        public DataFactorySecret ServicePrincipalKey { get; set; }
+
         /// <summary> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalCredentialType { get; set; }
+
+        /// <summary> The credential of the service principal object in Azure Active Directory. If servicePrincipalCredentialType is 'ServicePrincipalKey', servicePrincipalCredential can be SecureString or AzureKeyVaultSecretReference. If servicePrincipalCredentialType is 'ServicePrincipalCert', servicePrincipalCredential can only be AzureKeyVaultSecretReference. </summary>
+        public DataFactorySecret ServicePrincipalCredential { get; set; }
 
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Tenant { get; set; }

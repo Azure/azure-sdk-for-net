@@ -22,29 +22,37 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="HDInsightHiveActivityTypeProperties"/>. </summary>
         public HDInsightHiveActivityTypeProperties()
         {
+            StorageLinkedServices = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
             Arguments = new ChangeTrackingList<BinaryData>();
             Defines = new ChangeTrackingDictionary<string, BinaryData>();
             Variables = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightHiveActivityTypeProperties"/>. </summary>
+        /// <param name="storageLinkedServices"> Storage linked service references. </param>
         /// <param name="arguments"> User specified arguments to HDInsightActivity. </param>
         /// <param name="getDebugInfo"> Debug info option. </param>
         /// <param name="scriptPath"> Script path. Type: string (or Expression with resultType string). </param>
+        /// <param name="scriptLinkedService"> Script linked service reference. </param>
         /// <param name="defines"> Allows user to specify defines for Hive job request. </param>
         /// <param name="variables"> User specified arguments under hivevar namespace. </param>
         /// <param name="queryTimeout"> Query timeout value (in minutes).  Effective when the HDInsight cluster is with ESP (Enterprise Security Package). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightHiveActivityTypeProperties(IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> scriptPath, IDictionary<string, BinaryData> defines, IDictionary<string, BinaryData> variables, int? queryTimeout, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightHiveActivityTypeProperties(IList<DataFactoryLinkedServiceReference> storageLinkedServices, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> scriptPath, DataFactoryLinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines, IDictionary<string, BinaryData> variables, int? queryTimeout, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
             GetDebugInfo = getDebugInfo;
             ScriptPath = scriptPath;
+            ScriptLinkedService = scriptLinkedService;
             Defines = defines;
             Variables = variables;
             QueryTimeout = queryTimeout;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Storage linked service references. </summary>
+        public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; } = new ChangeTrackingList<DataFactoryLinkedServiceReference>();
 
         /// <summary>
         /// User specified arguments to HDInsightActivity.
@@ -79,6 +87,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Script path. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ScriptPath { get; set; }
+
+        /// <summary> Script linked service reference. </summary>
+        public DataFactoryLinkedServiceReference ScriptLinkedService { get; set; }
 
         /// <summary>
         /// Allows user to specify defines for Hive job request.

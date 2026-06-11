@@ -34,15 +34,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="MarketoLinkedServiceTypeProperties"/>. </summary>
         /// <param name="endpoint"> The endpoint of the Marketo server. (i.e. 123-ABC-321.mktorest.com). </param>
         /// <param name="clientId"> The client Id of your Marketo service. </param>
+        /// <param name="clientSecret"> The client secret of your Marketo service. </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MarketoLinkedServiceTypeProperties(DataFactoryElement<string> endpoint, DataFactoryElement<string> clientId, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MarketoLinkedServiceTypeProperties(DataFactoryElement<string> endpoint, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             ClientId = clientId;
+            ClientSecret = clientSecret;
             UseEncryptedEndpoints = useEncryptedEndpoints;
             UseHostVerification = useHostVerification;
             UsePeerVerification = usePeerVerification;
@@ -55,6 +57,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The client Id of your Marketo service. </summary>
         public DataFactoryElement<string> ClientId { get; set; }
+
+        /// <summary> The client secret of your Marketo service. </summary>
+        public DataFactorySecret ClientSecret { get; set; }
 
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }

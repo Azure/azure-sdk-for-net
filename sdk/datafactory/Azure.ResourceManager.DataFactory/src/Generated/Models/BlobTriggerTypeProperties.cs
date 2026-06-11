@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -20,23 +21,28 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="BlobTriggerTypeProperties"/>. </summary>
         /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
         /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> is null. </exception>
-        public BlobTriggerTypeProperties(string folderPath, int maxConcurrency)
+        /// <param name="linkedService"> The Azure Storage linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> or <paramref name="linkedService"/> is null. </exception>
+        public BlobTriggerTypeProperties(string folderPath, int maxConcurrency, DataFactoryLinkedServiceReference linkedService)
         {
             Argument.AssertNotNull(folderPath, nameof(folderPath));
+            Argument.AssertNotNull(linkedService, nameof(linkedService));
 
             FolderPath = folderPath;
             MaxConcurrency = maxConcurrency;
+            LinkedService = linkedService;
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobTriggerTypeProperties"/>. </summary>
         /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
         /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
+        /// <param name="linkedService"> The Azure Storage linked service reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobTriggerTypeProperties(string folderPath, int maxConcurrency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobTriggerTypeProperties(string folderPath, int maxConcurrency, DataFactoryLinkedServiceReference linkedService, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FolderPath = folderPath;
             MaxConcurrency = maxConcurrency;
+            LinkedService = linkedService;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,5 +51,8 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The max number of parallel files to handle when it is triggered. </summary>
         public int MaxConcurrency { get; set; }
+
+        /// <summary> The Azure Storage linked service reference. </summary>
+        public DataFactoryLinkedServiceReference LinkedService { get; set; }
     }
 }

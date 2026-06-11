@@ -18,24 +18,30 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureMLLinkedServiceTypeProperties"/>. </summary>
         /// <param name="mlEndpoint"> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>
-        public AzureMLLinkedServiceTypeProperties(DataFactoryElement<string> mlEndpoint)
+        /// <param name="apiKey"> The API key for accessing the Azure ML model endpoint. </param>
+        public AzureMLLinkedServiceTypeProperties(DataFactoryElement<string> mlEndpoint, DataFactorySecret apiKey)
         {
             MLEndpoint = mlEndpoint;
+            ApiKey = apiKey;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureMLLinkedServiceTypeProperties"/>. </summary>
         /// <param name="mlEndpoint"> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>
+        /// <param name="apiKey"> The API key for accessing the Azure ML model endpoint. </param>
         /// <param name="updateResourceEndpoint"> The Update Resource REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="authentication"> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureMLLinkedServiceTypeProperties(DataFactoryElement<string> mlEndpoint, DataFactoryElement<string> updateResourceEndpoint, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> tenant, string encryptedCredential, DataFactoryElement<string> authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AzureMLLinkedServiceTypeProperties(DataFactoryElement<string> mlEndpoint, DataFactorySecret apiKey, DataFactoryElement<string> updateResourceEndpoint, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, string encryptedCredential, DataFactoryElement<string> authentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MLEndpoint = mlEndpoint;
+            ApiKey = apiKey;
             UpdateResourceEndpoint = updateResourceEndpoint;
             ServicePrincipalId = servicePrincipalId;
+            ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             EncryptedCredential = encryptedCredential;
             Authentication = authentication;
@@ -45,11 +51,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> MLEndpoint { get; set; }
 
+        /// <summary> The API key for accessing the Azure ML model endpoint. </summary>
+        public DataFactorySecret ApiKey { get; set; }
+
         /// <summary> The Update Resource REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UpdateResourceEndpoint { get; set; }
 
         /// <summary> The ID of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
+
+        /// <summary> The key of the service principal used to authenticate against the ARM-based updateResourceEndpoint of an Azure ML Studio web service. </summary>
+        public DataFactorySecret ServicePrincipalKey { get; set; }
 
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Tenant { get; set; }

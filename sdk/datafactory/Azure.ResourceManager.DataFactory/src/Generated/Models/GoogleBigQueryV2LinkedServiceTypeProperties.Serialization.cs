@@ -89,6 +89,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ClientId, options);
             }
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WritePropertyName("clientSecret"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ClientSecret, options);
+            }
+            if (Optional.IsDefined(RefreshToken))
+            {
+                writer.WritePropertyName("refreshToken"u8);
+                writer.WriteObjectValue<DataFactorySecret>(RefreshToken, options);
+            }
+            if (Optional.IsDefined(KeyFileContent))
+            {
+                writer.WritePropertyName("keyFileContent"u8);
+                writer.WriteObjectValue<DataFactorySecret>(KeyFileContent, options);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -139,6 +154,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> projectId = default;
             GoogleBigQueryV2AuthenticationType authenticationType = default;
             DataFactoryElement<string> clientId = default;
+            DataFactorySecret clientSecret = default;
+            DataFactorySecret refreshToken = default;
+            DataFactorySecret keyFileContent = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -162,6 +180,33 @@ namespace Azure.ResourceManager.DataFactory.Models
                     clientId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("clientSecret"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientSecret = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("refreshToken"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    refreshToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("keyFileContent"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyFileContent = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("encryptedCredential"u8))
                 {
                     encryptedCredential = prop.Value.GetString();
@@ -172,7 +217,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GoogleBigQueryV2LinkedServiceTypeProperties(projectId, authenticationType, clientId, encryptedCredential, additionalBinaryDataProperties);
+            return new GoogleBigQueryV2LinkedServiceTypeProperties(
+                projectId,
+                authenticationType,
+                clientId,
+                clientSecret,
+                refreshToken,
+                keyFileContent,
+                encryptedCredential,
+                additionalBinaryDataProperties);
         }
     }
 }

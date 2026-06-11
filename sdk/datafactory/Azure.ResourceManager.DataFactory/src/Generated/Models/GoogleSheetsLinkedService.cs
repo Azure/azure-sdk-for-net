@@ -14,12 +14,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class GoogleSheetsLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="GoogleSheetsLinkedService"/>. </summary>
-        public GoogleSheetsLinkedService() : base("GoogleSheets")
-        {
-
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GoogleSheetsLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>

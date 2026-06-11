@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ClientId, options);
             }
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WritePropertyName("clientSecret"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ClientSecret, options);
+            }
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
@@ -145,6 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> environmentUri = default;
             DataFactoryElement<string> authenticationType = default;
             DataFactoryElement<string> clientId = default;
+            DataFactorySecret clientSecret = default;
             DataFactoryElement<string> apiVersion = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -177,6 +183,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                     clientId = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("clientSecret"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientSecret = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("apiVersion"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -200,6 +215,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 environmentUri,
                 authenticationType,
                 clientId,
+                clientSecret,
                 apiVersion,
                 encryptedCredential,
                 additionalBinaryDataProperties);

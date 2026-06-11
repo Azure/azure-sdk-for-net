@@ -102,6 +102,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("consumerKey"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ConsumerKey, options);
             }
+            if (Optional.IsDefined(ConsumerSecret))
+            {
+                writer.WritePropertyName("consumerSecret"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ConsumerSecret, options);
+            }
+            if (Optional.IsDefined(AccessToken))
+            {
+                writer.WritePropertyName("accessToken"u8);
+                writer.WriteObjectValue<DataFactorySecret>(AccessToken, options);
+            }
+            if (Optional.IsDefined(AccessTokenSecret))
+            {
+                writer.WritePropertyName("accessTokenSecret"u8);
+                writer.WriteObjectValue<DataFactorySecret>(AccessTokenSecret, options);
+            }
+            if (Optional.IsDefined(RefreshToken))
+            {
+                writer.WritePropertyName("refreshToken"u8);
+                writer.WriteObjectValue<DataFactorySecret>(RefreshToken, options);
+            }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
@@ -158,6 +178,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> endpoint = default;
             DataFactoryElement<string> companyId = default;
             DataFactoryElement<string> consumerKey = default;
+            DataFactorySecret consumerSecret = default;
+            DataFactorySecret accessToken = default;
+            DataFactorySecret accessTokenSecret = default;
+            DataFactorySecret refreshToken = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -199,6 +223,42 @@ namespace Azure.ResourceManager.DataFactory.Models
                     consumerKey = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("consumerSecret"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    consumerSecret = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("accessToken"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accessToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("accessTokenSecret"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accessTokenSecret = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("refreshToken"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    refreshToken = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
                 if (prop.NameEquals("useEncryptedEndpoints"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -223,6 +283,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 endpoint,
                 companyId,
                 consumerKey,
+                consumerSecret,
+                accessToken,
+                accessTokenSecret,
+                refreshToken,
                 useEncryptedEndpoints,
                 encryptedCredential,
                 additionalBinaryDataProperties);

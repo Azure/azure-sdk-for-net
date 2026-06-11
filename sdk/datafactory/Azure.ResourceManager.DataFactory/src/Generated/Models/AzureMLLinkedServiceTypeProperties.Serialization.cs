@@ -81,6 +81,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("mlEndpoint"u8);
             writer.WriteObjectValue<DataFactoryElement<string>>(MLEndpoint, options);
+            writer.WritePropertyName("apiKey"u8);
+            writer.WriteObjectValue<DataFactorySecret>(ApiKey, options);
             if (Optional.IsDefined(UpdateResourceEndpoint))
             {
                 writer.WritePropertyName("updateResourceEndpoint"u8);
@@ -90,6 +92,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
                 writer.WriteObjectValue<DataFactoryElement<string>>(ServicePrincipalId, options);
+            }
+            if (Optional.IsDefined(ServicePrincipalKey))
+            {
+                writer.WritePropertyName("servicePrincipalKey"u8);
+                writer.WriteObjectValue<DataFactorySecret>(ServicePrincipalKey, options);
             }
             if (Optional.IsDefined(Tenant))
             {
@@ -149,8 +156,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> mlEndpoint = default;
+            DataFactorySecret apiKey = default;
             DataFactoryElement<string> updateResourceEndpoint = default;
             DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecret servicePrincipalKey = default;
             DataFactoryElement<string> tenant = default;
             string encryptedCredential = default;
             DataFactoryElement<string> authentication = default;
@@ -160,6 +169,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("mlEndpoint"u8))
                 {
                     mlEndpoint = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("apiKey"u8))
+                {
+                    apiKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("updateResourceEndpoint"u8))
@@ -174,6 +188,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (prop.NameEquals("servicePrincipalId"u8))
                 {
                     ReadServicePrincipalId(prop, ref servicePrincipalId);
+                    continue;
+                }
+                if (prop.NameEquals("servicePrincipalKey"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servicePrincipalKey = ModelReaderWriter.Read<DataFactorySecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tenant"u8))
@@ -206,8 +229,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new AzureMLLinkedServiceTypeProperties(
                 mlEndpoint,
+                apiKey,
                 updateResourceEndpoint,
                 servicePrincipalId,
+                servicePrincipalKey,
                 tenant,
                 encryptedCredential,
                 authentication,

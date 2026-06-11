@@ -27,17 +27,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionProperties"> Properties used to connect to Square. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="host"> The URL of the Square instance. (i.e. mystore.mysquare.com). </param>
         /// <param name="clientId"> The client ID associated with your Square application. </param>
+        /// <param name="clientSecret"> The client secret associated with your Square application. </param>
         /// <param name="redirectUri"> The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500). </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SquareLinkedServiceTypeProperties(BinaryData connectionProperties, DataFactoryElement<string> host, DataFactoryElement<string> clientId, DataFactoryElement<string> redirectUri, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SquareLinkedServiceTypeProperties(BinaryData connectionProperties, DataFactoryElement<string> host, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> redirectUri, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionProperties = connectionProperties;
             Host = host;
             ClientId = clientId;
+            ClientSecret = clientSecret;
             RedirectUri = redirectUri;
             UseEncryptedEndpoints = useEncryptedEndpoints;
             UseHostVerification = useHostVerification;
@@ -79,6 +81,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The client ID associated with your Square application. </summary>
         public DataFactoryElement<string> ClientId { get; set; }
+
+        /// <summary> The client secret associated with your Square application. </summary>
+        public DataFactorySecret ClientSecret { get; set; }
 
         /// <summary> The redirect URL assigned in the Square application dashboard. (i.e. http://localhost:2500). </summary>
         public DataFactoryElement<string> RedirectUri { get; set; }
