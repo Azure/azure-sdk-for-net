@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Restores the protected parameterless constructor dropped by MPG generator (issue #59298).
-
 #nullable disable
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
+    // Restores the protected parameterless constructor dropped by MPG generator (issue #59298).
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("FormatReadSettings")]
     public abstract partial class FormatReadSettings
     {

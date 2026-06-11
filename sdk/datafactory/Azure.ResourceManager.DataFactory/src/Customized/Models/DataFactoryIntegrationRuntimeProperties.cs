@@ -5,6 +5,10 @@
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
+    // Restores the protected parameterless constructor that the MPG generator drops on abstract base
+    // classes, required so generated subclasses can chain via : base(). Generator bug:
+    // https://github.com/Azure/azure-sdk-for-net/issues/59298
+    // TODO: remove once the generator emits the base-class protected constructor.
     public abstract partial class DataFactoryIntegrationRuntimeProperties
     {
         /// <summary> Initializes a new instance of <see cref="DataFactoryIntegrationRuntimeProperties"/>. </summary>

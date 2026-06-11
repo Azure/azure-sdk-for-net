@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Customization to restore back-compat properties renamed by MPG generator.
-
 #nullable disable
 
 using System;
@@ -10,6 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
+    // Customization to restore back-compat properties renamed by MPG generator.
     public partial class DataFactoryExpressionV2
     {
         /// <summary> Back-compat alias for legacy "operator" property. </summary>

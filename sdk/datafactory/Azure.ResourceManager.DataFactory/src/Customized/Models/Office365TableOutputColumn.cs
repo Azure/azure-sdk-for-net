@@ -1,11 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// MPG migration back-compat: generator emits an internal-only ctor for Office365TableOutputColumn
-// (the @@usage decorator does not transitively reach models wrapped by Dfe<T>). Restore the public
-// parameterless ctor to match the pre-MPG API surface so callers can construct instances. Provides
-// a nested JsonConverter so DataFactoryElement<IList<Office365TableOutputColumn>> can serialize via Azure.Core.Expressions.DataFactory.
-
 #nullable disable
 
 using System;
@@ -16,6 +11,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
+    // MPG migration back-compat: generator emits an internal-only ctor for Office365TableOutputColumn
+    // (the @@usage decorator does not transitively reach models wrapped by Dfe<T>). Restore the public
+    // parameterless ctor to match the pre-MPG API surface so callers can construct instances. Provides
+    // a nested JsonConverter so DataFactoryElement<IList<Office365TableOutputColumn>> can serialize via Azure.Core.Expressions.DataFactory.
     // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/59298 :
     // generator treats this Dfe<T>-wrapped model as output-only and emits a getter-only Name,
     // but the GA contract exposed a setter. CodeGenMember is required to replace the generated property.
