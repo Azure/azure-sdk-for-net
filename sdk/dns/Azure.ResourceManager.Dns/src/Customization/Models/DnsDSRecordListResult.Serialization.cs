@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dns.Models
 #else
                     using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        writer.WriteObjectValue(document.RootElement, options);
                     }
 #endif
                 }

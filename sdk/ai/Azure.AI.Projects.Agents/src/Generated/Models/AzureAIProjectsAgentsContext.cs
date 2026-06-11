@@ -58,7 +58,6 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(ContainerNetworkPolicyParam))]
     [ModelReaderWriterBuildable(typeof(ContainerSkill))]
     [ModelReaderWriterBuildable(typeof(ContentFilterConfiguration))]
-    [ModelReaderWriterBuildable(typeof(CreateAgentFromCodeOptions))]
     [ModelReaderWriterBuildable(typeof(CreateAgentVersionFromCodeMetadata))]
     [ModelReaderWriterBuildable(typeof(CreateAgentVersionFromManifestRequest))]
     [ModelReaderWriterBuildable(typeof(CreateSessionRequest))]

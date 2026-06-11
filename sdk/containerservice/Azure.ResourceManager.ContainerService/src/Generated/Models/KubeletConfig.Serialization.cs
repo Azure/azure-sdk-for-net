@@ -139,11 +139,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("podMaxPids"u8);
                 writer.WriteNumberValue(PodMaxPids.Value);
             }
-            if (Optional.IsDefined(SeccompDefault))
-            {
-                writer.WritePropertyName("seccompDefault"u8);
-                writer.WriteStringValue(SeccompDefault.Value.ToString());
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -197,7 +192,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             int? containerLogMaxSizeInMB = default;
             int? containerLogMaxFiles = default;
             int? podMaxPids = default;
-            SeccompDefault? seccompDefault = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -300,15 +294,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                     podMaxPids = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("seccompDefault"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    seccompDefault = new SeccompDefault(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -326,7 +311,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 containerLogMaxSizeInMB,
                 containerLogMaxFiles,
                 podMaxPids,
-                seccompDefault,
                 additionalBinaryDataProperties);
         }
     }

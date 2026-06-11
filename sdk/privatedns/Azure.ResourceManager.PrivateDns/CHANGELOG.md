@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.2.3 (2026-06-09)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Make `Azure.ResourceManager.PrivateDns` AOT-compatible.
 
 ## 1.2.2 (2026-04-28)
 

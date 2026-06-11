@@ -581,5 +581,19 @@ namespace BasicTypeSpec
             request.Content = content;
             return message;
         }
+
+        internal HttpMessage CreateUploadCatRequest(RequestContent content, string contentType, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/cats", false);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", contentType);
+            request.Content = content;
+            return message;
+        }
     }
 }

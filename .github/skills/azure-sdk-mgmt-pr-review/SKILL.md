@@ -67,6 +67,7 @@ To determine the review scope:
    The scanner currently emits these rule families (see "API Review Checklist" for details):
    - `SUFFIX001`–`SUFFIX010` – forbidden type-name suffixes (Parameters, Request, Options, Response, Data, Definition, Operation, Collection, **Update**, …)
    - `RESINFIX001` – `Resource` infix in `*Data`/`*Collection` model names (with PrivateLinkResource exception)
+   - `RESNAME001` – single-word generic resource trio noun (after stripping `Resource`/`Data`/`Collection`); only fires when the class actually inherits `ArmResource` / `ResourceData` / `TrackedResourceData` / `ArmCollection`
    - `ACRONYM001` – curated acronyms in wrong casing (HTTP/TCP/SSL/TLS/…)
    - `ACRONYM002` – generic 3+ letter all-caps run inside a name (NNI, IPV, BFD, …)
    - `ARMCOMMON001` – type duplicates an Azure.ResourceManager/Azure.Core common type (`OperationStatusResult`, `ManagedServiceIdentity*`, `TagsUpdate`, `ErrorResponse`, …)
@@ -152,6 +153,12 @@ The following types are provided by `Azure.ResourceManager` / `Azure.Core` and *
   - **Collection types:** `ArmCollection` types must not include "Resource" before "Collection" — e.g., `VirtualMachineResourceCollection` is **not allowed**; use `VirtualMachineCollection` instead.
   - **Exception – PrivateLinkResource:** `*PrivateLinkResourceData` and `*PrivateLinkResourceCollection` are allowed because "PrivateLinkResource" is the established ARM resource name.
   - **When to flag:** Flag all other violations unless the PR provides explicit justification for keeping the "Resource" infix.
+- **No single-word generic resource trio names (RESNAME001).**
+  - After stripping the reserved ARM suffix (`Resource`, `Data`, or `Collection`), the remaining noun on a resource trio (a class that inherits `ArmResource`, `ResourceData`/`TrackedResourceData`, or `ArmCollection`) must still carry RP/domain context.
+  - **Bad examples:** `DrillResource` / `DrillData` / `DrillCollection` (noun is bare `Drill`), `GoalResource` (`Goal`), `RecoveryResource` (`Recovery`), `EnrollmentResource` (`Enrollment`) — readers cannot tell from IntelliSense which Azure service these belong to, and the names will collide with similarly-generic types in other mgmt packages.
+  - **Good examples:** `VirtualMachineResource`, `RecoveryPlanResource`, `UsagePlanResource`, `GoalAssignmentResource`, `DrillRunResource` — the noun is multi-word and service/resource-scoped.
+  - **Fix:** Rename the whole trio together (e.g., `DrillResource` / `DrillData` / `DrillCollection` → `ResilienceDrillResource` / `ResilienceDrillData` / `ResilienceDrillCollection`). The scanner emits this as `RESNAME001` automatically; reviewers should always recommend a renamed trio rather than fixing just one of the three.
+  - **Exception:** `GenericResource` (an established ARM common type that is intentionally generic). Any other exception requires explicit reviewer justification.
 
 #### Operation Body Parameters
 - **PATCH operation body:** Must be named `[Model]Patch`
