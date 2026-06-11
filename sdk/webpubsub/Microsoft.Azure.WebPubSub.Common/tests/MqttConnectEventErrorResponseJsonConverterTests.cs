@@ -19,19 +19,19 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             MqttConnectEventErrorResponse response = JsonSerializer.Deserialize<MqttConnectEventErrorResponse>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(response);
-            Assert.AreEqual(135, response.Mqtt.Code);
-            Assert.AreEqual("error message", response.Mqtt.Reason);
-            Assert.AreEqual("a", response.Mqtt.UserProperties.Single().Name);
-            Assert.AreEqual("b", response.Mqtt.UserProperties.Single().Value);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Mqtt.Code, Is.EqualTo(135));
+            Assert.That(response.Mqtt.Reason, Is.EqualTo("error message"));
+            Assert.That(response.Mqtt.UserProperties.Single().Name, Is.EqualTo("a"));
+            Assert.That(response.Mqtt.UserProperties.Single().Value, Is.EqualTo("b"));
 
             string serialized = JsonSerializer.Serialize(response, JsonSerializationOptions);
             MqttConnectEventErrorResponse converted = JsonSerializer.Deserialize<MqttConnectEventErrorResponse>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual(response.Mqtt.Code, converted.Mqtt.Code);
-            Assert.AreEqual(response.Mqtt.Reason, converted.Mqtt.Reason);
-            Assert.AreEqual(response.Mqtt.UserProperties.Single().Name, converted.Mqtt.UserProperties.Single().Name);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Mqtt.Code, Is.EqualTo(response.Mqtt.Code));
+            Assert.That(converted.Mqtt.Reason, Is.EqualTo(response.Mqtt.Reason));
+            Assert.That(converted.Mqtt.UserProperties.Single().Name, Is.EqualTo(response.Mqtt.UserProperties.Single().Name));
         }
 
         [Test]
@@ -41,18 +41,18 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             MqttConnectEventErrorResponse response = JsonSerializer.Deserialize<MqttConnectEventErrorResponse>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(response);
-            Assert.AreEqual(135, response.Mqtt.Code);
-            Assert.IsNull(response.Mqtt.Reason);
-            Assert.IsNull(response.Mqtt.UserProperties);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Mqtt.Code, Is.EqualTo(135));
+            Assert.That(response.Mqtt.Reason, Is.Null);
+            Assert.That(response.Mqtt.UserProperties, Is.Null);
 
             string serialized = JsonSerializer.Serialize(response, JsonSerializationOptions);
             MqttConnectEventErrorResponse converted = JsonSerializer.Deserialize<MqttConnectEventErrorResponse>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual(135, converted.Mqtt.Code);
-            Assert.IsNull(converted.Mqtt.Reason);
-            Assert.IsNull(converted.Mqtt.UserProperties);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Mqtt.Code, Is.EqualTo(135));
+            Assert.That(converted.Mqtt.Reason, Is.Null);
+            Assert.That(converted.Mqtt.UserProperties, Is.Null);
         }
 
         [Test]
@@ -71,21 +71,21 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             MqttConnectEventErrorResponse response = JsonSerializer.Deserialize<MqttConnectEventErrorResponse>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(response);
-            Assert.AreEqual(3, response.Mqtt.UserProperties.Count);
-            Assert.AreEqual("a", response.Mqtt.UserProperties[0].Name);
-            Assert.AreEqual("b", response.Mqtt.UserProperties[1].Name);
-            Assert.AreEqual("c", response.Mqtt.UserProperties[2].Name);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Mqtt.UserProperties.Count, Is.EqualTo(3));
+            Assert.That(response.Mqtt.UserProperties[0].Name, Is.EqualTo("a"));
+            Assert.That(response.Mqtt.UserProperties[1].Name, Is.EqualTo("b"));
+            Assert.That(response.Mqtt.UserProperties[2].Name, Is.EqualTo("c"));
 
             string serialized = JsonSerializer.Serialize(response, JsonSerializationOptions);
             MqttConnectEventErrorResponse converted = JsonSerializer.Deserialize<MqttConnectEventErrorResponse>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual(3, converted.Mqtt.UserProperties.Count);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Mqtt.UserProperties.Count, Is.EqualTo(3));
             for (int i = 0; i < 3; i++)
             {
-                Assert.AreEqual(response.Mqtt.UserProperties[i].Name, converted.Mqtt.UserProperties[i].Name);
-                Assert.AreEqual(response.Mqtt.UserProperties[i].Value, converted.Mqtt.UserProperties[i].Value);
+                Assert.That(converted.Mqtt.UserProperties[i].Name, Is.EqualTo(response.Mqtt.UserProperties[i].Name));
+                Assert.That(converted.Mqtt.UserProperties[i].Value, Is.EqualTo(response.Mqtt.UserProperties[i].Value));
             }
         }
 
@@ -97,16 +97,16 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             MqttConnectEventErrorResponse response = JsonSerializer.Deserialize<MqttConnectEventErrorResponse>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(response);
-            Assert.AreEqual(4, response.Mqtt.Code);
-            Assert.AreEqual("bad credentials", response.Mqtt.Reason);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Mqtt.Code, Is.EqualTo(4));
+            Assert.That(response.Mqtt.Reason, Is.EqualTo("bad credentials"));
 
             string serialized = JsonSerializer.Serialize(response, JsonSerializationOptions);
             MqttConnectEventErrorResponse converted = JsonSerializer.Deserialize<MqttConnectEventErrorResponse>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual(4, converted.Mqtt.Code);
-            Assert.AreEqual("bad credentials", converted.Mqtt.Reason);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Mqtt.Code, Is.EqualTo(4));
+            Assert.That(converted.Mqtt.Reason, Is.EqualTo("bad credentials"));
         }
     }
 }

@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    public readonly partial struct FunctionShellCallOutputOutcomeParamType : IEquatable<FunctionShellCallOutputOutcomeParamType>
+    internal readonly partial struct FunctionShellCallOutputOutcomeParamType : IEquatable<FunctionShellCallOutputOutcomeParamType>
     {
         private readonly string _value;
         private const string TimeoutValue = "timeout";
