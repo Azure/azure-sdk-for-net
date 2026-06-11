@@ -8,7 +8,8 @@ namespace Extensions.Plugin
 {
     /// <summary>
     /// ExtensionsPlugin is a generator plugin that applies visitors to mutate the generated
-    /// Azure.AI.Extensions.OpenAI library, analogous to the OpenAI library's codegen plugin.
+    /// Azure.AI.Projects, Azure.AI.Extensions.OpenAI and Azure.AI.Projects.Agents libraries,
+    /// analogous to the OpenAI library's codegen plugin.
     /// </summary>
     internal sealed class ExtensionsPlugin : GeneratorPlugin
     {

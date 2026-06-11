@@ -18,13 +18,13 @@ internal class SupportedPackages
         _stableTypes = new(LoadStableTypes(_name));
     }
 
-    private static SupportedPackages s_cahcedAzureAIProjects;
-    private static SupportedPackages s_cahcedAzureAIExtensionsOpenAI;
-    private static SupportedPackages s_cahcedAzureAIProjectsAgents;
+    private static SupportedPackages s_cachedAzureAIProjects;
+    private static SupportedPackages s_cachedAzureAIExtensionsOpenAI;
+    private static SupportedPackages s_cachedAzureAIProjectsAgents;
 
-    public static SupportedPackages AzureAIProjects { get => Volatile.Read(ref s_cahcedAzureAIProjects) ?? Interlocked.CompareExchange(ref s_cahcedAzureAIProjects, new SupportedPackages("Azure.AI.Projects"), null) ?? s_cahcedAzureAIProjects; }
-    public static SupportedPackages AzureAIProjectsAgents { get => Volatile.Read(ref s_cahcedAzureAIExtensionsOpenAI) ?? Interlocked.CompareExchange(ref s_cahcedAzureAIExtensionsOpenAI, new SupportedPackages("Azure.AI.Extensions.OpenAI"), null) ?? s_cahcedAzureAIExtensionsOpenAI; }
-    public static SupportedPackages AzureAIExtensionsOpenAI { get => Volatile.Read(ref s_cahcedAzureAIProjectsAgents) ?? Interlocked.CompareExchange(ref s_cahcedAzureAIProjectsAgents, new SupportedPackages("Azure.AI.Projects.Agents"), null) ?? s_cahcedAzureAIProjectsAgents; }
+    public static SupportedPackages AzureAIProjects { get => Volatile.Read(ref s_cachedAzureAIProjects) ?? Interlocked.CompareExchange(ref s_cachedAzureAIProjects, new SupportedPackages("Azure.AI.Projects"), null) ?? s_cachedAzureAIProjects; }
+    public static SupportedPackages AzureAIProjectsAgents { get => Volatile.Read(ref s_cachedAzureAIExtensionsOpenAI) ?? Interlocked.CompareExchange(ref s_cachedAzureAIExtensionsOpenAI, new SupportedPackages("Azure.AI.Extensions.OpenAI"), null) ?? s_cachedAzureAIExtensionsOpenAI; }
+    public static SupportedPackages AzureAIExtensionsOpenAI { get => Volatile.Read(ref s_cachedAzureAIProjectsAgents) ?? Interlocked.CompareExchange(ref s_cachedAzureAIProjectsAgents, new SupportedPackages("Azure.AI.Projects.Agents"), null) ?? s_cachedAzureAIProjectsAgents; }
 
     public static bool IsStable(string type)
     {
