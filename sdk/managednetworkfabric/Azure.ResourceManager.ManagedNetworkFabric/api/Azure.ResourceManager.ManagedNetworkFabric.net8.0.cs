@@ -5675,12 +5675,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.ControlPlaneAclPatchProperties> ControlPlaneAclConfiguration { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType? DefaultAction { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricDeviceRole? DeviceRole { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This compatibility property is obsolete and will be removed in a future version. Use DynamicMatchConfigurationSettings instead.")]
-        public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfigurationPatch> DynamicMatchConfigurationSettings { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricBooleanValue? GlobalAccessControlListActionsEnableCount { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This compatibility property is obsolete and will be removed in a future version. Use MatchConfigurationSettings instead.")]
-        public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchConfiguration> MatchConfigurations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchConfigurationPatch> MatchConfigurationSettings { get { throw null; } }
         protected override Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7016,8 +7012,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         public NetworkFabricRoutePolicyPatchContent() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType? DefaultAction { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This compatibility property is obsolete and will be removed in a future version. Use StatementSettings instead.")]
-        public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyStatementProperties> Statements { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyStatementPatchProperties> StatementSettings { get { throw null; } }
         protected override Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7814,14 +7808,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public NetworkTapRulePatchContent() { }
         public string Annotation { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationType? ConfigurationType { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This compatibility property is obsolete and will be removed in a future version. Use DynamicMatchConfigurationSettings instead.")]
-        public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfigurationPatch> DynamicMatchConfigurationSettings { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.GlobalNetworkTapRuleActionPatchProperties GlobalNetworkTapRuleActions { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricManagedServiceIdentityPatch Identity { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIdentitySelectorPatch IdentitySelector { get { throw null; } set { } }
-        [System.ObsoleteAttribute("This compatibility property is obsolete and will be removed in a future version. Use MatchConfigurationSettings instead.")]
-        public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchConfiguration> MatchConfigurations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchConfigurationPatch> MatchConfigurationSettings { get { throw null; } }
         public System.Uri TapRulesUri { get { throw null; } set { } }
         protected override Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
