@@ -243,11 +243,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="abusePenalty"> The abuse penalty. </param>
         /// <param name="raiMonitorConfig"> Cognitive Services Rai Monitor Config. </param>
         /// <param name="aiFoundryNetworkInjections"></param>
+        /// <param name="foundryAutoUpgrade"> Represents the foundry auto-upgrade configuration for a Cognitive Services account. </param>
         /// <param name="allowProjectManagement"> Specifies whether this resource support project management as child resources, used as containers for access management, data isolation and cost in AI Foundry. </param>
         /// <param name="defaultProject"> Specifies the project, by project name, that is targeted when data plane endpoints are called without a project parameter. </param>
         /// <param name="associatedProjects"> Specifies the projects, by project name, that are associated with this resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = default, string endpoint = default, IEnumerable<CognitiveServicesSkuCapability> capabilities = default, bool? isMigrated = default, string migrationToken = default, CognitiveServicesSkuChangeInfo skuChangeInfo = default, string customSubDomainName = default, CognitiveServicesNetworkRuleSet networkAcls = default, ServiceAccountEncryptionProperties encryption = default, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = default, UserOwnedAmlWorkspace amlWorkspace = default, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default, ServiceAccountPublicNetworkAccess? publicNetworkAccess = default, ServiceAccountApiProperties apiProperties = default, DateTimeOffset? createdOn = default, ServiceAccountCallRateLimit callRateLimit = default, bool? enableDynamicThrottling = default, bool? storedCompletionsDisabled = default, ServiceAccountQuotaLimit quotaLimit = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, bool? disableLocalAuth = default, IReadOnlyDictionary<string, string> endpoints = default, bool? restore = default, DateTimeOffset? deletedOn = default, string scheduledPurgeDate = default, CognitiveServicesMultiRegionSettings locations = default, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = default, AbusePenalty abusePenalty = default, RaiMonitorConfig raiMonitorConfig = default, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default, bool? allowProjectManagement = default, string defaultProject = default, IEnumerable<string> associatedProjects = default)
+        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = default, string endpoint = default, IEnumerable<CognitiveServicesSkuCapability> capabilities = default, bool? isMigrated = default, string migrationToken = default, CognitiveServicesSkuChangeInfo skuChangeInfo = default, string customSubDomainName = default, CognitiveServicesNetworkRuleSet networkAcls = default, ServiceAccountEncryptionProperties encryption = default, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = default, UserOwnedAmlWorkspace amlWorkspace = default, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = default, ServiceAccountPublicNetworkAccess? publicNetworkAccess = default, ServiceAccountApiProperties apiProperties = default, DateTimeOffset? createdOn = default, ServiceAccountCallRateLimit callRateLimit = default, bool? enableDynamicThrottling = default, bool? storedCompletionsDisabled = default, ServiceAccountQuotaLimit quotaLimit = default, bool? restrictOutboundNetworkAccess = default, IEnumerable<string> allowedFqdnList = default, bool? disableLocalAuth = default, IReadOnlyDictionary<string, string> endpoints = default, bool? restore = default, DateTimeOffset? deletedOn = default, string scheduledPurgeDate = default, CognitiveServicesMultiRegionSettings locations = default, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = default, AbusePenalty abusePenalty = default, RaiMonitorConfig raiMonitorConfig = default, IEnumerable<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default, FoundryAutoUpgrade foundryAutoUpgrade = default, bool? allowProjectManagement = default, string defaultProject = default, IEnumerable<string> associatedProjects = default)
         {
             capabilities ??= new ChangeTrackingList<CognitiveServicesSkuCapability>();
             userOwnedStorage ??= new ChangeTrackingList<ServiceAccountUserOwnedStorage>();
@@ -290,6 +291,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 abusePenalty,
                 raiMonitorConfig,
                 (aiFoundryNetworkInjections ?? new ChangeTrackingList<AIFoundryNetworkInjection>()).ToList(),
+                foundryAutoUpgrade,
                 allowProjectManagement,
                 defaultProject,
                 (associatedProjects ?? new ChangeTrackingList<string>()).ToList(),
@@ -503,6 +505,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new AIFoundryNetworkInjection(scenario, subnetArmId, useMicrosoftManagedNetwork, default);
         }
 
+        /// <param name="mode"> Gets or sets the auto-upgrade mode. </param>
+        /// <param name="isPlannedByMicrosoft"> Gets or sets a value indicating whether the auto-upgrade is planned by Microsoft. </param>
+        /// <param name="statusReason"> Gets or sets the status reason for the auto-upgrade configuration. </param>
+        /// <param name="scheduledOn"> Gets or sets the scheduled time for the auto-upgrade. </param>
+        /// <returns> A new <see cref="Models.FoundryAutoUpgrade"/> instance for mocking. </returns>
+        public static FoundryAutoUpgrade FoundryAutoUpgrade(FoundryAutoUpgradeMode? mode = default, bool? isPlannedByMicrosoft = default, string statusReason = default, DateTimeOffset? scheduledOn = default)
+        {
+            return new FoundryAutoUpgrade(mode, isPlannedByMicrosoft, statusReason, scheduledOn, default);
+        }
+
         /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
         /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
@@ -550,8 +562,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="currentValue"> Current value for this metric. </param>
         /// <param name="nextResetTime"> Next reset time for current quota. </param>
         /// <param name="status"> Cognitive Services account quota usage status. </param>
+        /// <param name="scopeType"> The scope type of the quota usage. </param>
+        /// <param name="scopeId"> The scope identifier of the quota usage. </param>
         /// <returns> A new <see cref="Models.ServiceAccountUsage"/> instance for mocking. </returns>
-        public static ServiceAccountUsage ServiceAccountUsage(ServiceAccountUsageUnitType? unit = default, ServiceAccountUsageMetricName name = default, string quotaPeriod = default, double? limit = default, double? currentValue = default, string nextResetTime = default, ServiceAccountQuotaUsageStatus? status = default)
+        public static ServiceAccountUsage ServiceAccountUsage(ServiceAccountUsageUnitType? unit = default, ServiceAccountUsageMetricName name = default, string quotaPeriod = default, double? limit = default, double? currentValue = default, string nextResetTime = default, ServiceAccountQuotaUsageStatus? status = default, CognitiveServicesQuotaScopeType? scopeType = default, string scopeId = default)
         {
             return new ServiceAccountUsage(
                 unit,
@@ -561,6 +575,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 currentValue,
                 nextResetTime,
                 status,
+                scopeType,
+                scopeId,
                 default);
         }
 
@@ -2783,10 +2799,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="skuName"></param>
         /// <param name="availableCapacity"> The available capacity for deployment with this model and sku. </param>
         /// <param name="availableFinetuneCapacity"> The available capacity for deployment with a fine-tune version of this model and sku. </param>
+        /// <param name="scopeId"> The scope identifier for model SKU capacity. </param>
+        /// <param name="scopeType"> The scope type for model SKU capacity. </param>
         /// <returns> A new <see cref="Models.ModelSkuCapacityProperties"/> instance for mocking. </returns>
-        public static ModelSkuCapacityProperties ModelSkuCapacityProperties(CognitiveServicesAccountDeploymentModel model = default, string skuName = default, float? availableCapacity = default, float? availableFinetuneCapacity = default)
+        public static ModelSkuCapacityProperties ModelSkuCapacityProperties(CognitiveServicesAccountDeploymentModel model = default, string skuName = default, float? availableCapacity = default, float? availableFinetuneCapacity = default, string scopeId = default, CognitiveServicesQuotaScopeType? scopeType = default)
         {
-            return new ModelSkuCapacityProperties(model, skuName, availableCapacity, availableFinetuneCapacity, default);
+            return new ModelSkuCapacityProperties(
+                model,
+                skuName,
+                availableCapacity,
+                availableFinetuneCapacity,
+                scopeId,
+                scopeType,
+                default);
         }
 
         /// <param name="model"> Cognitive Services account Model. </param>
@@ -2867,6 +2892,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 (commitmentPlanAssociations ?? new ChangeTrackingList<CommitmentPlanAssociation>()).ToList(),
                 abusePenalty,
                 raiMonitorConfig,
+                default,
                 default,
                 allowProjectManagement,
                 defaultProject,
@@ -2975,6 +3001,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 abusePenalty,
                 raiMonitorConfig,
                 (aiFoundryNetworkInjections ?? new ChangeTrackingList<AIFoundryNetworkInjection>()).ToList(),
+                default,
                 allowProjectManagement,
                 defaultProject,
                 (associatedProjects ?? new ChangeTrackingList<string>()).ToList(),
@@ -3004,6 +3031,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 privateEndpointId is null && connectionState is null && provisioningState is null && groupIds is null ? default : new CognitiveServicesPrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
                 etag,
                 location,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountUsage"/>. </summary>
+        /// <param name="unit"> The unit of the metric. </param>
+        /// <param name="name"> The name information for the metric. </param>
+        /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>
+        /// <param name="limit"> Maximum value for this metric. </param>
+        /// <param name="currentValue"> Current value for this metric. </param>
+        /// <param name="nextResetTime"> Next reset time for current quota. </param>
+        /// <param name="status"> Cognitive Services account quota usage status. </param>
+        /// <returns> A new <see cref="Models.ServiceAccountUsage"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ServiceAccountUsage ServiceAccountUsage(ServiceAccountUsageUnitType? unit = default, ServiceAccountUsageMetricName name = default, string quotaPeriod = default, double? limit = default, double? currentValue = default, string nextResetTime = default, ServiceAccountQuotaUsageStatus? status = default)
+        {
+            return new ServiceAccountUsage(
+                unit,
+                name,
+                quotaPeriod,
+                limit,
+                currentValue,
+                nextResetTime,
+                status,
+                default,
+                default,
                 default);
         }
 
@@ -3424,6 +3476,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 default,
                 default,
                 default,
+                default,
                 default);
         }
 
@@ -3526,6 +3579,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 locations,
                 (commitmentPlanAssociations ?? new ChangeTrackingList<CommitmentPlanAssociation>()).ToList(),
                 abusePenalty,
+                default,
                 default,
                 default,
                 default,

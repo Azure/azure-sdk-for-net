@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             TryGetApiVersion(ResourceType, out string cognitiveServicesManagedNetworkSettingsApiVersion);
             _managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _managedNetworkSettingsPropertiesBasicResourcesRestClient = new ManagedNetworkSettingsPropertiesBasicResources(_managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics, Pipeline, Endpoint, cognitiveServicesManagedNetworkSettingsApiVersion ?? "2026-05-01");
+            _managedNetworkSettingsPropertiesBasicResourcesRestClient = new ManagedNetworkSettingsPropertiesBasicResources(_managedNetworkSettingsPropertiesBasicResourcesClientDiagnostics, Pipeline, Endpoint, cognitiveServicesManagedNetworkSettingsApiVersion ?? "2026-01-15-preview");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-01-15-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

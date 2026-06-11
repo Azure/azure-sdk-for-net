@@ -642,85 +642,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <returns> A new <see cref="Vm.SnapshotData"/> instance for mocking. </returns>
-        public static SnapshotData SnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SnapshotProperties properties = default, HciVmExtendedLocation extendedLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SnapshotData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                extendedLocation,
-                default);
-        }
-
-        /// <param name="creationData"> Data used when creating a snapshot. </param>
-        /// <param name="timeCreated"> The time when the snapshot was created. </param>
-        /// <param name="diskSizeBytes"> The size of the disk in bytes. </param>
-        /// <param name="uniqueId"> Unique identifier for the snapshot. </param>
-        /// <param name="provisioningState"> Provisioning state of the snapshot. </param>
-        /// <param name="status"> The observed state of snapshots. </param>
-        /// <returns> A new <see cref="Models.SnapshotProperties"/> instance for mocking. </returns>
-        public static SnapshotProperties SnapshotProperties(HciVmCreationContent creationData = default, DateTimeOffset? timeCreated = default, long? diskSizeBytes = default, string uniqueId = default, HciVmProvisioningState? provisioningState = default, SnapshotStatus status = default)
-        {
-            return new SnapshotProperties(
-                creationData,
-                timeCreated,
-                diskSizeBytes,
-                uniqueId,
-                provisioningState,
-                status,
-                default);
-        }
-
-        /// <param name="createOption"> This enumerates the possible sources of a disk's creation. </param>
-        /// <param name="sourceResourceId"> ARM ID of the source resource used for disk creation. Required when createOption is Copy. </param>
-        /// <param name="sourceUniqueId"> Unique ID of the source resource used for disk creation. Read-only and not required for disk creation. </param>
-        /// <returns> A new <see cref="Models.HciVmCreationContent"/> instance for mocking. </returns>
-        public static HciVmCreationContent HciVmCreationContent(DiskCreateOption createOption = default, ResourceIdentifier sourceResourceId = default, string sourceUniqueId = default)
-        {
-            return new HciVmCreationContent(createOption, sourceResourceId, sourceUniqueId, default);
-        }
-
-        /// <param name="errorCode"> Snapshot provisioning error code. </param>
-        /// <param name="errorMessage"> Descriptive error message. </param>
-        /// <param name="provisioningStatus"> Provisioning status of the snapshot. </param>
-        /// <returns> A new <see cref="Models.SnapshotStatus"/> instance for mocking. </returns>
-        public static SnapshotStatus SnapshotStatus(string errorCode = default, string errorMessage = default, SnapshotStatusProvisioningStatus provisioningStatus = default)
-        {
-            return new SnapshotStatus(errorCode, errorMessage, provisioningStatus, default);
-        }
-
-        /// <param name="operationId"> The ID of the operation performed on the snapshot. </param>
-        /// <param name="status"> The status of the operation performed on the snapshot [Succeeded, Failed, InProgress]. </param>
-        /// <returns> A new <see cref="Models.SnapshotStatusProvisioningStatus"/> instance for mocking. </returns>
-        public static SnapshotStatusProvisioningStatus SnapshotStatusProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
-        {
-            return new SnapshotStatusProvisioningStatus(operationId, status, default);
-        }
-
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.SnapshotPatch"/> instance for mocking. </returns>
-        public static SnapshotPatch SnapshotPatch(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SnapshotPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <returns> A new <see cref="Vm.HciVmStorageContainerData"/> instance for mocking. </returns>
         public static HciVmStorageContainerData HciVmStorageContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmStorageContainerProperties properties = default, HciVmExtendedLocation extendedLocation = default)
         {
@@ -807,7 +728,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <param name="blockSizeInBytes"> Block size in bytes. </param>
-        /// <param name="creationData"> Data used when creating a virtual hard disk. </param>
         /// <param name="diskSizeInGB"> Size of the disk in GB. </param>
         /// <param name="isDynamic"> Boolean for enabling dynamic sizing on the virtual hard disk. </param>
         /// <param name="logicalSectorInBytes"> Logical sector in bytes. </param>
@@ -822,11 +742,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="status"> The observed state of virtual hard disks. </param>
         /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. </param>
         /// <returns> A new <see cref="Models.HciVmVirtualHardDiskProperties"/> instance for mocking. </returns>
-        public static HciVmVirtualHardDiskProperties HciVmVirtualHardDiskProperties(int? blockSizeInBytes = default, HciVmCreationContent creationData = default, long? diskSizeInGB = default, bool? isDynamic = default, int? logicalSectorInBytes = default, int? physicalSectorInBytes = default, Uri downloadUri = default, HciVmHyperVGeneration? hyperVGeneration = default, HciVmDiskFileFormat? diskFileFormat = default, bool? isCreatingFromLocal = default, string localVhdPath = default, HciVmProvisioningState? provisioningState = default, ResourceIdentifier containerId = default, HciVmVirtualHardDiskStatus status = default, long? maxShares = default)
+        public static HciVmVirtualHardDiskProperties HciVmVirtualHardDiskProperties(int? blockSizeInBytes = default, long? diskSizeInGB = default, bool? isDynamic = default, int? logicalSectorInBytes = default, int? physicalSectorInBytes = default, Uri downloadUri = default, HciVmHyperVGeneration? hyperVGeneration = default, HciVmDiskFileFormat? diskFileFormat = default, bool? isCreatingFromLocal = default, string localVhdPath = default, HciVmProvisioningState? provisioningState = default, ResourceIdentifier containerId = default, HciVmVirtualHardDiskStatus status = default, long? maxShares = default)
         {
             return new HciVmVirtualHardDiskProperties(
                 blockSizeInBytes,
-                creationData,
                 diskSizeInGB,
                 isDynamic,
                 logicalSectorInBytes,
@@ -1254,13 +1173,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmOSProfileWindowsConfiguration(shouldProvisionVmAgent, shouldProvisionVmConfigAgent, default);
         }
 
-        /// <param name="skipShutdown"> Indicates whether to perform an immediate shut down. When set to true, the VM is forcefully shut down. If not specified, the default value is false, and the operation attempts a graceful shut down of the VM. </param>
-        /// <returns> A new <see cref="Models.PowerOffVirtualMachineOptions"/> instance for mocking. </returns>
-        public static PowerOffVirtualMachineOptions PowerOffVirtualMachineOptions(bool? skipShutdown = default)
-        {
-            return new PowerOffVirtualMachineOptions(skipShutdown, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1590,15 +1502,23 @@ namespace Azure.ResourceManager.Hci.Vm.Models
 
         /// <param name="publicIPAddresses"> List of public ip addresses that the gateway can use for NAT. </param>
         /// <param name="subnets"> List of subnets associated with the nat gateway. These can only be vnet subnets and must be from the same vnet. </param>
+        /// <param name="inboundNatRules"> List of inbound NAT rules. InboundNATRules can only be set after the NAT Gateway has been associated with a vnet. Removed in 2026-04-01-preview; use InboundRule Child resource instead. </param>
         /// <param name="provisioningState"> Provisioning state of the public IP. </param>
         /// <param name="status"> The observed state of Nat Gateway. </param>
         /// <returns> A new <see cref="Models.HciVmNatGatewayProperties"/> instance for mocking. </returns>
-        public static HciVmNatGatewayProperties HciVmNatGatewayProperties(IEnumerable<HciVmPublicIPAddressArmReference> publicIPAddresses = default, IEnumerable<HciVmVirtualNetworkSubnetArmReference> subnets = default, HciVmProvisioningState? provisioningState = default, HciVmNatGatewayStatus status = default)
+        public static HciVmNatGatewayProperties HciVmNatGatewayProperties(IEnumerable<HciVmPublicIPAddressArmReference> publicIPAddresses = default, IEnumerable<HciVmVirtualNetworkSubnetArmReference> subnets = default, IEnumerable<HciVmInboundNatRule> inboundNatRules = default, HciVmProvisioningState? provisioningState = default, HciVmNatGatewayStatus status = default)
         {
             publicIPAddresses ??= new ChangeTrackingList<HciVmPublicIPAddressArmReference>();
             subnets ??= new ChangeTrackingList<HciVmVirtualNetworkSubnetArmReference>();
+            inboundNatRules ??= new ChangeTrackingList<HciVmInboundNatRule>();
 
-            return new HciVmNatGatewayProperties((publicIPAddresses ?? new ChangeTrackingList<HciVmPublicIPAddressArmReference>()).ToList(), (subnets ?? new ChangeTrackingList<HciVmVirtualNetworkSubnetArmReference>()).ToList(), provisioningState, status, default);
+            return new HciVmNatGatewayProperties(
+                (publicIPAddresses ?? new ChangeTrackingList<HciVmPublicIPAddressArmReference>()).ToList(),
+                (subnets ?? new ChangeTrackingList<HciVmVirtualNetworkSubnetArmReference>()).ToList(),
+                (inboundNatRules ?? new ChangeTrackingList<HciVmInboundNatRule>()).ToList(),
+                provisioningState,
+                status,
+                default);
         }
 
         /// <param name="resourceId"> The Azure Resource ID of a Public IP resource. </param>
@@ -1613,6 +1533,31 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static HciVmVirtualNetworkSubnetArmReference HciVmVirtualNetworkSubnetArmReference(ResourceIdentifier resourceId = default)
         {
             return new HciVmVirtualNetworkSubnetArmReference(resourceId, default);
+        }
+
+        /// <param name="name"> name of the inbound nat rule. </param>
+        /// <param name="properties"> properties of the inbound nat rule. </param>
+        /// <returns> A new <see cref="Models.HciVmInboundNatRule"/> instance for mocking. </returns>
+        public static HciVmInboundNatRule HciVmInboundNatRule(string name = default, HciVmInboundNatRuleProperties properties = default)
+        {
+            return new HciVmInboundNatRule(name, properties, default);
+        }
+
+        /// <param name="protocol"> Protocol for the NAT rule. </param>
+        /// <param name="frontendPort"> Frontend Port for the inbound rule. </param>
+        /// <param name="backendPort"> backend Port for the inbound rule. </param>
+        /// <param name="backendIPResourceId"> The Azure Resource ID of an IPConfiguration resource. </param>
+        /// <param name="publicIPAddressResourceId"> The Azure Resource ID of a Public IP resource. </param>
+        /// <returns> A new <see cref="Models.HciVmInboundNatRuleProperties"/> instance for mocking. </returns>
+        public static HciVmInboundNatRuleProperties HciVmInboundNatRuleProperties(HciVmInboundNatRuleProtocol protocol = default, int frontendPort = default, int backendPort = default, ResourceIdentifier backendIPResourceId = default, ResourceIdentifier publicIPAddressResourceId = default)
+        {
+            return new HciVmInboundNatRuleProperties(
+                protocol,
+                frontendPort,
+                backendPort,
+                backendIPResourceId is null ? default : new HciVmIPConfigurationArmReference(backendIPResourceId, default),
+                publicIPAddressResourceId is null ? default : new HciVmPublicIPAddressArmReference(publicIPAddressResourceId, default),
+                default);
         }
 
         /// <param name="errorCode"> NatGateway provisioning error code. </param>
@@ -1639,63 +1584,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HciVmNatGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <returns> A new <see cref="Vm.InboundRuleData"/> instance for mocking. </returns>
-        public static InboundRuleData InboundRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, InboundRuleProperties properties = default, HciVmExtendedLocation extendedLocation = default)
-        {
-            return new InboundRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                extendedLocation,
-                default);
-        }
-
-        /// <param name="protocol"> Protocol for the NAT rule. </param>
-        /// <param name="frontendPort"> Frontend Port for the inbound rule. </param>
-        /// <param name="backendPort"> backend Port for the inbound rule. </param>
-        /// <param name="backendIPResourceId"> The Azure Resource ID of an IPConfiguration resource. </param>
-        /// <param name="publicIPAddressResourceId"> The Azure Resource ID of a Public IP resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the inbound rule. </param>
-        /// <param name="status"> The observed state of Inbound Rule. </param>
-        /// <returns> A new <see cref="Models.InboundRuleProperties"/> instance for mocking. </returns>
-        public static InboundRuleProperties InboundRuleProperties(HciVmInboundNatRuleProtocol protocol = default, int frontendPort = default, int backendPort = default, ResourceIdentifier backendIPResourceId = default, ResourceIdentifier publicIPAddressResourceId = default, HciVmProvisioningState? provisioningState = default, InboundRuleStatus status = default)
-        {
-            return new InboundRuleProperties(
-                protocol,
-                frontendPort,
-                backendPort,
-                backendIPResourceId is null ? default : new HciVmIPConfigurationArmReference(backendIPResourceId, default),
-                publicIPAddressResourceId is null ? default : new HciVmPublicIPAddressArmReference(publicIPAddressResourceId, default),
-                provisioningState,
-                status,
-                default);
-        }
-
-        /// <param name="errorCode"> InboundRule provisioning error code. </param>
-        /// <param name="errorMessage"> Descriptive error message. </param>
-        /// <param name="provisioningStatus"> InboundRule provisioning status. </param>
-        /// <returns> A new <see cref="Models.InboundRuleStatus"/> instance for mocking. </returns>
-        public static InboundRuleStatus InboundRuleStatus(string errorCode = default, string errorMessage = default, InboundRuleStatusProvisioningStatus provisioningStatus = default)
-        {
-            return new InboundRuleStatus(errorCode, errorMessage, provisioningStatus, default);
-        }
-
-        /// <param name="operationId"> The ID of the operation performed on the inbound rule. </param>
-        /// <param name="status"> The status of the operation performed on the inbound rule [Succeeded, Failed, InProgress]. </param>
-        /// <returns> A new <see cref="Models.InboundRuleStatusProvisioningStatus"/> instance for mocking. </returns>
-        public static InboundRuleStatusProvisioningStatus InboundRuleStatusProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
-        {
-            return new InboundRuleStatusProvisioningStatus(operationId, status, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

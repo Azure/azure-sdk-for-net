@@ -151,32 +151,5 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
             MsixPackageResource.ValidateResourceId(id);
             return new MsixPackageResource(Client, id);
         }
-
-        /// <summary> Gets an object representing a <see cref="ActiveSessionHostConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ActiveSessionHostConfigurationResource"/> object. </returns>
-        public virtual ActiveSessionHostConfigurationResource GetActiveSessionHostConfigurationResource(ResourceIdentifier id)
-        {
-            ActiveSessionHostConfigurationResource.ValidateResourceId(id);
-            return new ActiveSessionHostConfigurationResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="SessionHostManagementResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SessionHostManagementResource"/> object. </returns>
-        public virtual SessionHostManagementResource GetSessionHostManagementResource(ResourceIdentifier id)
-        {
-            SessionHostManagementResource.ValidateResourceId(id);
-            return new SessionHostManagementResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="SessionHostConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SessionHostConfigurationResource"/> object. </returns>
-        public virtual SessionHostConfigurationResource GetSessionHostConfigurationResource(ResourceIdentifier id)
-        {
-            SessionHostConfigurationResource.ValidateResourceId(id);
-            return new SessionHostConfigurationResource(Client, id);
-        }
     }
 }

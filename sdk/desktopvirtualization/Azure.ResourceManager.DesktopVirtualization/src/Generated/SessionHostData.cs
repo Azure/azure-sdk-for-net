@@ -41,36 +41,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
         [WirePath("properties")]
         internal SessionHostProperties Properties { get; set; }
 
-        /// <summary> Number of active sessions on SessionHost. </summary>
-        [WirePath("properties.activeSessions")]
-        public int? ActiveSessions
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ActiveSessions;
-            }
-        }
-
-        /// <summary> Number of disconnected sessions on SessionHost. </summary>
-        [WirePath("properties.disconnectedSessions")]
-        public int? DisconnectedSessions
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DisconnectedSessions;
-            }
-        }
-
-        /// <summary> Number of pending sessions on SessionHost. </summary>
-        [WirePath("properties.pendingSessions")]
-        public int? PendingSessions
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PendingSessions;
-            }
-        }
-
         /// <summary> ObjectId of SessionHost. (internal use). </summary>
         [WirePath("properties.objectId")]
         public string ObjectId
@@ -172,26 +142,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
             get
             {
                 return Properties is null ? default : Properties.LastUpdatedOn;
-            }
-        }
-
-        /// <summary> The last time update was completed. </summary>
-        [WirePath("properties.lastSessionHostUpdateTime")]
-        public DateTimeOffset? LastSessionHostUpdateOn
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LastSessionHostUpdateOn;
-            }
-        }
-
-        /// <summary> SessionHostConfiguration version reference at the time the update is initiated, in the format of date time. Example: 2024-04-26T04:56:45Z. </summary>
-        [WirePath("properties.sessionHostConfiguration")]
-        public string SessionHostConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SessionHostConfiguration;
             }
         }
 

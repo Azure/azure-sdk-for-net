@@ -39,10 +39,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="applicationGroupType"> Resource Type of ApplicationGroup. </param>
         /// <param name="isCloudPCResource"> Is cloud pc resource. </param>
         /// <param name="showInFeed"> Boolean representing whether the applicationGroup is show in the feed. </param>
-        /// <param name="oboTenantId"> Tenant that the resource is being requested on behalf of. </param>
-        /// <param name="deploymentScope"> DeploymentScope type for ApplicationGroup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGroupProperties(string objectId, string description, string friendlyName, ResourceIdentifier hostPoolId, ResourceIdentifier workspaceId, VirtualApplicationGroupType applicationGroupType, bool? isCloudPCResource, bool? showInFeed, string oboTenantId, DesktopVirtualizationDeploymentScope? deploymentScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGroupProperties(string objectId, string description, string friendlyName, ResourceIdentifier hostPoolId, ResourceIdentifier workspaceId, VirtualApplicationGroupType applicationGroupType, bool? isCloudPCResource, bool? showInFeed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             Description = description;
@@ -52,8 +50,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ApplicationGroupType = applicationGroupType;
             IsCloudPCResource = isCloudPCResource;
             ShowInFeed = showInFeed;
-            OboTenantId = oboTenantId;
-            DeploymentScope = deploymentScope;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -88,13 +84,5 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> Boolean representing whether the applicationGroup is show in the feed. </summary>
         [WirePath("showInFeed")]
         public bool? ShowInFeed { get; set; }
-
-        /// <summary> Tenant that the resource is being requested on behalf of. </summary>
-        [WirePath("oboTenantId")]
-        public string OboTenantId { get; set; }
-
-        /// <summary> DeploymentScope type for ApplicationGroup. </summary>
-        [WirePath("deploymentScope")]
-        public DesktopVirtualizationDeploymentScope? DeploymentScope { get; }
     }
 }

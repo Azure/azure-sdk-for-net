@@ -32,23 +32,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> tags to be updated. </param>
         /// <param name="properties"> HostPool properties that can be patched. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, HostPoolPatchProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal HostPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, HostPoolPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             Properties = properties;
-            Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> HostPool properties that can be patched. </summary>
         [WirePath("properties")]
         internal HostPoolPatchProperties Properties { get; set; }
-
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Friendly name of HostPool. </summary>
         [WirePath("properties.friendlyName")]
@@ -371,114 +365,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     Properties = new HostPoolPatchProperties();
                 }
                 Properties.AgentUpdate = value;
-            }
-        }
-
-        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
-        [WirePath("properties.managedPrivateUDP")]
-        public DesktopVirtualizationManagedPrivateUdp? ManagedPrivateUdp
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ManagedPrivateUdp;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new HostPoolPatchProperties();
-                }
-                Properties.ManagedPrivateUdp = value;
-            }
-        }
-
-        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
-        [WirePath("properties.directUDP")]
-        public DesktopVirtualizationDirectUdp? DirectUdp
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DirectUdp;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new HostPoolPatchProperties();
-                }
-                Properties.DirectUdp = value;
-            }
-        }
-
-        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
-        [WirePath("properties.publicUDP")]
-        public DesktopVirtualizationPublicUdp? PublicUdp
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PublicUdp;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new HostPoolPatchProperties();
-                }
-                Properties.PublicUdp = value;
-            }
-        }
-
-        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
-        [WirePath("properties.relayUDP")]
-        public DesktopVirtualizationRelayUdp? RelayUdp
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RelayUdp;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new HostPoolPatchProperties();
-                }
-                Properties.RelayUdp = value;
-            }
-        }
-
-        /// <summary> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </summary>
-        [WirePath("properties.allowRDPShortPathWithPrivateLink")]
-        public DesktopVirtualizationAllowRdpShortPathWithPrivateLink? AllowRdpShortPathWithPrivateLink
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AllowRdpShortPathWithPrivateLink;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new HostPoolPatchProperties();
-                }
-                Properties.AllowRdpShortPathWithPrivateLink = value;
-            }
-        }
-
-        /// <summary> The conditional RDP properties of the host pool, serialized as a string in the format of `&lt;rdpPropertyName&gt;:&lt;type&gt;:&lt;value&gt;:&lt;conditionType&gt;:&lt;conditionValue&gt;`. </summary>
-        [WirePath("properties.conditionalRdpProperty")]
-        public string ConditionalRdpProperty
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConditionalRdpProperty;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new HostPoolPatchProperties();
-                }
-                Properties.ConditionalRdpProperty = value;
             }
         }
     }

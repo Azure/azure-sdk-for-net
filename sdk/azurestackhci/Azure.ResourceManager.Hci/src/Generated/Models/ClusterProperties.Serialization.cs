@@ -94,11 +94,6 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("cloudId"u8);
                 writer.WriteStringValue(CloudId.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ring))
-            {
-                writer.WritePropertyName("ring"u8);
-                writer.WriteStringValue(Ring);
-            }
             if (Optional.IsDefined(CloudManagementEndpoint))
             {
                 writer.WritePropertyName("cloudManagementEndpoint"u8);
@@ -169,11 +164,6 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("billingModel"u8);
                 writer.WriteStringValue(BillingModel);
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingProperties))
-            {
-                writer.WritePropertyName("billingProperties"u8);
-                writer.WriteObjectValue(BillingProperties, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(RegistrationTimestamp))
             {
                 writer.WritePropertyName("registrationTimestamp"u8);
@@ -214,16 +204,6 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("clusterPattern"u8);
                 writer.WriteStringValue(ClusterPattern.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ConfidentialVmProperties))
-            {
-                writer.WritePropertyName("confidentialVmProperties"u8);
-                writer.WriteObjectValue(ConfidentialVmProperties, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SdnProperties))
-            {
-                writer.WritePropertyName("sdnProperties"u8);
-                writer.WriteObjectValue(SdnProperties, options);
-            }
             if (Optional.IsCollectionDefined(LocalAvailabilityZones))
             {
                 writer.WritePropertyName("localAvailabilityZones"u8);
@@ -238,11 +218,6 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("identityProvider"u8);
                 writer.WriteStringValue(IdentityProvider.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(StorageType))
-            {
-                writer.WritePropertyName("storageType"u8);
-                writer.WriteStringValue(StorageType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -290,7 +265,6 @@ namespace Azure.ResourceManager.Hci.Models
             HciClusterStatus? status = default;
             HciClusterConnectivityStatus? connectivityStatus = default;
             Guid? cloudId = default;
-            string ring = default;
             string cloudManagementEndpoint = default;
             Guid? aadClientId = default;
             Guid? aadTenantId = default;
@@ -305,7 +279,6 @@ namespace Azure.ResourceManager.Hci.Models
             IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = default;
             float? trialDaysRemaining = default;
             string billingModel = default;
-            ClusterBillingProperties billingProperties = default;
             DateTimeOffset? registrationTimestamp = default;
             DateTimeOffset? lastSyncTimestamp = default;
             DateTimeOffset? lastBillingTimestamp = default;
@@ -313,11 +286,8 @@ namespace Azure.ResourceManager.Hci.Models
             string resourceProviderObjectId = default;
             IList<SecretsLocationDetails> secretsLocations = default;
             ClusterPattern? clusterPattern = default;
-            ConfidentialVmProperties confidentialVmProperties = default;
-            ClusterSdnProperties sdnProperties = default;
             IList<LocalAvailabilityZones> localAvailabilityZones = default;
             HciIdentityProvider? identityProvider = default;
-            HciStorageType? storageType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -355,11 +325,6 @@ namespace Azure.ResourceManager.Hci.Models
                         continue;
                     }
                     cloudId = new Guid(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("ring"u8))
-                {
-                    ring = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("cloudManagementEndpoint"u8))
@@ -480,15 +445,6 @@ namespace Azure.ResourceManager.Hci.Models
                     billingModel = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("billingProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    billingProperties = ClusterBillingProperties.DeserializeClusterBillingProperties(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("registrationTimestamp"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -549,24 +505,6 @@ namespace Azure.ResourceManager.Hci.Models
                     clusterPattern = new ClusterPattern(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("confidentialVmProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    confidentialVmProperties = ConfidentialVmProperties.DeserializeConfidentialVmProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("sdnProperties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sdnProperties = ClusterSdnProperties.DeserializeClusterSdnProperties(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("localAvailabilityZones"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -590,15 +528,6 @@ namespace Azure.ResourceManager.Hci.Models
                     identityProvider = new HciIdentityProvider(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("storageType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storageType = new HciStorageType(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -609,7 +538,6 @@ namespace Azure.ResourceManager.Hci.Models
                 status,
                 connectivityStatus,
                 cloudId,
-                ring,
                 cloudManagementEndpoint,
                 aadClientId,
                 aadTenantId,
@@ -624,7 +552,6 @@ namespace Azure.ResourceManager.Hci.Models
                 isolatedVmAttestationConfiguration,
                 trialDaysRemaining,
                 billingModel,
-                billingProperties,
                 registrationTimestamp,
                 lastSyncTimestamp,
                 lastBillingTimestamp,
@@ -632,11 +559,8 @@ namespace Azure.ResourceManager.Hci.Models
                 resourceProviderObjectId,
                 secretsLocations ?? new ChangeTrackingList<SecretsLocationDetails>(),
                 clusterPattern,
-                confidentialVmProperties,
-                sdnProperties,
                 localAvailabilityZones ?? new ChangeTrackingList<LocalAvailabilityZones>(),
                 identityProvider,
-                storageType,
                 additionalBinaryDataProperties);
         }
     }

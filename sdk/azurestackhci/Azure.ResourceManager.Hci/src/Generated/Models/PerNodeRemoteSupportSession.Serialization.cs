@@ -99,11 +99,6 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("accessLevel"u8);
                 writer.WriteStringValue(AccessLevel.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TranscriptLocation))
-            {
-                writer.WritePropertyName("transcriptLocation"u8);
-                writer.WriteStringValue(TranscriptLocation);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -151,7 +146,6 @@ namespace Azure.ResourceManager.Hci.Models
             string nodeName = default;
             long? duration = default;
             HciClusterAccessLevel? accessLevel = default;
-            string transcriptLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -196,11 +190,6 @@ namespace Azure.ResourceManager.Hci.Models
                     accessLevel = new HciClusterAccessLevel(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("transcriptLocation"u8))
-                {
-                    transcriptLocation = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -212,7 +201,6 @@ namespace Azure.ResourceManager.Hci.Models
                 nodeName,
                 duration,
                 accessLevel,
-                transcriptLocation,
                 additionalBinaryDataProperties);
         }
     }

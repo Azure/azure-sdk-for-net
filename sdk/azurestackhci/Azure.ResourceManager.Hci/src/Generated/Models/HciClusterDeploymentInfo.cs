@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Storage config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("storage")]
-        public DeploymentSettingStorage Storage { get; set; }
+        internal DeploymentSettingStorage Storage { get; set; }
 
         /// <summary> naming prefix to deploy cluster. </summary>
         [WirePath("namingPrefix")]

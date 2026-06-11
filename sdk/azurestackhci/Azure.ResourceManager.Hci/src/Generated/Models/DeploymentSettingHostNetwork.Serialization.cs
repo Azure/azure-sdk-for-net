@@ -94,11 +94,6 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SanNetworks))
-            {
-                writer.WritePropertyName("sanNetworks"u8);
-                writer.WriteObjectValue(SanNetworks, options);
-            }
             if (Optional.IsDefined(StorageConnectivitySwitchless))
             {
                 writer.WritePropertyName("storageConnectivitySwitchless"u8);
@@ -153,7 +148,6 @@ namespace Azure.ResourceManager.Hci.Models
             }
             IList<DeploymentSettingIntents> intents = default;
             IList<DeploymentSettingStorageNetworks> storageNetworks = default;
-            SanNetworks sanNetworks = default;
             bool? storageConnectivitySwitchless = default;
             bool? enableStorageAutoIP = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -187,15 +181,6 @@ namespace Azure.ResourceManager.Hci.Models
                     storageNetworks = array;
                     continue;
                 }
-                if (prop.NameEquals("sanNetworks"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sanNetworks = SanNetworks.DeserializeSanNetworks(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("storageConnectivitySwitchless"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -219,13 +204,7 @@ namespace Azure.ResourceManager.Hci.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeploymentSettingHostNetwork(
-                intents ?? new ChangeTrackingList<DeploymentSettingIntents>(),
-                storageNetworks ?? new ChangeTrackingList<DeploymentSettingStorageNetworks>(),
-                sanNetworks,
-                storageConnectivitySwitchless,
-                enableStorageAutoIP,
-                additionalBinaryDataProperties);
+            return new DeploymentSettingHostNetwork(intents ?? new ChangeTrackingList<DeploymentSettingIntents>(), storageNetworks ?? new ChangeTrackingList<DeploymentSettingStorageNetworks>(), storageConnectivitySwitchless, enableStorageAutoIP, additionalBinaryDataProperties);
         }
     }
 }

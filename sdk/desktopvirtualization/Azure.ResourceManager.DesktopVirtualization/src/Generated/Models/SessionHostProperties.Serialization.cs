@@ -74,21 +74,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 throw new FormatException($"The model {nameof(SessionHostProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(ActiveSessions))
-            {
-                writer.WritePropertyName("activeSessions"u8);
-                writer.WriteNumberValue(ActiveSessions.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DisconnectedSessions))
-            {
-                writer.WritePropertyName("disconnectedSessions"u8);
-                writer.WriteNumberValue(DisconnectedSessions.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(PendingSessions))
-            {
-                writer.WritePropertyName("pendingSessions"u8);
-                writer.WriteNumberValue(PendingSessions.Value);
-            }
             if (options.Format != "W" && Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
@@ -169,16 +154,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("updateErrorMessage"u8);
                 writer.WriteStringValue(UpdateErrorMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSessionHostUpdateOn))
-            {
-                writer.WritePropertyName("lastSessionHostUpdateTime"u8);
-                writer.WriteStringValue(LastSessionHostUpdateOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(SessionHostConfiguration))
-            {
-                writer.WritePropertyName("sessionHostConfiguration"u8);
-                writer.WriteStringValue(SessionHostConfiguration);
-            }
             if (options.Format != "W" && Optional.IsCollectionDefined(SessionHostHealthCheckResults))
             {
                 writer.WritePropertyName("sessionHostHealthCheckResults"u8);
@@ -231,9 +206,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            int? activeSessions = default;
-            int? disconnectedSessions = default;
-            int? pendingSessions = default;
             string objectId = default;
             DateTimeOffset? lastHeartBeatOn = default;
             int? sessions = default;
@@ -250,39 +222,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             SessionHostUpdateState? updateState = default;
             DateTimeOffset? lastUpdatedOn = default;
             string updateErrorMessage = default;
-            DateTimeOffset? lastSessionHostUpdateOn = default;
-            string sessionHostConfiguration = default;
             IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("activeSessions"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    activeSessions = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("disconnectedSessions"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disconnectedSessions = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("pendingSessions"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    pendingSessions = prop.Value.GetInt32();
-                    continue;
-                }
                 if (prop.NameEquals("objectId"u8))
                 {
                     objectId = prop.Value.GetString();
@@ -395,20 +338,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     updateErrorMessage = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("lastSessionHostUpdateTime"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastSessionHostUpdateOn = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("sessionHostConfiguration"u8))
-                {
-                    sessionHostConfiguration = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("sessionHostHealthCheckResults"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -429,9 +358,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             return new SessionHostProperties(
-                activeSessions,
-                disconnectedSessions,
-                pendingSessions,
                 objectId,
                 lastHeartBeatOn,
                 sessions,
@@ -448,8 +374,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 updateState,
                 lastUpdatedOn,
                 updateErrorMessage,
-                lastSessionHostUpdateOn,
-                sessionHostConfiguration,
                 sessionHostHealthCheckResults ?? new ChangeTrackingList<SessionHostHealthCheckReport>(),
                 additionalBinaryDataProperties);
         }

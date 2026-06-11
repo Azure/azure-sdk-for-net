@@ -111,11 +111,6 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("identity"u8);
                 ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
-            if (Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -166,7 +161,6 @@ namespace Azure.ResourceManager.Hci
             AzureLocation location = default;
             ClusterProperties properties = default;
             ManagedServiceIdentity identity = default;
-            string kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -246,11 +240,6 @@ namespace Azure.ResourceManager.Hci
                     identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerHciContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("kind"u8))
-                {
-                    kind = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -265,7 +254,6 @@ namespace Azure.ResourceManager.Hci
                 location,
                 properties,
                 identity,
-                kind,
                 additionalBinaryDataProperties);
         }
     }

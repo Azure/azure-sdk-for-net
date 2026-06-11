@@ -8,9 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -131,11 +129,6 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error"u8);
-                ((IJsonModel<ResponseError>)Error).Write(writer, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -186,7 +179,6 @@ namespace Azure.ResourceManager.Hci.Models
             string status = default;
             IReadOnlyList<HciClusterDeploymentStep> steps = default;
             IReadOnlyList<string> exception = default;
-            ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -255,15 +247,6 @@ namespace Azure.ResourceManager.Hci.Models
                     exception = array;
                     continue;
                 }
-                if (prop.NameEquals("error"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHciContext.Default);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -278,7 +261,6 @@ namespace Azure.ResourceManager.Hci.Models
                 status,
                 steps ?? new ChangeTrackingList<HciClusterDeploymentStep>(),
                 exception ?? new ChangeTrackingList<string>(),
-                error,
                 additionalBinaryDataProperties);
         }
     }

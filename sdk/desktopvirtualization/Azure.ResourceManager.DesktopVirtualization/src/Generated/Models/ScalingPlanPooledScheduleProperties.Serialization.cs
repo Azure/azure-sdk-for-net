@@ -74,11 +74,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 throw new FormatException($"The model {nameof(ScalingPlanPooledScheduleProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(ScheduleName))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(ScheduleName);
-            }
             if (Optional.IsCollectionDefined(DaysOfWeek))
             {
                 writer.WritePropertyName("daysOfWeek"u8);
@@ -88,16 +83,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ScalingMethod))
-            {
-                writer.WritePropertyName("scalingMethod"u8);
-                writer.WriteStringValue(ScalingMethod.Value.ToString());
-            }
-            if (Optional.IsDefined(CreateDelete))
-            {
-                writer.WritePropertyName("createDelete"u8);
-                writer.WriteObjectValue(CreateDelete, options);
             }
             if (Optional.IsDefined(RampUpStartTime))
             {
@@ -221,10 +206,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            string scheduleName = default;
             IList<DesktopVirtualizationDayOfWeek> daysOfWeek = default;
-            DesktopVirtualizationScalingMethodType? scalingMethod = default;
-            DesktopVirtualizationCreateDeleteProperties createDelete = default;
             ScalingActionTime rampUpStartTime = default;
             SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm = default;
             int? rampUpMinimumHostsPct = default;
@@ -244,11 +226,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
-                {
-                    scheduleName = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("daysOfWeek"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -261,24 +238,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         array.Add(item.GetString().ToDesktopVirtualizationDayOfWeek());
                     }
                     daysOfWeek = array;
-                    continue;
-                }
-                if (prop.NameEquals("scalingMethod"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    scalingMethod = new DesktopVirtualizationScalingMethodType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("createDelete"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    createDelete = DesktopVirtualizationCreateDeleteProperties.DeserializeDesktopVirtualizationCreateDeleteProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("rampUpStartTime"u8))
@@ -427,10 +386,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             return new ScalingPlanPooledScheduleProperties(
-                scheduleName,
                 daysOfWeek ?? new ChangeTrackingList<DesktopVirtualizationDayOfWeek>(),
-                scalingMethod,
-                createDelete,
                 rampUpStartTime,
                 rampUpLoadBalancingAlgorithm,
                 rampUpMinimumHostsPct,

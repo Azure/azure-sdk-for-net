@@ -109,6 +109,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
+            if (Optional.IsDefined(ScopeType))
+            {
+                writer.WritePropertyName("scopeType"u8);
+                writer.WriteStringValue(ScopeType.Value.ToString());
+            }
+            if (Optional.IsDefined(ScopeId))
+            {
+                writer.WritePropertyName("scopeId"u8);
+                writer.WriteStringValue(ScopeId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -158,6 +168,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             double? currentValue = default;
             string nextResetTime = default;
             ServiceAccountQuotaUsageStatus? status = default;
+            CognitiveServicesQuotaScopeType? scopeType = default;
+            string scopeId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -216,6 +228,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     status = new ServiceAccountQuotaUsageStatus(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("scopeType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        scopeType = null;
+                        continue;
+                    }
+                    scopeType = new CognitiveServicesQuotaScopeType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("scopeId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        scopeId = null;
+                        continue;
+                    }
+                    scopeId = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -229,6 +261,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 currentValue,
                 nextResetTime,
                 status,
+                scopeType,
+                scopeId,
                 additionalBinaryDataProperties);
         }
     }

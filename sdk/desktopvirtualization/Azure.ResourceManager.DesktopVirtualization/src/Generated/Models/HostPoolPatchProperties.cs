@@ -41,14 +41,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="startVmOnConnect"> The flag to turn on/off StartVMOnConnect feature. </param>
         /// <param name="publicNetworkAccess"> Enabled to allow this resource to be access from the public network. </param>
         /// <param name="agentUpdate"> The session host configuration for updating agent, monitoring agent, and stack component. </param>
-        /// <param name="managedPrivateUdp"> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </param>
-        /// <param name="directUdp"> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </param>
-        /// <param name="publicUdp"> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </param>
-        /// <param name="relayUdp"> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </param>
-        /// <param name="allowRdpShortPathWithPrivateLink"> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </param>
-        /// <param name="conditionalRdpProperty"> The conditional RDP properties of the host pool, serialized as a string in the format of `&lt;rdpPropertyName&gt;:&lt;type&gt;:&lt;value&gt;:&lt;conditionType&gt;:&lt;conditionValue&gt;`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HostPoolPatchProperties(string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdatePatchProperties agentUpdate, DesktopVirtualizationManagedPrivateUdp? managedPrivateUdp, DesktopVirtualizationDirectUdp? directUdp, DesktopVirtualizationPublicUdp? publicUdp, DesktopVirtualizationRelayUdp? relayUdp, DesktopVirtualizationAllowRdpShortPathWithPrivateLink? allowRdpShortPathWithPrivateLink, string conditionalRdpProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HostPoolPatchProperties(string friendlyName, string description, string customRdpProperty, int? maxSessionLimit, PersonalDesktopAssignmentType? personalDesktopAssignmentType, HostPoolLoadBalancerType? loadBalancerType, int? ring, bool? isValidationEnvironment, HostPoolRegistrationInfoPatch registrationInfo, string vmTemplate, string ssoAdfsAuthority, string ssoClientId, string ssoClientSecretKeyVaultPath, HostPoolSsoSecretType? ssoSecretType, PreferredAppGroupType? preferredAppGroupType, bool? startVmOnConnect, HostPoolPublicNetworkAccess? publicNetworkAccess, SessionHostAgentUpdatePatchProperties agentUpdate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             Description = description;
@@ -68,12 +62,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             StartVmOnConnect = startVmOnConnect;
             PublicNetworkAccess = publicNetworkAccess;
             AgentUpdate = agentUpdate;
-            ManagedPrivateUdp = managedPrivateUdp;
-            DirectUdp = directUdp;
-            PublicUdp = publicUdp;
-            RelayUdp = relayUdp;
-            AllowRdpShortPathWithPrivateLink = allowRdpShortPathWithPrivateLink;
-            ConditionalRdpProperty = conditionalRdpProperty;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -148,29 +136,5 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <summary> The session host configuration for updating agent, monitoring agent, and stack component. </summary>
         [WirePath("agentUpdate")]
         public SessionHostAgentUpdatePatchProperties AgentUpdate { get; set; }
-
-        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
-        [WirePath("managedPrivateUDP")]
-        public DesktopVirtualizationManagedPrivateUdp? ManagedPrivateUdp { get; set; }
-
-        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
-        [WirePath("directUDP")]
-        public DesktopVirtualizationDirectUdp? DirectUdp { get; set; }
-
-        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
-        [WirePath("publicUDP")]
-        public DesktopVirtualizationPublicUdp? PublicUdp { get; set; }
-
-        /// <summary> Default: AVD-wide settings are used to determine connection availability, Enabled: UDP will attempt this connection type when making connections. This means that this connection is possible, but is not guaranteed, as there are other factors that may prevent this connection type, Disabled: UDP will not attempt this connection type when making connections. </summary>
-        [WirePath("relayUDP")]
-        public DesktopVirtualizationRelayUdp? RelayUdp { get; set; }
-
-        /// <summary> Controls if the use of RDPShortPath transport is allowed, possibly bypassing Private Link routes. </summary>
-        [WirePath("allowRDPShortPathWithPrivateLink")]
-        public DesktopVirtualizationAllowRdpShortPathWithPrivateLink? AllowRdpShortPathWithPrivateLink { get; set; }
-
-        /// <summary> The conditional RDP properties of the host pool, serialized as a string in the format of `&lt;rdpPropertyName&gt;:&lt;type&gt;:&lt;value&gt;:&lt;conditionType&gt;:&lt;conditionValue&gt;`. </summary>
-        [WirePath("conditionalRdpProperty")]
-        public string ConditionalRdpProperty { get; set; }
     }
 }

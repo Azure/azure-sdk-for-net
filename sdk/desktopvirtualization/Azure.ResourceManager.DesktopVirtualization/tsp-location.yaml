@@ -1,5 +1,5 @@
 directory: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/DesktopVirtualization
-commit: 3efbb43bb387ba25bf944bb29cff753cb4a8ad3e
+commit: 5c5bc17604132337dec37e5713e4c1e45d6cae54
 repo: Azure/azure-rest-api-specs
 
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

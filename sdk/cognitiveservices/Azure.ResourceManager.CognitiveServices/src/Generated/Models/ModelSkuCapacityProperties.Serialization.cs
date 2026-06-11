@@ -94,6 +94,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("availableFinetuneCapacity"u8);
                 writer.WriteNumberValue(AvailableFinetuneCapacity.Value);
             }
+            if (Optional.IsDefined(ScopeId))
+            {
+                writer.WritePropertyName("scopeId"u8);
+                writer.WriteStringValue(ScopeId);
+            }
+            if (Optional.IsDefined(ScopeType))
+            {
+                writer.WritePropertyName("scopeType"u8);
+                writer.WriteStringValue(ScopeType.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -140,6 +150,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string skuName = default;
             float? availableCapacity = default;
             float? availableFinetuneCapacity = default;
+            string scopeId = default;
+            CognitiveServicesQuotaScopeType? scopeType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,12 +187,39 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     availableFinetuneCapacity = prop.Value.GetSingle();
                     continue;
                 }
+                if (prop.NameEquals("scopeId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        scopeId = null;
+                        continue;
+                    }
+                    scopeId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("scopeType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        scopeType = null;
+                        continue;
+                    }
+                    scopeType = new CognitiveServicesQuotaScopeType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ModelSkuCapacityProperties(model, skuName, availableCapacity, availableFinetuneCapacity, additionalBinaryDataProperties);
+            return new ModelSkuCapacityProperties(
+                model,
+                skuName,
+                availableCapacity,
+                availableFinetuneCapacity,
+                scopeId,
+                scopeType,
+                additionalBinaryDataProperties);
         }
     }
 }
