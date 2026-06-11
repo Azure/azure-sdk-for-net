@@ -343,6 +343,34 @@ namespace Azure.Test
         }
 
         [Test]
+        public async Task AZC0040_ProducedForArrowDelegateReturnType()
+        {
+            string code = @"
+using Apache.Arrow;
+" + ArrowStub + @"
+namespace Azure.Test
+{
+    public delegate Table {|AZC0040:TableProvider|}();
+}";
+
+            await Verifier.CreateAnalyzer(code).RunAsync();
+        }
+
+        [Test]
+        public async Task AZC0040_ProducedForArrowDelegateParameter()
+        {
+            string code = @"
+using Apache.Arrow;
+" + ArrowStub + @"
+namespace Azure.Test
+{
+    public delegate void {|AZC0040:TableHandler|}(Table table);
+}";
+
+            await Verifier.CreateAnalyzer(code).RunAsync();
+        }
+
+        [Test]
         public async Task AZC0040_NotProducedForInternalMember()
         {
             string code = @"
