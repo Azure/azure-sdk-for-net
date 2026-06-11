@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateTriggerSubscriptionEvaluationRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateTriggerPolicyStateEvaluationRequest(Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateTriggerResourceGroupEvaluationRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
+        internal HttpMessage CreateTriggerPolicyStateEvaluationRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -378,36 +378,36 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Triggers a policy evaluation scan for all the resources under the resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsResourceGroupResource.TriggerResourceGroupEvaluationAsync(WaitUntil, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsResourceGroupResource.TriggerPolicyStateEvaluationAsync(WaitUntil, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation> TriggerResourceGroupEvaluationAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation> TriggerPolicyStateEvaluationAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).TriggerResourceGroupEvaluationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).TriggerPolicyStateEvaluationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Triggers a policy evaluation scan for all the resources under the resource group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsResourceGroupResource.TriggerResourceGroupEvaluation(WaitUntil, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsResourceGroupResource.TriggerPolicyStateEvaluation(WaitUntil, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation TriggerResourceGroupEvaluation(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public static ArmOperation TriggerPolicyStateEvaluation(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).TriggerResourceGroupEvaluation(waitUntil, cancellationToken);
+            return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).TriggerPolicyStateEvaluation(waitUntil, cancellationToken);
         }
 
         /// <summary>
@@ -452,36 +452,36 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Triggers a policy evaluation scan for all the resources under the subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsSubscriptionResource.TriggerSubscriptionEvaluationAsync(WaitUntil, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsSubscriptionResource.TriggerPolicyStateEvaluationAsync(WaitUntil, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<ArmOperation> TriggerSubscriptionEvaluationAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation> TriggerPolicyStateEvaluationAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).TriggerSubscriptionEvaluationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).TriggerPolicyStateEvaluationAsync(waitUntil, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Triggers a policy evaluation scan for all the resources under the subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsSubscriptionResource.TriggerSubscriptionEvaluation(WaitUntil, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockablePolicyInsightsSubscriptionResource.TriggerPolicyStateEvaluation(WaitUntil, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static ArmOperation TriggerSubscriptionEvaluation(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public static ArmOperation TriggerPolicyStateEvaluation(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).TriggerSubscriptionEvaluation(waitUntil, cancellationToken);
+            return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).TriggerPolicyStateEvaluation(waitUntil, cancellationToken);
         }
 
         /// <summary>
