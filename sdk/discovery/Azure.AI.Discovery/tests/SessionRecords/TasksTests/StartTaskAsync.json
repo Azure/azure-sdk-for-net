@@ -1,0 +1,197 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://Sanitized.workspace.discovery.azure.com/projects/test-project/investigations/Sanitized/tasks?api-version=2026-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "126",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "title": "task-for-start-test",
+        "description": "Test task for C# SDK",
+        "assignedTo": {
+          "id": "test-agent",
+          "type": "Application"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 May 2026 00:50:45 GMT",
+        "mise-correlation-id": "Sanitized",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": {
+        "name": "5354052010250327798",
+        "title": "task-for-start-test",
+        "priority": "Medium",
+        "description": "Test task for C# SDK",
+        "validationRequirements": [],
+        "parentId": null,
+        "dependsOn": [],
+        "relatedTo": [],
+        "assignedTo": {
+          "id": "test-agent",
+          "type": "Application"
+        },
+        "comments": [],
+        "createdByType": "User",
+        "status": "New",
+        "createdAt": "2026-05-12T00:50:45.1107097Z",
+        "lastModifiedAt": "2026-05-12T00:50:45.1107097Z",
+        "executionHistory": [
+          {
+            "createdAt": "2026-05-12T00:50:45.1107097Z",
+            "action": "taskCreated",
+            "createdBy": "Sanitized",
+            "createdByType": "User",
+            "summary": "Task created: task-for-start-test"
+          }
+        ],
+        "taskCollectionId": "5591319156772512381",
+        "investigationId": "/projects/test-project/investigations/test-invst",
+        "taskResult": {
+          "text": "",
+          "storageAssetIds": [],
+          "citations": []
+        },
+        "storageAssetIds": [],
+        "lastModifiedByType": "User",
+        "lastModifiedBy": "Sanitized",
+        "createdBy": "Sanitized",
+        "foundryConversationId": null
+      }
+    },
+    {
+      "RequestUri": "https://Sanitized.workspace.discovery.azure.com/projects/test-project/investigations/Sanitized/tasks/5354052010250327798:start?api-version=2026-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 May 2026 00:50:52 GMT",
+        "mise-correlation-id": "Sanitized",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": {
+        "name": "5354052010250327798",
+        "title": "task-for-start-test",
+        "priority": "Medium",
+        "description": "Test task for C# SDK",
+        "validationRequirements": [],
+        "parentId": null,
+        "dependsOn": [],
+        "relatedTo": [],
+        "assignedTo": {
+          "id": "test-agent",
+          "type": "Application"
+        },
+        "comments": [],
+        "createdByType": "User",
+        "status": "Executing",
+        "createdAt": "2026-05-12T00:50:45.1107097Z",
+        "lastModifiedAt": "2026-05-12T00:50:52.4022601Z",
+        "executionHistory": [
+          {
+            "createdAt": "2026-05-12T00:50:45.1107097Z",
+            "action": "taskCreated",
+            "createdBy": "Sanitized",
+            "createdByType": "User",
+            "summary": "Task created: task-for-start-test"
+          },
+          {
+            "createdAt": "2026-05-12T00:50:50.314064Z",
+            "action": "taskStartInitiated",
+            "createdBy": "Sanitized",
+            "createdByType": "User",
+            "summary": "Task start requested by User"
+          },
+          {
+            "createdAt": "2026-05-12T00:50:51.2492508Z",
+            "action": "agentStarted",
+            "createdBy": "Sanitized",
+            "createdByType": "Application",
+            "summary": "Task execution initiated",
+            "responseMessageId": "conversations/task-5354052010250327798-d1f49d8a-e293-4841-a270-117de811f628/responses/resp_bc89fd9e1d7c481f80a89ab4343952f8"
+          },
+          {
+            "createdAt": "2026-05-12T00:50:51.3312Z",
+            "action": "taskUpdated",
+            "createdBy": "Sanitized",
+            "createdByType": "Application",
+            "summary": "Task updated: status",
+            "additionalDetails": {
+              "statusFrom": "New",
+              "statusTo": "Executing"
+            }
+          }
+        ],
+        "taskCollectionId": "5591319156772512381",
+        "investigationId": "/projects/test-project/investigations/test-invst",
+        "taskResult": {
+          "text": "",
+          "storageAssetIds": [],
+          "citations": []
+        },
+        "storageAssetIds": [],
+        "lastModifiedByType": "User",
+        "lastModifiedBy": "Sanitized",
+        "createdBy": "Sanitized",
+        "foundryConversationId": "conv_f2883aaed001046c00TVegpalTOEW1DI0rOp232QRYFPzBYEul"
+      }
+    },
+    {
+      "RequestUri": "https://Sanitized.workspace.discovery.azure.com/projects/test-project/investigations/Sanitized/tasks/5354052010250327798?api-version=2026-02-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Date": "Tue, 12 May 2026 00:50:54 GMT",
+        "mise-correlation-id": "Sanitized",
+        "Server": "Kestrel",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AGENT_NAME": "test-agent",
+    "AZURE_DISCOVERY_INVESTIGATION_NAME": "test-invst",
+    "AZURE_DISCOVERY_PROJECT_NAME": "test-project",
+    "AZURE_DISCOVERY_WORKSPACE_ENDPOINT": "https://Sanitized.workspace.discovery.azure.com",
+    "RandomSeed": "942882857"
+  }
+}

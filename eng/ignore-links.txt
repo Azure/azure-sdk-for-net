@@ -16,3 +16,6 @@ https://www.nuget.org/packages/Azure.AI.AgentServer.Invocations
 https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses
 https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples
 https://www.nuget.org/packages/Microsoft.Azure.PostgreSQL.Auth
+
+https://www.nuget.org/packages/Azure.AI.Discovery
+https://learn.microsoft.com/dotnet/api/azure.ai.discovery

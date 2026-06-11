@@ -1,0 +1,109 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://Sanitized.workspace.discovery.azure.com/conversations?api-version=2026-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "116",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "projectName": "Sanitized",
+        "investigationName": "/projects/test-project/investigations/test-invst"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 May 2026 00:57:56 GMT",
+        "mise-correlation-id": "Sanitized",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": {
+        "name": "0176a3af-8173-4967-a952-19a426a4c604",
+        "displayName": null,
+        "investigationName": "projects/test-project/investigations/test-invst",
+        "projectName": "Sanitized",
+        "createdAt": "2026-05-12T00:57:55.8870179Z",
+        "createdBy": "Sanitized",
+        "createdByType": "User",
+        "lastModifiedAt": "2026-05-12T00:57:55.8870179Z",
+        "lastModifiedBy": "Sanitized",
+        "lastModifiedByType": "User"
+      }
+    },
+    {
+      "RequestUri": "https://Sanitized.workspace.discovery.azure.com/conversations/0176a3af-8173-4967-a952-19a426a4c604?api-version=2026-02-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 May 2026 00:57:57 GMT",
+        "mise-correlation-id": "Sanitized",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": {
+        "name": "0176a3af-8173-4967-a952-19a426a4c604",
+        "displayName": null,
+        "investigationName": "projects/test-project/investigations/test-invst",
+        "projectName": "Sanitized",
+        "createdAt": "2026-05-12T00:57:55.8870179Z",
+        "createdBy": "Sanitized",
+        "createdByType": "User",
+        "lastModifiedAt": "2026-05-12T00:57:55.8870179Z",
+        "lastModifiedBy": "Sanitized",
+        "lastModifiedByType": "User"
+      }
+    },
+    {
+      "RequestUri": "https://Sanitized.workspace.discovery.azure.com/conversations/0176a3af-8173-4967-a952-19a426a4c604?api-version=2026-02-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Date": "Tue, 12 May 2026 00:57:59 GMT",
+        "mise-correlation-id": "Sanitized",
+        "Server": "Kestrel",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_DISCOVERY_INVESTIGATION_NAME": "test-invst",
+    "AZURE_DISCOVERY_PROJECT_NAME": "test-project",
+    "AZURE_DISCOVERY_WORKSPACE_ENDPOINT": "https://Sanitized.workspace.discovery.azure.com",
+    "RandomSeed": "1929415341"
+  }
+}

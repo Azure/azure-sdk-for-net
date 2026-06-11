@@ -1,0 +1,52 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://Sanitized.workspace.discovery.azure.com/projects/test-project/investigations/Sanitized?api-version=2026-02-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "57",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "description": "Test investigation",
+        "displayName": "Test"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 May 2026 00:32:21 GMT",
+        "mise-correlation-id": "Sanitized",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": {
+        "name": "test-create-replace",
+        "projectName": "Sanitized",
+        "description": "Test investigation",
+        "tags": null,
+        "createdBy": "Sanitized",
+        "createdByType": null,
+        "createdAt": "2026-05-12T00:28:05.634114+00:00",
+        "lastModifiedAt": "2026-05-12T00:32:21.2394925+00:00",
+        "lastModifiedBy": "Sanitized",
+        "lastModifiedByType": null,
+        "displayName": "Test",
+        "status": "Created"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_DISCOVERY_PROJECT_NAME": "test-project",
+    "AZURE_DISCOVERY_WORKSPACE_ENDPOINT": "https://Sanitized.workspace.discovery.azure.com",
+    "RandomSeed": "1604738037"
+  }
+}

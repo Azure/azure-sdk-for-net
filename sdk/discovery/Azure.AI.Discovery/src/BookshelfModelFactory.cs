@@ -1,0 +1,129 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+// Bookshelf-specific factory methods excluded from generated DiscoveryModelFactory
+// due to duplicate DiscoveryTag method between workspace and bookshelf partials.
+
+#nullable disable
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Azure;
+using Azure.Core;
+
+namespace Azure.AI.Discovery
+{
+    public static partial class DiscoveryModelFactory
+    {
+        /// <summary> A knowledgeBase. </summary>
+        /// <param name="name"> The knowledgeBase name. </param>
+        /// <param name="id"> The ID for the resource. </param>
+        /// <param name="version"> Version. </param>
+        /// <param name="bookshelfName"> The name of the associated Bookshelf tracked resource. </param>
+        /// <param name="storageAssetReferences"> Storage asset references to index. </param>
+        /// <param name="knowledgeBaseUrl"> URL to access the knowledge base. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="createdAt"> The timestamp when the resource was created. </param>
+        /// <param name="createdBy"> The ID of the user who created this resource. </param>
+        /// <param name="createdByType"> The type of user who created this resource. </param>
+        /// <param name="lastModifiedAt"> The timestamp when the resource was last updated. </param>
+        /// <param name="lastModifiedBy"> The ID of the user who updated this resource. </param>
+        /// <param name="lastModifiedByType"> The type of user who updated this resource. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="description"> The description. </param>
+        /// <param name="copilotInstruction"> The copilot instruction. </param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Discovery.KnowledgeBase"/> instance for mocking. </returns>
+        public static KnowledgeBase KnowledgeBase(string name = default, string id = default, string version = default, string bookshelfName = default, IEnumerable<StorageAssetReference> storageAssetReferences = default, string knowledgeBaseUrl = default, DiscoveryProvisioningState? provisioningState = default, DateTimeOffset? createdAt = default, string createdBy = default, ByType? createdByType = default, DateTimeOffset? lastModifiedAt = default, string lastModifiedBy = default, ByType? lastModifiedByType = default, IEnumerable<DiscoveryTag> tags = default, string description = default, string copilotInstruction = default, IndexingStatus? status = default)
+        {
+            storageAssetReferences ??= new ChangeTrackingList<StorageAssetReference>();
+            tags ??= new ChangeTrackingList<DiscoveryTag>();
+
+            return new KnowledgeBase(
+                name,
+                id,
+                version,
+                bookshelfName,
+                storageAssetReferences.ToList(),
+                knowledgeBaseUrl,
+                provisioningState,
+                createdAt,
+                createdBy,
+                createdByType,
+                lastModifiedAt,
+                lastModifiedBy,
+                lastModifiedByType,
+                tags.ToList(),
+                description,
+                copilotInstruction,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reference to a storage asset with identity information. </summary>
+        /// <param name="id"> The ARM resource ID of the storage asset. </param>
+        /// <param name="userAssignedIdentity"> The ARM resource ID of the User Assigned Managed Identity to access the storage asset. </param>
+        /// <returns> A new <see cref="Discovery.StorageAssetReference"/> instance for mocking. </returns>
+        public static StorageAssetReference StorageAssetReference(ResourceIdentifier id = default, ResourceIdentifier userAssignedIdentity = default)
+        {
+            return new StorageAssetReference(id, userAssignedIdentity, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A version. </summary>
+        /// <param name="name"> The version name. </param>
+        /// <param name="id"> The ID for the resource. </param>
+        /// <param name="version"> Version. </param>
+        /// <param name="bookshelfName"> The name of the associated Bookshelf tracked resource. </param>
+        /// <param name="storageAssetReferences"> Storage asset references to index. </param>
+        /// <param name="knowledgeBaseUrl"> URL to access the knowledge base. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="createdAt"> The timestamp when the resource was created. </param>
+        /// <param name="createdBy"> The ID of the user who created this resource. </param>
+        /// <param name="createdByType"> The type of user who created this resource. </param>
+        /// <param name="lastModifiedAt"> The timestamp when the resource was last updated. </param>
+        /// <param name="lastModifiedBy"> The ID of the user who updated this resource. </param>
+        /// <param name="lastModifiedByType"> The type of user who updated this resource. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="description"> The description. </param>
+        /// <param name="copilotInstruction"> The copilot instruction. </param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Discovery.KnowledgeBaseVersion"/> instance for mocking. </returns>
+        public static KnowledgeBaseVersion KnowledgeBaseVersion(string name = default, string id = default, string version = default, string bookshelfName = default, IEnumerable<StorageAssetReference> storageAssetReferences = default, string knowledgeBaseUrl = default, DiscoveryProvisioningState? provisioningState = default, DateTimeOffset? createdAt = default, string createdBy = default, ByType? createdByType = default, DateTimeOffset? lastModifiedAt = default, string lastModifiedBy = default, ByType? lastModifiedByType = default, IEnumerable<DiscoveryTag> tags = default, string description = default, string copilotInstruction = default, IndexingStatus? status = default)
+        {
+            storageAssetReferences ??= new ChangeTrackingList<StorageAssetReference>();
+            tags ??= new ChangeTrackingList<DiscoveryTag>();
+
+            return new KnowledgeBaseVersion(
+                name,
+                id,
+                version,
+                bookshelfName,
+                storageAssetReferences.ToList(),
+                knowledgeBaseUrl,
+                provisioningState,
+                createdAt,
+                createdBy,
+                createdByType,
+                lastModifiedAt,
+                lastModifiedBy,
+                lastModifiedByType,
+                tags.ToList(),
+                description,
+                copilotInstruction,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Status of a KnowledgeBase operation. </summary>
+        /// <param name="id"> The unique ID of the operation. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="error"> Error object that describes the error when status is 'Failed'. </param>
+        /// <param name="result"> The KnowledgeBaseVersion result of the operation. </param>
+        /// <returns> A new <see cref="Discovery.KnowledgeBaseOperationStatus"/> instance for mocking. </returns>
+        public static KnowledgeBaseOperationStatus KnowledgeBaseOperationStatus(string id = default, OperationState status = default, ResponseError error = default, KnowledgeBaseVersion result = default)
+        {
+            return new KnowledgeBaseOperationStatus(id, status, error, result, additionalBinaryDataProperties: null);
+        }
+    }
+}

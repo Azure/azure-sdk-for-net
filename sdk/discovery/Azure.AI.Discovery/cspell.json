@@ -1,0 +1,15 @@
+{
+  // Version of the setting file. Always 0.2
+  "version": "0.2",
+  // words - list of words to be always considered correct
+  "words": [
+    "invst",
+    "kbcrt",
+    "kbdel",
+    "kbdlt",
+    "kbops",
+    "milli",
+    "testv",
+    "wkspc"
+  ]
+}

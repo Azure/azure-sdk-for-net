@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <!-- This must be set BEFORE the repo Directory.Build.props is imported,
+         because OutDirName is used there to compute BaseOutputPath/
+         BaseIntermediateOutputPath. Sub-projects in _workspace/ share the
+         same AssemblyName as the main Azure.AI.Discovery project, so without
+         this override their NuGet restore overwrites the main project's
+         artifacts/obj/Azure.AI.Discovery/project.assets.json (stripping the
+         conditional GenAPI PackageReference and breaking ExportApi). -->
+    <OutDirName>Azure.AI.Discovery._workspace_$(MSBuildProjectName)</OutDirName>
+  </PropertyGroup>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+</Project>

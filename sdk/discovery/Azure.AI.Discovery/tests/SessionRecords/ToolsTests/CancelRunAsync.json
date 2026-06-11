@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://Sanitized.workspace.discovery.azure.com/tools/projects/test-project:run?api-version=2026-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "394",
+        "Content-Type": "application/json",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "toolId": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/tools/testtool",
+        "nodePoolIds": [
+          "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1"
+        ],
+        "command": "echo \"cancel test\" && sleep 300"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 12 May 2026 01:04:23 GMT",
+        "Location": "https://test-wkspc.workspace.discovery.azure.com/tools/projects/test-project/operations/7d86188d531d4e998bd8c38c94acfca9",
+        "mise-correlation-id": "Sanitized",
+        "operation-location": "https://test-wkspc.workspace.discovery.azure.com/tools/projects/test-project/operations/7d86188d531d4e998bd8c38c94acfca9",
+        "Server": "Kestrel",
+        "Transfer-Encoding": "chunked",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": {
+        "id": "7d86188d531d4e998bd8c38c94acfca9",
+        "status": "NotStarted",
+        "error": null,
+        "result": null
+      }
+    },
+    {
+      "RequestUri": "https://Sanitized.workspace.discovery.azure.com/tools/projects/test-project/operations/7d86188d531d4e998bd8c38c94acfca9:cancel?api-version=2026-02-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "User-Agent": "azsdk-net-AI.Discovery/1.0.0-alpha.20260512.1 (.NET 10.0.7; Ubuntu 24.04.4 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "0",
+        "Date": "Tue, 12 May 2026 01:04:24 GMT",
+        "mise-correlation-id": "Sanitized",
+        "Server": "Kestrel",
+        "x-ms-build-version": "1",
+        "x-ms-correlation-request-id": "Sanitized",
+        "x-ms-request-id": "Sanitized"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_DISCOVERY_PROJECT_NAME": "test-project",
+    "AZURE_DISCOVERY_WORKSPACE_ENDPOINT": "https://Sanitized.workspace.discovery.azure.com",
+    "RandomSeed": "1813498546",
+    "TOOL_ID": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/tools/testtool",
+    "TOOL_NODE_POOL_ID": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.Discovery/supercomputers/test-sc/nodePools/nodepool1"
+  }
+}
