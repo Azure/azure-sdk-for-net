@@ -68,6 +68,10 @@ namespace Azure.Generator.Management.Utilities
                 }
 
                 ParameterProvider outputParameter = convenienceParam;
+                if (GetResourceDataTypeOverride(enclosingTypeProvider, convenienceParam.Type) is { } resourceDataTypeOverride)
+                {
+                    outputParameter = RenameWithNewInstance(outputParameter, outputParameter.Name, type: resourceDataTypeOverride);
+                }
 
                 // Normalize body parameter names based on the type name (e.g., "patch", "details", "data", "content", or camelCase type name)
                 if (convenienceParam.Location == ParameterLocation.Body)
@@ -122,7 +126,7 @@ namespace Azure.Generator.Management.Utilities
             return [.. requiredParameters, .. optionalParameters];
         }
 
-        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null, ParameterValidationType? validation = null, bool preserveWireInfo = true)
+        private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, CSharpType? type = null, ParameterValidationType? validation = null, bool preserveWireInfo = true)
             => new(
                     name: normalizedName,
                     description: description ?? outputParameter.Description,
@@ -146,5 +150,24 @@ namespace Azure.Generator.Management.Utilities
                     // See issue #58484.
                     wireInfo: preserveWireInfo ? outputParameter.WireInfo : new WireInformation(SerializationFormat.Default, string.Empty),
                     validation: validation ?? outputParameter.Validation);
+
+        private static CSharpType? GetResourceDataTypeOverride(TypeProvider? enclosingTypeProvider, CSharpType type)
+        {
+            var resource = enclosingTypeProvider switch
+            {
+                ResourceClientProvider resourceClient => resourceClient,
+                ResourceCollectionClientProvider collectionClient => collectionClient.Resource,
+                _ => null
+            };
+
+            if (resource is not null &&
+                resource.OriginalResourceData.Type.Equals(type) &&
+                !resource.ResourceData.Type.Equals(type))
+            {
+                return resource.ResourceData.Type;
+            }
+
+            return null;
+        }
     }
 }

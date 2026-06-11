@@ -51,6 +51,20 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<CSharpType, OperationSourceProvider>? _operationSourceDict;
         internal IReadOnlyDictionary<CSharpType, OperationSourceProvider> OperationSourceDict => _operationSourceDict ??= BuildOperationSources();
+        internal OperationSourceProvider GetOperationSource(ResourceClientProvider resource)
+        {
+            var operationSources = OperationSourceDict;
+            if (!operationSources.TryGetValue(resource.Type, out var operationSource))
+            {
+                operationSource = new OperationSourceProvider(resource);
+                if (operationSources is Dictionary<CSharpType, OperationSourceProvider> mutableOperationSources)
+                {
+                    mutableOperationSources.Add(resource.Type, operationSource);
+                }
+            }
+
+            return operationSource;
+        }
 
         internal IReadOnlyList<ResourceClientProvider> ResourceProviders => GetValue(ref _resources);
         internal IReadOnlyList<ResourceCollectionClientProvider> ResourceCollectionProviders => GetValue(ref _resourceCollections);

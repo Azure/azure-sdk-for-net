@@ -73,7 +73,8 @@ namespace Azure.Generator.Management.Providers
 
             _resourceServiceMethods = resourceMethods;
             _readMethod = resourceMethods.First(m => m.Kind == ResourceOperationKind.Read)!;
-            ResourceData = ResolveResourceData(model);
+            OriginalResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
+            ResourceData = ResolveResourceData(model, OriginalResourceData);
 
             // Initialize client info dictionary using extension method
             _clientInfos = resourceMetadata.CreateClientInfosMap(this, resourceMethods);
@@ -93,7 +94,8 @@ namespace Azure.Generator.Management.Providers
 
         protected override FormattableString BuildDescription() => $"A class representing a {ResourceName} along with the instance operations that can be performed on it.\nIf you have a {typeof(ResourceIdentifier):C} you can construct a {Type:C} from an instance of {typeof(ArmClient):C} using the GetResource method.\nOtherwise you can get one from its parent resource {TypeOfParentResource:C} using the {FactoryMethodSignature.Name} method.";
 
-        internal ModelProvider ResourceData { get; }
+        internal ModelProvider OriginalResourceData { get; }
+        internal TypeProvider ResourceData { get; }
         internal string ResourceName { get; }
 
         internal string? SingletonResourceName => _resourceMetadata.SingletonResourceName;
@@ -102,7 +104,9 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
-        private ModelProvider ResolveResourceData(InputModelType model)
+        internal bool IsResourceDataType(CSharpType type) => ResourceData.Type.Equals(type) || OriginalResourceData.Type.Equals(type);
+
+        private TypeProvider ResolveResourceData(InputModelType model, ModelProvider defaultResourceData)
         {
             var customizedDataType = ManagementClientGenerator.Instance.ResourceDataCustomizationResolver.GetResourceDataType(model, ResourceName);
             if (customizedDataType is not null)
@@ -119,12 +123,21 @@ namespace Azure.Generator.Management.Providers
                     }
                 }
 
+                var customProvider = ManagementClientGenerator.Instance.SourceInputModel.FindForTypeInCustomization(
+                    customizedDataType.Namespace,
+                    customizedDataType.Name,
+                    declaringTypeName: null);
+                if (customProvider is not null)
+                {
+                    return customProvider;
+                }
+
                 ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
                     "general-warning",
                     $"Cannot find resource data type {customizedDataType.Namespace}.{customizedDataType.Name} specified by CodeGenResourceDataAttribute for resource {ResourceName}.");
             }
 
-            return ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
+            return defaultResourceData;
         }
 
         private IReadOnlyList<ResourceClientProvider>? _childResources;
