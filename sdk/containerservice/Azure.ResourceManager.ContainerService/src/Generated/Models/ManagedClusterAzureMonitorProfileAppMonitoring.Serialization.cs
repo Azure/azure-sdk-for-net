@@ -13,8 +13,8 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Application Monitoring Profile for Kubernetes Application Container. Collects application logs, metrics and traces through auto-instrumentation of the application using Azure Monitor OpenTelemetry based SDKs. See aka.ms/AzureMonitorApplicationMonitoring for an overview. </summary>
-    public partial class ManagedClusterAzureMonitorProfileAppMonitoring : IJsonModel<ManagedClusterAzureMonitorProfileAppMonitoring>
+    /// <summary> Application Monitoring profile for AKS. </summary>
+    internal partial class ManagedClusterAzureMonitorProfileAppMonitoring : IJsonModel<ManagedClusterAzureMonitorProfileAppMonitoring>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,16 +79,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("autoInstrumentation"u8);
                 writer.WriteObjectValue(AutoInstrumentation, options);
             }
-            if (Optional.IsDefined(OpenTelemetryMetrics))
-            {
-                writer.WritePropertyName("openTelemetryMetrics"u8);
-                writer.WriteObjectValue(OpenTelemetryMetrics, options);
-            }
-            if (Optional.IsDefined(OpenTelemetryLogs))
-            {
-                writer.WritePropertyName("openTelemetryLogs"u8);
-                writer.WriteObjectValue(OpenTelemetryLogs, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -132,8 +122,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             ManagedClusterAzureMonitorProfileAppMonitoringAutoInstrumentation autoInstrumentation = default;
-            ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics openTelemetryMetrics = default;
-            ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs openTelemetryLogs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,30 +134,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     autoInstrumentation = ManagedClusterAzureMonitorProfileAppMonitoringAutoInstrumentation.DeserializeManagedClusterAzureMonitorProfileAppMonitoringAutoInstrumentation(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("openTelemetryMetrics"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    openTelemetryMetrics = ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics.DeserializeManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("openTelemetryLogs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    openTelemetryLogs = ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs.DeserializeManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogs(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterAzureMonitorProfileAppMonitoring(autoInstrumentation, openTelemetryMetrics, openTelemetryLogs, additionalBinaryDataProperties);
+            return new ManagedClusterAzureMonitorProfileAppMonitoring(autoInstrumentation, additionalBinaryDataProperties);
         }
     }
 }

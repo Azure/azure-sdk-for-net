@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="src/Azure.Provisioning.NetApp.csproj" />
+  <Project Path="tests/Azure.Provisioning.NetApp.Tests.csproj" />
+</Solution>

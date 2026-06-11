@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -59,8 +61,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateCollectionAsset(string collectionId, RequestContent content, string contentType, RequestContext context = null)
@@ -71,6 +73,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
                 Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
                 using HttpMessage message = CreateCreateCollectionAssetRequest(collectionId, content, contentType, context);
                 return Pipeline.ProcessMessage(message, context);
@@ -95,8 +98,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateCollectionAssetAsync(string collectionId, RequestContent content, string contentType, RequestContext context = null)
@@ -107,6 +110,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
                 Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
                 using HttpMessage message = CreateCreateCollectionAssetRequest(collectionId, content, contentType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
@@ -116,6 +120,50 @@ namespace Azure.Analytics.PlanetaryComputer
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Create a new asset in the Collection metadata and write the associated
+        /// file to managed storage.
+        /// </summary>
+        /// <param name="collectionId"> STAC Collection ID. </param>
+        /// <param name="body"> Multi-part form data. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        public virtual Response<StacCollectionResource> CreateCollectionAsset(string collectionId, StacAssetData body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            using RequestContent requestContent = RequestContent.Create(content);
+            Response result = CreateCollectionAsset(collectionId, requestContent, content.MediaType, cancellationToken.ToRequestContext());
+            return Response.FromValue((StacCollectionResource)result, result);
+        }
+
+        /// <summary>
+        /// Create a new asset in the Collection metadata and write the associated
+        /// file to managed storage.
+        /// </summary>
+        /// <param name="collectionId"> STAC Collection ID. </param>
+        /// <param name="body"> Multi-part form data. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        public virtual async Task<Response<StacCollectionResource>> CreateCollectionAssetAsync(string collectionId, StacAssetData body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            using RequestContent requestContent = RequestContent.Create(content);
+            Response result = await CreateCollectionAssetAsync(collectionId, requestContent, content.MediaType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((StacCollectionResource)result, result);
         }
 
         /// <summary>
@@ -131,8 +179,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="assetId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="assetId"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="assetId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response ReplaceCollectionAsset(string collectionId, string assetId, RequestContent content, string contentType, RequestContext context = null)
@@ -144,6 +192,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
                 Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
                 Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
                 using HttpMessage message = CreateReplaceCollectionAssetRequest(collectionId, assetId, content, contentType, context);
                 return Pipeline.ProcessMessage(message, context);
@@ -168,8 +217,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="assetId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="assetId"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="assetId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> ReplaceCollectionAssetAsync(string collectionId, string assetId, RequestContent content, string contentType, RequestContext context = null)
@@ -181,6 +230,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
                 Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
                 Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
                 using HttpMessage message = CreateReplaceCollectionAssetRequest(collectionId, assetId, content, contentType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
@@ -190,6 +240,48 @@ namespace Azure.Analytics.PlanetaryComputer
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Update an existing asset in a given collection. </summary>
+        /// <param name="collectionId"> STAC Collection ID. </param>
+        /// <param name="assetId"> STAC Asset ID. </param>
+        /// <param name="body"> Multi-part form data. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="assetId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        public virtual Response<StacCollectionResource> ReplaceCollectionAsset(string collectionId, string assetId, StacAssetData body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            using RequestContent requestContent = RequestContent.Create(content);
+            Response result = ReplaceCollectionAsset(collectionId, assetId, requestContent, content.MediaType, cancellationToken.ToRequestContext());
+            return Response.FromValue((StacCollectionResource)result, result);
+        }
+
+        /// <summary> Update an existing asset in a given collection. </summary>
+        /// <param name="collectionId"> STAC Collection ID. </param>
+        /// <param name="assetId"> STAC Asset ID. </param>
+        /// <param name="body"> Multi-part form data. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="assetId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        public virtual async Task<Response<StacCollectionResource>> ReplaceCollectionAssetAsync(string collectionId, string assetId, StacAssetData body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            using RequestContent requestContent = RequestContent.Create(content);
+            Response result = await ReplaceCollectionAssetAsync(collectionId, assetId, requestContent, content.MediaType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((StacCollectionResource)result, result);
         }
 
         /// <summary>

@@ -108,26 +108,6 @@ namespace Azure.ResourceManager.CloudHealth.Samples
                     },
                     HealthObjective = 62F,
                     Impact = EntityImpact.Standard,
-                    Labels =
-{
-["key1376"] = "ixfvzsfnpvkkbrce"
-},
-                    Signals = new EntitySignalGroup
-                    {
-                        AzureResource = new AzureResourceSignalGroup("B3P1X3e-FZtZ-4Ak-2VLHGQ-4m4-05DE-XNW5zW3P-46XY-DC3SSX", new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1"))
-                        {
-                            SignalAssignments = { new EntitySignalAssignment(new string[] { "sigdef1" }) },
-                        },
-                        AzureLogAnalytics = new LogAnalyticsSignalGroup("B3P1X3e-FZtZ-4Ak-2VLHGQ-4m4-05DE-XNW5zW3P-46XY-DC3SSX", new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.OperationalInsights/workspaces/myworkspace"))
-                        {
-                            SignalAssignments = { new EntitySignalAssignment(new string[] { "B3P1X3e-FZtZ-4Ak-2VLHGQ-4m4-05DE-XNW5zW3P-46XY-DC3SSX" }) },
-                        },
-                        AzureMonitorWorkspace = new AzureMonitorWorkspaceSignalGroup("B3P1X3e-FZtZ-4Ak-2VLHGQ-4m4-05DE-XNW5zW3P-46XY-DC3SSX", new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.OperationalInsights/workspaces/myworkspace"))
-                        {
-                            SignalAssignments = { new EntitySignalAssignment(new string[] { "sigdef2" }), new EntitySignalAssignment(new string[] { "sigdef3" }) },
-                        },
-                        Dependencies = new DependenciesSignalGroup(DependenciesAggregationType.WorstOf),
-                    },
                     Alerts = new EntityAlerts
                     {
                         Unhealthy = new EntityAlertConfiguration(EntityAlertSeverity.Sev1)
