@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IoTSecurityAggregatedRecommendationProperties"/>. </summary>
-        internal IoTSecurityAggregatedRecommendationProperties()
+        public IoTSecurityAggregatedRecommendationProperties()
         {
         }
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Name of the recommendation. </summary>
-        public string RecommendationName { get; }
+        public string RecommendationName { get; set; }
 
         /// <summary> Display name of the recommendation type. </summary>
         public string RecommendationDisplayName { get; }

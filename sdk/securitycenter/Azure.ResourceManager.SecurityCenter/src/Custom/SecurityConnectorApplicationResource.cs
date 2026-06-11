@@ -27,6 +27,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    // Current TypeSpec generates SecurityConnectorApplicationData for the resource. The GA SDK
+    // exposed the older SecurityApplicationData shape and update overloads, so these hidden
+    // unsupported members are retained only for ApiCompat.
     [CodeGenSuppress("Data")]
     public partial class SecurityConnectorApplicationResource
     {

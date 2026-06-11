@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -13,14 +12,6 @@ namespace Azure.ResourceManager.SecurityCenter
     {
         private bool _isSupportingEvidenceDefined;
         private SecurityAlertSupportingEvidence _supportingEvidence;
-
-        // Preserve the legacy public constructor for mocking and initialize backing state used by flattened properties.
-        /// <summary> Initializes a new instance of <see cref="SecurityAlertData"/>. </summary>
-        public SecurityAlertData()
-        {
-            Properties = new AlertProperties();
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-        }
 
         /// <summary> Changing set of properties depending on the supportingEvidence type. </summary>
         public SecurityAlertSupportingEvidence SupportingEvidence

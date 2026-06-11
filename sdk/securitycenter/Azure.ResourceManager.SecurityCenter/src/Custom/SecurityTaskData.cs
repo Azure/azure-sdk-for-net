@@ -9,15 +9,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    [CodeGenSuppress("SecurityTaskData")]
     [CodeGenSuppress("SecurityTaskParameters")]
     public partial class SecurityTaskData
     {
-        /// <summary> Initializes a new instance of <see cref="SecurityTaskData"/>. </summary>
-        public SecurityTaskData()
-        {
-        }
-
         /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
         public SecurityTaskProperties SecurityTaskParameters
         {

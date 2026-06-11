@@ -5,9 +5,10 @@
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Backward compatibility: preserve the public constructor used by tests and mocking code.
     public partial class SecuritySettingData
     {
+        // Setting is a discriminated TypeSpec resource, so MPG generates a public constructor that
+        // requires the discriminator kind. The GA SDK also exposed a parameterless constructor.
         /// <summary> Initializes a new instance of <see cref="SecuritySettingData"/>. </summary>
         public SecuritySettingData()
         {

@@ -20,6 +20,12 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertData"/>. </summary>
+        public IotSecurityAggregatedAlertData()
+        {
+            Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotSecurityAggregatedAlertData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -35,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> IoT Security solution aggregated alert details. </summary>
-        internal IoTSecurityAggregatedAlertProperties Properties { get; }
+        internal IoTSecurityAggregatedAlertProperties Properties { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
@@ -153,7 +159,11 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.TopDevicesList;
+                if (Properties is null)
+                {
+                    Properties = new IoTSecurityAggregatedAlertProperties();
+                }
+                return Properties.TopDevicesList;
             }
         }
     }

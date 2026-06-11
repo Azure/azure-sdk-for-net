@@ -7,8 +7,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> The security automation resource. </summary>
-    // Compatibility customization: preserve the previous SDK base type while allowing the generator to own the generated members.
+    // The TypeSpec resource derives from ProxyResource, but the GA SDK exposed this data type as
+    // TrackedResourceData because the payload includes tracked-resource envelope fields.
     public partial class SecurityAutomationData : TrackedResourceData
     {
     }

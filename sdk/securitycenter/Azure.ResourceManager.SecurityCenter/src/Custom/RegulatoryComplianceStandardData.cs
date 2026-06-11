@@ -4,27 +4,22 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 using Azure.ResourceManager.SecurityCenter.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    [CodeGenSuppress("RegulatoryComplianceStandardData")]
+    // RegulatoryComplianceStandard is a read-only TypeSpec resource, so MPG emits only the internal
+    // resource-data constructor and read-only flattened properties. These members restore the GA
+    // public constructor and settable State property.
     [CodeGenSuppress("State")]
     public partial class RegulatoryComplianceStandardData
     {
         private bool _isStateDefined;
         private RegulatoryComplianceState? _state;
 
-        // Preserve the legacy public constructor for mocking.
-        /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceStandardData"/>. </summary>
-        public RegulatoryComplianceStandardData()
-        {
-            Properties = new RegulatoryComplianceStandardProperties();
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-        }
-
+        // GA exposed State as settable; generated output flattens the read-only state from the
+        // response property bag.
         /// <summary> Aggregative state based on the standard's supported controls states. </summary>
         public RegulatoryComplianceState? State
         {

@@ -9,7 +9,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    [CodeGenSuppress("SecuritySubAssessmentData")]
+    // The TypeSpec resource is output-only, so MPG generates read-only flattened properties from
+    // SecuritySubAssessmentProperties. These custom members restore the GA GeneratedOn alias and
+    // settable flattened properties.
     [CodeGenSuppress("AdditionalData")]
     [CodeGenSuppress("ResourceDetails")]
     [CodeGenSuppress("Status")]
@@ -22,14 +24,11 @@ namespace Azure.ResourceManager.SecurityCenter
         private bool _isStatusDefined;
         private SubAssessmentStatus _status;
 
-        /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentData"/>. </summary>
-        public SecuritySubAssessmentData()
-        {
-        }
-
+        // GA exposed GeneratedOn while TypeSpec models this payload field as timeGenerated.
         /// <summary> The date and time the sub-assessment was generated. </summary>
         public DateTimeOffset? GeneratedOn => TimeGenerated;
 
+        // GA exposed this flattened property as settable; generated output is read-only.
         /// <summary> Details of the sub-assessment. </summary>
         public SecuritySubAssessmentAdditionalInfo AdditionalData
         {
@@ -41,6 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        // GA exposed this flattened property as settable; generated output is read-only.
         /// <summary> Details of the resource that was assessed. </summary>
         public SecurityCenterResourceDetails ResourceDetails
         {
@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        // GA exposed this flattened property as settable; generated output is read-only.
         /// <summary> Status of the sub-assessment. </summary>
         public SubAssessmentStatus Status
         {

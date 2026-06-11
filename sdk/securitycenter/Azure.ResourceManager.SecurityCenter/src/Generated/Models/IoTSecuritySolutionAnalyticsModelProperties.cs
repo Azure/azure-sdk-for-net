@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IoTSecuritySolutionAnalyticsModelProperties"/>. </summary>
-        internal IoTSecuritySolutionAnalyticsModelProperties()
+        public IoTSecuritySolutionAnalyticsModelProperties()
         {
             DevicesMetrics = new ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>();
             TopAlertedDevices = new ChangeTrackingList<IotSecurityAlertedDevice>();

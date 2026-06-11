@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelData"/>. </summary>
+        public IotSecuritySolutionAnalyticsModelData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -33,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Security Solution  Aggregated Alert data. </summary>
-        internal IoTSecuritySolutionAnalyticsModelProperties Properties { get; }
+        internal IoTSecuritySolutionAnalyticsModelProperties Properties { get; set; }
 
         /// <summary> Security analytics of your IoT Security solution. </summary>
         public IotSeverityMetrics Metrics
@@ -58,7 +63,11 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.DevicesMetrics;
+                if (Properties is null)
+                {
+                    Properties = new IoTSecuritySolutionAnalyticsModelProperties();
+                }
+                return Properties.DevicesMetrics;
             }
         }
 
@@ -67,7 +76,11 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.TopAlertedDevices;
+                if (Properties is null)
+                {
+                    Properties = new IoTSecuritySolutionAnalyticsModelProperties();
+                }
+                return Properties.TopAlertedDevices;
             }
         }
 
@@ -76,7 +89,11 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.MostPrevalentDeviceAlerts;
+                if (Properties is null)
+                {
+                    Properties = new IoTSecuritySolutionAnalyticsModelProperties();
+                }
+                return Properties.MostPrevalentDeviceAlerts;
             }
         }
 
@@ -85,7 +102,11 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.MostPrevalentDeviceRecommendations;
+                if (Properties is null)
+                {
+                    Properties = new IoTSecuritySolutionAnalyticsModelProperties();
+                }
+                return Properties.MostPrevalentDeviceRecommendations;
             }
         }
     }

@@ -11,7 +11,9 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Backward compatibility: preserve the resource-level update methods that were available in the previous SDK.
+    // MPG generates create/update on SecurityAutomationCollection from the TypeSpec createOrUpdate
+    // operation. The GA SDK also exposed resource-level Update methods, so these forward to the
+    // generated collection operation.
     public partial class SecurityAutomationResource
     {
         /// <summary> Updates a security automation. </summary>

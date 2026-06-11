@@ -10,6 +10,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    // TypeSpec models lastModifiedUtc/expirationDateUtc directly and nests allOf under
+    // suppressionAlertsScope. These custom members restore GA aliases and the flattened
+    // SuppressionAlertsScopeAllOf property.
     [CodeGenSuppress("State")]
     [CodeGenSuppress("SuppressionAlertsScopeAllOf")]
     public partial class SecurityAlertsSuppressionRuleData
@@ -17,9 +20,11 @@ namespace Azure.ResourceManager.SecurityCenter
         private bool _isStateDefined;
         private SecurityAlertsSuppressionRuleState? _state;
 
+        // GA exposed LastModifiedOn while TypeSpec models this payload field as lastModifiedUtc.
         /// <summary> The last time this rule was modified. </summary>
         public DateTimeOffset? LastModifiedOn => LastModifiedUtc;
 
+        // GA exposed ExpireOn while TypeSpec models this payload field as expirationDateUtc.
         /// <summary> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </summary>
         public DateTimeOffset? ExpireOn
         {
@@ -27,6 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter
             set => ExpirationDateUtc = value;
         }
 
+        // GA exposed the C# renamed state enum; generated output uses the TypeSpec RuleState model.
         /// <summary> Possible states of the rule. </summary>
         public SecurityAlertsSuppressionRuleState? State
         {
@@ -46,6 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        // GA flattened suppressionAlertsScope.allOf onto the resource data model.
         /// <summary> All the conditions inside need to be true in order to suppress the alert. </summary>
         public IList<SuppressionAlertsScopeElement> SuppressionAlertsScopeAllOf
         {

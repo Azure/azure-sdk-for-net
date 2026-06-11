@@ -9,6 +9,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    // TypeSpec separates the assessment input resource from the response resource. MPG generates
+    // SecurityAssessmentData from the response model, with an internal constructor and read-only
+    // flattened properties. These custom members restore GA aliases and settable flattened members.
     [CodeGenSuppress("SecurityAssessmentData")]
     [CodeGenSuppress("ResourceDetails")]
     [CodeGenSuppress("Metadata")]
@@ -30,9 +33,11 @@ namespace Azure.ResourceManager.SecurityCenter
         {
         }
 
+        // GA exposed this as a Uri alias over the generated string LinksAzurePortalUri.
         /// <summary> Link to assessment in Azure Portal. </summary>
         public Uri AzurePortalUri => LinksAzurePortalUri is null ? null : new Uri(LinksAzurePortalUri);
 
+        // GA exposed this flattened property as settable; generated response data is read-only.
         /// <summary> Details of the resource that was assessed. </summary>
         public SecurityCenterResourceDetails ResourceDetails
         {
@@ -44,6 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        // GA exposed this flattened property as settable; generated response data is read-only.
         /// <summary> Describes properties of an assessment metadata. </summary>
         public SecurityAssessmentMetadataProperties Metadata
         {
@@ -55,6 +61,8 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        // GA exposed SecurityAssessmentPartner, while TypeSpec response data uses the internal
+        // partner-data shape from the response property bag.
         /// <summary> Data regarding 3rd party partner integration. </summary>
         public SecurityAssessmentPartner PartnersData
         {
@@ -77,6 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        // GA exposed this flattened property as settable; generated response data is read-only.
         /// <summary> The result of the assessment. </summary>
         public SecurityAssessmentStatusResult Status
         {

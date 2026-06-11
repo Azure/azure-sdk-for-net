@@ -10,6 +10,9 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    // TypeSpec generates ExpandEnum and SecurityAssessmentGenerated from the response/input split.
+    // These overloads restore the GA C# names SecurityAssessmentODataExpand and
+    // SecurityAssessmentCreateOrUpdateContent.
     public partial class SecurityAssessmentResource
     {
         /// <summary> Get a security assessment on your scanned resource. </summary>

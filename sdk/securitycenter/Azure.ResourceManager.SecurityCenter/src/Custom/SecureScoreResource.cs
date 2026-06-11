@@ -9,9 +9,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    // Backward compatibility: preserve legacy overloads that accepted the strongly typed OData expand value.
     public partial class SecureScoreResource
     {
+        // TypeSpec generates the action as GetBySecureScore with ExpandControlsEnum. The GA SDK
+        // exposed GetSecureScoreControls with SecurityScoreODataExpand.
         /// <summary> Get all security controls for a specific initiative within a scope. </summary>
         /// <param name="expand"> OData expand. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

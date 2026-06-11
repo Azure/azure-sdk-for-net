@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceStandardProperties"/>. </summary>
-        internal RegulatoryComplianceStandardProperties()
+        public RegulatoryComplianceStandardProperties()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Aggregative state based on the standard's supported controls states. </summary>
-        public SecurityAlertNotificationByRoleState? State { get; }
+        public SecurityAlertNotificationByRoleState? State { get; set; }
 
         /// <summary> The number of supported regulatory compliance controls of the given standard with a passed state. </summary>
         public int? PassedControls { get; }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComplianceProperties"/>. </summary>
-        internal ComplianceProperties()
+        public ComplianceProperties()
         {
             AssessmentResult = new ChangeTrackingList<ComplianceSegment>();
         }
