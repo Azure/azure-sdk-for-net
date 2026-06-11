@@ -51,7 +51,7 @@ namespace Azure.SdkAnalyzers
             DiagnosticCategory.Usage,
             DiagnosticSeverity.Warning,
             true,
-            "Exposing types from the Apache.Arrow library on the public API surface couples consumers to a third-party dependency whose versioning is outside the SDK's control. Keep Apache.Arrow types internal and expose abstractions owned by the library instead.",
+            "Exposing types from the Apache.Arrow library on the public API surface couples consumers to a third-party dependency whose versioning is outside the SDK's control. Keep Apache.Arrow types internal and expose abstractions owned by the SDK instead.",
             "https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tools/Azure.SdkAnalyzers/docs/AZC0040.md");
     }
 }

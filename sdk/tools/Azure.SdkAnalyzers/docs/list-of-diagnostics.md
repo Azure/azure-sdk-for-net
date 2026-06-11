@@ -166,7 +166,7 @@ A public or protected API member in an Azure SDK namespace exposes a type from t
 
 ### How to fix violation
 
-Keep `Apache.Arrow` types internal and expose abstractions owned by the library instead, converting to and from `Apache.Arrow` types behind the scenes.
+Keep `Apache.Arrow` types internal and expose abstractions owned by the SDK instead, converting to and from `Apache.Arrow` types behind the scenes.
 
 ### Example of a violation
 
