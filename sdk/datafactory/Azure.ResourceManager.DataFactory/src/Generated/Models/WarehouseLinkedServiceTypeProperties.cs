@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Microsoft Fabric Warehouse linked service properties. </summary>
-    public partial class WarehouseLinkedServiceTypeProperties
+    internal partial class WarehouseLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,12 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="WarehouseLinkedServiceTypeProperties"/>. </summary>
         /// <param name="artifactId"> The ID of Microsoft Fabric Warehouse artifact. Type: string (or Expression with resultType string). </param>
         /// <param name="endpoint"> The endpoint of Microsoft Fabric Warehouse server. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="artifactId"/> or <paramref name="endpoint"/> is null. </exception>
         public WarehouseLinkedServiceTypeProperties(DataFactoryElement<string> artifactId, DataFactoryElement<string> endpoint)
         {
-            Argument.AssertNotNull(artifactId, nameof(artifactId));
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-
             ArtifactId = artifactId;
             Endpoint = endpoint;
         }

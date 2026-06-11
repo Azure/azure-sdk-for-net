@@ -11,8 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Amazon Rds for SQL Server linked service properties. </summary>
-    public partial class AmazonRdsForSqlServerLinkedServiceTypeProperties : SqlServerBaseLinkedServiceTypeProperties
+    internal partial class AmazonRdsForSqlServerLinkedServiceTypeProperties : SqlServerBaseLinkedServiceTypeProperties
     {
         /// <summary> Initializes a new instance of <see cref="AmazonRdsForSqlServerLinkedServiceTypeProperties"/>. </summary>
         public AmazonRdsForSqlServerLinkedServiceTypeProperties()

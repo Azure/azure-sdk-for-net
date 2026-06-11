@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> HDInsight linked service properties. </summary>
-    public partial class HDInsightLinkedServiceTypeProperties : IJsonModel<HDInsightLinkedServiceTypeProperties>
+    internal partial class HDInsightLinkedServiceTypeProperties : IJsonModel<HDInsightLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="HDInsightLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal HDInsightLinkedServiceTypeProperties()

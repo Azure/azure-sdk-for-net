@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Web table dataset properties. </summary>
-    public partial class WebTableDatasetTypeProperties : IJsonModel<WebTableDatasetTypeProperties>
+    internal partial class WebTableDatasetTypeProperties : IJsonModel<WebTableDatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="WebTableDatasetTypeProperties"/> for deserialization. </summary>
         internal WebTableDatasetTypeProperties()

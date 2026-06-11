@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Properties specific to this linked service type. </summary>
-    public partial class FtpServerLinkedServiceTypeProperties : IJsonModel<FtpServerLinkedServiceTypeProperties>
+    internal partial class FtpServerLinkedServiceTypeProperties : IJsonModel<FtpServerLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="FtpServerLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal FtpServerLinkedServiceTypeProperties()

@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> PostgreSqlV2 linked service properties. </summary>
-    public partial class PostgreSqlV2LinkedServiceTypeProperties : IJsonModel<PostgreSqlV2LinkedServiceTypeProperties>
+    internal partial class PostgreSqlV2LinkedServiceTypeProperties : IJsonModel<PostgreSqlV2LinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlV2LinkedServiceTypeProperties"/> for deserialization. </summary>
         internal PostgreSqlV2LinkedServiceTypeProperties()

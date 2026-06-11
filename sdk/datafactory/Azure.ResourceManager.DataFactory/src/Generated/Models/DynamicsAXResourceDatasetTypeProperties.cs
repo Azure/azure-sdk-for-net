@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Dynamics AX OData resource dataset properties. </summary>
-    public partial class DynamicsAXResourceDatasetTypeProperties
+    internal partial class DynamicsAXResourceDatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DynamicsAXResourceDatasetTypeProperties"/>. </summary>
         /// <param name="path"> The path of the Dynamics AX OData entity. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         public DynamicsAXResourceDatasetTypeProperties(DataFactoryElement<string> path)
         {
-            Argument.AssertNotNull(path, nameof(path));
-
             Path = path;
         }
 

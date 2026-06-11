@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Twilio linked service type properties. </summary>
-    public partial class TwilioLinkedServiceTypeProperties
+    internal partial class TwilioLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TwilioLinkedServiceTypeProperties"/>. </summary>
         /// <param name="userName"> The Account SID of Twilio service. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         public TwilioLinkedServiceTypeProperties(DataFactoryElement<string> userName)
         {
-            Argument.AssertNotNull(userName, nameof(userName));
-
             UserName = userName;
         }
 

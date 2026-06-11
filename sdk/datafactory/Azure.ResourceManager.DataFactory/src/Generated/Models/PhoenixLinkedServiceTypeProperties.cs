@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Phoenix server linked service properties. </summary>
-    public partial class PhoenixLinkedServiceTypeProperties
+    internal partial class PhoenixLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,11 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="PhoenixLinkedServiceTypeProperties"/>. </summary>
         /// <param name="host"> The IP address or host name of the Phoenix server. (i.e. 192.168.222.160). </param>
         /// <param name="authenticationType"> The authentication mechanism used to connect to the Phoenix server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public PhoenixLinkedServiceTypeProperties(DataFactoryElement<string> host, PhoenixAuthenticationType authenticationType)
         {
-            Argument.AssertNotNull(host, nameof(host));
-
             Host = host;
             AuthenticationType = authenticationType;
         }

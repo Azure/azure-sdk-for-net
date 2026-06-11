@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Jira Service linked service properties. </summary>
-    public partial class JiraLinkedServiceTypeProperties : IJsonModel<JiraLinkedServiceTypeProperties>
+    internal partial class JiraLinkedServiceTypeProperties : IJsonModel<JiraLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="JiraLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal JiraLinkedServiceTypeProperties()

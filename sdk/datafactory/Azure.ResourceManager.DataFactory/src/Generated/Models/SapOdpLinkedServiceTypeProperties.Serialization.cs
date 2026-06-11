@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Properties specific to this linked service type. </summary>
-    public partial class SapOdpLinkedServiceTypeProperties : IJsonModel<SapOdpLinkedServiceTypeProperties>
+    internal partial class SapOdpLinkedServiceTypeProperties : IJsonModel<SapOdpLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

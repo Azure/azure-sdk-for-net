@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Xml dataset properties. </summary>
-    public partial class XmlDatasetTypeProperties
+    internal partial class XmlDatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="XmlDatasetTypeProperties"/>. </summary>
         /// <param name="dataLocation"> The location of the json data storage. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataLocation"/> is null. </exception>
         public XmlDatasetTypeProperties(DatasetLocation dataLocation)
         {
-            Argument.AssertNotNull(dataLocation, nameof(dataLocation));
-
             DataLocation = dataLocation;
         }
 

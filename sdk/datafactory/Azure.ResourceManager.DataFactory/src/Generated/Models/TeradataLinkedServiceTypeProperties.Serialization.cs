@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Teradata linked service properties. </summary>
-    public partial class TeradataLinkedServiceTypeProperties : IJsonModel<TeradataLinkedServiceTypeProperties>
+    internal partial class TeradataLinkedServiceTypeProperties : IJsonModel<TeradataLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

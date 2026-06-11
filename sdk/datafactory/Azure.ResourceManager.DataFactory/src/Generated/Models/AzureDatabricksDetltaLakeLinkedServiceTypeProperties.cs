@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure Databricks Delta Lake linked service properties. </summary>
-    public partial class AzureDatabricksDetltaLakeLinkedServiceTypeProperties
+    internal partial class AzureDatabricksDetltaLakeLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureDatabricksDetltaLakeLinkedServiceTypeProperties"/>. </summary>
         /// <param name="domain"> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
         public AzureDatabricksDetltaLakeLinkedServiceTypeProperties(DataFactoryElement<string> domain)
         {
-            Argument.AssertNotNull(domain, nameof(domain));
-
             Domain = domain;
         }
 

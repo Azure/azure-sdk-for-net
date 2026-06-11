@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Properties specific to this linked service type. </summary>
-    public partial class SapBWLinkedServiceTypeProperties
+    internal partial class SapBWLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,13 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="server"> Host name of the SAP BW instance. Type: string (or Expression with resultType string). </param>
         /// <param name="systemNumber"> System number of the BW system. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </param>
         /// <param name="clientId"> Client ID of the client on the BW system. (Usually a three-digit decimal number represented as a string) Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="server"/>, <paramref name="systemNumber"/> or <paramref name="clientId"/> is null. </exception>
         public SapBWLinkedServiceTypeProperties(DataFactoryElement<string> server, DataFactoryElement<string> systemNumber, DataFactoryElement<string> clientId)
         {
-            Argument.AssertNotNull(server, nameof(server));
-            Argument.AssertNotNull(systemNumber, nameof(systemNumber));
-            Argument.AssertNotNull(clientId, nameof(clientId));
-
             Server = server;
             SystemNumber = systemNumber;
             ClientId = clientId;

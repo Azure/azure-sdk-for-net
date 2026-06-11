@@ -12,8 +12,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Unknown variant of ExecutionActivity. </summary>
-    public partial class UnknownExecutionActivity : ExecutionActivity, IJsonModel<ExecutionActivity>
+    internal partial class UnknownExecutionActivity : ExecutionActivity, IJsonModel<ExecutionActivity>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownExecutionActivity"/> for deserialization. </summary>
         internal UnknownExecutionActivity()

@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Windows Azure Search Service linked service properties. </summary>
-    public partial class AzureSearchLinkedServiceTypeProperties : IJsonModel<AzureSearchLinkedServiceTypeProperties>
+    internal partial class AzureSearchLinkedServiceTypeProperties : IJsonModel<AzureSearchLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AzureSearchLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AzureSearchLinkedServiceTypeProperties()

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     // TODO: remove once the generator emits correct deserialization for identity-aliased types (#59298).
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Version), DeserializationValueHook = nameof(ReadVersion))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(ServicePrincipalId), DeserializationValueHook = nameof(ReadServicePrincipalId))]
-    public partial class HDInsightOnDemandLinkedServiceTypeProperties
+    internal partial class HDInsightOnDemandLinkedServiceTypeProperties
     {
         internal static void ReadVersion(JsonProperty property, ref DataFactoryElement<string> value)
             => value = DataFactoryExpressionSerialization.ReadElement<string>(property);

@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> HBase server linked service properties. </summary>
-    public partial class HBaseLinkedServiceTypeProperties : IJsonModel<HBaseLinkedServiceTypeProperties>
+    internal partial class HBaseLinkedServiceTypeProperties : IJsonModel<HBaseLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="HBaseLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal HBaseLinkedServiceTypeProperties()

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(ModifiedDatetimeStart), DeserializationValueHook = nameof(ReadModifiedDatetimeStart))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(ModifiedDatetimeEnd), DeserializationValueHook = nameof(ReadModifiedDatetimeEnd))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(FileFilter), DeserializationValueHook = nameof(ReadFileFilter))]
-    public partial class FileShareDatasetTypeProperties
+    internal partial class FileShareDatasetTypeProperties
     {
         internal static void ReadFolderPath(JsonProperty property, ref DataFactoryElement<string> value)
             => value = DataFactoryExpressionSerialization.ReadElement<string>(property);

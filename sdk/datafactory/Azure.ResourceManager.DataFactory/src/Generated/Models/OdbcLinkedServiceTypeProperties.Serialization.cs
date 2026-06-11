@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> ODBC linked service properties. </summary>
-    public partial class OdbcLinkedServiceTypeProperties : IJsonModel<OdbcLinkedServiceTypeProperties>
+    internal partial class OdbcLinkedServiceTypeProperties : IJsonModel<OdbcLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="OdbcLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal OdbcLinkedServiceTypeProperties()

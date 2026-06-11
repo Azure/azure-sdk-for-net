@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> SetVariable activity properties. </summary>
-    public partial class SetVariableActivityTypeProperties : IJsonModel<SetVariableActivityTypeProperties>
+    internal partial class SetVariableActivityTypeProperties : IJsonModel<SetVariableActivityTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

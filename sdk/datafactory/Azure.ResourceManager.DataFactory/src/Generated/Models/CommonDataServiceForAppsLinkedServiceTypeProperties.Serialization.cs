@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Common Data Service for Apps linked service properties. </summary>
-    public partial class CommonDataServiceForAppsLinkedServiceTypeProperties : IJsonModel<CommonDataServiceForAppsLinkedServiceTypeProperties>
+    internal partial class CommonDataServiceForAppsLinkedServiceTypeProperties : IJsonModel<CommonDataServiceForAppsLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="CommonDataServiceForAppsLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal CommonDataServiceForAppsLinkedServiceTypeProperties()

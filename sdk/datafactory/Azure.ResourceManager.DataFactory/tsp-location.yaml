@@ -1,5 +1,5 @@
 directory: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory
-commit: 005eca2dae49c5af4a757c7ca8180b18891e2bfb
+commit: 0306878edf9225b5ab2ba50bf1b60b008e460d8a
 repo: Azure/azure-rest-api-specs
 cleanup: true
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

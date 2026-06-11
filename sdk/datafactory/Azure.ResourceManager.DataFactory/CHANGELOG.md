@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- Reduced incidental public API surface introduced by the TypeSpec migration: the per-type `*TypeProperties` envelope models and the discriminated-union `Unknown*` fallback types are now `internal` (via `@@access(..., Access.internal, "csharp")` and matching customization), since their properties are already flattened onto the parent LinkedService/Dataset/Activity types. These types were never part of a released package, so this is not a breaking change for existing consumers.
+
 ## 1.11.1 (2026-06-03)
 
 ### Other Changes

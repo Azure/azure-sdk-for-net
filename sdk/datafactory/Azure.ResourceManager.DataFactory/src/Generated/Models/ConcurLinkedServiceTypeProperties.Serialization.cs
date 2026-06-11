@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Concur Service linked service properties. </summary>
-    public partial class ConcurLinkedServiceTypeProperties : IJsonModel<ConcurLinkedServiceTypeProperties>
+    internal partial class ConcurLinkedServiceTypeProperties : IJsonModel<ConcurLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ConcurLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal ConcurLinkedServiceTypeProperties()

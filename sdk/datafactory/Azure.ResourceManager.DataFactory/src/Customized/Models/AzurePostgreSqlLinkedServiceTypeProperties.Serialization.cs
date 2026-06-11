@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Username), DeserializationValueHook = nameof(ReadUsername))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(ServicePrincipalId), DeserializationValueHook = nameof(ReadServicePrincipalId))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Timeout), DeserializationValueHook = nameof(ReadTimeout))]
-    public partial class AzurePostgreSqlLinkedServiceTypeProperties
+    internal partial class AzurePostgreSqlLinkedServiceTypeProperties
     {
         internal static void ReadUsername(JsonProperty property, ref DataFactoryElement<string> value)
             => value = DataFactoryExpressionSerialization.ReadElement<string>(property);

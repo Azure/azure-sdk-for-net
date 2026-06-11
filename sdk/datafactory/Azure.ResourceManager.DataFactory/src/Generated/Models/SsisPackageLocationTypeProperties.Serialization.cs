@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> SSIS package location properties. </summary>
-    public partial class SSISPackageLocationTypeProperties : IJsonModel<SSISPackageLocationTypeProperties>
+    internal partial class SSISPackageLocationTypeProperties : IJsonModel<SSISPackageLocationTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

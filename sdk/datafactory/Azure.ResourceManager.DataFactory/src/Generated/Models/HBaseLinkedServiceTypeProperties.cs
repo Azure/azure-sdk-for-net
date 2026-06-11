@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> HBase server linked service properties. </summary>
-    public partial class HBaseLinkedServiceTypeProperties
+    internal partial class HBaseLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,11 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="HBaseLinkedServiceTypeProperties"/>. </summary>
         /// <param name="host"> The IP address or host name of the HBase server. (i.e. 192.168.222.160). </param>
         /// <param name="authenticationType"> The authentication mechanism to use to connect to the HBase server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public HBaseLinkedServiceTypeProperties(DataFactoryElement<string> host, HBaseAuthenticationType authenticationType)
         {
-            Argument.AssertNotNull(host, nameof(host));
-
             Host = host;
             AuthenticationType = authenticationType;
         }

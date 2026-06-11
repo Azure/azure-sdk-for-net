@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> AppFigures linked service type properties. </summary>
-    public partial class AppFiguresLinkedServiceTypeProperties
+    internal partial class AppFiguresLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppFiguresLinkedServiceTypeProperties"/>. </summary>
         /// <param name="userName"> The username of the Appfigures source. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         public AppFiguresLinkedServiceTypeProperties(DataFactoryElement<string> userName)
         {
-            Argument.AssertNotNull(userName, nameof(userName));
-
             UserName = userName;
         }
 

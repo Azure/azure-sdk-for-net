@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> SAP ECC linked service properties. </summary>
-    public partial class SapEccLinkedServiceTypeProperties
+    internal partial class SapEccLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SapEccLinkedServiceTypeProperties"/>. </summary>
         /// <param name="uri"> The URL of SAP ECC OData API. For example, '[https://hostname:port/sap/opu/odata/sap/servicename/]'. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public SapEccLinkedServiceTypeProperties(DataFactoryElement<string> uri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
-
             Uri = uri;
         }
 

@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure SQL Data Warehouse linked service properties. </summary>
-    public partial class AzureSqlDWLinkedServiceTypeProperties : SqlServerBaseLinkedServiceTypeProperties, IJsonModel<AzureSqlDWLinkedServiceTypeProperties>
+    internal partial class AzureSqlDWLinkedServiceTypeProperties : SqlServerBaseLinkedServiceTypeProperties, IJsonModel<AzureSqlDWLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

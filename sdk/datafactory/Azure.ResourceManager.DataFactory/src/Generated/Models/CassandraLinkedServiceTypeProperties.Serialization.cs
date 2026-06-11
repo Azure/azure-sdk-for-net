@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Cassandra linked service properties. </summary>
-    public partial class CassandraLinkedServiceTypeProperties : IJsonModel<CassandraLinkedServiceTypeProperties>
+    internal partial class CassandraLinkedServiceTypeProperties : IJsonModel<CassandraLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="CassandraLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal CassandraLinkedServiceTypeProperties()

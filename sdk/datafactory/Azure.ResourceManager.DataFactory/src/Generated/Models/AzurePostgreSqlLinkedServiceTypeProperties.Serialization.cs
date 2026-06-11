@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure PostgreSQL linked service properties. </summary>
-    public partial class AzurePostgreSqlLinkedServiceTypeProperties : IJsonModel<AzurePostgreSqlLinkedServiceTypeProperties>
+    internal partial class AzurePostgreSqlLinkedServiceTypeProperties : IJsonModel<AzurePostgreSqlLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

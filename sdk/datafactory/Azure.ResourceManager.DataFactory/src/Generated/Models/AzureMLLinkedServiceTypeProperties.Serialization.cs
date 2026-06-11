@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure ML Studio Web Service linked service properties. </summary>
-    public partial class AzureMLLinkedServiceTypeProperties : IJsonModel<AzureMLLinkedServiceTypeProperties>
+    internal partial class AzureMLLinkedServiceTypeProperties : IJsonModel<AzureMLLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AzureMLLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AzureMLLinkedServiceTypeProperties()

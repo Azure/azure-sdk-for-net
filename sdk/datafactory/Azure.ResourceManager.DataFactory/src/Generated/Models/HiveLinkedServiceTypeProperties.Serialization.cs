@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Hive Server linked service properties. </summary>
-    public partial class HiveLinkedServiceTypeProperties : IJsonModel<HiveLinkedServiceTypeProperties>
+    internal partial class HiveLinkedServiceTypeProperties : IJsonModel<HiveLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="HiveLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal HiveLinkedServiceTypeProperties()

@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Spark Server linked service properties. </summary>
-    public partial class SparkLinkedServiceTypeProperties
+    internal partial class SparkLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,12 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="host"> IP address or host name of the Spark server. </param>
         /// <param name="port"> The TCP port that the Spark server uses to listen for client connections. </param>
         /// <param name="authenticationType"> The authentication method used to access the Spark server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="port"/> is null. </exception>
         public SparkLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<int> port, SparkAuthenticationType authenticationType)
         {
-            Argument.AssertNotNull(host, nameof(host));
-            Argument.AssertNotNull(port, nameof(port));
-
             Host = host;
             Port = port;
             AuthenticationType = authenticationType;

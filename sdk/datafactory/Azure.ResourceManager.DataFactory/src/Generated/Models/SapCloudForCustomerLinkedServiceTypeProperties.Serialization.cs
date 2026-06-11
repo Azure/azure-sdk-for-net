@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> SAP Cloud for Customer linked service properties. </summary>
-    public partial class SapCloudForCustomerLinkedServiceTypeProperties : IJsonModel<SapCloudForCustomerLinkedServiceTypeProperties>
+    internal partial class SapCloudForCustomerLinkedServiceTypeProperties : IJsonModel<SapCloudForCustomerLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal SapCloudForCustomerLinkedServiceTypeProperties()

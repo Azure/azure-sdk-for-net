@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     // TODO: remove once the generator emits correct deserialization for identity-aliased types (#59298).
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Schema), DeserializationValueHook = nameof(ReadSchema))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Username), DeserializationValueHook = nameof(ReadUsername))]
-    public partial class SybaseLinkedServiceTypeProperties
+    internal partial class SybaseLinkedServiceTypeProperties
     {
         internal static void ReadSchema(JsonProperty property, ref DataFactoryElement<string> value)
             => value = DataFactoryExpressionSerialization.ReadElement<string>(property);

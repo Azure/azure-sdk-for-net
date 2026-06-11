@@ -11,8 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Service Principal credential type properties. </summary>
-    public partial class ServicePrincipalCredentialTypeProperties
+    internal partial class ServicePrincipalCredentialTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

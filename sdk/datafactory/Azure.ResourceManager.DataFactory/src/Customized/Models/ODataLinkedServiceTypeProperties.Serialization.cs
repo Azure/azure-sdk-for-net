@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(UserName), DeserializationValueHook = nameof(ReadUserName))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Uri), DeserializationValueHook = nameof(ReadUri))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(ServicePrincipalId), DeserializationValueHook = nameof(ReadServicePrincipalId))]
-    public partial class ODataLinkedServiceTypeProperties
+    internal partial class ODataLinkedServiceTypeProperties
     {
         internal static void ReadUserName(JsonProperty property, ref DataFactoryElement<string> value)
             => value = DataFactoryExpressionSerialization.ReadElement<string>(property);

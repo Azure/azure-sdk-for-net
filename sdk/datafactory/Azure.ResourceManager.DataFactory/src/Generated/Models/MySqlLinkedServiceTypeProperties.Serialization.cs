@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> MySQL linked service properties. </summary>
-    public partial class MySqlLinkedServiceTypeProperties : IJsonModel<MySqlLinkedServiceTypeProperties>
+    internal partial class MySqlLinkedServiceTypeProperties : IJsonModel<MySqlLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

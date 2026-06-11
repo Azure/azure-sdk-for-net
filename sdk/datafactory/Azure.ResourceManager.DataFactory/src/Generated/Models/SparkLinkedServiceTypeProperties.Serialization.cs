@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Spark Server linked service properties. </summary>
-    public partial class SparkLinkedServiceTypeProperties : IJsonModel<SparkLinkedServiceTypeProperties>
+    internal partial class SparkLinkedServiceTypeProperties : IJsonModel<SparkLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SparkLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal SparkLinkedServiceTypeProperties()

@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure ML Studio Web Service linked service properties. </summary>
-    public partial class AzureMLLinkedServiceTypeProperties
+    internal partial class AzureMLLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureMLLinkedServiceTypeProperties"/>. </summary>
         /// <param name="mlEndpoint"> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mlEndpoint"/> is null. </exception>
         public AzureMLLinkedServiceTypeProperties(DataFactoryElement<string> mlEndpoint)
         {
-            Argument.AssertNotNull(mlEndpoint, nameof(mlEndpoint));
-
             MLEndpoint = mlEndpoint;
         }
 

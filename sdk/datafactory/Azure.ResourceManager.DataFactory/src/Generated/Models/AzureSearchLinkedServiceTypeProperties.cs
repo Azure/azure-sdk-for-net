@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Windows Azure Search Service linked service properties. </summary>
-    public partial class AzureSearchLinkedServiceTypeProperties
+    internal partial class AzureSearchLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureSearchLinkedServiceTypeProperties"/>. </summary>
         /// <param name="uri"> URL for Azure Search service. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public AzureSearchLinkedServiceTypeProperties(DataFactoryElement<string> uri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
-
             Uri = uri;
         }
 

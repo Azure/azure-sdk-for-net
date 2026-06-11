@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Oracle Service Cloud linked service properties. </summary>
-    public partial class OracleServiceCloudLinkedServiceTypeProperties
+    internal partial class OracleServiceCloudLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,12 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="OracleServiceCloudLinkedServiceTypeProperties"/>. </summary>
         /// <param name="host"> The URL of the Oracle Service Cloud instance. </param>
         /// <param name="username"> The user name that you use to access Oracle Service Cloud server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="username"/> is null. </exception>
         public OracleServiceCloudLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> username)
         {
-            Argument.AssertNotNull(host, nameof(host));
-            Argument.AssertNotNull(username, nameof(username));
-
             Host = host;
             Username = username;
         }

@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Properties specific to this dataset type. </summary>
-    public partial class RestResourceDatasetTypeProperties : IJsonModel<RestResourceDatasetTypeProperties>
+    internal partial class RestResourceDatasetTypeProperties : IJsonModel<RestResourceDatasetTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

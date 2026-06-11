@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Dynamics AX linked service properties. </summary>
-    public partial class DynamicsAXLinkedServiceTypeProperties
+    internal partial class DynamicsAXLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,14 +21,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string). </param>
         /// <param name="aadResourceId"> Specify the resource you are requesting authorization. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="servicePrincipalId"/>, <paramref name="tenant"/> or <paramref name="aadResourceId"/> is null. </exception>
         public DynamicsAXLinkedServiceTypeProperties(DataFactoryElement<string> uri, DataFactoryElement<string> servicePrincipalId, DataFactoryElement<string> tenant, DataFactoryElement<string> aadResourceId)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
-            Argument.AssertNotNull(servicePrincipalId, nameof(servicePrincipalId));
-            Argument.AssertNotNull(tenant, nameof(tenant));
-            Argument.AssertNotNull(aadResourceId, nameof(aadResourceId));
-
             Uri = uri;
             ServicePrincipalId = servicePrincipalId;
             Tenant = tenant;

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     // TODO: remove once the generator emits correct deserialization for identity-aliased types (#59298).
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(ExcludeLastRequest), DeserializationValueHook = nameof(ReadExcludeLastRequest))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(BaseRequestId), DeserializationValueHook = nameof(ReadBaseRequestId))]
-    public partial class SapOpenHubTableDatasetTypeProperties
+    internal partial class SapOpenHubTableDatasetTypeProperties
     {
         internal static void ReadExcludeLastRequest(JsonProperty property, ref DataFactoryElement<bool> value)
             => value = DataFactoryExpressionSerialization.ReadElement<bool>(property);

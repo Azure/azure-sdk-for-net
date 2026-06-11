@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Until activity properties. </summary>
-    public partial class UntilActivityTypeProperties : IJsonModel<UntilActivityTypeProperties>
+    internal partial class UntilActivityTypeProperties : IJsonModel<UntilActivityTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="UntilActivityTypeProperties"/> for deserialization. </summary>
         internal UntilActivityTypeProperties()

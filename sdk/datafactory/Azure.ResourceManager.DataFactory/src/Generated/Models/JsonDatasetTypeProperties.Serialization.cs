@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Json dataset properties. </summary>
-    public partial class JsonDatasetTypeProperties : IJsonModel<JsonDatasetTypeProperties>
+    internal partial class JsonDatasetTypeProperties : IJsonModel<JsonDatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="JsonDatasetTypeProperties"/> for deserialization. </summary>
         internal JsonDatasetTypeProperties()

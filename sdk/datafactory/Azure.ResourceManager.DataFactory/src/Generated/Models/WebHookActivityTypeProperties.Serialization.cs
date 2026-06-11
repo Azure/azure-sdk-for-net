@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> WebHook activity type properties. </summary>
-    public partial class WebHookActivityTypeProperties : IJsonModel<WebHookActivityTypeProperties>
+    internal partial class WebHookActivityTypeProperties : IJsonModel<WebHookActivityTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="WebHookActivityTypeProperties"/> for deserialization. </summary>
         internal WebHookActivityTypeProperties()

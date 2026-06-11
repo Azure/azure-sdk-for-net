@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Validation activity properties. </summary>
-    public partial class ValidationActivityTypeProperties
+    internal partial class ValidationActivityTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ValidationActivityTypeProperties"/>. </summary>
         /// <param name="dataset"> Validation activity dataset reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataset"/> is null. </exception>
         public ValidationActivityTypeProperties(DatasetReference dataset)
         {
-            Argument.AssertNotNull(dataset, nameof(dataset));
-
             Dataset = dataset;
         }
 

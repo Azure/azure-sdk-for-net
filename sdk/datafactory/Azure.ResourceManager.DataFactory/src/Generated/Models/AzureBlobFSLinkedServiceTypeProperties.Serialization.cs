@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure Data Lake Storage Gen2 linked service properties. </summary>
-    public partial class AzureBlobFSLinkedServiceTypeProperties : IJsonModel<AzureBlobFSLinkedServiceTypeProperties>
+    internal partial class AzureBlobFSLinkedServiceTypeProperties : IJsonModel<AzureBlobFSLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

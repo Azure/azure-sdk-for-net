@@ -11,8 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Salesforce Service Cloud linked service properties. </summary>
-    public partial class SalesforceServiceCloudLinkedServiceTypeProperties
+    internal partial class SalesforceServiceCloudLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

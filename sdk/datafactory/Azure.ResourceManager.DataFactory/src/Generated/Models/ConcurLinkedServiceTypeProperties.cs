@@ -9,12 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Concur Service linked service properties. </summary>
-    public partial class ConcurLinkedServiceTypeProperties
+    internal partial class ConcurLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,12 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="ConcurLinkedServiceTypeProperties"/>. </summary>
         /// <param name="clientId"> Application client_id supplied by Concur App Management. </param>
         /// <param name="username"> The user name that you use to access Concur Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="username"/> is null. </exception>
         public ConcurLinkedServiceTypeProperties(DataFactoryElement<string> clientId, DataFactoryElement<string> username)
         {
-            Argument.AssertNotNull(clientId, nameof(clientId));
-            Argument.AssertNotNull(username, nameof(username));
-
             ClientId = clientId;
             Username = username;
         }

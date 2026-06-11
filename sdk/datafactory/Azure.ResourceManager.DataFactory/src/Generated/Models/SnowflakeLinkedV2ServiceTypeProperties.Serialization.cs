@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Snowflake linked service properties. </summary>
-    public partial class SnowflakeLinkedV2ServiceTypeProperties : IJsonModel<SnowflakeLinkedV2ServiceTypeProperties>
+    internal partial class SnowflakeLinkedV2ServiceTypeProperties : IJsonModel<SnowflakeLinkedV2ServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SnowflakeLinkedV2ServiceTypeProperties"/> for deserialization. </summary>
         internal SnowflakeLinkedV2ServiceTypeProperties()

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     // correct ModelReaderWriter-based reader via [CodeGenSerialization].
     // TODO: remove once the generator emits correct deserialization for identity-aliased types (#59298).
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Username), DeserializationValueHook = nameof(ReadUsername))]
-    public partial class AmazonRdsForLinkedServiceTypeProperties
+    internal partial class AmazonRdsForLinkedServiceTypeProperties
     {
         internal static void ReadUsername(JsonProperty property, ref DataFactoryElement<string> value)
             => value = DataFactoryExpressionSerialization.ReadElement<string>(property);

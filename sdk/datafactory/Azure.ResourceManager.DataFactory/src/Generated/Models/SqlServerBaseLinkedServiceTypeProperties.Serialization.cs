@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Sql Server family connector common linked service properties. </summary>
-    public partial class SqlServerBaseLinkedServiceTypeProperties : IJsonModel<SqlServerBaseLinkedServiceTypeProperties>
+    internal partial class SqlServerBaseLinkedServiceTypeProperties : IJsonModel<SqlServerBaseLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

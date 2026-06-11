@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Impala server linked service properties. </summary>
-    public partial class ImpalaLinkedServiceTypeProperties : IJsonModel<ImpalaLinkedServiceTypeProperties>
+    internal partial class ImpalaLinkedServiceTypeProperties : IJsonModel<ImpalaLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ImpalaLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal ImpalaLinkedServiceTypeProperties()

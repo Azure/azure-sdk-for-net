@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     // TODO: remove once the generator emits correct deserialization for identity-aliased types (#59298).
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(EncodingName), DeserializationValueHook = nameof(ReadEncodingName))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(NullValue), DeserializationValueHook = nameof(ReadNullValue))]
-    public partial class XmlDatasetTypeProperties
+    internal partial class XmlDatasetTypeProperties
     {
         internal static void ReadEncodingName(JsonProperty property, ref DataFactoryElement<string> value)
             => value = DataFactoryExpressionSerialization.ReadElement<string>(property);

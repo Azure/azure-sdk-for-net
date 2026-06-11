@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> TeamDesk linked service type properties. </summary>
-    public partial class TeamDeskLinkedServiceTypeProperties : IJsonModel<TeamDeskLinkedServiceTypeProperties>
+    internal partial class TeamDeskLinkedServiceTypeProperties : IJsonModel<TeamDeskLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="TeamDeskLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal TeamDeskLinkedServiceTypeProperties()

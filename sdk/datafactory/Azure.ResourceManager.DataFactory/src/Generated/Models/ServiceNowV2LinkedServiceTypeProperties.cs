@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> ServiceNowV2 server linked service properties. </summary>
-    public partial class ServiceNowV2LinkedServiceTypeProperties
+    internal partial class ServiceNowV2LinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,11 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="ServiceNowV2LinkedServiceTypeProperties"/>. </summary>
         /// <param name="endpoint"> The endpoint of the ServiceNowV2 server. (i.e. &lt;instance&gt;.service-now.com). </param>
         /// <param name="authenticationType"> The authentication type to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public ServiceNowV2LinkedServiceTypeProperties(DataFactoryElement<string> endpoint, ServiceNowV2AuthenticationType authenticationType)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-
             Endpoint = endpoint;
             AuthenticationType = authenticationType;
         }

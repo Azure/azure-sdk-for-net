@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Microsoft Fabric Warehouse linked service properties. </summary>
-    public partial class WarehouseLinkedServiceTypeProperties : IJsonModel<WarehouseLinkedServiceTypeProperties>
+    internal partial class WarehouseLinkedServiceTypeProperties : IJsonModel<WarehouseLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="WarehouseLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal WarehouseLinkedServiceTypeProperties()

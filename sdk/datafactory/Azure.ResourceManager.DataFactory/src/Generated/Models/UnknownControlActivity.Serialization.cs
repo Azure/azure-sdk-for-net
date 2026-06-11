@@ -12,8 +12,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Unknown variant of ControlActivity. </summary>
-    public partial class UnknownControlActivity : ControlActivity, IJsonModel<ControlActivity>
+    internal partial class UnknownControlActivity : ControlActivity, IJsonModel<ControlActivity>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownControlActivity"/> for deserialization. </summary>
         internal UnknownControlActivity()

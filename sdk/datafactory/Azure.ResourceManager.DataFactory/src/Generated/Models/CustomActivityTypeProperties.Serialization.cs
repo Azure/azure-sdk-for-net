@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Custom activity properties. </summary>
-    public partial class CustomActivityTypeProperties : IJsonModel<CustomActivityTypeProperties>
+    internal partial class CustomActivityTypeProperties : IJsonModel<CustomActivityTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="CustomActivityTypeProperties"/> for deserialization. </summary>
         internal CustomActivityTypeProperties()

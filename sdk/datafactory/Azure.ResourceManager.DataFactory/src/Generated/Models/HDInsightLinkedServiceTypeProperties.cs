@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> HDInsight linked service properties. </summary>
-    public partial class HDInsightLinkedServiceTypeProperties
+    internal partial class HDInsightLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HDInsightLinkedServiceTypeProperties"/>. </summary>
         /// <param name="clusterUri"> HDInsight cluster URI. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterUri"/> is null. </exception>
         public HDInsightLinkedServiceTypeProperties(DataFactoryElement<string> clusterUri)
         {
-            Argument.AssertNotNull(clusterUri, nameof(clusterUri));
-
             ClusterUri = clusterUri;
         }
 

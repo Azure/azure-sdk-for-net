@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(FileName), DeserializationValueHook = nameof(ReadFileName))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(ModifiedDatetimeStart), DeserializationValueHook = nameof(ReadModifiedDatetimeStart))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(ModifiedDatetimeEnd), DeserializationValueHook = nameof(ReadModifiedDatetimeEnd))]
-    public partial class AzureBlobDatasetTypeProperties
+    internal partial class AzureBlobDatasetTypeProperties
     {
         internal static void ReadFolderPath(JsonProperty property, ref DataFactoryElement<string> value)
             => value = DataFactoryExpressionSerialization.ReadElement<string>(property);

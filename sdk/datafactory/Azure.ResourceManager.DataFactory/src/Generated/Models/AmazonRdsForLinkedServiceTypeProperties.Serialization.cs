@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> AmazonRdsForOracle database linked service properties. </summary>
-    public partial class AmazonRdsForLinkedServiceTypeProperties : IJsonModel<AmazonRdsForLinkedServiceTypeProperties>
+    internal partial class AmazonRdsForLinkedServiceTypeProperties : IJsonModel<AmazonRdsForLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

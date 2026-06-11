@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Properties specific to this linked service type. </summary>
-    public partial class HttpLinkedServiceTypeProperties : IJsonModel<HttpLinkedServiceTypeProperties>
+    internal partial class HttpLinkedServiceTypeProperties : IJsonModel<HttpLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="HttpLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal HttpLinkedServiceTypeProperties()

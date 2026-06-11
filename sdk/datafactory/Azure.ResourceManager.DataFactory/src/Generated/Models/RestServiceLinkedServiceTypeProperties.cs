@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Rest Service linked service properties. </summary>
-    public partial class RestServiceLinkedServiceTypeProperties
+    internal partial class RestServiceLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,11 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="RestServiceLinkedServiceTypeProperties"/>. </summary>
         /// <param name="uri"> The base URL of the REST service. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the REST service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public RestServiceLinkedServiceTypeProperties(DataFactoryElement<string> uri, RestServiceAuthenticationType authenticationType)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
-
             Uri = uri;
             AuthenticationType = authenticationType;
         }

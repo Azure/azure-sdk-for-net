@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Oracle Service Cloud linked service properties. </summary>
-    public partial class OracleServiceCloudLinkedServiceTypeProperties : IJsonModel<OracleServiceCloudLinkedServiceTypeProperties>
+    internal partial class OracleServiceCloudLinkedServiceTypeProperties : IJsonModel<OracleServiceCloudLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="OracleServiceCloudLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal OracleServiceCloudLinkedServiceTypeProperties()

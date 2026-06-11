@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Informix linked service properties. </summary>
-    public partial class InformixLinkedServiceTypeProperties : IJsonModel<InformixLinkedServiceTypeProperties>
+    internal partial class InformixLinkedServiceTypeProperties : IJsonModel<InformixLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="InformixLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal InformixLinkedServiceTypeProperties()

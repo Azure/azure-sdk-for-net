@@ -13,8 +13,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Web activity type properties. </summary>
-    public partial class WebActivityTypeProperties
+    internal partial class WebActivityTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,11 +21,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="WebActivityTypeProperties"/>. </summary>
         /// <param name="method"> Rest API method for target endpoint. </param>
         /// <param name="uri"> Web activity target endpoint and path. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public WebActivityTypeProperties(WebActivityMethod @method, DataFactoryElement<string> uri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
-
             Method = @method;
             Uri = uri;
             RequestHeaders = new ChangeTrackingDictionary<string, BinaryData>();

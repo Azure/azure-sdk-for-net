@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Excel dataset properties. </summary>
-    public partial class ExcelDatasetTypeProperties : IJsonModel<ExcelDatasetTypeProperties>
+    internal partial class ExcelDatasetTypeProperties : IJsonModel<ExcelDatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ExcelDatasetTypeProperties"/> for deserialization. </summary>
         internal ExcelDatasetTypeProperties()

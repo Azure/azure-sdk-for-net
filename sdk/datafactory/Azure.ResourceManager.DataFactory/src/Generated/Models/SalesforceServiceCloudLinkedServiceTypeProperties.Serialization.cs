@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Salesforce Service Cloud linked service properties. </summary>
-    public partial class SalesforceServiceCloudLinkedServiceTypeProperties : IJsonModel<SalesforceServiceCloudLinkedServiceTypeProperties>
+    internal partial class SalesforceServiceCloudLinkedServiceTypeProperties : IJsonModel<SalesforceServiceCloudLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure Data Explorer (Kusto) linked service properties. </summary>
-    public partial class AzureDataExplorerLinkedServiceTypeProperties : IJsonModel<AzureDataExplorerLinkedServiceTypeProperties>
+    internal partial class AzureDataExplorerLinkedServiceTypeProperties : IJsonModel<AzureDataExplorerLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AzureDataExplorerLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AzureDataExplorerLinkedServiceTypeProperties()

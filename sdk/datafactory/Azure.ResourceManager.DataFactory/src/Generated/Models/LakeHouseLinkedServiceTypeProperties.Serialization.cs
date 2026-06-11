@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Microsoft Fabric Lakehouse linked service properties. </summary>
-    public partial class LakeHouseLinkedServiceTypeProperties : IJsonModel<LakeHouseLinkedServiceTypeProperties>
+    internal partial class LakeHouseLinkedServiceTypeProperties : IJsonModel<LakeHouseLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

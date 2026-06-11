@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> On-premises file system dataset properties. </summary>
-    public partial class FileShareDatasetTypeProperties : IJsonModel<FileShareDatasetTypeProperties>
+    internal partial class FileShareDatasetTypeProperties : IJsonModel<FileShareDatasetTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

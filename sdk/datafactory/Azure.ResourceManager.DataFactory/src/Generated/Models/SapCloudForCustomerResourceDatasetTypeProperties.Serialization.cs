@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Sap Cloud For Customer OData resource dataset properties. </summary>
-    public partial class SapCloudForCustomerResourceDatasetTypeProperties : IJsonModel<SapCloudForCustomerResourceDatasetTypeProperties>
+    internal partial class SapCloudForCustomerResourceDatasetTypeProperties : IJsonModel<SapCloudForCustomerResourceDatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerResourceDatasetTypeProperties"/> for deserialization. </summary>
         internal SapCloudForCustomerResourceDatasetTypeProperties()

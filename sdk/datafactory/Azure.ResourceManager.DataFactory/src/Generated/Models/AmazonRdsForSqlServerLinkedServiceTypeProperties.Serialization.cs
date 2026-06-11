@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Amazon Rds for SQL Server linked service properties. </summary>
-    public partial class AmazonRdsForSqlServerLinkedServiceTypeProperties : SqlServerBaseLinkedServiceTypeProperties, IJsonModel<AmazonRdsForSqlServerLinkedServiceTypeProperties>
+    internal partial class AmazonRdsForSqlServerLinkedServiceTypeProperties : SqlServerBaseLinkedServiceTypeProperties, IJsonModel<AmazonRdsForSqlServerLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

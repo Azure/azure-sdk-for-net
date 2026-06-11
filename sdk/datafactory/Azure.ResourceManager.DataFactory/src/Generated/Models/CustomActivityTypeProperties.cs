@@ -13,19 +13,15 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Custom activity properties. </summary>
-    public partial class CustomActivityTypeProperties
+    internal partial class CustomActivityTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomActivityTypeProperties"/>. </summary>
         /// <param name="command"> Command for custom activity Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="command"/> is null. </exception>
         public CustomActivityTypeProperties(DataFactoryElement<string> command)
         {
-            Argument.AssertNotNull(command, nameof(command));
-
             Command = command;
             ExtendedProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }

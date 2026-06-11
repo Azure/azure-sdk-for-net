@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure Blob Storage linked service properties. </summary>
-    public partial class AzureBlobStorageLinkedServiceTypeProperties : IJsonModel<AzureBlobStorageLinkedServiceTypeProperties>
+    internal partial class AzureBlobStorageLinkedServiceTypeProperties : IJsonModel<AzureBlobStorageLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

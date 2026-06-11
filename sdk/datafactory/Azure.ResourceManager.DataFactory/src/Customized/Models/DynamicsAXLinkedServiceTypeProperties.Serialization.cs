@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     // TODO: remove once the generator emits correct deserialization for identity-aliased types (#59298).
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Uri), DeserializationValueHook = nameof(ReadUri))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(ServicePrincipalId), DeserializationValueHook = nameof(ReadServicePrincipalId))]
-    public partial class DynamicsAXLinkedServiceTypeProperties
+    internal partial class DynamicsAXLinkedServiceTypeProperties
     {
         internal static void ReadUri(JsonProperty property, ref DataFactoryElement<string> value)
             => value = DataFactoryExpressionSerialization.ReadElement<string>(property);

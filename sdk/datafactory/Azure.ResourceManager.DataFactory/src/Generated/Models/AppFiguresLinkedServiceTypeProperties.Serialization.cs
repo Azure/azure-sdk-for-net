@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> AppFigures linked service type properties. </summary>
-    public partial class AppFiguresLinkedServiceTypeProperties : IJsonModel<AppFiguresLinkedServiceTypeProperties>
+    internal partial class AppFiguresLinkedServiceTypeProperties : IJsonModel<AppFiguresLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AppFiguresLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AppFiguresLinkedServiceTypeProperties()

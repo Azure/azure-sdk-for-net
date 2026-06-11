@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(QuoteChar), DeserializationValueHook = nameof(ReadQuoteChar))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(NullValue), DeserializationValueHook = nameof(ReadNullValue))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(FirstRowAsHeader), DeserializationValueHook = nameof(ReadFirstRowAsHeader))]
-    public partial class DelimitedTextDatasetTypeProperties
+    internal partial class DelimitedTextDatasetTypeProperties
     {
         internal static void ReadEncodingName(JsonProperty property, ref DataFactoryElement<string> value)
             => value = DataFactoryExpressionSerialization.ReadElement<string>(property);

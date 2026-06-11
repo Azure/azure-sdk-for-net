@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Dynamics CRM linked service properties. </summary>
-    public partial class DynamicsCrmLinkedServiceTypeProperties
+    internal partial class DynamicsCrmLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,12 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="DynamicsCrmLinkedServiceTypeProperties"/>. </summary>
         /// <param name="deploymentType"> The deployment type of the Dynamics CRM instance. 'Online' for Dynamics CRM Online and 'OnPremisesWithIfd' for Dynamics CRM on-premises with Ifd. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to connect to Dynamics CRM server. 'Office365' for online scenario, 'Ifd' for on-premises with Ifd scenario, 'AADServicePrincipal' for Server-To-Server authentication in online scenario, 'Active Directory' for Dynamics on-premises with IFD. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentType"/> or <paramref name="authenticationType"/> is null. </exception>
         public DynamicsCrmLinkedServiceTypeProperties(DataFactoryElement<string> deploymentType, DataFactoryElement<string> authenticationType)
         {
-            Argument.AssertNotNull(deploymentType, nameof(deploymentType));
-            Argument.AssertNotNull(authenticationType, nameof(authenticationType));
-
             DeploymentType = deploymentType;
             AuthenticationType = authenticationType;
         }

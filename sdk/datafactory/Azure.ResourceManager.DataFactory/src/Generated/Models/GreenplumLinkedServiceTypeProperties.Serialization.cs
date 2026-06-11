@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Greenplum Database linked service properties. </summary>
-    public partial class GreenplumLinkedServiceTypeProperties : IJsonModel<GreenplumLinkedServiceTypeProperties>
+    internal partial class GreenplumLinkedServiceTypeProperties : IJsonModel<GreenplumLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

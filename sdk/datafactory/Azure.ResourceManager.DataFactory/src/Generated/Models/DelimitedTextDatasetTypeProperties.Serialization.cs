@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> DelimitedText dataset properties. </summary>
-    public partial class DelimitedTextDatasetTypeProperties : IJsonModel<DelimitedTextDatasetTypeProperties>
+    internal partial class DelimitedTextDatasetTypeProperties : IJsonModel<DelimitedTextDatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DelimitedTextDatasetTypeProperties"/> for deserialization. </summary>
         internal DelimitedTextDatasetTypeProperties()

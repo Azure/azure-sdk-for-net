@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Quickbase linked service type properties. </summary>
-    public partial class QuickbaseLinkedServiceTypeProperties : IJsonModel<QuickbaseLinkedServiceTypeProperties>
+    internal partial class QuickbaseLinkedServiceTypeProperties : IJsonModel<QuickbaseLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal QuickbaseLinkedServiceTypeProperties()

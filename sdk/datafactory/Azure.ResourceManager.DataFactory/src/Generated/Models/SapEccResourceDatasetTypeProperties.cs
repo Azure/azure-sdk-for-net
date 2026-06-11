@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Sap ECC OData resource dataset properties. </summary>
-    public partial class SapEccResourceDatasetTypeProperties
+    internal partial class SapEccResourceDatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SapEccResourceDatasetTypeProperties"/>. </summary>
         /// <param name="path"> The path of the SAP ECC OData entity. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
         public SapEccResourceDatasetTypeProperties(DataFactoryElement<string> path)
         {
-            Argument.AssertNotNull(path, nameof(path));
-
             Path = path;
         }
 

@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Office365 linked service properties. </summary>
-    public partial class Office365LinkedServiceTypeProperties : IJsonModel<Office365LinkedServiceTypeProperties>
+    internal partial class Office365LinkedServiceTypeProperties : IJsonModel<Office365LinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="Office365LinkedServiceTypeProperties"/> for deserialization. </summary>
         internal Office365LinkedServiceTypeProperties()

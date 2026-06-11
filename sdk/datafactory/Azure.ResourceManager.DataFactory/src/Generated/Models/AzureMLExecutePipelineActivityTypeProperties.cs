@@ -12,8 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure ML Execute Pipeline activity properties. </summary>
-    public partial class AzureMLExecutePipelineActivityTypeProperties
+    internal partial class AzureMLExecutePipelineActivityTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

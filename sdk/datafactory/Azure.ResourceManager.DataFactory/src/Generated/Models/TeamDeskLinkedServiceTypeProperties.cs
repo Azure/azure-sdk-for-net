@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> TeamDesk linked service type properties. </summary>
-    public partial class TeamDeskLinkedServiceTypeProperties
+    internal partial class TeamDeskLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,11 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="TeamDeskLinkedServiceTypeProperties"/>. </summary>
         /// <param name="authenticationType"> The authentication type to use. </param>
         /// <param name="uri"> The url to connect TeamDesk source. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public TeamDeskLinkedServiceTypeProperties(TeamDeskAuthenticationType authenticationType, DataFactoryElement<string> uri)
         {
-            Argument.AssertNotNull(uri, nameof(uri));
-
             AuthenticationType = authenticationType;
             Uri = uri;
         }

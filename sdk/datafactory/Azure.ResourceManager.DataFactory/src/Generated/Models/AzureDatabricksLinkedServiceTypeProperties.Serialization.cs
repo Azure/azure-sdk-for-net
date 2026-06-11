@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure Databricks linked service properties. </summary>
-    public partial class AzureDatabricksLinkedServiceTypeProperties : IJsonModel<AzureDatabricksLinkedServiceTypeProperties>
+    internal partial class AzureDatabricksLinkedServiceTypeProperties : IJsonModel<AzureDatabricksLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AzureDatabricksLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AzureDatabricksLinkedServiceTypeProperties()

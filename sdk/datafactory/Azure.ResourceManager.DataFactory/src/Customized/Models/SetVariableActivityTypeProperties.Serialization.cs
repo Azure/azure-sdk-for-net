@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     // correct ModelReaderWriter-based reader via [CodeGenSerialization].
     // TODO: remove once the generator emits correct deserialization for identity-aliased types (#59298).
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Value), DeserializationValueHook = nameof(ReadValue))]
-    public partial class SetVariableActivityTypeProperties
+    internal partial class SetVariableActivityTypeProperties
     {
         internal static void ReadValue(JsonProperty property, ref DataFactoryElement<BinaryData> value)
             => value = DataFactoryExpressionSerialization.ReadElement<BinaryData>(property);

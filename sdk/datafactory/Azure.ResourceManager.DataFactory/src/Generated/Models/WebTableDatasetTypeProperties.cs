@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Web table dataset properties. </summary>
-    public partial class WebTableDatasetTypeProperties
+    internal partial class WebTableDatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebTableDatasetTypeProperties"/>. </summary>
         /// <param name="index"> The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer), minimum: 0. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="index"/> is null. </exception>
         public WebTableDatasetTypeProperties(DataFactoryElement<int> index)
         {
-            Argument.AssertNotNull(index, nameof(index));
-
             Index = index;
         }
 

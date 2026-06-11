@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> DB2 linked service properties. </summary>
-    public partial class Db2LinkedServiceTypeProperties : IJsonModel<Db2LinkedServiceTypeProperties>
+    internal partial class Db2LinkedServiceTypeProperties : IJsonModel<Db2LinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

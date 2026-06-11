@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Properties specific to this linked service type. </summary>
-    public partial class SftpServerLinkedServiceTypeProperties
+    internal partial class SftpServerLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SftpServerLinkedServiceTypeProperties"/>. </summary>
         /// <param name="host"> The SFTP server host name. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public SftpServerLinkedServiceTypeProperties(DataFactoryElement<string> host)
         {
-            Argument.AssertNotNull(host, nameof(host));
-
             Host = host;
         }
 

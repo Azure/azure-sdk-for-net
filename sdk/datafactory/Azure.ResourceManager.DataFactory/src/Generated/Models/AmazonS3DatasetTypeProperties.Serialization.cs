@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Amazon S3 dataset properties. </summary>
-    public partial class AmazonS3DatasetTypeProperties : IJsonModel<AmazonS3DatasetTypeProperties>
+    internal partial class AmazonS3DatasetTypeProperties : IJsonModel<AmazonS3DatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AmazonS3DatasetTypeProperties"/> for deserialization. </summary>
         internal AmazonS3DatasetTypeProperties()

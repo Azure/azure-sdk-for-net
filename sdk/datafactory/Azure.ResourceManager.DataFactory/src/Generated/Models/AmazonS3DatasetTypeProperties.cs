@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Amazon S3 dataset properties. </summary>
-    public partial class AmazonS3DatasetTypeProperties
+    internal partial class AmazonS3DatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AmazonS3DatasetTypeProperties"/>. </summary>
         /// <param name="bucketName"> The name of the Amazon S3 bucket. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bucketName"/> is null. </exception>
         public AmazonS3DatasetTypeProperties(DataFactoryElement<string> bucketName)
         {
-            Argument.AssertNotNull(bucketName, nameof(bucketName));
-
             BucketName = bucketName;
         }
 

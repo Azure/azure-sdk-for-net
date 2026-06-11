@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Oracle database linked service properties. </summary>
-    public partial class OracleLinkedServiceTypeProperties : IJsonModel<OracleLinkedServiceTypeProperties>
+    internal partial class OracleLinkedServiceTypeProperties : IJsonModel<OracleLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

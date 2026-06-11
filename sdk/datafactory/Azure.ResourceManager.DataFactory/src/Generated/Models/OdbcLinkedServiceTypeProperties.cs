@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> ODBC linked service properties. </summary>
-    public partial class OdbcLinkedServiceTypeProperties
+    internal partial class OdbcLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OdbcLinkedServiceTypeProperties"/>. </summary>
         /// <param name="connectionString"> The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, or SecureString, or AzureKeyVaultSecretReference, or Expression with resultType string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public OdbcLinkedServiceTypeProperties(DataFactoryElement<string> connectionString)
         {
-            Argument.AssertNotNull(connectionString, nameof(connectionString));
-
             ConnectionString = connectionString;
         }
 

@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Properties specific to SAP Business Warehouse Open Hub Destination linked service type. </summary>
-    public partial class SapOpenHubLinkedServiceTypeProperties : IJsonModel<SapOpenHubLinkedServiceTypeProperties>
+    internal partial class SapOpenHubLinkedServiceTypeProperties : IJsonModel<SapOpenHubLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

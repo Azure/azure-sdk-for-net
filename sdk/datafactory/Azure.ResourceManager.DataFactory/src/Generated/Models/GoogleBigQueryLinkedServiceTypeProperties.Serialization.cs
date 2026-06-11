@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Google BigQuery service linked service properties. </summary>
-    public partial class GoogleBigQueryLinkedServiceTypeProperties : IJsonModel<GoogleBigQueryLinkedServiceTypeProperties>
+    internal partial class GoogleBigQueryLinkedServiceTypeProperties : IJsonModel<GoogleBigQueryLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="GoogleBigQueryLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal GoogleBigQueryLinkedServiceTypeProperties()

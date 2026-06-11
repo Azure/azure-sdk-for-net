@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> MariaDB server linked service properties. </summary>
-    public partial class MariaDBLinkedServiceTypeProperties : IJsonModel<MariaDBLinkedServiceTypeProperties>
+    internal partial class MariaDBLinkedServiceTypeProperties : IJsonModel<MariaDBLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

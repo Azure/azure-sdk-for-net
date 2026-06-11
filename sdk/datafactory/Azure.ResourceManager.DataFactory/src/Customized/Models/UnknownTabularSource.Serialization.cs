@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     // local name. The body is otherwise identical to the generated output.
     // TODO: remove once the generator emits a consistent additional-properties local name (#58691).
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("DeserializeUnknownTabularSource", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
-    public partial class UnknownTabularSource
+    internal partial class UnknownTabularSource
     {
         internal static UnknownTabularSource DeserializeUnknownTabularSource(JsonElement element, ModelReaderWriterOptions options)
         {

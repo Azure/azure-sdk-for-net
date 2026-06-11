@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure Data Lake Store linked service properties. </summary>
-    public partial class AzureDataLakeStoreLinkedServiceTypeProperties : IJsonModel<AzureDataLakeStoreLinkedServiceTypeProperties>
+    internal partial class AzureDataLakeStoreLinkedServiceTypeProperties : IJsonModel<AzureDataLakeStoreLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AzureDataLakeStoreLinkedServiceTypeProperties()

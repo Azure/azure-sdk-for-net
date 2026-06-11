@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Username), DeserializationValueHook = nameof(ReadUsername))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(ServicePrincipalId), DeserializationValueHook = nameof(ReadServicePrincipalId))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Domain), DeserializationValueHook = nameof(ReadDomain))]
-    public partial class DynamicsLinkedServiceTypeProperties
+    internal partial class DynamicsLinkedServiceTypeProperties
     {
         internal static void ReadUsername(JsonProperty property, ref DataFactoryElement<string> value)
             => value = DataFactoryExpressionSerialization.ReadElement<string>(property);

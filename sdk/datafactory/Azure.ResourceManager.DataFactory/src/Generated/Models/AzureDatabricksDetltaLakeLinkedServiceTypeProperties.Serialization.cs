@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure Databricks Delta Lake linked service properties. </summary>
-    public partial class AzureDatabricksDetltaLakeLinkedServiceTypeProperties : IJsonModel<AzureDatabricksDetltaLakeLinkedServiceTypeProperties>
+    internal partial class AzureDatabricksDetltaLakeLinkedServiceTypeProperties : IJsonModel<AzureDatabricksDetltaLakeLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AzureDatabricksDetltaLakeLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AzureDatabricksDetltaLakeLinkedServiceTypeProperties()

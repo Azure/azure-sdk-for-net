@@ -13,19 +13,15 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure Databricks linked service properties. </summary>
-    public partial class AzureDatabricksLinkedServiceTypeProperties
+    internal partial class AzureDatabricksLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureDatabricksLinkedServiceTypeProperties"/>. </summary>
         /// <param name="domain"> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
         public AzureDatabricksLinkedServiceTypeProperties(DataFactoryElement<string> domain)
         {
-            Argument.AssertNotNull(domain, nameof(domain));
-
             Domain = domain;
             NewClusterSparkConf = new ChangeTrackingDictionary<string, BinaryData>();
             NewClusterSparkEnvVars = new ChangeTrackingDictionary<string, BinaryData>();

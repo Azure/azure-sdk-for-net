@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> CosmosDB linked service properties. </summary>
-    public partial class CosmosDbLinkedServiceTypeProperties : IJsonModel<CosmosDbLinkedServiceTypeProperties>
+    internal partial class CosmosDbLinkedServiceTypeProperties : IJsonModel<CosmosDbLinkedServiceTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

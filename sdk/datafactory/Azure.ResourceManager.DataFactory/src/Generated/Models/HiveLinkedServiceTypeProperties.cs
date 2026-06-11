@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Hive Server linked service properties. </summary>
-    public partial class HiveLinkedServiceTypeProperties
+    internal partial class HiveLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,11 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="HiveLinkedServiceTypeProperties"/>. </summary>
         /// <param name="host"> IP address or host name of the Hive server, separated by ';' for multiple hosts (only when serviceDiscoveryMode is enable). </param>
         /// <param name="authenticationType"> The authentication method used to access the Hive server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public HiveLinkedServiceTypeProperties(DataFactoryElement<string> host, HiveAuthenticationType authenticationType)
         {
-            Argument.AssertNotNull(host, nameof(host));
-
             Host = host;
             AuthenticationType = authenticationType;
         }

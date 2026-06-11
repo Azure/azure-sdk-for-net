@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> ServiceNow server linked service properties. </summary>
-    public partial class ServiceNowLinkedServiceTypeProperties : IJsonModel<ServiceNowLinkedServiceTypeProperties>
+    internal partial class ServiceNowLinkedServiceTypeProperties : IJsonModel<ServiceNowLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ServiceNowLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal ServiceNowLinkedServiceTypeProperties()

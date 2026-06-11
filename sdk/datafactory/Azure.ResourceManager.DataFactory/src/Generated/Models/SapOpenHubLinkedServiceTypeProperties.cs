@@ -11,8 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Properties specific to SAP Business Warehouse Open Hub Destination linked service type. </summary>
-    public partial class SapOpenHubLinkedServiceTypeProperties
+    internal partial class SapOpenHubLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

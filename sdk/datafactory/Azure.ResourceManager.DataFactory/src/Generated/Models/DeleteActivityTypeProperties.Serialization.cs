@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Delete activity properties. </summary>
-    public partial class DeleteActivityTypeProperties : IJsonModel<DeleteActivityTypeProperties>
+    internal partial class DeleteActivityTypeProperties : IJsonModel<DeleteActivityTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DeleteActivityTypeProperties"/> for deserialization. </summary>
         internal DeleteActivityTypeProperties()

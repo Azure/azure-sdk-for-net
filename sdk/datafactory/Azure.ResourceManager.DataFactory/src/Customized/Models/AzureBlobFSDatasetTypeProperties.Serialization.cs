@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     // TODO: remove once the generator emits correct deserialization for identity-aliased types (#59298).
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(FolderPath), DeserializationValueHook = nameof(ReadFolderPath))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(FileName), DeserializationValueHook = nameof(ReadFileName))]
-    public partial class AzureBlobFSDatasetTypeProperties
+    internal partial class AzureBlobFSDatasetTypeProperties
     {
         internal static void ReadFolderPath(JsonProperty property, ref DataFactoryElement<string> value)
             => value = DataFactoryExpressionSerialization.ReadElement<string>(property);

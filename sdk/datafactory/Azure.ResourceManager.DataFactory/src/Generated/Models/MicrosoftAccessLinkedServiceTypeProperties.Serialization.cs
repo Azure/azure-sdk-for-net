@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Microsoft Access linked service properties. </summary>
-    public partial class MicrosoftAccessLinkedServiceTypeProperties : IJsonModel<MicrosoftAccessLinkedServiceTypeProperties>
+    internal partial class MicrosoftAccessLinkedServiceTypeProperties : IJsonModel<MicrosoftAccessLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="MicrosoftAccessLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal MicrosoftAccessLinkedServiceTypeProperties()

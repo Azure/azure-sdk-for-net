@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Twilio linked service type properties. </summary>
-    public partial class TwilioLinkedServiceTypeProperties : IJsonModel<TwilioLinkedServiceTypeProperties>
+    internal partial class TwilioLinkedServiceTypeProperties : IJsonModel<TwilioLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="TwilioLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal TwilioLinkedServiceTypeProperties()

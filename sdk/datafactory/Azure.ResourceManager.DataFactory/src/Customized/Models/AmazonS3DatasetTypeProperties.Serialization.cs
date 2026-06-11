@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(ModifiedDatetimeStart), DeserializationValueHook = nameof(ReadModifiedDatetimeStart))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(ModifiedDatetimeEnd), DeserializationValueHook = nameof(ReadModifiedDatetimeEnd))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Key), DeserializationValueHook = nameof(ReadKey))]
-    public partial class AmazonS3DatasetTypeProperties
+    internal partial class AmazonS3DatasetTypeProperties
     {
         internal static void ReadBucketName(JsonProperty property, ref DataFactoryElement<string> value)
             => value = DataFactoryExpressionSerialization.ReadElement<string>(property);

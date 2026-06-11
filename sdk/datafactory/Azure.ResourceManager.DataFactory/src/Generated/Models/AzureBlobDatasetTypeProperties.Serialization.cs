@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure Blob dataset properties. </summary>
-    public partial class AzureBlobDatasetTypeProperties : IJsonModel<AzureBlobDatasetTypeProperties>
+    internal partial class AzureBlobDatasetTypeProperties : IJsonModel<AzureBlobDatasetTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

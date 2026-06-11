@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Dynamics linked service properties. </summary>
-    public partial class DynamicsLinkedServiceTypeProperties : IJsonModel<DynamicsLinkedServiceTypeProperties>
+    internal partial class DynamicsLinkedServiceTypeProperties : IJsonModel<DynamicsLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DynamicsLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal DynamicsLinkedServiceTypeProperties()

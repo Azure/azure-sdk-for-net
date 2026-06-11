@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure Data Lake Store dataset properties. </summary>
-    public partial class AzureDataLakeStoreDatasetTypeProperties : IJsonModel<AzureDataLakeStoreDatasetTypeProperties>
+    internal partial class AzureDataLakeStoreDatasetTypeProperties : IJsonModel<AzureDataLakeStoreDatasetTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

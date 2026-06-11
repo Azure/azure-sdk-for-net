@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Cmdkey command custom setup type properties. </summary>
-    public partial class CmdkeySetupTypeProperties
+    internal partial class CmdkeySetupTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,12 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="CmdkeySetupTypeProperties"/>. </summary>
         /// <param name="targetName"> The server name of data source access. Type: string. </param>
         /// <param name="userName"> The user name of data source access. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetName"/> or <paramref name="userName"/> is null. </exception>
         public CmdkeySetupTypeProperties(DataFactoryElement<string> targetName, DataFactoryElement<string> userName)
         {
-            Argument.AssertNotNull(targetName, nameof(targetName));
-            Argument.AssertNotNull(userName, nameof(userName));
-
             TargetName = targetName;
             UserName = userName;
         }

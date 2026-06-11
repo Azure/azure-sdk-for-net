@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> SAP ECC linked service properties. </summary>
-    public partial class SapEccLinkedServiceTypeProperties : IJsonModel<SapEccLinkedServiceTypeProperties>
+    internal partial class SapEccLinkedServiceTypeProperties : IJsonModel<SapEccLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SapEccLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal SapEccLinkedServiceTypeProperties()

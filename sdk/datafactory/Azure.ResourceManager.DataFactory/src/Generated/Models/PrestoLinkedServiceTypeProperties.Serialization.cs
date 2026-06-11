@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Presto server linked service properties. </summary>
-    public partial class PrestoLinkedServiceTypeProperties : IJsonModel<PrestoLinkedServiceTypeProperties>
+    internal partial class PrestoLinkedServiceTypeProperties : IJsonModel<PrestoLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="PrestoLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal PrestoLinkedServiceTypeProperties()

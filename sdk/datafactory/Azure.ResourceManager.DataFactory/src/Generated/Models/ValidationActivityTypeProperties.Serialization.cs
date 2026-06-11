@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Validation activity properties. </summary>
-    public partial class ValidationActivityTypeProperties : IJsonModel<ValidationActivityTypeProperties>
+    internal partial class ValidationActivityTypeProperties : IJsonModel<ValidationActivityTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ValidationActivityTypeProperties"/> for deserialization. </summary>
         internal ValidationActivityTypeProperties()

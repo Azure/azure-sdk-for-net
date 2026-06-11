@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Dynamics AX OData resource dataset properties. </summary>
-    public partial class DynamicsAXResourceDatasetTypeProperties : IJsonModel<DynamicsAXResourceDatasetTypeProperties>
+    internal partial class DynamicsAXResourceDatasetTypeProperties : IJsonModel<DynamicsAXResourceDatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="DynamicsAXResourceDatasetTypeProperties"/> for deserialization. </summary>
         internal DynamicsAXResourceDatasetTypeProperties()

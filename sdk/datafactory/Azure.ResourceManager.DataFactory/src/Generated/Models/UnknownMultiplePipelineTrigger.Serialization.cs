@@ -12,8 +12,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Unknown variant of MultiplePipelineTrigger. </summary>
-    public partial class UnknownMultiplePipelineTrigger : MultiplePipelineTrigger, IJsonModel<MultiplePipelineTrigger>
+    internal partial class UnknownMultiplePipelineTrigger : MultiplePipelineTrigger, IJsonModel<MultiplePipelineTrigger>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMultiplePipelineTrigger"/> for deserialization. </summary>
         internal UnknownMultiplePipelineTrigger()

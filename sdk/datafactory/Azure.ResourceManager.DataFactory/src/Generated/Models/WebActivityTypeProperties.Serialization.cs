@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Web activity type properties. </summary>
-    public partial class WebActivityTypeProperties : IJsonModel<WebActivityTypeProperties>
+    internal partial class WebActivityTypeProperties : IJsonModel<WebActivityTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="WebActivityTypeProperties"/> for deserialization. </summary>
         internal WebActivityTypeProperties()

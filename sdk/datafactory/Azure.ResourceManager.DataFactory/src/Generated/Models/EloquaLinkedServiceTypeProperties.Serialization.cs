@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Eloqua server linked service properties. </summary>
-    public partial class EloquaLinkedServiceTypeProperties : IJsonModel<EloquaLinkedServiceTypeProperties>
+    internal partial class EloquaLinkedServiceTypeProperties : IJsonModel<EloquaLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="EloquaLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal EloquaLinkedServiceTypeProperties()

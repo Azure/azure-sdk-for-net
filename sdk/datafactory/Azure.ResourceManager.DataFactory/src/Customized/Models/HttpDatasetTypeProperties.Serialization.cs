@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(RequestMethod), DeserializationValueHook = nameof(ReadRequestMethod))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(RequestBody), DeserializationValueHook = nameof(ReadRequestBody))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(AdditionalHeaders), DeserializationValueHook = nameof(ReadAdditionalHeaders))]
-    public partial class HttpDatasetTypeProperties
+    internal partial class HttpDatasetTypeProperties
     {
         internal static void ReadRelativeUri(JsonProperty property, ref DataFactoryElement<string> value)
             => value = DataFactoryExpressionSerialization.ReadElement<string>(property);

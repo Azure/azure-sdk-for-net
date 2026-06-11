@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Google BigQuery service linked service properties. </summary>
-    public partial class GoogleBigQueryLinkedServiceTypeProperties
+    internal partial class GoogleBigQueryLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,11 +19,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="GoogleBigQueryLinkedServiceTypeProperties"/>. </summary>
         /// <param name="project"> The default BigQuery project to query against. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The OAuth 2.0 authentication mechanism used for authentication. ServiceAuthentication can only be used on self-hosted IR. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="project"/> is null. </exception>
         public GoogleBigQueryLinkedServiceTypeProperties(DataFactoryElement<string> project, GoogleBigQueryAuthenticationType authenticationType)
         {
-            Argument.AssertNotNull(project, nameof(project));
-
             Project = project;
             AuthenticationType = authenticationType;
         }

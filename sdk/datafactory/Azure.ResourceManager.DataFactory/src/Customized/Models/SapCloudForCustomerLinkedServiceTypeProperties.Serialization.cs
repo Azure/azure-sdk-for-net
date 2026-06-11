@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     // TODO: remove once the generator emits correct deserialization for identity-aliased types (#59298).
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Username), DeserializationValueHook = nameof(ReadUsername))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Uri), DeserializationValueHook = nameof(ReadUri))]
-    public partial class SapCloudForCustomerLinkedServiceTypeProperties
+    internal partial class SapCloudForCustomerLinkedServiceTypeProperties
     {
         internal static void ReadUsername(JsonProperty property, ref DataFactoryElement<string> value)
             => value = DataFactoryExpressionSerialization.ReadElement<string>(property);

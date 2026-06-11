@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Sybase linked service properties. </summary>
-    public partial class SybaseLinkedServiceTypeProperties : IJsonModel<SybaseLinkedServiceTypeProperties>
+    internal partial class SybaseLinkedServiceTypeProperties : IJsonModel<SybaseLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SybaseLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal SybaseLinkedServiceTypeProperties()

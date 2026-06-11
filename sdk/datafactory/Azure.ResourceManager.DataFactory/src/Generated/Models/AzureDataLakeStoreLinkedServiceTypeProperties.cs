@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Azure Data Lake Store linked service properties. </summary>
-    public partial class AzureDataLakeStoreLinkedServiceTypeProperties
+    internal partial class AzureDataLakeStoreLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLinkedServiceTypeProperties"/>. </summary>
         /// <param name="dataLakeStoreUri"> Data Lake Store service URI. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreUri"/> is null. </exception>
         public AzureDataLakeStoreLinkedServiceTypeProperties(DataFactoryElement<string> dataLakeStoreUri)
         {
-            Argument.AssertNotNull(dataLakeStoreUri, nameof(dataLakeStoreUri));
-
             DataLakeStoreUri = dataLakeStoreUri;
         }
 

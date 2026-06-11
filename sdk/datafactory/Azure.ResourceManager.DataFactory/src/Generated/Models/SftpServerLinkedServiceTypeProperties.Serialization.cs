@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Properties specific to this linked service type. </summary>
-    public partial class SftpServerLinkedServiceTypeProperties : IJsonModel<SftpServerLinkedServiceTypeProperties>
+    internal partial class SftpServerLinkedServiceTypeProperties : IJsonModel<SftpServerLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SftpServerLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal SftpServerLinkedServiceTypeProperties()

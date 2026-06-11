@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Phoenix server linked service properties. </summary>
-    public partial class PhoenixLinkedServiceTypeProperties : IJsonModel<PhoenixLinkedServiceTypeProperties>
+    internal partial class PhoenixLinkedServiceTypeProperties : IJsonModel<PhoenixLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="PhoenixLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal PhoenixLinkedServiceTypeProperties()

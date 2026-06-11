@@ -8,23 +8,18 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Excel dataset properties. </summary>
-    public partial class ExcelDatasetTypeProperties
+    internal partial class ExcelDatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExcelDatasetTypeProperties"/>. </summary>
         /// <param name="dataLocation"> The location of the excel storage. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataLocation"/> is null. </exception>
         public ExcelDatasetTypeProperties(DatasetLocation dataLocation)
         {
-            Argument.AssertNotNull(dataLocation, nameof(dataLocation));
-
             DataLocation = dataLocation;
         }
 

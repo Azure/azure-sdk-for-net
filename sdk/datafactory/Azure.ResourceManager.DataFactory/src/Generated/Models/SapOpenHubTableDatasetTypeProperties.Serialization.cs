@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Sap Business Warehouse Open Hub Destination Table properties. </summary>
-    public partial class SapOpenHubTableDatasetTypeProperties : IJsonModel<SapOpenHubTableDatasetTypeProperties>
+    internal partial class SapOpenHubTableDatasetTypeProperties : IJsonModel<SapOpenHubTableDatasetTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SapOpenHubTableDatasetTypeProperties"/> for deserialization. </summary>
         internal SapOpenHubTableDatasetTypeProperties()

@@ -10,8 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Unknown variant of ControlActivity. </summary>
-    public partial class UnknownControlActivity : ControlActivity
+    internal partial class UnknownControlActivity : ControlActivity
     {
         /// <summary> Initializes a new instance of <see cref="UnknownControlActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>

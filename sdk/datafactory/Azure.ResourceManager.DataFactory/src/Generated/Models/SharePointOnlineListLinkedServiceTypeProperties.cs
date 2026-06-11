@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> SharePoint Online List linked service properties. </summary>
-    public partial class SharePointOnlineListLinkedServiceTypeProperties
+    internal partial class SharePointOnlineListLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,13 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="siteUri"> The URL of the SharePoint Online site. For example, https://contoso.sharepoint.com/sites/siteName. Type: string (or Expression with resultType string). </param>
         /// <param name="tenantId"> The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteUri"/>, <paramref name="tenantId"/> or <paramref name="servicePrincipalId"/> is null. </exception>
         public SharePointOnlineListLinkedServiceTypeProperties(DataFactoryElement<string> siteUri, DataFactoryElement<string> tenantId, DataFactoryElement<string> servicePrincipalId)
         {
-            Argument.AssertNotNull(siteUri, nameof(siteUri));
-            Argument.AssertNotNull(tenantId, nameof(tenantId));
-            Argument.AssertNotNull(servicePrincipalId, nameof(servicePrincipalId));
-
             SiteUri = siteUri;
             TenantId = tenantId;
             ServicePrincipalId = servicePrincipalId;

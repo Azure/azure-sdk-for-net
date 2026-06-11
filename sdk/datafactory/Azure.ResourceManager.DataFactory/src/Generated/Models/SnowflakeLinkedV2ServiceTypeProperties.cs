@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Snowflake linked service properties. </summary>
-    public partial class SnowflakeLinkedV2ServiceTypeProperties
+    internal partial class SnowflakeLinkedV2ServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,13 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="accountIdentifier"> The account identifier of your Snowflake account, e.g. xy12345.east-us-2.azure. </param>
         /// <param name="database"> The name of the Snowflake database. </param>
         /// <param name="warehouse"> The name of the Snowflake warehouse. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountIdentifier"/>, <paramref name="database"/> or <paramref name="warehouse"/> is null. </exception>
         public SnowflakeLinkedV2ServiceTypeProperties(DataFactoryElement<string> accountIdentifier, DataFactoryElement<string> database, DataFactoryElement<string> warehouse)
         {
-            Argument.AssertNotNull(accountIdentifier, nameof(accountIdentifier));
-            Argument.AssertNotNull(database, nameof(database));
-            Argument.AssertNotNull(warehouse, nameof(warehouse));
-
             AccountIdentifier = accountIdentifier;
             Database = database;
             Warehouse = warehouse;

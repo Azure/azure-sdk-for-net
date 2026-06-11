@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Zendesk linked service type properties. </summary>
-    public partial class ZendeskLinkedServiceTypeProperties : IJsonModel<ZendeskLinkedServiceTypeProperties>
+    internal partial class ZendeskLinkedServiceTypeProperties : IJsonModel<ZendeskLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ZendeskLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal ZendeskLinkedServiceTypeProperties()

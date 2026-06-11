@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Cmdkey command custom setup type properties. </summary>
-    public partial class CmdkeySetupTypeProperties : IJsonModel<CmdkeySetupTypeProperties>
+    internal partial class CmdkeySetupTypeProperties : IJsonModel<CmdkeySetupTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="CmdkeySetupTypeProperties"/> for deserialization. </summary>
         internal CmdkeySetupTypeProperties()

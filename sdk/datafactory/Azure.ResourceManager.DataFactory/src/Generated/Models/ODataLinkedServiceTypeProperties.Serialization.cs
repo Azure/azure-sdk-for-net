@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> OData linked service properties. </summary>
-    public partial class ODataLinkedServiceTypeProperties : IJsonModel<ODataLinkedServiceTypeProperties>
+    internal partial class ODataLinkedServiceTypeProperties : IJsonModel<ODataLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="ODataLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal ODataLinkedServiceTypeProperties()

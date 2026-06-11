@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Presto server linked service properties. </summary>
-    public partial class PrestoLinkedServiceTypeProperties
+    internal partial class PrestoLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,12 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="host"> The IP address or host name of the Presto server. (i.e. 192.168.222.160). </param>
         /// <param name="catalog"> The catalog context for all request against the server. </param>
         /// <param name="authenticationType"> The authentication mechanism used to connect to the Presto server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="catalog"/> is null. </exception>
         public PrestoLinkedServiceTypeProperties(DataFactoryElement<string> host, DataFactoryElement<string> catalog, PrestoAuthenticationType authenticationType)
         {
-            Argument.AssertNotNull(host, nameof(host));
-            Argument.AssertNotNull(catalog, nameof(catalog));
-
             Host = host;
             Catalog = catalog;
             AuthenticationType = authenticationType;

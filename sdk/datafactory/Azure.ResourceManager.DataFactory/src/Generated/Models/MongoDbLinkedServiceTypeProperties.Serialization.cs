@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> MongoDB linked service properties. </summary>
-    public partial class MongoDbLinkedServiceTypeProperties : IJsonModel<MongoDbLinkedServiceTypeProperties>
+    internal partial class MongoDbLinkedServiceTypeProperties : IJsonModel<MongoDbLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="MongoDbLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal MongoDbLinkedServiceTypeProperties()

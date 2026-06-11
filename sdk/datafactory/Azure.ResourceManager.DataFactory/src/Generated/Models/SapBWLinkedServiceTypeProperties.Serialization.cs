@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Properties specific to this linked service type. </summary>
-    public partial class SapBWLinkedServiceTypeProperties : IJsonModel<SapBWLinkedServiceTypeProperties>
+    internal partial class SapBWLinkedServiceTypeProperties : IJsonModel<SapBWLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="SapBWLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal SapBWLinkedServiceTypeProperties()

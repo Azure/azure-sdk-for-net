@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> OData dataset properties. </summary>
-    public partial class ODataResourceDatasetTypeProperties : IJsonModel<ODataResourceDatasetTypeProperties>
+    internal partial class ODataResourceDatasetTypeProperties : IJsonModel<ODataResourceDatasetTypeProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

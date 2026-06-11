@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Amazon Redshift linked service properties. </summary>
-    public partial class AmazonRedshiftLinkedServiceTypeProperties : IJsonModel<AmazonRedshiftLinkedServiceTypeProperties>
+    internal partial class AmazonRedshiftLinkedServiceTypeProperties : IJsonModel<AmazonRedshiftLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AmazonRedshiftLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal AmazonRedshiftLinkedServiceTypeProperties()

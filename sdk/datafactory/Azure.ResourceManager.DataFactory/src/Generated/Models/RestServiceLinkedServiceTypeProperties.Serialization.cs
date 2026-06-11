@@ -14,8 +14,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Rest Service linked service properties. </summary>
-    public partial class RestServiceLinkedServiceTypeProperties : IJsonModel<RestServiceLinkedServiceTypeProperties>
+    internal partial class RestServiceLinkedServiceTypeProperties : IJsonModel<RestServiceLinkedServiceTypeProperties>
     {
         /// <summary> Initializes a new instance of <see cref="RestServiceLinkedServiceTypeProperties"/> for deserialization. </summary>
         internal RestServiceLinkedServiceTypeProperties()

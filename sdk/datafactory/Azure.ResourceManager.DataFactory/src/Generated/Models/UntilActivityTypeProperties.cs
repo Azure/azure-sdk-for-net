@@ -13,8 +13,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Until activity properties. </summary>
-    public partial class UntilActivityTypeProperties
+    internal partial class UntilActivityTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,12 +21,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="UntilActivityTypeProperties"/>. </summary>
         /// <param name="expression"> An expression that would evaluate to Boolean. The loop will continue until this expression evaluates to true. </param>
         /// <param name="activities"> List of activities to execute. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="expression"/> or <paramref name="activities"/> is null. </exception>
         public UntilActivityTypeProperties(DataFactoryExpression expression, IEnumerable<PipelineActivity> activities)
         {
-            Argument.AssertNotNull(expression, nameof(expression));
-            Argument.AssertNotNull(activities, nameof(activities));
-
             Expression = expression;
             Activities = activities.ToList();
         }

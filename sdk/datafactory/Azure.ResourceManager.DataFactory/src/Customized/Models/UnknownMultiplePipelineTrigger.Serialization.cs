@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     // local name. The body is otherwise identical to the generated output.
     // TODO: remove once the generator emits a consistent additional-properties local name (#58691).
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("DeserializeUnknownMultiplePipelineTrigger", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
-    public partial class UnknownMultiplePipelineTrigger
+    internal partial class UnknownMultiplePipelineTrigger
     {
         internal static UnknownMultiplePipelineTrigger DeserializeUnknownMultiplePipelineTrigger(JsonElement element, ModelReaderWriterOptions options)
         {

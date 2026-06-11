@@ -12,8 +12,7 @@ using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Unknown variant of TabularSource. </summary>
-    public partial class UnknownTabularSource : TabularSource, IJsonModel<TabularSource>
+    internal partial class UnknownTabularSource : TabularSource, IJsonModel<TabularSource>
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTabularSource"/> for deserialization. </summary>
         internal UnknownTabularSource()

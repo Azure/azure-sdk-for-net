@@ -8,12 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Office365 linked service properties. </summary>
-    public partial class Office365LinkedServiceTypeProperties
+    internal partial class Office365LinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,13 +20,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="office365TenantId"> Azure tenant ID to which the Office 365 account belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalTenantId"> Specify the tenant information under which your Azure AD web application resides. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="office365TenantId"/>, <paramref name="servicePrincipalTenantId"/> or <paramref name="servicePrincipalId"/> is null. </exception>
         public Office365LinkedServiceTypeProperties(DataFactoryElement<string> office365TenantId, DataFactoryElement<string> servicePrincipalTenantId, DataFactoryElement<string> servicePrincipalId)
         {
-            Argument.AssertNotNull(office365TenantId, nameof(office365TenantId));
-            Argument.AssertNotNull(servicePrincipalTenantId, nameof(servicePrincipalTenantId));
-            Argument.AssertNotNull(servicePrincipalId, nameof(servicePrincipalId));
-
             Office365TenantId = office365TenantId;
             ServicePrincipalTenantId = servicePrincipalTenantId;
             ServicePrincipalId = servicePrincipalId;
