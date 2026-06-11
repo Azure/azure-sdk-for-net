@@ -209,7 +209,6 @@ stages:
                        ne(variables['Skip.PublishDocs'], 'true'), 
                        ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr')
                     )
-                  dependsOn: PublishPackage
 
                   pool:
                     name: $(LINUXPOOL)
