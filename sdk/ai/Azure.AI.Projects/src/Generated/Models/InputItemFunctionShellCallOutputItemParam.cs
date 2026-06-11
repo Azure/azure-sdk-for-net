@@ -10,7 +10,6 @@ using System.Linq;
 namespace Azure.AI.Projects
 {
     /// <summary> Shell tool call output. </summary>
-    [Experimental("AAIP001")]
     internal partial class InputItemFunctionShellCallOutputItemParam : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemFunctionShellCallOutputItemParam"/>. </summary>

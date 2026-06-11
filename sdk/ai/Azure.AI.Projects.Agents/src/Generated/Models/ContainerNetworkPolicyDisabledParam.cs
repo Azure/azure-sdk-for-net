@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace OpenAI
 {
     /// <summary> The ContainerNetworkPolicyDisabledParam. </summary>
-    [Experimental("AAIP001")]
     internal partial class ContainerNetworkPolicyDisabledParam : ContainerNetworkPolicyParam
     {
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkPolicyDisabledParam"/>. </summary>

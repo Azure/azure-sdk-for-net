@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Memory item kind. </summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct MemoryItemKind : IEquatable<MemoryItemKind>
     {
         private readonly string _value;

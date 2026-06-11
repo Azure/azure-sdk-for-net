@@ -43,7 +43,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
 
-        [Experimental("AAIP001")]
         internal enum ServiceVersion
         {
             /// <summary> Microsoft Foundry API version v1. </summary>

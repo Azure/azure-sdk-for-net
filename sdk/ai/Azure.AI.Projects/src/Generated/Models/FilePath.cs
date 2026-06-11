@@ -10,7 +10,6 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> File path. </summary>
-    [Experimental("AAIP001")]
     internal partial class FilePath : InternalAnnotation
     {
         /// <summary> Initializes a new instance of <see cref="FilePath"/>. </summary>

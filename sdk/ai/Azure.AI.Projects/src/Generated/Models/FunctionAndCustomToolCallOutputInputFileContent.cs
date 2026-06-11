@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> Input file. </summary>
-    [Experimental("AAIP001")]
     internal partial class FunctionAndCustomToolCallOutputInputFileContent : FunctionAndCustomToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputFileContent"/>. </summary>

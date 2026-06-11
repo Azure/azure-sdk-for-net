@@ -11,7 +11,6 @@ using System.Linq;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Multipart request body for creating a skill version from files. Accepts either a single zip file or multiple individual skill files (directory upload). For zip uploads, the server extracts and validates contents. For directory uploads, files are validated as-is. </summary>
-    [Experimental("AAIP001")]
     internal partial class CreateSkillVersionFromFilesBody
     {
         /// <summary> Initializes a new instance of <see cref="CreateSkillVersionFromFilesBody"/>. </summary>

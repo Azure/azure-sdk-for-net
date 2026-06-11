@@ -11,7 +11,6 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> Computer tool call. </summary>
-    [Experimental("AAIP001")]
     internal partial class InputItemComputerToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemComputerToolCall"/>. </summary>

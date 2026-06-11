@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> A pending safety check for the computer call. </summary>
-    [Experimental("AAIP001")]
     internal partial class ComputerCallSafetyCheckParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

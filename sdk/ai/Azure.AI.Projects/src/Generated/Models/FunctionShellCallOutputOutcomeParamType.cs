@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct FunctionShellCallOutputOutcomeParamType : IEquatable<FunctionShellCallOutputOutcomeParamType>
     {
         private readonly string _value;

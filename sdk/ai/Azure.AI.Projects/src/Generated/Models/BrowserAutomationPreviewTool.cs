@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
-    [Experimental("AAIP001")]
     internal partial class BrowserAutomationPreviewTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewTool"/>. </summary>

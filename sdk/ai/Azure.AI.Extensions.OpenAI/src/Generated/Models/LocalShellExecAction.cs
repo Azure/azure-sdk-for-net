@@ -10,7 +10,6 @@ using System.Linq;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Local shell exec action. </summary>
-    [Experimental("AAIP001")]
     internal partial class LocalShellExecAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> A web search configuration for bing custom search. </summary>
-    [Experimental("AAIP001")]
     internal partial class WebSearchConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

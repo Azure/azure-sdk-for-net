@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct FunctionShellCallOutputOutcomeType : IEquatable<FunctionShellCallOutputOutcomeType>
     {
         private readonly string _value;

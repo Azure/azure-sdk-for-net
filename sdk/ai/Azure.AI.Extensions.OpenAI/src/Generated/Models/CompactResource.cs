@@ -10,7 +10,6 @@ using System.Linq;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The compacted response object. </summary>
-    [Experimental("AAIP001")]
     internal partial class CompactResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

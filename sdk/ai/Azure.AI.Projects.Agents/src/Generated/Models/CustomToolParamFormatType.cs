@@ -10,7 +10,6 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary></summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct CustomToolParamFormatType : IEquatable<CustomToolParamFormatType>
     {
         private readonly string _value;

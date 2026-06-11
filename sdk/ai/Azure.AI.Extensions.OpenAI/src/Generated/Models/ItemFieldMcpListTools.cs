@@ -11,7 +11,6 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> MCP list tools. </summary>
-    [Experimental("AAIP001")]
     internal partial class ItemFieldMcpListTools : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldMcpListTools"/>. </summary>

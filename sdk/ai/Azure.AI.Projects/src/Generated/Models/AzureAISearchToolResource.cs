@@ -10,7 +10,6 @@ using System.Linq;
 namespace Azure.AI.Projects
 {
     /// <summary> A set of index resources used by the `azure_ai_search` tool. </summary>
-    [Experimental("AAIP001")]
     internal partial class AzureAISearchToolResource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

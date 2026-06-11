@@ -19,7 +19,6 @@ namespace Azure.AI.Extensions.OpenAI
     /// ensures the message the model generates is valid JSON. Using `json_schema`
     /// is preferred for models that support it.
     /// </summary>
-    [Experimental("AAIP001")]
     internal partial class TextResponseFormatConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

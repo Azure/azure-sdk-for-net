@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A content filter detection result that includes a reason description. </summary>
-    [Experimental("AAIP001")]
     internal partial class AzureContentFilterDetectionWithReasonResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

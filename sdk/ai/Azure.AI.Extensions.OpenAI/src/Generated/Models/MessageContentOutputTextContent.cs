@@ -11,7 +11,6 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Output text. </summary>
-    [Experimental("AAIP001")]
     internal partial class MessageContentOutputTextContent : InternalMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentOutputTextContent"/>. </summary>

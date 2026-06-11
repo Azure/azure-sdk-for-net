@@ -10,7 +10,6 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A structured output that can be produced by the agent. </summary>
-    [Experimental("AAIP001")]
     internal partial class StructuredOutputDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

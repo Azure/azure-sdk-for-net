@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> JSON object. </summary>
-    [Experimental("AAIP001")]
     internal partial class TextResponseFormatConfigurationResponseFormatJsonObject : TextResponseFormatConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="TextResponseFormatConfigurationResponseFormatJsonObject"/>. </summary>

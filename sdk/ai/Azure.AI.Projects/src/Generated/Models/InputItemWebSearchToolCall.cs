@@ -11,7 +11,6 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> Web search tool call. </summary>
-    [Experimental("AAIP001")]
     internal partial class InputItemWebSearchToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemWebSearchToolCall"/>. </summary>

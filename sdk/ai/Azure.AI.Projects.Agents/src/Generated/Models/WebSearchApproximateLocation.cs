@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace OpenAI
 {
     /// <summary> Web search approximate location. </summary>
-    [Experimental("AAIP001")]
     internal partial class WebSearchApproximateLocation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

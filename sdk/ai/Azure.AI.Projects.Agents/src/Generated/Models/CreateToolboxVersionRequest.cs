@@ -10,7 +10,6 @@ using System.Linq;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The CreateToolboxVersionRequest. </summary>
-    [Experimental("AAIP001")]
     internal partial class CreateToolboxVersionRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

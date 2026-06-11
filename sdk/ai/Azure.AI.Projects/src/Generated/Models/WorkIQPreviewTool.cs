@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> A WorkIQ server-side tool. </summary>
-    [Experimental("AAIP001")]
     internal partial class WorkIQPreviewTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="WorkIQPreviewTool"/>. </summary>

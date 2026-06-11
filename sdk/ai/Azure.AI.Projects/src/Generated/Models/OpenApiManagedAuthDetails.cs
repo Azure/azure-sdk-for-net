@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> Security details for OpenApi managed_identity authentication. </summary>
-    [Experimental("AAIP001")]
     internal partial class OpenApiManagedAuthDetails : OpenApiAuthDetails
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiManagedAuthDetails"/>. </summary>

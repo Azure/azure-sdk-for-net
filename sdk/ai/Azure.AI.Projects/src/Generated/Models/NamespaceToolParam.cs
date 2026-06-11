@@ -11,7 +11,6 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Namespace. </summary>
-    [Experimental("AAIP001")]
     internal partial class NamespaceToolParam : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="NamespaceToolParam"/>. </summary>

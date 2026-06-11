@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct AgentEndpointAuthorizationSchemeType : IEquatable<AgentEndpointAuthorizationSchemeType>
     {
         private readonly string _value;

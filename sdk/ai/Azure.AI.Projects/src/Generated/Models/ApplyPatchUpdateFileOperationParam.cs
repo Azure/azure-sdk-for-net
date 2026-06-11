@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> Apply patch update file operation. </summary>
-    [Experimental("AAIP001")]
     internal partial class ApplyPatchUpdateFileOperationParam : ApplyPatchOperationParam
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchUpdateFileOperationParam"/>. </summary>

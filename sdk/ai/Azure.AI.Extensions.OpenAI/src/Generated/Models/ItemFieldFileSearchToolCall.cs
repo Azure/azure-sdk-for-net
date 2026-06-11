@@ -10,7 +10,6 @@ using System.Linq;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> File search tool call. </summary>
-    [Experimental("AAIP001")]
     internal partial class ItemFieldFileSearchToolCall : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldFileSearchToolCall"/>. </summary>

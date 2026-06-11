@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace OpenAI
 {
     /// <summary> Specific apply patch tool choice. </summary>
-    [Experimental("AAIP001")]
     internal partial class SpecificApplyPatchParam : InternalToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="SpecificApplyPatchParam"/>. </summary>

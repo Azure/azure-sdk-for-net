@@ -11,7 +11,6 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> MCP list tools. </summary>
-    [Experimental("AAIP001")]
     internal partial class InputItemMcpListTools : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemMcpListTools"/>. </summary>

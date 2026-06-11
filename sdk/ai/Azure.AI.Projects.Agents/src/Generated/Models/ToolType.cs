@@ -10,7 +10,6 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary></summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct ToolType : IEquatable<ToolType>
     {
         private readonly string _value;

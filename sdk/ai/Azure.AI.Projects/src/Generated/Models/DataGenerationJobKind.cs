@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> The supported data generation job types. </summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct DataGenerationJobKind : IEquatable<DataGenerationJobKind>
     {
         private readonly string _value;

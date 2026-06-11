@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The ResponseUsageOutputTokensDetails. </summary>
-    [Experimental("AAIP001")]
     internal partial class ResponseUsageOutputTokensDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

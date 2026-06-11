@@ -11,7 +11,6 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Code interpreter tool call. </summary>
-    [Experimental("AAIP001")]
     internal partial class ItemFieldCodeInterpreterToolCall : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldCodeInterpreterToolCall"/>. </summary>

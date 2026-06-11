@@ -10,7 +10,6 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for an openapi function. </summary>
-    [Experimental("AAIP001")]
     internal partial class OpenApiFunctionDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

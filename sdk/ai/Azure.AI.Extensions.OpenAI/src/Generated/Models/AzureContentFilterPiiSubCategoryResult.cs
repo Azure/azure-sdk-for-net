@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Result details for an individual PII subcategory. </summary>
-    [Experimental("AAIP001")]
     internal partial class AzureContentFilterPiiSubCategoryResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

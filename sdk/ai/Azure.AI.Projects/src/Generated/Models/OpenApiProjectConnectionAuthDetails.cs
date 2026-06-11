@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> Security details for OpenApi project connection authentication. </summary>
-    [Experimental("AAIP001")]
     internal partial class OpenApiProjectConnectionAuthDetails : OpenApiAuthDetails
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiProjectConnectionAuthDetails"/>. </summary>

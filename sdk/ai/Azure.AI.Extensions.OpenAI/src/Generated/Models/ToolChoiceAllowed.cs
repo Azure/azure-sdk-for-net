@@ -11,7 +11,6 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Allowed tools. </summary>
-    [Experimental("AAIP001")]
     internal partial class ToolChoiceAllowed : InternalToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceAllowed"/>. </summary>

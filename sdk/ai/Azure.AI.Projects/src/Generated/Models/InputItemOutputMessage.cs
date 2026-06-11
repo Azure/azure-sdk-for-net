@@ -10,7 +10,6 @@ using System.Linq;
 namespace Azure.AI.Projects
 {
     /// <summary> Output message. </summary>
-    [Experimental("AAIP001")]
     internal partial class InputItemOutputMessage : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemOutputMessage"/>. </summary>

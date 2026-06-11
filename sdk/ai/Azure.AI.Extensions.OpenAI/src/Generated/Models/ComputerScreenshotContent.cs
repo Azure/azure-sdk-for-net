@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Computer screenshot. </summary>
-    [Experimental("AAIP001")]
     internal partial class ComputerScreenshotContent : InternalMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="ComputerScreenshotContent"/>. </summary>

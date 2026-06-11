@@ -11,7 +11,6 @@ using Azure.AI.Projects;
 namespace Azure.Core
 {
     /// <summary> Paged collection of Index items. </summary>
-    [Experimental("AAIP001")]
     internal partial class PagedIndex
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

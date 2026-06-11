@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> The definition of Azure function. </summary>
-    [Experimental("AAIP001")]
     internal partial class AzureFunctionDefinition
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

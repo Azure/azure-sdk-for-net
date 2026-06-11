@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> A tool for capturing structured outputs. </summary>
-    [Experimental("AAIP001")]
     internal partial class CaptureStructuredOutputsTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/>. </summary>

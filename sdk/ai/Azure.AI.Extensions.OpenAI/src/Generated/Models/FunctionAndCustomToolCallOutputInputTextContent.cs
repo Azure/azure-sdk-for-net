@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Input text. </summary>
-    [Experimental("AAIP001")]
     internal partial class FunctionAndCustomToolCallOutputInputTextContent : InternalFunctionAndCustomToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputTextContent"/>. </summary>

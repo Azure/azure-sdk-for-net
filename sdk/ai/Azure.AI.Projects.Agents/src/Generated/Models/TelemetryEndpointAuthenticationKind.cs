@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> The type of authentication for a telemetry endpoint. </summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct TelemetryEndpointAuthenticationKind : IEquatable<TelemetryEndpointAuthenticationKind>
     {
         private readonly string _value;

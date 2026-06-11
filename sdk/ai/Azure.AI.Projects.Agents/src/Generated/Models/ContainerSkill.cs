@@ -12,7 +12,6 @@ namespace OpenAI
     /// The ContainerSkill.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SkillReferenceParam"/> and <see cref="InlineSkillParam"/>.
     /// </summary>
-    [Experimental("AAIP001")]
     internal abstract partial class ContainerSkill
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

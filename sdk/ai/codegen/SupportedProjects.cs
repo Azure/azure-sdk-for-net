@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text.Json.Serialization;
 using System.Threading;
 
 namespace Extensions.Plugin;
@@ -19,9 +18,9 @@ internal class SupportedPackages
         _stableTypes = new(LoadStableTypes(_name));
     }
 
-    private static SupportedPackages? s_cahcedAzureAIProjects;
-    private static SupportedPackages? s_cahcedAzureAIExtensionsOpenAI;
-    private static SupportedPackages? s_cahcedAzureAIProjectsAgents;
+    private static SupportedPackages s_cahcedAzureAIProjects;
+    private static SupportedPackages s_cahcedAzureAIExtensionsOpenAI;
+    private static SupportedPackages s_cahcedAzureAIProjectsAgents;
 
     public static SupportedPackages AzureAIProjects { get => Volatile.Read(ref s_cahcedAzureAIProjects) ?? Interlocked.CompareExchange(ref s_cahcedAzureAIProjects, new SupportedPackages("Azure.AI.Projects"), null) ?? s_cahcedAzureAIProjects; }
     public static SupportedPackages AzureAIProjectsAgents { get => Volatile.Read(ref s_cahcedAzureAIExtensionsOpenAI) ?? Interlocked.CompareExchange(ref s_cahcedAzureAIExtensionsOpenAI, new SupportedPackages("Azure.AI.Extensions.OpenAI"), null) ?? s_cahcedAzureAIExtensionsOpenAI; }
@@ -50,7 +49,7 @@ internal class SupportedPackages
         using StreamReader reader = new(stream);
         var stableTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-        string? line;
+        string line;
         bool inSection = false;
         while ((line = reader.ReadLine()) != null)
         {

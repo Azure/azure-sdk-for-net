@@ -11,7 +11,6 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> DoubleClick. </summary>
-    [Experimental("AAIP001")]
     internal partial class DoubleClickAction : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="DoubleClickAction"/>. </summary>

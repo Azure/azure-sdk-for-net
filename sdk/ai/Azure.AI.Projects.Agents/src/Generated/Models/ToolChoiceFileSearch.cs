@@ -12,7 +12,6 @@ namespace OpenAI
     /// Indicates that the model should use a built-in tool to generate a response.
     /// [Learn more about built-in tools](https://platform.openai.com/docs/guides/tools).
     /// </summary>
-    [Experimental("AAIP001")]
     internal partial class ToolChoiceFileSearch : InternalToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFileSearch"/>. </summary>

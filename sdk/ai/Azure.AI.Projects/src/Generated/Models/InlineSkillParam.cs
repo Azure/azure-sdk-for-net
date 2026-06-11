@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> The InlineSkillParam. </summary>
-    [Experimental("AAIP001")]
     internal partial class InlineSkillParam : ContainerSkill
     {
         /// <summary> Initializes a new instance of <see cref="InlineSkillParam"/>. </summary>

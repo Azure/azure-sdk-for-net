@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> Compaction item. </summary>
-    [Experimental("AAIP001")]
     internal partial class InputItemCompactionSummaryItemParam : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemCompactionSummaryItemParam"/>. </summary>

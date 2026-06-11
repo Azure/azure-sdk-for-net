@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> Artifact profile of the model. </summary>
-    [Experimental("AAIP001")]
     internal partial class ArtifactProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

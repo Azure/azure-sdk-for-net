@@ -11,7 +11,6 @@ using Azure.AI.Projects;
 namespace Azure.Core
 {
     /// <summary> Paged collection of DatasetVersion items. </summary>
-    [Experimental("AAIP001")]
     internal partial class PagedDatasetVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

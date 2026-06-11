@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -30,7 +28,7 @@ namespace Extensions.Plugin.Visitors
         private readonly HashSet<string> _attributedTypes = new(StringComparer.Ordinal);
 
         /// <inheritdoc />
-        protected override TypeProvider? VisitType(TypeProvider type)
+        protected override TypeProvider VisitType(TypeProvider type)
         {
             string fullName = $"{type.Type.Namespace}.{type.Name}";
             if ((type.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public)

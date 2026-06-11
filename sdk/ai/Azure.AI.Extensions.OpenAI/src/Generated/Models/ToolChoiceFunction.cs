@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Function tool. </summary>
-    [Experimental("AAIP001")]
     internal partial class ToolChoiceFunction : InternalToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunction"/>. </summary>

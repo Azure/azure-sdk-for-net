@@ -10,7 +10,6 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> Grammar format. </summary>
-    [Experimental("AAIP001")]
     internal partial class CustomGrammarFormatParam : CustomToolParamFormat
     {
         /// <summary> Initializes a new instance of <see cref="CustomGrammarFormatParam"/>. </summary>
