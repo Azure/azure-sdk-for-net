@@ -71,7 +71,7 @@ Common decorators: `@@clientName`, `@@alternateType`, `@@usage`, `@@markAsPageab
 
 SDK custom code goes in the package's existing customization folder (`src/Custom/`, `src/Customization/`, or `src/Customized/`). Use MCP tools for deterministic edits when available, then hand-write only remaining shim logic.
 
-Every customization file or significant custom member needs a root-cause comment explaining what generated differently and why SDK-side customization is required. Avoid vague comments like "for backward compatibility".
+Every customization file or significant custom member needs a root-cause comment explaining what generated differently and why SDK-side customization is required. Avoid vague comments like "for backward compatibility". Obsolete custom members do not need a separate justification comment when the `[Obsolete]` message already clearly explains the reason and replacement.
 
 Model factory compatibility overloads should delegate to generated public model-factory overloads. Do not construct generated models through internal constructors or private `Core` helpers just to preserve an old factory signature.
 

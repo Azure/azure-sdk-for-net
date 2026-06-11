@@ -48,6 +48,8 @@ Each customization file or significant customization block must include a commen
 - Is it a naming convention fix?
 - Is it adding backward-compatibility for a removed/changed API?
 
+Exception: obsolete custom members do not need a separate justification comment when the `[Obsolete]` message already clearly explains why the member exists and what replacement callers should use.
+
 **Bad** — no explanation:
 ```csharp
 [CodeGenSuppress("RedisData", typeof(ResourceIdentifier), typeof(string), ...)]
