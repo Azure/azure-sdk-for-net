@@ -26,10 +26,20 @@ namespace Azure.ResourceManager.Compute
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<VirtualMachineScaleSetResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, CancellationToken cancellationToken)
-            => await UpdateAsync(waitUntil, patch, null, null, cancellationToken).ConfigureAwait(false);
+            => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<VirtualMachineScaleSetResource> Update(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, CancellationToken cancellationToken)
-            => Update(waitUntil, patch, null, null, cancellationToken);
+            => Update(waitUntil, patch, null, cancellationToken);
+
+        /// <summary> Backward-compatibility shim that accepts <c>ifMatch</c> and <c>ifNoneMatch</c> as positional string parameters; new code should use the <see cref="MatchConditions"/> overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<VirtualMachineScaleSetResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => await UpdateAsync(waitUntil, patch, ConditionalRequestExtensions.BuildMatchConditions(ifMatch, ifNoneMatch), cancellationToken).ConfigureAwait(false);
+
+        /// <summary> Backward-compatibility shim that accepts <c>ifMatch</c> and <c>ifNoneMatch</c> as positional string parameters; new code should use the <see cref="MatchConditions"/> overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<VirtualMachineScaleSetResource> Update(WaitUntil waitUntil, VirtualMachineScaleSetPatch patch, string ifMatch, string ifNoneMatch, CancellationToken cancellationToken = default)
+            => Update(waitUntil, patch, ConditionalRequestExtensions.BuildMatchConditions(ifMatch, ifNoneMatch), cancellationToken);
     }
 }

@@ -658,7 +658,7 @@ NetworkInterfaceResource nic = nicOperation.Value;
 
 VirtualMachineData vmData = new VirtualMachineData(location)
 {
-    AvailabilitySet = new WritableSubResource() { Id = availabilitySet.Id },
+    AvailabilitySetId = availabilitySet.Id,
     NetworkProfile = new VirtualMachineNetworkProfile
     {
         NetworkInterfaces = { new VirtualMachineNetworkInterfaceReference() { Id = nic.Id } }

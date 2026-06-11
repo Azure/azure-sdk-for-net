@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The configuration parameters used for operation recovery settings on a virtual machine scale set. </summary>
     public partial class OperationRecoverySettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OperationRecoverySettings"/>. </summary>
         public OperationRecoverySettings()
@@ -54,53 +25,71 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="restartRecoveryPolicy"> The configuration parameters used for restart recovery policy. </param>
         /// <param name="startRecoveryPolicy"> The configuration parameters used for start recovery policy. </param>
         /// <param name="reimageRecoveryPolicy"> The configuration parameters used for reimage recovery policy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationRecoverySettings(RestartRecoveryPolicy restartRecoveryPolicy, StartRecoveryPolicy startRecoveryPolicy, ReimageRecoveryPolicy reimageRecoveryPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OperationRecoverySettings(RestartRecoveryPolicy restartRecoveryPolicy, StartRecoveryPolicy startRecoveryPolicy, ReimageRecoveryPolicy reimageRecoveryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RestartRecoveryPolicy = restartRecoveryPolicy;
             StartRecoveryPolicy = startRecoveryPolicy;
             ReimageRecoveryPolicy = reimageRecoveryPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The configuration parameters used for restart recovery policy. </summary>
         internal RestartRecoveryPolicy RestartRecoveryPolicy { get; set; }
+
+        /// <summary> The configuration parameters used for start recovery policy. </summary>
+        internal StartRecoveryPolicy StartRecoveryPolicy { get; set; }
+
+        /// <summary> The configuration parameters used for reimage recovery policy. </summary>
+        internal ReimageRecoveryPolicy ReimageRecoveryPolicy { get; set; }
+
         /// <summary> Specifies whether restart recovery should be enabled. The default value is false. </summary>
         public bool? RestartRecoveryPolicyEnabled
         {
-            get => RestartRecoveryPolicy is null ? default : RestartRecoveryPolicy.Enabled;
+            get
+            {
+                return RestartRecoveryPolicy is null ? default : RestartRecoveryPolicy.Enabled;
+            }
             set
             {
                 if (RestartRecoveryPolicy is null)
+                {
                     RestartRecoveryPolicy = new RestartRecoveryPolicy();
+                }
                 RestartRecoveryPolicy.Enabled = value;
             }
         }
 
-        /// <summary> The configuration parameters used for start recovery policy. </summary>
-        internal StartRecoveryPolicy StartRecoveryPolicy { get; set; }
         /// <summary> Specifies whether start recovery should be enabled. The default value is false. </summary>
         public bool? StartRecoveryPolicyEnabled
         {
-            get => StartRecoveryPolicy is null ? default : StartRecoveryPolicy.Enabled;
+            get
+            {
+                return StartRecoveryPolicy is null ? default : StartRecoveryPolicy.Enabled;
+            }
             set
             {
                 if (StartRecoveryPolicy is null)
+                {
                     StartRecoveryPolicy = new StartRecoveryPolicy();
+                }
                 StartRecoveryPolicy.Enabled = value;
             }
         }
 
-        /// <summary> The configuration parameters used for reimage recovery policy. </summary>
-        internal ReimageRecoveryPolicy ReimageRecoveryPolicy { get; set; }
         /// <summary> Specifies whether reimage recovery should be enabled. The default value is false. </summary>
         public bool? ReimageRecoveryPolicyEnabled
         {
-            get => ReimageRecoveryPolicy is null ? default : ReimageRecoveryPolicy.Enabled;
+            get
+            {
+                return ReimageRecoveryPolicy is null ? default : ReimageRecoveryPolicy.Enabled;
+            }
             set
             {
                 if (ReimageRecoveryPolicy is null)
+                {
                     ReimageRecoveryPolicy = new ReimageRecoveryPolicy();
+                }
                 ReimageRecoveryPolicy.Enabled = value;
             }
         }

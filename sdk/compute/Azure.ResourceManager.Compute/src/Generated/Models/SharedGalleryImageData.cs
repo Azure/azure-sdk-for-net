@@ -18,76 +18,119 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Initializes a new instance of <see cref="SharedGalleryImageData"/>. </summary>
         internal SharedGalleryImageData()
         {
-            Features = new ChangeTrackingList<GalleryImageFeature>();
-            ArtifactTags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SharedGalleryImageData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="uniqueId"> The unique id of this shared gallery. </param>
-        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: **Windows,** **Linux.**. </param>
-        /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </param>
-        /// <param name="endOfLifeOn"> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="identifier"> This is the gallery image definition identifier. </param>
-        /// <param name="recommended"> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </param>
-        /// <param name="disallowed"> Describes the disallowed disk types. </param>
-        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
-        /// <param name="features"> A list of gallery image features. </param>
-        /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
-        /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
-        /// <param name="privacyStatementUri"> Privacy statement uri for the current community gallery image. </param>
-        /// <param name="eula"> End-user license agreement for the current community gallery image. </param>
-        /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
-        internal SharedGalleryImageData(string name, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula, IReadOnlyDictionary<string, string> artifactTags) : base(name, location, serializedAdditionalRawData, uniqueId)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="galleryIdentifier"> The identifier information of shared gallery. </param>
+        /// <param name="properties"> Describes the properties of a gallery image definition. </param>
+        internal SharedGalleryImageData(string name, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier galleryIdentifier, SharedGalleryImageProperties properties) : base(name, location, additionalBinaryDataProperties, galleryIdentifier)
         {
-            OSType = osType;
-            OSState = osState;
-            EndOfLifeOn = endOfLifeOn;
-            Identifier = identifier;
-            Recommended = recommended;
-            Disallowed = disallowed;
-            HyperVGeneration = hyperVGeneration;
-            Features = features;
-            PurchasePlan = purchasePlan;
-            Architecture = architecture;
-            PrivacyStatementUri = privacyStatementUri;
-            Eula = eula;
-            ArtifactTags = artifactTags;
+            Properties = properties;
         }
 
-        /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: **Windows,** **Linux.**. </summary>
-        public SupportedOperatingSystemType? OSType { get; }
-        /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
-        public OperatingSystemStateType? OSState { get; }
-        /// <summary> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
-        public DateTimeOffset? EndOfLifeOn { get; }
-        /// <summary> This is the gallery image definition identifier. </summary>
-        public GalleryImageIdentifier Identifier { get; }
-        /// <summary> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </summary>
-        public RecommendedMachineConfiguration Recommended { get; }
-        /// <summary> Describes the disallowed disk types. </summary>
-        internal Disallowed Disallowed { get; }
-        /// <summary> A list of disk types. </summary>
-        public IList<string> DisallowedDiskTypes
+        /// <summary> Describes the properties of a gallery image definition. </summary>
+        internal SharedGalleryImageProperties Properties { get; }
+
+        /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
+        public SupportedOperatingSystemType? OSType
         {
-            get => Disallowed?.DiskTypes;
+            get
+            {
+                return Properties is null ? default : Properties.OSType;
+            }
+        }
+
+        /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
+        public OperatingSystemStateType? OSState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSState;
+            }
+        }
+
+        /// <summary> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
+        public DateTimeOffset? EndOfLifeOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOfLifeOn;
+            }
+        }
+
+        /// <summary> This is the gallery image definition identifier. </summary>
+        public GalleryImageIdentifier ImageIdentifier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImageIdentifier;
+            }
+        }
+
+        /// <summary> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </summary>
+        public RecommendedMachineConfiguration Recommended
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Recommended;
+            }
         }
 
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
-        public HyperVGeneration? HyperVGeneration { get; }
-        /// <summary> A list of gallery image features. </summary>
-        public IReadOnlyList<GalleryImageFeature> Features { get; }
+        public HyperVGeneration? HyperVGeneration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HyperVGeneration;
+            }
+        }
+
         /// <summary> Describes the gallery image definition purchase plan. This is used by marketplace images. </summary>
-        public ImagePurchasePlan PurchasePlan { get; }
+        public ImagePurchasePlan PurchasePlan
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PurchasePlan;
+            }
+        }
+
         /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
-        public ArchitectureType? Architecture { get; }
+        public ArchitectureType? Architecture
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Architecture;
+            }
+        }
+
         /// <summary> Privacy statement uri for the current community gallery image. </summary>
-        public Uri PrivacyStatementUri { get; }
+        public Uri PrivacyStatementUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivacyStatementUri;
+            }
+        }
+
         /// <summary> End-user license agreement for the current community gallery image. </summary>
-        public string Eula { get; }
-        /// <summary> The artifact tags of a shared gallery resource. </summary>
-        public IReadOnlyDictionary<string, string> ArtifactTags { get; }
+        public string Eula
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Eula;
+            }
+        }
+
+        /// <summary> A list of disk types. </summary>
+        public IList<string> DisallowedDiskTypes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisallowedDiskTypes;
+            }
+        }
     }
 }

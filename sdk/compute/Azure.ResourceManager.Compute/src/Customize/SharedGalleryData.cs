@@ -5,10 +5,12 @@
 
 using System.ComponentModel;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Compute
 {
-    // we have this customization here to change its namespace to avoid breaking changes
+    // Backward compatibility: the previously shipped SDK exposed this data type in the root namespace.
+    // The generated TypeSpec model is otherwise placed under Models; CodeGenType keeps the public API shape.
     [CodeGenType("SharedGalleryData")]
     public partial class SharedGalleryData
     {

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -7,6 +7,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
+    // Backward compatibility: flatten ScheduledEventsTerminateNotificationProfile from ScheduledEventsProfile.
     public partial class VirtualMachinePatch
     {
         /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>

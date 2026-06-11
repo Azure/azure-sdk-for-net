@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> An enum describing the unit of usage measurement. </summary>
+    /// <summary></summary>
     public readonly partial struct ComputeUsageUnit : IEquatable<ComputeUsageUnit>
     {
         private readonly string _value;
+        /// <summary> The unit of measurement is a count. </summary>
+        private const string CountValue = "Count";
 
         /// <summary> Initializes a new instance of <see cref="ComputeUsageUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComputeUsageUnit(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CountValue = "Count";
-
-        /// <summary> Count. </summary>
+        /// <summary> The unit of measurement is a count. </summary>
         public static ComputeUsageUnit Count { get; } = new ComputeUsageUnit(CountValue);
+
         /// <summary> Determines if two <see cref="ComputeUsageUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeUsageUnit left, ComputeUsageUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeUsageUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeUsageUnit left, ComputeUsageUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeUsageUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeUsageUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeUsageUnit(string value) => new ComputeUsageUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeUsageUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeUsageUnit?(string value) => value == null ? null : new ComputeUsageUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeUsageUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeUsageUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

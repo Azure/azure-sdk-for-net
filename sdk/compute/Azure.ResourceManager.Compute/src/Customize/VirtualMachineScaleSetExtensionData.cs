@@ -6,25 +6,29 @@
 using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
-using System.Text;
-using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    // this piece of customized code adds back the ability to set name of this class in its constructor
-    public partial class VirtualMachineScaleSetExtensionData
+    // Backward compatibility: the previously shipped SDK exposed this type as a direct ResourceData-derived model.
+    // Without restoring the direct base type, VMSS extension inline request bodies no longer serialize the extension name.
+    public partial class VirtualMachineScaleSetExtensionData : ResourceData
     {
         /// <summary> Initializes a new instance of VmssExtensionData. </summary>
         /// <param name="name"> The name. </param>
+        // Backward compatibility: the previously shipped SDK exposed this name-only constructor.
+        // Without chaining to the ResourceData base constructor, the constructor cannot set the now read-only ResourceData.Name property.
         public VirtualMachineScaleSetExtensionData(string name) : base(default, name, default, default)
         {
-            // we should make sure that we call everything inside the no parameter constructor. Otherwise the list in this model is not initialized and we will get exceptions when serializing it.
-            ProvisionAfterExtensions = new ChangeTrackingList<string>();
         }
 
+        // Backward compatibility: the previously-shipped SDK exposed `ProtectedSettingsFromKeyVault` as a loosely-typed
+        // BinaryData property. The TypeSpec spec types it as `KeyVaultSecretReference`, which is now surfaced as the
+        // strongly-typed `KeyVaultProtectedSettings` (see G5 client.tsp clientName rename). This shim re-adds the
+        // BinaryData accessor by serializing/deserializing through the typed property to preserve binary compatibility.
         /// <summary>
-        /// The extensions protected settings that are passed by reference, and consumed from key vault
+        /// The extensions protected settings that are passed by reference, and consumed from key vault.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -57,7 +61,7 @@ namespace Azure.ResourceManager.Compute
         public BinaryData ProtectedSettingsFromKeyVault
         {
             get => KeyVaultProtectedSettings is null ? null : ((IJsonModel<KeyVaultSecretReference>)KeyVaultProtectedSettings).Write(ModelSerializationExtensions.WireOptions);
-            set => KeyVaultProtectedSettings = ModelReaderWriter.Read<KeyVaultSecretReference>(value, ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
+            set => KeyVaultProtectedSettings = value is null ? null : ModelReaderWriter.Read<KeyVaultSecretReference>(value, ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
         }
     }
 }

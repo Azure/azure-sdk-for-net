@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -8,6 +8,7 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
+    // Backward compatibility: flatten ScheduledEventsTerminateNotificationProfile from ScheduledEventsProfile.
     public partial class VirtualMachineData
     {
         /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>

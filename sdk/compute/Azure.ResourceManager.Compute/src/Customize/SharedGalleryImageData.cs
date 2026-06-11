@@ -3,12 +3,16 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Compute
 {
-    // we have this customization here to change its namespace to avoid breaking changes
+    // Backward compatibility: the previously shipped SDK exposed this data type in the root namespace.
+    // The generated TypeSpec model is otherwise placed under Models; CodeGenType keeps the public API shape.
     [CodeGenType("SharedGalleryImageData")]
     public partial class SharedGalleryImageData
     {
@@ -21,5 +25,31 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier Id { get; internal set; }
+
+        /// <summary> This is the gallery image definition identifier. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public GalleryImageIdentifier Identifier => ImageIdentifier;
+
+        // Backward compatibility: the previously shipped SDK exposed ArtifactTags as IReadOnlyDictionary.
+        // Suppress the generated IDictionary property and keep the read-only return type to avoid a binary break.
+        /// <summary> The artifact tags of a shared gallery resource. </summary>
+        public IReadOnlyDictionary<string, string> ArtifactTags
+        {
+            get
+            {
+                return Properties is null ? new ChangeTrackingDictionary<string, string>() : (IReadOnlyDictionary<string, string>)Properties.ArtifactTags;
+            }
+        }
+
+        // Backward compatibility: the previously shipped SDK exposed Features as IReadOnlyList.
+        // Suppress the generated IList property and keep the read-only return type to avoid a binary break.
+        /// <summary> A list of gallery image features. </summary>
+        public IReadOnlyList<GalleryImageFeature> Features
+        {
+            get
+            {
+                return Properties is null ? new ChangeTrackingList<GalleryImageFeature>() : (IReadOnlyList<GalleryImageFeature>)Properties.Features;
+            }
+        }
     }
 }
