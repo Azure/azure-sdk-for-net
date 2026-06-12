@@ -10,6 +10,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
+#pragma warning disable AAIP001
 
 public class Sample_EvaluatorGenerationJob : SamplesBase
 {

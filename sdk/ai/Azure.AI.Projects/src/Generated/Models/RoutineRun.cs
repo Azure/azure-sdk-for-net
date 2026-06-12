@@ -4,10 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A single routine run returned from the run history API. </summary>
+    [Experimental("AAIP001")]
     public partial class RoutineRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -42,7 +45,7 @@ namespace Azure.AI.Projects
         /// <param name="errorType"> The fully qualified error type captured for a failed attempt, when available. </param>
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutineRun(string id, string status, RoutineRunPhase? phase, RoutineTriggerType? triggerType, string triggerName, RoutineAttemptSource? attemptSource, RoutineActionType? actionType, string agentId, string agentEndpointId, string conversationId, string sessionId, DateTimeOffset? triggeredAt, DateTimeOffset? scheduledFireAt, DateTimeOffset? startedAt, DateTimeOffset? endedAt, string dispatchId, string actionCorrelationId, string responseId, string taskId, int? errorStatusCode, string errorType, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutineRun(string id, BinaryData status, RoutineRunPhase? phase, RoutineTriggerType? triggerType, string triggerName, RoutineAttemptSource? attemptSource, RoutineActionType? actionType, string agentId, string agentEndpointId, string conversationId, string sessionId, DateTimeOffset? triggeredAt, DateTimeOffset? scheduledFireAt, DateTimeOffset? startedAt, DateTimeOffset? endedAt, string dispatchId, string actionCorrelationId, string responseId, string taskId, int? errorStatusCode, string errorType, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -72,8 +75,43 @@ namespace Azure.AI.Projects
         /// <summary> The unique run identifier for the routine attempt. </summary>
         public string Id { get; }
 
-        /// <summary> The run status. </summary>
-        public string Status { get; }
+        /// <summary>
+        /// The run status.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// <remarks>
+        /// Supported types:
+        /// <list type="bullet">
+        /// <item>
+        /// <description> <see cref="string"/>. </description>
+        /// </item>
+        /// </list>
+        /// </remarks>
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Status { get; }
 
         /// <summary> The AgentExtensions lifecycle phase for the routine attempt. </summary>
         public RoutineRunPhase? Phase { get; }

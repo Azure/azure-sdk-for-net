@@ -20,7 +20,6 @@ namespace Azure.AI.Projects.Memory;
 [CodeGenSuppress("GetMemories", typeof(string), typeof(BinaryContent), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetMemories", typeof(string), typeof(BinaryContent), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenType("MemoryStores")]
-[Experimental("AAIP001")]
 public partial class AIProjectMemoryStores
 {
     /// <summary> Search for relevant memories from a memory store based on conversation context. </summary>

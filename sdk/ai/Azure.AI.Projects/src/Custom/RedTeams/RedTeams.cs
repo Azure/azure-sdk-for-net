@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Evaluation;
 
-[Experimental("AAIP001")]
 [CodeGenType("RedTeams")]
 public partial class RedTeams
 {

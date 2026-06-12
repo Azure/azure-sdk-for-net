@@ -2,6 +2,8 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>

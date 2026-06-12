@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Request body for getting evaluator credentials. </summary>
+    [Experimental("AAIP001")]
     public partial class EvaluatorCredentialRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

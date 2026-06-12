@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A reference to an existing skill to include in a toolbox. </summary>
+    [Experimental("AAIP001")]
     public partial class ToolboxSkillReference : ToolboxSkill
     {
         /// <summary> Initializes a new instance of <see cref="ToolboxSkillReference"/>. </summary>

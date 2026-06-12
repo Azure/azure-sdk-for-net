@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The LocalSkillParam. </summary>
+    [Experimental("AAIP001")]
     public partial class LocalSkillParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

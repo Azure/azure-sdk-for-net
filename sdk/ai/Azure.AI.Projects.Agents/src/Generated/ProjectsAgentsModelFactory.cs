@@ -202,6 +202,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="toolOptions"> The fabric data agent tool parameters. </param>
         /// <returns> A new <see cref="Agents.MicrosoftFabricPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static MicrosoftFabricPreviewTool MicrosoftFabricPreviewTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, FabricDataAgentToolOptions toolOptions = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
@@ -221,6 +222,7 @@ namespace Azure.AI.Projects.Agents
         /// resource attached to the tool.
         /// </param>
         /// <returns> A new <see cref="Agents.FabricDataAgentToolOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static FabricDataAgentToolOptions FabricDataAgentToolOptions(IEnumerable<ToolProjectConnection> projectConnections = default)
         {
             projectConnections ??= new ChangeTrackingList<ToolProjectConnection>();
@@ -246,6 +248,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="toolOptions"> The sharepoint grounding tool parameters. </param>
         /// <returns> A new <see cref="Agents.SharepointPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static SharepointPreviewTool SharepointPreviewTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, SharePointGroundingToolOptions toolOptions = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
@@ -265,6 +268,7 @@ namespace Azure.AI.Projects.Agents
         /// resource attached to the tool.
         /// </param>
         /// <returns> A new <see cref="Agents.SharePointGroundingToolOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static SharePointGroundingToolOptions SharePointGroundingToolOptions(IEnumerable<ToolProjectConnection> projectConnections = default)
         {
             projectConnections ??= new ChangeTrackingList<ToolProjectConnection>();
@@ -439,6 +443,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="bingCustomSearchPreview"> The bing custom search tool parameters. </param>
         /// <returns> A new <see cref="Agents.BingCustomSearchPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static BingCustomSearchPreviewTool BingCustomSearchPreviewTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BingCustomSearchToolOptions bingCustomSearchPreview = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
@@ -458,6 +463,7 @@ namespace Azure.AI.Projects.Agents
         /// resource attached to the tool.
         /// </param>
         /// <returns> A new <see cref="Agents.BingCustomSearchToolOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static BingCustomSearchToolOptions BingCustomSearchToolOptions(IEnumerable<BingCustomSearchConfiguration> searchConfigurations = default)
         {
             searchConfigurations ??= new ChangeTrackingList<BingCustomSearchConfiguration>();
@@ -473,6 +479,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="count"> The number of search results to return in the bing api response. </param>
         /// <param name="freshness"> Filter search results by a specific time range. See [accepted values here](https://learn.microsoft.com/bing/search-apis/bing-web-search/reference/query-parameters). </param>
         /// <returns> A new <see cref="Agents.BingCustomSearchConfiguration"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static BingCustomSearchConfiguration BingCustomSearchConfiguration(string projectConnectionId = default, string instanceName = default, string market = default, string setLang = default, long? count = default, string freshness = default)
         {
             return new BingCustomSearchConfiguration(
@@ -495,6 +502,7 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="toolParameters"> The Browser Automation Tool parameters. </param>
         /// <returns> A new <see cref="Agents.BrowserAutomationPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static BrowserAutomationPreviewTool BrowserAutomationPreviewTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, BrowserAutomationToolOptions toolParameters = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
@@ -511,6 +519,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Definition of input parameters for the Browser Automation Tool. </summary>
         /// <param name="toolConnectionParameters"> The project connection parameters associated with the Browser Automation Tool. </param>
         /// <returns> A new <see cref="Agents.BrowserAutomationToolOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static BrowserAutomationToolOptions BrowserAutomationToolOptions(BrowserAutomationToolConnectionParameters toolConnectionParameters = default)
         {
             return new BrowserAutomationToolOptions(toolConnectionParameters, additionalBinaryDataProperties: null);
@@ -519,6 +528,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Definition of input parameters for the connection used by the Browser Automation Tool. </summary>
         /// <param name="projectConnectionId"> The ID of the project connection to your Azure Playwright resource. </param>
         /// <returns> A new <see cref="Agents.BrowserAutomationToolConnectionParameters"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static BrowserAutomationToolConnectionParameters BrowserAutomationToolConnectionParameters(string projectConnectionId = default)
         {
             return new BrowserAutomationToolConnectionParameters(projectConnectionId, additionalBinaryDataProperties: null);
@@ -630,6 +640,7 @@ namespace Azure.AI.Projects.Agents
         /// The connection stores authentication and other connection details needed to connect to the A2A server.
         /// </param>
         /// <returns> A new <see cref="Agents.A2APreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static A2APreviewTool A2APreviewTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUri = default, string agentCardPath = default, string projectConnectionId = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
@@ -655,6 +666,7 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <returns> A new <see cref="Agents.WorkIQPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static WorkIQPreviewTool WorkIQPreviewTool(string projectConnectionId = default, string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
@@ -681,6 +693,7 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <returns> A new <see cref="Agents.FabricIQPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static FabricIQPreviewTool FabricIQPreviewTool(string projectConnectionId = default, string serverLabel = default, Uri serverUrl = default, BinaryData requireApproval = default, string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
@@ -714,6 +727,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="searchOptions"> Options for searching the memory store. </param>
         /// <param name="updateDelayInSecs"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
         /// <returns> A new <see cref="Agents.MemorySearchPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static MemorySearchPreviewTool MemorySearchPreviewTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string memoryStoreName = default, string scope = default, MemorySearchToolOptions searchOptions = default, int? updateDelayInSecs = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
@@ -733,6 +747,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Memory search options. </summary>
         /// <param name="maxMemories"> Maximum number of memory items to return. </param>
         /// <returns> A new <see cref="Agents.MemorySearchToolOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static MemorySearchToolOptions MemorySearchToolOptions(int? maxMemories = default)
         {
             return new MemorySearchToolOptions(maxMemories, additionalBinaryDataProperties: null);
@@ -751,6 +766,7 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <returns> A new <see cref="Agents.ToolboxSearchPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ToolboxSearchPreviewTool ToolboxSearchPreviewTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
@@ -762,6 +778,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>
         /// <returns> A new <see cref="Agents.ProjectWebSearchConfiguration"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ProjectWebSearchConfiguration ProjectWebSearchConfiguration(string projectConnectionId = default, string instanceName = default)
         {
             return new ProjectWebSearchConfiguration(projectConnectionId, instanceName, additionalBinaryDataProperties: null);
@@ -948,6 +965,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="workflowYaml"> The CSDL YAML definition of the workflow. </param>
         /// <returns> A new <see cref="Agents.WorkflowAgentDefinition"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static WorkflowAgentDefinition WorkflowAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string workflowYaml = default)
         {
             return new WorkflowAgentDefinition(ProjectsAgentKind.Workflow, contentFilterConfiguration, additionalBinaryDataProperties: null, workflowYaml);
@@ -967,6 +985,7 @@ namespace Azure.AI.Projects.Agents
         /// The resolved value is always echoed on read.
         /// </param>
         /// <returns> A new <see cref="Agents.ExternalAgentDefinition"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ExternalAgentDefinition ExternalAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string otelAgentId = default)
         {
             return new ExternalAgentDefinition(ProjectsAgentKind.External, contentFilterConfiguration, additionalBinaryDataProperties: null, otelAgentId);
@@ -1179,6 +1198,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="manifestId"> The manifest ID to import the agent version from. </param>
         /// <param name="parameterValues"> The inputs to the manifest that will result in a fully materialized Agent. </param>
         /// <returns> A new <see cref="Agents.AgentManifestOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static AgentManifestOptions AgentManifestOptions(IDictionary<string, string> metadata = default, string description = default, string manifestId = default, IDictionary<string, BinaryData> parameterValues = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -1214,6 +1234,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="lastAccessedAt"> The Unix timestamp (in seconds) when the session was last accessed. </param>
         /// <param name="expiresAt"> The Unix timestamp (in seconds) when the session expires (rolling, 30 days from last activity). </param>
         /// <returns> A new <see cref="Agents.ProjectAgentSession"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ProjectAgentSession ProjectAgentSession(string agentSessionId = default, VersionIndicator versionIndicator = default, AgentSessionStatus status = default, DateTimeOffset createdAt = default, DateTimeOffset lastAccessedAt = default, DateTimeOffset expiresAt = default)
         {
             return new ProjectAgentSession(
@@ -1246,6 +1267,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="event"> The SSE event type. Currently `log`, but additional event types may be added in the future. Clients should ignore unrecognized event types. </param>
         /// <param name="data"> The event payload as plain text. Currently JSON-formatted but the schema is not contractual and may change. </param>
         /// <returns> A new <see cref="Agents.SessionLogEvent"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static SessionLogEvent SessionLogEvent(SessionLogEventType @event = default, string data = default)
         {
             return new SessionLogEvent(@event, data, additionalBinaryDataProperties: null);
@@ -1257,6 +1279,7 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         /// <param name="type"> The type of skill source. </param>
         /// <returns> A new <see cref="Agents.ToolboxSkill"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ToolboxSkill ToolboxSkill(string @type = default)
         {
             return new UnknownToolboxSkill(@type, additionalBinaryDataProperties: null);
@@ -1266,6 +1289,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill. </param>
         /// <param name="version"> The version of the skill. If not specified, the skill's default version is used. When a version is specified, the reference is pinned to that immutable version. </param>
         /// <returns> A new <see cref="Agents.ToolboxSkillReference"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ToolboxSkillReference ToolboxSkillReference(string name = default, string version = default)
         {
             return new ToolboxSkillReference("skill_reference", additionalBinaryDataProperties: null, name, version);
@@ -1274,6 +1298,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Policy configuration for a toolbox, including content safety and other governance settings. </summary>
         /// <param name="raiConfig"> Responsible AI content filtering configuration. </param>
         /// <returns> A new <see cref="Agents.ToolboxPolicies"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ToolboxPolicies ToolboxPolicies(ContentFilterConfiguration raiConfig = default)
         {
             return new ToolboxPolicies(raiConfig, additionalBinaryDataProperties: null);
@@ -1296,6 +1321,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="skills"> The list of skill sources included in this toolbox version. </param>
         /// <param name="policies"> Policy configuration for the toolbox version. </param>
         /// <returns> A new <see cref="Agents.ToolboxVersion"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ToolboxVersion ToolboxVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default, IEnumerable<ProjectsAgentTool> tools = default, IEnumerable<ToolboxSkill> skills = default, ToolboxPolicies policies = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -1320,6 +1346,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="defaultVersion"> The version identifier that the toolbox currently points to. Defaults to the latest version. Can be changed via updateToolbox. </param>
         /// <returns> A new <see cref="Agents.ToolboxRecord"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ToolboxRecord ToolboxRecord(string id = default, string name = default, string defaultVersion = default)
         {
             return new ToolboxRecord(id, name, defaultVersion, additionalBinaryDataProperties: null);
@@ -1333,6 +1360,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="defaultVersion"> The default version for the skill. Can be changed via updateSkill. </param>
         /// <param name="latestVersion"> The latest version for the skill. </param>
         /// <returns> A new <see cref="Agents.AgentsSkill"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static AgentsSkill AgentsSkill(string id = default, string name = default, string description = default, DateTimeOffset createdAt = default, string defaultVersion = default, string latestVersion = default)
         {
             return new AgentsSkill(
@@ -1350,6 +1378,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="deleted"> Whether the skill was successfully deleted. </param>
         /// <returns> A new <see cref="Agents.DeleteSkillResponse"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static DeleteSkillResponse DeleteSkillResponse(string id = default, string name = default, bool deleted = default)
         {
             return new DeleteSkillResponse(id, name, deleted, additionalBinaryDataProperties: null);
@@ -1363,6 +1392,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="metadata"> Arbitrary key-value metadata for additional properties. </param>
         /// <param name="allowedTools"> List of pre-approved tools the skill may use. Experimental. </param>
         /// <returns> A new <see cref="Agents.SkillInlineContent"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static SkillInlineContent SkillInlineContent(string description = default, string instructions = default, string license = default, string compatibility = default, IDictionary<string, string> metadata = default, IEnumerable<string> allowedTools = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -1386,6 +1416,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the skill version. </param>
         /// <param name="createdAt"> The Unix timestamp (seconds) when the skill version was created. </param>
         /// <returns> A new <see cref="Agents.SkillVersion"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static SkillVersion SkillVersion(string id = default, string skillId = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default)
         {
             return new SkillVersion(
@@ -1404,6 +1435,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="deleted"> Whether the skill version was successfully deleted. </param>
         /// <param name="version"> The version that was deleted. </param>
         /// <returns> A new <see cref="Agents.DeleteSkillVersionResponse"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static DeleteSkillVersionResponse DeleteSkillVersionResponse(string id = default, string name = default, bool deleted = default, string version = default)
         {
             return new DeleteSkillVersionResponse(id, name, deleted, version, additionalBinaryDataProperties: null);
@@ -1413,6 +1445,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="path"> The path where the file was written, relative to the session home directory. </param>
         /// <param name="bytesWritten"> Number of bytes written. </param>
         /// <returns> A new <see cref="Agents.SessionFileWriteResponse"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static SessionFileWriteResponse SessionFileWriteResponse(string path = default, long bytesWritten = default)
         {
             return new SessionFileWriteResponse(path, bytesWritten, additionalBinaryDataProperties: null);
@@ -1424,6 +1457,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="isDirectory"> Whether this entry is a directory. </param>
         /// <param name="modifiedTime"> The Unix timestamp (in seconds) when the file was last modified. </param>
         /// <returns> A new <see cref="Agents.SessionDirectoryEntry"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static SessionDirectoryEntry SessionDirectoryEntry(string name = default, long size = default, bool isDirectory = default, DateTimeOffset modifiedTime = default)
         {
             return new SessionDirectoryEntry(name, size, isDirectory, modifiedTime, additionalBinaryDataProperties: null);
@@ -1436,6 +1470,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="evaluators"> Job-level evaluators (referenced by name). Per-task criteria may override. Default: ['task_adherence']. </param>
         /// <param name="options"> Tuning knobs and run-mode. </param>
         /// <returns> A new <see cref="Agents.OptimizationJobInputs"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static OptimizationJobInputs OptimizationJobInputs(AgentIdentifier agent = default, DatasetRef trainDatasetReference = default, DatasetRef validationDatasetReference = default, IEnumerable<string> evaluators = default, OptimizationOptions options = default)
         {
             evaluators ??= new ChangeTrackingList<string>();
@@ -1453,6 +1488,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> Registered Foundry agent name (required). </param>
         /// <param name="agentVersion"> Pinned agent version. Defaults to latest if omitted. </param>
         /// <returns> A new <see cref="Agents.AgentIdentifier"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static AgentIdentifier AgentIdentifier(string agentName = default, string agentVersion = default)
         {
             return new AgentIdentifier(agentName, agentVersion, additionalBinaryDataProperties: null);
@@ -1462,6 +1498,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> Dataset name. </param>
         /// <param name="version"> Dataset version. If not specified, the latest version is used. </param>
         /// <returns> A new <see cref="Agents.DatasetRef"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static DatasetRef DatasetRef(string name = default, string version = default)
         {
             return new DatasetRef(name, version, additionalBinaryDataProperties: null);
@@ -1474,6 +1511,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="optimizationModel"> Model deployment for optimization reasoning (must be gpt-5 family). Falls back to the default eval model when not set. </param>
         /// <param name="evaluationLevel"> Evaluation granularity. Null/omitted means per-item single-turn. Set to 'conversation' for per-conversation multi-turn simulation scoring. </param>
         /// <returns> A new <see cref="Agents.OptimizationOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static OptimizationOptions OptimizationOptions(int? maxIterations = default, IDictionary<string, BinaryData> optimizationConfig = default, string evalModel = default, string optimizationModel = default, EvaluationLevel? evaluationLevel = default)
         {
             optimizationConfig ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -1495,6 +1533,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="warnings"> Non-fatal warnings from the optimization run (e.g., target attribute failures that were skipped). </param>
         /// <param name="allTargetAttributesFailed"> True when all target attributes failed — only the baseline was evaluated. </param>
         /// <returns> A new <see cref="Agents.OptimizationJobResult"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static OptimizationJobResult OptimizationJobResult(OptimizationCandidate baseline = default, OptimizationCandidate best = default, IEnumerable<OptimizationCandidate> candidates = default, OptimizationOptions options = default, IEnumerable<string> warnings = default, bool? allTargetAttributesFailed = default)
         {
             candidates ??= new ChangeTrackingList<OptimizationCandidate>();
@@ -1524,6 +1563,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="evalRunId"> Foundry evaluation run identifier for this candidate's scoring run. </param>
         /// <param name="promotion"> Promotion metadata. Null if the candidate has not been promoted. </param>
         /// <returns> A new <see cref="Agents.OptimizationCandidate"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static OptimizationCandidate OptimizationCandidate(string candidateId = default, string name = default, OptimizationAgentDefinition config = default, IDictionary<string, BinaryData> mutations = default, double avgScore = default, double avgTokens = default, double passRate = default, IEnumerable<OptimizationTaskResult> taskScores = default, bool isParetoOptimal = default, string evalId = default, string evalRunId = default, PromotionInfo promotion = default)
         {
             mutations ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -1553,6 +1593,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="skills"> Agent skills. </param>
         /// <param name="tools"> Agent tools. </param>
         /// <returns> A new <see cref="Agents.OptimizationAgentDefinition"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static OptimizationAgentDefinition OptimizationAgentDefinition(string agentName = default, string agentVersion = default, string model = default, string systemPrompt = default, IEnumerable<IDictionary<string, BinaryData>> skills = default, IEnumerable<IDictionary<string, BinaryData>> tools = default)
         {
             skills ??= new ChangeTrackingList<IDictionary<string, BinaryData>>();
@@ -1581,6 +1622,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="response"> Raw agent response text. </param>
         /// <param name="runId"> Identifier of the agent run that produced this result. </param>
         /// <returns> A new <see cref="Agents.OptimizationTaskResult"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static OptimizationTaskResult OptimizationTaskResult(string taskName = default, string query = default, IDictionary<string, double> scores = default, double compositeScore = default, long tokens = default, TimeSpan durationSeconds = default, bool passed = default, string errorMessage = default, IDictionary<string, string> rationales = default, string response = default, string runId = default)
         {
             scores ??= new ChangeTrackingDictionary<string, double>();
@@ -1606,6 +1648,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> Name of the Foundry agent this candidate was promoted to. </param>
         /// <param name="agentVersion"> Version of the Foundry agent this candidate was promoted to. </param>
         /// <returns> A new <see cref="Agents.PromotionInfo"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static PromotionInfo PromotionInfo(DateTimeOffset promotedAt = default, string agentName = default, string agentVersion = default)
         {
             return new PromotionInfo(promotedAt, agentName, agentVersion, additionalBinaryDataProperties: null);
@@ -1616,6 +1659,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="bestScore"> Best score observed so far across all candidates. </param>
         /// <param name="elapsedSeconds"> Wall-clock time elapsed in seconds since the job began executing. </param>
         /// <returns> A new <see cref="Agents.OptimizationJobProgress"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static OptimizationJobProgress OptimizationJobProgress(int currentIteration = default, double bestScore = default, double elapsedSeconds = default)
         {
             return new OptimizationJobProgress(currentIteration, bestScore, elapsedSeconds, additionalBinaryDataProperties: null);
@@ -1627,6 +1671,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="taskCount"> Number of tasks/rows in the dataset. </param>
         /// <param name="isInline"> True when the dataset was provided inline in the request body. </param>
         /// <returns> A new <see cref="Agents.DatasetInfo"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static DatasetInfo DatasetInfo(string name = default, string version = default, int taskCount = default, bool isInline = default)
         {
             return new DatasetInfo(name, version, taskCount, isInline, additionalBinaryDataProperties: null);
@@ -1644,6 +1689,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="promotion"> Promotion metadata. Null if not promoted. </param>
         /// <param name="files"> Files in the candidate's blob directory. </param>
         /// <returns> A new <see cref="Agents.CandidateMetadata"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static CandidateMetadata CandidateMetadata(string candidateId = default, string jobId = default, string candidateName = default, string status = default, double? score = default, bool hasResults = default, DateTimeOffset createdAt = default, DateTimeOffset updatedAt = default, PromotionInfo promotion = default, IEnumerable<CandidateFileInfo> files = default)
         {
             files ??= new ChangeTrackingList<CandidateFileInfo>();
@@ -1667,6 +1713,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="type"> File type category (e.g. 'config', 'results'). </param>
         /// <param name="sizeBytes"> File size in bytes. </param>
         /// <returns> A new <see cref="Agents.CandidateFileInfo"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static CandidateFileInfo CandidateFileInfo(string path = default, string @type = default, long sizeBytes = default)
         {
             return new CandidateFileInfo(path, @type, sizeBytes, additionalBinaryDataProperties: null);
@@ -1679,6 +1726,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="skills"> Optional skill overrides. </param>
         /// <param name="tools"> Optional tool overrides. </param>
         /// <returns> A new <see cref="Agents.CandidateDeployConfig"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static CandidateDeployConfig CandidateDeployConfig(string instructions = default, string model = default, float? temperature = default, IEnumerable<IDictionary<string, BinaryData>> skills = default, IEnumerable<IDictionary<string, BinaryData>> tools = default)
         {
             skills ??= new ChangeTrackingList<IDictionary<string, BinaryData>>();
@@ -1697,6 +1745,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="candidateId"> Owning candidate id. </param>
         /// <param name="results"> Per-task evaluation rows. </param>
         /// <returns> A new <see cref="Agents.CandidateResults"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static CandidateResults CandidateResults(string candidateId = default, IEnumerable<OptimizationTaskResult> results = default)
         {
             results ??= new ChangeTrackingList<OptimizationTaskResult>();
@@ -1708,6 +1757,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> Name of the Foundry agent to promote to. </param>
         /// <param name="agentVersion"> Version of the Foundry agent to promote to. </param>
         /// <returns> A new <see cref="Agents.PromoteCandidateRequest"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static PromoteCandidateRequest PromoteCandidateRequest(string agentName = default, string agentVersion = default)
         {
             return new PromoteCandidateRequest(agentName, agentVersion, additionalBinaryDataProperties: null);
@@ -1720,6 +1770,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentName"> Name of the Foundry agent promoted to. </param>
         /// <param name="agentVersion"> Version of the Foundry agent promoted to. </param>
         /// <returns> A new <see cref="Agents.PromoteCandidateResponse"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static PromoteCandidateResponse PromoteCandidateResponse(string candidateId = default, string status = default, DateTimeOffset promotedAt = default, string agentName = default, string agentVersion = default)
         {
             return new PromoteCandidateResponse(
@@ -1774,6 +1825,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
         /// <param name="agentCard"> Optional agent card for the agent. </param>
         /// <returns> A new <see cref="Agents.PatchAgentOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static PatchAgentOptions PatchAgentOptions(AgentEndpointConfiguration agentEndpoint = default, AgentCard agentCard = default)
         {
             return new PatchAgentOptions(agentEndpoint, agentCard, additionalBinaryDataProperties: null);
@@ -1783,6 +1835,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the toolbox to update. </param>
         /// <param name="defaultVersion"> The version identifier that the toolbox should point to. When set, the toolbox's default version will resolve to this version instead of the latest. </param>
         /// <returns> A new <see cref="Agents.UpdateToolboxRequest"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static UpdateToolboxRequest UpdateToolboxRequest(string name = default, string defaultVersion = default)
         {
             return new UpdateToolboxRequest(name, defaultVersion, additionalBinaryDataProperties: null);

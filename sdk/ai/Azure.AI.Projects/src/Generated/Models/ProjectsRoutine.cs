@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A routine definition returned by the service. </summary>
+    [Experimental("AAIP001")]
     public partial class ProjectsRoutine
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

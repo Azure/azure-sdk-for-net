@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
+    [Experimental("AAIP001")]
     public partial class ResponsesMicrosoftFabricPreviewTool : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesMicrosoftFabricPreviewTool"/>. </summary>

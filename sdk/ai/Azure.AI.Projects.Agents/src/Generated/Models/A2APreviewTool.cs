@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> An agent implementing the A2A protocol. </summary>
+    [Experimental("AAIP001")]
     public partial class A2APreviewTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="A2APreviewTool"/>. </summary>

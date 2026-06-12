@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Monthly recurrence schedule. </summary>
+    [Experimental("AAIP001")]
     public partial class MonthlyRecurrenceSchedule : RecurrenceSchedule
     {
         /// <summary> Initializes a new instance of <see cref="MonthlyRecurrenceSchedule"/>. </summary>

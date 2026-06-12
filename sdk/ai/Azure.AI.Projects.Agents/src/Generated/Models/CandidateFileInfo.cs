@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> File entry in a candidate's blob directory. </summary>
+    [Experimental("AAIP001")]
     public partial class CandidateFileInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -4,14 +4,12 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents;
 
-[Experimental("AAIP001")]
 [CodeGenSuppress("GetSessionFiles", typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(string), typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetSessionFilesAsync", typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(string), typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetSessionFiles", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]

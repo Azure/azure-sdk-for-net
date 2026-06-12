@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -24,6 +25,7 @@ namespace Azure.AI.Projects.Agents
     /// data: {"timestamp":"2026-03-10T09:34:52.714Z","stream":"status","message":"Successfully connected to container"}
     /// ```
     /// </summary>
+    [Experimental("AAIP001")]
     public partial class SessionLogEvent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

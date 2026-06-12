@@ -19,6 +19,7 @@ using OpenAI.Evals;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
+#pragma warning disable AAIP001
 
 public class Sample_ScheduledEvaluations : EvaluationSampleBase
 {

@@ -2,6 +2,8 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Status values reported for shell tool calls. </summary>

@@ -10,7 +10,6 @@ using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects;
 
-[Experimental("AAIP001")]
 //                GetRoutineRuns(string routineName, string foundryFeatures, string filter, int? limit, string order, string after, string before, RequestOptions options)
 [CodeGenSuppress("GetRoutineRuns", typeof(string), typeof(FoundryFeaturesOptInKeys?), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetRoutineRunsAsync", typeof(string), typeof(FoundryFeaturesOptInKeys?), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]

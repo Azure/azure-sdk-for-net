@@ -10,7 +10,6 @@ using Azure.AI.Projects.Memory;
 
 namespace Azure.AI.Projects;
 
-[Experimental("AAIP001")]
 [CodeGenSuppress("GetGenerationJobs", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetGenerationJobsAsync", typeof(FoundryFeaturesOptInKeys?), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetGenerationJobs", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]

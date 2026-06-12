@@ -51,6 +51,7 @@ namespace Azure.AI.Projects
         internal string Version { get; }
 
         /// <summary> The version of the service to use. </summary>
+        [Experimental("AAIP001")]
         public enum ServiceVersion
         {
             /// <summary> Azure AI API version 2025-05-01. </summary>

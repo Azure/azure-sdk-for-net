@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Response from uploading a file to a session sandbox. </summary>
+    [Experimental("AAIP001")]
     public partial class SessionFileWriteResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

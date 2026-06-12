@@ -2,6 +2,8 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Projects
 {
     /// <summary> Outcome values reported for apply_patch tool call outputs. </summary>
