@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
@@ -45,6 +46,7 @@ namespace Azure.AI.Projects
         public ClientPipeline Pipeline { get; }
 
         /// <summary> Initializes a new instance of AIProjectMemoryStores. </summary>
+        [Experimental("AAIP001")]
         public virtual AIProjectMemoryStores GetAIProjectMemoryStoresClient()
         {
             return Volatile.Read(ref _cachedAIProjectMemoryStores) ?? Interlocked.CompareExchange(ref _cachedAIProjectMemoryStores, new AIProjectMemoryStores(Pipeline, _endpoint, _apiVersion), null) ?? _cachedAIProjectMemoryStores;

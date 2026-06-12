@@ -4,7 +4,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects.Agents;
 
 namespace OpenAI

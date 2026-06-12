@@ -9,7 +9,6 @@ using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
-using Microsoft.TypeSpec.Generator.Statements;
 
 namespace Extensions.Plugin.Visitors
 {
@@ -29,10 +28,10 @@ namespace Extensions.Plugin.Visitors
         private readonly HashSet<string> _attributedTypes = new(StringComparer.Ordinal);
         private readonly HashSet<string> _methodIDs = new(StringComparer.Ordinal);
 
-        private static string TypeId(CSharpType type) => $"{type.Namespace}.{type.Name}";
+        private static string TypeId(CSharpType type) => type is null ? null : $"{type.Namespace}.{type.Name}";
 
         private static bool IsExternal(TypeSignatureModifiers modifiers) => modifiers.HasFlag(TypeSignatureModifiers.Public) || modifiers.HasFlag(TypeSignatureModifiers.Protected);
-        private static bool IsExternal(MethodSignatureModifiers modifiers) => modifiers.HasFlag(TypeSignatureModifiers.Public) || modifiers.HasFlag(TypeSignatureModifiers.Protected);
+        private static bool IsExternal(MethodSignatureModifiers modifiers) => modifiers.HasFlag(MethodSignatureModifiers.Public) || modifiers.HasFlag(MethodSignatureModifiers.Protected);
 
         /// <inheritdoc />
         protected override TypeProvider VisitType(TypeProvider type)
@@ -54,10 +53,17 @@ namespace Extensions.Plugin.Visitors
 
         protected override MethodProvider VisitMethod(MethodProvider method)
         {
+            // If enclising type is not stable, no need to mark its methods.
+            string enclosingObjectId = TypeId(method.EnclosingType.Type);
+            if (!SupportedPackages.IsStable(enclosingObjectId))
+            {
+                return base.VisitMethod(method);
+            }
             string methodId = method.Signature.Parameters
                 .Select(x => TypeId(x.Type))
-                .Aggregate($"{TypeId(method.EnclosingType.Type)}.{method.Signature.Name}->", (x, next) => string.Join(',', [x, next]));
+                .Aggregate($"{enclosingObjectId}.{method.Signature.Name}->", (x, next) => string.Join(',', [x, next]));
 
+            // Do not mark internal methods as experimental.
             if (!IsExternal(method.Signature.Modifiers)
                 || method.Signature.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)))
                 )
@@ -65,6 +71,7 @@ namespace Extensions.Plugin.Visitors
                 return base.VisitMethod(method);
             }
 
+            // If method takes in or return experimental class, mark it as experimental.
             string typeId = TypeId(method.Signature.ReturnType);
             if ((!SupportedPackages.IsStable(TypeId(method.Signature.ReturnType))
                 || method.Signature.Parameters.Any(x => !SupportedPackages.IsStable(TypeId(x.Type))))

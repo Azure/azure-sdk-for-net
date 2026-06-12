@@ -29,6 +29,10 @@ internal class SupportedPackages
 
     public static bool IsStable(string type)
     {
+        if (type is null)
+        {
+            return true;
+        }
         if (type.StartsWith(AzureAIProjectsAgents.ToString()))
         {
             return AzureAIProjectsAgents._stableTypes.Value.Contains(type);
@@ -37,7 +41,11 @@ internal class SupportedPackages
         {
             return AzureAIExtensionsOpenAI._stableTypes.Value.Contains(type);
         }
-        return AzureAIProjects._stableTypes.Value.Contains(type);
+        if (type.StartsWith(AzureAIProjects.ToString()))
+        {
+            return AzureAIProjects._stableTypes.Value.Contains(type);
+        }
+        return true;
     }
 
     public override string ToString() => _name;
