@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DataMigrationMongoDBFinishCommandInput : IUtf8JsonSerializable, IJsonModel<DataMigrationMongoDBFinishCommandInput>
+    /// <summary> Describes the input to the 'finish' MongoDB migration command. </summary>
+    public partial class DataMigrationMongoDBFinishCommandInput : DataMigrationMongoDBCommandInput, IJsonModel<DataMigrationMongoDBFinishCommandInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMigrationMongoDBFinishCommandInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBFinishCommandInput"/> for deserialization. </summary>
+        internal DataMigrationMongoDBFinishCommandInput()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataMigrationMongoDBCommandInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBFinishCommandInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataMigrationMongoDBFinishCommandInput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationMongoDBFinishCommandInput)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBFinishCommandInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationMongoDBFinishCommandInput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataMigrationMongoDBFinishCommandInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMigrationMongoDBFinishCommandInput IPersistableModel<DataMigrationMongoDBFinishCommandInput>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataMigrationMongoDBFinishCommandInput)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataMigrationMongoDBFinishCommandInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataMigrationMongoDBFinishCommandInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,91 +74,62 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBFinishCommandInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBFinishCommandInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMigrationMongoDBFinishCommandInput)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("immediate"u8);
             writer.WriteBooleanValue(ShouldStopReplicationImmediately);
         }
 
-        DataMigrationMongoDBFinishCommandInput IJsonModel<DataMigrationMongoDBFinishCommandInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMigrationMongoDBFinishCommandInput IJsonModel<DataMigrationMongoDBFinishCommandInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataMigrationMongoDBFinishCommandInput)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataMigrationMongoDBCommandInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBFinishCommandInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBFinishCommandInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMigrationMongoDBFinishCommandInput)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataMigrationMongoDBFinishCommandInput(document.RootElement, options);
         }
 
-        internal static DataMigrationMongoDBFinishCommandInput DeserializeDataMigrationMongoDBFinishCommandInput(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataMigrationMongoDBFinishCommandInput DeserializeDataMigrationMongoDBFinishCommandInput(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool immediate = default;
             string objectName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            bool shouldStopReplicationImmediately = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("immediate"u8))
+                if (prop.NameEquals("objectName"u8))
                 {
-                    immediate = property.Value.GetBoolean();
+                    objectName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("objectName"u8))
+                if (prop.NameEquals("immediate"u8))
                 {
-                    objectName = property.Value.GetString();
+                    shouldStopReplicationImmediately = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DataMigrationMongoDBFinishCommandInput(objectName, serializedAdditionalRawData, immediate);
+            return new DataMigrationMongoDBFinishCommandInput(objectName, additionalBinaryDataProperties, shouldStopReplicationImmediately);
         }
-
-        BinaryData IPersistableModel<DataMigrationMongoDBFinishCommandInput>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBFinishCommandInput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataMigrationMongoDBFinishCommandInput)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataMigrationMongoDBFinishCommandInput IPersistableModel<DataMigrationMongoDBFinishCommandInput>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBFinishCommandInput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataMigrationMongoDBFinishCommandInput(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataMigrationMongoDBFinishCommandInput)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataMigrationMongoDBFinishCommandInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

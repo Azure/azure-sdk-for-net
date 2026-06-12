@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct ResourceSkuRestrictionsReasonCode : IEquatable<ResourceSkuRestrictionsReasonCode>
     {
         private readonly string _value;
+        /// <summary> QuotaId. </summary>
+        private const string QuotaIdValue = "QuotaId";
+        /// <summary> NotAvailableForSubscription. </summary>
+        private const string NotAvailableForSubscriptionValue = "NotAvailableForSubscription";
 
         /// <summary> Initializes a new instance of <see cref="ResourceSkuRestrictionsReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceSkuRestrictionsReasonCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string QuotaIdValue = "QuotaId";
-        private const string NotAvailableForSubscriptionValue = "NotAvailableForSubscription";
+            _value = value;
+        }
 
         /// <summary> QuotaId. </summary>
         public static ResourceSkuRestrictionsReasonCode QuotaId { get; } = new ResourceSkuRestrictionsReasonCode(QuotaIdValue);
+
         /// <summary> NotAvailableForSubscription. </summary>
         public static ResourceSkuRestrictionsReasonCode NotAvailableForSubscription { get; } = new ResourceSkuRestrictionsReasonCode(NotAvailableForSubscriptionValue);
+
         /// <summary> Determines if two <see cref="ResourceSkuRestrictionsReasonCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceSkuRestrictionsReasonCode left, ResourceSkuRestrictionsReasonCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceSkuRestrictionsReasonCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceSkuRestrictionsReasonCode left, ResourceSkuRestrictionsReasonCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceSkuRestrictionsReasonCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceSkuRestrictionsReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceSkuRestrictionsReasonCode(string value) => new ResourceSkuRestrictionsReasonCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceSkuRestrictionsReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceSkuRestrictionsReasonCode?(string value) => value == null ? null : new ResourceSkuRestrictionsReasonCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceSkuRestrictionsReasonCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceSkuRestrictionsReasonCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

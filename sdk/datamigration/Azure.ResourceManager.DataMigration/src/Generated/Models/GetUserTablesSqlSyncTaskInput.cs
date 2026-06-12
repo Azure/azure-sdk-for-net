@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Input for the task that collects user tables for the given list of databases. </summary>
     public partial class GetUserTablesSqlSyncTaskInput
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Connection information for SQL Server. </param>
@@ -70,27 +42,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetConnectionInfo"> Connection information for SQL DB. </param>
         /// <param name="selectedSourceDatabases"> List of source database names to collect tables for. </param>
         /// <param name="selectedTargetDatabases"> List of target database names to collect tables for. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetUserTablesSqlSyncTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IList<string> selectedSourceDatabases, IList<string> selectedTargetDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GetUserTablesSqlSyncTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IList<string> selectedSourceDatabases, IList<string> selectedTargetDatabases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
             SelectedSourceDatabases = selectedSourceDatabases;
             SelectedTargetDatabases = selectedTargetDatabases;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GetUserTablesSqlSyncTaskInput"/> for deserialization. </summary>
-        internal GetUserTablesSqlSyncTaskInput()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Connection information for SQL Server. </summary>
         public DataMigrationSqlConnectionInfo SourceConnectionInfo { get; set; }
+
         /// <summary> Connection information for SQL DB. </summary>
         public DataMigrationSqlConnectionInfo TargetConnectionInfo { get; set; }
+
         /// <summary> List of source database names to collect tables for. </summary>
         public IList<string> SelectedSourceDatabases { get; }
+
         /// <summary> List of target database names to collect tables for. </summary>
         public IList<string> SelectedTargetDatabases { get; }
     }
