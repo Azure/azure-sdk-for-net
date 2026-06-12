@@ -195,7 +195,7 @@ export class RequestPath {
     return (
       this.length === 0 ||
       (this.length === 2 &&
-        this.segments[0] === "tenants" &&
+        literalSegmentsEqual(this.segments[0], "tenants") &&
         isVariableSegment(this.segments[1]))
     );
   }
@@ -203,7 +203,7 @@ export class RequestPath {
   isSubscriptionPath(): boolean {
     return (
       this.length === 2 &&
-      this.segments[0] === "subscriptions" &&
+      literalSegmentsEqual(this.segments[0], "subscriptions") &&
       isVariableSegment(this.segments[1])
     );
   }
@@ -211,9 +211,9 @@ export class RequestPath {
   isResourceGroupPath(): boolean {
     return (
       this.length === 4 &&
-      this.segments[0] === "subscriptions" &&
+      literalSegmentsEqual(this.segments[0], "subscriptions") &&
       isVariableSegment(this.segments[1]) &&
-      this.segments[2] === "resourceGroups" &&
+      literalSegmentsEqual(this.segments[2], "resourceGroups") &&
       isVariableSegment(this.segments[3])
     );
   }
@@ -221,9 +221,9 @@ export class RequestPath {
   isManagementGroupPath(): boolean {
     return (
       this.length === 4 &&
-      this.segments[0] === "providers" &&
-      this.segments[1] === "Microsoft.Management" &&
-      this.segments[2] === "managementGroups" &&
+      literalSegmentsEqual(this.segments[0], "providers") &&
+      literalSegmentsEqual(this.segments[1], "Microsoft.Management") &&
+      literalSegmentsEqual(this.segments[2], "managementGroups") &&
       isVariableSegment(this.segments[3])
     );
   }
@@ -278,7 +278,7 @@ export class RequestPath {
         return "Microsoft.Resources/subscriptions";
       } else if (this.isResourceGroupPath()) {
         return "Microsoft.Resources/resourceGroups";
-      } else if (this.segments[0] === "tenants") {
+      } else if (literalSegmentsEqual(this.segments[0], "tenants")) {
         return "Microsoft.Resources/tenants";
       }
       return undefined;
@@ -819,7 +819,10 @@ function operationPathEndsWithResourceType(
   const lastTypeSegment = resourceType.split("/").at(-1);
   return (
     lastTypeSegment !== undefined &&
-    operationPath.segments[operationPath.length - 1] === lastTypeSegment
+    literalSegmentsEqual(
+      operationPath.segments[operationPath.length - 1],
+      lastTypeSegment
+    )
   );
 }
 
