@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.Language.Documents.Tests
 {
@@ -11,6 +13,25 @@ namespace Azure.AI.Language.Documents.Tests
     /// </summary>
     public class DocumentServiceTestEnvironment : TestEnvironment
     {
+        /// <summary>
+        /// Returns the credential used for local developer authentication.
+        /// The base implementation uses a broker/Visual Studio Code chain pinned to the
+        /// Azure SDK test tenant, which does not work for headless runs or when the
+        /// resource lives in a different tenant. This override uses the standard developer
+        /// credential chain (Azure CLI, Visual Studio, Visual Studio Code, Azure PowerShell),
+        /// excluding Managed Identity so a non-VM dev box does not stall on the IMDS probe.
+        /// CI is unaffected because it authenticates via the pipeline credential before this
+        /// method is reached.
+        /// </summary>
+        protected override TokenCredential CreateDeveloperCredential()
+            => new DefaultAzureCredential(
+                new DefaultAzureCredentialOptions
+                {
+                    ExcludeEnvironmentCredential = true,
+                    ExcludeManagedIdentityCredential = true,
+                    ExcludeWorkloadIdentityCredential = true,
+                });
+
         /// <summary>
         /// Gets the master API key.
         /// </summary>

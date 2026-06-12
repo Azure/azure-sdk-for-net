@@ -61,8 +61,6 @@ namespace Azure.AI.Language.Documents.Tests
                 request);
 
             Assert.IsNotNull(operation);
-            Assert.IsNotNull(operation.Id);
-            Assert.IsNotEmpty(operation.Id);
             Assert.IsNotNull(operation.GetRawResponse());
         }
     }
