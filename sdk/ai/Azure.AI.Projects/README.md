@@ -47,6 +47,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
   - [Red teams](#red-teams)
   - [Schedules](#schedules)
   - [Toolboxes](#toolboxes)
+  - [Routines](#routines)
 - [Tracing](#tracing)
     - [Azure Monitor Tracing](#tracing-to-azure-monitor)
     - [Console Tracing](#tracing-to-console)
@@ -1667,6 +1668,80 @@ The name of Toolbox and its version allow to get the `ToolboxVersion`, containin
 ```C# Snippet:Sample_GetToolboxVersion_ToolboxesCRUD_Async
 ToolboxVersion toolBox = await toolboxClient.GetToolboxVersionAsync(record.Name, record.DefaultVersion);
 Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
+```
+
+## Routines
+
+Routines client provides the mechanism to call the Hosted Agent asynchronously.
+The call can be scheduled in three different ways by using different trigger types.
+    - At specific date and time using `TimerRoutineTrigger`.
+    - In response to the external event using `CustomRoutineTrigger`.
+    - Or repeatedly according to schedule using `ScheduleRoutineTrigger`.
+
+To create Routine, we need to define the hosted agent to be called and an action, which will be called on the
+Agent.
+
+```C# Snippet:Sample_CreateRoutine_RoutinesScheduleTrigger_Async
+IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
+{
+    ["every_five_minutes"] = new ScheduleRoutineTrigger(
+        cronExpression: "*/5 * * * *",
+        timeZone: "UTC"
+    )
+};
+
+RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+{
+    AgentName = agentVersion.Name,
+    Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
+};
+
+ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
+    routineName: routineName,
+    triggers: triggers,
+    action: action,
+    description: "Routine used by the schedule-trigger sample.",
+    enabled: true);
+Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
+Console.WriteLine($"cron expression: {((ScheduleRoutineTrigger)triggers["every_five_minutes"]).CronExpression}; time zone: {((ScheduleRoutineTrigger)triggers["every_five_minutes"]).TimeZone}");
+```
+
+In this case we create schedule, when we call Agent every five minutes, we use responses API for invocation
+and the phrase "Hello, Tell me a joke." as an input.
+
+Similarly, we can create the routine, which will start the run in a response to the external event.
+
+```C# Snippet:Sample_CreateRoutine_RoutinesCRUD_Async
+IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
+{
+    ["manual"] = new CustomRoutineTrigger(
+        provider: "sample-provider",
+        parameters: new Dictionary<string, BinaryData>
+        {
+            ["source"] = BinaryData.FromString("\"sample_routines_crud\"")
+        })
+    {
+        EventName = "sample-event"
+    }
+};
+
+RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+{
+    AgentName = agentVersion.Name
+};
+
+ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
+    routineName: routineName,
+    triggers: triggers,
+    action: action,
+    description: "Routine created by the azure-ai-projects sample.",
+    enabled: true);
+Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}");
+```
+
+To create a single run at given time we need to define routine as follows:
+
+```Snippet:Sample_CreateRoutine_RoutinesTimerTrigger_Sync
 ```
 
 ## Tracing
