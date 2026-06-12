@@ -23,7 +23,6 @@ namespace Azure.Data.AppConfiguration.Tests
                 20,
                 20,
                 new Dictionary<string, string>(),
-                "snapshot_description",
                 new ETag());
 
             var retentionPeriod = settingSnapshot.RetentionPeriod;

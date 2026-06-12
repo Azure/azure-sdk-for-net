@@ -92,27 +92,5 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.That(configurationSetting.Label, Is.EqualTo("label"));
             Assert.That(configurationSetting.ETag.ToString(), Is.EqualTo("etag"));
         }
-
-        [Test]
-        public void ConfigurationSettingDescriptionConstructor()
-        {
-            var configurationSetting = new ConfigurationSetting("key", "value", "label", "description");
-            Assert.That(configurationSetting.Key, Is.EqualTo("key"));
-            Assert.That(configurationSetting.Value, Is.EqualTo("value"));
-            Assert.That(configurationSetting.Label, Is.EqualTo("label"));
-            Assert.That(configurationSetting.Description, Is.EqualTo("description"));
-            Assert.That(configurationSetting.ETag, Is.EqualTo(default(ETag)));
-        }
-
-        [Test]
-        public void ConfigurationSettingDescriptionAndEtagConstructor()
-        {
-            var configurationSetting = new ConfigurationSetting("key", "value", "label", "description", new ETag("etag"));
-            Assert.That(configurationSetting.Key, Is.EqualTo("key"));
-            Assert.That(configurationSetting.Value, Is.EqualTo("value"));
-            Assert.That(configurationSetting.Label, Is.EqualTo("label"));
-            Assert.That(configurationSetting.Description, Is.EqualTo("description"));
-            Assert.That(configurationSetting.ETag.ToString(), Is.EqualTo("etag"));
-        }
     }
 }

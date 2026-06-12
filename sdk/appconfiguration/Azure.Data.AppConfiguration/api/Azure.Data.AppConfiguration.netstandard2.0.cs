@@ -136,7 +136,6 @@ namespace Azure.Data.AppConfiguration
     {
         public ConfigurationSetting(string key, string value, string label = null) { }
         public ConfigurationSetting(string key, string value, string label, Azure.ETag etag) { }
-        public ConfigurationSetting(string key, string value, string label, string description, Azure.ETag etag = default(Azure.ETag)) { }
         public string ContentType { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag ETag { get { throw null; } }
