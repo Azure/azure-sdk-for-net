@@ -1,14 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Suppress CS0618: generated sample files reference types/methods marked [Obsolete] for ApiCompat backward-compat. -->
+    <NoWarn>$(NoWarn);CS0618</NoWarn>
+  </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Generated\**" />
     <!-- These scenarios target legacy operations that are no longer service-supported and remain hidden obsolete thrower shims for ApiCompat only. -->
     <Compile Remove="Scenario\AdaptiveApplicationControlGroupTests.cs" />
     <Compile Remove="Scenario\AdaptiveNetworkHardening.cs" />
     <Compile Remove="Scenario\CustomAssessmentAutomationTests.cs" />
     <Compile Remove="Scenario\CustomEntityStoreAssignmentTests.cs" />
     <Compile Remove="Scenario\SoftwareTests.cs" />
-    <EmbeddedResource Remove="Generated\**" />
-    <None Remove="Generated\**" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Compute" />
