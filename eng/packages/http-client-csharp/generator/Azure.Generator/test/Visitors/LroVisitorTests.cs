@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -430,6 +431,62 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreEqual(Helpers.GetExpectedFromFile(), actual);
         }
 
+        // Regression test for the Async-suffix scope-name bug: when both visitors run
+        // (DistributedTracingVisitor adds the outer client-method scope, LroVisitor rewrites
+        // the ProcessMessage call and injects the polling scope argument), the async protocol
+        // method must use the stripped scope name ("TestClient.Foo") in BOTH places, never
+        // "TestClient.FooAsync".
+        [Test]
+        public void AsyncProtocolMethodUsesStrippedScopeNameForOuterScopeAndScopeArg()
+        {
+            var lroVisitor = new TestLroVisitor();
+            var tracingVisitor = new TestDistributedTracingVisitor();
+            List<InputParameter> parameters =
+            [
+                InputFactory.BodyParameter("p1", InputPrimitiveType.String)
+            ];
+            List<InputMethodParameter> methodParameters =
+            [
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
+            ];
+            var lro = InputFactory.Operation(
+                "foo",
+                parameters: parameters);
+            var responseModel = InputFactory.Model("foo");
+            var lroServiceMethod = InputFactory.LongRunningServiceMethod(
+                "foo",
+                lro, parameters: methodParameters,
+                response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
+            var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
+            var plugin = MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            var outputLibrary = plugin.Object.OutputLibrary;
+
+            // Run the visitors in the same order as the real generation pipeline:
+            // DistributedTracingVisitor wraps the body with the outer scope first,
+            // then LroVisitor rewrites the inner ProcessMessage call / scope argument.
+            tracingVisitor.InvokeVisitLibrary(outputLibrary);
+            lroVisitor.InvokeVisitLibrary(outputLibrary);
+
+            var clientProvider = outputLibrary.TypeProviders.OfType<ClientProvider>().FirstOrDefault();
+            Assert.IsNotNull(clientProvider);
+            var asyncProtocolMethod = clientProvider!.Methods
+                .FirstOrDefault(m => m.Signature.Name == "FooAsync"
+                    && m.Signature.Parameters.Any(p => p.Name == "context"));
+
+            Assert.IsNotNull(asyncProtocolMethod);
+            var actual = asyncProtocolMethod!.BodyStatements!.ToDisplayString();
+
+            // The outer scope (DistributedTracingVisitor) must be present and use the stripped name.
+            Assert.IsTrue(actual.Contains("CreateScope(\"TestClient.Foo\")"), actual);
+            // The async protocol method must call ProcessMessageAsync (LroVisitor rewrite).
+            Assert.IsTrue(actual.Contains("ProcessMessageAsync"), actual);
+            // Both the outer scope and the ProcessMessageAsync scope argument must use the
+            // stripped literal, so it should appear at least twice.
+            Assert.GreaterOrEqual(Regex.Matches(actual, "\"TestClient\\.Foo\"").Count, 2, actual);
+            // The Async suffix must not leak into either scope name.
+            Assert.IsFalse(actual.Contains("TestClient.FooAsync"), actual);
+        }
+
         private class TestLroVisitor : LroVisitor
         {
             public MethodProvider? InvokeVisitMethod(MethodProvider method)
@@ -445,6 +502,14 @@ namespace Azure.Generator.Tests.Visitors
                 return base.Visit(serviceMethod, client, methodCollection);
             }
 
+            public void InvokeVisitLibrary(OutputLibrary library)
+            {
+                base.VisitLibrary(library);
+            }
+        }
+
+        private class TestDistributedTracingVisitor : DistributedTracingVisitor
+        {
             public void InvokeVisitLibrary(OutputLibrary library)
             {
                 base.VisitLibrary(library);
