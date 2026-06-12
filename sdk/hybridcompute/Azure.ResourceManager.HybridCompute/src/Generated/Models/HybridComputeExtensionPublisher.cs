@@ -12,21 +12,21 @@ using Azure.ResourceManager.HybridCompute;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes an Extension Publisher. </summary>
-    public partial class ExtensionPublisher
+    public partial class HybridComputeExtensionPublisher
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionPublisher"/>. </summary>
-        internal ExtensionPublisher()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeExtensionPublisher"/>. </summary>
+        internal HybridComputeExtensionPublisher()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionPublisher"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeExtensionPublisher"/>. </summary>
         /// <param name="id"> The ID of the extension publisher. </param>
         /// <param name="name"> The name of the extension publisher. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtensionPublisher(string id, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HybridComputeExtensionPublisher(string id, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

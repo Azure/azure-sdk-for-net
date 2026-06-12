@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (MachineRunCommandData item in Value)
+            foreach (HybridComputeMachineRunCommandData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            IList<MachineRunCommandData> value = default;
+            IList<HybridComputeMachineRunCommandData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<MachineRunCommandData> array = new List<MachineRunCommandData>();
+                    List<HybridComputeMachineRunCommandData> array = new List<HybridComputeMachineRunCommandData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MachineRunCommandData.DeserializeMachineRunCommandData(item, options));
+                        array.Add(HybridComputeMachineRunCommandData.DeserializeHybridComputeMachineRunCommandData(item, options));
                     }
                     value = array;
                     continue;

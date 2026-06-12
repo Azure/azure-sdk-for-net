@@ -15,7 +15,7 @@ using Azure.ResourceManager.HybridCompute.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    internal partial class MachineRunCommandsGetAllAsyncCollectionResultOfT : AsyncPageable<MachineRunCommandData>
+    internal partial class MachineRunCommandsGetAllAsyncCollectionResultOfT : AsyncPageable<HybridComputeMachineRunCommandData>
     {
         private readonly MachineRunCommands _client;
         private readonly string _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of MachineRunCommandsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<MachineRunCommandData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<HybridComputeMachineRunCommandData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridCompute
                     yield break;
                 }
                 MachineRunCommandsListResult result = MachineRunCommandsListResult.FromResponse(response);
-                yield return Page<MachineRunCommandData>.FromValues((IReadOnlyList<MachineRunCommandData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HybridComputeMachineRunCommandData>.FromValues((IReadOnlyList<HybridComputeMachineRunCommandData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

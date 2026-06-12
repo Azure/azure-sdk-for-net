@@ -893,12 +893,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="errorBlobManagedIdentity"> User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="instanceView"> The machine run command instance view. </param>
-        /// <returns> A new <see cref="HybridCompute.MachineRunCommandData"/> instance for mocking. </returns>
-        public static MachineRunCommandData MachineRunCommandData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineRunCommandScriptSource source = default, IEnumerable<RunCommandInputContent> parameters = default, IEnumerable<RunCommandInputContent> protectedParameters = default, bool? isAsyncExecution = default, string runAsUser = default, string runAsPassword = default, int? timeoutInSeconds = default, Uri outputBlobUri = default, Uri errorBlobUri = default, RunCommandManagedIdentity outputBlobManagedIdentity = default, RunCommandManagedIdentity errorBlobManagedIdentity = default, string provisioningState = default, MachineRunCommandInstanceView instanceView = default)
+        /// <returns> A new <see cref="HybridCompute.HybridComputeMachineRunCommandData"/> instance for mocking. </returns>
+        public static HybridComputeMachineRunCommandData HybridComputeMachineRunCommandData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineRunCommandScriptSource source = default, IEnumerable<RunCommandInputContent> parameters = default, IEnumerable<RunCommandInputContent> protectedParameters = default, bool? isAsyncExecution = default, string runAsUser = default, string runAsPassword = default, int? timeoutInSeconds = default, Uri outputBlobUri = default, Uri errorBlobUri = default, RunCommandManagedIdentity outputBlobManagedIdentity = default, RunCommandManagedIdentity errorBlobManagedIdentity = default, string provisioningState = default, MachineRunCommandInstanceView instanceView = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new MachineRunCommandData(
+            return new HybridComputeMachineRunCommandData(
                 id,
                 name,
                 resourceType,
@@ -1322,10 +1322,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="extensionSignatureUri"> Location of the signature files for the extension. </param>
         /// <param name="operatingSystem"> The operating system (Windows, Linux, etc.) this extension supports. </param>
         /// <param name="architecture"> Architectures (x64, arms64, etc.) that this extension supports. </param>
-        /// <returns> A new <see cref="HybridCompute.ExtensionValueV2Data"/> instance for mocking. </returns>
-        public static ExtensionValueV2Data ExtensionValueV2Data(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string version = default, string extensionType = default, string publisher = default, IEnumerable<Uri> extensionUris = default, Uri extensionSignatureUri = default, string operatingSystem = default, IEnumerable<string> architecture = default)
+        /// <returns> A new <see cref="HybridCompute.HybridComputeExtensionValueV2Data"/> instance for mocking. </returns>
+        public static HybridComputeExtensionValueV2Data HybridComputeExtensionValueV2Data(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string version = default, string extensionType = default, string publisher = default, IEnumerable<Uri> extensionUris = default, Uri extensionSignatureUri = default, string operatingSystem = default, IEnumerable<string> architecture = default)
         {
-            return new ExtensionValueV2Data(
+            return new HybridComputeExtensionValueV2Data(
                 id,
                 name,
                 resourceType,
@@ -1370,10 +1370,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <param name="id"> The ID of the extension publisher. </param>
         /// <param name="name"> The name of the extension publisher. </param>
-        /// <returns> A new <see cref="Models.ExtensionPublisher"/> instance for mocking. </returns>
-        public static ExtensionPublisher ExtensionPublisher(string id = default, string name = default)
+        /// <returns> A new <see cref="Models.HybridComputeExtensionPublisher"/> instance for mocking. </returns>
+        public static HybridComputeExtensionPublisher HybridComputeExtensionPublisher(string id = default, string name = default)
         {
-            return new ExtensionPublisher(id, name, default);
+            return new HybridComputeExtensionPublisher(id, name, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LicenseProfileMachineInstanceView"/>. </summary>

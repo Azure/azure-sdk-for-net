@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetValidationDetailsForMachineRequest(string subscriptionId, string resourceGroupName, string machineName, RequestContext context)
+        internal HttpMessage CreateGetValidationDetailsForMachinePrivateLinkScopeRequest(string subscriptionId, string resourceGroupName, string machineName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary> Describes a Run Command. </summary>
-    public partial class MachineRunCommandData : TrackedResourceData, IJsonModel<MachineRunCommandData>
+    public partial class HybridComputeMachineRunCommandData : TrackedResourceData, IJsonModel<HybridComputeMachineRunCommandData>
     {
-        /// <summary> Initializes a new instance of <see cref="MachineRunCommandData"/> for deserialization. </summary>
-        internal MachineRunCommandData()
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineRunCommandData"/> for deserialization. </summary>
+        internal HybridComputeMachineRunCommandData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeMachineRunCommandData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMachineRunCommandData(document.RootElement, options);
+                        return DeserializeHybridComputeMachineRunCommandData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeMachineRunCommandData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeMachineRunCommandData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeMachineRunCommandData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MachineRunCommandData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HybridComputeMachineRunCommandData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MachineRunCommandData IPersistableModel<MachineRunCommandData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MachineRunCommandData)PersistableModelCreateCore(data, options);
+        HybridComputeMachineRunCommandData IPersistableModel<HybridComputeMachineRunCommandData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HybridComputeMachineRunCommandData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MachineRunCommandData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeMachineRunCommandData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="machineRunCommandData"> The <see cref="MachineRunCommandData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MachineRunCommandData machineRunCommandData)
+        /// <param name="hybridComputeMachineRunCommandData"> The <see cref="HybridComputeMachineRunCommandData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HybridComputeMachineRunCommandData hybridComputeMachineRunCommandData)
         {
-            if (machineRunCommandData == null)
+            if (hybridComputeMachineRunCommandData == null)
             {
                 return null;
             }
-            return RequestContent.Create(machineRunCommandData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(hybridComputeMachineRunCommandData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MachineRunCommandData"/> from. </param>
-        internal static MachineRunCommandData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HybridComputeMachineRunCommandData"/> from. </param>
+        internal static HybridComputeMachineRunCommandData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeHybridComputeMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MachineRunCommandData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeMachineRunCommandData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeMachineRunCommandData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeMachineRunCommandData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MachineRunCommandData IJsonModel<MachineRunCommandData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MachineRunCommandData)JsonModelCreateCore(ref reader, options);
+        HybridComputeMachineRunCommandData IJsonModel<HybridComputeMachineRunCommandData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HybridComputeMachineRunCommandData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeMachineRunCommandData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeMachineRunCommandData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMachineRunCommandData(document.RootElement, options);
+            return DeserializeHybridComputeMachineRunCommandData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MachineRunCommandData DeserializeMachineRunCommandData(JsonElement element, ModelReaderWriterOptions options)
+        internal static HybridComputeMachineRunCommandData DeserializeHybridComputeMachineRunCommandData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.HybridCompute
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MachineRunCommandData(
+            return new HybridComputeMachineRunCommandData(
                 id,
                 name,
                 resourceType,

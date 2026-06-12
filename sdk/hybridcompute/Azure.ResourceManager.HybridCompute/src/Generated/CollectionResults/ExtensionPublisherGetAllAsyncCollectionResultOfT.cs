@@ -15,7 +15,7 @@ using Azure.ResourceManager.HybridCompute.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    internal partial class ExtensionPublisherGetAllAsyncCollectionResultOfT : AsyncPageable<Models.ExtensionPublisher>
+    internal partial class ExtensionPublisherGetAllAsyncCollectionResultOfT : AsyncPageable<HybridComputeExtensionPublisher>
     {
         private readonly ExtensionPublisher _client;
         private readonly string _location;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ExtensionPublisherGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<Models.ExtensionPublisher>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<HybridComputeExtensionPublisher>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridCompute
                     yield break;
                 }
                 ExtensionPublisherListResult result = ExtensionPublisherListResult.FromResponse(response);
-                yield return Page<Models.ExtensionPublisher>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<HybridComputeExtensionPublisher>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

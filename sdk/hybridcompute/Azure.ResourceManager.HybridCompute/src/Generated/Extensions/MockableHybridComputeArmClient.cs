@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return new HybridComputeMachineExtensionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="MachineRunCommandResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HybridComputeMachineRunCommandResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineRunCommandResource"/> object. </returns>
-        public virtual MachineRunCommandResource GetMachineRunCommandResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridComputeMachineRunCommandResource"/> object. </returns>
+        public virtual HybridComputeMachineRunCommandResource GetHybridComputeMachineRunCommandResource(ResourceIdentifier id)
         {
-            MachineRunCommandResource.ValidateResourceId(id);
-            return new MachineRunCommandResource(Client, id);
+            HybridComputeMachineRunCommandResource.ValidateResourceId(id);
+            return new HybridComputeMachineRunCommandResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ArcGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             return new HybridComputeExtensionValueResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ExtensionValueV2Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HybridComputeExtensionValueV2Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExtensionValueV2Resource"/> object. </returns>
-        public virtual ExtensionValueV2Resource GetExtensionValueV2Resource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridComputeExtensionValueV2Resource"/> object. </returns>
+        public virtual HybridComputeExtensionValueV2Resource GetHybridComputeExtensionValueV2Resource(ResourceIdentifier id)
         {
-            ExtensionValueV2Resource.ValidateResourceId(id);
-            return new ExtensionValueV2Resource(Client, id);
+            HybridComputeExtensionValueV2Resource.ValidateResourceId(id);
+            return new HybridComputeExtensionValueV2Resource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="HybridComputeSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>

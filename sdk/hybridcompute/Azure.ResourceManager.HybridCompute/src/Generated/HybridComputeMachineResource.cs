@@ -537,9 +537,9 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateLinkScopeValidationDetails>> GetValidationDetailsForMachineAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkScopeValidationDetails>> GetValidationDetailsForMachinePrivateLinkScopeAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("HybridComputeMachineResource.GetValidationDetailsForMachine");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("HybridComputeMachineResource.GetValidationDetailsForMachinePrivateLinkScope");
             scope.Start();
             try
             {
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetValidationDetailsForMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetValidationDetailsForMachinePrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateLinkScopeValidationDetails> response = Response.FromValue(PrivateLinkScopeValidationDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -585,9 +585,9 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkScopeValidationDetails> GetValidationDetailsForMachine(CancellationToken cancellationToken = default)
+        public virtual Response<PrivateLinkScopeValidationDetails> GetValidationDetailsForMachinePrivateLinkScope(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("HybridComputeMachineResource.GetValidationDetailsForMachine");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("HybridComputeMachineResource.GetValidationDetailsForMachinePrivateLinkScope");
             scope.Start();
             try
             {
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.HybridCompute
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopesRestClient.CreateGetValidationDetailsForMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetValidationDetailsForMachinePrivateLinkScopeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateLinkScopeValidationDetails> response = Response.FromValue(PrivateLinkScopeValidationDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -1379,11 +1379,11 @@ namespace Azure.ResourceManager.HybridCompute
             return GetHybridComputeMachineExtensions().Get(extensionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MachineRunCommands in the <see cref="HybridComputeMachineResource"/>. </summary>
-        /// <returns> An object representing collection of MachineRunCommands and their operations over a MachineRunCommandResource. </returns>
-        public virtual MachineRunCommandCollection GetMachineRunCommands()
+        /// <summary> Gets a collection of HybridComputeMachineRunCommands in the <see cref="HybridComputeMachineResource"/>. </summary>
+        /// <returns> An object representing collection of HybridComputeMachineRunCommands and their operations over a HybridComputeMachineRunCommandResource. </returns>
+        public virtual HybridComputeMachineRunCommandCollection GetHybridComputeMachineRunCommands()
         {
-            return GetCachedClient(client => new MachineRunCommandCollection(client, Id));
+            return GetCachedClient(client => new HybridComputeMachineRunCommandCollection(client, Id));
         }
 
         /// <summary> The operation to get a run command. </summary>
@@ -1392,11 +1392,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MachineRunCommandResource>> GetMachineRunCommandAsync(string runCommandName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeMachineRunCommandResource>> GetHybridComputeMachineRunCommandAsync(string runCommandName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            return await GetMachineRunCommands().GetAsync(runCommandName, cancellationToken).ConfigureAwait(false);
+            return await GetHybridComputeMachineRunCommands().GetAsync(runCommandName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The operation to get a run command. </summary>
@@ -1405,11 +1405,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="runCommandName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runCommandName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MachineRunCommandResource> GetMachineRunCommand(string runCommandName, CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeMachineRunCommandResource> GetHybridComputeMachineRunCommand(string runCommandName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runCommandName, nameof(runCommandName));
 
-            return GetMachineRunCommands().Get(runCommandName, cancellationToken);
+            return GetHybridComputeMachineRunCommands().Get(runCommandName, cancellationToken);
         }
     }
 }

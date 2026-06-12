@@ -20,11 +20,11 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExtensionValueV2Resource"/> and their operations.
-    /// Each <see cref="ExtensionValueV2Resource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
-    /// To get a <see cref="ExtensionValueV2Collection"/> instance call the GetExtensionValueV2s method from an instance of <see cref="TenantResource"/>.
+    /// A class representing a collection of <see cref="HybridComputeExtensionValueV2Resource"/> and their operations.
+    /// Each <see cref="HybridComputeExtensionValueV2Resource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="HybridComputeExtensionValueV2Collection"/> instance call the GetHybridComputeExtensionValueV2s method from an instance of <see cref="TenantResource"/>.
     /// </summary>
-    public partial class ExtensionValueV2Collection : ArmCollection, IEnumerable<ExtensionValueV2Resource>, IAsyncEnumerable<ExtensionValueV2Resource>
+    public partial class HybridComputeExtensionValueV2Collection : ArmCollection, IEnumerable<HybridComputeExtensionValueV2Resource>, IAsyncEnumerable<HybridComputeExtensionValueV2Resource>
     {
         private readonly ClientDiagnostics _extensionMetadataV2ClientDiagnostics;
         private readonly ExtensionMetadataV2 _extensionMetadataV2RestClient;
@@ -35,25 +35,25 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> The extensionType. </summary>
         private readonly string _extensionType;
 
-        /// <summary> Initializes a new instance of ExtensionValueV2Collection for mocking. </summary>
-        protected ExtensionValueV2Collection()
+        /// <summary> Initializes a new instance of HybridComputeExtensionValueV2Collection for mocking. </summary>
+        protected HybridComputeExtensionValueV2Collection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionValueV2Collection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeExtensionValueV2Collection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="publisher"> The publisher for the resource. </param>
         /// <param name="extensionType"> The extensionType for the resource. </param>
-        internal ExtensionValueV2Collection(ArmClient client, ResourceIdentifier id, AzureLocation location, string publisher, string extensionType) : base(client, id)
+        internal HybridComputeExtensionValueV2Collection(ArmClient client, ResourceIdentifier id, AzureLocation location, string publisher, string extensionType) : base(client, id)
         {
-            TryGetApiVersion(ExtensionValueV2Resource.ResourceType, out string extensionValueV2ApiVersion);
+            TryGetApiVersion(HybridComputeExtensionValueV2Resource.ResourceType, out string hybridComputeExtensionValueV2ApiVersion);
             _location = location;
             _publisher = publisher;
             _extensionType = extensionType;
-            _extensionMetadataV2ClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ExtensionValueV2Resource.ResourceType.Namespace, Diagnostics);
-            _extensionMetadataV2RestClient = new ExtensionMetadataV2(_extensionMetadataV2ClientDiagnostics, Pipeline, Endpoint, extensionValueV2ApiVersion ?? "2025-09-16-preview");
+            _extensionMetadataV2ClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeExtensionValueV2Resource.ResourceType.Namespace, Diagnostics);
+            _extensionMetadataV2RestClient = new ExtensionMetadataV2(_extensionMetadataV2ClientDiagnostics, Pipeline, Endpoint, hybridComputeExtensionValueV2ApiVersion ?? "2025-09-16-preview");
             ValidateResourceId(id);
         }
 
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ExtensionValueV2Resource>> GetAsync(string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeExtensionValueV2Resource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("ExtensionValueV2Collection.Get");
+            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("HybridComputeExtensionValueV2Collection.Get");
             scope.Start();
             try
             {
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.HybridCompute
                 };
                 HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ExtensionValueV2Data> response = Response.FromValue(ExtensionValueV2Data.FromResponse(result), result);
+                Response<HybridComputeExtensionValueV2Data> response = Response.FromValue(HybridComputeExtensionValueV2Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExtensionValueV2Resource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeExtensionValueV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ExtensionValueV2Resource> Get(string version, CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeExtensionValueV2Resource> Get(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("ExtensionValueV2Collection.Get");
+            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("HybridComputeExtensionValueV2Collection.Get");
             scope.Start();
             try
             {
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.HybridCompute
                 };
                 HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ExtensionValueV2Data> response = Response.FromValue(ExtensionValueV2Data.FromResponse(result), result);
+                Response<HybridComputeExtensionValueV2Data> response = Response.FromValue(HybridComputeExtensionValueV2Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExtensionValueV2Resource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeExtensionValueV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,20 +183,20 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExtensionValueV2Resource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExtensionValueV2Resource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeExtensionValueV2Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridComputeExtensionValueV2Resource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExtensionValueV2Data, ExtensionValueV2Resource>(new ExtensionMetadataV2GetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HybridComputeExtensionValueV2Data, HybridComputeExtensionValueV2Resource>(new ExtensionMetadataV2GetAllAsyncCollectionResultOfT(
                 _extensionMetadataV2RestClient,
                 _location,
                 _publisher,
                 _extensionType,
                 context,
-                "ExtensionValueV2Collection.GetAll"), data => new ExtensionValueV2Resource(Client, data));
+                "HybridComputeExtensionValueV2Collection.GetAll"), data => new HybridComputeExtensionValueV2Resource(Client, data));
         }
 
         /// <summary>
@@ -217,20 +217,20 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExtensionValueV2Resource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExtensionValueV2Resource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeExtensionValueV2Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridComputeExtensionValueV2Resource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExtensionValueV2Data, ExtensionValueV2Resource>(new ExtensionMetadataV2GetAllCollectionResultOfT(
+            return new PageableWrapper<HybridComputeExtensionValueV2Data, HybridComputeExtensionValueV2Resource>(new ExtensionMetadataV2GetAllCollectionResultOfT(
                 _extensionMetadataV2RestClient,
                 _location,
                 _publisher,
                 _extensionType,
                 context,
-                "ExtensionValueV2Collection.GetAll"), data => new ExtensionValueV2Resource(Client, data));
+                "HybridComputeExtensionValueV2Collection.GetAll"), data => new HybridComputeExtensionValueV2Resource(Client, data));
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("ExtensionValueV2Collection.Exists");
+            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("HybridComputeExtensionValueV2Collection.Exists");
             scope.Start();
             try
             {
@@ -269,14 +269,14 @@ namespace Azure.ResourceManager.HybridCompute
                 HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ExtensionValueV2Data> response = default;
+                Response<HybridComputeExtensionValueV2Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExtensionValueV2Data.FromResponse(result), result);
+                        response = Response.FromValue(HybridComputeExtensionValueV2Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExtensionValueV2Data)null, result);
+                        response = Response.FromValue((HybridComputeExtensionValueV2Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("ExtensionValueV2Collection.Exists");
+            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("HybridComputeExtensionValueV2Collection.Exists");
             scope.Start();
             try
             {
@@ -326,14 +326,14 @@ namespace Azure.ResourceManager.HybridCompute
                 HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ExtensionValueV2Data> response = default;
+                Response<HybridComputeExtensionValueV2Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExtensionValueV2Data.FromResponse(result), result);
+                        response = Response.FromValue(HybridComputeExtensionValueV2Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExtensionValueV2Data)null, result);
+                        response = Response.FromValue((HybridComputeExtensionValueV2Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -368,11 +368,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ExtensionValueV2Resource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<HybridComputeExtensionValueV2Resource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("ExtensionValueV2Collection.GetIfExists");
+            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("HybridComputeExtensionValueV2Collection.GetIfExists");
             scope.Start();
             try
             {
@@ -383,23 +383,23 @@ namespace Azure.ResourceManager.HybridCompute
                 HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ExtensionValueV2Data> response = default;
+                Response<HybridComputeExtensionValueV2Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExtensionValueV2Data.FromResponse(result), result);
+                        response = Response.FromValue(HybridComputeExtensionValueV2Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExtensionValueV2Data)null, result);
+                        response = Response.FromValue((HybridComputeExtensionValueV2Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ExtensionValueV2Resource>(response.GetRawResponse());
+                    return new NoValueResponse<HybridComputeExtensionValueV2Resource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExtensionValueV2Resource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeExtensionValueV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -429,11 +429,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ExtensionValueV2Resource> GetIfExists(string version, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<HybridComputeExtensionValueV2Resource> GetIfExists(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("ExtensionValueV2Collection.GetIfExists");
+            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("HybridComputeExtensionValueV2Collection.GetIfExists");
             scope.Start();
             try
             {
@@ -444,23 +444,23 @@ namespace Azure.ResourceManager.HybridCompute
                 HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(_location, _publisher, _extensionType, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ExtensionValueV2Data> response = default;
+                Response<HybridComputeExtensionValueV2Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExtensionValueV2Data.FromResponse(result), result);
+                        response = Response.FromValue(HybridComputeExtensionValueV2Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExtensionValueV2Data)null, result);
+                        response = Response.FromValue((HybridComputeExtensionValueV2Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ExtensionValueV2Resource>(response.GetRawResponse());
+                    return new NoValueResponse<HybridComputeExtensionValueV2Resource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExtensionValueV2Resource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeExtensionValueV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        IEnumerator<ExtensionValueV2Resource> IEnumerable<ExtensionValueV2Resource>.GetEnumerator()
+        IEnumerator<HybridComputeExtensionValueV2Resource> IEnumerable<HybridComputeExtensionValueV2Resource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ExtensionValueV2Resource> IAsyncEnumerable<ExtensionValueV2Resource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HybridComputeExtensionValueV2Resource> IAsyncEnumerable<HybridComputeExtensionValueV2Resource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

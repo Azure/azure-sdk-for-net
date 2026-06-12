@@ -14,18 +14,18 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary> Describes a Run Command. </summary>
-    public partial class MachineRunCommandData : TrackedResourceData
+    public partial class HybridComputeMachineRunCommandData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MachineRunCommandData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineRunCommandData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public MachineRunCommandData(AzureLocation location) : base(location)
+        public HybridComputeMachineRunCommandData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineRunCommandData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineRunCommandData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes Run Command Properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineRunCommandData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineRunCommandProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal HybridComputeMachineRunCommandData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineRunCommandProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

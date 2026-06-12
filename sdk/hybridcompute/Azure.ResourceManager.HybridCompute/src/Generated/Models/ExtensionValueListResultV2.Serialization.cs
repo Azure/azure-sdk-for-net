@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ExtensionValueV2Data item in Value)
+                foreach (HybridComputeExtensionValueV2Data item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,17 +139,17 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 return null;
             }
-            IReadOnlyList<ExtensionValueV2Data> value = default;
+            IReadOnlyList<HybridComputeExtensionValueV2Data> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ExtensionValueV2Data> array = new List<ExtensionValueV2Data>();
+                    List<HybridComputeExtensionValueV2Data> array = new List<HybridComputeExtensionValueV2Data>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionValueV2Data.DeserializeExtensionValueV2Data(item, options));
+                        array.Add(HybridComputeExtensionValueV2Data.DeserializeHybridComputeExtensionValueV2Data(item, options));
                     }
                     value = array;
                     continue;

@@ -117,21 +117,21 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MachineRunCommandResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="HybridComputeMachineRunCommandResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetMachineRunCommandResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetHybridComputeMachineRunCommandResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineRunCommandResource"/> object. </returns>
-        public static MachineRunCommandResource GetMachineRunCommandResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridComputeMachineRunCommandResource"/> object. </returns>
+        public static HybridComputeMachineRunCommandResource GetHybridComputeMachineRunCommandResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHybridComputeArmClient(client).GetMachineRunCommandResource(id);
+            return GetMockableHybridComputeArmClient(client).GetHybridComputeMachineRunCommandResource(id);
         }
 
         /// <summary>
@@ -243,21 +243,21 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ExtensionValueV2Resource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="HybridComputeExtensionValueV2Resource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetExtensionValueV2Resource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetHybridComputeExtensionValueV2Resource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ExtensionValueV2Resource"/> object. </returns>
-        public static ExtensionValueV2Resource GetExtensionValueV2Resource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridComputeExtensionValueV2Resource"/> object. </returns>
+        public static HybridComputeExtensionValueV2Resource GetHybridComputeExtensionValueV2Resource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHybridComputeArmClient(client).GetExtensionValueV2Resource(id);
+            return GetMockableHybridComputeArmClient(client).GetHybridComputeExtensionValueV2Resource(id);
         }
 
         /// <summary>
@@ -803,10 +803,10 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Gets a collection of ExtensionValueV2s in the <see cref="TenantResource"/>
+        /// Gets a collection of HybridComputeExtensionValueV2s in the <see cref="TenantResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeTenantResource.GetExtensionValueV2s(AzureLocation, string, string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeTenantResource.GetHybridComputeExtensionValueV2s(AzureLocation, string, string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -814,19 +814,19 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="publisher"> The publisher for the resource. </param>
         /// <param name="extensionType"> The extensionType for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of ExtensionValueV2s and their operations over a ExtensionValueV2Resource. </returns>
-        public static ExtensionValueV2Collection GetExtensionValueV2s(this TenantResource tenantResource, AzureLocation location, string publisher, string extensionType)
+        /// <returns> An object representing collection of HybridComputeExtensionValueV2s and their operations over a HybridComputeExtensionValueV2Resource. </returns>
+        public static HybridComputeExtensionValueV2Collection GetHybridComputeExtensionValueV2s(this TenantResource tenantResource, AzureLocation location, string publisher, string extensionType)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableHybridComputeTenantResource(tenantResource).GetExtensionValueV2s(location, publisher, extensionType);
+            return GetMockableHybridComputeTenantResource(tenantResource).GetHybridComputeExtensionValueV2s(location, publisher, extensionType);
         }
 
         /// <summary>
         /// Gets an Extension Metadata based on location, publisher, extensionType and version
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeTenantResource.GetExtensionValueV2Async(AzureLocation, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeTenantResource.GetHybridComputeExtensionValueV2Async(AzureLocation, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -837,18 +837,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ExtensionValueV2Resource>> GetExtensionValueV2Async(this TenantResource tenantResource, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public static async Task<Response<HybridComputeExtensionValueV2Resource>> GetHybridComputeExtensionValueV2Async(this TenantResource tenantResource, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableHybridComputeTenantResource(tenantResource).GetExtensionValueV2Async(location, publisher, extensionType, version, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridComputeTenantResource(tenantResource).GetHybridComputeExtensionValueV2Async(location, publisher, extensionType, version, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an Extension Metadata based on location, publisher, extensionType and version
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHybridComputeTenantResource.GetExtensionValueV2(AzureLocation, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHybridComputeTenantResource.GetHybridComputeExtensionValueV2(AzureLocation, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
@@ -859,11 +859,11 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ExtensionValueV2Resource> GetExtensionValueV2(this TenantResource tenantResource, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public static Response<HybridComputeExtensionValueV2Resource> GetHybridComputeExtensionValueV2(this TenantResource tenantResource, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableHybridComputeTenantResource(tenantResource).GetExtensionValueV2(location, publisher, extensionType, version, cancellationToken);
+            return GetMockableHybridComputeTenantResource(tenantResource).GetHybridComputeExtensionValueV2(location, publisher, extensionType, version, cancellationToken);
         }
 
         /// <summary>
@@ -953,8 +953,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.ExtensionPublisher"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.ExtensionPublisher> GetAllAsync(this TenantResource tenantResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeExtensionPublisher"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HybridComputeExtensionPublisher> GetAllAsync(this TenantResource tenantResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -972,8 +972,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Models.ExtensionPublisher"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.ExtensionPublisher> GetAll(this TenantResource tenantResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeExtensionPublisher"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HybridComputeExtensionPublisher> GetAll(this TenantResource tenantResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

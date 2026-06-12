@@ -18,58 +18,58 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary> Describes an Extension Metadata. </summary>
-    public partial class ExtensionValueV2Data : ResourceData, IJsonModel<ExtensionValueV2Data>
+    public partial class HybridComputeExtensionValueV2Data : ResourceData, IJsonModel<HybridComputeExtensionValueV2Data>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionValueV2Data>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeExtensionValueV2Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExtensionValueV2Data(document.RootElement, options);
+                        return DeserializeHybridComputeExtensionValueV2Data(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionValueV2Data)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeExtensionValueV2Data)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionValueV2Data>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeExtensionValueV2Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionValueV2Data)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeExtensionValueV2Data)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExtensionValueV2Data>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HybridComputeExtensionValueV2Data>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExtensionValueV2Data IPersistableModel<ExtensionValueV2Data>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExtensionValueV2Data)PersistableModelCreateCore(data, options);
+        HybridComputeExtensionValueV2Data IPersistableModel<HybridComputeExtensionValueV2Data>.Create(BinaryData data, ModelReaderWriterOptions options) => (HybridComputeExtensionValueV2Data)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExtensionValueV2Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HybridComputeExtensionValueV2Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExtensionValueV2Data"/> from. </param>
-        internal static ExtensionValueV2Data FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HybridComputeExtensionValueV2Data"/> from. </param>
+        internal static HybridComputeExtensionValueV2Data FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeExtensionValueV2Data(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeHybridComputeExtensionValueV2Data(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExtensionValueV2Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HybridComputeExtensionValueV2Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionValueV2Data>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeExtensionValueV2Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionValueV2Data)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeExtensionValueV2Data)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExtensionValueV2Data IJsonModel<ExtensionValueV2Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExtensionValueV2Data)JsonModelCreateCore(ref reader, options);
+        HybridComputeExtensionValueV2Data IJsonModel<HybridComputeExtensionValueV2Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HybridComputeExtensionValueV2Data)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExtensionValueV2Data>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridComputeExtensionValueV2Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionValueV2Data)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeExtensionValueV2Data)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExtensionValueV2Data(document.RootElement, options);
+            return DeserializeHybridComputeExtensionValueV2Data(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExtensionValueV2Data DeserializeExtensionValueV2Data(JsonElement element, ModelReaderWriterOptions options)
+        internal static HybridComputeExtensionValueV2Data DeserializeHybridComputeExtensionValueV2Data(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.HybridCompute
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExtensionValueV2Data(
+            return new HybridComputeExtensionValueV2Data(
                 id,
                 name,
                 resourceType,

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary></summary>
-    internal partial class MachineRunCommandResourceOperationSource : IOperationSource<MachineRunCommandResource>
+    internal partial class HybridComputeMachineRunCommandResourceOperationSource : IOperationSource<HybridComputeMachineRunCommandResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal MachineRunCommandResourceOperationSource(ArmClient client)
+        internal HybridComputeMachineRunCommandResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        MachineRunCommandResource IOperationSource<MachineRunCommandResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        HybridComputeMachineRunCommandResource IOperationSource<HybridComputeMachineRunCommandResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            MachineRunCommandData data = MachineRunCommandData.DeserializeMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new MachineRunCommandResource(_client, data);
+            HybridComputeMachineRunCommandData data = HybridComputeMachineRunCommandData.DeserializeHybridComputeMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HybridComputeMachineRunCommandResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<MachineRunCommandResource> IOperationSource<MachineRunCommandResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<HybridComputeMachineRunCommandResource> IOperationSource<HybridComputeMachineRunCommandResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            MachineRunCommandData data = MachineRunCommandData.DeserializeMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new MachineRunCommandResource(_client, data);
+            HybridComputeMachineRunCommandData data = HybridComputeMachineRunCommandData.DeserializeHybridComputeMachineRunCommandData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HybridComputeMachineRunCommandResource(_client, data);
         }
     }
 }

@@ -37,21 +37,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
         }
 
-        internal static HybridComputeLicense FromData(HybridComputeLicenseData data)
-        {
-            if (data is null)
-            {
-                return null;
-            }
-
-            if (data is HybridComputeLicense license)
-            {
-                return license;
-            }
-
-            return new HybridComputeLicense(data.Id, data.Name, data.ResourceType, data.SystemData, additionalBinaryDataProperties: null, data.Tags, data.Location, data.ProvisioningState, data.TenantId, data.LicenseType, data.LicenseDetails);
-        }
-
-        internal HybridComputeLicenseData ToData() => this;
+        /// <summary> Converts the model to <see cref="HybridComputeLicenseData"/>. </summary>
+        public HybridComputeLicenseData ToData() => this;
     }
 }

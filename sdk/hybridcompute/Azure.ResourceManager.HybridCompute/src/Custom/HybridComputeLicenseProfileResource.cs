@@ -12,7 +12,8 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class HybridComputeLicenseProfileResource
     {
-        // Backward-compat justification: the GA license profile resource exposed create/update methods on the resource type.
+        // Backward-compat justification: TypeSpec generation places license profile create-or-update on the collection,
+        // but the GA SDK exposed this PUT operation as resource-level CreateOrUpdate methods.
         /// <summary> The operation to create or update a license profile. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. </param>
         /// <param name="data"> Parameters supplied to the Create or Update license profile operation. </param>

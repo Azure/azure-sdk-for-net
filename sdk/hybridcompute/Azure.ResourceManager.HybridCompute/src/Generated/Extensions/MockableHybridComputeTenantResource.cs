@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
 
         private ExtensionPublisher ExtensionPublisherRestClient => _extensionPublisherRestClient ??= new ExtensionPublisher(ExtensionPublisherClientDiagnostics, Pipeline, Endpoint, "2025-09-16-preview");
 
-        /// <summary> Gets a collection of ExtensionValueV2s in the <see cref="TenantResource"/>. </summary>
+        /// <summary> Gets a collection of HybridComputeExtensionValueV2s in the <see cref="TenantResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
         /// <param name="publisher"> The publisher for the resource. </param>
         /// <param name="extensionType"> The extensionType for the resource. </param>
-        /// <returns> An object representing collection of ExtensionValueV2s and their operations over a ExtensionValueV2Resource. </returns>
-        public virtual ExtensionValueV2Collection GetExtensionValueV2s(AzureLocation location, string publisher, string extensionType)
+        /// <returns> An object representing collection of HybridComputeExtensionValueV2s and their operations over a HybridComputeExtensionValueV2Resource. </returns>
+        public virtual HybridComputeExtensionValueV2Collection GetHybridComputeExtensionValueV2s(AzureLocation location, string publisher, string extensionType)
         {
-            return GetCachedClient(client => new ExtensionValueV2Collection(client, Id, location, publisher, extensionType));
+            return GetCachedClient(client => new HybridComputeExtensionValueV2Collection(client, Id, location, publisher, extensionType));
         }
 
         /// <summary>
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExtensionValueV2Resource>> GetExtensionValueV2Async(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeExtensionValueV2Resource>> GetHybridComputeExtensionValueV2Async(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return await GetExtensionValueV2s(location, publisher, extensionType).GetAsync(version, cancellationToken).ConfigureAwait(false);
+            return await GetHybridComputeExtensionValueV2s(location, publisher, extensionType).GetAsync(version, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExtensionValueV2Resource> GetExtensionValueV2(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeExtensionValueV2Resource> GetHybridComputeExtensionValueV2(AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return GetExtensionValueV2s(location, publisher, extensionType).Get(version, cancellationToken);
+            return GetHybridComputeExtensionValueV2s(location, publisher, extensionType).Get(version, cancellationToken);
         }
 
         /// <summary>
@@ -273,8 +273,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Models.ExtensionPublisher"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Models.ExtensionPublisher> GetAllAsync(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeExtensionPublisher"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridComputeExtensionPublisher> GetAllAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -306,8 +306,8 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="Models.ExtensionPublisher"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Models.ExtensionPublisher> GetAll(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeExtensionPublisher"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridComputeExtensionPublisher> GetAll(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 

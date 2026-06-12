@@ -18,40 +18,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
-    /// A class representing a ExtensionValueV2 along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ExtensionValueV2Resource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetExtensionValueV2s method.
+    /// A class representing a HybridComputeExtensionValueV2 along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HybridComputeExtensionValueV2Resource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetHybridComputeExtensionValueV2s method.
     /// </summary>
-    public partial class ExtensionValueV2Resource : ArmResource
+    public partial class HybridComputeExtensionValueV2Resource : ArmResource
     {
         private readonly ClientDiagnostics _extensionMetadataV2ClientDiagnostics;
         private readonly ExtensionMetadataV2 _extensionMetadataV2RestClient;
-        private readonly ExtensionValueV2Data _data;
+        private readonly HybridComputeExtensionValueV2Data _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/locations/publishers/extensionTypes/versions";
 
-        /// <summary> Initializes a new instance of ExtensionValueV2Resource for mocking. </summary>
-        protected ExtensionValueV2Resource()
+        /// <summary> Initializes a new instance of HybridComputeExtensionValueV2Resource for mocking. </summary>
+        protected HybridComputeExtensionValueV2Resource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionValueV2Resource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeExtensionValueV2Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExtensionValueV2Resource(ArmClient client, ExtensionValueV2Data data) : this(client, data.Id)
+        internal HybridComputeExtensionValueV2Resource(ArmClient client, HybridComputeExtensionValueV2Data data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtensionValueV2Resource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeExtensionValueV2Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ExtensionValueV2Resource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HybridComputeExtensionValueV2Resource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string extensionValueV2ApiVersion);
+            TryGetApiVersion(ResourceType, out string hybridComputeExtensionValueV2ApiVersion);
             _extensionMetadataV2ClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", ResourceType.Namespace, Diagnostics);
-            _extensionMetadataV2RestClient = new ExtensionMetadataV2(_extensionMetadataV2ClientDiagnostics, Pipeline, Endpoint, extensionValueV2ApiVersion ?? "2025-09-16-preview");
+            _extensionMetadataV2RestClient = new ExtensionMetadataV2(_extensionMetadataV2ClientDiagnostics, Pipeline, Endpoint, hybridComputeExtensionValueV2ApiVersion ?? "2025-09-16-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ExtensionValueV2Data Data
+        public virtual HybridComputeExtensionValueV2Data Data
         {
             get
             {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ExtensionValueV2Resource"/>. </description>
+        /// <description> <see cref="HybridComputeExtensionValueV2Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExtensionValueV2Resource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeExtensionValueV2Resource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("ExtensionValueV2Resource.Get");
+            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("HybridComputeExtensionValueV2Resource.Get");
             scope.Start();
             try
             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.HybridCompute
                 };
                 HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ExtensionValueV2Data> response = Response.FromValue(ExtensionValueV2Data.FromResponse(result), result);
+                Response<HybridComputeExtensionValueV2Data> response = Response.FromValue(HybridComputeExtensionValueV2Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExtensionValueV2Resource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeExtensionValueV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ExtensionValueV2Resource"/>. </description>
+        /// <description> <see cref="HybridComputeExtensionValueV2Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExtensionValueV2Resource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeExtensionValueV2Resource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("ExtensionValueV2Resource.Get");
+            using DiagnosticScope scope = _extensionMetadataV2ClientDiagnostics.CreateScope("HybridComputeExtensionValueV2Resource.Get");
             scope.Start();
             try
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.HybridCompute
                 };
                 HttpMessage message = _extensionMetadataV2RestClient.CreateGetRequest(Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ExtensionValueV2Data> response = Response.FromValue(ExtensionValueV2Data.FromResponse(result), result);
+                Response<HybridComputeExtensionValueV2Data> response = Response.FromValue(HybridComputeExtensionValueV2Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExtensionValueV2Resource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeExtensionValueV2Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
