@@ -56,6 +56,18 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Whether the diagnostic settings category exists. </returns>
         public virtual Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
 
+        /// <summary> Tries to get a diagnostic settings category. </summary>
+        /// <param name="name"> The diagnostic settings category name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The diagnostic settings category resource if it exists. </returns>
+        public virtual NullableResponse<DiagnosticSettingsCategoryResource> GetIfExists(string name, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Tries to get a diagnostic settings category. </summary>
+        /// <param name="name"> The diagnostic settings category name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The diagnostic settings category resource if it exists. </returns>
+        public virtual Task<NullableResponse<DiagnosticSettingsCategoryResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
         IEnumerator<DiagnosticSettingsCategoryResource> IEnumerable<DiagnosticSettingsCategoryResource>.GetEnumerator() => throw new NotSupportedException("This API is no longer supported.");
         IAsyncEnumerator<DiagnosticSettingsCategoryResource> IAsyncEnumerable<DiagnosticSettingsCategoryResource>.GetAsyncEnumerator(CancellationToken cancellationToken) => throw new NotSupportedException("This API is no longer supported.");
         IEnumerator IEnumerable.GetEnumerator() => throw new NotSupportedException("This API is no longer supported.");

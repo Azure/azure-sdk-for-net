@@ -10,63 +10,64 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The response to a metrics query. </summary>
-    public partial class PredictiveResponse : IJsonModel<PredictiveResponse>
+    public partial class AutoscaleSettingPredicativeResult : IJsonModel<AutoscaleSettingPredicativeResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PredictiveResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AutoscaleSettingPredicativeResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PredictiveResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingPredicativeResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePredictiveResponse(document.RootElement, options);
+                        return DeserializeAutoscaleSettingPredicativeResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PredictiveResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleSettingPredicativeResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PredictiveResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingPredicativeResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PredictiveResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleSettingPredicativeResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PredictiveResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AutoscaleSettingPredicativeResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PredictiveResponse IPersistableModel<PredictiveResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AutoscaleSettingPredicativeResult IPersistableModel<AutoscaleSettingPredicativeResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PredictiveResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AutoscaleSettingPredicativeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="PredictiveResponse"/> from. </param>
-        internal static PredictiveResponse FromResponse(Azure.Response response)
+        /// <param name="response"> The <see cref="Azure.Response"/> to deserialize the <see cref="AutoscaleSettingPredicativeResult"/> from. </param>
+        internal static AutoscaleSettingPredicativeResult FromResponse(Azure.Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePredictiveResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAutoscaleSettingPredicativeResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PredictiveResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AutoscaleSettingPredicativeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +78,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PredictiveResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingPredicativeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictiveResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleSettingPredicativeResult)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Timespan))
             {
@@ -131,24 +132,24 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PredictiveResponse IJsonModel<PredictiveResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AutoscaleSettingPredicativeResult IJsonModel<AutoscaleSettingPredicativeResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PredictiveResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AutoscaleSettingPredicativeResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PredictiveResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AutoscaleSettingPredicativeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictiveResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleSettingPredicativeResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePredictiveResponse(document.RootElement, options);
+            return DeserializeAutoscaleSettingPredicativeResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PredictiveResponse DeserializePredictiveResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static AutoscaleSettingPredicativeResult DeserializeAutoscaleSettingPredicativeResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -157,8 +158,8 @@ namespace Azure.ResourceManager.Monitor.Models
             string timespan = default;
             TimeSpan? interval = default;
             string metricName = default;
-            string targetResourceId = default;
-            IList<PredictiveValue> data = default;
+            ResourceIdentifier targetResourceId = default;
+            IReadOnlyList<PredictiveValue> data = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,7 +184,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("targetResourceId"u8))
                 {
-                    targetResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("data"u8))
@@ -205,7 +210,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PredictiveResponse(
+            return new AutoscaleSettingPredicativeResult(
                 timespan,
                 interval,
                 metricName,

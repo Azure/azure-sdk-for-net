@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of <see cref="MetricAlertData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
-        /// <param name="enabled"> The flag that indicates whether the metric alert is enabled. </param>
+        /// <param name="isEnabled"> The flag that indicates whether the metric alert is enabled. </param>
         /// <param name="scopes"> The list of resource id's that this metric alert is scoped to. You cannot change the scope of a metric rule based on logs. </param>
         /// <param name="evaluationFrequency"> How often the metric alert is evaluated represented in ISO 8601 duration format. </param>
         /// <param name="criteria"> Defines the specific alert criteria information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> or <paramref name="criteria"/> is null. </exception>
-        public MetricAlertData(AzureLocation location, int severity, bool enabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, MetricAlertCriteria criteria) : base(location)
+        public MetricAlertData(AzureLocation location, int severity, bool isEnabled, IEnumerable<string> scopes, TimeSpan evaluationFrequency, MetricAlertCriteria criteria) : base(location)
         {
             Argument.AssertNotNull(scopes, nameof(scopes));
             Argument.AssertNotNull(criteria, nameof(criteria));
 
-            Properties = new MetricAlertProperties(severity, enabled, scopes, evaluationFrequency, criteria);
+            Properties = new MetricAlertProperties(severity, isEnabled, scopes, evaluationFrequency, criteria);
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricAlertData"/>. </summary>
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The flag that indicates whether the metric alert is enabled. </summary>
-        public bool Enabled
+        public bool IsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
             set
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     Properties = new MetricAlertProperties();
                 }
-                Properties.Enabled = value;
+                Properties.IsEnabled = value;
             }
         }
 
@@ -139,25 +139,8 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> The period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </summary>
-        public TimeSpan? WindowSize
-        {
-            get
-            {
-                return Properties is null ? default : Properties.WindowSize;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MetricAlertProperties();
-                }
-                Properties.WindowSize = value;
-            }
-        }
-
         /// <summary> The resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </summary>
-        public string TargetResourceType
+        public ResourceType? TargetResourceType
         {
             get
             {
@@ -174,7 +157,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The region of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </summary>
-        public string TargetResourceRegion
+        public AzureLocation? TargetResourceRegion
         {
             get
             {
@@ -208,11 +191,11 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The flag that indicates whether the alert should be auto resolved or not. The default is true. </summary>
-        public bool? AutoMitigate
+        public bool? IsAutoMitigateEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.AutoMitigate;
+                return Properties is null ? default : Properties.IsAutoMitigateEnabled;
             }
             set
             {
@@ -220,7 +203,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     Properties = new MetricAlertProperties();
                 }
-                Properties.AutoMitigate = value;
+                Properties.IsAutoMitigateEnabled = value;
             }
         }
 

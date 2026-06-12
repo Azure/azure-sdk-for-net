@@ -8,7 +8,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -41,17 +40,6 @@ namespace Azure.ResourceManager.Monitor
             TryGetApiVersion(MonitorPrivateLinkScopedResource.ResourceType, out string monitorPrivateLinkScopedApiVersion);
             _privateLinkScopedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorPrivateLinkScopedResource.ResourceType.Namespace, Diagnostics);
             _privateLinkScopedResourcesRestClient = new PrivateLinkScopedResources(_privateLinkScopedResourcesClientDiagnostics, Pipeline, Endpoint, monitorPrivateLinkScopedApiVersion ?? "2023-06-01-preview");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != MonitorPrivateLinkScopeResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MonitorPrivateLinkScopeResource.ResourceType), nameof(id));
-            }
         }
 
         /// <summary>

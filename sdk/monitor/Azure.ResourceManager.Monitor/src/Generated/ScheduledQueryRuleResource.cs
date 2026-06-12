@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing a ScheduledQueryRule along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScheduledQueryRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetScheduledQueryRules method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetScheduledQueryRules method.
     /// </summary>
     public partial class ScheduledQueryRuleResource : ArmResource
     {

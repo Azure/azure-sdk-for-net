@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -39,17 +38,6 @@ namespace Azure.ResourceManager.Monitor
             TryGetApiVersion(MonitorPrivateEndpointConnectionResource.ResourceType, out string monitorPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
             _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, monitorPrivateEndpointConnectionApiVersion ?? "2023-06-01-preview");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != MonitorPrivateLinkScopeResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, MonitorPrivateLinkScopeResource.ResourceType), nameof(id));
-            }
         }
 
         /// <summary>

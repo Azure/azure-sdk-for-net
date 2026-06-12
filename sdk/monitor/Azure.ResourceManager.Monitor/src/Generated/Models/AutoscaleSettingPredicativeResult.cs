@@ -7,30 +7,31 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The response to a metrics query. </summary>
-    public partial class PredictiveResponse
+    public partial class AutoscaleSettingPredicativeResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PredictiveResponse"/>. </summary>
-        internal PredictiveResponse()
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettingPredicativeResult"/>. </summary>
+        internal AutoscaleSettingPredicativeResult()
         {
             Data = new ChangeTrackingList<PredictiveValue>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PredictiveResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSettingPredicativeResult"/>. </summary>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="metricName"> The metrics being queried. </param>
         /// <param name="targetResourceId"> resource of the predictive metric. </param>
         /// <param name="data"> the value of the collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PredictiveResponse(string timespan, TimeSpan? interval, string metricName, string targetResourceId, IList<PredictiveValue> data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutoscaleSettingPredicativeResult(string timespan, TimeSpan? interval, string metricName, ResourceIdentifier targetResourceId, IReadOnlyList<PredictiveValue> data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Timespan = timespan;
             Interval = interval;
@@ -50,9 +51,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public string MetricName { get; }
 
         /// <summary> resource of the predictive metric. </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
 
         /// <summary> the value of the collection. </summary>
-        public IList<PredictiveValue> Data { get; }
+        public IReadOnlyList<PredictiveValue> Data { get; }
     }
 }

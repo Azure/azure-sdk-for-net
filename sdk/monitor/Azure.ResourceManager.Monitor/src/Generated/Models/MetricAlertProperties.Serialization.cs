@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("severity"u8);
             writer.WriteNumberValue(Severity);
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("scopes"u8);
             writer.WriteStartArray();
             foreach (string item in Scopes)
@@ -110,19 +111,19 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(TargetResourceType))
             {
                 writer.WritePropertyName("targetResourceType"u8);
-                writer.WriteStringValue(TargetResourceType);
+                writer.WriteStringValue(TargetResourceType.Value);
             }
             if (Optional.IsDefined(TargetResourceRegion))
             {
                 writer.WritePropertyName("targetResourceRegion"u8);
-                writer.WriteStringValue(TargetResourceRegion);
+                writer.WriteStringValue(TargetResourceRegion.Value);
             }
             writer.WritePropertyName("criteria"u8);
             writer.WriteObjectValue(Criteria, options);
-            if (Optional.IsDefined(AutoMitigate))
+            if (Optional.IsDefined(IsAutoMitigateEnabled))
             {
                 writer.WritePropertyName("autoMitigate"u8);
-                writer.WriteBooleanValue(AutoMitigate.Value);
+                writer.WriteBooleanValue(IsAutoMitigateEnabled.Value);
             }
             if (Optional.IsDefined(ResolveConfiguration))
             {
@@ -225,14 +226,14 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             string description = default;
             int severity = default;
-            bool enabled = default;
+            bool isEnabled = default;
             IList<string> scopes = default;
             TimeSpan evaluationFrequency = default;
             TimeSpan? windowSize = default;
-            string targetResourceType = default;
-            string targetResourceRegion = default;
+            ResourceType? targetResourceType = default;
+            AzureLocation? targetResourceRegion = default;
             MetricAlertCriteria criteria = default;
-            bool? autoMitigate = default;
+            bool? isAutoMitigateEnabled = default;
             ResolveConfiguration resolveConfiguration = default;
             IList<MetricAlertAction> actions = default;
             DateTimeOffset? lastUpdatedOn = default;
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("scopes"u8))
@@ -290,12 +291,20 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("targetResourceType"u8))
                 {
-                    targetResourceType = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetResourceRegion"u8))
                 {
-                    targetResourceRegion = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceRegion = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("criteria"u8))
@@ -309,7 +318,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    autoMitigate = prop.Value.GetBoolean();
+                    isAutoMitigateEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("resolveConfiguration"u8))
@@ -403,14 +412,14 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MetricAlertProperties(
                 description,
                 severity,
-                enabled,
+                isEnabled,
                 scopes,
                 evaluationFrequency,
                 windowSize,
                 targetResourceType,
                 targetResourceRegion,
                 criteria,
-                autoMitigate,
+                isAutoMitigateEnabled,
                 resolveConfiguration,
                 actions ?? new ChangeTrackingList<MetricAlertAction>(),
                 lastUpdatedOn,

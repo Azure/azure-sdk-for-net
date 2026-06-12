@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="identity"> Managed service identity of the resource. </param>
         /// <param name="eTag"> Resource entity tag (ETag). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionEndpointResourceProperties properties, DataCollectionEndpointResourceKind? kind, DataCollectionEndpointResourceSku sku, DataCollectionEndpointResourceIdentity identity, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DataCollectionEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionEndpointResourceProperties properties, DataCollectionEndpointResourceKind? kind, DataCollectionEndpointResourceSku sku, ManagedServiceIdentity identity, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Kind = kind;
@@ -58,10 +59,10 @@ namespace Azure.ResourceManager.Monitor
         public DataCollectionEndpointResourceSku Sku { get; set; }
 
         /// <summary> Managed service identity of the resource. </summary>
-        public DataCollectionEndpointResourceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Resource entity tag (ETag). </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Description of the data collection endpoint. </summary>
         public string Description

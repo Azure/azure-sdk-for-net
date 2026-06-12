@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -91,13 +92,8 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("locations"u8);
             writer.WriteStartArray();
-            foreach (string item in Locations)
+            foreach (AzureLocation item in Locations)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -157,9 +153,9 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            string storageAccountId = default;
-            string serviceBusRuleId = default;
-            IList<string> locations = default;
+            ResourceIdentifier storageAccountId = default;
+            ResourceIdentifier serviceBusRuleId = default;
+            IList<AzureLocation> locations = default;
             IList<string> categories = default;
             RetentionPolicy retentionPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -167,27 +163,28 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (prop.NameEquals("storageAccountId"u8))
                 {
-                    storageAccountId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("serviceBusRuleId"u8))
                 {
-                    serviceBusRuleId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceBusRuleId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("locations"u8))
                 {
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;

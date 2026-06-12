@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="logs"> the list of logs settings. </param>
         /// <param name="workspaceId"> The workspace ID (resource ID of a Log Analytics workspace) for a Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticSettingsProperties(string storageAccountId, string serviceBusRuleId, string eventHubAuthorizationRuleId, IList<MetricSettings> metrics, IList<LogSettings> logs, string workspaceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticSettingsProperties(ResourceIdentifier storageAccountId, ResourceIdentifier serviceBusRuleId, ResourceIdentifier eventHubAuthorizationRuleId, IList<MetricSettings> metrics, IList<LogSettings> logs, ResourceIdentifier workspaceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountId = storageAccountId;
             ServiceBusRuleId = serviceBusRuleId;
@@ -44,13 +45,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The resource ID of the storage account to which you would like to send Diagnostic Logs. </summary>
-        public string StorageAccountId { get; set; }
+        public ResourceIdentifier StorageAccountId { get; set; }
 
         /// <summary> The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming Diagnostic Logs. The rule ID is of the format: '{service bus resource ID}/authorizationrules/{key name}'. </summary>
-        public string ServiceBusRuleId { get; set; }
+        public ResourceIdentifier ServiceBusRuleId { get; set; }
 
         /// <summary> The resource Id for the event hub namespace authorization rule. </summary>
-        public string EventHubAuthorizationRuleId { get; set; }
+        public ResourceIdentifier EventHubAuthorizationRuleId { get; set; }
 
         /// <summary> the list of metric settings. </summary>
         public IList<MetricSettings> Metrics { get; } = new ChangeTrackingList<MetricSettings>();
@@ -59,6 +60,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public IList<LogSettings> Logs { get; } = new ChangeTrackingList<LogSettings>();
 
         /// <summary> The workspace ID (resource ID of a Log Analytics workspace) for a Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </summary>
-        public string WorkspaceId { get; set; }
+        public ResourceIdentifier WorkspaceId { get; set; }
     }
 }

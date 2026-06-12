@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
         internal DiagnosticSettingsProperties Properties { get; set; }
 
         /// <summary> The resource ID of the storage account to which you would like to send Diagnostic Logs. </summary>
-        public string StorageAccountId
+        public ResourceIdentifier StorageAccountId
         {
             get
             {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming Diagnostic Logs. The rule ID is of the format: '{service bus resource ID}/authorizationrules/{key name}'. </summary>
-        public string ServiceBusRuleId
+        public ResourceIdentifier ServiceBusRuleId
         {
             get
             {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The resource Id for the event hub namespace authorization rule. </summary>
-        public string EventHubAuthorizationRuleId
+        public ResourceIdentifier EventHubAuthorizationRuleId
         {
             get
             {
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The workspace ID (resource ID of a Log Analytics workspace) for a Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </summary>
-        public string WorkspaceId
+        public ResourceIdentifier WorkspaceId
         {
             get
             {

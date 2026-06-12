@@ -8,21 +8,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A class representing a collection of <see cref="MetricAlertResource"/> and their operations.
-    /// Each <see cref="MetricAlertResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="MetricAlertCollection"/> instance call the GetMetricAlerts method from an instance of <see cref="ResourceGroupResource"/>.
+    /// Each <see cref="MetricAlertResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="MetricAlertCollection"/> instance call the GetMetricAlerts method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class MetricAlertCollection : ArmCollection, IEnumerable<MetricAlertResource>, IAsyncEnumerable<MetricAlertResource>
     {
@@ -42,17 +40,6 @@ namespace Azure.ResourceManager.Monitor
             TryGetApiVersion(MetricAlertResource.ResourceType, out string metricAlertApiVersion);
             _metricAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", MetricAlertResource.ResourceType.Namespace, Diagnostics);
             _metricAlertsRestClient = new MetricAlerts(_metricAlertsClientDiagnostics, Pipeline, Endpoint, metricAlertApiVersion ?? "2024-03-01-preview");
-            ValidateResourceId(id);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
-            }
         }
 
         /// <summary>

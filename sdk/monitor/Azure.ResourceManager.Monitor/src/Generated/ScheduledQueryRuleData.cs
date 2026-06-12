@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="kind"> Indicates the type of scheduled query rule. The default is LogAlert. </param>
         /// <param name="eTag"> Resource entity tag (ETag). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledQueryRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScheduledQueryRuleProperties properties, Models.Identity identity, IDictionary<string, string> tags, string location, ScheduledQueryRuleKind? kind, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ScheduledQueryRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScheduledQueryRuleProperties properties, Models.Identity identity, IDictionary<string, string> tags, string location, ScheduledQueryRuleKind? kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Identity = identity;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Monitor
         public ScheduledQueryRuleKind? Kind { get; set; }
 
         /// <summary> Resource entity tag (ETag). </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The api-version used when creating this alert rule. </summary>
         public string CreatedWithApiVersion

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing a AutoscaleSetting along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AutoscaleSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAutoscaleSettings method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetAutoscaleSettings method.
     /// </summary>
     public partial class AutoscaleSettingResource : ArmResource
     {
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PredictiveResponse>> GetPredictiveMetricAsync(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutoscaleSettingPredicativeResult>> GetPredictiveMetricAsync(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _predictiveMetricRestClient.CreateGetPredictiveMetricRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, timespan, interval, metricNamespace, metricName, aggregation, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PredictiveResponse> response = Response.FromValue(PredictiveResponse.FromResponse(result), result);
+                Response<AutoscaleSettingPredicativeResult> response = Response.FromValue(AutoscaleSettingPredicativeResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PredictiveResponse> GetPredictiveMetric(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
+        public virtual Response<AutoscaleSettingPredicativeResult> GetPredictiveMetric(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _predictiveMetricRestClient.CreateGetPredictiveMetricRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, timespan, interval, metricNamespace, metricName, aggregation, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PredictiveResponse> response = Response.FromValue(PredictiveResponse.FromResponse(result), result);
+                Response<AutoscaleSettingPredicativeResult> response = Response.FromValue(AutoscaleSettingPredicativeResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

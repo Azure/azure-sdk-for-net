@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
         internal LogProfileProperties Properties { get; set; }
 
         /// <summary> the resource id of the storage account to which you would like to send the Activity Log. </summary>
-        public string StorageAccountId
+        public ResourceIdentifier StorageAccountId
         {
             get
             {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming the Activity Log. The rule ID is of the format: '{service bus resource ID}/authorizationrules/{key name}'. </summary>
-        public string ServiceBusRuleId
+        public ResourceIdentifier ServiceBusRuleId
         {
             get
             {
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> List of regions for which Activity Log events should be stored or streamed. It is a comma separated list of valid ARM locations including the 'global' location. </summary>
-        public IList<string> Locations
+        public IList<AzureLocation> Locations
         {
             get
             {

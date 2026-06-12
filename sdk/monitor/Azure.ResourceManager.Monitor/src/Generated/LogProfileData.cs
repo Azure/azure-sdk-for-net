@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="categories"> the categories of the logs. These categories are created as is convenient to the user. Some values are: 'Write', 'Delete', and/or 'Action.'. </param>
         /// <param name="retentionPolicy"> the retention policy for the events in the log. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/>, <paramref name="categories"/> or <paramref name="retentionPolicy"/> is null. </exception>
-        public LogProfileData(AzureLocation location, IEnumerable<string> locations, IEnumerable<string> categories, RetentionPolicy retentionPolicy) : base(location)
+        public LogProfileData(AzureLocation location, IEnumerable<AzureLocation> locations, IEnumerable<string> categories, RetentionPolicy retentionPolicy) : base(location)
         {
             Argument.AssertNotNull(locations, nameof(locations));
             Argument.AssertNotNull(categories, nameof(categories));
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor
         internal LogProfileProperties Properties { get; set; }
 
         /// <summary> the resource id of the storage account to which you would like to send the Activity Log. </summary>
-        public string StorageAccountId
+        public ResourceIdentifier StorageAccountId
         {
             get
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming the Activity Log. The rule ID is of the format: '{service bus resource ID}/authorizationrules/{key name}'. </summary>
-        public string ServiceBusRuleId
+        public ResourceIdentifier ServiceBusRuleId
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> List of regions for which Activity Log events should be stored or streamed. It is a comma separated list of valid ARM locations including the 'global' location. </summary>
-        public IList<string> Locations
+        public IList<AzureLocation> Locations
         {
             get
             {

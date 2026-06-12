@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="categories"> the categories of the logs. These categories are created as is convenient to the user. Some values are: 'Write', 'Delete', and/or 'Action.'. </param>
         /// <param name="retentionPolicy"> the retention policy for the events in the log. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/>, <paramref name="categories"/> or <paramref name="retentionPolicy"/> is null. </exception>
-        public LogProfileProperties(IEnumerable<string> locations, IEnumerable<string> categories, RetentionPolicy retentionPolicy)
+        public LogProfileProperties(IEnumerable<AzureLocation> locations, IEnumerable<string> categories, RetentionPolicy retentionPolicy)
         {
             Argument.AssertNotNull(locations, nameof(locations));
             Argument.AssertNotNull(categories, nameof(categories));
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="categories"> the categories of the logs. These categories are created as is convenient to the user. Some values are: 'Write', 'Delete', and/or 'Action.'. </param>
         /// <param name="retentionPolicy"> the retention policy for the events in the log. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogProfileProperties(string storageAccountId, string serviceBusRuleId, IList<string> locations, IList<string> categories, RetentionPolicy retentionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogProfileProperties(ResourceIdentifier storageAccountId, ResourceIdentifier serviceBusRuleId, IList<AzureLocation> locations, IList<string> categories, RetentionPolicy retentionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountId = storageAccountId;
             ServiceBusRuleId = serviceBusRuleId;
@@ -52,13 +53,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> the resource id of the storage account to which you would like to send the Activity Log. </summary>
-        public string StorageAccountId { get; set; }
+        public ResourceIdentifier StorageAccountId { get; set; }
 
         /// <summary> The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming the Activity Log. The rule ID is of the format: '{service bus resource ID}/authorizationrules/{key name}'. </summary>
-        public string ServiceBusRuleId { get; set; }
+        public ResourceIdentifier ServiceBusRuleId { get; set; }
 
         /// <summary> List of regions for which Activity Log events should be stored or streamed. It is a comma separated list of valid ARM locations including the 'global' location. </summary>
-        public IList<string> Locations { get; } = new ChangeTrackingList<string>();
+        public IList<AzureLocation> Locations { get; } = new ChangeTrackingList<AzureLocation>();
 
         /// <summary> the categories of the logs. These categories are created as is convenient to the user. Some values are: 'Write', 'Delete', and/or 'Action.'. </summary>
         public IList<string> Categories { get; } = new ChangeTrackingList<string>();

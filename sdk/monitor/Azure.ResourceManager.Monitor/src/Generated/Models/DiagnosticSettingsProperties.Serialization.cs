@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -156,28 +157,40 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            string storageAccountId = default;
-            string serviceBusRuleId = default;
-            string eventHubAuthorizationRuleId = default;
+            ResourceIdentifier storageAccountId = default;
+            ResourceIdentifier serviceBusRuleId = default;
+            ResourceIdentifier eventHubAuthorizationRuleId = default;
             IList<MetricSettings> metrics = default;
             IList<LogSettings> logs = default;
-            string workspaceId = default;
+            ResourceIdentifier workspaceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("storageAccountId"u8))
                 {
-                    storageAccountId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("serviceBusRuleId"u8))
                 {
-                    serviceBusRuleId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceBusRuleId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("eventHubAuthorizationRuleId"u8))
                 {
-                    eventHubAuthorizationRuleId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eventHubAuthorizationRuleId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("metrics"u8))
@@ -210,7 +223,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("workspaceId"u8))
                 {
-                    workspaceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    workspaceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> Description of a service diagnostic setting. </summary>
     public partial class DiagnosticSettingData : ResourceData, IJsonModel<DiagnosticSettingData>
     {
-        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingData"/> for deserialization. </summary>
-        internal DiagnosticSettingData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

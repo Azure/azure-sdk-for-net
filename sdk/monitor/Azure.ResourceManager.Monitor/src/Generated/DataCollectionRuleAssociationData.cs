@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="properties"></param>
         /// <param name="eTag"> Resource entity tag (ETag). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataCollectionRuleAssociationProxyOnlyResourceProperties properties, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataCollectionRuleAssociationProxyOnlyResourceProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Monitor
         internal DataCollectionRuleAssociationProxyOnlyResourceProperties Properties { get; set; }
 
         /// <summary> Resource entity tag (ETag). </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Description of the association. </summary>
         public string Description

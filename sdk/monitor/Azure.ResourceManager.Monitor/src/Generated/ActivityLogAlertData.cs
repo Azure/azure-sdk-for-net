@@ -107,19 +107,6 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> The list of Activity Log Alert rule conditions. </summary>
-        public IList<ActivityLogAlertAnyOfOrLeafCondition> ConditionAllOf
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertRuleProperties();
-                }
-                return Properties.ConditionAllOf;
-            }
-        }
-
         /// <summary> The list of the Action Groups. </summary>
         public IList<ActivityLogAlertActionGroup> ActionsActionGroups
         {

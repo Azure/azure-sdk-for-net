@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The notification status. </returns>
         public virtual Response<NotificationStatus> GetNotificationStatus(string notificationId, CancellationToken cancellationToken = default)
-            => GetNotificationStatus(Id.Parent.Name, Id.Name, notificationId, cancellationToken);
+            => MonitorExtensions.GetNotificationStatus(Client.GetResourceGroupResource(Id.Parent), Id.Name, notificationId, cancellationToken);
 
         /// <summary> Gets the test notifications by the notification id. </summary>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The notification status. </returns>
         public virtual async Task<Response<NotificationStatus>> GetNotificationStatusAsync(string notificationId, CancellationToken cancellationToken = default)
-            => await GetNotificationStatusAsync(Id.Parent.Name, Id.Name, notificationId, cancellationToken).ConfigureAwait(false);
+            => await MonitorExtensions.GetNotificationStatusAsync(Client.GetResourceGroupResource(Id.Parent), Id.Name, notificationId, cancellationToken).ConfigureAwait(false);
     }
 }
