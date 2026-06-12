@@ -444,21 +444,23 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new IfNotExistsEvaluationDetails(resourceId, totalResources, default);
         }
 
-        /// <param name="id"> Component Id. </param>
-        /// <param name="type"> Component type. </param>
-        /// <param name="name"> Component name. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="timestamp"> Component compliance evaluation timestamp. </param>
         /// <param name="complianceState"> Component compliance state. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.ComponentStateDetails"/> instance for mocking. </returns>
-        public static ComponentStateDetails ComponentStateDetails(string id = default, string @type = default, string name = default, DateTimeOffset? timestamp = default, string complianceState = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        public static ComponentStateDetails ComponentStateDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timestamp = default, string complianceState = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new ComponentStateDetails(
                 id,
-                @type,
                 name,
+                resourceType,
+                systemData,
                 timestamp,
                 complianceState,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
@@ -882,27 +884,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = default, string evaluationResult = default, PolicyEvaluationDetails evaluationDetails = default)
         {
             return new PolicyEvaluationResult(policyInfo, evaluationResult, evaluationDetails, default, default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ComponentStateDetails"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="timestamp"> Component compliance evaluation timestamp. </param>
-        /// <param name="complianceState"> Component compliance state. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.ComponentStateDetails"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ComponentStateDetails ComponentStateDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timestamp = default, string complianceState = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
-        {
-            return new ComponentStateDetails(
-                default,
-                default,
-                name,
-                timestamp,
-                complianceState,
-                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PolicyEvaluationResult"/>. </summary>

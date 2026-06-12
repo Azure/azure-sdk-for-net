@@ -7,18 +7,18 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.ObjectModel;
 using System.Text.Json;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Component state details. </summary>
-    public partial class ComponentStateDetails : IJsonModel<ComponentStateDetails>
+    public partial class ComponentStateDetails : ResourceData, IJsonModel<ComponentStateDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComponentStateDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ComponentStateDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComponentStateDetails IPersistableModel<ComponentStateDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComponentStateDetails IPersistableModel<ComponentStateDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (ComponentStateDetails)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ComponentStateDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -67,28 +67,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ComponentStateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComponentStateDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
@@ -115,11 +101,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComponentStateDetails IJsonModel<ComponentStateDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComponentStateDetails IJsonModel<ComponentStateDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ComponentStateDetails)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ComponentStateDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ComponentStateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -128,62 +114,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeComponentStateDetails(document.RootElement, options);
-        }
-
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ComponentStateDetails DeserializeComponentStateDetails(JsonElement element, ModelReaderWriterOptions options)
-        {
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string id = default;
-            string @type = default;
-            string name = default;
-            DateTimeOffset? timestamp = default;
-            string complianceState = default;
-            ChangeTrackingDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
-            {
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("timestamp"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    timestamp = prop.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (prop.NameEquals("complianceState"u8))
-                {
-                    complianceState = prop.Value.GetString();
-                    continue;
-                }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-            }
-            return new ComponentStateDetails(
-                id,
-                @type,
-                name,
-                timestamp,
-                complianceState,
-                new ReadOnlyDictionary<string, BinaryData>(additionalProperties));
         }
     }
 }
