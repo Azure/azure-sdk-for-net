@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         [RecordedTest]
         public async Task CanCreateMachineRunCommand()
         {
-            MachineRunCommandData resourceData = await createRunCommand();
+            HybridComputeMachineRunCommandData resourceData = await createRunCommand();
             Assert.AreEqual(runCommandName, resourceData.Name);
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         [RecordedTest]
         public async Task CanUpdateMachineRunCommand()
         {
-            MachineRunCommandData resourceData = await updateRunCommand();
+            HybridComputeMachineRunCommandData resourceData = await updateRunCommand();
             Assert.AreEqual(runCommandName, resourceData.Name);
         }
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         [RecordedTest]
         public async Task CanGetMachineRunCommand()
         {
-            MachineRunCommandData resourceData = await getRunCommand();
+            HybridComputeMachineRunCommandData resourceData = await getRunCommand();
             Assert.AreEqual(runCommandName, resourceData.Name);
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
         [RecordedTest]
         public async Task CanGetMachineRunCommandCollection()
         {
-            MachineRunCommandCollection resourceCollection = await getRunCommandCollection();
+            HybridComputeMachineRunCommandCollection resourceCollection = await getRunCommandCollection();
             string collectionId = "/subscriptions/" + subscriptionId + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.HybridCompute/machines/" + machineName;
             Assert.AreEqual(collectionId, resourceCollection.Id.ToString());
         }

@@ -304,7 +304,7 @@ TargetVersion = "1.10",
             HybridComputeMachineResource hybridComputeMachine = client.GetHybridComputeMachineResource(hybridComputeMachineResourceId);
 
             // invoke the operation
-            PrivateLinkScopeValidationDetails result = await hybridComputeMachine.GetValidationDetailsForMachineAsync();
+            PrivateLinkScopeValidationDetails result = await hybridComputeMachine.GetValidationDetailsForMachinePrivateLinkScopeAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

@@ -338,12 +338,12 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             return connectionCollection;
         }
 
-        protected async Task<MachineRunCommandData> createRunCommand()
+        protected async Task<HybridComputeMachineRunCommandData> createRunCommand()
         {
             HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
-            MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
+            HybridComputeMachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetHybridComputeMachineRunCommands();
 
-            MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("eastus"))
+            HybridComputeMachineRunCommandData data = new HybridComputeMachineRunCommandData(new AzureLocation("eastus"))
             {
                 Source = new MachineRunCommandScriptSource()
                 {
@@ -360,18 +360,18 @@ namespace Azure.ResourceManager.HybridCompute.Tests
                 // OutputBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/myscriptoutputcontainer/MyScriptoutput.txt"),
                 // ErrorBlobUri = new Uri("https://mystorageaccount.blob.core.windows.net/mycontainer/MyScriptError.txt"),
             };
-            ArmOperation<MachineRunCommandResource> lro = await runCommandCollection.CreateOrUpdateAsync(WaitUntil.Completed, runCommandName, data);
-            MachineRunCommandResource result = lro.Value;
+            ArmOperation<HybridComputeMachineRunCommandResource> lro = await runCommandCollection.CreateOrUpdateAsync(WaitUntil.Completed, runCommandName, data);
+            HybridComputeMachineRunCommandResource result = lro.Value;
 
             return result.Data;
         }
 
-        protected async Task<MachineRunCommandData> updateRunCommand()
+        protected async Task<HybridComputeMachineRunCommandData> updateRunCommand()
         {
-            ResourceIdentifier machineRunCommandResourceId = MachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, runCommandName);
-            MachineRunCommandResource machineRunCommand = ArmClient.GetMachineRunCommandResource(machineRunCommandResourceId);
+            ResourceIdentifier machineRunCommandResourceId = HybridComputeMachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, runCommandName);
+            HybridComputeMachineRunCommandResource machineRunCommand = ArmClient.GetHybridComputeMachineRunCommandResource(machineRunCommandResourceId);
 
-            MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("eastus"))
+            HybridComputeMachineRunCommandData data = new HybridComputeMachineRunCommandData(new AzureLocation("eastus"))
             {
                 Source = new MachineRunCommandScriptSource()
                 {
@@ -393,30 +393,30 @@ namespace Azure.ResourceManager.HybridCompute.Tests
                     ["Tag2"] = "Value2",
                 },
             };
-            ArmOperation<MachineRunCommandResource> lro = await machineRunCommand.UpdateAsync(WaitUntil.Completed, data);
-            MachineRunCommandResource result = lro.Value;
+            ArmOperation<HybridComputeMachineRunCommandResource> lro = await machineRunCommand.UpdateAsync(WaitUntil.Completed, data);
+            HybridComputeMachineRunCommandResource result = lro.Value;
 
             return result.Data;
         }
 
-        protected async Task<MachineRunCommandData> getRunCommand()
+        protected async Task<HybridComputeMachineRunCommandData> getRunCommand()
         {
             HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
-            MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
+            HybridComputeMachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetHybridComputeMachineRunCommands();
 
-            MachineRunCommandResource result = await runCommandCollection.GetAsync(runCommandName);
+            HybridComputeMachineRunCommandResource result = await runCommandCollection.GetAsync(runCommandName);
 
             return result.Data;
         }
 
-        protected async Task<MachineRunCommandCollection> getRunCommandCollection()
+        protected async Task<HybridComputeMachineRunCommandCollection> getRunCommandCollection()
         {
             HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
-            MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
+            HybridComputeMachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetHybridComputeMachineRunCommands();
 
-            await foreach (MachineRunCommandResource item in runCommandCollection.GetAllAsync())
+            await foreach (HybridComputeMachineRunCommandResource item in runCommandCollection.GetAllAsync())
             {
-                MachineRunCommandData resourceData = item.Data;
+                HybridComputeMachineRunCommandData resourceData = item.Data;
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
@@ -607,9 +607,9 @@ namespace Azure.ResourceManager.HybridCompute.Tests
         protected async Task deleteRunCommand()
         {
             HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
-            MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
+            HybridComputeMachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetHybridComputeMachineRunCommands();
 
-            MachineRunCommandResource result = await runCommandCollection.GetAsync(runCommandName);
+            HybridComputeMachineRunCommandResource result = await runCommandCollection.GetAsync(runCommandName);
 
             await result.DeleteAsync(WaitUntil.Completed);
             Console.WriteLine($"Delete Machine Run Command Succeeded");

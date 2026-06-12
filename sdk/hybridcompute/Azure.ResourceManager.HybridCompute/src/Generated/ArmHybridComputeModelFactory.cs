@@ -840,6 +840,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 assignedLicense);
         }
 
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="softwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
+        /// <param name="assignedLicense"> The resource id of the license. </param>
+        /// <param name="subscriptionStatus"> Indicates the subscription status of the product. </param>
+        /// <param name="productType"> Indicates the product type of the license. </param>
+        /// <param name="productFeatures"> The list of product feature updates. </param>
+        /// <returns> A new <see cref="Models.HybridComputeLicenseProfilePatch"/> instance for mocking. </returns>
+        public static HybridComputeLicenseProfilePatch HybridComputeLicenseProfilePatch(IDictionary<string, string> tags = default, bool? softwareAssuranceCustomer = default, string assignedLicense = default, LicenseProfileSubscriptionStatusUpdate? subscriptionStatus = default, LicenseProfileProductType? productType = default, IEnumerable<HybridComputeProductFeatureUpdate> productFeatures = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HybridComputeLicenseProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, softwareAssuranceCustomer is null && assignedLicense is null && subscriptionStatus is null && productType is null && productFeatures is null ? default : new LicenseProfileUpdateProperties(new LicenseProfileUpdatePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), new EsuProfileUpdateProperties(assignedLicense, default), new ProductProfileUpdateProperties(subscriptionStatus, productType, (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeatureUpdate>()).ToList(), default), default));
+        }
+
         /// <param name="name"> Product feature name. </param>
         /// <param name="subscriptionStatus"> Indicates the new status of the product feature. </param>
         /// <returns> A new <see cref="Models.HybridComputeProductFeatureUpdate"/> instance for mocking. </returns>
