@@ -1,8 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <!-- Suppress CS0618: generated sample files reference types/methods marked [Obsolete] for ApiCompat backward-compat. -->
-    <NoWarn>$(NoWarn);CS0618</NoWarn>
-  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Compute" />
     <PackageReference Include="Azure.ResourceManager.IotHub" />

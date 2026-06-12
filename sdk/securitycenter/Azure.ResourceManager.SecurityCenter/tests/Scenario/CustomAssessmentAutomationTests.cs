@@ -1,7 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+
+#pragma warning disable CS0618
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -58,3 +60,4 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
     }
 }
+#pragma warning restore CS0618
