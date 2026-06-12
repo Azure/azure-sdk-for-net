@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Operators allowed in the rule condition. </summary>
+    /// <summary></summary>
     public enum MonitorConditionOperator
     {
         /// <summary> GreaterThan. </summary>
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         LessThan,
         /// <summary> LessThanOrEqual. </summary>
         LessThanOrEqual,
-        /// <summary> Equals. </summary>
+        /// <summary> EqualsValue. </summary>
         EqualsValue
     }
 }

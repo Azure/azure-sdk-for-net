@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Definition of custom data column. </summary>
     public partial class DataColumnDefinition
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataColumnDefinition"/>. </summary>
         public DataColumnDefinition()
@@ -52,18 +23,19 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="DataColumnDefinition"/>. </summary>
         /// <param name="name"> The name of the column. </param>
-        /// <param name="definitionType"> The type of the column data. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataColumnDefinition(string name, DataColumnDefinitionType? definitionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="type"> The type of the column data. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataColumnDefinition(string name, KnownColumnDefinitionType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            DefinitionType = definitionType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the column. </summary>
         public string Name { get; set; }
+
         /// <summary> The type of the column data. </summary>
-        public DataColumnDefinitionType? DefinitionType { get; set; }
+        public KnownColumnDefinitionType? Type { get; set; }
     }
 }

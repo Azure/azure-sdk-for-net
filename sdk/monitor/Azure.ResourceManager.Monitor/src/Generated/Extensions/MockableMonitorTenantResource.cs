@@ -6,148 +6,158 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Monitor;
 using Azure.ResourceManager.Monitor.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableMonitorTenantResource : ArmResource
     {
         private ClientDiagnostics _eventCategoriesClientDiagnostics;
-        private EventCategoriesRestOperations _eventCategoriesRestClient;
+        private EventCategories _eventCategoriesRestClient;
         private ClientDiagnostics _tenantActivityLogsClientDiagnostics;
-        private TenantActivityLogsRestOperations _tenantActivityLogsRestClient;
+        private TenantActivityLogs _tenantActivityLogsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMonitorTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMonitorTenantResource for mocking. </summary>
         protected MockableMonitorTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMonitorTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMonitorTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMonitorTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics EventCategoriesClientDiagnostics => _eventCategoriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private EventCategoriesRestOperations EventCategoriesRestClient => _eventCategoriesRestClient ??= new EventCategoriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics TenantActivityLogsClientDiagnostics => _tenantActivityLogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private TenantActivityLogsRestOperations TenantActivityLogsRestClient => _tenantActivityLogsRestClient ??= new TenantActivityLogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics EventCategoriesClientDiagnostics => _eventCategoriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private EventCategories EventCategoriesRestClient => _eventCategoriesRestClient ??= new EventCategories(EventCategoriesClientDiagnostics, Pipeline, Endpoint, "2015-04-01");
+
+        private ClientDiagnostics TenantActivityLogsClientDiagnostics => _tenantActivityLogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private TenantActivityLogs TenantActivityLogsRestClient => _tenantActivityLogsRestClient ??= new TenantActivityLogs(TenantActivityLogsClientDiagnostics, Pipeline, Endpoint, "2015-04-01");
 
         /// <summary>
         /// Get the list of available event categories supported in the Activity Logs Service.&lt;br&gt;The current list includes the following: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Insights/eventcategories</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Insights/eventcategories. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EventCategories_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> EventCategoriesOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MonitorLocalizableString"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorLocalizableString> GetEventCategoriesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EventCategoriesRestClient.CreateListRequest();
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MonitorLocalizableString.DeserializeMonitorLocalizableString(e), EventCategoriesClientDiagnostics, Pipeline, "MockableMonitorTenantResource.GetEventCategories", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the list of available event categories supported in the Activity Logs Service.&lt;br&gt;The current list includes the following: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Insights/eventcategories</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EventCategories_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MonitorLocalizableString"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitorLocalizableString> GetEventCategories(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MonitorLocalizableString> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EventCategoriesRestClient.CreateListRequest();
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MonitorLocalizableString.DeserializeMonitorLocalizableString(e), EventCategoriesClientDiagnostics, Pipeline, "MockableMonitorTenantResource.GetEventCategories", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EventCategoriesGetAllAsyncCollectionResultOfT(EventCategoriesRestClient, context, "MockableMonitorTenantResource.GetAll");
         }
 
         /// <summary>
-        /// Gets the Activity Logs for the Tenant.&lt;br&gt;Everything that is applicable to the API to get the Activity Logs for the subscription is applicable to this API (the parameters, $filter, etc.).&lt;br&gt;One thing to point out here is that this API does *not* retrieve the logs at the individual subscription of the tenant but only surfaces the logs that were generated at the tenant level.
+        /// Get the list of available event categories supported in the Activity Logs Service.&lt;br&gt;The current list includes the following: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Insights/eventtypes/management/values</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Insights/eventcategories. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantActivityLogs_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> EventCategoriesOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The **$filter** is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceGroupName eq '&lt;ResourceGroupName&gt;'.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceUri eq '&lt;ResourceURI&gt;'.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation'.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceProvider eq '&lt;ResourceProviderName&gt;'.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and eventChannels eq 'Admin, Operation' and correlationId eq '&lt;CorrelationID&gt;'.&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
-        /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventDataInfo> GetTenantActivityLogsAsync(string filter = null, string select = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorLocalizableString"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorLocalizableString> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => TenantActivityLogsRestClient.CreateListRequest(filter, select);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TenantActivityLogsRestClient.CreateListNextPageRequest(nextLink, filter, select);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EventDataInfo.DeserializeEventDataInfo(e), TenantActivityLogsClientDiagnostics, Pipeline, "MockableMonitorTenantResource.GetTenantActivityLogs", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EventCategoriesGetAllCollectionResultOfT(EventCategoriesRestClient, context, "MockableMonitorTenantResource.GetAll");
         }
 
         /// <summary>
-        /// Gets the Activity Logs for the Tenant.&lt;br&gt;Everything that is applicable to the API to get the Activity Logs for the subscription is applicable to this API (the parameters, $filter, etc.).&lt;br&gt;One thing to point out here is that this API does *not* retrieve the logs at the individual subscription of the tenant but only surfaces the logs that were generated at the tenant level.
+        /// Gets the Activity Logs for the Tenant.&lt;br&gt;Everything that is applicable to the API to get the Activity Logs for the subscription is applicable to this API (the parameters, $filter, etc.).&lt;br&gt;One thing to point out here is that this API does <i>not</i> retrieve the logs at the individual subscription of the tenant but only surfaces the logs that were generated at the tenant level.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Insights/eventtypes/management/values</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Insights/eventtypes/management/values. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TenantActivityLogs_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> TenantActivityLogsOperationGroup_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The **$filter** is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceGroupName eq '&lt;ResourceGroupName&gt;'.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceUri eq '&lt;ResourceURI&gt;'.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation'.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceProvider eq '&lt;ResourceProviderName&gt;'.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and eventChannels eq 'Admin, Operation' and correlationId eq '&lt;CorrelationID&gt;'.&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
-        /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
+        /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The <b>$filter</b> is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceGroupName eq '&lt;ResourceGroupName&gt;'.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceUri eq '&lt;ResourceURI&gt;'.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation'.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceProvider eq '&lt;ResourceProviderName&gt;'.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and eventChannels eq 'Admin, Operation' and correlationId eq '&lt;CorrelationID&gt;'.&lt;br&gt;<b>NOTE</b>: No other syntax is allowed. </param>
+        /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The <b>$select</b> argument is a comma separated list of property names to be returned. Possible values are: <i>authorization</i>, <i>claims</i>, <i>correlationId</i>, <i>description</i>, <i>eventDataId</i>, <i>eventName</i>, <i>eventTimestamp</i>, <i>httpRequest</i>, <i>level</i>, <i>operationId</i>, <i>operationName</i>, <i>properties</i>, <i>resourceGroupName</i>, <i>resourceProviderName</i>, <i>resourceId</i>, <i>status</i>, <i>submissionTimestamp</i>, <i>subStatus</i>, <i>subscriptionId</i>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventDataInfo> GetTenantActivityLogs(string filter = null, string select = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EventDataInfo> GetAllAsync(string filter = default, string @select = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => TenantActivityLogsRestClient.CreateListRequest(filter, select);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TenantActivityLogsRestClient.CreateListNextPageRequest(nextLink, filter, select);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EventDataInfo.DeserializeEventDataInfo(e), TenantActivityLogsClientDiagnostics, Pipeline, "MockableMonitorTenantResource.GetTenantActivityLogs", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new TenantActivityLogsGetAllAsyncCollectionResultOfT(TenantActivityLogsRestClient, filter, @select, context, "MockableMonitorTenantResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets the Activity Logs for the Tenant.&lt;br&gt;Everything that is applicable to the API to get the Activity Logs for the subscription is applicable to this API (the parameters, $filter, etc.).&lt;br&gt;One thing to point out here is that this API does <i>not</i> retrieve the logs at the individual subscription of the tenant but only surfaces the logs that were generated at the tenant level.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Insights/eventtypes/management/values. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TenantActivityLogsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The <b>$filter</b> is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceGroupName eq '&lt;ResourceGroupName&gt;'.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceUri eq '&lt;ResourceURI&gt;'.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation'.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceProvider eq '&lt;ResourceProviderName&gt;'.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and eventChannels eq 'Admin, Operation' and correlationId eq '&lt;CorrelationID&gt;'.&lt;br&gt;<b>NOTE</b>: No other syntax is allowed. </param>
+        /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The <b>$select</b> argument is a comma separated list of property names to be returned. Possible values are: <i>authorization</i>, <i>claims</i>, <i>correlationId</i>, <i>description</i>, <i>eventDataId</i>, <i>eventName</i>, <i>eventTimestamp</i>, <i>httpRequest</i>, <i>level</i>, <i>operationId</i>, <i>operationName</i>, <i>properties</i>, <i>resourceGroupName</i>, <i>resourceProviderName</i>, <i>resourceId</i>, <i>status</i>, <i>submissionTimestamp</i>, <i>subStatus</i>, <i>subscriptionId</i>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventDataInfo> GetAll(string filter = default, string @select = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new TenantActivityLogsGetAllCollectionResultOfT(TenantActivityLogsRestClient, filter, @select, context, "MockableMonitorTenantResource.GetAll");
         }
     }
 }

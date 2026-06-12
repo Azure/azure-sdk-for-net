@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
@@ -21,55 +22,53 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing a collection of <see cref="ActivityLogAlertResource"/> and their operations.
     /// Each <see cref="ActivityLogAlertResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="ActivityLogAlertCollection"/> instance call the GetActivityLogAlerts method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ActivityLogAlertCollection"/> instance call the GetActivityLogAlerts method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ActivityLogAlertCollection : ArmCollection, IEnumerable<ActivityLogAlertResource>, IAsyncEnumerable<ActivityLogAlertResource>
     {
-        private readonly ClientDiagnostics _activityLogAlertClientDiagnostics;
-        private readonly ActivityLogAlertsRestOperations _activityLogAlertRestClient;
+        private readonly ClientDiagnostics _activityLogAlertsClientDiagnostics;
+        private readonly ActivityLogAlerts _activityLogAlertsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ActivityLogAlertCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ActivityLogAlertCollection for mocking. </summary>
         protected ActivityLogAlertCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ActivityLogAlertCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActivityLogAlertCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ActivityLogAlertCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _activityLogAlertClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ActivityLogAlertResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ActivityLogAlertResource.ResourceType, out string activityLogAlertApiVersion);
-            _activityLogAlertRestClient = new ActivityLogAlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, activityLogAlertApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _activityLogAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ActivityLogAlertResource.ResourceType.Namespace, Diagnostics);
+            _activityLogAlertsRestClient = new ActivityLogAlerts(_activityLogAlertsClientDiagnostics, Pipeline, Endpoint, activityLogAlertApiVersion ?? "2023-01-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create a new Activity Log Alert rule or update an existing one.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogAlerts_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActivityLogAlertResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActivityLogAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
         /// <param name="data"> The Activity Log Alert rule to create or use for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ActivityLogAlertResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string activityLogAlertName, ActivityLogAlertData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _activityLogAlertsClientDiagnostics.CreateScope("ActivityLogAlertCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _activityLogAlertRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _activityLogAlertRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation<ActivityLogAlertResource>(Response.FromValue(new ActivityLogAlertResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _activityLogAlertsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, ActivityLogAlertData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation<ActivityLogAlertResource> operation = new MonitorArmOperation<ActivityLogAlertResource>(Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.Monitor
         /// Create a new Activity Log Alert rule or update an existing one.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogAlerts_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActivityLogAlertResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActivityLogAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,23 +131,31 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
         /// <param name="data"> The Activity Log Alert rule to create or use for the update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ActivityLogAlertResource> CreateOrUpdate(WaitUntil waitUntil, string activityLogAlertName, ActivityLogAlertData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _activityLogAlertsClientDiagnostics.CreateScope("ActivityLogAlertCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _activityLogAlertRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, data, cancellationToken);
-                var uri = _activityLogAlertRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation<ActivityLogAlertResource>(Response.FromValue(new ActivityLogAlertResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _activityLogAlertsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, ActivityLogAlertData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                MonitorArmOperation<ActivityLogAlertResource> operation = new MonitorArmOperation<ActivityLogAlertResource>(Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +169,42 @@ namespace Azure.ResourceManager.Monitor
         /// Get an Activity Log Alert rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogAlerts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActivityLogAlertResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActivityLogAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ActivityLogAlertResource>> GetAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
-            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.Get");
+            using DiagnosticScope scope = _activityLogAlertsClientDiagnostics.CreateScope("ActivityLogAlertCollection.Get");
             scope.Start();
             try
             {
-                var response = await _activityLogAlertRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +218,42 @@ namespace Azure.ResourceManager.Monitor
         /// Get an Activity Log Alert rule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogAlerts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActivityLogAlertResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActivityLogAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ActivityLogAlertResource> Get(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
-            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.Get");
+            using DiagnosticScope scope = _activityLogAlertsClientDiagnostics.CreateScope("ActivityLogAlertCollection.Get");
             scope.Start();
             try
             {
-                var response = _activityLogAlertRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,50 +267,44 @@ namespace Azure.ResourceManager.Monitor
         /// Get a list of all Activity Log Alert rules in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogAlerts_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActivityLogAlertResources_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActivityLogAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ActivityLogAlertResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _activityLogAlertRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityLogAlertRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ActivityLogAlertResource(Client, ActivityLogAlertData.DeserializeActivityLogAlertData(e)), _activityLogAlertClientDiagnostics, Pipeline, "ActivityLogAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertsGetByResourceGroupAsyncCollectionResultOfT(_activityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ActivityLogAlertCollection.GetAll"), data => new ActivityLogAlertResource(Client, data));
         }
 
         /// <summary>
         /// Get a list of all Activity Log Alert rules in a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogAlerts_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActivityLogAlertResources_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActivityLogAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,45 +312,61 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="ActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ActivityLogAlertResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _activityLogAlertRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityLogAlertRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ActivityLogAlertResource(Client, ActivityLogAlertData.DeserializeActivityLogAlertData(e)), _activityLogAlertClientDiagnostics, Pipeline, "ActivityLogAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ActivityLogAlertData, ActivityLogAlertResource>(new ActivityLogAlertsGetByResourceGroupCollectionResultOfT(_activityLogAlertsRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "ActivityLogAlertCollection.GetAll"), data => new ActivityLogAlertResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogAlerts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActivityLogAlertResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActivityLogAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
-            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.Exists");
+            using DiagnosticScope scope = _activityLogAlertsClientDiagnostics.CreateScope("ActivityLogAlertCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _activityLogAlertRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ActivityLogAlertData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ActivityLogAlertData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,36 +380,50 @@ namespace Azure.ResourceManager.Monitor
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogAlerts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActivityLogAlertResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActivityLogAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
-            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.Exists");
+            using DiagnosticScope scope = _activityLogAlertsClientDiagnostics.CreateScope("ActivityLogAlertCollection.Exists");
             scope.Start();
             try
             {
-                var response = _activityLogAlertRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ActivityLogAlertData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ActivityLogAlertData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,38 +437,54 @@ namespace Azure.ResourceManager.Monitor
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogAlerts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActivityLogAlertResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActivityLogAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ActivityLogAlertResource>> GetIfExistsAsync(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
-            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.GetIfExists");
+            using DiagnosticScope scope = _activityLogAlertsClientDiagnostics.CreateScope("ActivityLogAlertCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _activityLogAlertRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ActivityLogAlertData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ActivityLogAlertData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ActivityLogAlertResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -439,38 +498,54 @@ namespace Azure.ResourceManager.Monitor
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/activityLogAlerts/{activityLogAlertName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActivityLogAlerts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActivityLogAlertResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ActivityLogAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="activityLogAlertName"> The name of the Activity Log Alert rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="activityLogAlertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="activityLogAlertName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ActivityLogAlertResource> GetIfExists(string activityLogAlertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(activityLogAlertName, nameof(activityLogAlertName));
 
-            using var scope = _activityLogAlertClientDiagnostics.CreateScope("ActivityLogAlertCollection.GetIfExists");
+            using DiagnosticScope scope = _activityLogAlertsClientDiagnostics.CreateScope("ActivityLogAlertCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _activityLogAlertRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, activityLogAlertName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, activityLogAlertName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ActivityLogAlertData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ActivityLogAlertData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ActivityLogAlertResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,6 +565,7 @@ namespace Azure.ResourceManager.Monitor
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ActivityLogAlertResource> IAsyncEnumerable<ActivityLogAlertResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

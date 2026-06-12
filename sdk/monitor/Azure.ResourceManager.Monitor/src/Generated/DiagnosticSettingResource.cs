@@ -6,44 +6,38 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Monitor.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A Class representing a DiagnosticSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiagnosticSettingResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDiagnosticSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDiagnosticSetting method.
+    /// A class representing a DiagnosticSetting along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiagnosticSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDiagnosticSettings method.
     /// </summary>
     public partial class DiagnosticSettingResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DiagnosticSettingResource"/> instance. </summary>
-        /// <param name="resourceUri"> The resourceUri. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string name)
-        {
-            var resourceId = $"{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _diagnosticSettingClientDiagnostics;
-        private readonly DiagnosticSettingsRestOperations _diagnosticSettingRestClient;
+        private readonly ClientDiagnostics _serviceDiagnosticSettingsClientDiagnostics;
+        private readonly ServiceDiagnosticSettings _serviceDiagnosticSettingsRestClient;
         private readonly DiagnosticSettingData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/diagnosticSettings";
 
-        /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DiagnosticSettingResource for mocking. </summary>
         protected DiagnosticSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DiagnosticSettingResource(ArmClient client, DiagnosticSettingData data) : this(client, data.Id)
@@ -52,71 +46,91 @@ namespace Azure.ResourceManager.Monitor
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiagnosticSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _diagnosticSettingClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string diagnosticSettingApiVersion);
-            _diagnosticSettingRestClient = new DiagnosticSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, diagnosticSettingApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _serviceDiagnosticSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
+            _serviceDiagnosticSettingsRestClient = new ServiceDiagnosticSettings(_serviceDiagnosticSettingsClientDiagnostics, Pipeline, Endpoint, diagnosticSettingApiVersion ?? "2016-09-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DiagnosticSettingData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="diagnosticSetting"> The diagnosticSetting. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string diagnosticSetting)
+        {
+            string resourceId = $"{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{diagnosticSetting}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
-        /// Gets the active diagnostic settings for the specified resource.
+        /// Gets the active diagnostic settings for the specified resource. <b>WARNING</b>: This method will be deprecated in future releases.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{diagnosticSetting}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceDiagnosticSettingsResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DiagnosticSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingResource.Get");
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.Get");
             scope.Start();
             try
             {
-                var response = await _diagnosticSettingRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -127,36 +141,44 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Gets the active diagnostic settings for the specified resource.
+        /// Gets the active diagnostic settings for the specified resource. <b>WARNING</b>: This method will be deprecated in future releases.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{diagnosticSetting}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceDiagnosticSettingsResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DiagnosticSettingResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingResource.Get");
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.Get");
             scope.Start();
             try
             {
-                var response = _diagnosticSettingRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -167,41 +189,49 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Deletes existing diagnostic settings for the specified resource.
+        /// Updates an existing ServiceDiagnosticSettingsResource. To update other fields use the CreateOrUpdate method. <b>WARNING</b>: This method will be deprecated in future releases.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{diagnosticSetting}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceDiagnosticSettingsResources_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<DiagnosticSettingResource>> UpdateAsync(DiagnosticSettingPatch patch, CancellationToken cancellationToken = default)
         {
-            using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingResource.Delete");
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.Update");
             scope.Start();
             try
             {
-                var response = await _diagnosticSettingRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _diagnosticSettingRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, DiagnosticSettingPatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,41 +241,49 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Deletes existing diagnostic settings for the specified resource.
+        /// Updates an existing ServiceDiagnosticSettingsResource. To update other fields use the CreateOrUpdate method. <b>WARNING</b>: This method will be deprecated in future releases.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{diagnosticSetting}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceDiagnosticSettingsResources_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2016-09-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiagnosticSettingResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<DiagnosticSettingResource> Update(DiagnosticSettingPatch patch, CancellationToken cancellationToken = default)
         {
-            using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingResource.Delete");
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.Update");
             scope.Start();
             try
             {
-                var response = _diagnosticSettingRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var uri = _diagnosticSettingRestClient.CreateDeleteRequestUri(Id.Parent, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, DiagnosticSettingPatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -254,46 +292,46 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Creates or updates diagnostic settings for the specified resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Parameters supplied to the operation. </param>
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DiagnosticSettingResource>> UpdateAsync(WaitUntil waitUntil, DiagnosticSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual async Task<Response<DiagnosticSettingResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingResource.Update");
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.AddTag");
             scope.Start();
             try
             {
-                var response = await _diagnosticSettingRestClient.CreateOrUpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _diagnosticSettingRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                {
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
+                    return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    DiagnosticSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DiagnosticSettingPatch patch = new DiagnosticSettingPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    Response<DiagnosticSettingResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -302,46 +340,224 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary>
-        /// Creates or updates diagnostic settings for the specified resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticSettings_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiagnosticSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Parameters supplied to the operation. </param>
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DiagnosticSettingResource> Update(WaitUntil waitUntil, DiagnosticSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
+        public virtual Response<DiagnosticSettingResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _diagnosticSettingClientDiagnostics.CreateScope("DiagnosticSettingResource.Update");
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.AddTag");
             scope.Start();
             try
             {
-                var response = _diagnosticSettingRestClient.CreateOrUpdate(Id.Parent, Id.Name, data, cancellationToken);
-                var uri = _diagnosticSettingRestClient.CreateCreateOrUpdateRequestUri(Id.Parent, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
+                if (CanUseTagResource(cancellationToken))
+                {
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
+                    return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    DiagnosticSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DiagnosticSettingPatch patch = new DiagnosticSettingPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    Response<DiagnosticSettingResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual async Task<Response<DiagnosticSettingResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.SetTags");
+            scope.Start();
+            try
+            {
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
+                    return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    DiagnosticSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DiagnosticSettingPatch patch = new DiagnosticSettingPatch();
+                    patch.Tags.ReplaceWith(tags);
+                    Response<DiagnosticSettingResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
+        public virtual Response<DiagnosticSettingResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tags, nameof(tags));
+
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.SetTags");
+            scope.Start();
+            try
+            {
+                if (CanUseTagResource(cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
+                    return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    DiagnosticSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DiagnosticSettingPatch patch = new DiagnosticSettingPatch();
+                    patch.Tags.ReplaceWith(tags);
+                    Response<DiagnosticSettingResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual async Task<Response<DiagnosticSettingResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.RemoveTag");
+            scope.Start();
+            try
+            {
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
+                {
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
+                    return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    DiagnosticSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DiagnosticSettingPatch patch = new DiagnosticSettingPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    Response<DiagnosticSettingResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Removes a tag by key from the resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        public virtual Response<DiagnosticSettingResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingResource.RemoveTag");
+            scope.Start();
+            try
+            {
+                if (CanUseTagResource(cancellationToken))
+                {
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
+                    return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    DiagnosticSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DiagnosticSettingPatch patch = new DiagnosticSettingPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    Response<DiagnosticSettingResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {

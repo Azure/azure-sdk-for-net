@@ -13,106 +13,111 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary>
-    /// A class representing the ActivityLogAlert data model.
-    /// An Activity Log Alert rule resource.
-    /// </summary>
+    /// <summary> An Activity Log Alert rule resource. </summary>
     public partial class ActivityLogAlertData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ActivityLogAlertData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public ActivityLogAlertData(AzureLocation location) : base(location)
         {
-            Scopes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ActivityLogAlertData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="scopes"> A list of resource IDs that will be used as prefixes. The alert will only apply to Activity Log events with resource IDs that fall under one of these prefixes. This list must include at least one item. </param>
-        /// <param name="condition"> The condition that will cause this alert to activate. </param>
-        /// <param name="actions"> The actions that will activate when the condition is met. </param>
-        /// <param name="isEnabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
-        /// <param name="description"> A description of this Activity Log Alert rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ActivityLogAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> scopes, AlertRuleAllOfCondition condition, ActionList actions, bool? isEnabled, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The Activity Log Alert rule properties of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ActivityLogAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AlertRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Scopes = scopes;
-            Condition = condition;
-            Actions = actions;
-            IsEnabled = isEnabled;
-            Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActivityLogAlertData"/> for deserialization. </summary>
-        internal ActivityLogAlertData()
+        /// <summary> The Activity Log Alert rule properties of the resource. </summary>
+        internal AlertRuleProperties Properties { get; set; }
+
+        /// <summary> The tenant GUID. Must be provided for tenant-level and management group events rules. </summary>
+        public string TenantScope
         {
+            get
+            {
+                return Properties is null ? default : Properties.TenantScope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AlertRuleProperties();
+                }
+                Properties.TenantScope = value;
+            }
         }
 
         /// <summary> A list of resource IDs that will be used as prefixes. The alert will only apply to Activity Log events with resource IDs that fall under one of these prefixes. This list must include at least one item. </summary>
-        public IList<string> Scopes { get; }
-        /// <summary> The condition that will cause this alert to activate. </summary>
-        internal AlertRuleAllOfCondition Condition { get; set; }
-        /// <summary> The list of Activity Log Alert rule conditions. </summary>
-        public IList<ActivityLogAlertAnyOfOrLeafCondition> ConditionAllOf
+        public IList<string> Scopes
         {
-            get => Condition is null ? default : Condition.AllOf;
-            set => Condition = new AlertRuleAllOfCondition(value);
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AlertRuleProperties();
+                }
+                return Properties.Scopes;
+            }
         }
 
-        /// <summary> The actions that will activate when the condition is met. </summary>
-        internal ActionList Actions { get; set; }
+        /// <summary> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </summary>
+        public bool? IsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AlertRuleProperties();
+                }
+                Properties.IsEnabled = value;
+            }
+        }
+
+        /// <summary> A description of this Activity Log Alert rule. </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AlertRuleProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The list of the Action Groups. </summary>
         public IList<ActivityLogAlertActionGroup> ActionsActionGroups
         {
             get
             {
-                if (Actions is null)
-                    Actions = new ActionList();
-                return Actions.ActionGroups;
+                if (Properties is null)
+                {
+                    Properties = new AlertRuleProperties();
+                }
+                return Properties.ActionsActionGroups;
             }
         }
-
-        /// <summary> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </summary>
-        public bool? IsEnabled { get; set; }
-        /// <summary> A description of this Activity Log Alert rule. </summary>
-        public string Description { get; set; }
     }
 }

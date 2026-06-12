@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The request body which contain contact detail metadata. </summary>
     public partial class NotificationContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NotificationContent"/>. </summary>
         /// <param name="alertType"> The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget. </param>
@@ -81,8 +53,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
         /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
         /// <param name="incidentReceivers"> The list of incident receivers that are part of this action group. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationContent(string alertType, IList<MonitorEmailReceiver> emailReceivers, IList<MonitorSmsReceiver> smsReceivers, IList<MonitorWebhookReceiver> webhookReceivers, IList<MonitorItsmReceiver> itsmReceivers, IList<MonitorAzureAppPushReceiver> azureAppPushReceivers, IList<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IList<MonitorVoiceReceiver> voiceReceivers, IList<MonitorLogicAppReceiver> logicAppReceivers, IList<MonitorAzureFunctionReceiver> azureFunctionReceivers, IList<MonitorArmRoleReceiver> armRoleReceivers, IList<MonitorEventHubReceiver> eventHubReceivers, IList<IncidentReceiver> incidentReceivers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationContent(string alertType, IList<MonitorEmailReceiver> emailReceivers, IList<MonitorSmsReceiver> smsReceivers, IList<MonitorWebhookReceiver> webhookReceivers, IList<MonitorItsmReceiver> itsmReceivers, IList<MonitorAzureAppPushReceiver> azureAppPushReceivers, IList<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IList<MonitorVoiceReceiver> voiceReceivers, IList<MonitorLogicAppReceiver> logicAppReceivers, IList<MonitorAzureFunctionReceiver> azureFunctionReceivers, IList<MonitorArmRoleReceiver> armRoleReceivers, IList<MonitorEventHubReceiver> eventHubReceivers, IList<IncidentReceiver> incidentReceivers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertType = alertType;
             EmailReceivers = emailReceivers;
@@ -97,38 +69,45 @@ namespace Azure.ResourceManager.Monitor.Models
             ArmRoleReceivers = armRoleReceivers;
             EventHubReceivers = eventHubReceivers;
             IncidentReceivers = incidentReceivers;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NotificationContent"/> for deserialization. </summary>
-        internal NotificationContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The value of the supported alert type. Supported alert type values are: servicehealth, metricstaticthreshold, metricsdynamicthreshold, logalertv2, smartalert, webtestalert, logalertv1numresult, logalertv1metricmeasurement, resourcehealth, activitylog, actualcostbudget, forecastedbudget. </summary>
         public string AlertType { get; }
+
         /// <summary> The list of email receivers that are part of this action group. </summary>
         public IList<MonitorEmailReceiver> EmailReceivers { get; }
+
         /// <summary> The list of SMS receivers that are part of this action group. </summary>
         public IList<MonitorSmsReceiver> SmsReceivers { get; }
+
         /// <summary> The list of webhook receivers that are part of this action group. </summary>
         public IList<MonitorWebhookReceiver> WebhookReceivers { get; }
+
         /// <summary> The list of ITSM receivers that are part of this action group. </summary>
         public IList<MonitorItsmReceiver> ItsmReceivers { get; }
+
         /// <summary> The list of AzureAppPush receivers that are part of this action group. </summary>
         public IList<MonitorAzureAppPushReceiver> AzureAppPushReceivers { get; }
+
         /// <summary> The list of AutomationRunbook receivers that are part of this action group. </summary>
         public IList<MonitorAutomationRunbookReceiver> AutomationRunbookReceivers { get; }
+
         /// <summary> The list of voice receivers that are part of this action group. </summary>
         public IList<MonitorVoiceReceiver> VoiceReceivers { get; }
+
         /// <summary> The list of logic app receivers that are part of this action group. </summary>
         public IList<MonitorLogicAppReceiver> LogicAppReceivers { get; }
+
         /// <summary> The list of azure function receivers that are part of this action group. </summary>
         public IList<MonitorAzureFunctionReceiver> AzureFunctionReceivers { get; }
+
         /// <summary> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </summary>
         public IList<MonitorArmRoleReceiver> ArmRoleReceivers { get; }
+
         /// <summary> The list of event hub receivers that are part of this action group. </summary>
         public IList<MonitorEventHubReceiver> EventHubReceivers { get; }
+
         /// <summary> The list of incident receivers that are part of this action group. </summary>
         public IList<IncidentReceiver> IncidentReceivers { get; }
     }

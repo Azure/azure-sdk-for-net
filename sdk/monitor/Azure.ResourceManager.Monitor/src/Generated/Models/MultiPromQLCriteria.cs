@@ -12,52 +12,20 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary>
     /// The types of conditions for a multi query metric alert.
-    /// Please note <see cref="MultiPromQLCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DynamicPromQLCriteria"/> and <see cref="StaticPromQLCriteria"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StaticPromQLCriteria"/> and <see cref="DynamicPromQLCriteria"/>.
     /// </summary>
     public abstract partial class MultiPromQLCriteria
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MultiPromQLCriteria"/>. </summary>
+        /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="query"> The query used to evaluate the alert rule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="query"/> is null. </exception>
-        protected MultiPromQLCriteria(string name, string query)
+        private protected MultiPromQLCriteria(CriterionType criterionType, string name, string query)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(query, nameof(query));
-
+            CriterionType = criterionType;
             Name = name;
             Query = query;
         }
@@ -66,24 +34,21 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="query"> The query used to evaluate the alert rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MultiPromQLCriteria(CriterionType criterionType, string name, string query, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MultiPromQLCriteria(CriterionType criterionType, string name, string query, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CriterionType = criterionType;
             Name = name;
             Query = query;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MultiPromQLCriteria"/> for deserialization. </summary>
-        internal MultiPromQLCriteria()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the type of threshold criteria. Previously undocumented values might be returned. </summary>
         internal CriterionType CriterionType { get; set; }
+
         /// <summary> Name of the criteria. </summary>
         public string Name { get; set; }
+
         /// <summary> The query used to evaluate the alert rule. </summary>
         public string Query { get; set; }
     }

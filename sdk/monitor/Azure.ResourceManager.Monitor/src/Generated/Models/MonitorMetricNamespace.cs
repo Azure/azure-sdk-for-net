@@ -7,45 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Metric namespace class specifies the metadata for a metric namespace. </summary>
-    public partial class MonitorMetricNamespace : ResourceData
+    public partial class MonitorMetricNamespace
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MonitorMetricNamespace"/>. </summary>
         internal MonitorMetricNamespace()
@@ -53,28 +22,44 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorMetricNamespace"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> The ID of the metric namespace. </param>
+        /// <param name="type"> The type of the namespace. </param>
+        /// <param name="name"> The escaped name of the namespace. </param>
         /// <param name="classification"> Kind of namespace. </param>
         /// <param name="properties"> Properties which include the fully qualified namespace name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorMetricNamespace(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorNamespaceClassification? classification, MetricNamespaceName properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorMetricNamespace(string id, string @type, string name, MonitorNamespaceClassification? classification, MetricNamespaceName properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Id = id;
+            Type = @type;
+            Name = name;
             Classification = classification;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The ID of the metric namespace. </summary>
+        public string Id { get; }
+
+        /// <summary> The type of the namespace. </summary>
+        public string Type { get; }
+
+        /// <summary> The escaped name of the namespace. </summary>
+        public string Name { get; }
 
         /// <summary> Kind of namespace. </summary>
         public MonitorNamespaceClassification? Classification { get; }
+
         /// <summary> Properties which include the fully qualified namespace name. </summary>
         internal MetricNamespaceName Properties { get; }
+
         /// <summary> The metric namespace name. </summary>
-        public string MetricNamespaceNameValue
+        public string MetricNamespaceNameProperty
         {
-            get => Properties?.MetricNamespaceNameValue;
+            get
+            {
+                return Properties is null ? default : Properties.MetricNamespaceNameProperty;
+            }
         }
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal class MonitorPrivateLinkScopedResourceOperationSource : IOperationSource<MonitorPrivateLinkScopedResource>
+    /// <summary></summary>
+    internal partial class MonitorPrivateLinkScopedResourceOperationSource : IOperationSource<MonitorPrivateLinkScopedResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal MonitorPrivateLinkScopedResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         MonitorPrivateLinkScopedResource IOperationSource<MonitorPrivateLinkScopedResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MonitorPrivateLinkScopedResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMonitorContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            MonitorPrivateLinkScopedData data = MonitorPrivateLinkScopedData.DeserializeMonitorPrivateLinkScopedData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new MonitorPrivateLinkScopedResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<MonitorPrivateLinkScopedResource> IOperationSource<MonitorPrivateLinkScopedResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MonitorPrivateLinkScopedResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMonitorContext.Default);
-            return await Task.FromResult(new MonitorPrivateLinkScopedResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            MonitorPrivateLinkScopedData data = MonitorPrivateLinkScopedData.DeserializeMonitorPrivateLinkScopedData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new MonitorPrivateLinkScopedResource(_client, data);
         }
     }
 }

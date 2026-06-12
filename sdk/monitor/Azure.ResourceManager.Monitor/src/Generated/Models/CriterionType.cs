@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specifies the type of threshold criteria. Previously undocumented values might be returned. </summary>
-    internal readonly partial struct CriterionType : IEquatable<CriterionType>
+    public readonly partial struct CriterionType : IEquatable<CriterionType>
     {
         private readonly string _value;
+        /// <summary> StaticThresholdCriterion. </summary>
+        private const string StaticThresholdCriterionValue = "StaticThresholdCriterion";
+        /// <summary> DynamicThresholdCriterion. </summary>
+        private const string DynamicThresholdCriterionValue = "DynamicThresholdCriterion";
 
         /// <summary> Initializes a new instance of <see cref="CriterionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CriterionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StaticThresholdCriterionValue = "StaticThresholdCriterion";
-        private const string DynamicThresholdCriterionValue = "DynamicThresholdCriterion";
+            _value = value;
+        }
 
         /// <summary> StaticThresholdCriterion. </summary>
         public static CriterionType StaticThresholdCriterion { get; } = new CriterionType(StaticThresholdCriterionValue);
+
         /// <summary> DynamicThresholdCriterion. </summary>
         public static CriterionType DynamicThresholdCriterion { get; } = new CriterionType(DynamicThresholdCriterionValue);
+
         /// <summary> Determines if two <see cref="CriterionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CriterionType left, CriterionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CriterionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CriterionType left, CriterionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CriterionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CriterionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CriterionType(string value) => new CriterionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CriterionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CriterionType?(string value) => value == null ? null : new CriterionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CriterionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CriterionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

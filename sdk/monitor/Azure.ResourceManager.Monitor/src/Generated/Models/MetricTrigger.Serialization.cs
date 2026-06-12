@@ -10,13 +10,60 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MetricTrigger : IUtf8JsonSerializable, IJsonModel<MetricTrigger>
+    /// <summary> The trigger that results in a scaling action. </summary>
+    public partial class MetricTrigger : IJsonModel<MetricTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="MetricTrigger"/> for deserialization. </summary>
+        internal MetricTrigger()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MetricTrigger PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMetricTrigger(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MetricTrigger)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MetricTrigger)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MetricTrigger>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MetricTrigger IPersistableModel<MetricTrigger>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MetricTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MetricTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +75,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MetricTrigger)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("metricName"u8);
             writer.WriteStringValue(MetricName);
             if (Optional.IsDefined(MetricNamespace))
@@ -42,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStringValue(MetricNamespace);
             }
             writer.WritePropertyName("metricResourceUri"u8);
-            writer.WriteStringValue(MetricResourceId);
+            writer.WriteStringValue(MetricResourceUri);
             if (Optional.IsDefined(MetricResourceLocation))
             {
                 writer.WritePropertyName("metricResourceLocation"u8);
@@ -62,35 +108,28 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteNumberValue(Threshold);
             if (Optional.IsCollectionDefined(Dimensions))
             {
-                if (Dimensions != null)
+                writer.WritePropertyName("dimensions"u8);
+                writer.WriteStartArray();
+                foreach (AutoscaleRuleMetricDimension item in Dimensions)
                 {
-                    writer.WritePropertyName("dimensions"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in Dimensions)
-                    {
-                        writer.WriteObjectValue(item, options);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item, options);
                 }
-                else
-                {
-                    writer.WriteNull("dimensions");
-                }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsDividedPerInstance))
+            if (Optional.IsDefined(DividePerInstance))
             {
                 writer.WritePropertyName("dividePerInstance"u8);
-                writer.WriteBooleanValue(IsDividedPerInstance.Value);
+                writer.WriteBooleanValue(DividePerInstance.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -99,29 +138,34 @@ namespace Azure.ResourceManager.Monitor.Models
             }
         }
 
-        MetricTrigger IJsonModel<MetricTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MetricTrigger IJsonModel<MetricTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MetricTrigger JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MetricTrigger)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMetricTrigger(document.RootElement, options);
         }
 
-        internal static MetricTrigger DeserializeMetricTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MetricTrigger DeserializeMetricTrigger(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string metricName = default;
             string metricNamespace = default;
-            ResourceIdentifier metricResourceUri = default;
+            string metricResourceUri = default;
             AzureLocation? metricResourceLocation = default;
             TimeSpan timeGrain = default;
             MetricStatisticType statistic = default;
@@ -131,94 +175,91 @@ namespace Azure.ResourceManager.Monitor.Models
             double threshold = default;
             IList<AutoscaleRuleMetricDimension> dimensions = default;
             bool? dividePerInstance = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("metricName"u8))
+                if (prop.NameEquals("metricName"u8))
                 {
-                    metricName = property.Value.GetString();
+                    metricName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricNamespace"u8))
+                if (prop.NameEquals("metricNamespace"u8))
                 {
-                    metricNamespace = property.Value.GetString();
+                    metricNamespace = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricResourceUri"u8))
+                if (prop.NameEquals("metricResourceUri"u8))
                 {
-                    metricResourceUri = new ResourceIdentifier(property.Value.GetString());
+                    metricResourceUri = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricResourceLocation"u8))
+                if (prop.NameEquals("metricResourceLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    metricResourceLocation = new AzureLocation(property.Value.GetString());
+                    metricResourceLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("timeGrain"u8))
+                if (prop.NameEquals("timeGrain"u8))
                 {
-                    timeGrain = property.Value.GetTimeSpan("P");
+                    timeGrain = prop.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("statistic"u8))
+                if (prop.NameEquals("statistic"u8))
                 {
-                    statistic = property.Value.GetString().ToMetricStatisticType();
+                    statistic = prop.Value.GetString().ToMetricStatisticType();
                     continue;
                 }
-                if (property.NameEquals("timeWindow"u8))
+                if (prop.NameEquals("timeWindow"u8))
                 {
-                    timeWindow = property.Value.GetTimeSpan("P");
+                    timeWindow = prop.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("timeAggregation"u8))
+                if (prop.NameEquals("timeAggregation"u8))
                 {
-                    timeAggregation = property.Value.GetString().ToMetricTriggerTimeAggregationType();
+                    timeAggregation = prop.Value.GetString().ToMetricTriggerTimeAggregationType();
                     continue;
                 }
-                if (property.NameEquals("operator"u8))
+                if (prop.NameEquals("operator"u8))
                 {
-                    @operator = property.Value.GetString().ToMetricTriggerComparisonOperation();
+                    @operator = prop.Value.GetString().ToMetricTriggerComparisonOperation();
                     continue;
                 }
-                if (property.NameEquals("threshold"u8))
+                if (prop.NameEquals("threshold"u8))
                 {
-                    threshold = property.Value.GetDouble();
+                    threshold = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("dimensions"u8))
+                if (prop.NameEquals("dimensions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dimensions = null;
                         continue;
                     }
                     List<AutoscaleRuleMetricDimension> array = new List<AutoscaleRuleMetricDimension>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(AutoscaleRuleMetricDimension.DeserializeAutoscaleRuleMetricDimension(item, options));
                     }
                     dimensions = array;
                     continue;
                 }
-                if (property.NameEquals("dividePerInstance"u8))
+                if (prop.NameEquals("dividePerInstance"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dividePerInstance = property.Value.GetBoolean();
+                    dividePerInstance = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MetricTrigger(
                 metricName,
                 metricNamespace,
@@ -232,38 +273,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 threshold,
                 dimensions ?? new ChangeTrackingList<AutoscaleRuleMetricDimension>(),
                 dividePerInstance,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<MetricTrigger>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricTrigger>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MetricTrigger)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MetricTrigger IPersistableModel<MetricTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricTrigger>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMetricTrigger(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MetricTrigger)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MetricTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorMetricDefinition : IUtf8JsonSerializable, IJsonModel<MonitorMetricDefinition>
+    /// <summary> Metric definition class specifies the metadata for a metric. </summary>
+    public partial class MonitorMetricDefinition : IJsonModel<MonitorMetricDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorMetricDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MonitorMetricDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMonitorMetricDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MonitorMetricDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MonitorMetricDefinition IPersistableModel<MonitorMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MonitorMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MonitorMetricDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitorMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IsDimensionRequired))
             {
                 writer.WritePropertyName("isDimensionRequired"u8);
@@ -83,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("supportedAggregationTypes"u8);
                 writer.WriteStartArray();
-                foreach (var item in SupportedAggregationTypes)
+                foreach (MonitorAggregationType item in SupportedAggregationTypes)
                 {
                     writer.WriteStringValue(item.ToSerialString());
                 }
@@ -93,7 +133,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("metricAvailabilities"u8);
                 writer.WriteStartArray();
-                foreach (var item in MetricAvailabilities)
+                foreach (MonitorMetricAvailability item in MetricAvailabilities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,21 +148,21 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Dimensions)
+                foreach (MonitorLocalizableString item in Dimensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -131,22 +171,27 @@ namespace Azure.ResourceManager.Monitor.Models
             }
         }
 
-        MonitorMetricDefinition IJsonModel<MonitorMetricDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MonitorMetricDefinition IJsonModel<MonitorMetricDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MonitorMetricDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitorMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMonitorMetricDefinition(document.RootElement, options);
         }
 
-        internal static MonitorMetricDefinition DeserializeMonitorMetricDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MonitorMetricDefinition DeserializeMonitorMetricDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -164,116 +209,115 @@ namespace Azure.ResourceManager.Monitor.Models
             IReadOnlyList<MonitorMetricAvailability> metricAvailabilities = default;
             string id = default;
             IReadOnlyList<MonitorLocalizableString> dimensions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("isDimensionRequired"u8))
+                if (prop.NameEquals("isDimensionRequired"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDimensionRequired = property.Value.GetBoolean();
+                    isDimensionRequired = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("resourceId"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    resourceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("namespace"u8))
+                if (prop.NameEquals("namespace"u8))
                 {
-                    @namespace = property.Value.GetString();
+                    @namespace = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(property.Value, options);
+                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("displayDescription"u8))
+                if (prop.NameEquals("displayDescription"u8))
                 {
-                    displayDescription = property.Value.GetString();
+                    displayDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("category"u8))
+                if (prop.NameEquals("category"u8))
                 {
-                    category = property.Value.GetString();
+                    category = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricClass"u8))
+                if (prop.NameEquals("metricClass"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    metricClass = new MonitorMetricClass(property.Value.GetString());
+                    metricClass = new MonitorMetricClass(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("unit"u8))
+                if (prop.NameEquals("unit"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    unit = new MonitorMetricUnit(property.Value.GetString());
+                    unit = new MonitorMetricUnit(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryAggregationType"u8))
+                if (prop.NameEquals("primaryAggregationType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    primaryAggregationType = property.Value.GetString().ToMonitorAggregationType();
+                    primaryAggregationType = prop.Value.GetString().ToMonitorAggregationType();
                     continue;
                 }
-                if (property.NameEquals("supportedAggregationTypes"u8))
+                if (prop.NameEquals("supportedAggregationTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitorAggregationType> array = new List<MonitorAggregationType>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(item.GetString().ToMonitorAggregationType());
                     }
                     supportedAggregationTypes = array;
                     continue;
                 }
-                if (property.NameEquals("metricAvailabilities"u8))
+                if (prop.NameEquals("metricAvailabilities"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitorMetricAvailability> array = new List<MonitorMetricAvailability>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MonitorMetricAvailability.DeserializeMonitorMetricAvailability(item, options));
                     }
                     metricAvailabilities = array;
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dimensions"u8))
+                if (prop.NameEquals("dimensions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<MonitorLocalizableString> array = new List<MonitorLocalizableString>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MonitorLocalizableString.DeserializeMonitorLocalizableString(item, options));
                     }
@@ -282,10 +326,9 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MonitorMetricDefinition(
                 isDimensionRequired,
                 resourceId,
@@ -300,38 +343,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 metricAvailabilities ?? new ChangeTrackingList<MonitorMetricAvailability>(),
                 id,
                 dimensions ?? new ChangeTrackingList<MonitorLocalizableString>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<MonitorMetricDefinition>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitorMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MonitorMetricDefinition IPersistableModel<MonitorMetricDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MonitorMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMonitorMetricDefinition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MonitorMetricDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

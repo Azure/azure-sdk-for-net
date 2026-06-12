@@ -8,17 +8,67 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MetricAlertPatch : IUtf8JsonSerializable, IJsonModel<MetricAlertPatch>
+    /// <summary> The metric alert resource for patch operations. </summary>
+    public partial class MetricAlertPatch : IJsonModel<MetricAlertPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricAlertPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MetricAlertPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMetricAlertPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MetricAlertPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MetricAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MetricAlertPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MetricAlertPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MetricAlertPatch IPersistableModel<MetricAlertPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MetricAlertPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="metricAlertPatch"> The <see cref="MetricAlertPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MetricAlertPatch metricAlertPatch)
+        {
+            if (metricAlertPatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(metricAlertPatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MetricAlertPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +80,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MetricAlertPatch)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -43,6 +92,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -50,122 +104,22 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                writer.WriteObjectValue(Identity, options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Severity))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("severity"u8);
-                writer.WriteNumberValue(Severity.Value);
-            }
-            if (Optional.IsDefined(IsEnabled))
-            {
-                writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(IsEnabled.Value);
-            }
-            if (Optional.IsCollectionDefined(Scopes))
-            {
-                writer.WritePropertyName("scopes"u8);
-                writer.WriteStartArray();
-                foreach (var item in Scopes)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(EvaluationFrequency))
-            {
-                writer.WritePropertyName("evaluationFrequency"u8);
-                writer.WriteStringValue(EvaluationFrequency.Value, "P");
-            }
-            if (Optional.IsDefined(WindowSize))
-            {
-                writer.WritePropertyName("windowSize"u8);
-                writer.WriteStringValue(WindowSize.Value, "P");
-            }
-            if (Optional.IsDefined(TargetResourceType))
-            {
-                writer.WritePropertyName("targetResourceType"u8);
-                writer.WriteStringValue(TargetResourceType.Value);
-            }
-            if (Optional.IsDefined(TargetResourceRegion))
-            {
-                writer.WritePropertyName("targetResourceRegion"u8);
-                writer.WriteStringValue(TargetResourceRegion.Value);
-            }
-            if (Optional.IsDefined(Criteria))
-            {
-                writer.WritePropertyName("criteria"u8);
-                writer.WriteObjectValue(Criteria, options);
-            }
-            if (Optional.IsDefined(IsAutoMitigateEnabled))
-            {
-                writer.WritePropertyName("autoMitigate"u8);
-                writer.WriteBooleanValue(IsAutoMitigateEnabled.Value);
-            }
-            if (Optional.IsDefined(ResolveConfiguration))
-            {
-                writer.WritePropertyName("resolveConfiguration"u8);
-                writer.WriteObjectValue(ResolveConfiguration, options);
-            }
-            if (Optional.IsCollectionDefined(Actions))
-            {
-                writer.WritePropertyName("actions"u8);
-                writer.WriteStartArray();
-                foreach (var item in Actions)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
-            {
-                writer.WritePropertyName("lastUpdatedTime"u8);
-                writer.WriteStringValue(LastUpdatedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsMigrated))
-            {
-                writer.WritePropertyName("isMigrated"u8);
-                writer.WriteBooleanValue(IsMigrated.Value);
-            }
-            if (Optional.IsCollectionDefined(CustomProperties))
-            {
-                writer.WritePropertyName("customProperties"u8);
-                writer.WriteStartObject();
-                foreach (var item in CustomProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(ActionProperties))
-            {
-                writer.WritePropertyName("actionProperties"u8);
-                writer.WriteStartObject();
-                foreach (var item in ActionProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -174,300 +128,82 @@ namespace Azure.ResourceManager.Monitor.Models
             }
         }
 
-        MetricAlertPatch IJsonModel<MetricAlertPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MetricAlertPatch IJsonModel<MetricAlertPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MetricAlertPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MetricAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MetricAlertPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMetricAlertPatch(document.RootElement, options);
         }
 
-        internal static MetricAlertPatch DeserializeMetricAlertPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MetricAlertPatch DeserializeMetricAlertPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> tags = default;
-            ManagedServiceIdentity identity = default;
-            string description = default;
-            int? severity = default;
-            bool? enabled = default;
-            IList<string> scopes = default;
-            TimeSpan? evaluationFrequency = default;
-            TimeSpan? windowSize = default;
-            ResourceType? targetResourceType = default;
-            AzureLocation? targetResourceRegion = default;
-            MetricAlertCriteria criteria = default;
-            bool? autoMitigate = default;
-            ResolveConfiguration resolveConfiguration = default;
-            IList<MetricAlertAction> actions = default;
-            DateTimeOffset? lastUpdatedTime = default;
-            bool? isMigrated = default;
-            IDictionary<string, string> customProperties = default;
-            IDictionary<string, string> actionProperties = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            Identity identity = default;
+            MetricAlertPropertiesPatch properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMonitorContext.Default);
+                    identity = Identity.DeserializeIdentity(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("severity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            severity = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("enabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("scopes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            scopes = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("evaluationFrequency"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            evaluationFrequency = property0.Value.GetTimeSpan("P");
-                            continue;
-                        }
-                        if (property0.NameEquals("windowSize"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            windowSize = property0.Value.GetTimeSpan("P");
-                            continue;
-                        }
-                        if (property0.NameEquals("targetResourceType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            targetResourceType = new ResourceType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("targetResourceRegion"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            targetResourceRegion = new AzureLocation(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("criteria"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            criteria = MetricAlertCriteria.DeserializeMetricAlertCriteria(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("autoMitigate"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            autoMitigate = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("resolveConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resolveConfiguration = ResolveConfiguration.DeserializeResolveConfiguration(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("actions"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<MetricAlertAction> array = new List<MetricAlertAction>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(MetricAlertAction.DeserializeMetricAlertAction(item, options));
-                            }
-                            actions = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("lastUpdatedTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            lastUpdatedTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("isMigrated"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isMigrated = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("customProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            customProperties = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("actionProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            actionProperties = dictionary;
-                            continue;
-                        }
-                    }
+                    properties = MetricAlertPropertiesPatch.DeserializeMetricAlertPropertiesPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MetricAlertPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                identity,
-                description,
-                severity,
-                enabled,
-                scopes ?? new ChangeTrackingList<string>(),
-                evaluationFrequency,
-                windowSize,
-                targetResourceType,
-                targetResourceRegion,
-                criteria,
-                autoMitigate,
-                resolveConfiguration,
-                actions ?? new ChangeTrackingList<MetricAlertAction>(),
-                lastUpdatedTime,
-                isMigrated,
-                customProperties ?? new ChangeTrackingDictionary<string, string>(),
-                actionProperties ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData);
+            return new MetricAlertPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<MetricAlertPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MetricAlertPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MetricAlertPatch IPersistableModel<MetricAlertPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MetricAlertPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMetricAlertPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MetricAlertPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MetricAlertPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,9 +11,10 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     internal static partial class MetricTriggerComparisonOperationExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MetricTriggerComparisonOperation value) => value switch
         {
-            MetricTriggerComparisonOperation.EqualsValue => "Equals",
+            MetricTriggerComparisonOperation.Equals => "Equals",
             MetricTriggerComparisonOperation.NotEquals => "NotEquals",
             MetricTriggerComparisonOperation.GreaterThan => "GreaterThan",
             MetricTriggerComparisonOperation.GreaterThanOrEqual => "GreaterThanOrEqual",
@@ -22,14 +23,33 @@ namespace Azure.ResourceManager.Monitor.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MetricTriggerComparisonOperation value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MetricTriggerComparisonOperation ToMetricTriggerComparisonOperation(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Equals")) return MetricTriggerComparisonOperation.EqualsValue;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotEquals")) return MetricTriggerComparisonOperation.NotEquals;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GreaterThan")) return MetricTriggerComparisonOperation.GreaterThan;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GreaterThanOrEqual")) return MetricTriggerComparisonOperation.GreaterThanOrEqual;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LessThan")) return MetricTriggerComparisonOperation.LessThan;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LessThanOrEqual")) return MetricTriggerComparisonOperation.LessThanOrEqual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Equals"))
+            {
+                return MetricTriggerComparisonOperation.Equals;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotEquals"))
+            {
+                return MetricTriggerComparisonOperation.NotEquals;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GreaterThan"))
+            {
+                return MetricTriggerComparisonOperation.GreaterThan;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GreaterThanOrEqual"))
+            {
+                return MetricTriggerComparisonOperation.GreaterThanOrEqual;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LessThan"))
+            {
+                return MetricTriggerComparisonOperation.LessThan;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LessThanOrEqual"))
+            {
+                return MetricTriggerComparisonOperation.LessThanOrEqual;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MetricTriggerComparisonOperation value.");
         }
     }
