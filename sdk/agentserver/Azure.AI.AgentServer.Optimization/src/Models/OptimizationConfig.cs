@@ -7,7 +7,7 @@ using System.Text.Json;
 namespace Azure.AI.AgentServer.Optimization;
 
 /// <summary>
-/// Resolved optimization config returned by <see cref="OptimizationConfigLoader.LoadConfigAsync"/>.
+/// Resolved optimization config returned by <see cref="OptimizationConfigLoader.LoadConfigAsync(System.ClientModel.AuthenticationTokenProvider, System.Threading.CancellationToken)"/>.
 /// Contains the optimized instructions, model, temperature, skills, and tool definitions.
 /// </summary>
 public class OptimizationConfig

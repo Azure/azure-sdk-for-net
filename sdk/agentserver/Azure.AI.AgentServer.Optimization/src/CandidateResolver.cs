@@ -24,7 +24,7 @@ internal static class CandidateResolver
         AuthenticationTokenProvider tokenProvider,
         CancellationToken cancellationToken = default)
     {
-        ValidateCandidateId(candidateId);
+        CandidateIdValidator.ThrowIfInvalid(candidateId, nameof(candidateId));
 
         var pipeline = BuildPipeline(tokenProvider);
         return await FetchCandidateConfigAsync(pipeline, endpoint, candidateId, cancellationToken).ConfigureAwait(false);
@@ -49,36 +49,6 @@ internal static class CandidateResolver
 
         using var doc = JsonDocument.Parse(response.Content);
         return doc.RootElement.Clone();
-    }
-
-    private static void ValidateCandidateId(string candidateId)
-    {
-        if (string.IsNullOrEmpty(candidateId))
-        {
-            throw new ArgumentNullException(nameof(candidateId));
-        }
-
-        ReadOnlySpan<char> candidateIdSpan = candidateId.AsSpan();
-
-        if (ContainsParentTraversal(candidateIdSpan) ||
-            candidateIdSpan.IndexOf(Path.DirectorySeparatorChar) >= 0 ||
-            candidateIdSpan.IndexOf(Path.AltDirectorySeparatorChar) >= 0)
-        {
-            throw new ArgumentException("Candidate ID must not contain path separators or '..'.", nameof(candidateId));
-        }
-    }
-
-    private static bool ContainsParentTraversal(ReadOnlySpan<char> value)
-    {
-        for (int i = 1; i < value.Length; i++)
-        {
-            if (value[i - 1] == '.' && value[i] == '.')
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private static RequestOptions CreateRequestOptions(CancellationToken cancellationToken) =>

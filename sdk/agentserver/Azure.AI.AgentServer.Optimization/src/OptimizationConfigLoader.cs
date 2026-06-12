@@ -19,11 +19,18 @@ namespace Azure.AI.AgentServer.Optimization;
 /// <item><description><b>Local baseline directory</b> — <c>OPTIMIZATION_LOCAL_DIR/baseline/</c> exists on disk.</description></item>
 /// <item><description>When none of the above match, returns <c>null</c>.</description></item>
 /// </list>
+/// <para>
+/// Multi-agent hosts can scope env-var lookups per agent by passing
+/// <see cref="LoadConfigOptions.AgentKey"/>: the loader prefers
+/// <c>OPTIMIZATION_&lt;VAR&gt;__&lt;CANONICAL_KEY&gt;</c> over the un-suffixed variant.
+/// </para>
 /// </remarks>
 public static class OptimizationConfigLoader
 {
+    private static readonly TimeSpan s_defaultResolverTimeout = TimeSpan.FromSeconds(30);
+
     /// <summary>
-    /// Loads optimization config asynchronously using the resolution waterfall.
+    /// Loads optimization config asynchronously using the resolution waterfall (back-compat overload).
     /// </summary>
     /// <param name="tokenProvider">Optional token provider for authenticating to the resolver API.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
@@ -32,53 +39,126 @@ public static class OptimizationConfigLoader
         AuthenticationTokenProvider tokenProvider = null,
         CancellationToken cancellationToken = default)
     {
-        string candidateId = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableCandidateId)?.Trim() ?? "";
-        string endpoint = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableResolveEndpoint)?.Trim()?.TrimEnd('/') ?? "";
+        var result = await LoadConfigAsync(
+            new LoadConfigOptions { TokenProvider = tokenProvider },
+            cancellationToken).ConfigureAwait(false);
+        return result.Config;
+    }
+
+    /// <summary>
+    /// Loads optimization config synchronously using the resolution waterfall (back-compat overload).
+    /// </summary>
+    /// <param name="tokenProvider">Optional token provider for authenticating to the resolver API.</param>
+    /// <returns>The resolved config, or <c>null</c> if no config source was found.</returns>
+    public static OptimizationConfig LoadConfig(AuthenticationTokenProvider tokenProvider = null)
+    {
+#pragma warning disable AZC0102 // TaskExtensions.EnsureCompleted not available in this context
+        return LoadConfigAsync(tokenProvider).GetAwaiter().GetResult();
+#pragma warning restore AZC0102
+    }
+
+    /// <summary>
+    /// Loads optimization config synchronously with detailed result and diagnostics.
+    /// </summary>
+    /// <param name="options">Resolution options. Must not be <c>null</c>.</param>
+    /// <returns>A <see cref="LoadConfigResult"/> carrying the resolved config (if any), the source that produced it, and any non-fatal warnings.</returns>
+    public static LoadConfigResult LoadConfig(LoadConfigOptions options)
+    {
+#pragma warning disable AZC0102 // TaskExtensions.EnsureCompleted not available in this context
+        return LoadConfigAsync(options, default).GetAwaiter().GetResult();
+#pragma warning restore AZC0102
+    }
+
+    /// <summary>
+    /// Loads optimization config asynchronously with detailed result and diagnostics.
+    /// </summary>
+    /// <param name="options">Resolution options. Must not be <c>null</c>.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>A <see cref="LoadConfigResult"/> carrying the resolved config (if any), the source that produced it, and any non-fatal warnings.</returns>
+    public static async Task<LoadConfigResult> LoadConfigAsync(
+        LoadConfigOptions options,
+        CancellationToken cancellationToken = default)
+    {
+        if (options is null)
+        {
+            throw new ArgumentNullException(nameof(options));
+        }
+
+        string canonicalKey = null;
+        if (!string.IsNullOrEmpty(options.AgentKey))
+        {
+            canonicalKey = AgentKeyCanonicalizer.Canonicalize(options.AgentKey, nameof(options.AgentKey) + " on " + nameof(LoadConfigOptions));
+        }
+
+        var warnings = new List<string>();
+        bool allowUnsuffixedFallback = canonicalKey is null || options.FallbackToUnsuffixedEnvVars;
+
+        string candidateId = ResolveEnvVar(OptimizationConfig.EnvironmentVariableCandidateId, canonicalKey, allowUnsuffixedFallback);
+        string endpoint = ResolveEnvVar(OptimizationConfig.EnvironmentVariableResolveEndpoint, canonicalKey, allowUnsuffixedFallback)?.TrimEnd('/');
 
         // ── Priority 1: Resolver API ────────────────────────────────
         if (!string.IsNullOrEmpty(candidateId) && !string.IsNullOrEmpty(endpoint))
         {
+            using var linked = CreateResolverCancellation(cancellationToken, options.ResolverTimeout ?? s_defaultResolverTimeout);
             try
             {
                 var resolved = await CandidateResolver.ResolveAsync(
-                    candidateId, endpoint, tokenProvider, cancellationToken).ConfigureAwait(false);
+                    candidateId, endpoint, options.TokenProvider, linked.Token).ConfigureAwait(false);
 
                 if (resolved.HasValue)
                 {
-                    return OptimizationConfig.FromJson(
-                        resolved.Value,
-                        source: $"api:candidate:{candidateId}",
-                        candidateId: candidateId);
+                    string source = $"api:candidate:{candidateId}";
+                    var cfg = OptimizationConfig.FromJson(resolved.Value, source: source, candidateId: candidateId);
+                    return new LoadConfigResult(cfg, source, warnings);
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) when (!options.StrictMode)
             {
-                Console.Error.WriteLine($"[AgentServer.Optimization] Warning: Failed to resolve config for candidate '{candidateId}' from '{endpoint}': {ex.Message}");
-                // Resolver failure is non-fatal — fall through to next priority
+                string msg = $"Failed to resolve config for candidate '{candidateId}' from '{endpoint}': {ex.Message}";
+                Console.Error.WriteLine($"[AgentServer.Optimization] Warning: {msg}");
+                warnings.Add(msg);
+                // Resolver failure is non-fatal in non-strict mode — fall through to next priority.
             }
         }
 
         // ── Priority 2: Inline JSON env var ─────────────────────────
-        string rawConfig = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableConfig)?.Trim() ?? "";
+        // Inline JSON in OPTIMIZATION_CONFIG is an explicit signal — parse errors
+        // always throw regardless of StrictMode (preserves back-compat).
+        string rawConfig = ResolveEnvVar(OptimizationConfig.EnvironmentVariableConfig, canonicalKey, allowUnsuffixedFallback);
         if (!string.IsNullOrEmpty(rawConfig))
         {
-            return LoadFromEnvVar(rawConfig);
+            var cfg = LoadFromEnvVar(rawConfig);
+            return new LoadConfigResult(cfg, cfg.Source, warnings);
         }
 
         // ── Priority 3: Local candidate directory ───────────────────
-        // When `azd ai agent optimize apply --candidate <id>` runs, it writes
-        // the candidate config to `<OPTIMIZATION_LOCAL_DIR>/<candidate_id>/`
-        // and sets OPTIMIZATION_CANDIDATE_ID on the agent. If the candidate
-        // directory exists on disk, prefer it over baseline so the deployed
-        // container actually exercises the optimized config when the resolver
-        // API endpoint is not configured (the common offline / preview case).
-        string localDir = Environment.GetEnvironmentVariable(OptimizationConfig.EnvironmentVariableLocalDirectory)?.Trim() ?? "";
+        // When `azd ai agent optimize apply --candidate <id>` runs, it writes the
+        // candidate config to `<OPTIMIZATION_LOCAL_DIR>/<candidate_id>/` and sets
+        // OPTIMIZATION_CANDIDATE_ID on the agent. If the candidate directory exists
+        // on disk, prefer it over baseline so the deployed container actually exercises
+        // the optimized config when the resolver API endpoint is not configured (the
+        // common offline / preview case).
+        string localDir = ResolveEnvVar(OptimizationConfig.EnvironmentVariableLocalDirectory, canonicalKey, allowUnsuffixedFallback);
         if (!string.IsNullOrEmpty(candidateId) && !string.IsNullOrEmpty(localDir))
         {
-            string candidatePath = Path.Combine(localDir, candidateId);
-            if (Directory.Exists(candidatePath))
+            if (!CandidateIdValidator.IsValid(candidateId))
             {
-                return LoadFromLocalDirectory(candidatePath, candidateId);
+                string msg = $"Candidate ID '{candidateId}' is invalid (contains path separators or '..'); skipping local candidate directory.";
+                if (options.StrictMode)
+                {
+                    throw new InvalidOperationException(msg);
+                }
+                Console.Error.WriteLine($"[AgentServer.Optimization] Warning: {msg}");
+                warnings.Add(msg);
+            }
+            else
+            {
+                string candidatePath = Path.Combine(localDir, candidateId);
+                if (Directory.Exists(candidatePath))
+                {
+                    var cfg = LoadFromLocalDirectory(candidatePath, candidateId, options.StrictMode, warnings);
+                    return new LoadConfigResult(cfg, cfg.Source, warnings);
+                }
             }
         }
 
@@ -88,24 +168,45 @@ public static class OptimizationConfigLoader
             string baselinePath = Path.Combine(localDir, "baseline");
             if (Directory.Exists(baselinePath))
             {
-                return LoadFromLocalDirectory(baselinePath);
+                var cfg = LoadFromLocalDirectory(baselinePath, candidateId: null, options.StrictMode, warnings);
+                return new LoadConfigResult(cfg, cfg.Source, warnings);
             }
         }
 
         // ── No config found ─────────────────────────────────────────
-        return null;
+        return warnings.Count == 0 ? LoadConfigResult.Empty : new LoadConfigResult(null, null, warnings);
     }
 
     /// <summary>
-    /// Loads optimization config synchronously using the resolution waterfall.
+    /// Resolves an environment variable, preferring the per-agent suffixed form
+    /// (<c>&lt;VAR&gt;__&lt;CANONICAL_KEY&gt;</c>) when <paramref name="canonicalKey"/>
+    /// is non-null. Falls back to the un-suffixed form only when
+    /// <paramref name="allowUnsuffixedFallback"/> is <c>true</c>.
     /// </summary>
-    /// <param name="tokenProvider">Optional token provider for authenticating to the resolver API.</param>
-    /// <returns>The resolved config, or <c>null</c> if no config source was found.</returns>
-    public static OptimizationConfig LoadConfig(AuthenticationTokenProvider tokenProvider = null)
+    private static string ResolveEnvVar(string varName, string canonicalKey, bool allowUnsuffixedFallback)
     {
-#pragma warning disable AZC0102 // TaskExtensions.EnsureCompleted not available in this context
-        return LoadConfigAsync(tokenProvider).GetAwaiter().GetResult();
-#pragma warning restore AZC0102
+        if (canonicalKey is not null)
+        {
+            string suffixed = Environment.GetEnvironmentVariable($"{varName}__{canonicalKey}")?.Trim();
+            if (!string.IsNullOrEmpty(suffixed))
+            {
+                return suffixed;
+            }
+
+            if (!allowUnsuffixedFallback)
+            {
+                return null;
+            }
+        }
+
+        return Environment.GetEnvironmentVariable(varName)?.Trim();
+    }
+
+    private static CancellationTokenSource CreateResolverCancellation(CancellationToken outer, TimeSpan timeout)
+    {
+        var cts = CancellationTokenSource.CreateLinkedTokenSource(outer);
+        cts.CancelAfter(timeout);
+        return cts;
     }
 
     /// <summary>
@@ -211,7 +312,11 @@ public static class OptimizationConfigLoader
         }
     }
 
-    private static OptimizationConfig LoadFromLocalDirectory(string localDir, string candidateId = null)
+    private static OptimizationConfig LoadFromLocalDirectory(
+        string localDir,
+        string candidateId = null,
+        bool strict = false,
+        List<string> warnings = null)
     {
         // Read instructions.md
         string instructionsPath = Path.Combine(localDir, "instructions.md");
@@ -237,7 +342,13 @@ public static class OptimizationConfigLoader
             }
             catch (JsonException ex)
             {
-                Console.Error.WriteLine($"[AgentServer.Optimization] Warning: Failed to parse tools.json at '{toolsPath}': {ex.Message}");
+                string msg = $"Failed to parse tools.json at '{toolsPath}': {ex.Message}";
+                if (strict)
+                {
+                    throw new InvalidOperationException(msg, ex);
+                }
+                Console.Error.WriteLine($"[AgentServer.Optimization] Warning: {msg}");
+                warnings?.Add(msg);
             }
         }
 
