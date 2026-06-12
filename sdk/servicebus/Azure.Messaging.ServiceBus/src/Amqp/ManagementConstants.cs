@@ -37,6 +37,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             public const string ScheduleMessageOperation = Microsoft + ":schedule-message";
             public const string CancelScheduledMessageOperation = Microsoft + ":cancel-scheduled-message";
             public const string DeleteMessagesOperation = Microsoft + ":batch-delete-messages";
+            public const string GetMessageSessionsOperation = Microsoft + ":get-message-sessions";
         }
 
         public static class Properties
@@ -84,6 +85,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             public static readonly MapKey ReplyToSessionId = new MapKey("reply-to-session-id");
             public static readonly MapKey ContentType = new MapKey("content-type");
             public static readonly MapKey CorrelationRuleFilterProperties = new MapKey("properties");
+
+            public static readonly MapKey SessionIds = new MapKey("sessions-ids");
+            public static readonly MapKey LastUpdatedTime = new MapKey("last-updated-time");
         }
     }
 }
