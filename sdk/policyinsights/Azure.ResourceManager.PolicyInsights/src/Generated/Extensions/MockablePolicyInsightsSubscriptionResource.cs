@@ -8,490 +8,76 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.PolicyInsights;
 using Azure.ResourceManager.PolicyInsights.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PolicyInsights.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockablePolicyInsightsSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _policyTrackedResourcesClientDiagnostics;
-        private PolicyTrackedResourcesRestOperations _policyTrackedResourcesRestClient;
         private ClientDiagnostics _policyEventsClientDiagnostics;
-        private PolicyEventsRestOperations _policyEventsRestClient;
+        private PolicyEvents _policyEventsRestClient;
         private ClientDiagnostics _policyStatesClientDiagnostics;
-        private PolicyStatesRestOperations _policyStatesRestClient;
+        private PolicyStates _policyStatesRestClient;
         private ClientDiagnostics _policyRestrictionsClientDiagnostics;
-        private PolicyRestrictionsRestOperations _policyRestrictionsRestClient;
+        private PolicyRestrictions _policyRestrictionsRestClient;
         private ClientDiagnostics _componentPolicyStatesClientDiagnostics;
-        private ComponentPolicyStatesRestOperations _componentPolicyStatesRestClient;
+        private ComponentPolicyStates _componentPolicyStatesRestClient;
+        private ClientDiagnostics _policyTrackedResourcesClientDiagnostics;
+        private PolicyTrackedResources _policyTrackedResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePolicyInsightsSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePolicyInsightsSubscriptionResource for mocking. </summary>
         protected MockablePolicyInsightsSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePolicyInsightsSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePolicyInsightsSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePolicyInsightsSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics PolicyTrackedResourcesClientDiagnostics => _policyTrackedResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private PolicyTrackedResourcesRestOperations PolicyTrackedResourcesRestClient => _policyTrackedResourcesRestClient ??= new PolicyTrackedResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics PolicyEventsClientDiagnostics => _policyEventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private PolicyEventsRestOperations PolicyEventsRestClient => _policyEventsRestClient ??= new PolicyEventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics PolicyStatesClientDiagnostics => _policyStatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private PolicyStatesRestOperations PolicyStatesRestClient => _policyStatesRestClient ??= new PolicyStatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics PolicyRestrictionsClientDiagnostics => _policyRestrictionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private PolicyRestrictionsRestOperations PolicyRestrictionsRestClient => _policyRestrictionsRestClient ??= new PolicyRestrictionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ComponentPolicyStatesClientDiagnostics => _componentPolicyStatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ComponentPolicyStatesRestOperations ComponentPolicyStatesRestClient => _componentPolicyStatesRestClient ??= new ComponentPolicyStatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics PolicyEventsClientDiagnostics => _policyEventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private PolicyEvents PolicyEventsRestClient => _policyEventsRestClient ??= new PolicyEvents(PolicyEventsClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
 
-        /// <summary>
-        /// Queries policy tracked resources under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyTrackedResources_ListQueryResultsForSubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-07-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord(e), PolicyTrackedResourcesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
-        }
+        private ClientDiagnostics PolicyStatesClientDiagnostics => _policyStatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Queries policy tracked resources under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyTrackedResources/{policyTrackedResourcesResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyTrackedResources_ListQueryResultsForSubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-07-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyTrackedResourceType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord(e), PolicyTrackedResourcesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
-        }
+        private PolicyStates PolicyStatesRestClient => _policyStatesRestClient ??= new PolicyStates(PolicyStatesClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
 
-        /// <summary>
-        /// Queries policy events for the resources under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyEvents_ListQueryResultsForSubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyEventType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
-        }
+        private ClientDiagnostics PolicyRestrictionsClientDiagnostics => _policyRestrictionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Queries policy events for the resources under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyEvents_ListQueryResultsForSubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetPolicyEventQueryResults(PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyEventType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
-        }
+        private PolicyRestrictions PolicyRestrictionsRestClient => _policyRestrictionsRestClient ??= new PolicyRestrictions(PolicyRestrictionsClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
 
-        /// <summary>
-        /// Queries policy events for the subscription level policy set definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyEvents_ListQueryResultsForPolicySetDefinition</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEventsAsync(string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+        private ClientDiagnostics ComponentPolicyStatesClientDiagnostics => _componentPolicyStatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicySetDefinitionPolicyEvents", "value", "@odata.nextLink", cancellationToken);
-        }
+        private ComponentPolicyStates ComponentPolicyStatesRestClient => _componentPolicyStatesRestClient ??= new ComponentPolicyStates(ComponentPolicyStatesClientDiagnostics, Pipeline, Endpoint, "2024-10-01");
 
-        /// <summary>
-        /// Queries policy events for the subscription level policy set definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyEvents_ListQueryResultsForPolicySetDefinition</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEvents(string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
+        private ClientDiagnostics PolicyTrackedResourcesClientDiagnostics => _policyTrackedResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policySetDefinitionName, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicySetDefinitionPolicyEvents", "value", "@odata.nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyEvents_ListQueryResultsForPolicyDefinition</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEventsAsync(string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionPolicyEvents", "value", "@odata.nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyEvents_ListQueryResultsForPolicyDefinition</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEvents(string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policyDefinitionName, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionPolicyEvents", "value", "@odata.nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy assignment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyEvents_ListQueryResultsForSubscriptionLevelPolicyAssignment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEventsAsync(string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, Id.SubscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents", "value", "@odata.nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy assignment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyEvents_ListQueryResultsForSubscriptionLevelPolicyAssignment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents(string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, Id.SubscriptionId, policyAssignmentName, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents", "value", "@odata.nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy states for the resources under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_ListQueryResultsForSubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyStateType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy states for the resources under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_ListQueryResultsForSubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetPolicyStateQueryResults(PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, policyStateType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the resources under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_SummarizeForSubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForSubscriptionRequest(Id.SubscriptionId, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizePolicyStates", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the resources under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_SummarizeForSubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicySummary> SummarizePolicyStates(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForSubscriptionRequest(Id.SubscriptionId, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizePolicyStates", "value", null, cancellationToken);
-        }
+        private PolicyTrackedResources PolicyTrackedResourcesRestClient => _policyTrackedResourcesRestClient ??= new PolicyTrackedResources(PolicyTrackedResourcesClientDiagnostics, Pipeline, Endpoint, "2018-07-01-preview");
 
         /// <summary>
         /// Triggers a policy evaluation scan for all the resources under the subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyStates/latest/triggerEvaluation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyStates/latest/triggerEvaluation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_TriggerSubscriptionEvaluation</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyStatesOperationGroup_TriggerSubscriptionEvaluation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -499,14 +85,21 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> TriggerPolicyStateEvaluationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = PolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsSubscriptionResource.TriggerPolicyStateEvaluation");
+            using DiagnosticScope scope = PolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsSubscriptionResource.TriggerPolicyStateEvaluation");
             scope.Start();
             try
             {
-                var response = await PolicyStatesRestClient.TriggerSubscriptionEvaluationAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyInsightsArmOperation(PolicyStatesClientDiagnostics, Pipeline, PolicyStatesRestClient.CreateTriggerSubscriptionEvaluationRequest(Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PolicyStatesRestClient.CreateTriggerPolicyStateEvaluationRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PolicyInsightsArmOperation operation = new PolicyInsightsArmOperation(PolicyStatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -520,16 +113,16 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// Triggers a policy evaluation scan for all the resources under the subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyStates/latest/triggerEvaluation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/policyStates/latest/triggerEvaluation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_TriggerSubscriptionEvaluation</description>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyStatesOperationGroup_TriggerSubscriptionEvaluation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -537,14 +130,21 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation TriggerPolicyStateEvaluation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = PolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsSubscriptionResource.TriggerPolicyStateEvaluation");
+            using DiagnosticScope scope = PolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsSubscriptionResource.TriggerPolicyStateEvaluation");
             scope.Start();
             try
             {
-                var response = PolicyStatesRestClient.TriggerSubscriptionEvaluation(Id.SubscriptionId, cancellationToken);
-                var operation = new PolicyInsightsArmOperation(PolicyStatesClientDiagnostics, Pipeline, PolicyStatesRestClient.CreateTriggerSubscriptionEvaluationRequest(Id.SubscriptionId).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PolicyStatesRestClient.CreateTriggerPolicyStateEvaluationRequest(Guid.Parse(Id.SubscriptionId), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PolicyInsightsArmOperation operation = new PolicyInsightsArmOperation(PolicyStatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -555,462 +155,42 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         }
 
         /// <summary>
-        /// Queries policy states for the subscription level policy set definition.
+        /// Queries component policy states under subscription scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_ListQueryResultsForPolicySetDefinition</description>
+        /// <term> Operation Id. </term>
+        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
+        /// <param name="componentPolicyStatesResource"></param>
+        /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStatesAsync(string policySetDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForSubscriptionComponentPolicyStatesAsync(ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicySetDefinitionPolicyStates", "value", "@odata.nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy set definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_ListQueryResultsForPolicySetDefinition</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStates(string policySetDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForPolicySetDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policySetDefinitionName, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicySetDefinitionPolicyStates", "value", "@odata.nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy set definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_SummarizeForPolicySetDefinition</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicySummary> SummarizeForPolicySetDefinitionPolicyStatesAsync(string policySetDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicySetDefinitionPolicyStates", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy set definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_SummarizeForPolicySetDefinition</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicySummary> SummarizeForPolicySetDefinitionPolicyStates(string policySetDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForPolicySetDefinitionRequest(Id.SubscriptionId, policySetDefinitionName, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicySetDefinitionPolicyStates", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_ListQueryResultsForPolicyDefinition</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetQueryResultsForPolicyDefinitionPolicyStatesAsync(string policyDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionPolicyStates", "value", "@odata.nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_ListQueryResultsForPolicyDefinition</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetQueryResultsForPolicyDefinitionPolicyStates(string policyDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionNextPageRequest(nextLink, Id.SubscriptionId, policyDefinitionName, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionPolicyStates", "value", "@odata.nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_SummarizeForPolicyDefinition</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicySummary> SummarizeForPolicyDefinitionPolicyStatesAsync(string policyDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicyDefinitionPolicyStates", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_SummarizeForPolicyDefinition</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicySummary> SummarizeForPolicyDefinitionPolicyStates(string policyDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForPolicyDefinitionRequest(Id.SubscriptionId, policyDefinitionName, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForPolicyDefinitionPolicyStates", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy assignment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, Id.SubscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates", "value", "@odata.nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy assignment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates(string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(nextLink, Id.SubscriptionId, policyAssignmentName, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates", "value", "@odata.nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy assignment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_SummarizeForSubscriptionLevelPolicyAssignment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicySummary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(string policyAssignmentName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy assignment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyStates_SummarizeForSubscriptionLevelPolicyAssignment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicySummary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates(string policyAssignmentName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, policyAssignmentName, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks what restrictions Azure Policy will place on a resource within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestrictions_CheckAtSubscriptionScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The check policy restrictions parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("MockablePolicyInsightsSubscriptionResource.CheckPolicyRestrictions");
+            using DiagnosticScope scope = ComponentPolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionComponentPolicyStates");
             scope.Start();
             try
             {
-                var response = await PolicyRestrictionsRestClient.CheckAtSubscriptionScopeAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Checks what restrictions Azure Policy will place on a resource within a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/checkPolicyRestrictions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestrictions_CheckAtSubscriptionScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The check policy restrictions parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckPolicyRestrictionsResult> CheckPolicyRestrictions(CheckPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("MockablePolicyInsightsSubscriptionResource.CheckPolicyRestrictions");
-            scope.Start();
-            try
-            {
-                var response = PolicyRestrictionsRestClient.CheckAtSubscriptionScope(Id.SubscriptionId, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ComponentPolicyStatesRestClient.CreateGetQueryResultsForSubscriptionComponentPolicyStatesRequest(Id.SubscriptionId, componentPolicyStatesResource.ToString(), default, default, default, default, default, default, default, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ComponentPolicyStatesQueryResults> response = Response.FromValue(ComponentPolicyStatesQueryResults.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -1024,174 +204,46 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// Queries component policy states under subscription scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComponentPolicyStates_ListQueryResultsForSubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForSubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="componentPolicyStatesResource"></param>
+        /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForSubscriptionComponentPolicyStatesAsync(SubscriptionResourceGetQueryResultsForSubscriptionComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
+        public virtual Response<ComponentPolicyStatesQueryResults> GetQueryResultsForSubscriptionComponentPolicyStates(ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ComponentPolicyStatesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, options.ComponentPolicyStatesResource, options.Top, options.OrderBy, options.Select, options.From, options.To, options.Filter, options.Apply);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ComponentPolicyState.DeserializeComponentPolicyState(e), ComponentPolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionComponentPolicyStates", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries component policy states under subscription scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComponentPolicyStates_ListQueryResultsForSubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ComponentPolicyState> GetQueryResultsForSubscriptionComponentPolicyStates(SubscriptionResourceGetQueryResultsForSubscriptionComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ComponentPolicyStatesRestClient.CreateListQueryResultsForSubscriptionRequest(Id.SubscriptionId, options.ComponentPolicyStatesResource, options.Top, options.OrderBy, options.Select, options.From, options.To, options.Filter, options.Apply);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ComponentPolicyState.DeserializeComponentPolicyState(e), ComponentPolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionComponentPolicyStates", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries component policy states for the subscription level policy definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComponentPolicyStates_ListQueryResultsForPolicyDefinition</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(SubscriptionResourceGetQueryResultsForPolicyDefinitionComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ComponentPolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, options.PolicyDefinitionName, options.ComponentPolicyStatesResource, options.Top, options.OrderBy, options.Select, options.From, options.To, options.Filter, options.Apply);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ComponentPolicyState.DeserializeComponentPolicyState(e), ComponentPolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionComponentPolicyStates", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries component policy states for the subscription level policy definition.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComponentPolicyStates_ListQueryResultsForPolicyDefinition</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ComponentPolicyState> GetQueryResultsForPolicyDefinitionComponentPolicyStates(SubscriptionResourceGetQueryResultsForPolicyDefinitionComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ComponentPolicyStatesRestClient.CreateListQueryResultsForPolicyDefinitionRequest(Id.SubscriptionId, options.PolicyDefinitionName, options.ComponentPolicyStatesResource, options.Top, options.OrderBy, options.Select, options.From, options.To, options.Filter, options.Apply);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ComponentPolicyState.DeserializeComponentPolicyState(e), ComponentPolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForPolicyDefinitionComponentPolicyStates", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries component policy states for the subscription level policy assignment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComponentPolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(SubscriptionResourceGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ComponentPolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, options.PolicyAssignmentName, options.ComponentPolicyStatesResource, options.Top, options.OrderBy, options.Select, options.From, options.To, options.Filter, options.Apply);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ComponentPolicyState.DeserializeComponentPolicyState(e), ComponentPolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries component policy states for the subscription level policy assignment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ComponentPolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ComponentPolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates(SubscriptionResourceGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesOptions options, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(options, nameof(options));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ComponentPolicyStatesRestClient.CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(Id.SubscriptionId, options.PolicyAssignmentName, options.ComponentPolicyStatesResource, options.Top, options.OrderBy, options.Select, options.From, options.To, options.Filter, options.Apply);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ComponentPolicyState.DeserializeComponentPolicyState(e), ComponentPolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates", "value", null, cancellationToken);
+            using DiagnosticScope scope = ComponentPolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionComponentPolicyStates");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ComponentPolicyStatesRestClient.CreateGetQueryResultsForSubscriptionComponentPolicyStatesRequest(Id.SubscriptionId, componentPolicyStatesResource.ToString(), default, default, default, default, default, default, default, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ComponentPolicyStatesQueryResults> response = Response.FromValue(ComponentPolicyStatesQueryResults.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

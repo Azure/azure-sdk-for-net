@@ -10,9 +10,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
@@ -24,42 +25,38 @@ namespace Azure.ResourceManager.PolicyInsights
     /// </summary>
     public partial class PolicyRemediationCollection : ArmCollection, IEnumerable<PolicyRemediationResource>, IAsyncEnumerable<PolicyRemediationResource>
     {
-        private readonly ClientDiagnostics _policyRemediationRemediationsClientDiagnostics;
-        private readonly RemediationsRestOperations _policyRemediationRemediationsRestClient;
+        private readonly ClientDiagnostics _remediationsClientDiagnostics;
+        private readonly Remediations _remediationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyRemediationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PolicyRemediationCollection for mocking. </summary>
         protected PolicyRemediationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyRemediationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyRemediationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PolicyRemediationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _policyRemediationRemediationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", PolicyRemediationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PolicyRemediationResource.ResourceType, out string policyRemediationRemediationsApiVersion);
-            _policyRemediationRemediationsRestClient = new RemediationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, policyRemediationRemediationsApiVersion);
+            TryGetApiVersion(PolicyRemediationResource.ResourceType, out string policyRemediationApiVersion);
+            _remediationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", PolicyRemediationResource.ResourceType.Namespace, Diagnostics);
+            _remediationsRestClient = new Remediations(_remediationsClientDiagnostics, Pipeline, Endpoint, policyRemediationApiVersion ?? "2024-10-01");
         }
 
         /// <summary>
         /// Creates or updates a remediation at resource scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Remediations_CreateOrUpdateAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Remediations_CreateOrUpdateAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -67,23 +64,31 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="data"> The remediation parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<PolicyRemediationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string remediationName, PolicyRemediationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _remediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _policyRemediationRemediationsRestClient.CreateOrUpdateAtResourceAsync(Id, remediationName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _policyRemediationRemediationsRestClient.CreateCreateOrUpdateAtResourceRequestUri(Id, remediationName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new PolicyInsightsArmOperation<PolicyRemediationResource>(Response.FromValue(new PolicyRemediationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _remediationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.ToString(), remediationName, PolicyRemediationData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicyRemediationData> response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                PolicyInsightsArmOperation<PolicyRemediationResource> operation = new PolicyInsightsArmOperation<PolicyRemediationResource>(Response.FromValue(new PolicyRemediationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -97,20 +102,16 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Creates or updates a remediation at resource scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Remediations_CreateOrUpdateAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Remediations_CreateOrUpdateAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -118,23 +119,31 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="data"> The remediation parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<PolicyRemediationResource> CreateOrUpdate(WaitUntil waitUntil, string remediationName, PolicyRemediationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _remediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _policyRemediationRemediationsRestClient.CreateOrUpdateAtResource(Id, remediationName, data, cancellationToken);
-                var uri = _policyRemediationRemediationsRestClient.CreateCreateOrUpdateAtResourceRequestUri(Id, remediationName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new PolicyInsightsArmOperation<PolicyRemediationResource>(Response.FromValue(new PolicyRemediationResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _remediationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.ToString(), remediationName, PolicyRemediationData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicyRemediationData> response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                PolicyInsightsArmOperation<PolicyRemediationResource> operation = new PolicyInsightsArmOperation<PolicyRemediationResource>(Response.FromValue(new PolicyRemediationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -148,38 +157,42 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Gets an existing remediation at resource scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Remediations_GetAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Remediations_GetAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PolicyRemediationResource>> GetAsync(string remediationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
-            using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.Get");
+            using DiagnosticScope scope = _remediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _policyRemediationRemediationsRestClient.GetAtResourceAsync(Id, remediationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _remediationsRestClient.CreateGetAtResourceRequest(Id.ToString(), remediationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PolicyRemediationData> response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PolicyRemediationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -193,38 +206,42 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Gets an existing remediation at resource scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Remediations_GetAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Remediations_GetAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PolicyRemediationResource> Get(string remediationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
-            using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.Get");
+            using DiagnosticScope scope = _remediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.Get");
             scope.Start();
             try
             {
-                var response = _policyRemediationRemediationsRestClient.GetAtResource(Id, remediationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _remediationsRestClient.CreateGetAtResourceRequest(Id.ToString(), remediationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PolicyRemediationData> response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PolicyRemediationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -238,98 +255,120 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Gets all remediations for a resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/remediations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Remediations_ListForResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Remediations_ListForResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
+        /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyRemediationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyRemediationResource> GetAllAsync(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PolicyRemediationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PolicyRemediationResource> GetAllAsync(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRemediationRemediationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PolicyRemediationResource(Client, PolicyRemediationData.DeserializePolicyRemediationData(e)), _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PolicyRemediationData, PolicyRemediationResource>(new RemediationsGetForResourceAsyncCollectionResultOfT(
+                _remediationsRestClient,
+                Id.ToString(),
+                default,
+                default,
+                context,
+                "PolicyRemediationCollection.GetAll"), data => new PolicyRemediationResource(Client, data));
         }
 
         /// <summary>
         /// Gets all remediations for a resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/remediations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Remediations_ListForResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Remediations_ListForResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="policyQuerySettings"> Parameter group. </param>
+        /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyRemediationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyRemediationResource> GetAll(PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyRemediationResource> GetAll(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyRemediationRemediationsRestClient.CreateListForResourceRequest(Id, policyQuerySettings);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _policyRemediationRemediationsRestClient.CreateListForResourceNextPageRequest(nextLink, Id, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PolicyRemediationResource(Client, PolicyRemediationData.DeserializePolicyRemediationData(e)), _policyRemediationRemediationsClientDiagnostics, Pipeline, "PolicyRemediationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PolicyRemediationData, PolicyRemediationResource>(new RemediationsGetForResourceCollectionResultOfT(
+                _remediationsRestClient,
+                Id.ToString(),
+                default,
+                default,
+                context,
+                "PolicyRemediationCollection.GetAll"), data => new PolicyRemediationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Remediations_GetAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Remediations_GetAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string remediationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
-            using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.Exists");
+            using DiagnosticScope scope = _remediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _policyRemediationRemediationsRestClient.GetAtResourceAsync(Id, remediationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _remediationsRestClient.CreateGetAtResourceRequest(Id.ToString(), remediationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PolicyRemediationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyRemediationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -343,36 +382,50 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Remediations_GetAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Remediations_GetAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string remediationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
-            using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.Exists");
+            using DiagnosticScope scope = _remediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _policyRemediationRemediationsRestClient.GetAtResource(Id, remediationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _remediationsRestClient.CreateGetAtResourceRequest(Id.ToString(), remediationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PolicyRemediationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyRemediationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,38 +439,54 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Remediations_GetAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Remediations_GetAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PolicyRemediationResource>> GetIfExistsAsync(string remediationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
-            using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.GetIfExists");
+            using DiagnosticScope scope = _remediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _policyRemediationRemediationsRestClient.GetAtResourceAsync(Id, remediationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _remediationsRestClient.CreateGetAtResourceRequest(Id.ToString(), remediationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PolicyRemediationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyRemediationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PolicyRemediationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PolicyRemediationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -431,38 +500,54 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/remediations/{remediationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Remediations_GetAtResource</description>
+        /// <term> Operation Id. </term>
+        /// <description> Remediations_GetAtResource. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="remediationName"> The name of the remediation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="remediationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="remediationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PolicyRemediationResource> GetIfExists(string remediationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(remediationName, nameof(remediationName));
 
-            using var scope = _policyRemediationRemediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.GetIfExists");
+            using DiagnosticScope scope = _remediationsClientDiagnostics.CreateScope("PolicyRemediationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _policyRemediationRemediationsRestClient.GetAtResource(Id, remediationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _remediationsRestClient.CreateGetAtResourceRequest(Id.ToString(), remediationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PolicyRemediationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PolicyRemediationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PolicyRemediationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PolicyRemediationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PolicyRemediationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -482,6 +567,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PolicyRemediationResource> IAsyncEnumerable<PolicyRemediationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

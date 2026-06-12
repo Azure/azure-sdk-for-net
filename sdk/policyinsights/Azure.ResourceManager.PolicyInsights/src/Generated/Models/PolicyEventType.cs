@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    /// <summary> The PolicyEventType. </summary>
+    /// <summary></summary>
     public readonly partial struct PolicyEventType : IEquatable<PolicyEventType>
     {
         private readonly string _value;
+        /// <summary> default. </summary>
+        private const string DefaultValue = "default";
 
         /// <summary> Initializes a new instance of <see cref="PolicyEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PolicyEventType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "default";
+            _value = value;
+        }
 
         /// <summary> default. </summary>
         public static PolicyEventType Default { get; } = new PolicyEventType(DefaultValue);
+
         /// <summary> Determines if two <see cref="PolicyEventType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PolicyEventType left, PolicyEventType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PolicyEventType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PolicyEventType left, PolicyEventType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PolicyEventType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PolicyEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PolicyEventType(string value) => new PolicyEventType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PolicyEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PolicyEventType?(string value) => value == null ? null : new PolicyEventType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PolicyEventType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PolicyEventType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
