@@ -71,22 +71,19 @@ public class AgentConfigurationProvider : ConfigurationProvider
             FallbackToUnsuffixedEnvVars = _options.FallbackToUnsuffixedEnvVars,
         };
 
-        LoadResult result = OptimizationOptionsLoader.Load(loadOptions);
+        OptimizationOptions? options = OptimizationOptionsLoader.Load(loadOptions);
 
-        if (result.Options is null)
+        if (options is null)
         {
             if (_options.FailOnEmpty)
             {
-                string detail = result.Warnings.Count == 0
-                    ? "No source matched (resolver API, OPTIMIZATION_CONFIG, local candidate dir, local baseline dir)."
-                    : string.Join("; ", result.Warnings);
-
                 string agentScope = _options.AgentKey is null
                     ? string.Empty
                     : $" for agent '{_options.AgentKey}'";
 
                 throw new InvalidOperationException(
-                    $"AgentConfigurationProvider could not resolve an optimization config{agentScope}. {detail}");
+                    $"AgentConfigurationProvider could not resolve an optimization config{agentScope}. " +
+                    "No source matched (resolver API, OPTIMIZATION_CONFIG, local candidate dir, local baseline dir).");
             }
 
             // Non-failing empty result: clear any previously-loaded data so a stale
@@ -98,7 +95,7 @@ public class AgentConfigurationProvider : ConfigurationProvider
         // Build into a local dictionary first so a partial / failing load does not
         // mutate Data. Only swap on success.
         var newData = CreateEmptyDataDictionary();
-        Flatten(result.Options, section, newData);
+        Flatten(options, section, newData);
         Data = newData;
     }
 

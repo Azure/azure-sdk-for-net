@@ -45,48 +45,40 @@ public class LoadOptionsTests
     }
 
     // ─────────────────────────────────────────────────────────────────
-    // LoadResult basics
+    // Load shape basics
     // ─────────────────────────────────────────────────────────────────
 
     [Test]
-    public async Task LoadAsync_WithOptions_ReturnsEmpty_WhenNoSourceAvailable()
+    public async Task LoadAsync_WithOptions_ReturnsNull_WhenNoSourceAvailable()
     {
-        var result = await OptimizationOptionsLoader.LoadAsync(new LoadOptions());
+        var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions());
 
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.Options, Is.Null);
-        Assert.That(result.SourceUsed, Is.Null);
-        Assert.That(result.Warnings, Is.Empty);
+        Assert.That(options, Is.Null);
     }
 
     [Test]
-    public void Load_WithOptions_NullOptions_Throws()
+    public async Task LoadAsync_NullLoadOptions_UsesDefaults()
     {
-        Assert.Throws<ArgumentNullException>(() => OptimizationOptionsLoader.Load((LoadOptions)null!));
+        // Passing null is equivalent to `new LoadOptions()` — should not throw.
+        var options = await OptimizationOptionsLoader.LoadAsync(options: null);
+
+        Assert.That(options, Is.Null);
     }
 
     [Test]
-    public async Task LoadAsync_WithOptions_NullOptions_Throws()
-    {
-        Assert.ThrowsAsync<ArgumentNullException>(
-            async () => await OptimizationOptionsLoader.LoadAsync((LoadOptions)null!));
-        await Task.CompletedTask;
-    }
-
-    [Test]
-    public async Task LoadAsync_WithOptions_PopulatesSourceUsed_ForInlineJson()
+    public async Task LoadAsync_WithOptions_PopulatesSource_ForInlineJson()
     {
         string json = "{\"instructions\":\"hi\"}";
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", json);
 
-        var result = await OptimizationOptionsLoader.LoadAsync(new LoadOptions());
+        var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions());
 
-        Assert.That(result.Options, Is.Not.Null);
-        Assert.That(result.SourceUsed, Is.EqualTo("env:OPTIMIZATION_CONFIG"));
+        Assert.That(options, Is.Not.Null);
+        Assert.That(options!.Source, Is.EqualTo("env:OPTIMIZATION_CONFIG"));
     }
 
     [Test]
-    public async Task LoadAsync_WithOptions_PopulatesSourceUsed_ForLocalCandidateDir()
+    public async Task LoadAsync_WithOptions_PopulatesSource_ForLocalCandidateDir()
     {
         string tempDir = Path.Combine(Path.GetTempPath(), $"opt-test-{Guid.NewGuid():N}");
         string candidateDir = Path.Combine(tempDir, "cand_001");
@@ -97,13 +89,13 @@ public class LoadOptionsTests
             Environment.SetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID", "cand_001");
             Environment.SetEnvironmentVariable("OPTIMIZATION_LOCAL_DIR", tempDir);
 
-            var result = await OptimizationOptionsLoader.LoadAsync(new LoadOptions());
+            var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions());
 
-            Assert.That(result.Options, Is.Not.Null);
-            Assert.That(result.Options!.Instructions, Is.EqualTo("from local candidate dir"));
-            Assert.That(result.Options.CandidateId, Is.EqualTo("cand_001"));
-            Assert.That(result.SourceUsed, Does.StartWith("local:"));
-            Assert.That(result.SourceUsed, Does.Contain("cand_001"));
+            Assert.That(options, Is.Not.Null);
+            Assert.That(options!.Instructions, Is.EqualTo("from local candidate dir"));
+            Assert.That(options.CandidateId, Is.EqualTo("cand_001"));
+            Assert.That(options.Source, Does.StartWith("local:"));
+            Assert.That(options.Source, Does.Contain("cand_001"));
         }
         finally
         {
@@ -121,22 +113,22 @@ public class LoadOptionsTests
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "{\"instructions\":\"global\"}");
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG__TRIAGE_AGENT", "{\"instructions\":\"triage-specific\"}");
 
-        var result = await OptimizationOptionsLoader.LoadAsync(new LoadOptions { AgentKey = "triage-agent" });
+        var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions { AgentKey = "triage-agent" });
 
-        Assert.That(result.Options, Is.Not.Null);
-        Assert.That(result.Options!.Instructions, Is.EqualTo("triage-specific"));
+        Assert.That(options, Is.Not.Null);
+        Assert.That(options!.Instructions, Is.EqualTo("triage-specific"));
     }
 
     [Test]
-    public async Task PerAgent_NoSuffixed_NoFallback_ByDefault_ReturnsEmpty()
+    public async Task PerAgent_NoSuffixed_NoFallback_ByDefault_ReturnsNull()
     {
         // Only the unsuffixed global is set. Default behavior for a per-agent
         // load is to NOT fall back to unsuffixed (FallbackToUnsuffixedEnvVars=false).
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "{\"instructions\":\"global\"}");
 
-        var result = await OptimizationOptionsLoader.LoadAsync(new LoadOptions { AgentKey = "triage-agent" });
+        var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions { AgentKey = "triage-agent" });
 
-        Assert.That(result.Options, Is.Null);
+        Assert.That(options, Is.Null);
     }
 
     [Test]
@@ -144,14 +136,14 @@ public class LoadOptionsTests
     {
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "{\"instructions\":\"global\"}");
 
-        var result = await OptimizationOptionsLoader.LoadAsync(new LoadOptions
+        var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions
         {
             AgentKey = "triage-agent",
             FallbackToUnsuffixedEnvVars = true,
         });
 
-        Assert.That(result.Options, Is.Not.Null);
-        Assert.That(result.Options!.Instructions, Is.EqualTo("global"));
+        Assert.That(options, Is.Not.Null);
+        Assert.That(options!.Instructions, Is.EqualTo("global"));
     }
 
     [Test]
@@ -163,8 +155,8 @@ public class LoadOptionsTests
         var triage = await OptimizationOptionsLoader.LoadAsync(new LoadOptions { AgentKey = "triage-agent" });
         var booking = await OptimizationOptionsLoader.LoadAsync(new LoadOptions { AgentKey = "booking-agent" });
 
-        Assert.That(triage.Options!.Instructions, Is.EqualTo("triage"));
-        Assert.That(booking.Options!.Instructions, Is.EqualTo("booking"));
+        Assert.That(triage!.Instructions, Is.EqualTo("triage"));
+        Assert.That(booking!.Instructions, Is.EqualTo("booking"));
     }
 
     [Test]
@@ -176,8 +168,8 @@ public class LoadOptionsTests
         var withHyphen = await OptimizationOptionsLoader.LoadAsync(new LoadOptions { AgentKey = "triage-agent" });
         var withUnderscore = await OptimizationOptionsLoader.LoadAsync(new LoadOptions { AgentKey = "triage_agent" });
 
-        Assert.That(withHyphen.Options!.Instructions, Is.EqualTo("shared"));
-        Assert.That(withUnderscore.Options!.Instructions, Is.EqualTo("shared"));
+        Assert.That(withHyphen!.Instructions, Is.EqualTo("shared"));
+        Assert.That(withUnderscore!.Instructions, Is.EqualTo("shared"));
     }
 
     [Test]
@@ -194,7 +186,7 @@ public class LoadOptionsTests
     // ─────────────────────────────────────────────────────────────────
 
     [Test]
-    public async Task LocalCandidateDir_InvalidCandidateId_NonStrict_FallsThrough_WithWarning()
+    public async Task LocalCandidateDir_InvalidCandidateId_NonStrict_FallsThroughToBaseline()
     {
         string tempDir = Path.Combine(Path.GetTempPath(), $"opt-test-{Guid.NewGuid():N}");
         string baselineDir = Path.Combine(tempDir, "baseline");
@@ -205,12 +197,10 @@ public class LoadOptionsTests
             Environment.SetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID", "../escape");
             Environment.SetEnvironmentVariable("OPTIMIZATION_LOCAL_DIR", tempDir);
 
-            var result = await OptimizationOptionsLoader.LoadAsync(new LoadOptions());
+            var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions());
 
-            Assert.That(result.Options, Is.Not.Null);
-            Assert.That(result.Options!.Instructions, Is.EqualTo("from baseline"));
-            Assert.That(result.Warnings, Has.Count.GreaterThan(0));
-            Assert.That(result.Warnings[0], Does.Contain("invalid"));
+            Assert.That(options, Is.Not.Null);
+            Assert.That(options!.Instructions, Is.EqualTo("from baseline"));
         }
         finally
         {
@@ -243,21 +233,20 @@ public class LoadOptionsTests
     // ─────────────────────────────────────────────────────────────────
 
     [Test]
-    public async Task ResolverFailure_NonStrict_FallsThrough_WithWarning()
+    public async Task ResolverFailure_NonStrict_FallsThroughToNull()
     {
         // Set both env vars so Priority 1 (resolver) is selected, then point
         // to a definitely-unreachable endpoint. With non-strict mode the loader
-        // should warn and fall through; with no other source we land on null.
+        // should fall through; with no other source we land on null.
         Environment.SetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID", "cand_001");
         Environment.SetEnvironmentVariable("OPTIMIZATION_RESOLVE_ENDPOINT", "http://127.0.0.1:1/never-listens");
 
-        var result = await OptimizationOptionsLoader.LoadAsync(new LoadOptions
+        var options = await OptimizationOptionsLoader.LoadAsync(new LoadOptions
         {
             ResolverTimeout = TimeSpan.FromMilliseconds(500),
         });
 
-        Assert.That(result.Options, Is.Null);
-        Assert.That(result.Warnings, Has.Count.GreaterThan(0));
+        Assert.That(options, Is.Null);
     }
 
     [Test]

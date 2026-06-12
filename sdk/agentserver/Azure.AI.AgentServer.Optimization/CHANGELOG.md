@@ -4,13 +4,16 @@
 
 ### Changes
 
-Consolidated configuration types ahead of public preview. The package now has a single canonical mutable options type that binds idiomatically via `Microsoft.Extensions.Configuration`, instead of the previous duplicated immutable/mutable variants.
+Consolidated configuration types ahead of public preview. The package now has a single canonical mutable options type that binds idiomatically via `Microsoft.Extensions.Configuration`, and the loader returns it directly (no result wrapper).
 
 - `OptimizationConfig` → `OptimizationOptions` (mutable class, `{ get; set; }` properties).
 - `OptimizationConfigLoader` → `OptimizationOptionsLoader`.
-- `OptimizationConfigLoader.LoadConfig` / `LoadConfigAsync` → `OptimizationOptionsLoader.Load` / `LoadAsync`.
+- Loader API collapsed from four overloads to two:
+  - `OptimizationOptionsLoader.Load(LoadOptions? = null)` → `OptimizationOptions?`
+  - `OptimizationOptionsLoader.LoadAsync(LoadOptions? = null, CancellationToken = default)` → `Task<OptimizationOptions?>`
+  - The previous `AuthenticationTokenProvider`-only overloads are gone — pass the provider via `LoadOptions.TokenProvider`.
+- Removed `LoadResult` wrapper. `LoadResult.SourceUsed` duplicated `OptimizationOptions.Source`, and `LoadResult.Warnings` is now surfaced as stderr diagnostics only.
 - `LoadConfigOptions` → `LoadOptions`.
-- `LoadConfigResult` → `LoadResult`; `LoadResult.Config` → `LoadResult.Options`.
 - `OptimizationSkill` is now a mutable class (was a `readonly struct`). Reference equality only.
 - `ToolDefinition` is now a mutable class with `{ get; set; }` properties.
 - `Skills` and `ToolDefinitions` collections are typed `IList<>` (mutable) instead of `IReadOnlyList<>`.

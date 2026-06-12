@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel;
 using System.Text.Json;
 
 namespace Azure.AI.AgentServer.Optimization;
@@ -30,42 +29,12 @@ public static class OptimizationOptionsLoader
     private static readonly TimeSpan s_defaultResolverTimeout = TimeSpan.FromSeconds(30);
 
     /// <summary>
-    /// Loads <see cref="OptimizationOptions"/> asynchronously using the resolution
-    /// waterfall (back-compat overload).
-    /// </summary>
-    /// <param name="tokenProvider">Optional token provider for authenticating to the resolver API.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>The resolved options, or <c>null</c> if no source was found.</returns>
-    public static async Task<OptimizationOptions> LoadAsync(
-        AuthenticationTokenProvider tokenProvider = null,
-        CancellationToken cancellationToken = default)
-    {
-        var result = await LoadAsync(
-            new LoadOptions { TokenProvider = tokenProvider },
-            cancellationToken).ConfigureAwait(false);
-        return result.Options;
-    }
-
-    /// <summary>
     /// Loads <see cref="OptimizationOptions"/> synchronously using the resolution
-    /// waterfall (back-compat overload).
+    /// waterfall.
     /// </summary>
-    /// <param name="tokenProvider">Optional token provider for authenticating to the resolver API.</param>
-    /// <returns>The resolved options, or <c>null</c> if no source was found.</returns>
-    public static OptimizationOptions Load(AuthenticationTokenProvider tokenProvider = null)
-    {
-#pragma warning disable AZC0102 // TaskExtensions.EnsureCompleted not available in this context
-        return LoadAsync(tokenProvider).GetAwaiter().GetResult();
-#pragma warning restore AZC0102
-    }
-
-    /// <summary>
-    /// Loads <see cref="OptimizationOptions"/> synchronously with detailed result and
-    /// diagnostics.
-    /// </summary>
-    /// <param name="options">Resolution options. Must not be <c>null</c>.</param>
-    /// <returns>A <see cref="LoadResult"/> carrying the resolved options (if any), the source that produced them, and any non-fatal warnings.</returns>
-    public static LoadResult Load(LoadOptions options)
+    /// <param name="options">Optional resolution options; when <c>null</c>, defaults are used.</param>
+    /// <returns>The resolved options, or <c>null</c> when no source matched.</returns>
+    public static OptimizationOptions Load(LoadOptions options = null)
     {
 #pragma warning disable AZC0102 // TaskExtensions.EnsureCompleted not available in this context
         return LoadAsync(options, default).GetAwaiter().GetResult();
@@ -73,20 +42,17 @@ public static class OptimizationOptionsLoader
     }
 
     /// <summary>
-    /// Loads <see cref="OptimizationOptions"/> asynchronously with detailed result
-    /// and diagnostics.
+    /// Loads <see cref="OptimizationOptions"/> asynchronously using the resolution
+    /// waterfall.
     /// </summary>
-    /// <param name="options">Resolution options. Must not be <c>null</c>.</param>
+    /// <param name="options">Optional resolution options; when <c>null</c>, defaults are used.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>A <see cref="LoadResult"/> carrying the resolved options (if any), the source that produced them, and any non-fatal warnings.</returns>
-    public static async Task<LoadResult> LoadAsync(
-        LoadOptions options,
+    /// <returns>The resolved options, or <c>null</c> when no source matched.</returns>
+    public static async Task<OptimizationOptions> LoadAsync(
+        LoadOptions options = null,
         CancellationToken cancellationToken = default)
     {
-        if (options is null)
-        {
-            throw new ArgumentNullException(nameof(options));
-        }
+        options ??= new LoadOptions();
 
         string canonicalKey = null;
         if (!string.IsNullOrEmpty(options.AgentKey))
@@ -94,7 +60,6 @@ public static class OptimizationOptionsLoader
             canonicalKey = AgentKeyCanonicalizer.Canonicalize(options.AgentKey, nameof(options.AgentKey) + " on " + nameof(LoadOptions));
         }
 
-        var warnings = new List<string>();
         bool allowUnsuffixedFallback = canonicalKey is null || options.FallbackToUnsuffixedEnvVars;
 
         string candidateId = ResolveEnvVar(OptimizationOptions.EnvironmentVariableCandidateId, canonicalKey, allowUnsuffixedFallback);
@@ -112,15 +77,13 @@ public static class OptimizationOptionsLoader
                 if (resolved.HasValue)
                 {
                     string source = $"api:candidate:{candidateId}";
-                    var opts = OptimizationOptions.FromJson(resolved.Value, source: source, candidateId: candidateId);
-                    return new LoadResult(opts, source, warnings);
+                    return OptimizationOptions.FromJson(resolved.Value, source: source, candidateId: candidateId);
                 }
             }
             catch (Exception ex) when (!options.StrictMode)
             {
-                string msg = $"Failed to resolve config for candidate '{candidateId}' from '{endpoint}': {ex.Message}";
-                Console.Error.WriteLine($"[AgentServer.Optimization] Warning: {msg}");
-                warnings.Add(msg);
+                Console.Error.WriteLine(
+                    $"[AgentServer.Optimization] Warning: Failed to resolve config for candidate '{candidateId}' from '{endpoint}': {ex.Message}");
                 // Resolver failure is non-fatal in non-strict mode — fall through to next priority.
             }
         }
@@ -131,8 +94,7 @@ public static class OptimizationOptionsLoader
         string rawConfig = ResolveEnvVar(OptimizationOptions.EnvironmentVariableConfig, canonicalKey, allowUnsuffixedFallback);
         if (!string.IsNullOrEmpty(rawConfig))
         {
-            var opts = LoadFromEnvVar(rawConfig);
-            return new LoadResult(opts, opts.Source, warnings);
+            return LoadFromEnvVar(rawConfig);
         }
 
         // ── Priority 3: Local candidate directory ───────────────────
@@ -153,15 +115,13 @@ public static class OptimizationOptionsLoader
                     throw new InvalidOperationException(msg);
                 }
                 Console.Error.WriteLine($"[AgentServer.Optimization] Warning: {msg}");
-                warnings.Add(msg);
             }
             else
             {
                 string candidatePath = Path.Combine(localDir, candidateId);
                 if (Directory.Exists(candidatePath))
                 {
-                    var opts = LoadFromLocalDirectory(candidatePath, candidateId, options.StrictMode, warnings);
-                    return new LoadResult(opts, opts.Source, warnings);
+                    return LoadFromLocalDirectory(candidatePath, candidateId, options.StrictMode);
                 }
             }
         }
@@ -172,13 +132,12 @@ public static class OptimizationOptionsLoader
             string baselinePath = Path.Combine(localDir, "baseline");
             if (Directory.Exists(baselinePath))
             {
-                var opts = LoadFromLocalDirectory(baselinePath, candidateId: null, options.StrictMode, warnings);
-                return new LoadResult(opts, opts.Source, warnings);
+                return LoadFromLocalDirectory(baselinePath, candidateId: null, options.StrictMode);
             }
         }
 
         // ── No config found ─────────────────────────────────────────
-        return warnings.Count == 0 ? LoadResult.Empty : new LoadResult(null, null, warnings);
+        return null;
     }
 
     /// <summary>
@@ -319,8 +278,7 @@ public static class OptimizationOptionsLoader
     private static OptimizationOptions LoadFromLocalDirectory(
         string localDir,
         string candidateId = null,
-        bool strict = false,
-        List<string> warnings = null)
+        bool strict = false)
     {
         // Read instructions.md
         string instructionsPath = Path.Combine(localDir, "instructions.md");
@@ -356,7 +314,6 @@ public static class OptimizationOptionsLoader
                     throw new InvalidOperationException(msg, ex);
                 }
                 Console.Error.WriteLine($"[AgentServer.Optimization] Warning: {msg}");
-                warnings?.Add(msg);
             }
         }
 
