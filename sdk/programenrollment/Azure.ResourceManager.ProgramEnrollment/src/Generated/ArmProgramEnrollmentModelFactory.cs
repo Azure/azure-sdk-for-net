@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
         /// <param name="domains"> The domain groups associated with this enrollment. </param>
         /// <param name="failureReason"> Failure detail when provisioningState is Failed. Omitted otherwise. </param>
         /// <returns> A new <see cref="Models.EduEnrollmentProperties"/> instance for mocking. </returns>
-        public static EduEnrollmentProperties EduEnrollmentProperties(ProvisioningState? provisioningState = default, IEnumerable<DomainGroup> domains = default, ResponseError failureReason = default)
+        public static EduEnrollmentProperties EduEnrollmentProperties(ProgramEnrollmentProvisioningState? provisioningState = default, IEnumerable<ProgramEnrollmentDomainGroup> domains = default, ResponseError failureReason = default)
         {
-            domains ??= new ChangeTrackingList<DomainGroup>();
+            domains ??= new ChangeTrackingList<ProgramEnrollmentDomainGroup>();
 
-            return new EduEnrollmentProperties(provisioningState, (domains ?? new ChangeTrackingList<DomainGroup>()).ToList(), failureReason, default);
+            return new EduEnrollmentProperties(provisioningState, (domains ?? new ChangeTrackingList<ProgramEnrollmentDomainGroup>()).ToList(), failureReason, default);
         }
 
         /// <param name="domainNames"> The edu domain names in this group. </param>
         /// <param name="tenantId"> The Entra tenant ID that owns these domains. Defaults to the caller's tenant if omitted. </param>
         /// <param name="state"> The assessment state of this domain group. </param>
         /// <param name="failureReason"> Failure detail when state is Failed or ActionRequired. Omitted otherwise. </param>
-        /// <returns> A new <see cref="Models.DomainGroup"/> instance for mocking. </returns>
-        public static DomainGroup DomainGroup(IEnumerable<string> domainNames = default, Guid? tenantId = default, DomainGroupState? state = default, ResponseError failureReason = default)
+        /// <returns> A new <see cref="Models.ProgramEnrollmentDomainGroup"/> instance for mocking. </returns>
+        public static ProgramEnrollmentDomainGroup ProgramEnrollmentDomainGroup(IEnumerable<string> domainNames = default, Guid? tenantId = default, ProgramEnrollmentDomainGroupState? state = default, ResponseError failureReason = default)
         {
             domainNames ??= new ChangeTrackingList<string>();
 
-            return new DomainGroup((domainNames ?? new ChangeTrackingList<string>()).ToList(), tenantId, state, failureReason, default);
+            return new ProgramEnrollmentDomainGroup((domainNames ?? new ChangeTrackingList<string>()).ToList(), tenantId, state, failureReason, default);
         }
 
         /// <param name="tags"> Resource tags. </param>

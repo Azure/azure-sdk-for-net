@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
         /// <summary> Initializes a new instance of <see cref="EduEnrollmentProperties"/>. </summary>
         /// <param name="domains"> The domain groups associated with this enrollment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domains"/> is null. </exception>
-        public EduEnrollmentProperties(IEnumerable<DomainGroup> domains)
+        public EduEnrollmentProperties(IEnumerable<ProgramEnrollmentDomainGroup> domains)
         {
             Argument.AssertNotNull(domains, nameof(domains));
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
         /// <param name="domains"> The domain groups associated with this enrollment. </param>
         /// <param name="failureReason"> Failure detail when provisioningState is Failed. Omitted otherwise. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EduEnrollmentProperties(ProvisioningState? provisioningState, IList<DomainGroup> domains, ResponseError failureReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EduEnrollmentProperties(ProgramEnrollmentProvisioningState? provisioningState, IList<ProgramEnrollmentDomainGroup> domains, ResponseError failureReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Domains = domains;
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public ProgramEnrollmentProvisioningState? ProvisioningState { get; }
 
         /// <summary> The domain groups associated with this enrollment. </summary>
-        public IList<DomainGroup> Domains { get; }
+        public IList<ProgramEnrollmentDomainGroup> Domains { get; }
 
         /// <summary> Failure detail when provisioningState is Failed. Omitted otherwise. </summary>
         public ResponseError FailureReason { get; }

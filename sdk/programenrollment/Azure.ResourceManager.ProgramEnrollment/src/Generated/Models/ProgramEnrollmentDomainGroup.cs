@@ -14,28 +14,28 @@ using Azure.ResourceManager.ProgramEnrollment;
 namespace Azure.ResourceManager.ProgramEnrollment.Models
 {
     /// <summary> A group of edu domains scoped to an Entra tenant. </summary>
-    public partial class DomainGroup
+    public partial class ProgramEnrollmentDomainGroup
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DomainGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProgramEnrollmentDomainGroup"/>. </summary>
         /// <param name="domainNames"> The edu domain names in this group. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainNames"/> is null. </exception>
-        public DomainGroup(IEnumerable<string> domainNames)
+        public ProgramEnrollmentDomainGroup(IEnumerable<string> domainNames)
         {
             Argument.AssertNotNull(domainNames, nameof(domainNames));
 
             DomainNames = domainNames.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DomainGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProgramEnrollmentDomainGroup"/>. </summary>
         /// <param name="domainNames"> The edu domain names in this group. </param>
         /// <param name="tenantId"> The Entra tenant ID that owns these domains. Defaults to the caller's tenant if omitted. </param>
         /// <param name="state"> The assessment state of this domain group. </param>
         /// <param name="failureReason"> Failure detail when state is Failed or ActionRequired. Omitted otherwise. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DomainGroup(IList<string> domainNames, Guid? tenantId, DomainGroupState? state, ResponseError failureReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProgramEnrollmentDomainGroup(IList<string> domainNames, Guid? tenantId, ProgramEnrollmentDomainGroupState? state, ResponseError failureReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DomainNames = domainNames;
             TenantId = tenantId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
         public Guid? TenantId { get; set; }
 
         /// <summary> The assessment state of this domain group. </summary>
-        public DomainGroupState? State { get; }
+        public ProgramEnrollmentDomainGroupState? State { get; }
 
         /// <summary> Failure detail when state is Failed or ActionRequired. Omitted otherwise. </summary>
         public ResponseError FailureReason { get; }

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
             }
             writer.WritePropertyName("domains"u8);
             writer.WriteStartArray();
-            foreach (DomainGroup item in Domains)
+            foreach (ProgramEnrollmentDomainGroup item in Domains)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -140,8 +140,8 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
-            IList<DomainGroup> domains = default;
+            ProgramEnrollmentProvisioningState? provisioningState = default;
+            IList<ProgramEnrollmentDomainGroup> domains = default;
             ResponseError failureReason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,15 +152,15 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new ProgramEnrollmentProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("domains"u8))
                 {
-                    List<DomainGroup> array = new List<DomainGroup>();
+                    List<ProgramEnrollmentDomainGroup> array = new List<ProgramEnrollmentDomainGroup>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DomainGroup.DeserializeDomainGroup(item, options));
+                        array.Add(ProgramEnrollmentDomainGroup.DeserializeProgramEnrollmentDomainGroup(item, options));
                     }
                     domains = array;
                     continue;

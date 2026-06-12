@@ -12,7 +12,7 @@ using Azure.ResourceManager.ProgramEnrollment;
 namespace Azure.ResourceManager.ProgramEnrollment.Models
 {
     /// <summary> The assessment state of a domain group. </summary>
-    public readonly partial struct DomainGroupState : IEquatable<DomainGroupState>
+    public readonly partial struct ProgramEnrollmentDomainGroupState : IEquatable<ProgramEnrollmentDomainGroupState>
     {
         private readonly string _value;
         /// <summary> Assessment is pending. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
         /// <summary> Assessment succeeded. </summary>
         private const string SucceededValue = "Succeeded";
 
-        /// <summary> Initializes a new instance of <see cref="DomainGroupState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProgramEnrollmentDomainGroupState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DomainGroupState(string value)
+        public ProgramEnrollmentDomainGroupState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
         }
 
         /// <summary> Assessment is pending. </summary>
-        public static DomainGroupState Pending { get; } = new DomainGroupState(PendingValue);
+        public static ProgramEnrollmentDomainGroupState Pending { get; } = new ProgramEnrollmentDomainGroupState(PendingValue);
 
         /// <summary> Action is required to complete assessment. </summary>
-        public static DomainGroupState ActionRequired { get; } = new DomainGroupState(ActionRequiredValue);
+        public static ProgramEnrollmentDomainGroupState ActionRequired { get; } = new ProgramEnrollmentDomainGroupState(ActionRequiredValue);
 
         /// <summary> Assessment failed. </summary>
-        public static DomainGroupState Failed { get; } = new DomainGroupState(FailedValue);
+        public static ProgramEnrollmentDomainGroupState Failed { get; } = new ProgramEnrollmentDomainGroupState(FailedValue);
 
         /// <summary> Assessment succeeded. </summary>
-        public static DomainGroupState Succeeded { get; } = new DomainGroupState(SucceededValue);
+        public static ProgramEnrollmentDomainGroupState Succeeded { get; } = new ProgramEnrollmentDomainGroupState(SucceededValue);
 
-        /// <summary> Determines if two <see cref="DomainGroupState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ProgramEnrollmentDomainGroupState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DomainGroupState left, DomainGroupState right) => left.Equals(right);
+        public static bool operator ==(ProgramEnrollmentDomainGroupState left, ProgramEnrollmentDomainGroupState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DomainGroupState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ProgramEnrollmentDomainGroupState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DomainGroupState left, DomainGroupState right) => !left.Equals(right);
+        public static bool operator !=(ProgramEnrollmentDomainGroupState left, ProgramEnrollmentDomainGroupState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DomainGroupState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProgramEnrollmentDomainGroupState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainGroupState(string value) => new DomainGroupState(value);
+        public static implicit operator ProgramEnrollmentDomainGroupState(string value) => new ProgramEnrollmentDomainGroupState(value);
 
-        /// <summary> Converts a string to a <see cref="DomainGroupState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProgramEnrollmentDomainGroupState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DomainGroupState?(string value) => value == null ? null : new DomainGroupState(value);
+        public static implicit operator ProgramEnrollmentDomainGroupState?(string value) => value == null ? null : new ProgramEnrollmentDomainGroupState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DomainGroupState other && Equals(other);
+        public override bool Equals(object obj) => obj is ProgramEnrollmentDomainGroupState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DomainGroupState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ProgramEnrollmentDomainGroupState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

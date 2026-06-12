@@ -12,7 +12,7 @@ using Azure.ResourceManager.ProgramEnrollment;
 namespace Azure.ResourceManager.ProgramEnrollment.Models
 {
     /// <summary> The status of the current operation. </summary>
-    public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
+    public readonly partial struct ProgramEnrollmentProvisioningState : IEquatable<ProgramEnrollmentProvisioningState>
     {
         private readonly string _value;
         /// <summary> Resource has been created. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
         /// <summary> Deletion in progress. </summary>
         private const string DeletingValue = "Deleting";
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProgramEnrollmentProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProvisioningState(string value)
+        public ProgramEnrollmentProvisioningState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
         }
 
         /// <summary> Resource has been created. </summary>
-        public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
+        public static ProgramEnrollmentProvisioningState Succeeded { get; } = new ProgramEnrollmentProvisioningState(SucceededValue);
 
         /// <summary> Resource creation failed. </summary>
-        public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
+        public static ProgramEnrollmentProvisioningState Failed { get; } = new ProgramEnrollmentProvisioningState(FailedValue);
 
         /// <summary> Resource creation was canceled. </summary>
-        public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
+        public static ProgramEnrollmentProvisioningState Canceled { get; } = new ProgramEnrollmentProvisioningState(CanceledValue);
 
         /// <summary> Initial provisioning in progress. </summary>
-        public static ProvisioningState Provisioning { get; } = new ProvisioningState(ProvisioningValue);
+        public static ProgramEnrollmentProvisioningState Provisioning { get; } = new ProgramEnrollmentProvisioningState(ProvisioningValue);
 
         /// <summary> Update in progress. </summary>
-        public static ProvisioningState Updating { get; } = new ProvisioningState(UpdatingValue);
+        public static ProgramEnrollmentProvisioningState Updating { get; } = new ProgramEnrollmentProvisioningState(UpdatingValue);
 
         /// <summary> Deletion in progress. </summary>
-        public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
+        public static ProgramEnrollmentProvisioningState Deleting { get; } = new ProgramEnrollmentProvisioningState(DeletingValue);
 
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ProgramEnrollmentProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
+        public static bool operator ==(ProgramEnrollmentProvisioningState left, ProgramEnrollmentProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ProgramEnrollmentProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ProvisioningState left, ProvisioningState right) => !left.Equals(right);
+        public static bool operator !=(ProgramEnrollmentProvisioningState left, ProgramEnrollmentProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProgramEnrollmentProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningState(string value) => new ProvisioningState(value);
+        public static implicit operator ProgramEnrollmentProvisioningState(string value) => new ProgramEnrollmentProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ProgramEnrollmentProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ProvisioningState?(string value) => value == null ? null : new ProvisioningState(value);
+        public static implicit operator ProgramEnrollmentProvisioningState?(string value) => value == null ? null : new ProgramEnrollmentProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is ProgramEnrollmentProvisioningState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ProgramEnrollmentProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
