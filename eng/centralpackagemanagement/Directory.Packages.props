@@ -137,7 +137,7 @@
     <PackageVersion Include="Azure.ResourceManager.Dns" Version="1.2.0-beta.2" />
     <PackageVersion Include="Azure.ResourceManager.EventGrid" Version="1.1.0" />
     <PackageVersion Include="Azure.ResourceManager.EventHubs" Version="1.2.1" />
-    <PackageVersion Include="Azure.ResourceManager.FrontDoor" Version="1.4.1" />
+    <PackageVersion Include="Azure.ResourceManager.FrontDoor" Version="1.4.2" />
     <PackageVersion Include="Azure.ResourceManager.IotHub" Version="1.1.1" />
     <PackageVersion Include="Azure.ResourceManager.KeyVault" Version="1.4.0" />
     <PackageVersion Include="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.5" />
