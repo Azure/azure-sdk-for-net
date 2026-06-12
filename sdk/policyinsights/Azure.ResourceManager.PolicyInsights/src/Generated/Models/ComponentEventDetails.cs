@@ -8,12 +8,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Component event details. </summary>
-    public partial class ComponentEventDetails
+    public partial class ComponentEventDetails : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -25,34 +27,23 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComponentEventDetails"/>. </summary>
-        /// <param name="id"> Component Id. </param>
-        /// <param name="type"> Component type. </param>
-        /// <param name="name"> Component name. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="timestamp"> Timestamp for component policy event record. </param>
         /// <param name="tenantId"> Tenant ID for the policy event record. </param>
         /// <param name="principalOid"> Principal object ID for the user who initiated the resource component operation that triggered the policy event. </param>
         /// <param name="policyDefinitionAction"> Policy definition action, i.e. effect. </param>
         /// <param name="additionalProperties"></param>
-        internal ComponentEventDetails(string id, string @type, string name, DateTimeOffset? timestamp, Guid? tenantId, string principalOid, string policyDefinitionAction, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal ComponentEventDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timestamp, Guid? tenantId, string principalOid, string policyDefinitionAction, IReadOnlyDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Type = @type;
-            Name = name;
             Timestamp = timestamp;
             TenantId = tenantId;
             PrincipalOid = principalOid;
             PolicyDefinitionAction = policyDefinitionAction;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
         }
-
-        /// <summary> Component Id. </summary>
-        public string Id { get; }
-
-        /// <summary> Component type. </summary>
-        public string Type { get; }
-
-        /// <summary> Component name. </summary>
-        public string Name { get; }
 
         /// <summary> Timestamp for component policy event record. </summary>
         public DateTimeOffset? Timestamp { get; }

@@ -299,23 +299,25 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <param name="id"> Component Id. </param>
-        /// <param name="type"> Component type. </param>
-        /// <param name="name"> Component name. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="timestamp"> Timestamp for component policy event record. </param>
         /// <param name="tenantId"> Tenant ID for the policy event record. </param>
         /// <param name="principalOid"> Principal object ID for the user who initiated the resource component operation that triggered the policy event. </param>
         /// <param name="policyDefinitionAction"> Policy definition action, i.e. effect. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.ComponentEventDetails"/> instance for mocking. </returns>
-        public static ComponentEventDetails ComponentEventDetails(string id = default, string @type = default, string name = default, DateTimeOffset? timestamp = default, Guid? tenantId = default, string principalOid = default, string policyDefinitionAction = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        public static ComponentEventDetails ComponentEventDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timestamp = default, Guid? tenantId = default, string principalOid = default, string policyDefinitionAction = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new ComponentEventDetails(
                 id,
-                @type,
                 name,
+                resourceType,
+                systemData,
                 timestamp,
                 tenantId,
                 principalOid,
@@ -880,31 +882,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public static PolicyEvaluationResult PolicyEvaluationResult(PolicyReference policyInfo = default, string evaluationResult = default, PolicyEvaluationDetails evaluationDetails = default)
         {
             return new PolicyEvaluationResult(policyInfo, evaluationResult, evaluationDetails, default, default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ComponentEventDetails"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="timestamp"> Timestamp for component policy event record. </param>
-        /// <param name="tenantId"> Tenant ID for the policy event record. </param>
-        /// <param name="principalOid"> Principal object ID for the user who initiated the resource component operation that triggered the policy event. </param>
-        /// <param name="policyDefinitionAction"> Policy definition action, i.e. effect. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.ComponentEventDetails"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ComponentEventDetails ComponentEventDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timestamp = default, Guid? tenantId = default, string principalOid = default, string policyDefinitionAction = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
-        {
-            return new ComponentEventDetails(
-                default,
-                default,
-                name,
-                timestamp,
-                tenantId,
-                principalOid,
-                policyDefinitionAction,
-                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ComponentStateDetails"/>. </summary>
