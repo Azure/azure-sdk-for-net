@@ -62,17 +62,35 @@ namespace Azure.ResourceManager.EventGrid
 
         public virtual AsyncPageable<EventGridTopicPrivateLinkResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            MockableEventGridResourceGroupResource resourceGroup = new MockableEventGridResourceGroupResource(Client, Id.Parent);
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new AsyncPageableWrapper<global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource, EventGridTopicPrivateLinkResource>(
-                resourceGroup.GetByResourceAsync("topics", Id.Name, filter, top, cancellationToken),
+                new PrivateLinkResourcesGetByResourceAsyncCollectionResultOfT(
+                    _privateLinkResourcesRestClient,
+                    Guid.Parse(Id.SubscriptionId),
+                    Id.ResourceGroupName,
+                    "topics",
+                    Id.Name,
+                    filter,
+                    top,
+                    context,
+                    "EventGridTopicPrivateLinkResourceCollection.GetAll"),
                 item => PrivateLinkResourceCompat.ToTopicResource(Client, item));
         }
 
         public virtual Pageable<EventGridTopicPrivateLinkResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            MockableEventGridResourceGroupResource resourceGroup = new MockableEventGridResourceGroupResource(Client, Id.Parent);
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new PageableWrapper<global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource, EventGridTopicPrivateLinkResource>(
-                resourceGroup.GetByResource("topics", Id.Name, filter, top, cancellationToken),
+                new PrivateLinkResourcesGetByResourceCollectionResultOfT(
+                    _privateLinkResourcesRestClient,
+                    Guid.Parse(Id.SubscriptionId),
+                    Id.ResourceGroupName,
+                    "topics",
+                    Id.Name,
+                    filter,
+                    top,
+                    context,
+                    "EventGridTopicPrivateLinkResourceCollection.GetAll"),
                 item => PrivateLinkResourceCompat.ToTopicResource(Client, item));
         }
 

@@ -5,10 +5,12 @@
 
 #pragma warning disable CS1591
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
@@ -17,12 +19,28 @@ namespace Azure.ResourceManager.EventGrid
     {
         public virtual AsyncPageable<NetworkSecurityPerimeterConfigurationData> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return NetworkSecurityPerimeterConfigurationCompat.GetResourceGroup(Client, Id).GetAllAsync(NetworkSecurityPerimeterResourceType.Topics, Id.Name, cancellationToken);
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new NetworkSecurityPerimeterConfigurationsGetAllAsyncCollectionResultOfT(
+                _networkSecurityPerimeterConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                NetworkSecurityPerimeterResourceType.Topics.ToString(),
+                Id.Name,
+                context,
+                "TopicNetworkSecurityPerimeterConfigurationCollection.GetAll");
         }
 
         public virtual Pageable<NetworkSecurityPerimeterConfigurationData> GetAll(CancellationToken cancellationToken = default)
         {
-            return NetworkSecurityPerimeterConfigurationCompat.GetResourceGroup(Client, Id).GetAll(NetworkSecurityPerimeterResourceType.Topics, Id.Name, cancellationToken);
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new NetworkSecurityPerimeterConfigurationsGetAllCollectionResultOfT(
+                _networkSecurityPerimeterConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                NetworkSecurityPerimeterResourceType.Topics.ToString(),
+                Id.Name,
+                context,
+                "TopicNetworkSecurityPerimeterConfigurationCollection.GetAll");
         }
 
         public virtual IAsyncEnumerator<NetworkSecurityPerimeterConfigurationData> GetAsyncEnumerator(CancellationToken cancellationToken = default)

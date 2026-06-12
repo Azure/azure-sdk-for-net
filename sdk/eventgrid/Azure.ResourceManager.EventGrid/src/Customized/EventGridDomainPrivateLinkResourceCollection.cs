@@ -62,17 +62,35 @@ namespace Azure.ResourceManager.EventGrid
 
         public virtual AsyncPageable<EventGridDomainPrivateLinkResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            MockableEventGridResourceGroupResource resourceGroup = new MockableEventGridResourceGroupResource(Client, Id.Parent);
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new AsyncPageableWrapper<global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource, EventGridDomainPrivateLinkResource>(
-                resourceGroup.GetByResourceAsync("domains", Id.Name, filter, top, cancellationToken),
+                new PrivateLinkResourcesGetByResourceAsyncCollectionResultOfT(
+                    _privateLinkResourcesRestClient,
+                    Guid.Parse(Id.SubscriptionId),
+                    Id.ResourceGroupName,
+                    "domains",
+                    Id.Name,
+                    filter,
+                    top,
+                    context,
+                    "EventGridDomainPrivateLinkResourceCollection.GetAll"),
                 item => PrivateLinkResourceCompat.ToDomainResource(Client, item));
         }
 
         public virtual Pageable<EventGridDomainPrivateLinkResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            MockableEventGridResourceGroupResource resourceGroup = new MockableEventGridResourceGroupResource(Client, Id.Parent);
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new PageableWrapper<global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource, EventGridDomainPrivateLinkResource>(
-                resourceGroup.GetByResource("domains", Id.Name, filter, top, cancellationToken),
+                new PrivateLinkResourcesGetByResourceCollectionResultOfT(
+                    _privateLinkResourcesRestClient,
+                    Guid.Parse(Id.SubscriptionId),
+                    Id.ResourceGroupName,
+                    "domains",
+                    Id.Name,
+                    filter,
+                    top,
+                    context,
+                    "EventGridDomainPrivateLinkResourceCollection.GetAll"),
                 item => PrivateLinkResourceCompat.ToDomainResource(Client, item));
         }
 

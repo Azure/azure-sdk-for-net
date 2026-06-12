@@ -62,17 +62,35 @@ namespace Azure.ResourceManager.EventGrid
 
         public virtual AsyncPageable<PartnerNamespacePrivateLinkResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            MockableEventGridResourceGroupResource resourceGroup = new MockableEventGridResourceGroupResource(Client, Id.Parent);
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new AsyncPageableWrapper<global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource, PartnerNamespacePrivateLinkResource>(
-                resourceGroup.GetByResourceAsync("partnerNamespaces", Id.Name, filter, top, cancellationToken),
+                new PrivateLinkResourcesGetByResourceAsyncCollectionResultOfT(
+                    _privateLinkResourcesRestClient,
+                    Guid.Parse(Id.SubscriptionId),
+                    Id.ResourceGroupName,
+                    "partnerNamespaces",
+                    Id.Name,
+                    filter,
+                    top,
+                    context,
+                    "PartnerNamespacePrivateLinkResourceCollection.GetAll"),
                 item => PrivateLinkResourceCompat.ToPartnerNamespaceResource(Client, item));
         }
 
         public virtual Pageable<PartnerNamespacePrivateLinkResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            MockableEventGridResourceGroupResource resourceGroup = new MockableEventGridResourceGroupResource(Client, Id.Parent);
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new PageableWrapper<global::Azure.ResourceManager.EventGrid.Models.EventGridPrivateLinkResource, PartnerNamespacePrivateLinkResource>(
-                resourceGroup.GetByResource("partnerNamespaces", Id.Name, filter, top, cancellationToken),
+                new PrivateLinkResourcesGetByResourceCollectionResultOfT(
+                    _privateLinkResourcesRestClient,
+                    Guid.Parse(Id.SubscriptionId),
+                    Id.ResourceGroupName,
+                    "partnerNamespaces",
+                    Id.Name,
+                    filter,
+                    top,
+                    context,
+                    "PartnerNamespacePrivateLinkResourceCollection.GetAll"),
                 item => PrivateLinkResourceCompat.ToPartnerNamespaceResource(Client, item));
         }
 

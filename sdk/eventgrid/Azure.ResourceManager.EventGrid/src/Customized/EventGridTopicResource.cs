@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.EventGrid.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
