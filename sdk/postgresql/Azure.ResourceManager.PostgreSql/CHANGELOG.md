@@ -1,5 +1,15 @@
 # Release History
 
+## 1.5.1 (2026-06-15)
+
+### Features Added
+
+- Upgraded API version to `2026-04-01-preview`.
+- Add operations for MaintenanceEvent: Get, List by Server, Reschedule, and ApplyNow.
+- Add operations for MajorVersionUpgradePrecheck: Get and List by Server.
+- Add operations for Server: StartMajorVersionUpgradePrecheck.
+- Add new properties for multi-tenant Microsoft Entra application for Server.
+
 ## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
