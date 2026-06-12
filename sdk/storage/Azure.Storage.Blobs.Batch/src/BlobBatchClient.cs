@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Batch;
 using Azure.Storage.Blobs.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
@@ -19,7 +20,22 @@ namespace Azure.Storage.Blobs.Specialized
     /// The <see cref="BlobBatchClient"/> allows you to batch multiple Azure
     /// Storage operations in a single request.
     /// </summary>
-    public class BlobBatchClient
+    // CUSTOM:
+    // - Suppress unused methods, ctors, and fields.
+    [CodeGenType("BlobBatchClient")]
+    [CodeGenSuppress("_endpoint", typeof(Uri))]
+    [CodeGenSuppress("_cachedServiceRestClient", typeof(ServiceRestClient))]
+    [CodeGenSuppress("_cachedContainerRestClient", typeof(ContainerRestClient))]
+    [CodeGenSuppress("BlobBatchClient", typeof(Uri), typeof(TokenCredential))]
+    [CodeGenSuppress("BlobBatchClient", typeof(HttpPipelinePolicy), typeof(Uri), typeof(BlobBatchClientOptions))]
+    [CodeGenSuppress("BlobBatchClient", typeof(Uri), typeof(TokenCredential), typeof(BlobBatchClientOptions))]
+#pragma warning disable SCME0002 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+    [CodeGenSuppress("BlobBatchClient", typeof(BlobBatchClientSettings))]
+#pragma warning restore SCME0002 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+    [CodeGenSuppress("GetServiceRestClient")]
+    [CodeGenSuppress("GetContainerRestClient")]
+    [CodeGenSuppress("GetBlobRestClient", typeof(string))]
+    public partial class BlobBatchClient
     {
         /// <summary>
         /// Gets the blob service's primary <see cref="Uri"/> endpoint.
@@ -230,13 +246,13 @@ namespace Azure.Storage.Blobs.Specialized
             ServiceRestClient serviceRestClient = new ServiceRestClient(
                 clientDiagnostics: _clientDiagnostics,
                 pipeline: _pipeline,
-                url: serviceUri.AbsoluteUri,
+                endpoint: serviceUri,
                 version: _version.ToVersionString());
 
             ContainerRestClient containerRestClient = new ContainerRestClient(
                 clientDiagnostics: _clientDiagnostics,
                 pipeline: _pipeline,
-                url: serviceUri.AbsoluteUri,
+                endpoint: serviceUri,
                 version: _version.ToVersionString());
 
             return (serviceRestClient, containerRestClient);
@@ -432,7 +448,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await _containerRestClient.SubmitBatchAsync(
                             containerName: ContainerName,
                             contentLength: content.Length,
-                            multipartContentType: contentType,
+                            contentType: contentType,
                             content: RequestContent.Create(content),
                             context: new RequestContext { CancellationToken = cancellationToken })
                             .ConfigureAwait(false);
@@ -442,7 +458,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response = _containerRestClient.SubmitBatch(
                             containerName: ContainerName,
                             contentLength: content.Length,
-                            multipartContentType: contentType,
+                            contentType: contentType,
                             content: RequestContent.Create(content),
                             context: new RequestContext { CancellationToken = cancellationToken });
                     }
@@ -453,7 +469,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = await _serviceRestClient.SubmitBatchAsync(
                             contentLength: content.Length,
-                            multipartContentType: contentType,
+                            contentType: contentType,
                             content: RequestContent.Create(content),
                             context: new RequestContext { CancellationToken = cancellationToken })
                             .ConfigureAwait(false);
@@ -462,7 +478,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = _serviceRestClient.SubmitBatch(
                             contentLength: content.Length,
-                            multipartContentType: contentType,
+                            contentType: contentType,
                             content: RequestContent.Create(content),
                             context: new RequestContext { CancellationToken = cancellationToken });
                     }
