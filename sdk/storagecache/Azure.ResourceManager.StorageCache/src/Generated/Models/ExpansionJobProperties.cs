@@ -80,20 +80,20 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> The time (in UTC) the expansion job started. </summary>
-        public DateTimeOffset? StartTimeUTC
+        public DateTimeOffset? StartedOn
         {
             get
             {
-                return Status is null ? default : Status.StartTimeUTC;
+                return Status is null ? default : Status.StartedOn;
             }
         }
 
         /// <summary> The time (in UTC) when the expansion job completed. Only populated when job reaches a terminal state. </summary>
-        public DateTimeOffset? CompletionTimeUTC
+        public DateTimeOffset? CompletedOn
         {
             get
             {
-                return Status is null ? default : Status.CompletionTimeUTC;
+                return Status is null ? default : Status.CompletedOn;
             }
         }
     }

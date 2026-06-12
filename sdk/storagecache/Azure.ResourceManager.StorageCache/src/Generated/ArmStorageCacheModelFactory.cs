@@ -850,10 +850,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="statusCode"> Server-defined status code for expansion job. </param>
         /// <param name="statusMessage"> Server-defined status message for expansion job. </param>
         /// <param name="percentComplete"> The percentage of expansion job completion. </param>
-        /// <param name="startTimeUTC"> The time (in UTC) the expansion job started. </param>
-        /// <param name="completionTimeUTC"> The time (in UTC) when the expansion job completed. Only populated when job reaches a terminal state. </param>
+        /// <param name="startedOn"> The time (in UTC) the expansion job started. </param>
+        /// <param name="completedOn"> The time (in UTC) when the expansion job completed. Only populated when job reaches a terminal state. </param>
         /// <returns> A new <see cref="StorageCache.AmlFileSystemExpansionJobData"/> instance for mocking. </returns>
-        public static AmlFileSystemExpansionJobData AmlFileSystemExpansionJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AmlFileSystemExpansionJobProvisioningState? provisioningState = default, float? newStorageCapacityTiB = default, AmlFileSystemExpansionJobStatusType? state = default, string statusCode = default, string statusMessage = default, float? percentComplete = default, DateTimeOffset? startTimeUTC = default, DateTimeOffset? completionTimeUTC = default)
+        public static AmlFileSystemExpansionJobData AmlFileSystemExpansionJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AmlFileSystemExpansionJobProvisioningState? provisioningState = default, float? newStorageCapacityTiB = default, AmlFileSystemExpansionJobStatusType? state = default, string statusCode = default, string statusMessage = default, float? percentComplete = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -864,13 +864,13 @@ namespace Azure.ResourceManager.StorageCache.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && newStorageCapacityTiB is null && state is null && statusCode is null && statusMessage is null && percentComplete is null && startTimeUTC is null && completionTimeUTC is null ? default : new ExpansionJobProperties(provisioningState, newStorageCapacityTiB, new ExpansionJobPropertiesStatus(
+                provisioningState is null && newStorageCapacityTiB is null && state is null && statusCode is null && statusMessage is null && percentComplete is null && startedOn is null && completedOn is null ? default : new ExpansionJobProperties(provisioningState, newStorageCapacityTiB, new ExpansionJobPropertiesStatus(
                     state,
                     statusCode,
                     statusMessage,
                     percentComplete,
-                    startTimeUTC,
-                    completionTimeUTC,
+                    startedOn,
+                    completedOn,
                     default), default),
                 default);
         }

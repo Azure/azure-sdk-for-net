@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartTimeUTC))
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startTimeUTC"u8);
-                writer.WriteStringValue(StartTimeUTC.Value, "O");
+                writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CompletionTimeUTC))
+            if (options.Format != "W" && Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completionTimeUTC"u8);
-                writer.WriteStringValue(CompletionTimeUTC.Value, "O");
+                writer.WriteStringValue(CompletedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             string statusCode = default;
             string statusMessage = default;
             float? percentComplete = default;
-            DateTimeOffset? startTimeUTC = default;
-            DateTimeOffset? completionTimeUTC = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? completedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    startTimeUTC = prop.Value.GetDateTimeOffset("O");
+                    startedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("completionTimeUTC"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    completionTimeUTC = prop.Value.GetDateTimeOffset("O");
+                    completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -211,8 +211,8 @@ namespace Azure.ResourceManager.StorageCache.Models
                 statusCode,
                 statusMessage,
                 percentComplete,
-                startTimeUTC,
-                completionTimeUTC,
+                startedOn,
+                completedOn,
                 additionalBinaryDataProperties);
         }
     }

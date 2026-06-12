@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="statusCode"> Server-defined status code for expansion job. </param>
         /// <param name="statusMessage"> Server-defined status message for expansion job. </param>
         /// <param name="percentComplete"> The percentage of expansion job completion. </param>
-        /// <param name="startTimeUTC"> The time (in UTC) the expansion job started. </param>
-        /// <param name="completionTimeUTC"> The time (in UTC) when the expansion job completed. Only populated when job reaches a terminal state. </param>
+        /// <param name="startedOn"> The time (in UTC) the expansion job started. </param>
+        /// <param name="completedOn"> The time (in UTC) when the expansion job completed. Only populated when job reaches a terminal state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpansionJobPropertiesStatus(AmlFileSystemExpansionJobStatusType? state, string statusCode, string statusMessage, float? percentComplete, DateTimeOffset? startTimeUTC, DateTimeOffset? completionTimeUTC, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpansionJobPropertiesStatus(AmlFileSystemExpansionJobStatusType? state, string statusCode, string statusMessage, float? percentComplete, DateTimeOffset? startedOn, DateTimeOffset? completedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             StatusCode = statusCode;
             StatusMessage = statusMessage;
             PercentComplete = percentComplete;
-            StartTimeUTC = startTimeUTC;
-            CompletionTimeUTC = completionTimeUTC;
+            StartedOn = startedOn;
+            CompletedOn = completedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.StorageCache.Models
         public float? PercentComplete { get; }
 
         /// <summary> The time (in UTC) the expansion job started. </summary>
-        public DateTimeOffset? StartTimeUTC { get; }
+        public DateTimeOffset? StartedOn { get; }
 
         /// <summary> The time (in UTC) when the expansion job completed. Only populated when job reaches a terminal state. </summary>
-        public DateTimeOffset? CompletionTimeUTC { get; }
+        public DateTimeOffset? CompletedOn { get; }
     }
 }
