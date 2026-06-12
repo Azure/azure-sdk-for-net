@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Optimization.Tests;
 
 [TestFixture]
-public class OptimizationConfigLoaderTests
+public class OptimizationOptionsLoaderTests
 {
     private readonly Dictionary<string, string?> _savedEnvVars = new();
 
@@ -38,20 +38,20 @@ public class OptimizationConfigLoaderTests
     }
 
     [Test]
-    public async Task LoadConfigAsync_ReturnsNull_WhenNoSourceAvailable()
+    public async Task LoadAsync_ReturnsNull_WhenNoSourceAvailable()
     {
-        var result = await OptimizationConfigLoader.LoadConfigAsync();
+        var result = await OptimizationOptionsLoader.LoadAsync();
 
         Assert.That(result, Is.Null);
     }
 
     [Test]
-    public async Task LoadConfigAsync_LoadsFromEnvVar_Priority2()
+    public async Task LoadAsync_LoadsFromEnvVar_Priority2()
     {
         string json = "{\"instructions\":\"Be helpful.\",\"model\":\"gpt-4o\",\"temperature\":0.7}";
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", json);
 
-        var result = await OptimizationConfigLoader.LoadConfigAsync();
+        var result = await OptimizationOptionsLoader.LoadAsync();
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result!.Instructions, Is.EqualTo("Be helpful."));
@@ -61,7 +61,7 @@ public class OptimizationConfigLoaderTests
     }
 
     [Test]
-    public async Task LoadConfigAsync_ParsesSkillsFromEnvVar()
+    public async Task LoadAsync_ParsesSkillsFromEnvVar()
     {
         string json = @"{
             ""instructions"": ""test"",
@@ -70,7 +70,7 @@ public class OptimizationConfigLoaderTests
         }";
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", json);
 
-        var result = await OptimizationConfigLoader.LoadConfigAsync();
+        var result = await OptimizationOptionsLoader.LoadAsync();
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result!.Skills.Count, Is.EqualTo(1));
@@ -81,38 +81,38 @@ public class OptimizationConfigLoaderTests
     }
 
     [Test]
-    public void LoadConfigAsync_ThrowsOnInvalidJson()
+    public void LoadAsync_ThrowsOnInvalidJson()
     {
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "not valid json{{{");
 
         Assert.ThrowsAsync<InvalidOperationException>(
-            async () => await OptimizationConfigLoader.LoadConfigAsync());
+            async () => await OptimizationOptionsLoader.LoadAsync());
     }
 
     [Test]
-    public void LoadConfig_Sync_Works()
+    public void Load_Sync_Works()
     {
         string json = "{\"model\":\"sync-model\"}";
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", json);
 
-        var result = OptimizationConfigLoader.LoadConfig();
+        var result = OptimizationOptionsLoader.Load();
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result!.Model, Is.EqualTo("sync-model"));
     }
 
     [Test]
-    public async Task LoadConfigAsync_HandlesEmptyEnvVar()
+    public async Task LoadAsync_HandlesEmptyEnvVar()
     {
         Environment.SetEnvironmentVariable("OPTIMIZATION_CONFIG", "   ");
 
-        var result = await OptimizationConfigLoader.LoadConfigAsync();
+        var result = await OptimizationOptionsLoader.LoadAsync();
 
         Assert.That(result, Is.Null);
     }
 
     [Test]
-    public async Task LoadConfigAsync_LoadsFromLocalCandidateDirectory_Priority3()
+    public async Task LoadAsync_LoadsFromLocalCandidateDirectory_Priority3()
     {
         // Simulate the layout written by `azd ai agent optimize apply --candidate`:
         //   <root>/baseline/instructions.md
@@ -132,7 +132,7 @@ public class OptimizationConfigLoaderTests
             Environment.SetEnvironmentVariable("OPTIMIZATION_LOCAL_DIR", root);
             Environment.SetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID", "cand_abc123");
 
-            var result = await OptimizationConfigLoader.LoadConfigAsync();
+            var result = await OptimizationOptionsLoader.LoadAsync();
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result!.Instructions, Is.EqualTo("optimized instructions"));
@@ -146,7 +146,7 @@ public class OptimizationConfigLoaderTests
     }
 
     [Test]
-    public async Task LoadConfigAsync_FallsBackToBaseline_WhenCandidateDirectoryMissing()
+    public async Task LoadAsync_FallsBackToBaseline_WhenCandidateDirectoryMissing()
     {
         string root = Path.Combine(Path.GetTempPath(), $"opt-loader-tests-{Guid.NewGuid():N}");
         try
@@ -158,7 +158,7 @@ public class OptimizationConfigLoaderTests
             Environment.SetEnvironmentVariable("OPTIMIZATION_LOCAL_DIR", root);
             Environment.SetEnvironmentVariable("OPTIMIZATION_CANDIDATE_ID", "cand_does_not_exist");
 
-            var result = await OptimizationConfigLoader.LoadConfigAsync();
+            var result = await OptimizationOptionsLoader.LoadAsync();
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result!.Instructions, Is.EqualTo("baseline instructions"));
@@ -172,7 +172,7 @@ public class OptimizationConfigLoaderTests
     }
 
     [Test]
-    public async Task LoadConfigAsync_LoadsBaseline_WhenOnlyLocalDirSet()
+    public async Task LoadAsync_LoadsBaseline_WhenOnlyLocalDirSet()
     {
         string root = Path.Combine(Path.GetTempPath(), $"opt-loader-tests-{Guid.NewGuid():N}");
         try
@@ -183,7 +183,7 @@ public class OptimizationConfigLoaderTests
 
             Environment.SetEnvironmentVariable("OPTIMIZATION_LOCAL_DIR", root);
 
-            var result = await OptimizationConfigLoader.LoadConfigAsync();
+            var result = await OptimizationOptionsLoader.LoadAsync();
 
             Assert.That(result, Is.Not.Null);
             Assert.That(result!.Instructions, Is.EqualTo("baseline only"));

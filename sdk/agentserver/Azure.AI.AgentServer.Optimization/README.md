@@ -22,13 +22,13 @@ dotnet add package Azure.AI.AgentServer.Optimization --prerelease
 
 ## Key concepts
 
-### OptimizationConfigLoader
+### OptimizationOptionsLoader
 
-The main entry point. Call `LoadConfig()` or `LoadConfigAsync()` to resolve an `OptimizationConfig` from the highest-priority available source.
+The main entry point. Call `Load()` or `LoadAsync()` to resolve an `OptimizationOptions` from the highest-priority available source.
 
-### OptimizationConfig
+### OptimizationOptions
 
-An immutable config object containing:
+A mutable, binder-friendly options object containing:
 - `Instructions` — optimized system prompt
 - `Model` — model deployment name
 - `Temperature` — sampling temperature
@@ -41,23 +41,23 @@ Represents a single learned skill with `Name`, `Description`, and `Body`.
 
 ## Examples
 
-### Load config with defaults
+### Load options with defaults
 
 <!-- TODO: Convert to verified snippets -->
 ```csharp
 using Azure.AI.AgentServer.Optimization;
 
-OptimizationConfig? config = await OptimizationConfigLoader.LoadConfigAsync();
+OptimizationOptions? options = await OptimizationOptionsLoader.LoadAsync();
 
-if (config is not null)
+if (options is not null)
 {
-    Console.WriteLine($"Source: {config.Source}");
-    Console.WriteLine($"Instructions: {config.Instructions}");
-    Console.WriteLine($"Model: {config.Model}");
+    Console.WriteLine($"Source: {options.Source}");
+    Console.WriteLine($"Instructions: {options.Instructions}");
+    Console.WriteLine($"Model: {options.Model}");
 }
 ```
 
-### Load config with a custom token provider
+### Load options with a custom token provider
 
 <!-- TODO: Convert to verified snippets -->
 ```csharp
@@ -69,7 +69,7 @@ using System.Threading.Tasks;
 using Azure.AI.AgentServer.Optimization;
 
 AuthenticationTokenProvider tokenProvider = new MyTokenProvider();
-OptimizationConfig? config = await OptimizationConfigLoader.LoadConfigAsync(tokenProvider);
+OptimizationOptions? options = await OptimizationOptionsLoader.LoadAsync(tokenProvider);
 
 file sealed class MyTokenProvider : AuthenticationTokenProvider
 {
@@ -85,7 +85,7 @@ file sealed class MyTokenProvider : AuthenticationTokenProvider
 
 ## Troubleshooting
 
-When troubleshooting configuration resolution, set the environment variables for the source that you intend to use and inspect the `Source` property on the returned `OptimizationConfig` to confirm which source was selected.
+When troubleshooting configuration resolution, set the environment variables for the source that you intend to use and inspect the `Source` property on the returned `OptimizationOptions` to confirm which source was selected.
 
 ## Contributing
 

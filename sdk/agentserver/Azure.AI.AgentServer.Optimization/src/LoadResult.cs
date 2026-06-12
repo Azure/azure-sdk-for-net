@@ -4,34 +4,33 @@
 namespace Azure.AI.AgentServer.Optimization;
 
 /// <summary>
-/// Result of <see cref="OptimizationConfigLoader.LoadConfig(LoadConfigOptions)"/>.
-/// Carries the resolved config (if any), the source that produced it, and any
+/// Result of <see cref="OptimizationOptionsLoader.Load(LoadOptions)"/>. Carries the
+/// resolved <see cref="Options"/> (if any), the source that produced it, and any
 /// non-fatal warnings encountered along the resolution waterfall.
 /// </summary>
-public class LoadConfigResult
+public class LoadResult
 {
     private static readonly IReadOnlyList<string> s_emptyWarnings = Array.Empty<string>();
 
-    /// <summary>
-    /// Initializes a new <see cref="LoadConfigResult"/>.
-    /// </summary>
-    public LoadConfigResult(OptimizationConfig config, string sourceUsed, IReadOnlyList<string> warnings = null)
+    /// <summary>Initializes a new <see cref="LoadResult"/>.</summary>
+    public LoadResult(OptimizationOptions options, string sourceUsed, IReadOnlyList<string> warnings = null)
     {
-        Config = config;
+        Options = options;
         SourceUsed = sourceUsed;
         Warnings = warnings ?? s_emptyWarnings;
     }
 
     /// <summary>
-    /// The resolved optimization config, or <c>null</c> when no source produced one.
+    /// The resolved <see cref="OptimizationOptions"/>, or <c>null</c> when no source
+    /// produced one.
     /// </summary>
-    public OptimizationConfig Config { get; }
+    public OptimizationOptions Options { get; }
 
     /// <summary>
-    /// The source string from the priority that produced <see cref="Config"/>, e.g.
+    /// The source string from the priority that produced <see cref="Options"/>, e.g.
     /// <c>api:candidate:abc</c>, <c>env:OPTIMIZATION_CONFIG</c>,
     /// <c>local:/path/cand_abc</c>, or <c>local:/path/baseline</c>. <c>null</c> when
-    /// <see cref="Config"/> is <c>null</c>.
+    /// <see cref="Options"/> is <c>null</c>.
     /// </summary>
     public string SourceUsed { get; }
 
@@ -43,7 +42,8 @@ public class LoadConfigResult
     public IReadOnlyList<string> Warnings { get; }
 
     /// <summary>
-    /// An empty result indicating no source produced a config and no warnings were raised.
+    /// An empty result indicating no source produced an <see cref="OptimizationOptions"/>
+    /// and no warnings were raised.
     /// </summary>
-    public static LoadConfigResult Empty { get; } = new LoadConfigResult(null, null);
+    public static LoadResult Empty { get; } = new LoadResult(null, null);
 }

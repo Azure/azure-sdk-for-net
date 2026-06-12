@@ -12,7 +12,7 @@ namespace Azure.AI.AgentServer.Optimization.Configuration;
 
 /// <summary>
 /// Runs the optimization config waterfall at <see cref="Load"/> time and projects the
-/// resulting <see cref="OptimizationConfig"/> into the <see cref="IConfiguration"/> tree.
+/// resulting <see cref="OptimizationOptions"/> into the <see cref="IConfiguration"/> tree.
 /// </summary>
 /// <remarks>
 /// <para>
@@ -62,7 +62,7 @@ public class AgentConfigurationProvider : ConfigurationProvider
         string section = ResolveSectionName(_options);
         AuthenticationTokenProvider? tokenProvider = ResolveTokenProvider(_options);
 
-        var loadOptions = new LoadConfigOptions
+        var loadOptions = new LoadOptions
         {
             AgentKey = _options.AgentKey,
             TokenProvider = tokenProvider,
@@ -71,9 +71,9 @@ public class AgentConfigurationProvider : ConfigurationProvider
             FallbackToUnsuffixedEnvVars = _options.FallbackToUnsuffixedEnvVars,
         };
 
-        LoadConfigResult result = OptimizationConfigLoader.LoadConfig(loadOptions);
+        LoadResult result = OptimizationOptionsLoader.Load(loadOptions);
 
-        if (result.Config is null)
+        if (result.Options is null)
         {
             if (_options.FailOnEmpty)
             {
@@ -98,7 +98,7 @@ public class AgentConfigurationProvider : ConfigurationProvider
         // Build into a local dictionary first so a partial / failing load does not
         // mutate Data. Only swap on success.
         var newData = CreateEmptyDataDictionary();
-        Flatten(result.Config, section, newData);
+        Flatten(result.Options, section, newData);
         Data = newData;
     }
 
@@ -155,41 +155,49 @@ public class AgentConfigurationProvider : ConfigurationProvider
         => new(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
-    /// Flattens <paramref name="config"/> into <paramref name="data"/> under
+    /// Flattens <paramref name="options"/> into <paramref name="data"/> under
     /// <paramref name="section"/> using the standard <see cref="ConfigurationPath.KeyDelimiter"/>
     /// for nested sections and indexed array element notation for collections.
     /// </summary>
-    private static void Flatten(OptimizationConfig config, string section, IDictionary<string, string?> data)
+    private static void Flatten(OptimizationOptions options, string section, IDictionary<string, string?> data)
     {
-        Set(data, section, nameof(OptimizationOptions.Instructions), config.Instructions);
-        Set(data, section, nameof(OptimizationOptions.Model), config.Model);
+        Set(data, section, nameof(OptimizationOptions.Instructions), options.Instructions);
+        Set(data, section, nameof(OptimizationOptions.Model), options.Model);
 
-        if (config.Temperature.HasValue)
+        if (options.Temperature.HasValue)
         {
             Set(data, section, nameof(OptimizationOptions.Temperature),
-                config.Temperature.Value.ToString(CultureInfo.InvariantCulture));
+                options.Temperature.Value.ToString(CultureInfo.InvariantCulture));
         }
 
-        Set(data, section, nameof(OptimizationOptions.SkillsDirectory), config.SkillsDirectory);
-        Set(data, section, nameof(OptimizationOptions.Source), config.Source);
-        Set(data, section, nameof(OptimizationOptions.CandidateId), config.CandidateId);
+        Set(data, section, nameof(OptimizationOptions.SkillsDirectory), options.SkillsDirectory);
+        Set(data, section, nameof(OptimizationOptions.Source), options.Source);
+        Set(data, section, nameof(OptimizationOptions.CandidateId), options.CandidateId);
 
-        for (int i = 0; i < config.Skills.Count; i++)
+        for (int i = 0; i < options.Skills.Count; i++)
         {
-            var skill = config.Skills[i];
+            var skill = options.Skills[i];
+            if (skill is null)
+            {
+                continue;
+            }
             string skillPrefix = ConfigurationPath.Combine(section, nameof(OptimizationOptions.Skills), i.ToString(CultureInfo.InvariantCulture));
-            Set(data, skillPrefix, nameof(SkillOptions.Name), skill.Name);
-            Set(data, skillPrefix, nameof(SkillOptions.Description), skill.Description);
-            Set(data, skillPrefix, nameof(SkillOptions.Body), skill.Body);
+            Set(data, skillPrefix, nameof(OptimizationSkill.Name), skill.Name);
+            Set(data, skillPrefix, nameof(OptimizationSkill.Description), skill.Description);
+            Set(data, skillPrefix, nameof(OptimizationSkill.Body), skill.Body);
         }
 
-        for (int i = 0; i < config.ToolDefinitions.Count; i++)
+        for (int i = 0; i < options.ToolDefinitions.Count; i++)
         {
-            var tool = config.ToolDefinitions[i];
+            var tool = options.ToolDefinitions[i];
+            if (tool is null)
+            {
+                continue;
+            }
             string toolPrefix = ConfigurationPath.Combine(section, nameof(OptimizationOptions.ToolDefinitions), i.ToString(CultureInfo.InvariantCulture));
-            Set(data, toolPrefix, nameof(ToolDefinitionOptions.Type), tool.Type);
-            Set(data, toolPrefix, nameof(ToolDefinitionOptions.Name), tool.Name);
-            Set(data, toolPrefix, nameof(ToolDefinitionOptions.Description), tool.Description);
+            Set(data, toolPrefix, nameof(ToolDefinition.Type), tool.Type);
+            Set(data, toolPrefix, nameof(ToolDefinition.Name), tool.Name);
+            Set(data, toolPrefix, nameof(ToolDefinition.Description), tool.Description);
         }
     }
 

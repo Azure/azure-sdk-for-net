@@ -2,13 +2,12 @@
 // Licensed under the MIT License.
 
 using System.ClientModel;
-using System.ClientModel.Primitives;
 
 namespace Azure.AI.AgentServer.Optimization;
 
 /// <summary>
-/// Options that control how <see cref="OptimizationConfigLoader.LoadConfig(LoadConfigOptions)"/>
-/// resolves an optimization config from the environment.
+/// Options that control how <see cref="OptimizationOptionsLoader.Load(LoadOptions)"/>
+/// resolves an <see cref="OptimizationOptions"/> from the environment.
 /// </summary>
 /// <remarks>
 /// <para>
@@ -23,7 +22,7 @@ namespace Azure.AI.AgentServer.Optimization;
 /// against the un-suffixed environment variables.
 /// </para>
 /// </remarks>
-public class LoadConfigOptions
+public class LoadOptions
 {
     /// <summary>
     /// Logical agent key used to scope environment-variable lookups for multi-agent

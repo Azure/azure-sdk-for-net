@@ -3,12 +3,12 @@
 
 using System.ClientModel;
 using System.Text.Json;
-using System.ClientModel.Primitives;
 
 namespace Azure.AI.AgentServer.Optimization;
 
 /// <summary>
-/// Loads optimization config with graceful fallback using a 4-priority resolution waterfall.
+/// Loads <see cref="OptimizationOptions"/> with graceful fallback using a 4-priority
+/// resolution waterfall.
 /// </summary>
 /// <remarks>
 /// Resolution order (first match wins):
@@ -21,62 +21,66 @@ namespace Azure.AI.AgentServer.Optimization;
 /// </list>
 /// <para>
 /// Multi-agent hosts can scope env-var lookups per agent by passing
-/// <see cref="LoadConfigOptions.AgentKey"/>: the loader prefers
+/// <see cref="LoadOptions.AgentKey"/>: the loader prefers
 /// <c>OPTIMIZATION_&lt;VAR&gt;__&lt;CANONICAL_KEY&gt;</c> over the un-suffixed variant.
 /// </para>
 /// </remarks>
-public static class OptimizationConfigLoader
+public static class OptimizationOptionsLoader
 {
     private static readonly TimeSpan s_defaultResolverTimeout = TimeSpan.FromSeconds(30);
 
     /// <summary>
-    /// Loads optimization config asynchronously using the resolution waterfall (back-compat overload).
+    /// Loads <see cref="OptimizationOptions"/> asynchronously using the resolution
+    /// waterfall (back-compat overload).
     /// </summary>
     /// <param name="tokenProvider">Optional token provider for authenticating to the resolver API.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>The resolved config, or <c>null</c> if no config source was found.</returns>
-    public static async Task<OptimizationConfig> LoadConfigAsync(
+    /// <returns>The resolved options, or <c>null</c> if no source was found.</returns>
+    public static async Task<OptimizationOptions> LoadAsync(
         AuthenticationTokenProvider tokenProvider = null,
         CancellationToken cancellationToken = default)
     {
-        var result = await LoadConfigAsync(
-            new LoadConfigOptions { TokenProvider = tokenProvider },
+        var result = await LoadAsync(
+            new LoadOptions { TokenProvider = tokenProvider },
             cancellationToken).ConfigureAwait(false);
-        return result.Config;
+        return result.Options;
     }
 
     /// <summary>
-    /// Loads optimization config synchronously using the resolution waterfall (back-compat overload).
+    /// Loads <see cref="OptimizationOptions"/> synchronously using the resolution
+    /// waterfall (back-compat overload).
     /// </summary>
     /// <param name="tokenProvider">Optional token provider for authenticating to the resolver API.</param>
-    /// <returns>The resolved config, or <c>null</c> if no config source was found.</returns>
-    public static OptimizationConfig LoadConfig(AuthenticationTokenProvider tokenProvider = null)
+    /// <returns>The resolved options, or <c>null</c> if no source was found.</returns>
+    public static OptimizationOptions Load(AuthenticationTokenProvider tokenProvider = null)
     {
 #pragma warning disable AZC0102 // TaskExtensions.EnsureCompleted not available in this context
-        return LoadConfigAsync(tokenProvider).GetAwaiter().GetResult();
+        return LoadAsync(tokenProvider).GetAwaiter().GetResult();
 #pragma warning restore AZC0102
     }
 
     /// <summary>
-    /// Loads optimization config synchronously with detailed result and diagnostics.
+    /// Loads <see cref="OptimizationOptions"/> synchronously with detailed result and
+    /// diagnostics.
     /// </summary>
     /// <param name="options">Resolution options. Must not be <c>null</c>.</param>
-    /// <returns>A <see cref="LoadConfigResult"/> carrying the resolved config (if any), the source that produced it, and any non-fatal warnings.</returns>
-    public static LoadConfigResult LoadConfig(LoadConfigOptions options)
+    /// <returns>A <see cref="LoadResult"/> carrying the resolved options (if any), the source that produced them, and any non-fatal warnings.</returns>
+    public static LoadResult Load(LoadOptions options)
     {
 #pragma warning disable AZC0102 // TaskExtensions.EnsureCompleted not available in this context
-        return LoadConfigAsync(options, default).GetAwaiter().GetResult();
+        return LoadAsync(options, default).GetAwaiter().GetResult();
 #pragma warning restore AZC0102
     }
 
     /// <summary>
-    /// Loads optimization config asynchronously with detailed result and diagnostics.
+    /// Loads <see cref="OptimizationOptions"/> asynchronously with detailed result
+    /// and diagnostics.
     /// </summary>
     /// <param name="options">Resolution options. Must not be <c>null</c>.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>A <see cref="LoadConfigResult"/> carrying the resolved config (if any), the source that produced it, and any non-fatal warnings.</returns>
-    public static async Task<LoadConfigResult> LoadConfigAsync(
-        LoadConfigOptions options,
+    /// <returns>A <see cref="LoadResult"/> carrying the resolved options (if any), the source that produced them, and any non-fatal warnings.</returns>
+    public static async Task<LoadResult> LoadAsync(
+        LoadOptions options,
         CancellationToken cancellationToken = default)
     {
         if (options is null)
@@ -87,14 +91,14 @@ public static class OptimizationConfigLoader
         string canonicalKey = null;
         if (!string.IsNullOrEmpty(options.AgentKey))
         {
-            canonicalKey = AgentKeyCanonicalizer.Canonicalize(options.AgentKey, nameof(options.AgentKey) + " on " + nameof(LoadConfigOptions));
+            canonicalKey = AgentKeyCanonicalizer.Canonicalize(options.AgentKey, nameof(options.AgentKey) + " on " + nameof(LoadOptions));
         }
 
         var warnings = new List<string>();
         bool allowUnsuffixedFallback = canonicalKey is null || options.FallbackToUnsuffixedEnvVars;
 
-        string candidateId = ResolveEnvVar(OptimizationConfig.EnvironmentVariableCandidateId, canonicalKey, allowUnsuffixedFallback);
-        string endpoint = ResolveEnvVar(OptimizationConfig.EnvironmentVariableResolveEndpoint, canonicalKey, allowUnsuffixedFallback)?.TrimEnd('/');
+        string candidateId = ResolveEnvVar(OptimizationOptions.EnvironmentVariableCandidateId, canonicalKey, allowUnsuffixedFallback);
+        string endpoint = ResolveEnvVar(OptimizationOptions.EnvironmentVariableResolveEndpoint, canonicalKey, allowUnsuffixedFallback)?.TrimEnd('/');
 
         // ── Priority 1: Resolver API ────────────────────────────────
         if (!string.IsNullOrEmpty(candidateId) && !string.IsNullOrEmpty(endpoint))
@@ -108,8 +112,8 @@ public static class OptimizationConfigLoader
                 if (resolved.HasValue)
                 {
                     string source = $"api:candidate:{candidateId}";
-                    var cfg = OptimizationConfig.FromJson(resolved.Value, source: source, candidateId: candidateId);
-                    return new LoadConfigResult(cfg, source, warnings);
+                    var opts = OptimizationOptions.FromJson(resolved.Value, source: source, candidateId: candidateId);
+                    return new LoadResult(opts, source, warnings);
                 }
             }
             catch (Exception ex) when (!options.StrictMode)
@@ -124,11 +128,11 @@ public static class OptimizationConfigLoader
         // ── Priority 2: Inline JSON env var ─────────────────────────
         // Inline JSON in OPTIMIZATION_CONFIG is an explicit signal — parse errors
         // always throw regardless of StrictMode (preserves back-compat).
-        string rawConfig = ResolveEnvVar(OptimizationConfig.EnvironmentVariableConfig, canonicalKey, allowUnsuffixedFallback);
+        string rawConfig = ResolveEnvVar(OptimizationOptions.EnvironmentVariableConfig, canonicalKey, allowUnsuffixedFallback);
         if (!string.IsNullOrEmpty(rawConfig))
         {
-            var cfg = LoadFromEnvVar(rawConfig);
-            return new LoadConfigResult(cfg, cfg.Source, warnings);
+            var opts = LoadFromEnvVar(rawConfig);
+            return new LoadResult(opts, opts.Source, warnings);
         }
 
         // ── Priority 3: Local candidate directory ───────────────────
@@ -138,7 +142,7 @@ public static class OptimizationConfigLoader
         // on disk, prefer it over baseline so the deployed container actually exercises
         // the optimized config when the resolver API endpoint is not configured (the
         // common offline / preview case).
-        string localDir = ResolveEnvVar(OptimizationConfig.EnvironmentVariableLocalDirectory, canonicalKey, allowUnsuffixedFallback);
+        string localDir = ResolveEnvVar(OptimizationOptions.EnvironmentVariableLocalDirectory, canonicalKey, allowUnsuffixedFallback);
         if (!string.IsNullOrEmpty(candidateId) && !string.IsNullOrEmpty(localDir))
         {
             if (!CandidateIdValidator.IsValid(candidateId))
@@ -156,8 +160,8 @@ public static class OptimizationConfigLoader
                 string candidatePath = Path.Combine(localDir, candidateId);
                 if (Directory.Exists(candidatePath))
                 {
-                    var cfg = LoadFromLocalDirectory(candidatePath, candidateId, options.StrictMode, warnings);
-                    return new LoadConfigResult(cfg, cfg.Source, warnings);
+                    var opts = LoadFromLocalDirectory(candidatePath, candidateId, options.StrictMode, warnings);
+                    return new LoadResult(opts, opts.Source, warnings);
                 }
             }
         }
@@ -168,13 +172,13 @@ public static class OptimizationConfigLoader
             string baselinePath = Path.Combine(localDir, "baseline");
             if (Directory.Exists(baselinePath))
             {
-                var cfg = LoadFromLocalDirectory(baselinePath, candidateId: null, options.StrictMode, warnings);
-                return new LoadConfigResult(cfg, cfg.Source, warnings);
+                var opts = LoadFromLocalDirectory(baselinePath, candidateId: null, options.StrictMode, warnings);
+                return new LoadResult(opts, opts.Source, warnings);
             }
         }
 
         // ── No config found ─────────────────────────────────────────
-        return warnings.Count == 0 ? LoadConfigResult.Empty : new LoadConfigResult(null, null, warnings);
+        return warnings.Count == 0 ? LoadResult.Empty : new LoadResult(null, null, warnings);
     }
 
     /// <summary>
@@ -210,9 +214,9 @@ public static class OptimizationConfigLoader
     }
 
     /// <summary>
-    /// Loads skills from a directory of skill folders.
-    /// Each subfolder should contain a <c>SKILL.md</c> file with optional YAML frontmatter
-    /// (name, description) and a body.
+    /// Loads skills from a directory of skill folders. Each subfolder should contain
+    /// a <c>SKILL.md</c> file with optional YAML frontmatter (name, description) and
+    /// a body.
     /// </summary>
     /// <param name="skillsDirectory">Path to the skills directory.</param>
     /// <returns>A list of parsed skills.</returns>
@@ -297,22 +301,22 @@ public static class OptimizationConfigLoader
         }
     }
 
-    private static OptimizationConfig LoadFromEnvVar(string rawConfig)
+    private static OptimizationOptions LoadFromEnvVar(string rawConfig)
     {
         try
         {
             using var doc = JsonDocument.Parse(rawConfig);
-            return OptimizationConfig.FromJson(
+            return OptimizationOptions.FromJson(
                 doc.RootElement,
-                source: $"env:{OptimizationConfig.EnvironmentVariableConfig}");
+                source: $"env:{OptimizationOptions.EnvironmentVariableConfig}");
         }
         catch (JsonException ex)
         {
-            throw new InvalidOperationException($"Bad {OptimizationConfig.EnvironmentVariableConfig} env var: {ex.Message}", ex);
+            throw new InvalidOperationException($"Bad {OptimizationOptions.EnvironmentVariableConfig} env var: {ex.Message}", ex);
         }
     }
 
-    private static OptimizationConfig LoadFromLocalDirectory(
+    private static OptimizationOptions LoadFromLocalDirectory(
         string localDir,
         string candidateId = null,
         bool strict = false,
@@ -326,7 +330,7 @@ public static class OptimizationConfigLoader
 
         // Read tools.json
         string toolsPath = Path.Combine(localDir, "tools.json");
-        IReadOnlyList<ToolDefinition> tools = Array.Empty<ToolDefinition>();
+        var tools = new List<ToolDefinition>();
         if (File.Exists(toolsPath))
         {
             try
@@ -334,10 +338,14 @@ public static class OptimizationConfigLoader
                 using var doc = JsonDocument.Parse(File.ReadAllText(toolsPath));
                 if (doc.RootElement.ValueKind == JsonValueKind.Array)
                 {
-                    // Wrap in {"tools": [...]} so FromJson can parse it
+                    // Wrap in {"tools": [...]} so FromJson can parse it.
                     string wrapped = $"{{\"tools\":{doc.RootElement.GetRawText()}}}";
                     using var wrappedDoc = JsonDocument.Parse(wrapped);
-                    tools = OptimizationConfig.FromJson(wrappedDoc.RootElement).ToolDefinitions;
+                    var parsed = OptimizationOptions.FromJson(wrappedDoc.RootElement);
+                    foreach (var t in parsed.ToolDefinitions)
+                    {
+                        tools.Add(t);
+                    }
                 }
             }
             catch (JsonException ex)
@@ -356,12 +364,18 @@ public static class OptimizationConfigLoader
         string skillsDir = Path.Combine(localDir, "skills");
         IReadOnlyList<OptimizationSkill> skills = LoadSkillsFromDirectory(skillsDir);
 
-        return new OptimizationConfig(
-            instructions: instructions,
-            skills: skills,
-            skillsDirectory: Directory.Exists(skillsDir) ? Path.GetFullPath(skillsDir) : null,
-            toolDefinitions: tools,
-            source: $"local:{localDir}",
-            candidateId: candidateId);
+        var result = new OptimizationOptions
+        {
+            Instructions = instructions,
+            SkillsDirectory = Directory.Exists(skillsDir) ? Path.GetFullPath(skillsDir) : null,
+            ToolDefinitions = tools,
+            Source = $"local:{localDir}",
+            CandidateId = candidateId,
+        };
+        foreach (var s in skills)
+        {
+            result.Skills.Add(s);
+        }
+        return result;
     }
 }

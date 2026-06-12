@@ -9,7 +9,17 @@ namespace Azure.AI.AgentServer.Optimization.Tests;
 public class OptimizationSkillTests
 {
     [Test]
-    public void Constructor_SetsProperties()
+    public void Parameterless_DefaultsAllPropertiesToNull()
+    {
+        var skill = new OptimizationSkill();
+
+        Assert.That(skill.Name, Is.Null);
+        Assert.That(skill.Description, Is.Null);
+        Assert.That(skill.Body, Is.Null);
+    }
+
+    [Test]
+    public void Ctor_SetsProperties()
     {
         var skill = new OptimizationSkill("budget-checker", "Checks budget limits", "body text");
 
@@ -19,7 +29,7 @@ public class OptimizationSkillTests
     }
 
     [Test]
-    public void Constructor_DefaultsBodyToEmpty()
+    public void Ctor_DefaultsBodyToEmpty()
     {
         var skill = new OptimizationSkill("test", "desc");
 
@@ -27,42 +37,28 @@ public class OptimizationSkillTests
     }
 
     [Test]
-    public void Constructor_ThrowsOnNullName()
+    public void Ctor_ThrowsOnNullName()
     {
         Assert.Throws<ArgumentNullException>(() => new OptimizationSkill(null!, "desc"));
     }
 
     [Test]
-    public void Constructor_ThrowsOnNullDescription()
+    public void Ctor_ThrowsOnNullDescription()
     {
         Assert.Throws<ArgumentNullException>(() => new OptimizationSkill("name", null!));
     }
 
     [Test]
-    public void Equals_TrueForSameValues()
+    public void Settable_PropertiesAllowMutation()
     {
-        var a = new OptimizationSkill("s1", "d1", "b1");
-        var b = new OptimizationSkill("s1", "d1", "b1");
+        var skill = new OptimizationSkill();
+        skill.Name = "x";
+        skill.Description = "y";
+        skill.Body = "z";
 
-        Assert.That(a.Equals(b), Is.True);
-        Assert.That(a.GetHashCode(), Is.EqualTo(b.GetHashCode()));
-    }
-
-    [Test]
-    public void Equals_FalseForDifferentValues()
-    {
-        var a = new OptimizationSkill("s1", "d1", "b1");
-        var b = new OptimizationSkill("s2", "d1", "b1");
-
-        Assert.That(a.Equals(b), Is.False);
-    }
-
-    [Test]
-    public void Equals_FalseForNull()
-    {
-        var skill = new OptimizationSkill("s1", "d1");
-
-        Assert.That(skill.Equals(null), Is.False);
+        Assert.That(skill.Name, Is.EqualTo("x"));
+        Assert.That(skill.Description, Is.EqualTo("y"));
+        Assert.That(skill.Body, Is.EqualTo("z"));
     }
 
     [Test]
@@ -72,5 +68,62 @@ public class OptimizationSkillTests
 
         Assert.That(skill.ToString(), Does.Contain("budget"));
         Assert.That(skill.ToString(), Does.Contain("Checks budget"));
+    }
+}
+
+[TestFixture]
+public class ToolDefinitionTests
+{
+    [Test]
+    public void Parameterless_DefaultsTypeToFunctionAndDescriptionToEmpty()
+    {
+        var tool = new ToolDefinition();
+
+        Assert.That(tool.Type, Is.EqualTo("function"));
+        Assert.That(tool.Name, Is.Null);
+        Assert.That(tool.Description, Is.EqualTo(string.Empty));
+    }
+
+    [Test]
+    public void Ctor_SetsProperties()
+    {
+        var tool = new ToolDefinition("function", "get_weather", "Look up weather");
+
+        Assert.That(tool.Type, Is.EqualTo("function"));
+        Assert.That(tool.Name, Is.EqualTo("get_weather"));
+        Assert.That(tool.Description, Is.EqualTo("Look up weather"));
+    }
+
+    [Test]
+    public void Ctor_ThrowsOnNullType()
+    {
+        Assert.Throws<ArgumentNullException>(() => new ToolDefinition(null!, "name", "desc"));
+    }
+
+    [Test]
+    public void Ctor_ThrowsOnNullName()
+    {
+        Assert.Throws<ArgumentNullException>(() => new ToolDefinition("function", null!, "desc"));
+    }
+
+    [Test]
+    public void Ctor_NullDescriptionBecomesEmpty()
+    {
+        var tool = new ToolDefinition("function", "name", null!);
+
+        Assert.That(tool.Description, Is.EqualTo(string.Empty));
+    }
+
+    [Test]
+    public void Settable_PropertiesAllowMutation()
+    {
+        var tool = new ToolDefinition();
+        tool.Type = "function";
+        tool.Name = "n";
+        tool.Description = "d";
+
+        Assert.That(tool.Type, Is.EqualTo("function"));
+        Assert.That(tool.Name, Is.EqualTo("n"));
+        Assert.That(tool.Description, Is.EqualTo("d"));
     }
 }

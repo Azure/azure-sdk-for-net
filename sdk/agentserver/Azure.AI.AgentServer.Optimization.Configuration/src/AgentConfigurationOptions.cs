@@ -15,9 +15,9 @@ namespace Azure.AI.AgentServer.Optimization.Configuration;
 /// <remarks>
 /// <para>
 /// At <see cref="AgentConfigurationProvider.Load"/> time the source runs the same
-/// 4-priority waterfall as <see cref="OptimizationConfigLoader.LoadConfig(LoadConfigOptions)"/>
+/// 4-priority waterfall as <see cref="OptimizationOptionsLoader.Load(LoadOptions)"/>
 /// (resolver API → inline JSON → local candidate directory → local baseline directory)
-/// and flattens the resulting <see cref="OptimizationConfig"/> into the configuration
+/// and flattens the resulting <see cref="OptimizationOptions"/> into the configuration
 /// dictionary under <see cref="SectionName"/>.
 /// </para>
 /// <para>

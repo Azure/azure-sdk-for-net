@@ -2,57 +2,76 @@
 // Licensed under the MIT License.
 
 using System.Text;
+using System.Text.Json;
 
 namespace Azure.AI.AgentServer.Optimization;
 
 /// <summary>
-/// Settable mirror of <see cref="OptimizationConfig"/> intended for binding from
-/// <c>Microsoft.Extensions.Configuration</c> (or for population by hand).
+/// Resolved optimization options returned by <see cref="OptimizationOptionsLoader.LoadAsync(LoadOptions, System.Threading.CancellationToken)"/>.
+/// Contains the optimized instructions, model, temperature, skills, and tool definitions.
 /// </summary>
 /// <remarks>
 /// <para>
-/// <see cref="OptimizationConfig"/> is intentionally immutable so callers can pass
-/// it through without defensive copies. The configuration binder, however, requires
-/// settable properties and parameterless constructors. <see cref="OptimizationOptions"/>
-/// satisfies the binder contract while still round-tripping cleanly to and from the
-/// immutable type.
+/// This type is the single canonical shape for optimization data — it is both the
+/// loader's return value and the binding target for <c>Microsoft.Extensions.Configuration</c>
+/// (via the <c>Azure.AI.AgentServer.Optimization.Configuration</c> package). Properties
+/// have public setters and collections are mutable so the configuration binder can
+/// populate them.
 /// </para>
 /// <para>
-/// This type lives in the core package so that downstream packages
-/// (<c>Azure.AI.AgentServer.Optimization.Configuration</c>,
-/// <c>Azure.AI.AgentServer.Optimization.AgentFramework</c>) can share it without
-/// forcing the core package to depend on <c>Microsoft.Extensions.*</c>.
+/// Callers who want a defensively-immutable view should copy the relevant fields into
+/// their own type; the loader does not freeze instances after handing them out.
 /// </para>
 /// </remarks>
 public class OptimizationOptions
 {
+    /// <summary>Environment variable name for inline JSON config (Priority 2).</summary>
+    public const string EnvironmentVariableConfig = "OPTIMIZATION_CONFIG";
+
+    /// <summary>Environment variable name for the candidate ID (Priority 1).</summary>
+    public const string EnvironmentVariableCandidateId = "OPTIMIZATION_CANDIDATE_ID";
+
+    /// <summary>Environment variable name for the resolver API endpoint (Priority 1).</summary>
+    public const string EnvironmentVariableResolveEndpoint = "OPTIMIZATION_RESOLVE_ENDPOINT";
+
+    /// <summary>Environment variable name for the local baseline directory (Priority 3).</summary>
+    public const string EnvironmentVariableLocalDirectory = "OPTIMIZATION_LOCAL_DIR";
+
     /// <summary>Optimized system prompt text. Required at runtime unless explicitly opted out.</summary>
     public string Instructions { get; set; }
 
     /// <summary>Model deployment name (e.g. "gpt-4o"). Optional advisory hint to the runtime.</summary>
     public string Model { get; set; }
 
-    /// <summary>Sampling temperature; must be in [0, 2] when set.</summary>
+    /// <summary>Sampling temperature; expected to be in [0, 2] when set.</summary>
     public double? Temperature { get; set; }
 
     /// <summary>Learned skills from optimization.</summary>
-    public IList<SkillOptions> Skills { get; set; } = new List<SkillOptions>();
+    public IList<OptimizationSkill> Skills { get; set; } = new List<OptimizationSkill>();
 
-    /// <summary>Path to a directory containing skill files for on-demand loading.</summary>
+    /// <summary>
+    /// Path to a directory containing skill files for on-demand loading via
+    /// <see cref="OptimizationOptionsLoader.LoadSkillsFromDirectory"/>.
+    /// </summary>
     public string SkillsDirectory { get; set; }
 
     /// <summary>Optimized tool definitions (function name + optimized description).</summary>
-    public IList<ToolDefinitionOptions> ToolDefinitions { get; set; } = new List<ToolDefinitionOptions>();
+    public IList<ToolDefinition> ToolDefinitions { get; set; } = new List<ToolDefinition>();
 
-    /// <summary>Where the config was loaded from (e.g. <c>env:OPTIMIZATION_CONFIG</c>, <c>api:candidate:...</c>).</summary>
+    /// <summary>
+    /// Where the options were loaded from (e.g. <c>env:OPTIMIZATION_CONFIG</c>,
+    /// <c>api:candidate:abc</c>, <c>local:/path/cand_abc</c>, or <c>local:/path/baseline</c>).
+    /// </summary>
     public string Source { get; set; }
 
     /// <summary>Candidate identifier, if resolved against a specific optimization candidate.</summary>
     public string CandidateId { get; set; }
 
+    /// <summary>Gets a value indicating whether these options carry any inline skill data.</summary>
+    public bool HasSkills => (Skills?.Count ?? 0) > 0 || SkillsDirectory is not null;
+
     /// <summary>
     /// Returns instructions with a skill catalog appended (if any skills are present).
-    /// Mirrors <see cref="OptimizationConfig.ComposeInstructions"/>.
     /// </summary>
     public string ComposeInstructions()
     {
@@ -82,117 +101,115 @@ public class OptimizationOptions
     }
 
     /// <summary>
-    /// Converts these options into the immutable <see cref="OptimizationConfig"/>.
+    /// Creates an <see cref="OptimizationOptions"/> from a JSON element (API response
+    /// or env-var payload). Recognises the keys <c>instructions</c>, <c>model</c>,
+    /// <c>temperature</c>, <c>skills</c>, and <c>tools</c>.
     /// </summary>
-    public OptimizationConfig ToOptimizationConfig()
+    /// <param name="data">The root JSON element to parse.</param>
+    /// <param name="source">Source label (e.g. <c>env:OPTIMIZATION_CONFIG</c>). Defaults to <c>defaults</c>.</param>
+    /// <param name="candidateId">Optional candidate id associated with this payload.</param>
+    internal static OptimizationOptions FromJson(JsonElement data, string source = "defaults", string candidateId = null)
     {
-        var skills = new List<OptimizationSkill>(Skills?.Count ?? 0);
-        if (Skills is not null)
-        {
-            foreach (var skill in Skills)
-            {
-                if (skill is null || string.IsNullOrEmpty(skill.Name))
-                {
-                    continue;
-                }
-                skills.Add(new OptimizationSkill(skill.Name, skill.Description ?? string.Empty, skill.Body ?? string.Empty));
-            }
-        }
-
-        var tools = new List<ToolDefinition>(ToolDefinitions?.Count ?? 0);
-        if (ToolDefinitions is not null)
-        {
-            foreach (var tool in ToolDefinitions)
-            {
-                if (tool is null || string.IsNullOrEmpty(tool.Name))
-                {
-                    continue;
-                }
-                tools.Add(new ToolDefinition(tool.Type ?? "function", tool.Name, tool.Description ?? string.Empty));
-            }
-        }
-
-        return new OptimizationConfig(
-            instructions: Instructions,
-            model: Model,
-            temperature: Temperature,
-            skills: skills,
-            skillsDirectory: SkillsDirectory,
-            toolDefinitions: tools,
-            source: Source ?? "options",
-            candidateId: CandidateId);
-    }
-
-    /// <summary>
-    /// Creates an <see cref="OptimizationOptions"/> from an immutable <see cref="OptimizationConfig"/>.
-    /// </summary>
-    public static OptimizationOptions FromOptimizationConfig(OptimizationConfig config)
-    {
-        if (config is null)
-        {
-            throw new ArgumentNullException(nameof(config));
-        }
-
         var opts = new OptimizationOptions
         {
-            Instructions = config.Instructions,
-            Model = config.Model,
-            Temperature = config.Temperature,
-            SkillsDirectory = config.SkillsDirectory,
-            Source = config.Source,
-            CandidateId = config.CandidateId,
+            Instructions = data.TryGetProperty("instructions", out var instrProp) && instrProp.ValueKind == JsonValueKind.String
+                ? instrProp.GetString()
+                : null,
+            Model = data.TryGetProperty("model", out var modelProp) && modelProp.ValueKind == JsonValueKind.String
+                ? modelProp.GetString()
+                : null,
+            Temperature = data.TryGetProperty("temperature", out var tempProp) && tempProp.ValueKind == JsonValueKind.Number
+                ? tempProp.GetDouble()
+                : (double?)null,
+            Source = source,
+            CandidateId = candidateId,
         };
 
-        foreach (var skill in config.Skills)
-        {
-            opts.Skills.Add(new SkillOptions
-            {
-                Name = skill.Name,
-                Description = skill.Description,
-                Body = skill.Body,
-            });
-        }
-
-        foreach (var tool in config.ToolDefinitions)
-        {
-            opts.ToolDefinitions.Add(new ToolDefinitionOptions
-            {
-                Type = tool.Type,
-                Name = tool.Name,
-                Description = tool.Description,
-            });
-        }
-
+        ParseSkills(data, opts.Skills);
+        ParseToolDefinitions(data, opts.ToolDefinitions);
         return opts;
     }
-}
 
-/// <summary>
-/// Settable mirror of <see cref="OptimizationSkill"/> for configuration binding.
-/// </summary>
-public class SkillOptions
-{
-    /// <summary>The skill name.</summary>
-    public string Name { get; set; }
+    private static void ParseSkills(JsonElement data, IList<OptimizationSkill> skills)
+    {
+        if (!data.TryGetProperty("skills", out var skillsArray) || skillsArray.ValueKind != JsonValueKind.Array)
+        {
+            return;
+        }
 
-    /// <summary>A short description of the skill.</summary>
-    public string Description { get; set; }
+        foreach (var item in skillsArray.EnumerateArray())
+        {
+            if (item.ValueKind != JsonValueKind.Object)
+            {
+                continue;
+            }
 
-    /// <summary>The skill body text.</summary>
-    public string Body { get; set; }
-}
+            if (!item.TryGetProperty("name", out var skillName) || skillName.ValueKind != JsonValueKind.String)
+            {
+                continue;
+            }
 
-/// <summary>
-/// Settable mirror of <see cref="ToolDefinition"/> for configuration binding.
-/// </summary>
-public class ToolDefinitionOptions
-{
-    /// <summary>The tool type (e.g. "function").</summary>
-    public string Type { get; set; }
+            string name = skillName.GetString() ?? string.Empty;
+            if (name.Length == 0)
+            {
+                continue;
+            }
 
-    /// <summary>The function name.</summary>
-    public string Name { get; set; }
+            string description = item.TryGetProperty("description", out var descProp) && descProp.ValueKind == JsonValueKind.String
+                ? descProp.GetString() ?? ""
+                : "";
 
-    /// <summary>The optimized description.</summary>
-    public string Description { get; set; }
+            string body = item.TryGetProperty("body", out var bodyProp) && bodyProp.ValueKind == JsonValueKind.String
+                ? bodyProp.GetString() ?? ""
+                : "";
+
+            skills.Add(new OptimizationSkill(name, description, body));
+        }
+    }
+
+    private static void ParseToolDefinitions(JsonElement data, IList<ToolDefinition> tools)
+    {
+        if (!data.TryGetProperty("tools", out var toolsArray))
+        {
+            return;
+        }
+
+        if (toolsArray.ValueKind != JsonValueKind.Array)
+        {
+            throw new InvalidOperationException($"Expected 'tools' to be an array, got {toolsArray.ValueKind}");
+        }
+
+        foreach (var item in toolsArray.EnumerateArray())
+        {
+            if (item.ValueKind != JsonValueKind.Object)
+            {
+                continue;
+            }
+
+            string type = item.TryGetProperty("type", out var typeProp) && typeProp.ValueKind == JsonValueKind.String
+                ? typeProp.GetString() ?? "function"
+                : "function";
+
+            if (item.TryGetProperty("function", out var func) && func.ValueKind == JsonValueKind.Object)
+            {
+                string name = func.TryGetProperty("name", out var nameProp) && nameProp.ValueKind == JsonValueKind.String
+                    ? nameProp.GetString() ?? string.Empty
+                    : string.Empty;
+
+                if (name.Length == 0)
+                {
+                    continue;
+                }
+
+                string description = func.TryGetProperty("description", out var descProp) && descProp.ValueKind == JsonValueKind.String
+                    ? descProp.GetString() ?? ""
+                    : "";
+
+                tools.Add(new ToolDefinition(type, name, description));
+            }
+        }
+    }
+
+    /// <inheritdoc/>
+    public override string ToString() => $"OptimizationOptions(source={Source}, model={Model}, candidate_id={CandidateId})";
 }

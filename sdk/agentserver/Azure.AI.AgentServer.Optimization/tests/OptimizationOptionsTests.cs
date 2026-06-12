@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Optimization.Tests;
@@ -9,101 +10,74 @@ namespace Azure.AI.AgentServer.Optimization.Tests;
 public class OptimizationOptionsTests
 {
     [Test]
-    public void RoundTrip_Config_To_Options_To_Config_PreservesAllFields()
+    public void DefaultOptions_HaveSensibleDefaults()
     {
-        var original = new OptimizationConfig(
-            instructions: "Be helpful.",
-            model: "gpt-4o",
-            temperature: 0.7,
-            skills: new[]
-            {
-                new OptimizationSkill("greet", "Say hello", "Hello {name}!"),
-                new OptimizationSkill("farewell", "Say goodbye", "See you, {name}."),
-            },
-            skillsDirectory: "/skills",
-            toolDefinitions: new[]
-            {
-                new ToolDefinition("function", "get_weather", "Look up the weather."),
-            },
-            source: "test:roundtrip",
-            candidateId: "cand_42");
+        var opts = new OptimizationOptions();
 
-        var opts = OptimizationOptions.FromOptimizationConfig(original);
-        var roundtripped = opts.ToOptimizationConfig();
-
-        Assert.That(roundtripped.Instructions, Is.EqualTo(original.Instructions));
-        Assert.That(roundtripped.Model, Is.EqualTo(original.Model));
-        Assert.That(roundtripped.Temperature, Is.EqualTo(original.Temperature));
-        Assert.That(roundtripped.Source, Is.EqualTo(original.Source));
-        Assert.That(roundtripped.CandidateId, Is.EqualTo(original.CandidateId));
-        Assert.That(roundtripped.SkillsDirectory, Is.EqualTo(original.SkillsDirectory));
-
-        Assert.That(roundtripped.Skills.Count, Is.EqualTo(2));
-        Assert.That(roundtripped.Skills[0].Name, Is.EqualTo("greet"));
-        Assert.That(roundtripped.Skills[0].Description, Is.EqualTo("Say hello"));
-        Assert.That(roundtripped.Skills[0].Body, Is.EqualTo("Hello {name}!"));
-
-        Assert.That(roundtripped.ToolDefinitions.Count, Is.EqualTo(1));
-        Assert.That(roundtripped.ToolDefinitions[0].Name, Is.EqualTo("get_weather"));
-        Assert.That(roundtripped.ToolDefinitions[0].Description, Is.EqualTo("Look up the weather."));
+        Assert.That(opts.Instructions, Is.Null);
+        Assert.That(opts.Model, Is.Null);
+        Assert.That(opts.Temperature, Is.Null);
+        Assert.That(opts.SkillsDirectory, Is.Null);
+        Assert.That(opts.Source, Is.Null);
+        Assert.That(opts.CandidateId, Is.Null);
+        Assert.That(opts.Skills, Is.Not.Null);
+        Assert.That(opts.Skills, Is.Empty);
+        Assert.That(opts.ToolDefinitions, Is.Not.Null);
+        Assert.That(opts.ToolDefinitions, Is.Empty);
+        Assert.That(opts.HasSkills, Is.False);
     }
 
     [Test]
-    public void ToOptimizationConfig_DefaultsSourceWhenUnset()
-    {
-        var opts = new OptimizationOptions { Instructions = "x" };
-
-        var cfg = opts.ToOptimizationConfig();
-
-        Assert.That(cfg.Source, Is.EqualTo("options"));
-    }
-
-    [Test]
-    public void ToOptimizationConfig_SkipsSkillsAndToolsWithEmptyNames()
+    public void SettableProperties_AllowsBinderShapedAssignment()
     {
         var opts = new OptimizationOptions
         {
-            Instructions = "x",
-            Skills =
-            {
-                new SkillOptions { Name = "valid", Description = "d", Body = "b" },
-                new SkillOptions { Name = "", Description = "skipme", Body = "skipme" },
-                null!,
-            },
-            ToolDefinitions =
-            {
-                new ToolDefinitionOptions { Name = "ok", Description = "d" },
-                new ToolDefinitionOptions { Name = "", Description = "skipme" },
-                null!,
-            },
+            Instructions = "Be helpful.",
+            Model = "gpt-4o",
+            Temperature = 0.7,
+            SkillsDirectory = "/skills",
+            Source = "env:OPTIMIZATION_CONFIG",
+            CandidateId = "candidate-1",
+            Skills = { new OptimizationSkill("s1", "d1") },
+            ToolDefinitions = { new ToolDefinition("function", "test_tool", "A test tool") },
         };
 
-        var cfg = opts.ToOptimizationConfig();
-
-        Assert.That(cfg.Skills.Count, Is.EqualTo(1));
-        Assert.That(cfg.Skills[0].Name, Is.EqualTo("valid"));
-        Assert.That(cfg.ToolDefinitions.Count, Is.EqualTo(1));
-        Assert.That(cfg.ToolDefinitions[0].Name, Is.EqualTo("ok"));
+        Assert.That(opts.Instructions, Is.EqualTo("Be helpful."));
+        Assert.That(opts.Model, Is.EqualTo("gpt-4o"));
+        Assert.That(opts.Temperature, Is.EqualTo(0.7));
+        Assert.That(opts.SkillsDirectory, Is.EqualTo("/skills"));
+        Assert.That(opts.Source, Is.EqualTo("env:OPTIMIZATION_CONFIG"));
+        Assert.That(opts.CandidateId, Is.EqualTo("candidate-1"));
+        Assert.That(opts.Skills.Count, Is.EqualTo(1));
+        Assert.That(opts.ToolDefinitions.Count, Is.EqualTo(1));
     }
 
     [Test]
-    public void ToOptimizationConfig_DefaultsToolTypeToFunction()
+    public void HasSkills_TrueWhenSkillsPresent()
     {
-        var opts = new OptimizationOptions
-        {
-            ToolDefinitions =
-            {
-                new ToolDefinitionOptions { Name = "foo", Description = "bar" }, // Type unset
-            },
-        };
+        var opts = new OptimizationOptions { Skills = { new OptimizationSkill("s1", "d1") } };
 
-        var cfg = opts.ToOptimizationConfig();
-
-        Assert.That(cfg.ToolDefinitions[0].Type, Is.EqualTo("function"));
+        Assert.That(opts.HasSkills, Is.True);
     }
 
     [Test]
-    public void ComposeInstructions_WithoutSkills_ReturnsInstructionsVerbatim()
+    public void HasSkills_TrueWhenSkillsDirectorySet()
+    {
+        var opts = new OptimizationOptions { SkillsDirectory = "/skills" };
+
+        Assert.That(opts.HasSkills, Is.True);
+    }
+
+    [Test]
+    public void HasSkills_FalseWhenEmpty()
+    {
+        var opts = new OptimizationOptions();
+
+        Assert.That(opts.HasSkills, Is.False);
+    }
+
+    [Test]
+    public void ComposeInstructions_ReturnsInstructionsVerbatimWhenNoSkills()
     {
         var opts = new OptimizationOptions { Instructions = "Be helpful." };
 
@@ -111,55 +85,87 @@ public class OptimizationOptionsTests
     }
 
     [Test]
-    public void ComposeInstructions_WithSkills_AppendsCatalog()
+    public void ComposeInstructions_AppendsSkillCatalog()
     {
         var opts = new OptimizationOptions
         {
-            Instructions = "Be helpful.",
+            Instructions = "You are a travel assistant.",
             Skills =
             {
-                new SkillOptions { Name = "greet", Description = "Say hello" },
-                new SkillOptions { Name = "farewell", Description = "Say goodbye" },
+                new OptimizationSkill("budget-checker", "Checks budget limits"),
+                new OptimizationSkill("date-formatter", "Formats dates"),
             },
         };
 
         string composed = opts.ComposeInstructions();
 
-        Assert.That(composed, Does.Contain("Be helpful."));
+        Assert.That(composed, Does.Contain("You are a travel assistant."));
         Assert.That(composed, Does.Contain("## Available Skills"));
-        Assert.That(composed, Does.Contain("- **greet**: Say hello"));
-        Assert.That(composed, Does.Contain("- **farewell**: Say goodbye"));
+        Assert.That(composed, Does.Contain("- **budget-checker**: Checks budget limits"));
+        Assert.That(composed, Does.Contain("- **date-formatter**: Formats dates"));
     }
 
     [Test]
-    public void ComposeInstructions_NullInstructions_StillIncludesSkills()
+    public void ComposeInstructions_NullInstructionsWithSkills_StartsWithCatalog()
     {
         var opts = new OptimizationOptions
         {
-            Skills = { new SkillOptions { Name = "greet", Description = "Say hello" } },
+            Skills = { new OptimizationSkill("s1", "d1") },
         };
 
         string composed = opts.ComposeInstructions();
 
-        Assert.That(composed, Does.Contain("## Available Skills"));
-        Assert.That(composed, Does.Contain("greet"));
+        Assert.That(composed, Does.StartWith("## Available Skills"));
     }
 
     [Test]
-    public void FromOptimizationConfig_NullThrows()
+    public void ComposeInstructions_SkipsNullSkillEntries()
     {
-        Assert.Throws<ArgumentNullException>(
-            () => OptimizationOptions.FromOptimizationConfig(null!));
+        var opts = new OptimizationOptions
+        {
+            Instructions = "Be helpful.",
+            Skills = { new OptimizationSkill("s1", "d1"), null! },
+        };
+
+        string composed = opts.ComposeInstructions();
+
+        Assert.That(composed, Does.Contain("s1"));
     }
 
     [Test]
-    public void DefaultOptions_SkillsAndToolDefinitions_AreNonNullEmpty()
+    public void ToString_ContainsSourceAndModel()
     {
-        var opts = new OptimizationOptions();
+        var opts = new OptimizationOptions { Model = "gpt-4o", Source = "api:candidate:test" };
 
-        Assert.That(opts.Skills, Is.Not.Null);
-        Assert.That(opts.Skills, Is.Empty);
-        Assert.That(opts.ToolDefinitions, Is.Not.Null);
-        Assert.That(opts.ToolDefinitions, Is.Empty);
+        Assert.That(opts.ToString(), Does.Contain("gpt-4o"));
+        Assert.That(opts.ToString(), Does.Contain("api:candidate:test"));
+    }
+
+    [Test]
+    public void ToolDefinitions_LinqAccess_WorksAsExpected()
+    {
+        var opts = new OptimizationOptions
+        {
+            ToolDefinitions =
+            {
+                new ToolDefinition("function", "search_flights", "Search flights"),
+                new ToolDefinition("function", "get_hotels", "Get hotel prices"),
+            },
+        };
+
+        var found = opts.ToolDefinitions.FirstOrDefault(t => t.Name == "search_flights")?.Description;
+        var missing = opts.ToolDefinitions.FirstOrDefault(t => t.Name == "nonexistent")?.Description;
+
+        Assert.That(found, Is.EqualTo("Search flights"));
+        Assert.That(missing, Is.Null);
+    }
+
+    [Test]
+    public void EnvironmentVariableConstants_HaveExpectedNames()
+    {
+        Assert.That(OptimizationOptions.EnvironmentVariableConfig, Is.EqualTo("OPTIMIZATION_CONFIG"));
+        Assert.That(OptimizationOptions.EnvironmentVariableCandidateId, Is.EqualTo("OPTIMIZATION_CANDIDATE_ID"));
+        Assert.That(OptimizationOptions.EnvironmentVariableResolveEndpoint, Is.EqualTo("OPTIMIZATION_RESOLVE_ENDPOINT"));
+        Assert.That(OptimizationOptions.EnvironmentVariableLocalDirectory, Is.EqualTo("OPTIMIZATION_LOCAL_DIR"));
     }
 }
