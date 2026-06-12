@@ -37,6 +37,14 @@ KeyVaultSecret bankSecret = client.GetSecret(secretName);
 Debug.WriteLine($"Secret is returned with name {bankSecret.Name} and value {bankSecret.Value}");
 ```
 
+### Getting a secret with outContentType
+
+For certificate-backed secrets, you can request the secret value in a different format. For example, to convert a PFX-backed secret to PEM:
+
+```csharp
+KeyVaultSecret pemSecret = client.GetSecret(secretName, version: null, outContentType: SecretContentType.Pem);
+```
+
 ## Updating secret properties
 
 After one year if the bank account is still active, we need to update the expiration time of the secret.
@@ -58,6 +66,18 @@ var secretNewValue = new KeyVaultSecret(secretName, "bhjd4DDgsa");
 secretNewValue.Properties.ExpiresOn = DateTimeOffset.Now.AddYears(1);
 
 client.SetSecret(secretNewValue);
+```
+
+## Checking previous version
+
+For secrets created after June 1, 2025, you can retrieve the previous version identifier, which is useful for tracking version history of certificate-backed secrets.
+
+```csharp
+KeyVaultSecret latestSecret = client.GetSecret(secretName);
+if (latestSecret.Properties.PreviousVersion != null)
+{
+    Debug.WriteLine($"Secret's previous version is {latestSecret.Properties.PreviousVersion}");
+}
 ```
 
 ## Deleting a secret

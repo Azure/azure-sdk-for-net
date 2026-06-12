@@ -16,12 +16,21 @@ CertificateClient client = new CertificateClient(new Uri(keyVaultUrl), new Defau
 
 ## Creating a certificate
 
-Let's create a self-signed certificate using the default policy.
+Let's create a self-signed certificate with Subject Alternative Names (SANs) that include DNS names, IP addresses, and URIs.
 If the certificate already exists in the Azure Key Vault, then a new version of the key is created.
 
 ```C# Snippet:CertificatesSample1CreateCertificate
 string certName = $"defaultCert-{Guid.NewGuid()}";
-CertificateOperation certOp = client.StartCreateCertificate(certName, CertificatePolicy.Default);
+
+// Create Subject Alternative Names (SANs) with DNS names, IP addresses, and URIs.
+var sans = new SubjectAlternativeNames();
+sans.DnsNames.Add("sdk.azure-int.net");
+sans.IpAddresses.Add("10.0.0.1");
+sans.IpAddresses.Add("2001:db8::1");
+sans.UniformResourceIdentifiers.Add("https://mydomain.com");
+
+var policy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=SelfSignedCert", sans);
+CertificateOperation certOp = client.StartCreateCertificate(certName, policy);
 
 while (!certOp.HasCompleted)
 {

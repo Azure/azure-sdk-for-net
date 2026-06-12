@@ -26,7 +26,16 @@ namespace Azure.Security.KeyVault.Certificates.Samples
 
             #region Snippet:CertificatesSample1CreateCertificate
             string certName = $"defaultCert-{Guid.NewGuid()}";
-            CertificateOperation certOp = client.StartCreateCertificate(certName, CertificatePolicy.Default);
+
+            // Create Subject Alternative Names (SANs) with DNS names, IP addresses, and URIs.
+            var sans = new SubjectAlternativeNames();
+            sans.DnsNames.Add("sdk.azure-int.net");
+            sans.IpAddresses.Add("10.0.0.1");
+            sans.IpAddresses.Add("2001:db8::1");
+            sans.UniformResourceIdentifiers.Add("https://mydomain.com");
+
+            var policy = new CertificatePolicy(WellKnownIssuerNames.Self, "CN=SelfSignedCert", sans);
+            CertificateOperation certOp = client.StartCreateCertificate(certName, policy);
 
             while (!certOp.HasCompleted)
             {
