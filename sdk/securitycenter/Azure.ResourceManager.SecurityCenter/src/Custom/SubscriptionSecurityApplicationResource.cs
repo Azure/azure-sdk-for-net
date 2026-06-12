@@ -20,7 +20,18 @@ namespace Azure.ResourceManager.SecurityCenter
     [CodeGenSuppress("Data")]
     public partial class SubscriptionSecurityApplicationResource : IJsonModel<SecurityApplicationData>, IPersistableModel<SecurityApplicationData>
     {
-        public virtual SecurityApplicationData Data { get { throw new NotSupportedException("This API is no longer supported by the service."); } }
+        public virtual SecurityApplicationData Data
+        {
+            get
+            {
+                if (!HasData)
+                {
+                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
+
+                return new SecurityApplicationData(_data);
+            }
+        }
 
         [ForwardsClientCalls]
         public virtual Task<ArmOperation<SubscriptionSecurityApplicationResource>> UpdateAsync(WaitUntil waitUntil, SecurityApplicationData data, CancellationToken cancellationToken = default(CancellationToken))

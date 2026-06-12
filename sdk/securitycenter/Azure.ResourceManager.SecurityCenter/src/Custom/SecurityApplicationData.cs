@@ -33,10 +33,16 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityApplicationData : SecurityConnectorApplicationData, IJsonModel<SecurityApplicationData>, IPersistableModel<SecurityApplicationData>
     {
         public SecurityApplicationData() { }
-        public new IList<BinaryData> ConditionSets { get { throw new NotSupportedException("This API is no longer supported by the service."); } }
-        public new string Description { get { throw new NotSupportedException("This API is no longer supported by the service."); } set { throw new NotSupportedException("This API is no longer supported by the service."); } }
-        public new string DisplayName { get { throw new NotSupportedException("This API is no longer supported by the service."); } set { throw new NotSupportedException("This API is no longer supported by the service."); } }
-        public new ApplicationSourceResourceType? SourceResourceType { get { throw new NotSupportedException("This API is no longer supported by the service."); } set { throw new NotSupportedException("This API is no longer supported by the service."); } }
+
+        internal SecurityApplicationData(SecurityConnectorApplicationData data)
+            : base(data.Id, data.Name, data.ResourceType, data.SystemData, data.Properties, default)
+        {
+        }
+
+        public new IList<BinaryData> ConditionSets => base.ConditionSets;
+        public new string Description { get => base.Description; set => base.Description = value; }
+        public new string DisplayName { get => base.DisplayName; set => base.DisplayName = value; }
+        public new ApplicationSourceResourceType? SourceResourceType { get => base.SourceResourceType; set => base.SourceResourceType = value; }
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         SecurityApplicationData IJsonModel<SecurityApplicationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
         void IJsonModel<SecurityApplicationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
