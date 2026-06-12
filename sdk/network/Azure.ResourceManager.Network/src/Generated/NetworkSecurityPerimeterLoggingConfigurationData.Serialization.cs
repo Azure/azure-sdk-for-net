@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -142,40 +141,11 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            ResourceIdentifier id = default;
-            string resourceName = default;
-            ResourceType resourceType = default;
-            SystemData systemData = default;
             NspLoggingConfigurationProperties properties = default;
-            string loggingConfigurationName = default;
+            string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("name"u8))
-                {
-                    resourceName = prop.Value.GetString();
-                    loggingConfigurationName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    resourceType = new ResourceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
-                    continue;
-                }
                 if (prop.NameEquals("properties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -190,7 +160,7 @@ namespace Azure.ResourceManager.Network
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NetworkSecurityPerimeterLoggingConfigurationData(id, resourceName, resourceType, systemData, properties, loggingConfigurationName, additionalBinaryDataProperties);
+            return new NetworkSecurityPerimeterLoggingConfigurationData(properties, name, additionalBinaryDataProperties);
         }
     }
 }

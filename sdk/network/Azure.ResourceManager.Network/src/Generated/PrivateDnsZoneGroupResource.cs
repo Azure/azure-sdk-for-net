@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_Get. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetPrivateDnsZoneGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateDnsZoneGroupData> response = Response.FromValue(PrivateDnsZoneGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_Get. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetPrivateDnsZoneGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateDnsZoneGroupData> response = Response.FromValue(PrivateDnsZoneGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_PrivateDnsZoneGroupsDelete. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsDelete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateDeletePrivateDnsZoneGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_privateDnsZoneGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_PrivateDnsZoneGroupsDelete. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsDelete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateDeletePrivateDnsZoneGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_privateDnsZoneGroupsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_CreateOrUpdate. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PrivateDnsZoneGroupData.ToRequestContent(data), context);
+                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateCreateOrUpdatePrivateDnsZoneGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PrivateDnsZoneGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<PrivateDnsZoneGroupResource> operation = new NetworkArmOperation<PrivateDnsZoneGroupResource>(
                     new PrivateDnsZoneGroupResourceOperationSource(Client),
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_CreateOrUpdate. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PrivateDnsZoneGroupData.ToRequestContent(data), context);
+                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateCreateOrUpdatePrivateDnsZoneGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PrivateDnsZoneGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<PrivateDnsZoneGroupResource> operation = new NetworkArmOperation<PrivateDnsZoneGroupResource>(
                     new PrivateDnsZoneGroupResourceOperationSource(Client),

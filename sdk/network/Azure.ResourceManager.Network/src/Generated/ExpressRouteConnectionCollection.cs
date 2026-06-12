@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.Network
     /// Each <see cref="ExpressRouteConnectionResource"/> in the collection will belong to the same instance of <see cref="ExpressRouteGatewayResource"/>.
     /// To get a <see cref="ExpressRouteConnectionCollection"/> instance call the GetExpressRouteConnections method from an instance of <see cref="ExpressRouteGatewayResource"/>.
     /// </summary>
-    public partial class ExpressRouteConnectionCollection : ArmCollection, IEnumerable<ExpressRouteConnectionResource>, IAsyncEnumerable<ExpressRouteConnectionResource>
+    public partial class ExpressRouteConnectionCollection : ArmCollection
     {
         private readonly ClientDiagnostics _expressRouteConnectionsClientDiagnostics;
         private readonly ExpressRouteConnections _expressRouteConnectionsRestClient;
@@ -63,7 +61,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_CreateOrUpdate. </description>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -72,7 +70,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="data"> Parameters required in an ExpressRouteConnection PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
@@ -90,7 +88,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, ExpressRouteConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateCreateOrUpdateExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, ExpressRouteConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ExpressRouteConnectionResource> operation = new NetworkArmOperation<ExpressRouteConnectionResource>(
                     new ExpressRouteConnectionResourceOperationSource(Client),
@@ -121,7 +119,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_CreateOrUpdate. </description>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -130,7 +128,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="data"> Parameters required in an ExpressRouteConnection PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
@@ -148,7 +146,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, ExpressRouteConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateCreateOrUpdateExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, ExpressRouteConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ExpressRouteConnectionResource> operation = new NetworkArmOperation<ExpressRouteConnectionResource>(
                     new ExpressRouteConnectionResourceOperationSource(Client),
@@ -179,7 +177,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_Get. </description>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -187,7 +185,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -203,7 +201,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRouteConnectionData> response = Response.FromValue(ExpressRouteConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +226,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_Get. </description>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -236,7 +234,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -252,7 +250,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRouteConnectionData> response = Response.FromValue(ExpressRouteConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -269,74 +267,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Lists ExpressRouteConnections.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpressRouteConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<ExpressRouteConnectionData, ExpressRouteConnectionResource>(new ExpressRouteConnectionsGetAllAsyncCollectionResultOfT(
-                _expressRouteConnectionsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ExpressRouteConnectionCollection.GetAll"), data => new ExpressRouteConnectionResource(Client, data));
-        }
-
-        /// <summary>
-        /// Lists ExpressRouteConnections.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpressRouteConnectionResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<ExpressRouteConnectionData, ExpressRouteConnectionResource>(new ExpressRouteConnectionsGetAllCollectionResultOfT(
-                _expressRouteConnectionsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "ExpressRouteConnectionCollection.GetAll"), data => new ExpressRouteConnectionResource(Client, data));
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -345,7 +275,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_Get. </description>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -353,7 +283,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -369,7 +299,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExpressRouteConnectionData> response = default;
@@ -402,7 +332,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_Get. </description>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -410,7 +340,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -426,7 +356,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExpressRouteConnectionData> response = default;
@@ -459,7 +389,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_Get. </description>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -467,7 +397,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -483,7 +413,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExpressRouteConnectionData> response = default;
@@ -520,7 +450,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_Get. </description>
+        /// <description> ExpressRouteGateways_ExpressRouteConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -528,7 +458,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -544,7 +474,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExpressRouteConnectionData> response = default;
@@ -570,22 +500,6 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<ExpressRouteConnectionResource> IEnumerable<ExpressRouteConnectionResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ExpressRouteConnectionResource> IAsyncEnumerable<ExpressRouteConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

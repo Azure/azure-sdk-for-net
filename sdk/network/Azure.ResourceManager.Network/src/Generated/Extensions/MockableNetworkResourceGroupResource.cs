@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Network.Mocking
         private NetworkInterfaces _networkInterfacesRestClient;
         private ClientDiagnostics _publicIPAddressesClientDiagnostics;
         private PublicIPAddresses _publicIPAddressesRestClient;
-        private ClientDiagnostics _networkInterfaceIPConfigurationsClientDiagnostics;
-        private NetworkInterfaceIPConfigurations _networkInterfaceIPConfigurationsRestClient;
         private ClientDiagnostics _privateLinkServicesClientDiagnostics;
         private PrivateLinkServices _privateLinkServicesRestClient;
         private ClientDiagnostics _expressRouteGatewaysClientDiagnostics;
         private ExpressRouteGateways _expressRouteGatewaysRestClient;
         private ClientDiagnostics _publicIPAddressesOperationGroupClientDiagnostics;
         private PublicIPAddressesOperationGroup _publicIPAddressesOperationGroupRestClient;
+        private ClientDiagnostics _virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics;
+        private VirtualMachineScaleSetNetworkInterfaceIPConfigurations _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient;
         private ClientDiagnostics _availableResourceGroupDelegationsClientDiagnostics;
         private AvailableResourceGroupDelegations _availableResourceGroupDelegationsRestClient;
         private ClientDiagnostics _availableServiceAliasesClientDiagnostics;
@@ -62,10 +62,6 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private PublicIPAddresses PublicIPAddressesRestClient => _publicIPAddressesRestClient ??= new PublicIPAddresses(PublicIPAddressesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
 
-        private ClientDiagnostics NetworkInterfaceIPConfigurationsClientDiagnostics => _networkInterfaceIPConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private NetworkInterfaceIPConfigurations NetworkInterfaceIPConfigurationsRestClient => _networkInterfaceIPConfigurationsRestClient ??= new NetworkInterfaceIPConfigurations(NetworkInterfaceIPConfigurationsClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
-
         private ClientDiagnostics PrivateLinkServicesClientDiagnostics => _privateLinkServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private PrivateLinkServices PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServices(PrivateLinkServicesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
@@ -77,6 +73,10 @@ namespace Azure.ResourceManager.Network.Mocking
         private ClientDiagnostics PublicIPAddressesOperationGroupClientDiagnostics => _publicIPAddressesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private PublicIPAddressesOperationGroup PublicIPAddressesOperationGroupRestClient => _publicIPAddressesOperationGroupRestClient ??= new PublicIPAddressesOperationGroup(PublicIPAddressesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+
+        private ClientDiagnostics VirtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics => _virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private VirtualMachineScaleSetNetworkInterfaceIPConfigurations VirtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient => _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient ??= new VirtualMachineScaleSetNetworkInterfaceIPConfigurations(VirtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics, Pipeline, Endpoint, "2018-10-01");
 
         private ClientDiagnostics AvailableResourceGroupDelegationsClientDiagnostics => _availableResourceGroupDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -884,6 +884,74 @@ namespace Azure.ResourceManager.Network.Mocking
             Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             return GetExpressRoutePorts().Get(expressRoutePortName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ExpressRoutePortAuthorizations in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="expressRoutePortName"> The expressRoutePortName for the resource. </param>
+        /// <returns> An object representing collection of ExpressRoutePortAuthorizations and their operations over a ExpressRoutePortAuthorizationResource. </returns>
+        public virtual ExpressRoutePortAuthorizationCollection GetExpressRoutePortAuthorizations(string expressRoutePortName)
+        {
+            return GetCachedClient(client => new ExpressRoutePortAuthorizationCollection(client, Id, expressRoutePortName));
+        }
+
+        /// <summary>
+        /// Gets the specified authorization from the specified express route port.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRoutePortAuthorizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expressRoutePortName"> The expressRoutePortName for the resource. </param>
+        /// <param name="authorizationName"> The name of the authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ExpressRoutePortAuthorizationResource>> GetExpressRoutePortAuthorizationAsync(string expressRoutePortName, string authorizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+
+            return await GetExpressRoutePortAuthorizations(expressRoutePortName).GetAsync(authorizationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified authorization from the specified express route port.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRoutePortAuthorizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="expressRoutePortName"> The expressRoutePortName for the resource. </param>
+        /// <param name="authorizationName"> The name of the authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ExpressRoutePortAuthorizationResource> GetExpressRoutePortAuthorization(string expressRoutePortName, string authorizationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+
+            return GetExpressRoutePortAuthorizations(expressRoutePortName).Get(authorizationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of FirewallPolicies in the <see cref="ResourceGroupResource"/>. </summary>
@@ -3327,13 +3395,13 @@ namespace Azure.ResourceManager.Network.Mocking
             return GetP2SVpnGateways().Get(gatewayName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of VirtualMachineScaleSetNetworkInterfaces in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <summary> Gets a collection of VirtualMachineScaleSetVmNetworks in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="virtualMachineScaleSetName"> The virtualMachineScaleSetName for the resource. </param>
         /// <param name="virtualmachineIndex"> The virtualmachineIndex for the resource. </param>
-        /// <returns> An object representing collection of VirtualMachineScaleSetNetworkInterfaces and their operations over a VirtualMachineScaleSetNetworkInterfaceResource. </returns>
-        public virtual VirtualMachineScaleSetNetworkInterfaceCollection GetVirtualMachineScaleSetNetworkInterfaces(string virtualMachineScaleSetName, string virtualmachineIndex)
+        /// <returns> An object representing collection of VirtualMachineScaleSetVmNetworks and their operations over a VirtualMachineScaleSetVmNetworkResource. </returns>
+        public virtual VirtualMachineScaleSetVmNetworkCollection GetVirtualMachineScaleSetVmNetworks(string virtualMachineScaleSetName, string virtualmachineIndex)
         {
-            return GetCachedClient(client => new VirtualMachineScaleSetNetworkInterfaceCollection(client, Id, virtualMachineScaleSetName, virtualmachineIndex));
+            return GetCachedClient(client => new VirtualMachineScaleSetVmNetworkCollection(client, Id, virtualMachineScaleSetName, virtualmachineIndex));
         }
 
         /// <summary>
@@ -3361,11 +3429,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualMachineScaleSetNetworkInterfaceResource>> GetVirtualMachineScaleSetNetworkInterfaceAsync(string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualMachineScaleSetVmNetworkResource>> GetVirtualMachineScaleSetVmNetworkAsync(string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
-            return await GetVirtualMachineScaleSetNetworkInterfaces(virtualMachineScaleSetName, virtualmachineIndex).GetAsync(networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetVirtualMachineScaleSetVmNetworks(virtualMachineScaleSetName, virtualmachineIndex).GetAsync(networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3393,11 +3461,11 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualMachineScaleSetNetworkInterfaceResource> GetVirtualMachineScaleSetNetworkInterface(string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualMachineScaleSetVmNetworkResource> GetVirtualMachineScaleSetVmNetwork(string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
 
-            return GetVirtualMachineScaleSetNetworkInterfaces(virtualMachineScaleSetName, virtualmachineIndex).Get(networkInterfaceName, expand, cancellationToken);
+            return GetVirtualMachineScaleSetVmNetworks(virtualMachineScaleSetName, virtualmachineIndex).Get(networkInterfaceName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -3554,100 +3622,6 @@ namespace Azure.ResourceManager.Network.Mocking
                 cloudServiceName,
                 context,
                 "MockableNetworkResourceGroupResource.GetCloudServicePublicIPAddresses");
-        }
-
-        /// <summary>
-        /// Get the specified network interface ip configuration in a virtual machine scale set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipConfigurations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NetworkInterfaceIPConfigurations_ListVirtualMachineScaleSetIpConfigurations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualMachineScaleSetName"></param>
-        /// <param name="virtualmachineIndex"></param>
-        /// <param name="networkInterfaceName"></param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource> GetVirtualMachineScaleSetIpConfigurationsAsync(string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
-            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<VirtualMachineScaleSetNetworkInterfaceIPConfigurationData, VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource>(new NetworkInterfaceIPConfigurationsGetVirtualMachineScaleSetIpConfigurationsAsyncCollectionResultOfT(
-                NetworkInterfaceIPConfigurationsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                virtualMachineScaleSetName,
-                virtualmachineIndex,
-                networkInterfaceName,
-                expand,
-                context,
-                "MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetIpConfigurations"), data => new VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource(Client, data));
-        }
-
-        /// <summary>
-        /// Get the specified network interface ip configuration in a virtual machine scale set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipConfigurations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> NetworkInterfaceIPConfigurations_ListVirtualMachineScaleSetIpConfigurations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2018-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="virtualMachineScaleSetName"></param>
-        /// <param name="virtualmachineIndex"></param>
-        /// <param name="networkInterfaceName"></param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource> GetVirtualMachineScaleSetIpConfigurations(string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
-            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
-            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<VirtualMachineScaleSetNetworkInterfaceIPConfigurationData, VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource>(new NetworkInterfaceIPConfigurationsGetVirtualMachineScaleSetIpConfigurationsCollectionResultOfT(
-                NetworkInterfaceIPConfigurationsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                virtualMachineScaleSetName,
-                virtualmachineIndex,
-                networkInterfaceName,
-                expand,
-                context,
-                "MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetIpConfigurations"), data => new VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource(Client, data));
         }
 
         /// <summary>
@@ -4011,6 +3985,100 @@ namespace Azure.ResourceManager.Network.Mocking
         }
 
         /// <summary>
+        /// Get the specified network interface ip configuration in a virtual machine scale set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaceIPConfigurations_ListVirtualMachineScaleSetIpConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineScaleSetName"></param>
+        /// <param name="virtualmachineIndex"></param>
+        /// <param name="networkInterfaceName"></param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NetworkInterfaceIPConfigurationData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkInterfaceIPConfigurationData> GetVirtualMachineScaleSetIpConfigurationsAsync(string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new VirtualMachineScaleSetNetworkInterfaceIPConfigurationsGetVirtualMachineScaleSetIpConfigurationsAsyncCollectionResultOfT(
+                VirtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                virtualMachineScaleSetName,
+                virtualmachineIndex,
+                networkInterfaceName,
+                expand,
+                context,
+                "MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetIpConfigurations");
+        }
+
+        /// <summary>
+        /// Get the specified network interface ip configuration in a virtual machine scale set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkInterfaceIPConfigurations_ListVirtualMachineScaleSetIpConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineScaleSetName"></param>
+        /// <param name="virtualmachineIndex"></param>
+        /// <param name="networkInterfaceName"></param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/>, <paramref name="virtualmachineIndex"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="NetworkInterfaceIPConfigurationData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkInterfaceIPConfigurationData> GetVirtualMachineScaleSetIpConfigurations(string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
+            Argument.AssertNotNullOrEmpty(virtualmachineIndex, nameof(virtualmachineIndex));
+            Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new VirtualMachineScaleSetNetworkInterfaceIPConfigurationsGetVirtualMachineScaleSetIpConfigurationsCollectionResultOfT(
+                VirtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                virtualMachineScaleSetName,
+                virtualmachineIndex,
+                networkInterfaceName,
+                expand,
+                context,
+                "MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetIpConfigurations");
+        }
+
+        /// <summary>
         /// Gets all of the available subnet delegations for this resource group in this region.
         /// <list type="bullet">
         /// <item>
@@ -4265,8 +4333,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineScaleSetNetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineScaleSetNetworkInterfaceResource> GetVirtualMachineScaleSetNetworkInterfacesAsync(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkInterfaceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkInterfaceData> GetVirtualMachineScaleSetNetworkInterfacesAsync(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
@@ -4274,13 +4342,13 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualMachineScaleSetNetworkInterfaceData, VirtualMachineScaleSetNetworkInterfaceResource>(new VirtualMachineScaleSetNetworkGetVirtualMachineScaleSetNetworkInterfacesAsyncCollectionResultOfT(
+            return new VirtualMachineScaleSetNetworkGetVirtualMachineScaleSetNetworkInterfacesAsyncCollectionResultOfT(
                 VirtualMachineScaleSetNetworkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 virtualMachineScaleSetName,
                 context,
-                "MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetNetworkInterfaces"), data => new VirtualMachineScaleSetNetworkInterfaceResource(Client, data));
+                "MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetNetworkInterfaces");
         }
 
         /// <summary>
@@ -4304,8 +4372,8 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineScaleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineScaleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="VirtualMachineScaleSetNetworkInterfaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineScaleSetNetworkInterfaceResource> GetVirtualMachineScaleSetNetworkInterfaces(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkInterfaceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkInterfaceData> GetVirtualMachineScaleSetNetworkInterfaces(string virtualMachineScaleSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualMachineScaleSetName, nameof(virtualMachineScaleSetName));
 
@@ -4313,13 +4381,13 @@ namespace Azure.ResourceManager.Network.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualMachineScaleSetNetworkInterfaceData, VirtualMachineScaleSetNetworkInterfaceResource>(new VirtualMachineScaleSetNetworkGetVirtualMachineScaleSetNetworkInterfacesCollectionResultOfT(
+            return new VirtualMachineScaleSetNetworkGetVirtualMachineScaleSetNetworkInterfacesCollectionResultOfT(
                 VirtualMachineScaleSetNetworkRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 virtualMachineScaleSetName,
                 context,
-                "MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetNetworkInterfaces"), data => new VirtualMachineScaleSetNetworkInterfaceResource(Client, data));
+                "MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetNetworkInterfaces");
         }
     }
 }

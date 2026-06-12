@@ -1023,7 +1023,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the details of a vpn connection. </summary>
-        /// <param name="connectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the details of a vpn connection. </summary>
-        /// <param name="connectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>

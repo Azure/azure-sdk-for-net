@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VirtualHubRouteTableV2s_Get. </description>
+        /// <description> VirtualHubs_VirtualHubRouteTableV2sGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VirtualHubRouteTableV2Data> response = Response.FromValue(VirtualHubRouteTableV2Data.FromResponse(result), result);
                 if (response.Value == null)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VirtualHubRouteTableV2s_Get. </description>
+        /// <description> VirtualHubs_VirtualHubRouteTableV2sGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateGetVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VirtualHubRouteTableV2Data> response = Response.FromValue(VirtualHubRouteTableV2Data.FromResponse(result), result);
                 if (response.Value == null)
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VirtualHubRouteTableV2s_VirtualHubRouteTableV2sDelete. </description>
+        /// <description> VirtualHubs_VirtualHubRouteTableV2sDelete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateDeleteVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_virtualHubRouteTableV2sClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VirtualHubRouteTableV2s_VirtualHubRouteTableV2sDelete. </description>
+        /// <description> VirtualHubs_VirtualHubRouteTableV2sDelete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateDeleteVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_virtualHubRouteTableV2sClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VirtualHubRouteTableV2s_CreateOrUpdate. </description>
+        /// <description> VirtualHubs_VirtualHubRouteTableV2sCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualHubRouteTableV2Data.ToRequestContent(data), context);
+                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateCreateOrUpdateVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualHubRouteTableV2Data.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<VirtualHubRouteTableV2Resource> operation = new NetworkArmOperation<VirtualHubRouteTableV2Resource>(
                     new VirtualHubRouteTableV2ResourceOperationSource(Client),
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VirtualHubRouteTableV2s_CreateOrUpdate. </description>
+        /// <description> VirtualHubs_VirtualHubRouteTableV2sCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualHubRouteTableV2Data.ToRequestContent(data), context);
+                HttpMessage message = _virtualHubRouteTableV2sRestClient.CreateCreateOrUpdateVirtualHubRouteTableV2Request(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, VirtualHubRouteTableV2Data.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<VirtualHubRouteTableV2Resource> operation = new NetworkArmOperation<VirtualHubRouteTableV2Resource>(
                     new VirtualHubRouteTableV2ResourceOperationSource(Client),

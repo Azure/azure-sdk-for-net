@@ -36,6 +36,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualMachineScaleSetVmNetworkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _virtualMachineScaleSetVmNetworkClientDiagnostics = CreateClientDiagnostics();
+            _virtualMachineScaleSetVmNetworkRestClient = CreateVirtualMachineScaleSetVmNetworkRestClient();
             ValidateResourceId(id);
         }
 
@@ -64,47 +66,39 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<NetworkInterfaceIPConfigurationData> GetAllIPConfigurationDataAsync(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
         {
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
-            return new AsyncPageableWrapper<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource, NetworkInterfaceIPConfigurationData>(
-                resourceGroup.GetVirtualMachineScaleSetIpConfigurationsAsync(virtualMachineScaleSetName, virtualmachineIndex, "nic1", cancellationToken: cancellationToken),
-                resource => resource.Data);
+            return resourceGroup.GetVirtualMachineScaleSetIpConfigurationsAsync(virtualMachineScaleSetName, virtualmachineIndex, "nic1", cancellationToken: cancellationToken);
         }
 
         public virtual Pageable<NetworkInterfaceIPConfigurationData> GetAllIPConfigurationData(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
         {
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
-            return new PageableWrapper<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource, NetworkInterfaceIPConfigurationData>(
-                resourceGroup.GetVirtualMachineScaleSetIpConfigurations(virtualMachineScaleSetName, virtualmachineIndex, "nic1", cancellationToken: cancellationToken),
-                resource => resource.Data);
+            return resourceGroup.GetVirtualMachineScaleSetIpConfigurations(virtualMachineScaleSetName, virtualmachineIndex, "nic1", cancellationToken: cancellationToken);
         }
 
         public virtual AsyncPageable<NetworkInterfaceData> GetAllNetworkInterfaceDataAsync(CancellationToken cancellationToken)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new AsyncPageableWrapper<VirtualMachineScaleSetNetworkInterfaceData, NetworkInterfaceData>(
-                new VirtualMachineScaleSetVmNetworkGetVirtualMachineScaleSetVMNetworkInterfacesAsyncCollectionResultOfT(
-                    CreateVirtualMachineScaleSetVmNetworkRestClient(),
-                    Guid.Parse(Id.SubscriptionId),
-                    Id.ResourceGroupName,
-                    Id.Parent.Name,
-                    Id.Name,
-                    context,
-                    "VirtualMachineScaleSetVmNetworkResource.GetAllNetworkInterfaceData"),
-                data => data);
+            return new VirtualMachineScaleSetVmNetworkGetVirtualMachineScaleSetVMNetworkInterfacesAsyncCollectionResultOfT(
+                CreateVirtualMachineScaleSetVmNetworkRestClient(),
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "VirtualMachineScaleSetVmNetworkResource.GetAllNetworkInterfaceData");
         }
 
         public virtual Pageable<NetworkInterfaceData> GetAllNetworkInterfaceData(CancellationToken cancellationToken)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new PageableWrapper<VirtualMachineScaleSetNetworkInterfaceData, NetworkInterfaceData>(
-                new VirtualMachineScaleSetVmNetworkGetVirtualMachineScaleSetVMNetworkInterfacesCollectionResultOfT(
-                    CreateVirtualMachineScaleSetVmNetworkRestClient(),
-                    Guid.Parse(Id.SubscriptionId),
-                    Id.ResourceGroupName,
-                    Id.Parent.Name,
-                    Id.Name,
-                    context,
-                    "VirtualMachineScaleSetVmNetworkResource.GetAllNetworkInterfaceData"),
-                data => data);
+            return new VirtualMachineScaleSetVmNetworkGetVirtualMachineScaleSetVMNetworkInterfacesCollectionResultOfT(
+                CreateVirtualMachineScaleSetVmNetworkRestClient(),
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "VirtualMachineScaleSetVmNetworkResource.GetAllNetworkInterfaceData");
         }
 
         public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
@@ -146,7 +140,7 @@ namespace Azure.ResourceManager.Network
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = CreateVirtualMachineScaleSetVmNetworkRestClient().CreateGetVirtualMachineScaleSetNetworkInterfaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineScaleSetName, Id.Name, networkInterfaceName, null, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return Response.FromValue((NetworkInterfaceData)VirtualMachineScaleSetNetworkInterfaceData.FromResponse(result), result);
+                return Response.FromValue(NetworkInterfaceData.FromResponse(result), result);
             }
             catch (Exception e)
             {
@@ -164,7 +158,7 @@ namespace Azure.ResourceManager.Network
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = CreateVirtualMachineScaleSetVmNetworkRestClient().CreateGetVirtualMachineScaleSetNetworkInterfaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineScaleSetName, Id.Name, networkInterfaceName, null, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                return Response.FromValue((NetworkInterfaceData)VirtualMachineScaleSetNetworkInterfaceData.FromResponse(result), result);
+                return Response.FromValue(NetworkInterfaceData.FromResponse(result), result);
             }
             catch (Exception e)
             {

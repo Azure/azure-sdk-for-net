@@ -171,5 +171,164 @@ namespace Azure.ResourceManager.Network
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
+
+        internal HttpMessage CreateGetFailoverAllTestsDetailsRequest(Guid subscriptionId, string resourceGroupName, string expressRouteGatewayName, string @type, bool? fetchLatest, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
+            uri.AppendPath(expressRouteGatewayName, true);
+            uri.AppendPath("/getFailoverAllTestsDetails", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (@type != null)
+            {
+                uri.AppendQuery("type", @type, true);
+            }
+            if (fetchLatest != null)
+            {
+                uri.AppendQuery("fetchLatest", TypeFormatters.ConvertToString(fetchLatest), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetFailoverSingleTestDetailsRequest(Guid subscriptionId, string resourceGroupName, string expressRouteGatewayName, string peeringLocation, string failoverTestId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
+            uri.AppendPath(expressRouteGatewayName, true);
+            uri.AppendPath("/getFailoverSingleTestDetails", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            uri.AppendQuery("peeringLocation", peeringLocation, true);
+            uri.AppendQuery("failoverTestId", failoverTestId, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateStartSiteFailoverTestRequest(Guid subscriptionId, string resourceGroupName, string expressRouteGatewayName, string peeringLocation, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
+            uri.AppendPath(expressRouteGatewayName, true);
+            uri.AppendPath("/startSiteFailoverTest", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            uri.AppendQuery("peeringLocation", peeringLocation, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateStopSiteFailoverTestRequest(Guid subscriptionId, string resourceGroupName, string expressRouteGatewayName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
+            uri.AppendPath(expressRouteGatewayName, true);
+            uri.AppendPath("/stopSiteFailoverTest", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetRoutesInformationRequest(Guid subscriptionId, string resourceGroupName, string expressRouteGatewayName, bool? attemptRefresh, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
+            uri.AppendPath(expressRouteGatewayName, true);
+            uri.AppendPath("/getRoutesInformation", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (attemptRefresh != null)
+            {
+                uri.AppendQuery("attemptRefresh", TypeFormatters.ConvertToString(attemptRefresh), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetResiliencyInformationRequest(Guid subscriptionId, string resourceGroupName, string expressRouteGatewayName, bool? attemptRefresh, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/expressRouteGateways/", false);
+            uri.AppendPath(expressRouteGatewayName, true);
+            uri.AppendPath("/getResiliencyInformation", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (attemptRefresh != null)
+            {
+                uri.AppendQuery("attemptRefresh", TypeFormatters.ConvertToString(attemptRefresh), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
     }
 }

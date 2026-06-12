@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_Get. </description>
+        /// <description> RouteFilters_RouteFilterRulesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routeFilterRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _routeFilterRulesRestClient.CreateGetRouteFilterRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RouteFilterRuleData> response = Response.FromValue(RouteFilterRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_Get. </description>
+        /// <description> RouteFilters_RouteFilterRulesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routeFilterRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _routeFilterRulesRestClient.CreateGetRouteFilterRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RouteFilterRuleData> response = Response.FromValue(RouteFilterRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_Delete. </description>
+        /// <description> RouteFilters_RouteFilterRulesDelete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routeFilterRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _routeFilterRulesRestClient.CreateDeleteRouteFilterRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_routeFilterRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_Delete. </description>
+        /// <description> RouteFilters_RouteFilterRulesDelete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routeFilterRulesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _routeFilterRulesRestClient.CreateDeleteRouteFilterRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_routeFilterRulesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_CreateOrUpdate. </description>
+        /// <description> RouteFilters_RouteFilterRulesCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routeFilterRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RouteFilterRuleData.ToRequestContent(data), context);
+                HttpMessage message = _routeFilterRulesRestClient.CreateCreateOrUpdateRouteFilterRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RouteFilterRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<RouteFilterRuleResource> operation = new NetworkArmOperation<RouteFilterRuleResource>(
                     new RouteFilterRuleResourceOperationSource(Client),
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_CreateOrUpdate. </description>
+        /// <description> RouteFilters_RouteFilterRulesCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routeFilterRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RouteFilterRuleData.ToRequestContent(data), context);
+                HttpMessage message = _routeFilterRulesRestClient.CreateCreateOrUpdateRouteFilterRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RouteFilterRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<RouteFilterRuleResource> operation = new NetworkArmOperation<RouteFilterRuleResource>(
                     new RouteFilterRuleResourceOperationSource(Client),

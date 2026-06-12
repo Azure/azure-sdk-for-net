@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string location, string applicationGatewayWafDynamicManifestName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -49,8 +49,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Network/locations/", false);
             uri.AppendPath(location, true);
-            uri.AppendPath("/applicationGatewayWafDynamicManifests/", false);
-            uri.AppendPath(applicationGatewayWafDynamicManifestName, true);
+            uri.AppendPath("/applicationGatewayWafDynamicManifests/dafault", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

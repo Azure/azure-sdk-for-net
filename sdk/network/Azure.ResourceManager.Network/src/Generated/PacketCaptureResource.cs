@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_Get. </description>
+        /// <description> NetworkWatchers_PacketCapturesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_Get. </description>
+        /// <description> NetworkWatchers_PacketCapturesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_Delete. </description>
+        /// <description> NetworkWatchers_PacketCapturesDelete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_Delete. </description>
+        /// <description> NetworkWatchers_PacketCapturesDelete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_GetStatus. </description>
+        /// <description> NetworkWatchers_GetStatus. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_GetStatus. </description>
+        /// <description> NetworkWatchers_GetStatus. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_Stop. </description>
+        /// <description> NetworkWatchers_Stop. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_Stop. </description>
+        /// <description> NetworkWatchers_Stop. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_CreateOrUpdate. </description>
+        /// <description> NetworkWatchers_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _packetCapturesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PacketCaptureContent.ToRequestContent(content), context);
+                HttpMessage message = _packetCapturesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PacketCaptureContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<PacketCaptureResource> operation = new NetworkArmOperation<PacketCaptureResource>(
                     new PacketCaptureResourceOperationSource(Client),
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_CreateOrUpdate. </description>
+        /// <description> NetworkWatchers_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _packetCapturesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PacketCaptureContent.ToRequestContent(content), context);
+                HttpMessage message = _packetCapturesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, PacketCaptureContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<PacketCaptureResource> operation = new NetworkArmOperation<PacketCaptureResource>(
                     new PacketCaptureResourceOperationSource(Client),

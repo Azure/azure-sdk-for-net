@@ -129,7 +129,6 @@ namespace Azure.ResourceManager.Network
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                response.Value.Id = Id;
                 return Response.FromValue(new ApplicationGatewayAvailableSslOptionsInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -178,7 +177,6 @@ namespace Azure.ResourceManager.Network
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                response.Value.Id = Id;
                 return Response.FromValue(new ApplicationGatewayAvailableSslOptionsInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the private dns zone group resource by specified private dns zone group name. </summary>
-        /// <param name="privateDnsZoneGroupName"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="privateDnsZoneGroupName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the private dns zone group resource by specified private dns zone group name. </summary>
-        /// <param name="privateDnsZoneGroupName"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="privateDnsZoneGroupName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>

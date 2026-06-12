@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
@@ -20,24 +19,18 @@ namespace Azure.ResourceManager.Network
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterData"/>. </summary>
-        public NetworkSecurityPerimeterData() : base(default)
+        public NetworkSecurityPerimeterData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The network security perimeter properties. </param>
-        /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
+        /// <param name="name"> The name of the network security perimeter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkSecurityPerimeterProperties properties, string networkSecurityPerimeterName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkSecurityPerimeterData(NetworkSecurityPerimeterProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
-            Name = networkSecurityPerimeterName;
+            Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

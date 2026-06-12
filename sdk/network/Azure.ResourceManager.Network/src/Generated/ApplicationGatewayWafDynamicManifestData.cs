@@ -25,22 +25,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWafDynamicManifestData"/>. </summary>
         /// <param name="properties"> Properties of the ApplicationGatewayWafDynamicManifest . </param>
-        /// <param name="name"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayWafDynamicManifestData(ApplicationGatewayWafDynamicManifestPropertiesResult properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayWafDynamicManifestData(ApplicationGatewayWafDynamicManifestPropertiesResult properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
-            Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the ApplicationGatewayWafDynamicManifest . </summary>
         [WirePath("properties")]
         internal ApplicationGatewayWafDynamicManifestPropertiesResult Properties { get; }
-
-        /// <summary> Gets the Name. </summary>
-        [WirePath("name")]
-        public string Name { get; }
 
         /// <summary> The type of the web application firewall rule set. </summary>
         [WirePath("properties.defaultRuleSet.ruleSetType")]

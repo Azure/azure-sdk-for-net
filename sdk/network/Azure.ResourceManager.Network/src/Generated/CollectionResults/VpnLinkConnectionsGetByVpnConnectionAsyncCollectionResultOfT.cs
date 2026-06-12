@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="gatewayName"> The name of the gateway. </param>
-        /// <param name="connectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
         public VpnLinkConnectionsGetByVpnConnectionAsyncCollectionResultOfT(VpnLinkConnections client, Guid subscriptionId, string resourceGroupName, string gatewayName, string connectionName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)

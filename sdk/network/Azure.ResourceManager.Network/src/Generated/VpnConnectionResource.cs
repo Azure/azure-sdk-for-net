@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_Get. </description>
+        /// <description> VpnGateways_VpnConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_Get. </description>
+        /// <description> VpnGateways_VpnConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_VpnConnectionsDelete. </description>
+        /// <description> VpnGateways_VpnConnectionsDelete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_VpnConnectionsDelete. </description>
+        /// <description> VpnGateways_VpnConnectionsDelete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_StartPacketCapture. </description>
+        /// <description> VpnGateways_VpnConnectionsStartPacketCapture. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_StartPacketCapture. </description>
+        /// <description> VpnGateways_VpnConnectionsStartPacketCapture. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_StopPacketCapture. </description>
+        /// <description> VpnGateways_VpnConnectionsStopPacketCapture. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_StopPacketCapture. </description>
+        /// <description> VpnGateways_VpnConnectionsStopPacketCapture. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_CreateOrUpdate. </description>
+        /// <description> VpnGateways_VpnConnectionsCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_CreateOrUpdate. </description>
+        /// <description> VpnGateways_VpnConnectionsCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

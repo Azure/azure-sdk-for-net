@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkSecurityPerimeterLinkReferenceData : ResourceData { }
     public partial class NetworkSecurityPerimeterLoggingConfigurationData : ResourceData { }
     public partial class NetworkSecurityPerimeterProfileData : ResourceData { }
+    /// <summary> A class representing packet capture data. </summary>
     public partial class PacketCaptureData : ResourceData { }
     public partial class ReachabilityAnalysisIntentData : ResourceData { }
     public partial class ReachabilityAnalysisRunData : ResourceData { }

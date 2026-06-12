@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkVirtualApplianceConnections_CreateOrUpdate. </description>
+        /// <description> NetworkVirtualApplianceConnections_NetworkVirtualApplianceConnectionsCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"></param>
         /// <param name="data"> Parameters supplied in an NetworkVirtualApplianceConnection PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, NetworkVirtualApplianceConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateCreateOrUpdateNetworkVirtualApplianceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, NetworkVirtualApplianceConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<NetworkVirtualApplianceConnectionResource> operation = new NetworkArmOperation<NetworkVirtualApplianceConnectionResource>(
                     new NetworkVirtualApplianceConnectionResourceOperationSource(Client),
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkVirtualApplianceConnections_CreateOrUpdate. </description>
+        /// <description> NetworkVirtualApplianceConnections_NetworkVirtualApplianceConnectionsCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"></param>
         /// <param name="data"> Parameters supplied in an NetworkVirtualApplianceConnection PUT operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, NetworkVirtualApplianceConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateCreateOrUpdateNetworkVirtualApplianceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, NetworkVirtualApplianceConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<NetworkVirtualApplianceConnectionResource> operation = new NetworkArmOperation<NetworkVirtualApplianceConnectionResource>(
                     new NetworkVirtualApplianceConnectionResourceOperationSource(Client),
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkVirtualApplianceConnections_Get. </description>
+        /// <description> NetworkVirtualApplianceConnections_NetworkVirtualApplianceConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateGetNetworkVirtualApplianceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<NetworkVirtualApplianceConnectionData> response = Response.FromValue(NetworkVirtualApplianceConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkVirtualApplianceConnections_Get. </description>
+        /// <description> NetworkVirtualApplianceConnections_NetworkVirtualApplianceConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateGetNetworkVirtualApplianceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<NetworkVirtualApplianceConnectionData> response = Response.FromValue(NetworkVirtualApplianceConnectionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkVirtualApplianceConnections_List. </description>
+        /// <description> NetworkVirtualApplianceConnections_NetworkVirtualApplianceConnectionsList. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NetworkVirtualApplianceConnectionData, NetworkVirtualApplianceConnectionResource>(new NetworkVirtualApplianceConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<NetworkVirtualApplianceConnectionData, NetworkVirtualApplianceConnectionResource>(new NetworkVirtualApplianceConnectionsGetNetworkVirtualApplianceConnectionsAsyncCollectionResultOfT(
                 _networkVirtualApplianceConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkVirtualApplianceConnections_List. </description>
+        /// <description> NetworkVirtualApplianceConnections_NetworkVirtualApplianceConnectionsList. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NetworkVirtualApplianceConnectionData, NetworkVirtualApplianceConnectionResource>(new NetworkVirtualApplianceConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<NetworkVirtualApplianceConnectionData, NetworkVirtualApplianceConnectionResource>(new NetworkVirtualApplianceConnectionsGetNetworkVirtualApplianceConnectionsCollectionResultOfT(
                 _networkVirtualApplianceConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkVirtualApplianceConnections_Get. </description>
+        /// <description> NetworkVirtualApplianceConnections_NetworkVirtualApplianceConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateGetNetworkVirtualApplianceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkVirtualApplianceConnectionData> response = default;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkVirtualApplianceConnections_Get. </description>
+        /// <description> NetworkVirtualApplianceConnections_NetworkVirtualApplianceConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateGetNetworkVirtualApplianceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkVirtualApplianceConnectionData> response = default;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkVirtualApplianceConnections_Get. </description>
+        /// <description> NetworkVirtualApplianceConnections_NetworkVirtualApplianceConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateGetNetworkVirtualApplianceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<NetworkVirtualApplianceConnectionData> response = default;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkVirtualApplianceConnections_Get. </description>
+        /// <description> NetworkVirtualApplianceConnections_NetworkVirtualApplianceConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
+                HttpMessage message = _networkVirtualApplianceConnectionsRestClient.CreateGetNetworkVirtualApplianceConnectionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, connectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<NetworkVirtualApplianceConnectionData> response = default;

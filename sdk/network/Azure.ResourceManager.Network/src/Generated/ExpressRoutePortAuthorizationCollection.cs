@@ -15,18 +15,21 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A class representing a collection of <see cref="ExpressRoutePortAuthorizationResource"/> and their operations.
-    /// Each <see cref="ExpressRoutePortAuthorizationResource"/> in the collection will belong to the same instance of <see cref="ExpressRoutePortResource"/>.
-    /// To get a <see cref="ExpressRoutePortAuthorizationCollection"/> instance call the GetExpressRoutePortAuthorizations method from an instance of <see cref="ExpressRoutePortResource"/>.
+    /// Each <see cref="ExpressRoutePortAuthorizationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ExpressRoutePortAuthorizationCollection"/> instance call the GetExpressRoutePortAuthorizations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ExpressRoutePortAuthorizationCollection : ArmCollection, IEnumerable<ExpressRoutePortAuthorizationResource>, IAsyncEnumerable<ExpressRoutePortAuthorizationResource>
     {
         private readonly ClientDiagnostics _expressRoutePortAuthorizationsClientDiagnostics;
         private readonly ExpressRoutePortAuthorizations _expressRoutePortAuthorizationsRestClient;
+        /// <summary> The expressRoutePortName. </summary>
+        private readonly string _expressRoutePortName;
 
         /// <summary> Initializes a new instance of ExpressRoutePortAuthorizationCollection for mocking. </summary>
         protected ExpressRoutePortAuthorizationCollection()
@@ -36,9 +39,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="ExpressRoutePortAuthorizationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ExpressRoutePortAuthorizationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="expressRoutePortName"> The expressRoutePortName for the resource. </param>
+        internal ExpressRoutePortAuthorizationCollection(ArmClient client, ResourceIdentifier id, string expressRoutePortName) : base(client, id)
         {
             TryGetApiVersion(ExpressRoutePortAuthorizationResource.ResourceType, out string expressRoutePortAuthorizationApiVersion);
+            _expressRoutePortName = expressRoutePortName;
             _expressRoutePortAuthorizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRoutePortAuthorizationResource.ResourceType.Namespace, Diagnostics);
             _expressRoutePortAuthorizationsRestClient = new ExpressRoutePortAuthorizations(_expressRoutePortAuthorizationsClientDiagnostics, Pipeline, Endpoint, expressRoutePortAuthorizationApiVersion ?? "2025-07-01");
             ValidateResourceId(id);
@@ -48,9 +53,9 @@ namespace Azure.ResourceManager.Network
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ExpressRoutePortResource.ResourceType)
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ExpressRoutePortResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -59,7 +64,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, ExpressRoutePortAuthorizationData.ToRequestContent(data), context);
+                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _expressRoutePortName, authorizationName, ExpressRoutePortAuthorizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<ExpressRoutePortAuthorizationResource> operation = new NetworkArmOperation<ExpressRoutePortAuthorizationResource>(
                     new ExpressRoutePortAuthorizationResourceOperationSource(Client),
@@ -117,7 +122,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -148,7 +153,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, ExpressRoutePortAuthorizationData.ToRequestContent(data), context);
+                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _expressRoutePortName, authorizationName, ExpressRoutePortAuthorizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<ExpressRoutePortAuthorizationResource> operation = new NetworkArmOperation<ExpressRoutePortAuthorizationResource>(
                     new ExpressRoutePortAuthorizationResourceOperationSource(Client),
@@ -175,7 +180,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -203,7 +208,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, context);
+                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _expressRoutePortName, authorizationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ExpressRoutePortAuthorizationData> response = Response.FromValue(ExpressRoutePortAuthorizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -224,7 +229,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -252,7 +257,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, context);
+                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _expressRoutePortName, authorizationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ExpressRoutePortAuthorizationData> response = Response.FromValue(ExpressRoutePortAuthorizationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -273,7 +278,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -297,7 +302,7 @@ namespace Azure.ResourceManager.Network
                 _expressRoutePortAuthorizationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
-                Id.Name,
+                _expressRoutePortName,
                 context,
                 "ExpressRoutePortAuthorizationCollection.GetAll"), data => new ExpressRoutePortAuthorizationResource(Client, data));
         }
@@ -307,7 +312,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -331,7 +336,7 @@ namespace Azure.ResourceManager.Network
                 _expressRoutePortAuthorizationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
-                Id.Name,
+                _expressRoutePortName,
                 context,
                 "ExpressRoutePortAuthorizationCollection.GetAll"), data => new ExpressRoutePortAuthorizationResource(Client, data));
         }
@@ -341,7 +346,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -369,7 +374,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, context);
+                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _expressRoutePortName, authorizationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExpressRoutePortAuthorizationData> response = default;
@@ -398,7 +403,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -426,7 +431,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, context);
+                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _expressRoutePortName, authorizationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExpressRoutePortAuthorizationData> response = default;
@@ -455,7 +460,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -483,7 +488,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, context);
+                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _expressRoutePortName, authorizationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ExpressRoutePortAuthorizationData> response = default;
@@ -516,7 +521,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -544,7 +549,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, context);
+                HttpMessage message = _expressRoutePortAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _expressRoutePortName, authorizationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ExpressRoutePortAuthorizationData> response = default;

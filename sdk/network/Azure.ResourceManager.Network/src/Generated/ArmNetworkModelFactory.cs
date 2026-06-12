@@ -3241,7 +3241,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.DdosProtectionPlanData"/> instance for mocking. </returns>
         public static DdosProtectionPlanData DdosProtectionPlanData(Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, IEnumerable<WritableSubResource> publicIPAddresses = default, IEnumerable<WritableSubResource> virtualNetworks = default, string name = default, ETag? eTag = default)
         {
-            return new DdosProtectionPlanData(default, name, default, default, new ChangeTrackingDictionary<string, string>(), default, resourceGuid is null && provisioningState is null && publicIPAddresses is null && virtualNetworks is null ? default : new DdosProtectionPlanPropertiesFormat(resourceGuid, provisioningState, (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(), (virtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default), name, eTag, default);
+            return new DdosProtectionPlanData(resourceGuid is null && provisioningState is null && publicIPAddresses is null && virtualNetworks is null ? default : new DdosProtectionPlanPropertiesFormat(resourceGuid, provisioningState, (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(), (virtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default), name, eTag, default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -5309,53 +5309,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="virtualNetworkTaps"> The reference to Virtual Network Taps. </param>
-        /// <param name="applicationGatewayBackendAddressPools"> The reference to ApplicationGatewayBackendAddressPool resource. </param>
-        /// <param name="loadBalancerBackendAddressPools"> The reference to LoadBalancerBackendAddressPool resource. </param>
-        /// <param name="loadBalancerInboundNatRules"> A list of references of LoadBalancerInboundNatRules. </param>
-        /// <param name="privateIPAddress"> Private IP address of the IP configuration. It can be a single IP address or a CIDR block in the format &lt;address&gt;/&lt;prefix-length&gt;. </param>
-        /// <param name="privateIPAddressPrefixLength"> The private IP address prefix length. If specified and the allocation method is dynamic, the service will allocate a CIDR block instead of a single IP address. </param>
-        /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
-        /// <param name="privateIPAddressVersion"> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </param>
-        /// <param name="subnet"> Subnet bound to the IP configuration. </param>
-        /// <param name="primary"> Whether this is a primary customer address on the network interface. </param>
-        /// <param name="publicIPAddress"> Public IP address bound to the IP configuration. </param>
-        /// <param name="applicationSecurityGroups"> Application security groups in which the IP configuration is included. </param>
-        /// <param name="provisioningState"> The provisioning state of the network interface IP configuration. </param>
-        /// <param name="privateLinkConnectionProperties"> PrivateLinkConnection properties for the network interface. </param>
-        /// <param name="gatewayLoadBalancerId"> Resource ID. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.VirtualMachineScaleSetNetworkInterfaceIPConfigurationData"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetNetworkInterfaceIPConfigurationData VirtualMachineScaleSetNetworkInterfaceIPConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, IEnumerable<VirtualNetworkTapData> virtualNetworkTaps = default, IEnumerable<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default, IEnumerable<BackendAddressPoolData> loadBalancerBackendAddressPools = default, IEnumerable<InboundNatRuleData> loadBalancerInboundNatRules = default, string privateIPAddress = default, int? privateIPAddressPrefixLength = default, NetworkIPAllocationMethod? privateIPAllocationMethod = default, NetworkIPVersion? privateIPAddressVersion = default, SubnetData subnet = default, bool? primary = default, PublicIPAddressData publicIPAddress = default, IEnumerable<ApplicationSecurityGroupData> applicationSecurityGroups = default, NetworkProvisioningState? provisioningState = default, NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties privateLinkConnectionProperties = default, ResourceIdentifier gatewayLoadBalancerId = default, ETag? eTag = default)
-        {
-            return new VirtualMachineScaleSetNetworkInterfaceIPConfigurationData(
-                id,
-                default,
-                name,
-                resourceType,
-                gatewayLoadBalancerId is null && virtualNetworkTaps is null && applicationGatewayBackendAddressPools is null && loadBalancerBackendAddressPools is null && loadBalancerInboundNatRules is null && privateIPAddress is null && privateIPAddressPrefixLength is null && privateIPAllocationMethod is null && privateIPAddressVersion is null && subnet is null && primary is null && publicIPAddress is null && applicationSecurityGroups is null && provisioningState is null && privateLinkConnectionProperties is null ? default : new NetworkInterfaceIPConfigurationPropertiesFormat(
-                    new NetworkSubResource(gatewayLoadBalancerId, default),
-                    (virtualNetworkTaps ?? new ChangeTrackingList<VirtualNetworkTapData>()).ToList(),
-                    (applicationGatewayBackendAddressPools ?? new ChangeTrackingList<ApplicationGatewayBackendAddressPool>()).ToList(),
-                    (loadBalancerBackendAddressPools ?? new ChangeTrackingList<BackendAddressPoolData>()).ToList(),
-                    (loadBalancerInboundNatRules ?? new ChangeTrackingList<InboundNatRuleData>()).ToList(),
-                    privateIPAddress,
-                    privateIPAddressPrefixLength,
-                    privateIPAllocationMethod,
-                    privateIPAddressVersion,
-                    subnet,
-                    primary,
-                    publicIPAddress,
-                    (applicationSecurityGroups ?? new ChangeTrackingList<ApplicationSecurityGroupData>()).ToList(),
-                    provisioningState,
-                    privateLinkConnectionProperties,
-                    default),
-                eTag);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="networkManagerId"> Network Manager Id. </param>
@@ -5743,7 +5696,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.NetworkSecurityPerimeterData"/> instance for mocking. </returns>
         public static NetworkSecurityPerimeterData NetworkSecurityPerimeterData(NetworkSecurityPerimeterProvisioningState? provisioningState = default, Guid? perimeterGuid = default, string name = default)
         {
-            return new NetworkSecurityPerimeterData(default, name, default, default, new ChangeTrackingDictionary<string, string>(), default, provisioningState is null && perimeterGuid is null ? default : new NetworkSecurityPerimeterProperties(provisioningState, perimeterGuid, default), name, default);
+            return new NetworkSecurityPerimeterData(provisioningState is null && perimeterGuid is null ? default : new NetworkSecurityPerimeterProperties(provisioningState, perimeterGuid, default), name, default);
         }
 
         /// <param name="id"> Network security perimeter identifier. </param>
@@ -6780,237 +6733,6 @@ namespace Azure.ResourceManager.Network.Models
                 sourcePortMatched,
                 destinationMatched,
                 destinationPortMatched,
-                default);
-        }
-
-        /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
-        /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
-        /// <param name="targetType"> Target type of the resource provided. </param>
-        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
-        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
-        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
-        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
-        /// <param name="filters"> A list of packet capture filters. </param>
-        /// <param name="continuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
-        /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
-        /// <param name="isContinuousCapture"> Gets or sets the IsContinuousCapture. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="target"/> or <paramref name="storageLocation"/> is null. </exception>
-        /// <returns> A new <see cref="Models.PacketCaptureContent"/> instance for mocking. </returns>
-        public static PacketCaptureContent PacketCaptureContent(string target = default, PacketCaptureMachineScope scope = default, PacketCaptureTargetType? targetType = default, long? bytesToCapturePerPacket = default, long? totalBytesPerSession = default, int? timeLimitInSeconds = default, PacketCaptureStorageLocation storageLocation = default, IEnumerable<PacketCaptureFilter> filters = default, bool? continuousCapture = default, PacketCaptureSettings captureSettings = default, bool? isContinuousCapture = default)
-        {
-            return new PacketCaptureContent(bytesToCapturePerPacket is null && continuousCapture is null && captureSettings is null ? default : new PacketCaptureCreateOrUpdateContent(
-                default,
-                default,
-                default,
-                bytesToCapturePerPacket,
-                default,
-                default,
-                default,
-                default,
-                continuousCapture,
-                captureSettings,
-                default), default);
-        }
-
-        /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
-        /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
-        /// <param name="targetType"> Target type of the resource provided. </param>
-        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
-        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
-        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
-        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
-        /// <param name="filters"> A list of packet capture filters. </param>
-        /// <param name="isContinuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
-        /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
-        /// <returns> A new <see cref="Models.PacketCaptureCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static PacketCaptureCreateOrUpdateContent PacketCaptureCreateOrUpdateContent(string target = default, PacketCaptureMachineScope scope = default, PacketCaptureTargetType? targetType = default, long? bytesToCapturePerPacket = default, long? totalBytesPerSession = default, int? timeLimitInSeconds = default, PacketCaptureStorageLocation storageLocation = default, IEnumerable<PacketCaptureFilter> filters = default, bool? isContinuousCapture = default, PacketCaptureSettings captureSettings = default)
-        {
-            filters ??= new ChangeTrackingList<PacketCaptureFilter>();
-
-            return new PacketCaptureCreateOrUpdateContent(
-                target,
-                scope,
-                targetType,
-                bytesToCapturePerPacket,
-                totalBytesPerSession,
-                timeLimitInSeconds,
-                storageLocation,
-                (filters ?? new ChangeTrackingList<PacketCaptureFilter>()).ToList(),
-                default,
-                captureSettings,
-                default);
-        }
-
-        /// <param name="include"> List of AzureVMSS instances to run packet capture on. </param>
-        /// <param name="exclude"> List of AzureVMSS instances which has to be excluded from the AzureVMSS from running packet capture. </param>
-        /// <returns> A new <see cref="Models.PacketCaptureMachineScope"/> instance for mocking. </returns>
-        public static PacketCaptureMachineScope PacketCaptureMachineScope(IEnumerable<string> include = default, IEnumerable<string> exclude = default)
-        {
-            include ??= new ChangeTrackingList<string>();
-            exclude ??= new ChangeTrackingList<string>();
-
-            return new PacketCaptureMachineScope((include ?? new ChangeTrackingList<string>()).ToList(), (exclude ?? new ChangeTrackingList<string>()).ToList(), default);
-        }
-
-        /// <param name="storageId"> The ID of the storage account to save the packet capture session. Required if no localPath or filePath is provided. </param>
-        /// <param name="storagePath"> The URI of the storage path to save the packet capture. Must be a well-formed URI describing the location to save the packet capture. </param>
-        /// <param name="filePath"> This path is invalid if 'Continuous Capture' is provided with 'true' or 'false'. A valid local path on the targeting VM. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. Required if no storage ID is provided, otherwise optional. </param>
-        /// <param name="localPath"> This path is valid if 'Continuous Capture' is provided with 'true' or 'false' and required if no storage ID is provided, otherwise optional. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. </param>
-        /// <returns> A new <see cref="Models.PacketCaptureStorageLocation"/> instance for mocking. </returns>
-        public static PacketCaptureStorageLocation PacketCaptureStorageLocation(ResourceIdentifier storageId = default, string storagePath = default, string filePath = default, string localPath = default)
-        {
-            return new PacketCaptureStorageLocation(storageId, storagePath, filePath, localPath, default);
-        }
-
-        /// <param name="protocol"> Protocol to be filtered on. </param>
-        /// <param name="localIPAddress"> Local IP Address to be filtered on. Notation: "127.0.0.1" for single address entry. "127.0.0.1-127.0.0.255" for range. "127.0.0.1;127.0.0.5"? for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null. </param>
-        /// <param name="remoteIPAddress"> Local IP Address to be filtered on. Notation: "127.0.0.1" for single address entry. "127.0.0.1-127.0.0.255" for range. "127.0.0.1;127.0.0.5;" for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null. </param>
-        /// <param name="localPort"> Local port to be filtered on. Notation: "80" for single port entry."80-85" for range. "80;443;" for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null. </param>
-        /// <param name="remotePort"> Remote port to be filtered on. Notation: "80" for single port entry."80-85" for range. "80;443;" for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null. </param>
-        /// <returns> A new <see cref="Models.PacketCaptureFilter"/> instance for mocking. </returns>
-        public static PacketCaptureFilter PacketCaptureFilter(PcProtocol? protocol = default, string localIPAddress = default, string remoteIPAddress = default, string localPort = default, string remotePort = default)
-        {
-            return new PacketCaptureFilter(
-                protocol,
-                localIPAddress,
-                remoteIPAddress,
-                localPort,
-                remotePort,
-                default);
-        }
-
-        /// <param name="fileCount"> Number of file count. Default value of count is 10 and maximum number is 10000. </param>
-        /// <param name="fileSizeInBytes"> Number of bytes captured per packet. Default value in bytes 104857600 (100MB) and maximum in bytes 4294967295 (4GB). </param>
-        /// <param name="sessionTimeLimitInSeconds"> Maximum duration of the capture session in seconds is 604800s (7 days) for a file. Default value in second 86400s (1 day). </param>
-        /// <returns> A new <see cref="Models.PacketCaptureSettings"/> instance for mocking. </returns>
-        public static PacketCaptureSettings PacketCaptureSettings(int? fileCount = default, long? fileSizeInBytes = default, int? sessionTimeLimitInSeconds = default)
-        {
-            return new PacketCaptureSettings(fileCount, fileSizeInBytes, sessionTimeLimitInSeconds, default);
-        }
-
-        /// <param name="name"> Name of the packet capture session. </param>
-        /// <param name="id"> ID of the packet capture operation. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
-        /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
-        /// <param name="targetType"> Target type of the resource provided. </param>
-        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
-        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
-        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
-        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
-        /// <param name="filters"> A list of packet capture filters. </param>
-        /// <param name="continuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
-        /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
-        /// <param name="isContinuousCapture"> Gets or sets the IsContinuousCapture. </param>
-        /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
-        /// <returns> A new <see cref="Network.PacketCaptureData"/> instance for mocking. </returns>
-        public static PacketCaptureData PacketCaptureData(string name = default, string id = default, ETag? eTag = default, string target = default, PacketCaptureMachineScope scope = default, PacketCaptureTargetType? targetType = default, long? bytesToCapturePerPacket = default, long? totalBytesPerSession = default, int? timeLimitInSeconds = default, PacketCaptureStorageLocation storageLocation = default, IEnumerable<PacketCaptureFilter> filters = default, bool? continuousCapture = default, PacketCaptureSettings captureSettings = default, bool? isContinuousCapture = default, NetworkProvisioningState? provisioningState = default)
-        {
-            return new PacketCaptureData(name, id, eTag, target is null && scope is null && targetType is null && bytesToCapturePerPacket is null && totalBytesPerSession is null && timeLimitInSeconds is null && storageLocation is null && filters is null && continuousCapture is null && captureSettings is null && provisioningState is null ? default : new PacketCaptureResultProperties(
-                target,
-                scope,
-                targetType,
-                bytesToCapturePerPacket,
-                totalBytesPerSession,
-                timeLimitInSeconds,
-                storageLocation,
-                (filters ?? new ChangeTrackingList<PacketCaptureFilter>()).ToList(),
-                continuousCapture,
-                captureSettings,
-                default,
-                provisioningState), default);
-        }
-
-        /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
-        /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
-        /// <param name="targetType"> Target type of the resource provided. </param>
-        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
-        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
-        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
-        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
-        /// <param name="filters"> A list of packet capture filters. </param>
-        /// <param name="continuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
-        /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
-        /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
-        /// <returns> A new <see cref="Models.PacketCaptureResultProperties"/> instance for mocking. </returns>
-        public static PacketCaptureResultProperties PacketCaptureResultProperties(string target = default, PacketCaptureMachineScope scope = default, PacketCaptureTargetType? targetType = default, long? bytesToCapturePerPacket = default, long? totalBytesPerSession = default, int? timeLimitInSeconds = default, PacketCaptureStorageLocation storageLocation = default, IEnumerable<PacketCaptureFilter> filters = default, bool? continuousCapture = default, PacketCaptureSettings captureSettings = default, NetworkProvisioningState? provisioningState = default)
-        {
-            filters ??= new ChangeTrackingList<PacketCaptureFilter>();
-
-            return new PacketCaptureResultProperties(
-                target,
-                scope,
-                targetType,
-                bytesToCapturePerPacket,
-                totalBytesPerSession,
-                timeLimitInSeconds,
-                storageLocation,
-                (filters ?? new ChangeTrackingList<PacketCaptureFilter>()).ToList(),
-                continuousCapture,
-                captureSettings,
-                default,
-                provisioningState);
-        }
-
-        /// <param name="name"> The name of the packet capture resource. </param>
-        /// <param name="id"> The ID of the packet capture resource. </param>
-        /// <param name="captureStartOn"> The start time of the packet capture session. </param>
-        /// <param name="packetCaptureStatus"> The status of the packet capture session. </param>
-        /// <param name="stopReason"> The reason the current packet capture session was stopped. </param>
-        /// <param name="packetCaptureError"> List of errors of packet capture session. </param>
-        /// <returns> A new <see cref="Models.PacketCaptureQueryStatusResult"/> instance for mocking. </returns>
-        public static PacketCaptureQueryStatusResult PacketCaptureQueryStatusResult(string name = default, string id = default, DateTimeOffset? captureStartOn = default, PcStatus? packetCaptureStatus = default, string stopReason = default, IEnumerable<PcError> packetCaptureError = default)
-        {
-            packetCaptureError ??= new ChangeTrackingList<PcError>();
-
-            return new PacketCaptureQueryStatusResult(
-                name,
-                id,
-                captureStartOn,
-                packetCaptureStatus,
-                stopReason,
-                (packetCaptureError ?? new ChangeTrackingList<PcError>()).ToList(),
-                default);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="provisioningState"> The provisioning state of the private dns zone group resource. </param>
-        /// <param name="privateDnsZoneConfigs"> A collection of private dns zone configurations of the private dns zone group. </param>
-        /// <returns> A new <see cref="Network.PrivateDnsZoneGroupData"/> instance for mocking. </returns>
-        public static PrivateDnsZoneGroupData PrivateDnsZoneGroupData(ResourceIdentifier id = default, string name = default, string @type = default, NetworkProvisioningState? provisioningState = default, IEnumerable<PrivateDnsZoneConfig> privateDnsZoneConfigs = default)
-        {
-            return new PrivateDnsZoneGroupData(id, default, name, @type, provisioningState is null && privateDnsZoneConfigs is null ? default : new PrivateDnsZoneGroupPropertiesFormat(provisioningState, (privateDnsZoneConfigs ?? new ChangeTrackingList<PrivateDnsZoneConfig>()).ToList(), default));
-        }
-
-        /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
-        /// <param name="privateDnsZoneId"> The resource id of the private dns zone. </param>
-        /// <param name="recordSets"> A collection of information regarding a recordSet, holding information to identify private resources. </param>
-        /// <returns> A new <see cref="Models.PrivateDnsZoneConfig"/> instance for mocking. </returns>
-        public static PrivateDnsZoneConfig PrivateDnsZoneConfig(string name = default, string privateDnsZoneId = default, IEnumerable<RecordSet> recordSets = default)
-        {
-            return new PrivateDnsZoneConfig(name, privateDnsZoneId is null && recordSets is null ? default : new PrivateDnsZonePropertiesFormat(privateDnsZoneId, (recordSets ?? new ChangeTrackingList<RecordSet>()).ToList(), default), default);
-        }
-
-        /// <param name="recordType"> Resource record type. </param>
-        /// <param name="recordSetName"> Recordset name. </param>
-        /// <param name="fqdn"> Fqdn that resolves to private endpoint ip address. </param>
-        /// <param name="provisioningState"> The provisioning state of the recordset. </param>
-        /// <param name="ttl"> Recordset time to live. </param>
-        /// <param name="ipAddresses"> The private ip address of the private endpoint. </param>
-        /// <returns> A new <see cref="Models.RecordSet"/> instance for mocking. </returns>
-        public static RecordSet RecordSet(string recordType = default, string recordSetName = default, string fqdn = default, NetworkProvisioningState? provisioningState = default, int? ttl = default, IEnumerable<string> ipAddresses = default)
-        {
-            ipAddresses ??= new ChangeTrackingList<string>();
-
-            return new RecordSet(
-                recordType,
-                recordSetName,
-                fqdn,
-                provisioningState,
-                ttl,
-                (ipAddresses ?? new ChangeTrackingList<string>()).ToList(),
                 default);
         }
 
@@ -9154,37 +8876,6 @@ namespace Azure.ResourceManager.Network.Models
             return new VirtualHubOutboundRoutesContent(resourceUri, connectionType, default);
         }
 
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="allowHubToRemoteVnetTransit"> Deprecated: VirtualHub to RemoteVnet transit to enabled or not. </param>
-        /// <param name="allowRemoteVnetToUseHubVnetGateways"> Deprecated: Allow RemoteVnet to use Virtual Hub's gateways. </param>
-        /// <param name="enableInternetSecurity"> Enable internet security. </param>
-        /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        /// <param name="provisioningState"> The provisioning state of the hub virtual network connection resource. </param>
-        /// <param name="remoteVirtualNetworkId"> Resource ID. </param>
-        /// <param name="connectionPolicyId"> Resource ID. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.HubVirtualNetworkConnectionData"/> instance for mocking. </returns>
-        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, bool? allowHubToRemoteVnetTransit = default, bool? allowRemoteVnetToUseHubVnetGateways = default, bool? enableInternetSecurity = default, RoutingConfigurationNfv routingConfiguration = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier remoteVirtualNetworkId = default, ResourceIdentifier connectionPolicyId = default, ETag? eTag = default)
-        {
-            return new HubVirtualNetworkConnectionData(
-                id,
-                default,
-                name,
-                @type,
-                remoteVirtualNetworkId is null && allowHubToRemoteVnetTransit is null && allowRemoteVnetToUseHubVnetGateways is null && connectionPolicyId is null && enableInternetSecurity is null && routingConfiguration is null && provisioningState is null ? default : new HubVirtualNetworkConnectionProperties(
-                    new NetworkSubResource(remoteVirtualNetworkId, default),
-                    allowHubToRemoteVnetTransit,
-                    allowRemoteVnetToUseHubVnetGateways,
-                    new NetworkSubResource(connectionPolicyId, default),
-                    enableInternetSecurity,
-                    routingConfiguration,
-                    provisioningState,
-                    default),
-                eTag);
-        }
-
         /// <param name="associatedInboundConnections"> List of connections which have this RoutMap associated for inbound traffic. </param>
         /// <param name="associatedOutboundConnections"> List of connections which have this RoutMap associated for outbound traffic. </param>
         /// <param name="rules"> List of RouteMap rules to be applied. </param>
@@ -9452,26 +9143,6 @@ namespace Azure.ResourceManager.Network.Models
         public static VpnGatewayPacketCaptureStopContent VpnGatewayPacketCaptureStopContent(Uri sasUri = default)
         {
             return new VpnGatewayPacketCaptureStopContent(sasUri, default);
-        }
-
-        /// <param name="filterData"> Start Packet capture parameters on vpn connection. </param>
-        /// <param name="linkConnectionNames"> List of site link connection names. </param>
-        /// <returns> A new <see cref="Models.VpnConnectionPacketCaptureStartContent"/> instance for mocking. </returns>
-        public static VpnConnectionPacketCaptureStartContent VpnConnectionPacketCaptureStartContent(string filterData = default, IEnumerable<string> linkConnectionNames = default)
-        {
-            linkConnectionNames ??= new ChangeTrackingList<string>();
-
-            return new VpnConnectionPacketCaptureStartContent(filterData, (linkConnectionNames ?? new ChangeTrackingList<string>()).ToList(), default);
-        }
-
-        /// <param name="sasUri"> SAS url for packet capture on vpn connection. </param>
-        /// <param name="linkConnectionNames"> List of site link connection names. </param>
-        /// <returns> A new <see cref="Models.VpnConnectionPacketCaptureStopContent"/> instance for mocking. </returns>
-        public static VpnConnectionPacketCaptureStopContent VpnConnectionPacketCaptureStopContent(Uri sasUri = default, IEnumerable<string> linkConnectionNames = default)
-        {
-            linkConnectionNames ??= new ChangeTrackingList<string>();
-
-            return new VpnConnectionPacketCaptureStopContent(sasUri, (linkConnectionNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -10199,11 +9870,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="availableRuleSets"> The available rulesets. </param>
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
         /// <param name="ruleSetVersion"> The version of the web application firewall rule set type. </param>
-        /// <param name="name"></param>
         /// <returns> A new <see cref="Network.ApplicationGatewayWafDynamicManifestData"/> instance for mocking. </returns>
-        public static ApplicationGatewayWafDynamicManifestData ApplicationGatewayWafDynamicManifestData(IEnumerable<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets = default, string ruleSetType = default, string ruleSetVersion = default, string name = default)
+        public static ApplicationGatewayWafDynamicManifestData ApplicationGatewayWafDynamicManifestData(IEnumerable<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets = default, string ruleSetType = default, string ruleSetVersion = default)
         {
-            return new ApplicationGatewayWafDynamicManifestData(ruleSetType is null && ruleSetVersion is null && availableRuleSets is null ? default : new ApplicationGatewayWafDynamicManifestPropertiesResult(new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, default), (availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>()).ToList(), default), name, default);
+            return new ApplicationGatewayWafDynamicManifestData(ruleSetType is null && ruleSetVersion is null && availableRuleSets is null ? default : new ApplicationGatewayWafDynamicManifestPropertiesResult(new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, default), (availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>()).ToList(), default), default);
         }
 
         /// <param name="ruleSetType"> The type of the web application firewall rule set. </param>
@@ -10844,6 +10514,194 @@ namespace Azure.ResourceManager.Network.Models
                 default);
         }
 
+        /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
+        /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
+        /// <param name="targetType"> Target type of the resource provided. </param>
+        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
+        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
+        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
+        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
+        /// <param name="filters"> A list of packet capture filters. </param>
+        /// <param name="continuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
+        /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
+        /// <param name="isContinuousCapture"> Gets or sets the IsContinuousCapture. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="target"/> or <paramref name="storageLocation"/> is null. </exception>
+        /// <returns> A new <see cref="Models.PacketCaptureContent"/> instance for mocking. </returns>
+        public static PacketCaptureContent PacketCaptureContent(string target = default, PacketCaptureMachineScope scope = default, PacketCaptureTargetType? targetType = default, long? bytesToCapturePerPacket = default, long? totalBytesPerSession = default, int? timeLimitInSeconds = default, PacketCaptureStorageLocation storageLocation = default, IEnumerable<PacketCaptureFilter> filters = default, bool? continuousCapture = default, PacketCaptureSettings captureSettings = default, bool? isContinuousCapture = default)
+        {
+            return new PacketCaptureContent(bytesToCapturePerPacket is null && continuousCapture is null && captureSettings is null ? default : new PacketCaptureCreateOrUpdateContent(
+                default,
+                default,
+                default,
+                bytesToCapturePerPacket,
+                default,
+                default,
+                default,
+                default,
+                continuousCapture,
+                captureSettings,
+                default), default);
+        }
+
+        /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
+        /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
+        /// <param name="targetType"> Target type of the resource provided. </param>
+        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
+        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
+        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
+        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
+        /// <param name="filters"> A list of packet capture filters. </param>
+        /// <param name="isContinuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
+        /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
+        /// <returns> A new <see cref="Models.PacketCaptureCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static PacketCaptureCreateOrUpdateContent PacketCaptureCreateOrUpdateContent(string target = default, PacketCaptureMachineScope scope = default, PacketCaptureTargetType? targetType = default, long? bytesToCapturePerPacket = default, long? totalBytesPerSession = default, int? timeLimitInSeconds = default, PacketCaptureStorageLocation storageLocation = default, IEnumerable<PacketCaptureFilter> filters = default, bool? isContinuousCapture = default, PacketCaptureSettings captureSettings = default)
+        {
+            filters ??= new ChangeTrackingList<PacketCaptureFilter>();
+
+            return new PacketCaptureCreateOrUpdateContent(
+                target,
+                scope,
+                targetType,
+                bytesToCapturePerPacket,
+                totalBytesPerSession,
+                timeLimitInSeconds,
+                storageLocation,
+                (filters ?? new ChangeTrackingList<PacketCaptureFilter>()).ToList(),
+                default,
+                captureSettings,
+                default);
+        }
+
+        /// <param name="include"> List of AzureVMSS instances to run packet capture on. </param>
+        /// <param name="exclude"> List of AzureVMSS instances which has to be excluded from the AzureVMSS from running packet capture. </param>
+        /// <returns> A new <see cref="Models.PacketCaptureMachineScope"/> instance for mocking. </returns>
+        public static PacketCaptureMachineScope PacketCaptureMachineScope(IEnumerable<string> include = default, IEnumerable<string> exclude = default)
+        {
+            include ??= new ChangeTrackingList<string>();
+            exclude ??= new ChangeTrackingList<string>();
+
+            return new PacketCaptureMachineScope((include ?? new ChangeTrackingList<string>()).ToList(), (exclude ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="storageId"> The ID of the storage account to save the packet capture session. Required if no localPath or filePath is provided. </param>
+        /// <param name="storagePath"> The URI of the storage path to save the packet capture. Must be a well-formed URI describing the location to save the packet capture. </param>
+        /// <param name="filePath"> This path is invalid if 'Continuous Capture' is provided with 'true' or 'false'. A valid local path on the targeting VM. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. Required if no storage ID is provided, otherwise optional. </param>
+        /// <param name="localPath"> This path is valid if 'Continuous Capture' is provided with 'true' or 'false' and required if no storage ID is provided, otherwise optional. Must include the name of the capture file (*.cap). For linux virtual machine it must start with /var/captures. </param>
+        /// <returns> A new <see cref="Models.PacketCaptureStorageLocation"/> instance for mocking. </returns>
+        public static PacketCaptureStorageLocation PacketCaptureStorageLocation(ResourceIdentifier storageId = default, string storagePath = default, string filePath = default, string localPath = default)
+        {
+            return new PacketCaptureStorageLocation(storageId, storagePath, filePath, localPath, default);
+        }
+
+        /// <param name="protocol"> Protocol to be filtered on. </param>
+        /// <param name="localIPAddress"> Local IP Address to be filtered on. Notation: "127.0.0.1" for single address entry. "127.0.0.1-127.0.0.255" for range. "127.0.0.1;127.0.0.5"? for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null. </param>
+        /// <param name="remoteIPAddress"> Local IP Address to be filtered on. Notation: "127.0.0.1" for single address entry. "127.0.0.1-127.0.0.255" for range. "127.0.0.1;127.0.0.5;" for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null. </param>
+        /// <param name="localPort"> Local port to be filtered on. Notation: "80" for single port entry."80-85" for range. "80;443;" for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null. </param>
+        /// <param name="remotePort"> Remote port to be filtered on. Notation: "80" for single port entry."80-85" for range. "80;443;" for multiple entries. Multiple ranges not currently supported. Mixing ranges with multiple entries not currently supported. Default = null. </param>
+        /// <returns> A new <see cref="Models.PacketCaptureFilter"/> instance for mocking. </returns>
+        public static PacketCaptureFilter PacketCaptureFilter(PcProtocol? protocol = default, string localIPAddress = default, string remoteIPAddress = default, string localPort = default, string remotePort = default)
+        {
+            return new PacketCaptureFilter(
+                protocol,
+                localIPAddress,
+                remoteIPAddress,
+                localPort,
+                remotePort,
+                default);
+        }
+
+        /// <param name="fileCount"> Number of file count. Default value of count is 10 and maximum number is 10000. </param>
+        /// <param name="fileSizeInBytes"> Number of bytes captured per packet. Default value in bytes 104857600 (100MB) and maximum in bytes 4294967295 (4GB). </param>
+        /// <param name="sessionTimeLimitInSeconds"> Maximum duration of the capture session in seconds is 604800s (7 days) for a file. Default value in second 86400s (1 day). </param>
+        /// <returns> A new <see cref="Models.PacketCaptureSettings"/> instance for mocking. </returns>
+        public static PacketCaptureSettings PacketCaptureSettings(int? fileCount = default, long? fileSizeInBytes = default, int? sessionTimeLimitInSeconds = default)
+        {
+            return new PacketCaptureSettings(fileCount, fileSizeInBytes, sessionTimeLimitInSeconds, default);
+        }
+
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
+        /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
+        /// <param name="targetType"> Target type of the resource provided. </param>
+        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
+        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
+        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
+        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
+        /// <param name="filters"> A list of packet capture filters. </param>
+        /// <param name="continuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
+        /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
+        /// <param name="isContinuousCapture"> Gets or sets the IsContinuousCapture. </param>
+        /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
+        /// <returns> A new <see cref="Network.PacketCaptureData"/> instance for mocking. </returns>
+        public static PacketCaptureData PacketCaptureData(ETag? eTag = default, string target = default, PacketCaptureMachineScope scope = default, PacketCaptureTargetType? targetType = default, long? bytesToCapturePerPacket = default, long? totalBytesPerSession = default, int? timeLimitInSeconds = default, PacketCaptureStorageLocation storageLocation = default, IEnumerable<PacketCaptureFilter> filters = default, bool? continuousCapture = default, PacketCaptureSettings captureSettings = default, bool? isContinuousCapture = default, NetworkProvisioningState? provisioningState = default)
+        {
+            return new PacketCaptureData(eTag, target is null && scope is null && targetType is null && bytesToCapturePerPacket is null && totalBytesPerSession is null && timeLimitInSeconds is null && storageLocation is null && filters is null && continuousCapture is null && captureSettings is null && provisioningState is null ? default : new PacketCaptureResultProperties(
+                target,
+                scope,
+                targetType,
+                bytesToCapturePerPacket,
+                totalBytesPerSession,
+                timeLimitInSeconds,
+                storageLocation,
+                (filters ?? new ChangeTrackingList<PacketCaptureFilter>()).ToList(),
+                continuousCapture,
+                captureSettings,
+                default,
+                provisioningState), default);
+        }
+
+        /// <param name="target"> The ID of the targeted resource, only AzureVM and AzureVMSS as target type are currently supported. </param>
+        /// <param name="scope"> A list of AzureVMSS instances which can be included or excluded to run packet capture. If both included and excluded are empty, then the packet capture will run on all instances of AzureVMSS. </param>
+        /// <param name="targetType"> Target type of the resource provided. </param>
+        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. </param>
+        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
+        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
+        /// <param name="storageLocation"> The storage location for a packet capture session. </param>
+        /// <param name="filters"> A list of packet capture filters. </param>
+        /// <param name="continuousCapture"> This continuous capture is a nullable boolean, which can hold 'null', 'true' or 'false' value. If we do not pass this parameter, it would be consider as 'null', default value is 'null'. </param>
+        /// <param name="captureSettings"> The capture setting holds the 'FileCount', 'FileSizeInBytes', 'SessionTimeLimitInSeconds' values. </param>
+        /// <param name="provisioningState"> The provisioning state of the packet capture session. </param>
+        /// <returns> A new <see cref="Models.PacketCaptureResultProperties"/> instance for mocking. </returns>
+        public static PacketCaptureResultProperties PacketCaptureResultProperties(string target = default, PacketCaptureMachineScope scope = default, PacketCaptureTargetType? targetType = default, long? bytesToCapturePerPacket = default, long? totalBytesPerSession = default, int? timeLimitInSeconds = default, PacketCaptureStorageLocation storageLocation = default, IEnumerable<PacketCaptureFilter> filters = default, bool? continuousCapture = default, PacketCaptureSettings captureSettings = default, NetworkProvisioningState? provisioningState = default)
+        {
+            filters ??= new ChangeTrackingList<PacketCaptureFilter>();
+
+            return new PacketCaptureResultProperties(
+                target,
+                scope,
+                targetType,
+                bytesToCapturePerPacket,
+                totalBytesPerSession,
+                timeLimitInSeconds,
+                storageLocation,
+                (filters ?? new ChangeTrackingList<PacketCaptureFilter>()).ToList(),
+                continuousCapture,
+                captureSettings,
+                default,
+                provisioningState);
+        }
+
+        /// <param name="name"> The name of the packet capture resource. </param>
+        /// <param name="id"> The ID of the packet capture resource. </param>
+        /// <param name="captureStartOn"> The start time of the packet capture session. </param>
+        /// <param name="packetCaptureStatus"> The status of the packet capture session. </param>
+        /// <param name="stopReason"> The reason the current packet capture session was stopped. </param>
+        /// <param name="packetCaptureError"> List of errors of packet capture session. </param>
+        /// <returns> A new <see cref="Models.PacketCaptureQueryStatusResult"/> instance for mocking. </returns>
+        public static PacketCaptureQueryStatusResult PacketCaptureQueryStatusResult(string name = default, string id = default, DateTimeOffset? captureStartOn = default, PcStatus? packetCaptureStatus = default, string stopReason = default, IEnumerable<PcError> packetCaptureError = default)
+        {
+            packetCaptureError ??= new ChangeTrackingList<PcError>();
+
+            return new PacketCaptureQueryStatusResult(
+                name,
+                id,
+                captureStartOn,
+                packetCaptureStatus,
+                stopReason,
+                (packetCaptureError ?? new ChangeTrackingList<PcError>()).ToList(),
+                default);
+        }
+
         /// <param name="source"> Describes the source of connection monitor. </param>
         /// <param name="destination"> Describes the destination of connection monitor. </param>
         /// <param name="autoStart"> Determines if the connection monitor will start automatically once created. </param>
@@ -11144,6 +11002,47 @@ namespace Azure.ResourceManager.Network.Models
                 default), default);
         }
 
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="provisioningState"> The provisioning state of the private dns zone group resource. </param>
+        /// <param name="privateDnsZoneConfigs"> A collection of private dns zone configurations of the private dns zone group. </param>
+        /// <returns> A new <see cref="Network.PrivateDnsZoneGroupData"/> instance for mocking. </returns>
+        public static PrivateDnsZoneGroupData PrivateDnsZoneGroupData(ResourceIdentifier id = default, string name = default, string @type = default, NetworkProvisioningState? provisioningState = default, IEnumerable<PrivateDnsZoneConfig> privateDnsZoneConfigs = default)
+        {
+            return new PrivateDnsZoneGroupData(id, default, name, @type, provisioningState is null && privateDnsZoneConfigs is null ? default : new PrivateDnsZoneGroupPropertiesFormat(provisioningState, (privateDnsZoneConfigs ?? new ChangeTrackingList<PrivateDnsZoneConfig>()).ToList(), default));
+        }
+
+        /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="privateDnsZoneId"> The resource id of the private dns zone. </param>
+        /// <param name="recordSets"> A collection of information regarding a recordSet, holding information to identify private resources. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsZoneConfig"/> instance for mocking. </returns>
+        public static PrivateDnsZoneConfig PrivateDnsZoneConfig(string name = default, string privateDnsZoneId = default, IEnumerable<RecordSet> recordSets = default)
+        {
+            return new PrivateDnsZoneConfig(name, privateDnsZoneId is null && recordSets is null ? default : new PrivateDnsZonePropertiesFormat(privateDnsZoneId, (recordSets ?? new ChangeTrackingList<RecordSet>()).ToList(), default), default);
+        }
+
+        /// <param name="recordType"> Resource record type. </param>
+        /// <param name="recordSetName"> Recordset name. </param>
+        /// <param name="fqdn"> Fqdn that resolves to private endpoint ip address. </param>
+        /// <param name="provisioningState"> The provisioning state of the recordset. </param>
+        /// <param name="ttl"> Recordset time to live. </param>
+        /// <param name="ipAddresses"> The private ip address of the private endpoint. </param>
+        /// <returns> A new <see cref="Models.RecordSet"/> instance for mocking. </returns>
+        public static RecordSet RecordSet(string recordType = default, string recordSetName = default, string fqdn = default, NetworkProvisioningState? provisioningState = default, int? ttl = default, IEnumerable<string> ipAddresses = default)
+        {
+            ipAddresses ??= new ChangeTrackingList<string>();
+
+            return new RecordSet(
+                recordType,
+                recordSetName,
+                fqdn,
+                provisioningState,
+                ttl,
+                (ipAddresses ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
         /// <param name="vpnSites"> List of resource-ids of the vpn-sites for which config is to be downloaded. </param>
         /// <param name="outputBlobSasUri"> The sas-url to download the configurations for vpn-sites. </param>
         /// <returns> A new <see cref="Models.GetVpnSitesConfigurationContent"/> instance for mocking. </returns>
@@ -11161,6 +11060,57 @@ namespace Azure.ResourceManager.Network.Models
             vpnServerConfigurationResourceIds ??= new ChangeTrackingList<string>();
 
             return new VpnServerConfigurationsResponse((vpnServerConfigurationResourceIds ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="allowHubToRemoteVnetTransit"> Deprecated: VirtualHub to RemoteVnet transit to enabled or not. </param>
+        /// <param name="allowRemoteVnetToUseHubVnetGateways"> Deprecated: Allow RemoteVnet to use Virtual Hub's gateways. </param>
+        /// <param name="enableInternetSecurity"> Enable internet security. </param>
+        /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
+        /// <param name="provisioningState"> The provisioning state of the hub virtual network connection resource. </param>
+        /// <param name="remoteVirtualNetworkId"> Resource ID. </param>
+        /// <param name="connectionPolicyId"> Resource ID. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.HubVirtualNetworkConnectionData"/> instance for mocking. </returns>
+        public static HubVirtualNetworkConnectionData HubVirtualNetworkConnectionData(ResourceIdentifier id = default, string name = default, string @type = default, bool? allowHubToRemoteVnetTransit = default, bool? allowRemoteVnetToUseHubVnetGateways = default, bool? enableInternetSecurity = default, RoutingConfigurationNfv routingConfiguration = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier remoteVirtualNetworkId = default, ResourceIdentifier connectionPolicyId = default, ETag? eTag = default)
+        {
+            return new HubVirtualNetworkConnectionData(
+                id,
+                default,
+                name,
+                @type,
+                remoteVirtualNetworkId is null && allowHubToRemoteVnetTransit is null && allowRemoteVnetToUseHubVnetGateways is null && connectionPolicyId is null && enableInternetSecurity is null && routingConfiguration is null && provisioningState is null ? default : new HubVirtualNetworkConnectionProperties(
+                    new NetworkSubResource(remoteVirtualNetworkId, default),
+                    allowHubToRemoteVnetTransit,
+                    allowRemoteVnetToUseHubVnetGateways,
+                    new NetworkSubResource(connectionPolicyId, default),
+                    enableInternetSecurity,
+                    routingConfiguration,
+                    provisioningState,
+                    default),
+                eTag);
+        }
+
+        /// <param name="filterData"> Start Packet capture parameters on vpn connection. </param>
+        /// <param name="linkConnectionNames"> List of site link connection names. </param>
+        /// <returns> A new <see cref="Models.VpnConnectionPacketCaptureStartContent"/> instance for mocking. </returns>
+        public static VpnConnectionPacketCaptureStartContent VpnConnectionPacketCaptureStartContent(string filterData = default, IEnumerable<string> linkConnectionNames = default)
+        {
+            linkConnectionNames ??= new ChangeTrackingList<string>();
+
+            return new VpnConnectionPacketCaptureStartContent(filterData, (linkConnectionNames ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="sasUri"> SAS url for packet capture on vpn connection. </param>
+        /// <param name="linkConnectionNames"> List of site link connection names. </param>
+        /// <returns> A new <see cref="Models.VpnConnectionPacketCaptureStopContent"/> instance for mocking. </returns>
+        public static VpnConnectionPacketCaptureStopContent VpnConnectionPacketCaptureStopContent(Uri sasUri = default, IEnumerable<string> linkConnectionNames = default)
+        {
+            linkConnectionNames ??= new ChangeTrackingList<string>();
+
+            return new VpnConnectionPacketCaptureStopContent(sasUri, (linkConnectionNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -11204,6 +11154,15 @@ namespace Azure.ResourceManager.Network.Models
         public static P2SVpnConnectionHealth P2SVpnConnectionHealth(Uri sasUri = default)
         {
             return new P2SVpnConnectionHealth(sasUri, default);
+        }
+
+        /// <param name="value"> The list of ExpressRoute connections. </param>
+        /// <returns> A new <see cref="Models.ExpressRouteConnectionList"/> instance for mocking. </returns>
+        public static ExpressRouteConnectionList ExpressRouteConnectionList(IEnumerable<ExpressRouteConnectionData> value = default)
+        {
+            value ??= new ChangeTrackingList<ExpressRouteConnectionData>();
+
+            return new ExpressRouteConnectionList((value ?? new ChangeTrackingList<ExpressRouteConnectionData>()).ToList(), default);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -11559,77 +11518,6 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkUsageName NetworkUsageName(string value = default, string localizedValue = default)
         {
             return new NetworkUsageName(value, localizedValue, default);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="networkSecurityGroup"> The reference to the NetworkSecurityGroup resource. </param>
-        /// <param name="privateEndpoint"> A reference to the private endpoint to which the network interface is linked. </param>
-        /// <param name="ipConfigurations"> A list of IPConfigurations of the network interface. </param>
-        /// <param name="tapConfigurations"> A list of TapConfigurations of the network interface. </param>
-        /// <param name="dnsSettings"> The DNS settings in network interface. </param>
-        /// <param name="macAddress"> The MAC address of the network interface. </param>
-        /// <param name="primary"> Whether this is a primary network interface on a virtual machine. </param>
-        /// <param name="vnetEncryptionSupported"> Whether the virtual machine this nic is attached to supports encryption. </param>
-        /// <param name="defaultOutboundConnectivityEnabled"> Whether default outbound connectivity for nic was configured or not. </param>
-        /// <param name="enableAcceleratedNetworking"> If the network interface is configured for accelerated networking. Not applicable to VM sizes which require accelerated networking. </param>
-        /// <param name="disableTcpStateTracking"> Indicates whether to disable tcp state tracking. </param>
-        /// <param name="enableIPForwarding"> Indicates whether IP forwarding is enabled on this network interface. </param>
-        /// <param name="hostedWorkloads"> A list of references to linked BareMetal resources. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the network interface resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the network interface resource. </param>
-        /// <param name="workloadType"> WorkloadType of the NetworkInterface for BareMetal resources. </param>
-        /// <param name="nicType"> Type of Network Interface resource. </param>
-        /// <param name="privateLinkService"> Privatelinkservice of the network interface resource. </param>
-        /// <param name="migrationPhase"> Migration phase of Network Interface resource. </param>
-        /// <param name="auxiliaryMode"> Auxiliary mode of Network Interface resource. </param>
-        /// <param name="auxiliarySku"> Auxiliary sku of Network Interface resource. </param>
-        /// <param name="virtualMachineId"> Resource ID. </param>
-        /// <param name="dscpConfigurationId"> Resource ID. </param>
-        /// <param name="extendedLocation"> The extended location of the network interface. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.VirtualMachineScaleSetNetworkInterfaceData"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetNetworkInterfaceData VirtualMachineScaleSetNetworkInterfaceData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, NetworkSecurityGroupData networkSecurityGroup = default, PrivateEndpointData privateEndpoint = default, IEnumerable<NetworkInterfaceIPConfigurationData> ipConfigurations = default, IEnumerable<NetworkInterfaceTapConfigurationData> tapConfigurations = default, NetworkInterfaceDnsSettings dnsSettings = default, string macAddress = default, bool? primary = default, bool? vnetEncryptionSupported = default, bool? defaultOutboundConnectivityEnabled = default, bool? enableAcceleratedNetworking = default, bool? disableTcpStateTracking = default, bool? enableIPForwarding = default, IEnumerable<string> hostedWorkloads = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, string workloadType = default, NetworkInterfaceNicType? nicType = default, PrivateLinkServiceData privateLinkService = default, NetworkInterfaceMigrationPhase? migrationPhase = default, NetworkInterfaceAuxiliaryMode? auxiliaryMode = default, NetworkInterfaceAuxiliarySku? auxiliarySku = default, ResourceIdentifier virtualMachineId = default, ResourceIdentifier dscpConfigurationId = default, ExtendedLocation extendedLocation = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new VirtualMachineScaleSetNetworkInterfaceData(
-                id,
-                name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                virtualMachineId is null && networkSecurityGroup is null && privateEndpoint is null && ipConfigurations is null && tapConfigurations is null && dnsSettings is null && macAddress is null && primary is null && vnetEncryptionSupported is null && defaultOutboundConnectivityEnabled is null && enableAcceleratedNetworking is null && disableTcpStateTracking is null && enableIPForwarding is null && hostedWorkloads is null && dscpConfigurationId is null && resourceGuid is null && provisioningState is null && workloadType is null && nicType is null && privateLinkService is null && migrationPhase is null && auxiliaryMode is null && auxiliarySku is null ? default : new NetworkInterfacePropertiesFormat(
-                    new NetworkSubResource(virtualMachineId, default),
-                    networkSecurityGroup,
-                    privateEndpoint,
-                    (ipConfigurations ?? new ChangeTrackingList<NetworkInterfaceIPConfigurationData>()).ToList(),
-                    (tapConfigurations ?? new ChangeTrackingList<NetworkInterfaceTapConfigurationData>()).ToList(),
-                    dnsSettings,
-                    macAddress,
-                    primary,
-                    vnetEncryptionSupported,
-                    defaultOutboundConnectivityEnabled,
-                    enableAcceleratedNetworking,
-                    disableTcpStateTracking,
-                    enableIPForwarding,
-                    (hostedWorkloads ?? new ChangeTrackingList<string>()).ToList(),
-                    new NetworkSubResource(dscpConfigurationId, default),
-                    resourceGuid,
-                    provisioningState,
-                    workloadType,
-                    nicType,
-                    privateLinkService,
-                    migrationPhase,
-                    auxiliaryMode,
-                    auxiliarySku,
-                    default),
-                extendedLocation,
-                eTag);
         }
 
         /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>
@@ -14406,7 +14294,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ApplicationGatewayWafDynamicManifestData ApplicationGatewayWafDynamicManifestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ApplicationGatewayFirewallManifestRuleSet> availableRuleSets = default, string ruleSetType = default, string ruleSetVersion = default)
         {
-            return new ApplicationGatewayWafDynamicManifestData(ruleSetType is null && ruleSetVersion is null && availableRuleSets is null ? default : new ApplicationGatewayWafDynamicManifestPropertiesResult(new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, default), (availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>()).ToList(), default), name, default);
+            return new ApplicationGatewayWafDynamicManifestData(ruleSetType is null && ruleSetVersion is null && availableRuleSets is null ? default : new ApplicationGatewayWafDynamicManifestPropertiesResult(new DefaultRuleSetPropertyFormat(ruleSetType, ruleSetVersion, default), (availableRuleSets ?? new ChangeTrackingList<ApplicationGatewayFirewallManifestRuleSet>()).ToList(), default), default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailableDelegation"/>. </summary>
@@ -14840,7 +14728,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DdosProtectionPlanData DdosProtectionPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, IEnumerable<WritableSubResource> publicIPAddresses = default, IEnumerable<WritableSubResource> virtualNetworks = default)
         {
-            return new DdosProtectionPlanData(id, name, resourceType, systemData, tags ?? new ChangeTrackingDictionary<string, string>(), location, resourceGuid is null && provisioningState is null && publicIPAddresses is null && virtualNetworks is null ? default : new DdosProtectionPlanPropertiesFormat(resourceGuid, provisioningState, (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(), (virtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default), name, etag, default);
+            return new DdosProtectionPlanData(resourceGuid is null && provisioningState is null && publicIPAddresses is null && virtualNetworks is null ? default : new DdosProtectionPlanPropertiesFormat(resourceGuid, provisioningState, (publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(), (virtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default), name, etag, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.DscpConfigurationData"/>. </summary>
@@ -16368,7 +16256,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkSecurityPerimeterData NetworkSecurityPerimeterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkSecurityPerimeterProvisioningState? provisioningState = default, Guid? perimeterGuid = default)
         {
-            return new NetworkSecurityPerimeterData(id, name, resourceType, systemData, tags ?? new ChangeTrackingDictionary<string, string>(), location, provisioningState is null && perimeterGuid is null ? default : new NetworkSecurityPerimeterProperties(provisioningState, perimeterGuid, default), name, default);
+            return new NetworkSecurityPerimeterData(provisioningState is null && perimeterGuid is null ? default : new NetworkSecurityPerimeterProperties(provisioningState, perimeterGuid, default), name, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterProfileData"/>. </summary>
@@ -16748,7 +16636,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PacketCaptureData PacketCaptureData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string target = default, PacketCaptureMachineScope scope = default, PacketCaptureTargetType? targetType = default, long? bytesToCapturePerPacket = default, long? totalBytesPerSession = default, int? timeLimitInSeconds = default, PacketCaptureStorageLocation storageLocation = default, IEnumerable<PacketCaptureFilter> filters = default, bool? isContinuousCapture = default, PacketCaptureSettings captureSettings = default, NetworkProvisioningState? provisioningState = default)
         {
-            return new PacketCaptureData(name, default, etag, target is null && scope is null && targetType is null && bytesToCapturePerPacket is null && totalBytesPerSession is null && timeLimitInSeconds is null && storageLocation is null && filters is null && captureSettings is null && provisioningState is null ? default : new PacketCaptureResultProperties(
+            return new PacketCaptureData(etag, target is null && scope is null && targetType is null && bytesToCapturePerPacket is null && totalBytesPerSession is null && timeLimitInSeconds is null && storageLocation is null && filters is null && captureSettings is null && provisioningState is null ? default : new PacketCaptureResultProperties(
                 target,
                 scope,
                 targetType,
@@ -21207,7 +21095,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PacketCaptureData PacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string target, PacketCaptureMachineScope scope, PacketCaptureTargetType? targetType, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds, PacketCaptureStorageLocation storageLocation, IEnumerable<PacketCaptureFilter> filters, NetworkProvisioningState? provisioningState)
         {
-            return new PacketCaptureData(name, default, etag, target is null && scope is null && targetType is null && bytesToCapturePerPacket is null && totalBytesPerSession is null && timeLimitInSeconds is null && storageLocation is null && filters is null && provisioningState is null ? default : new PacketCaptureResultProperties(
+            return new PacketCaptureData(etag, target is null && scope is null && targetType is null && bytesToCapturePerPacket is null && totalBytesPerSession is null && timeLimitInSeconds is null && storageLocation is null && filters is null && provisioningState is null ? default : new PacketCaptureResultProperties(
                 target,
                 scope,
                 targetType,

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// <summary>
     /// A class representing a ApplicationGatewayWafDynamicManifest along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApplicationGatewayWafDynamicManifestResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetApplicationGatewayWafDynamicManifests method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetApplicationGatewayWafDynamicManifest method.
     /// </summary>
     public partial class ApplicationGatewayWafDynamicManifestResource : ArmResource
     {
@@ -74,10 +74,9 @@ namespace Azure.ResourceManager.Network
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="applicationGatewayWafDynamicManifestName"> The applicationGatewayWafDynamicManifestName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string applicationGatewayWafDynamicManifestName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/{applicationGatewayWafDynamicManifestName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/{applicationGatewayWafDynamicManifestName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGatewayWafDynamicManifestsDefaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _applicationGatewayWafDynamicManifestsDefaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApplicationGatewayWafDynamicManifestData> response = Response.FromValue(ApplicationGatewayWafDynamicManifestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/{applicationGatewayWafDynamicManifestName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -171,7 +170,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationGatewayWafDynamicManifestsDefaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _applicationGatewayWafDynamicManifestsDefaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApplicationGatewayWafDynamicManifestData> response = Response.FromValue(ApplicationGatewayWafDynamicManifestData.FromResponse(result), result);
                 if (response.Value == null)

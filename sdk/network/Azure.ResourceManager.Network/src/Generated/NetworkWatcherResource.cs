@@ -2067,39 +2067,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a collection of PacketCaptures in the <see cref="NetworkWatcherResource"/>. </summary>
-        /// <returns> An object representing collection of PacketCaptures and their operations over a PacketCaptureResource. </returns>
-        public virtual PacketCaptureCollection GetPacketCaptures()
-        {
-            return GetCachedClient(client => new PacketCaptureCollection(client, Id));
-        }
-
-        /// <summary> Gets a packet capture session by name. </summary>
-        /// <param name="packetCaptureName"> Name of the packet capture session. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PacketCaptureResource>> GetPacketCaptureAsync(string packetCaptureName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
-
-            return await GetPacketCaptures().GetAsync(packetCaptureName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a packet capture session by name. </summary>
-        /// <param name="packetCaptureName"> Name of the packet capture session. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PacketCaptureResource> GetPacketCapture(string packetCaptureName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
-
-            return GetPacketCaptures().Get(packetCaptureName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of FlowLogs in the <see cref="NetworkWatcherResource"/>. </summary>
         /// <returns> An object representing collection of FlowLogs and their operations over a FlowLogResource. </returns>
         public virtual FlowLogCollection GetFlowLogs()
@@ -2131,6 +2098,39 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
             return GetFlowLogs().Get(flowLogName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PacketCaptures in the <see cref="NetworkWatcherResource"/>. </summary>
+        /// <returns> An object representing collection of PacketCaptures and their operations over a PacketCaptureResource. </returns>
+        public virtual PacketCaptureCollection GetPacketCaptures()
+        {
+            return GetCachedClient(client => new PacketCaptureCollection(client, Id));
+        }
+
+        /// <summary> Gets a packet capture session by name. </summary>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PacketCaptureResource>> GetPacketCaptureAsync(string packetCaptureName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
+
+            return await GetPacketCaptures().GetAsync(packetCaptureName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a packet capture session by name. </summary>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PacketCaptureResource> GetPacketCapture(string packetCaptureName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
+
+            return GetPacketCaptures().Get(packetCaptureName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ConnectionMonitors in the <see cref="NetworkWatcherResource"/>. </summary>

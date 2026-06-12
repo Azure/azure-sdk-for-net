@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string connectionName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateNetworkVirtualApplianceConnectionRequest(Guid subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string connectionName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string connectionName, RequestContext context)
+        internal HttpMessage CreateGetNetworkVirtualApplianceConnectionRequest(Guid subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string connectionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string connectionName, RequestContext context)
+        internal HttpMessage CreateDeleteNetworkVirtualApplianceConnectionRequest(Guid subscriptionId, string resourceGroupName, string networkVirtualApplianceName, string connectionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string networkVirtualApplianceName, RequestContext context)
+        internal HttpMessage CreateGetNetworkVirtualApplianceConnectionsRequest(Guid subscriptionId, string resourceGroupName, string networkVirtualApplianceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string networkVirtualApplianceName, RequestContext context)
+        internal HttpMessage CreateNextGetNetworkVirtualApplianceConnectionsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string networkVirtualApplianceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

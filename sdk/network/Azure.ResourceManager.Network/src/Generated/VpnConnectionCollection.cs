@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_CreateOrUpdate. </description>
+        /// <description> VpnGateways_VpnConnectionsCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="connectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="data"> Parameters supplied to create or Update a VPN Connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_CreateOrUpdate. </description>
+        /// <description> VpnGateways_VpnConnectionsCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="connectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="data"> Parameters supplied to create or Update a VPN Connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_Get. </description>
+        /// <description> VpnGateways_VpnConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_Get. </description>
+        /// <description> VpnGateways_VpnConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_List. </description>
+        /// <description> VpnGateways_ListByVpnGateway. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VpnConnectionData, VpnConnectionResource>(new VpnConnectionsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<VpnConnectionData, VpnConnectionResource>(new VpnConnectionsGetByVpnGatewayAsyncCollectionResultOfT(
                 _vpnConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_List. </description>
+        /// <description> VpnGateways_ListByVpnGateway. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VpnConnectionData, VpnConnectionResource>(new VpnConnectionsGetAllCollectionResultOfT(
+            return new PageableWrapper<VpnConnectionData, VpnConnectionResource>(new VpnConnectionsGetByVpnGatewayCollectionResultOfT(
                 _vpnConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_Get. </description>
+        /// <description> VpnGateways_VpnConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_Get. </description>
+        /// <description> VpnGateways_VpnConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_Get. </description>
+        /// <description> VpnGateways_VpnConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> VpnConnections_Get. </description>
+        /// <description> VpnGateways_VpnConnectionsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>

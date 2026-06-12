@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_GetFailoverAllTestsDetails. </description>
+        /// <description> ExpressRouteGateways_GetFailoverAllTestsDetails. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<IList<ExpressRouteFailoverTestDetails>>> GetFailoverAllTestsDetailsAsync(WaitUntil waitUntil, string @type = default, bool? fetchLatest = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetFailoverAllTestsDetails");
+            using DiagnosticScope scope = _expressRouteGatewaysClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetFailoverAllTestsDetails");
             scope.Start();
             try
             {
@@ -444,11 +444,11 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetFailoverAllTestsDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @type, fetchLatest, context);
+                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetFailoverAllTestsDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @type, fetchLatest, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<IList<ExpressRouteFailoverTestDetails>> operation = new NetworkArmOperation<IList<ExpressRouteFailoverTestDetails>>(
                     new IListOfExpressRouteFailoverTestDetailsOperationSource(),
-                    _expressRouteConnectionsClientDiagnostics,
+                    _expressRouteGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_GetFailoverAllTestsDetails. </description>
+        /// <description> ExpressRouteGateways_GetFailoverAllTestsDetails. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<IList<ExpressRouteFailoverTestDetails>> GetFailoverAllTestsDetails(WaitUntil waitUntil, string @type = default, bool? fetchLatest = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetFailoverAllTestsDetails");
+            using DiagnosticScope scope = _expressRouteGatewaysClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetFailoverAllTestsDetails");
             scope.Start();
             try
             {
@@ -501,11 +501,11 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetFailoverAllTestsDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @type, fetchLatest, context);
+                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetFailoverAllTestsDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, @type, fetchLatest, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<IList<ExpressRouteFailoverTestDetails>> operation = new NetworkArmOperation<IList<ExpressRouteFailoverTestDetails>>(
                     new IListOfExpressRouteFailoverTestDetailsOperationSource(),
-                    _expressRouteConnectionsClientDiagnostics,
+                    _expressRouteGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_GetFailoverSingleTestDetails. </description>
+        /// <description> ExpressRouteGateways_GetFailoverSingleTestDetails. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(peeringLocation, nameof(peeringLocation));
             Argument.AssertNotNullOrEmpty(failoverTestId, nameof(failoverTestId));
 
-            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetFailoverSingleTestDetails");
+            using DiagnosticScope scope = _expressRouteGatewaysClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetFailoverSingleTestDetails");
             scope.Start();
             try
             {
@@ -563,11 +563,11 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetFailoverSingleTestDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, failoverTestId, context);
+                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetFailoverSingleTestDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, failoverTestId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<IList<ExpressRouteFailoverSingleTestDetails>> operation = new NetworkArmOperation<IList<ExpressRouteFailoverSingleTestDetails>>(
                     new IListOfExpressRouteFailoverSingleTestDetailsOperationSource(),
-                    _expressRouteConnectionsClientDiagnostics,
+                    _expressRouteGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_GetFailoverSingleTestDetails. </description>
+        /// <description> ExpressRouteGateways_GetFailoverSingleTestDetails. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -617,7 +617,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(peeringLocation, nameof(peeringLocation));
             Argument.AssertNotNullOrEmpty(failoverTestId, nameof(failoverTestId));
 
-            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetFailoverSingleTestDetails");
+            using DiagnosticScope scope = _expressRouteGatewaysClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetFailoverSingleTestDetails");
             scope.Start();
             try
             {
@@ -625,11 +625,11 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetFailoverSingleTestDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, failoverTestId, context);
+                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetFailoverSingleTestDetailsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, failoverTestId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<IList<ExpressRouteFailoverSingleTestDetails>> operation = new NetworkArmOperation<IList<ExpressRouteFailoverSingleTestDetails>>(
                     new IListOfExpressRouteFailoverSingleTestDetailsOperationSource(),
-                    _expressRouteConnectionsClientDiagnostics,
+                    _expressRouteGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_GetResiliencyInformation. </description>
+        /// <description> ExpressRouteGateways_GetResiliencyInformation. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<GatewayResiliencyInformation>> GetResiliencyInformationAsync(WaitUntil waitUntil, bool? attemptRefresh = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetResiliencyInformation");
+            using DiagnosticScope scope = _expressRouteGatewaysClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetResiliencyInformation");
             scope.Start();
             try
             {
@@ -681,11 +681,11 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetResiliencyInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
+                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetResiliencyInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<GatewayResiliencyInformation> operation = new NetworkArmOperation<GatewayResiliencyInformation>(
                     new GatewayResiliencyInformationOperationSource(),
-                    _expressRouteConnectionsClientDiagnostics,
+                    _expressRouteGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_GetResiliencyInformation. </description>
+        /// <description> ExpressRouteGateways_GetResiliencyInformation. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -729,7 +729,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<GatewayResiliencyInformation> GetResiliencyInformation(WaitUntil waitUntil, bool? attemptRefresh = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetResiliencyInformation");
+            using DiagnosticScope scope = _expressRouteGatewaysClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetResiliencyInformation");
             scope.Start();
             try
             {
@@ -737,11 +737,11 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetResiliencyInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
+                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetResiliencyInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<GatewayResiliencyInformation> operation = new NetworkArmOperation<GatewayResiliencyInformation>(
                     new GatewayResiliencyInformationOperationSource(),
-                    _expressRouteConnectionsClientDiagnostics,
+                    _expressRouteGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_GetRoutesInformation. </description>
+        /// <description> ExpressRouteGateways_GetRoutesInformation. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<GatewayRouteSetsInformation>> GetRoutesInformationAsync(WaitUntil waitUntil, bool? attemptRefresh = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetRoutesInformation");
+            using DiagnosticScope scope = _expressRouteGatewaysClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetRoutesInformation");
             scope.Start();
             try
             {
@@ -793,11 +793,11 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetRoutesInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
+                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRoutesInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<GatewayRouteSetsInformation> operation = new NetworkArmOperation<GatewayRouteSetsInformation>(
                     new GatewayRouteSetsInformationOperationSource(),
-                    _expressRouteConnectionsClientDiagnostics,
+                    _expressRouteGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_GetRoutesInformation. </description>
+        /// <description> ExpressRouteGateways_GetRoutesInformation. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<GatewayRouteSetsInformation> GetRoutesInformation(WaitUntil waitUntil, bool? attemptRefresh = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetRoutesInformation");
+            using DiagnosticScope scope = _expressRouteGatewaysClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetRoutesInformation");
             scope.Start();
             try
             {
@@ -849,11 +849,11 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetRoutesInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
+                HttpMessage message = _expressRouteGatewaysRestClient.CreateGetRoutesInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, attemptRefresh, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<GatewayRouteSetsInformation> operation = new NetworkArmOperation<GatewayRouteSetsInformation>(
                     new GatewayRouteSetsInformationOperationSource(),
-                    _expressRouteConnectionsClientDiagnostics,
+                    _expressRouteGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -863,6 +863,102 @@ namespace Azure.ResourceManager.Network
                     operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists ExpressRouteConnections.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteGatewayResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ExpressRouteConnectionList>> GetExpressRouteConnectionsAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetExpressRouteConnections");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ExpressRouteConnectionList> response = Response.FromValue(ExpressRouteConnectionList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists ExpressRouteConnections.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}/expressRouteConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteGateways_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ExpressRouteGatewayResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ExpressRouteConnectionList> GetExpressRouteConnections(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.GetExpressRouteConnections");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _expressRouteConnectionsRestClient.CreateGetExpressRouteConnectionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ExpressRouteConnectionList> response = Response.FromValue(ExpressRouteConnectionList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {
@@ -880,7 +976,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_StartSiteFailoverTest. </description>
+        /// <description> ExpressRouteGateways_StartSiteFailoverTest. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -901,7 +997,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(peeringLocation, nameof(peeringLocation));
 
-            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.StartSiteFailoverTest");
+            using DiagnosticScope scope = _expressRouteGatewaysClientDiagnostics.CreateScope("ExpressRouteGatewayResource.StartSiteFailoverTest");
             scope.Start();
             try
             {
@@ -909,11 +1005,11 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateStartSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, context);
+                HttpMessage message = _expressRouteGatewaysRestClient.CreateStartSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
-                    _expressRouteConnectionsClientDiagnostics,
+                    _expressRouteGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -940,7 +1036,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_StartSiteFailoverTest. </description>
+        /// <description> ExpressRouteGateways_StartSiteFailoverTest. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -961,7 +1057,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(peeringLocation, nameof(peeringLocation));
 
-            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.StartSiteFailoverTest");
+            using DiagnosticScope scope = _expressRouteGatewaysClientDiagnostics.CreateScope("ExpressRouteGatewayResource.StartSiteFailoverTest");
             scope.Start();
             try
             {
@@ -969,11 +1065,11 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateStartSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, context);
+                HttpMessage message = _expressRouteGatewaysRestClient.CreateStartSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, peeringLocation, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
-                    _expressRouteConnectionsClientDiagnostics,
+                    _expressRouteGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -1000,7 +1096,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_StopSiteFailoverTest. </description>
+        /// <description> ExpressRouteGateways_StopSiteFailoverTest. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -1020,7 +1116,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.StopSiteFailoverTest");
+            using DiagnosticScope scope = _expressRouteGatewaysClientDiagnostics.CreateScope("ExpressRouteGatewayResource.StopSiteFailoverTest");
             scope.Start();
             try
             {
@@ -1028,11 +1124,11 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateStopSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
+                HttpMessage message = _expressRouteGatewaysRestClient.CreateStopSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
-                    _expressRouteConnectionsClientDiagnostics,
+                    _expressRouteGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -1059,7 +1155,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteConnections_StopSiteFailoverTest. </description>
+        /// <description> ExpressRouteGateways_StopSiteFailoverTest. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -1079,7 +1175,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            using DiagnosticScope scope = _expressRouteConnectionsClientDiagnostics.CreateScope("ExpressRouteGatewayResource.StopSiteFailoverTest");
+            using DiagnosticScope scope = _expressRouteGatewaysClientDiagnostics.CreateScope("ExpressRouteGatewayResource.StopSiteFailoverTest");
             scope.Start();
             try
             {
@@ -1087,11 +1183,11 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteConnectionsRestClient.CreateStopSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
+                HttpMessage message = _expressRouteGatewaysRestClient.CreateStopSiteFailoverTestRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, null, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<string> operation = new NetworkArmOperation<string>(
                     new StringOperationSource(),
-                    _expressRouteConnectionsClientDiagnostics,
+                    _expressRouteGatewaysClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -1391,7 +1487,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the specified ExpressRouteConnection. </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1404,7 +1500,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets the specified ExpressRouteConnection. </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"> The name of the express route connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>

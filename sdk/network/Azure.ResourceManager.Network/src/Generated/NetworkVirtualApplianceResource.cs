@@ -1017,7 +1017,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the details of specified NVA connection. </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the details of specified NVA connection. </summary>
-        /// <param name="connectionName"> The name of the resource. </param>
+        /// <param name="connectionName"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>

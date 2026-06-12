@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/ExpressRoutePorts/", false);
+            uri.AppendPath("/providers/Microsoft.Network/expressRoutePorts/", false);
             uri.AppendPath(expressRoutePortName, true);
             uri.AppendPath("/authorizations/", false);
             uri.AppendPath(authorizationName, true);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/ExpressRoutePorts/", false);
+            uri.AppendPath("/providers/Microsoft.Network/expressRoutePorts/", false);
             uri.AppendPath(expressRoutePortName, true);
             uri.AppendPath("/authorizations/", false);
             uri.AppendPath(authorizationName, true);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/ExpressRoutePorts/", false);
+            uri.AppendPath("/providers/Microsoft.Network/expressRoutePorts/", false);
             uri.AppendPath(expressRoutePortName, true);
             uri.AppendPath("/authorizations/", false);
             uri.AppendPath(authorizationName, true);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Network/ExpressRoutePorts/", false);
+            uri.AppendPath("/providers/Microsoft.Network/expressRoutePorts/", false);
             uri.AppendPath(expressRoutePortName, true);
             uri.AppendPath("/authorizations", false);
             if (_apiVersion != null)

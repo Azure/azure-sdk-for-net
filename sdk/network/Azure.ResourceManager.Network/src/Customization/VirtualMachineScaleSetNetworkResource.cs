@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<NetworkInterfaceData> GetAllNetworkInterfaceDataAsync(CancellationToken cancellationToken)
         {
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
-            return new AsyncPageableWrapper<VirtualMachineScaleSetNetworkInterfaceResource, NetworkInterfaceData>(resourceGroup.GetVirtualMachineScaleSetNetworkInterfacesAsync(Id.Name, cancellationToken), resource => resource.Data);
+            return resourceGroup.GetVirtualMachineScaleSetNetworkInterfacesAsync(Id.Name, cancellationToken);
         }
 
         [ForwardsClientCalls]
         public virtual Pageable<NetworkInterfaceData> GetAllNetworkInterfaceData(CancellationToken cancellationToken)
         {
             var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
-            return new PageableWrapper<VirtualMachineScaleSetNetworkInterfaceResource, NetworkInterfaceData>(resourceGroup.GetVirtualMachineScaleSetNetworkInterfaces(Id.Name, cancellationToken), resource => resource.Data);
+            return resourceGroup.GetVirtualMachineScaleSetNetworkInterfaces(Id.Name, cancellationToken);
         }
 
         [ForwardsClientCalls]

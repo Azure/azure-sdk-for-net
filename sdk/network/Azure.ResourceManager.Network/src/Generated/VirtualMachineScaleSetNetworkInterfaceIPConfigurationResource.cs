@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Network
     /// <summary>
     /// A class representing a VirtualMachineScaleSetNetworkInterfaceIPConfiguration along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetNetworkInterfaceResource"/> using the GetVirtualMachineScaleSetNetworkInterfaceIPConfigurations method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetVmNetworkResource"/> using the GetVirtualMachineScaleSetNetworkInterfaceIPConfigurations method.
     /// </summary>
     public partial class VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource : ArmResource
     {
-        private readonly ClientDiagnostics _networkInterfaceIPConfigurationsClientDiagnostics;
-        private readonly NetworkInterfaceIPConfigurations _networkInterfaceIPConfigurationsRestClient;
-        private readonly VirtualMachineScaleSetNetworkInterfaceIPConfigurationData _data;
+        private readonly ClientDiagnostics _virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics;
+        private readonly VirtualMachineScaleSetNetworkInterfaceIPConfigurations _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient;
+        private readonly NetworkInterfaceIPConfigurationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/networkInterfaces/ipConfigurations";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource(ArmClient client, VirtualMachineScaleSetNetworkInterfaceIPConfigurationData data) : this(client, data.Id)
+        internal VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource(ArmClient client, NetworkInterfaceIPConfigurationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Network
         internal VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string virtualMachineScaleSetNetworkInterfaceIPConfigurationApiVersion);
-            _networkInterfaceIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _networkInterfaceIPConfigurationsRestClient = new NetworkInterfaceIPConfigurations(_networkInterfaceIPConfigurationsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetNetworkInterfaceIPConfigurationApiVersion ?? "2025-07-01");
+            _virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient = new VirtualMachineScaleSetNetworkInterfaceIPConfigurations(_virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetNetworkInterfaceIPConfigurationApiVersion ?? "2018-10-01");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual VirtualMachineScaleSetNetworkInterfaceIPConfigurationData Data
+        public virtual NetworkInterfaceIPConfigurationData Data
         {
             get
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _networkInterfaceIPConfigurationsClientDiagnostics.CreateScope("VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource.Get");
+            using DiagnosticScope scope = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics.CreateScope("VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource.Get");
             scope.Start();
             try
             {
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
+                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VirtualMachineScaleSetNetworkInterfaceIPConfigurationData> response = Response.FromValue(VirtualMachineScaleSetNetworkInterfaceIPConfigurationData.FromResponse(result), result);
+                Response<NetworkInterfaceIPConfigurationData> response = Response.FromValue(NetworkInterfaceIPConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource> Get(string expand = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _networkInterfaceIPConfigurationsClientDiagnostics.CreateScope("VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource.Get");
+            using DiagnosticScope scope = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsClientDiagnostics.CreateScope("VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource.Get");
             scope.Start();
             try
             {
@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _networkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
+                HttpMessage message = _virtualMachineScaleSetNetworkInterfaceIPConfigurationsRestClient.CreateGetVirtualMachineScaleSetIpConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<VirtualMachineScaleSetNetworkInterfaceIPConfigurationData> response = Response.FromValue(VirtualMachineScaleSetNetworkInterfaceIPConfigurationData.FromResponse(result), result);
+                Response<NetworkInterfaceIPConfigurationData> response = Response.FromValue(NetworkInterfaceIPConfigurationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteLinks_Get. </description>
+        /// <description> ExpressRoutePorts_ExpressRouteLinksGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteLinks_Get. </description>
+        /// <description> ExpressRoutePorts_ExpressRouteLinksGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

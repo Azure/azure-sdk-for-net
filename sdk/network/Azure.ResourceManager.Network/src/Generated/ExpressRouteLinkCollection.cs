@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteLinks_Get. </description>
+        /// <description> ExpressRoutePorts_ExpressRouteLinksGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkName"> Name of child port resource that is unique among child port resources of the parent. </param>
+        /// <param name="linkName"> The name of the express route link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteLinks_Get. </description>
+        /// <description> ExpressRoutePorts_ExpressRouteLinksGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkName"> Name of child port resource that is unique among child port resources of the parent. </param>
+        /// <param name="linkName"> The name of the express route link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteLinks_List. </description>
+        /// <description> ExpressRoutePorts_ExpressRouteLinksList. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteLinks_List. </description>
+        /// <description> ExpressRoutePorts_ExpressRouteLinksList. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteLinks_Get. </description>
+        /// <description> ExpressRoutePorts_ExpressRouteLinksGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkName"> Name of child port resource that is unique among child port resources of the parent. </param>
+        /// <param name="linkName"> The name of the express route link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteLinks_Get. </description>
+        /// <description> ExpressRoutePorts_ExpressRouteLinksGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkName"> Name of child port resource that is unique among child port resources of the parent. </param>
+        /// <param name="linkName"> The name of the express route link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteLinks_Get. </description>
+        /// <description> ExpressRoutePorts_ExpressRouteLinksGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkName"> Name of child port resource that is unique among child port resources of the parent. </param>
+        /// <param name="linkName"> The name of the express route link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ExpressRouteLinks_Get. </description>
+        /// <description> ExpressRoutePorts_ExpressRouteLinksGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="linkName"> Name of child port resource that is unique among child port resources of the parent. </param>
+        /// <param name="linkName"> The name of the express route link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>

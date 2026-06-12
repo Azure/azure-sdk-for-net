@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, string routeTableName, RequestContext context)
+        internal HttpMessage CreateGetVirtualHubRouteTableV2Request(Guid subscriptionId, string resourceGroupName, string virtualHubName, string routeTableName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, string routeTableName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateVirtualHubRouteTableV2Request(Guid subscriptionId, string resourceGroupName, string virtualHubName, string routeTableName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, string routeTableName, RequestContext context)
+        internal HttpMessage CreateDeleteVirtualHubRouteTableV2Request(Guid subscriptionId, string resourceGroupName, string virtualHubName, string routeTableName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContext context)
+        internal HttpMessage CreateGetVirtualHubRouteTableV2sRequest(Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContext context)
+        internal HttpMessage CreateNextGetVirtualHubRouteTableV2sRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string virtualHubName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         else
                         {
-                            array.Add(item.ValueKind == JsonValueKind.String ? item.GetString() : item.GetRawText());
+                            array.Add(item.GetString());
                         }
                     }
                     rules = array;

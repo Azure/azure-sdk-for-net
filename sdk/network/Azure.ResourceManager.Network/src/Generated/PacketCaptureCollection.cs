@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_CreateOrUpdate. </description>
+        /// <description> NetworkWatchers_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _packetCapturesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packetCaptureName, PacketCaptureContent.ToRequestContent(content), context);
+                HttpMessage message = _packetCapturesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packetCaptureName, PacketCaptureContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<PacketCaptureResource> operation = new NetworkArmOperation<PacketCaptureResource>(
                     new PacketCaptureResourceOperationSource(Client),
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_CreateOrUpdate. </description>
+        /// <description> NetworkWatchers_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _packetCapturesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packetCaptureName, PacketCaptureContent.ToRequestContent(content), context);
+                HttpMessage message = _packetCapturesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, packetCaptureName, PacketCaptureContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<PacketCaptureResource> operation = new NetworkArmOperation<PacketCaptureResource>(
                     new PacketCaptureResourceOperationSource(Client),
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_Get. </description>
+        /// <description> NetworkWatchers_PacketCapturesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="packetCaptureName"> Name of the packet capture session. </param>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_Get. </description>
+        /// <description> NetworkWatchers_PacketCapturesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="packetCaptureName"> Name of the packet capture session. </param>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_List. </description>
+        /// <description> NetworkWatchers_PacketCapturesList. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_List. </description>
+        /// <description> NetworkWatchers_PacketCapturesList. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_Get. </description>
+        /// <description> NetworkWatchers_PacketCapturesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="packetCaptureName"> Name of the packet capture session. </param>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_Get. </description>
+        /// <description> NetworkWatchers_PacketCapturesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="packetCaptureName"> Name of the packet capture session. </param>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_Get. </description>
+        /// <description> NetworkWatchers_PacketCapturesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="packetCaptureName"> Name of the packet capture session. </param>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PacketCaptures_Get. </description>
+        /// <description> NetworkWatchers_PacketCapturesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="packetCaptureName"> Name of the packet capture session. </param>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>

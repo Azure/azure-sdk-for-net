@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Network
 {
     /// <summary></summary>
-    public partial class VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource : IJsonModel<VirtualMachineScaleSetNetworkInterfaceIPConfigurationData>
+    public partial class VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource : IJsonModel<NetworkInterfaceIPConfigurationData>
     {
-        private static IJsonModel<VirtualMachineScaleSetNetworkInterfaceIPConfigurationData> s_dataDeserializationInstance;
+        private static IJsonModel<NetworkInterfaceIPConfigurationData> s_dataDeserializationInstance;
 
-        private static IJsonModel<VirtualMachineScaleSetNetworkInterfaceIPConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VirtualMachineScaleSetNetworkInterfaceIPConfigurationData();
+        private static IJsonModel<NetworkInterfaceIPConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkInterfaceIPConfigurationData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<VirtualMachineScaleSetNetworkInterfaceIPConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineScaleSetNetworkInterfaceIPConfigurationData>)Data).Write(writer, options);
+        void IJsonModel<NetworkInterfaceIPConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkInterfaceIPConfigurationData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineScaleSetNetworkInterfaceIPConfigurationData IJsonModel<VirtualMachineScaleSetNetworkInterfaceIPConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        NetworkInterfaceIPConfigurationData IJsonModel<NetworkInterfaceIPConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<VirtualMachineScaleSetNetworkInterfaceIPConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualMachineScaleSetNetworkInterfaceIPConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<NetworkInterfaceIPConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkInterfaceIPConfigurationData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        VirtualMachineScaleSetNetworkInterfaceIPConfigurationData IPersistableModel<VirtualMachineScaleSetNetworkInterfaceIPConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualMachineScaleSetNetworkInterfaceIPConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
+        NetworkInterfaceIPConfigurationData IPersistableModel<NetworkInterfaceIPConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkInterfaceIPConfigurationData>(data, options, AzureResourceManagerNetworkContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<VirtualMachineScaleSetNetworkInterfaceIPConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<NetworkInterfaceIPConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

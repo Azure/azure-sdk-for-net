@@ -1,0 +1,19 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+#pragma warning disable CS0612, CS0618, CS1591
+
+namespace Azure.ResourceManager.Network
+{
+    public partial class ExpressRoutePortsLocationResource
+    {
+        public virtual global::Azure.Response<global::Azure.ResourceManager.Network.ExpressRoutePortsLocationResource> AddTag(global::System.String p0, global::System.String p1, global::System.Threading.CancellationToken p2) => default;
+        public virtual global::Azure.Response<global::Azure.ResourceManager.Network.ExpressRoutePortsLocationResource> RemoveTag(global::System.String p0, global::System.Threading.CancellationToken p1) => default;
+        public virtual global::Azure.Response<global::Azure.ResourceManager.Network.ExpressRoutePortsLocationResource> SetTags(global::System.Collections.Generic.IDictionary<global::System.String, global::System.String> p0, global::System.Threading.CancellationToken p1) => default;
+        public virtual global::System.Threading.Tasks.Task<global::Azure.Response<global::Azure.ResourceManager.Network.ExpressRoutePortsLocationResource>> AddTagAsync(global::System.String p0, global::System.String p1, global::System.Threading.CancellationToken p2) => default;
+        public virtual global::System.Threading.Tasks.Task<global::Azure.Response<global::Azure.ResourceManager.Network.ExpressRoutePortsLocationResource>> RemoveTagAsync(global::System.String p0, global::System.Threading.CancellationToken p1) => default;
+        public virtual global::System.Threading.Tasks.Task<global::Azure.Response<global::Azure.ResourceManager.Network.ExpressRoutePortsLocationResource>> SetTagsAsync(global::System.Collections.Generic.IDictionary<global::System.String, global::System.String> p0, global::System.Threading.CancellationToken p1) => default;
+    }
+}

@@ -83,11 +83,6 @@ namespace Azure.ResourceManager.Network
             {
                 throw new FormatException($"The model {nameof(PacketCaptureData)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -140,18 +135,11 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
-            string name = default;
-            string id = default;
             ETag? eTag = default;
             PacketCaptureResultProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("etag"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -175,7 +163,7 @@ namespace Azure.ResourceManager.Network
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PacketCaptureData(name, id, eTag, properties, additionalBinaryDataProperties);
+            return new PacketCaptureData(eTag, properties, additionalBinaryDataProperties);
         }
     }
 }

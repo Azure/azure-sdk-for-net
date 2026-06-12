@@ -131,7 +131,6 @@ namespace Azure.ResourceManager.Network
                 return null;
             }
             ApplicationGatewayWafDynamicManifestPropertiesResult properties = default;
-            string name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,7 +148,7 @@ namespace Azure.ResourceManager.Network
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApplicationGatewayWafDynamicManifestData(properties, name, additionalBinaryDataProperties);
+            return new ApplicationGatewayWafDynamicManifestData(properties, additionalBinaryDataProperties);
         }
     }
 }

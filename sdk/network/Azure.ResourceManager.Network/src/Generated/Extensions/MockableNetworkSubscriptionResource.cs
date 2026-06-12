@@ -553,20 +553,12 @@ namespace Azure.ResourceManager.Network.Mocking
             return GetExpressRoutePortsLocations().Get(locationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApplicationGatewayWafDynamicManifests in the <see cref="SubscriptionResource"/>. </summary>
-        /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of ApplicationGatewayWafDynamicManifests and their operations over a ApplicationGatewayWafDynamicManifestResource. </returns>
-        public virtual ApplicationGatewayWafDynamicManifestCollection GetApplicationGatewayWafDynamicManifests(string location)
-        {
-            return GetCachedClient(client => new ApplicationGatewayWafDynamicManifestCollection(client, Id, location));
-        }
-
         /// <summary>
         /// Gets the regional application gateway waf manifest.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/{applicationGatewayWafDynamicManifestName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -576,49 +568,16 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <term> Default Api Version. </term>
         /// <description> 2025-07-01. </description>
         /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location for the resource. </param>
-        /// <param name="applicationGatewayWafDynamicManifestName"> The name of the Application Gateway WAF Dynamic Manifest. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApplicationGatewayWafDynamicManifestResource>> GetApplicationGatewayWafDynamicManifestAsync(string location, string applicationGatewayWafDynamicManifestName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(applicationGatewayWafDynamicManifestName, nameof(applicationGatewayWafDynamicManifestName));
-
-            return await GetApplicationGatewayWafDynamicManifests(location).GetAsync(applicationGatewayWafDynamicManifestName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the regional application gateway waf manifest.
-        /// <list type="bullet">
         /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/{applicationGatewayWafDynamicManifestName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ApplicationGatewayWafDynamicManifestResults_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationGatewayWafDynamicManifestResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the resource. </param>
-        /// <param name="applicationGatewayWafDynamicManifestName"> The name of the Application Gateway WAF Dynamic Manifest. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApplicationGatewayWafDynamicManifestResource> GetApplicationGatewayWafDynamicManifest(string location, string applicationGatewayWafDynamicManifestName, CancellationToken cancellationToken = default)
+        /// <returns> Returns a <see cref="ApplicationGatewayWafDynamicManifestResource"/> object. </returns>
+        public virtual ApplicationGatewayWafDynamicManifestResource GetApplicationGatewayWafDynamicManifest()
         {
-            Argument.AssertNotNullOrEmpty(applicationGatewayWafDynamicManifestName, nameof(applicationGatewayWafDynamicManifestName));
-
-            return GetApplicationGatewayWafDynamicManifests(location).Get(applicationGatewayWafDynamicManifestName, cancellationToken);
+            return new ApplicationGatewayWafDynamicManifestResource(Client, Id.AppendProviderResource("Microsoft.Network", "locations", "dafault"));
         }
 
         /// <summary> Gets a collection of AzureWebCategories in the <see cref="SubscriptionResource"/>. </summary>

@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Network
     {
         /// <summary> Generate the resource identifier for this resource. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location)
-            => CreateResourceIdentifier(subscriptionId, location.ToString(), "default");
+            => CreateResourceIdentifier(subscriptionId, location.ToString());
     }
 
     public partial class CloudServiceSwapResource

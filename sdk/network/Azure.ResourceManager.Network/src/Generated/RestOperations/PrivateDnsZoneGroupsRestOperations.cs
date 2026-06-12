@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, RequestContext context)
+        internal HttpMessage CreateDeletePrivateDnsZoneGroupRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, RequestContext context)
+        internal HttpMessage CreateGetPrivateDnsZoneGroupRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdatePrivateDnsZoneGroupRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointName, string privateDnsZoneGroupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointName, RequestContext context)
+        internal HttpMessage CreateGetPrivateDnsZoneGroupsRequest(Guid subscriptionId, string resourceGroupName, string privateEndpointName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateEndpointName, RequestContext context)
+        internal HttpMessage CreateNextGetPrivateDnsZoneGroupsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string privateEndpointName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

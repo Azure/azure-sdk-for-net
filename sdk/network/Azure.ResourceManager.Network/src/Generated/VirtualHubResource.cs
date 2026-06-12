@@ -665,72 +665,6 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a collection of HubVirtualNetworkConnections in the <see cref="VirtualHubResource"/>. </summary>
-        /// <returns> An object representing collection of HubVirtualNetworkConnections and their operations over a HubVirtualNetworkConnectionResource. </returns>
-        public virtual HubVirtualNetworkConnectionCollection GetHubVirtualNetworkConnections()
-        {
-            return GetCachedClient(client => new HubVirtualNetworkConnectionCollection(client, Id));
-        }
-
-        /// <summary> Retrieves the details of a HubVirtualNetworkConnection. </summary>
-        /// <param name="connectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<HubVirtualNetworkConnectionResource>> GetHubVirtualNetworkConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-
-            return await GetHubVirtualNetworkConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Retrieves the details of a HubVirtualNetworkConnection. </summary>
-        /// <param name="connectionName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<HubVirtualNetworkConnectionResource> GetHubVirtualNetworkConnection(string connectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-
-            return GetHubVirtualNetworkConnections().Get(connectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of VirtualHubRouteTableV2s in the <see cref="VirtualHubResource"/>. </summary>
-        /// <returns> An object representing collection of VirtualHubRouteTableV2s and their operations over a VirtualHubRouteTableV2Resource. </returns>
-        public virtual VirtualHubRouteTableV2Collection GetVirtualHubRouteTableV2s()
-        {
-            return GetCachedClient(client => new VirtualHubRouteTableV2Collection(client, Id));
-        }
-
-        /// <summary> Retrieves the details of a VirtualHubRouteTableV2. </summary>
-        /// <param name="routeTableName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualHubRouteTableV2Resource>> GetVirtualHubRouteTableV2Async(string routeTableName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
-
-            return await GetVirtualHubRouteTableV2s().GetAsync(routeTableName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Retrieves the details of a VirtualHubRouteTableV2. </summary>
-        /// <param name="routeTableName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<VirtualHubRouteTableV2Resource> GetVirtualHubRouteTableV2(string routeTableName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
-
-            return GetVirtualHubRouteTableV2s().Get(routeTableName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of RouteMaps in the <see cref="VirtualHubResource"/>. </summary>
         /// <returns> An object representing collection of RouteMaps and their operations over a RouteMapResource. </returns>
         public virtual RouteMapCollection GetRouteMaps()
@@ -828,6 +762,72 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(connectionPolicyName, nameof(connectionPolicyName));
 
             return GetConnectionPolicies().Get(connectionPolicyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HubVirtualNetworkConnections in the <see cref="VirtualHubResource"/>. </summary>
+        /// <returns> An object representing collection of HubVirtualNetworkConnections and their operations over a HubVirtualNetworkConnectionResource. </returns>
+        public virtual HubVirtualNetworkConnectionCollection GetHubVirtualNetworkConnections()
+        {
+            return GetCachedClient(client => new HubVirtualNetworkConnectionCollection(client, Id));
+        }
+
+        /// <summary> Retrieves the details of a HubVirtualNetworkConnection. </summary>
+        /// <param name="connectionName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HubVirtualNetworkConnectionResource>> GetHubVirtualNetworkConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+
+            return await GetHubVirtualNetworkConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieves the details of a HubVirtualNetworkConnection. </summary>
+        /// <param name="connectionName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HubVirtualNetworkConnectionResource> GetHubVirtualNetworkConnection(string connectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+
+            return GetHubVirtualNetworkConnections().Get(connectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of VirtualHubRouteTableV2s in the <see cref="VirtualHubResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualHubRouteTableV2s and their operations over a VirtualHubRouteTableV2Resource. </returns>
+        public virtual VirtualHubRouteTableV2Collection GetVirtualHubRouteTableV2s()
+        {
+            return GetCachedClient(client => new VirtualHubRouteTableV2Collection(client, Id));
+        }
+
+        /// <summary> Retrieves the details of a VirtualHubRouteTableV2. </summary>
+        /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<VirtualHubRouteTableV2Resource>> GetVirtualHubRouteTableV2Async(string routeTableName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
+
+            return await GetVirtualHubRouteTableV2s().GetAsync(routeTableName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieves the details of a VirtualHubRouteTableV2. </summary>
+        /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VirtualHubRouteTableV2Resource> GetVirtualHubRouteTableV2(string routeTableName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routeTableName, nameof(routeTableName));
+
+            return GetVirtualHubRouteTableV2s().Get(routeTableName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BgpConnections in the <see cref="VirtualHubResource"/>. </summary>

@@ -15,8 +15,6 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Common writable subresource representation used by the previous C# AutoRest projection. </summary>
     public partial class NetworkWritableResourceData : NetworkSubResource
     {
-        private protected string _name;
-
         /// <summary> Initializes a new instance of <see cref="NetworkWritableResourceData"/>. </summary>
         public NetworkWritableResourceData()
         {

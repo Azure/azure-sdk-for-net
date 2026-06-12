@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_CreateOrUpdate. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="privateDnsZoneGroupName"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="privateDnsZoneGroupName"> The name of the private endpoint. </param>
         /// <param name="data"> Parameters supplied to the create or update private dns zone group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> or <paramref name="data"/> is null. </exception>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, PrivateDnsZoneGroupData.ToRequestContent(data), context);
+                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateCreateOrUpdatePrivateDnsZoneGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, PrivateDnsZoneGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<PrivateDnsZoneGroupResource> operation = new NetworkArmOperation<PrivateDnsZoneGroupResource>(
                     new PrivateDnsZoneGroupResourceOperationSource(Client),
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_CreateOrUpdate. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="privateDnsZoneGroupName"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="privateDnsZoneGroupName"> The name of the private endpoint. </param>
         /// <param name="data"> Parameters supplied to the create or update private dns zone group operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> or <paramref name="data"/> is null. </exception>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, PrivateDnsZoneGroupData.ToRequestContent(data), context);
+                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateCreateOrUpdatePrivateDnsZoneGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, PrivateDnsZoneGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<PrivateDnsZoneGroupResource> operation = new NetworkArmOperation<PrivateDnsZoneGroupResource>(
                     new PrivateDnsZoneGroupResourceOperationSource(Client),
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_Get. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateDnsZoneGroupName"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="privateDnsZoneGroupName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, context);
+                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetPrivateDnsZoneGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateDnsZoneGroupData> response = Response.FromValue(PrivateDnsZoneGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_Get. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateDnsZoneGroupName"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="privateDnsZoneGroupName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, context);
+                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetPrivateDnsZoneGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateDnsZoneGroupData> response = Response.FromValue(PrivateDnsZoneGroupData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_List. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsList. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PrivateDnsZoneGroupData, PrivateDnsZoneGroupResource>(new PrivateDnsZoneGroupsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PrivateDnsZoneGroupData, PrivateDnsZoneGroupResource>(new PrivateDnsZoneGroupsGetPrivateDnsZoneGroupsAsyncCollectionResultOfT(
                 _privateDnsZoneGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_List. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsList. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PrivateDnsZoneGroupData, PrivateDnsZoneGroupResource>(new PrivateDnsZoneGroupsGetAllCollectionResultOfT(
+            return new PageableWrapper<PrivateDnsZoneGroupData, PrivateDnsZoneGroupResource>(new PrivateDnsZoneGroupsGetPrivateDnsZoneGroupsCollectionResultOfT(
                 _privateDnsZoneGroupsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_Get. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateDnsZoneGroupName"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="privateDnsZoneGroupName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, context);
+                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetPrivateDnsZoneGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PrivateDnsZoneGroupData> response = default;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_Get. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateDnsZoneGroupName"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="privateDnsZoneGroupName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, context);
+                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetPrivateDnsZoneGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PrivateDnsZoneGroupData> response = default;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_Get. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateDnsZoneGroupName"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="privateDnsZoneGroupName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, context);
+                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetPrivateDnsZoneGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PrivateDnsZoneGroupData> response = default;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> PrivateDnsZoneGroups_Get. </description>
+        /// <description> PrivateEndpoints_PrivateDnsZoneGroupsGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateDnsZoneGroupName"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="privateDnsZoneGroupName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateDnsZoneGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateDnsZoneGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, context);
+                HttpMessage message = _privateDnsZoneGroupsRestClient.CreateGetPrivateDnsZoneGroupRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateDnsZoneGroupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PrivateDnsZoneGroupData> response = default;

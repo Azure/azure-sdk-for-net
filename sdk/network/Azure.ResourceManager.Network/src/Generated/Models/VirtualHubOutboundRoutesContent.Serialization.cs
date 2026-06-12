@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceUri"u8);
-                writer.WriteStringValue(ResourceUri.IsAbsoluteUri ? ResourceUri.AbsoluteUri : ResourceUri.OriginalString);
+                writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ConnectionType))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    resourceUri = new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    resourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("connectionType"u8))

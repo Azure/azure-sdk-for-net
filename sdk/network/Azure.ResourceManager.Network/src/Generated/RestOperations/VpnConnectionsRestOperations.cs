@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, RequestContext context)
+        internal HttpMessage CreateGetByVpnGatewayRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string gatewayName, RequestContext context)
+        internal HttpMessage CreateNextGetByVpnGatewayRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string gatewayName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

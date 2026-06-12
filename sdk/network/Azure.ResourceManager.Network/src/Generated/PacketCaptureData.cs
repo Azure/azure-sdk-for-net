@@ -25,27 +25,15 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of <see cref="PacketCaptureData"/>. </summary>
-        /// <param name="name"> Name of the packet capture session. </param>
-        /// <param name="id"> ID of the packet capture operation. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="properties"> Properties of the packet capture result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PacketCaptureData(string name, string id, ETag? eTag, PacketCaptureResultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PacketCaptureData(ETag? eTag, PacketCaptureResultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Name = name;
-            Id = id;
             ETag = eTag;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Name of the packet capture session. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> ID of the packet capture operation. </summary>
-        [WirePath("id")]
-        public string Id { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]

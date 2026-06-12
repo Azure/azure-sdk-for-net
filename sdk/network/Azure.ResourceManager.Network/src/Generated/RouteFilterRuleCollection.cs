@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_CreateOrUpdate. </description>
+        /// <description> RouteFilters_RouteFilterRulesCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="data"> Parameters supplied to the create or update route filter rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routeFilterRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, RouteFilterRuleData.ToRequestContent(data), context);
+                HttpMessage message = _routeFilterRulesRestClient.CreateCreateOrUpdateRouteFilterRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, RouteFilterRuleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation<RouteFilterRuleResource> operation = new NetworkArmOperation<RouteFilterRuleResource>(
                     new RouteFilterRuleResourceOperationSource(Client),
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_CreateOrUpdate. </description>
+        /// <description> RouteFilters_RouteFilterRulesCreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="data"> Parameters supplied to the create or update route filter rule operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routeFilterRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, RouteFilterRuleData.ToRequestContent(data), context);
+                HttpMessage message = _routeFilterRulesRestClient.CreateCreateOrUpdateRouteFilterRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, RouteFilterRuleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation<RouteFilterRuleResource> operation = new NetworkArmOperation<RouteFilterRuleResource>(
                     new RouteFilterRuleResourceOperationSource(Client),
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_Get. </description>
+        /// <description> RouteFilters_RouteFilterRulesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routeFilterRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
+                HttpMessage message = _routeFilterRulesRestClient.CreateGetRouteFilterRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RouteFilterRuleData> response = Response.FromValue(RouteFilterRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_Get. </description>
+        /// <description> RouteFilters_RouteFilterRulesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routeFilterRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
+                HttpMessage message = _routeFilterRulesRestClient.CreateGetRouteFilterRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RouteFilterRuleData> response = Response.FromValue(RouteFilterRuleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_List. </description>
+        /// <description> RouteFilters_ListByRouteFilter. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<RouteFilterRuleData, RouteFilterRuleResource>(new RouteFilterRulesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<RouteFilterRuleData, RouteFilterRuleResource>(new RouteFilterRulesGetRouteFilterRulesAsyncCollectionResultOfT(
                 _routeFilterRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_List. </description>
+        /// <description> RouteFilters_ListByRouteFilter. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<RouteFilterRuleData, RouteFilterRuleResource>(new RouteFilterRulesGetAllCollectionResultOfT(
+            return new PageableWrapper<RouteFilterRuleData, RouteFilterRuleResource>(new RouteFilterRulesGetRouteFilterRulesCollectionResultOfT(
                 _routeFilterRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_Get. </description>
+        /// <description> RouteFilters_RouteFilterRulesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routeFilterRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
+                HttpMessage message = _routeFilterRulesRestClient.CreateGetRouteFilterRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RouteFilterRuleData> response = default;
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_Get. </description>
+        /// <description> RouteFilters_RouteFilterRulesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routeFilterRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
+                HttpMessage message = _routeFilterRulesRestClient.CreateGetRouteFilterRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RouteFilterRuleData> response = default;
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_Get. </description>
+        /// <description> RouteFilters_RouteFilterRulesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routeFilterRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
+                HttpMessage message = _routeFilterRulesRestClient.CreateGetRouteFilterRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<RouteFilterRuleData> response = default;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> RouteFilterRules_Get. </description>
+        /// <description> RouteFilters_RouteFilterRulesGet. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleName"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="ruleName"> The name of the route filter rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _routeFilterRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
+                HttpMessage message = _routeFilterRulesRestClient.CreateGetRouteFilterRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<RouteFilterRuleData> response = default;

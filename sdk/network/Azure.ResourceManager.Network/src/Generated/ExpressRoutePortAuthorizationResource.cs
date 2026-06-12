@@ -13,13 +13,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A class representing a ExpressRoutePortAuthorization along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ExpressRoutePortAuthorizationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ExpressRoutePortResource"/> using the GetExpressRoutePortAuthorizations method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetExpressRoutePortAuthorizations method.
     /// </summary>
     public partial class ExpressRoutePortAuthorizationResource : ArmResource
     {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network
         private readonly ExpressRoutePortAuthorizations _expressRoutePortAuthorizationsRestClient;
         private readonly ExpressRoutePortAuthorizationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/ExpressRoutePorts/authorizations";
+        public static readonly ResourceType ResourceType = "Microsoft.Network/expressRoutePorts/authorizations";
 
         /// <summary> Initializes a new instance of ExpressRoutePortAuthorizationResource for mocking. </summary>
         protected ExpressRoutePortAuthorizationResource()
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="authorizationName"> The authorizationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string expressRoutePortName, string authorizationName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -192,7 +193,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -241,7 +242,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -290,7 +291,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -349,7 +350,7 @@ namespace Azure.ResourceManager.Network
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRoutePorts/{expressRoutePortName}/authorizations/{authorizationName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>

@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the specified ExpressRouteLink resource. </summary>
-        /// <param name="linkName"> Name of child port resource that is unique among child port resources of the parent. </param>
+        /// <param name="linkName"> The name of the express route link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -790,7 +790,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Retrieves the specified ExpressRouteLink resource. </summary>
-        /// <param name="linkName"> Name of child port resource that is unique among child port resources of the parent. </param>
+        /// <param name="linkName"> The name of the express route link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="linkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -800,39 +800,6 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(linkName, nameof(linkName));
 
             return GetExpressRouteLinks().Get(linkName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ExpressRoutePortAuthorizations in the <see cref="ExpressRoutePortResource"/>. </summary>
-        /// <returns> An object representing collection of ExpressRoutePortAuthorizations and their operations over a ExpressRoutePortAuthorizationResource. </returns>
-        public virtual ExpressRoutePortAuthorizationCollection GetExpressRoutePortAuthorizations()
-        {
-            return GetCachedClient(client => new ExpressRoutePortAuthorizationCollection(client, Id));
-        }
-
-        /// <summary> Gets the specified authorization from the specified express route port. </summary>
-        /// <param name="authorizationName"> The name of the authorization. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ExpressRoutePortAuthorizationResource>> GetExpressRoutePortAuthorizationAsync(string authorizationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
-
-            return await GetExpressRoutePortAuthorizations().GetAsync(authorizationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the specified authorization from the specified express route port. </summary>
-        /// <param name="authorizationName"> The name of the authorization. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ExpressRoutePortAuthorizationResource> GetExpressRoutePortAuthorization(string authorizationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
-
-            return GetExpressRoutePortAuthorizations().Get(authorizationName, cancellationToken);
         }
     }
 }
