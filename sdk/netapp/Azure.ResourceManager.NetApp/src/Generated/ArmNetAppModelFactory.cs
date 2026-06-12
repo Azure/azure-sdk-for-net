@@ -1396,7 +1396,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
         /// <param name="fileAccessLogs"> Flag indicating whether file access logs are enabled for the Cache, based on active diagnostic settings present on the Cache. </param>
         /// <returns> A new <see cref="Models.NetAppCacheProperties"/> instance for mocking. </returns>
-        public static NetAppCacheProperties NetAppCacheProperties(string filePath = default, long size = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, IEnumerable<NetAppProtocolType> protocolTypes = default, NetAppCacheProvisioningState? provisioningState = default, NetAppCacheLifeCycleState? cacheState = default, ResourceIdentifier cacheSubnetResourceId = default, ResourceIdentifier peeringSubnetResourceId = default, IEnumerable<NetAppCacheMountTargetProperties> mountTargets = default, NetAppKerberosState? kerberos = default, NetAppSmbSettings smbSettings = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, long? maximumNumberOfFiles = default, NetAppEncryptionState? encryption = default, NetAppVolumeLanguage? language = default, NetAppLdapState? ldap = default, NetAppLdapServerType? ldapServerType = default, NetAppOriginClusterInformation originClusterInformation = default, NetAppCifsChangeNotifyState? cifsChangeNotifications = default, NetAppGlobalFileLockingState? globalFileLocking = default, NetAppEnableWriteBackState? writeBack = default, CacheFileAccessLogs? fileAccessLogs = default)
+        public static NetAppCacheProperties NetAppCacheProperties(string filePath = default, long size = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, IEnumerable<NetAppProtocolType> protocolTypes = default, NetAppCacheProvisioningState? provisioningState = default, NetAppCacheLifeCycleState? cacheState = default, ResourceIdentifier cacheSubnetResourceId = default, ResourceIdentifier peeringSubnetResourceId = default, IEnumerable<NetAppCacheMountTargetProperties> mountTargets = default, NetAppKerberosState? kerberos = default, NetAppSmbSettings smbSettings = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, long? maximumNumberOfFiles = default, NetAppEncryptionState? encryption = default, NetAppVolumeLanguage? language = default, NetAppLdapState? ldap = default, NetAppLdapServerType? ldapServerType = default, NetAppOriginClusterInformation originClusterInformation = default, NetAppCifsChangeNotifyState? cifsChangeNotifications = default, NetAppGlobalFileLockingState? globalFileLocking = default, NetAppEnableWriteBackState? writeBack = default, NetAppCacheFileAccessLogs? fileAccessLogs = default)
         {
             protocolTypes ??= new ChangeTrackingList<NetAppProtocolType>();
             mountTargets ??= new ChangeTrackingList<NetAppCacheMountTargetProperties>();
@@ -2006,6 +2006,63 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppUsageName(value, localizedValue, default);
         }
 
+        /// <param name="filePath"> The file path of the Cache. </param>
+        /// <param name="size"> Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB. </param>
+        /// <param name="exportRules"> Export policy rule. </param>
+        /// <param name="protocolTypes"> Set of supported protocol types, which include NFSv3, NFSv4 and SMB protocol. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="cacheState"> Azure NetApp Files Cache lifecycle management. </param>
+        /// <param name="cacheSubnetResourceId"> The Azure Resource URI for a delegated cache subnet that will be used to allocate data IPs. </param>
+        /// <param name="peeringSubnetResourceId"> The Azure Resource URI for a delegated subnet that will be used for ANF Intercluster Interface IP addresses. </param>
+        /// <param name="mountTargets"> List of mount targets that can be used to mount this cache. </param>
+        /// <param name="kerberos"> Describe if a cache is Kerberos enabled. </param>
+        /// <param name="smbSettings"> SMB information for the cache. </param>
+        /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this cache volume and this will be accepted as input only for manual qosType cache. </param>
+        /// <param name="actualThroughputMibps"> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </param>
+        /// <param name="encryptionKeySource"> Source of key used to encrypt data in the cache. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </param>
+        /// <param name="keyVaultPrivateEndpointResourceId"> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </param>
+        /// <param name="maximumNumberOfFiles"> Maximum number of files allowed. </param>
+        /// <param name="encryption"> Specifies if the cache is encryption or not. </param>
+        /// <param name="language"> Language supported for volume. </param>
+        /// <param name="ldap"> Specifies whether LDAP is enabled or not for flexcache volume. </param>
+        /// <param name="ldapServerType"> Specifies the type of LDAP server for flexcache volume. </param>
+        /// <param name="originClusterInformation"> Origin cluster information. </param>
+        /// <param name="cifsChangeNotifications"> Flag indicating whether a CIFS change notification is enabled for the cache. </param>
+        /// <param name="globalFileLocking"> Flag indicating whether the global file lock is enabled for the cache. </param>
+        /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
+        /// <returns> A new <see cref="Models.NetAppCacheProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetAppCacheProperties NetAppCacheProperties(string filePath = default, long size = 0L, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, IEnumerable<NetAppProtocolType> protocolTypes = default, NetAppCacheProvisioningState? provisioningState = default, NetAppCacheLifeCycleState? cacheState = default, ResourceIdentifier cacheSubnetResourceId = default, ResourceIdentifier peeringSubnetResourceId = default, IEnumerable<NetAppCacheMountTargetProperties> mountTargets = default, NetAppKerberosState? kerberos = default, NetAppSmbSettings smbSettings = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, long? maximumNumberOfFiles = default, NetAppEncryptionState? encryption = default, NetAppVolumeLanguage? language = default, NetAppLdapState? ldap = default, NetAppLdapServerType? ldapServerType = default, NetAppOriginClusterInformation originClusterInformation = default, NetAppCifsChangeNotifyState? cifsChangeNotifications = default, NetAppGlobalFileLockingState? globalFileLocking = default, NetAppEnableWriteBackState? writeBack = default)
+        {
+            return new NetAppCacheProperties(
+                filePath,
+                size,
+                exportRules is null ? default : new NetAppCachePropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                (protocolTypes ?? new ChangeTrackingList<NetAppProtocolType>()).ToList(),
+                provisioningState,
+                cacheState,
+                cacheSubnetResourceId,
+                peeringSubnetResourceId,
+                (mountTargets ?? new ChangeTrackingList<NetAppCacheMountTargetProperties>()).ToList(),
+                kerberos,
+                smbSettings,
+                throughputMibps,
+                actualThroughputMibps,
+                encryptionKeySource,
+                keyVaultPrivateEndpointResourceId,
+                maximumNumberOfFiles,
+                encryption,
+                language,
+                ldap,
+                ldapServerType,
+                originClusterInformation,
+                cifsChangeNotifications,
+                globalFileLocking,
+                writeBack,
+                default,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="NetApp.NetAppAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -2083,64 +2140,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     (volumeBackups ?? new ChangeTrackingList<NetAppVolumeBackupDetail>()).ToList(),
                     default),
                 etag,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppCacheProperties"/>. </summary>
-        /// <param name="filePath"> The file path of the Cache. </param>
-        /// <param name="size"> Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB. </param>
-        /// <param name="exportRules"> Set of export policy rules. </param>
-        /// <param name="protocolTypes"> Set of supported protocol types, which include NFSv3, NFSv4 and SMB protocol. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="cacheState"> Azure NetApp Files Cache lifecycle management. </param>
-        /// <param name="cacheSubnetResourceId"> The Azure Resource URI for a delegated cache subnet that will be used to allocate data IPs. </param>
-        /// <param name="peeringSubnetResourceId"> The Azure Resource URI for a delegated subnet that will be used for ANF Intercluster Interface IP addresses. </param>
-        /// <param name="mountTargets"> List of mount targets that can be used to mount this cache. </param>
-        /// <param name="kerberos"> Describe if a cache is Kerberos enabled. </param>
-        /// <param name="smbSettings"> SMB information for the cache. </param>
-        /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this cache volume and this will be accepted as input only for manual qosType cache. </param>
-        /// <param name="actualThroughputMibps"> Actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel. </param>
-        /// <param name="encryptionKeySource"> Source of key used to encrypt data in the cache. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </param>
-        /// <param name="keyVaultPrivateEndpointResourceId"> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </param>
-        /// <param name="maximumNumberOfFiles"> Maximum number of files allowed. </param>
-        /// <param name="encryption"> Specifies if the cache is encryption or not. </param>
-        /// <param name="language"> Language supported for volume. </param>
-        /// <param name="ldap"> Specifies whether LDAP is enabled or not for flexcache volume. </param>
-        /// <param name="ldapServerType"> Specifies the type of LDAP server for flexcache volume. </param>
-        /// <param name="originClusterInformation"> Origin cluster information. </param>
-        /// <param name="cifsChangeNotifications"> Flag indicating whether a CIFS change notification is enabled for the cache. </param>
-        /// <param name="globalFileLocking"> Flag indicating whether the global file lock is enabled for the cache. </param>
-        /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
-        /// <returns> A new <see cref="Models.NetAppCacheProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppCacheProperties NetAppCacheProperties(string filePath = default, long size = 0L, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = default, IEnumerable<NetAppProtocolType> protocolTypes = default, NetAppCacheProvisioningState? provisioningState = default, NetAppCacheLifeCycleState? cacheState = default, ResourceIdentifier cacheSubnetResourceId = default, ResourceIdentifier peeringSubnetResourceId = default, IEnumerable<NetAppCacheMountTargetProperties> mountTargets = default, NetAppKerberosState? kerberos = default, NetAppSmbSettings smbSettings = default, float? throughputMibps = default, float? actualThroughputMibps = default, NetAppEncryptionKeySource encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = default, long? maximumNumberOfFiles = default, NetAppEncryptionState? encryption = default, NetAppVolumeLanguage? language = default, NetAppLdapState? ldap = default, NetAppLdapServerType? ldapServerType = default, NetAppOriginClusterInformation originClusterInformation = default, NetAppCifsChangeNotifyState? cifsChangeNotifications = default, NetAppGlobalFileLockingState? globalFileLocking = default, NetAppEnableWriteBackState? writeBack = default)
-        {
-            return new NetAppCacheProperties(
-                filePath,
-                size,
-                exportRules is null ? default : new NetAppCachePropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
-                (protocolTypes ?? new ChangeTrackingList<NetAppProtocolType>()).ToList(),
-                provisioningState,
-                cacheState,
-                cacheSubnetResourceId,
-                peeringSubnetResourceId,
-                (mountTargets ?? new ChangeTrackingList<NetAppCacheMountTargetProperties>()).ToList(),
-                kerberos,
-                smbSettings,
-                throughputMibps,
-                actualThroughputMibps,
-                encryptionKeySource,
-                keyVaultPrivateEndpointResourceId,
-                maximumNumberOfFiles,
-                encryption,
-                language,
-                ldap,
-                ldapServerType,
-                originClusterInformation,
-                cifsChangeNotifications,
-                globalFileLocking,
-                writeBack,
-                default,
                 default);
         }
 

@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppCifsChangeNotifyState? cifsChangeNotifications = default;
             NetAppGlobalFileLockingState? globalFileLocking = default;
             NetAppEnableWriteBackState? writeBack = default;
-            CacheFileAccessLogs? fileAccessLogs = default;
+            NetAppCacheFileAccessLogs? fileAccessLogs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    fileAccessLogs = new CacheFileAccessLogs(prop.Value.GetString());
+                    fileAccessLogs = new NetAppCacheFileAccessLogs(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

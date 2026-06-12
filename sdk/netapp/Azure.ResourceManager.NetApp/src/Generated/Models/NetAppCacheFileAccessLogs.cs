@@ -12,7 +12,7 @@ using Azure.ResourceManager.NetApp;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Flag indicating whether file access logs are enabled for the Cache, based on active diagnostic settings present on the Cache. </summary>
-    public readonly partial struct CacheFileAccessLogs : IEquatable<CacheFileAccessLogs>
+    public readonly partial struct NetAppCacheFileAccessLogs : IEquatable<NetAppCacheFileAccessLogs>
     {
         private readonly string _value;
         /// <summary> fileAccessLogs are enabled. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> fileAccessLogs are not enabled. </summary>
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Initializes a new instance of <see cref="CacheFileAccessLogs"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppCacheFileAccessLogs"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CacheFileAccessLogs(string value)
+        public NetAppCacheFileAccessLogs(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> fileAccessLogs are enabled. </summary>
-        public static CacheFileAccessLogs Enabled { get; } = new CacheFileAccessLogs(EnabledValue);
+        public static NetAppCacheFileAccessLogs Enabled { get; } = new NetAppCacheFileAccessLogs(EnabledValue);
 
         /// <summary> fileAccessLogs are not enabled. </summary>
-        public static CacheFileAccessLogs Disabled { get; } = new CacheFileAccessLogs(DisabledValue);
+        public static NetAppCacheFileAccessLogs Disabled { get; } = new NetAppCacheFileAccessLogs(DisabledValue);
 
-        /// <summary> Determines if two <see cref="CacheFileAccessLogs"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="NetAppCacheFileAccessLogs"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(CacheFileAccessLogs left, CacheFileAccessLogs right) => left.Equals(right);
+        public static bool operator ==(NetAppCacheFileAccessLogs left, NetAppCacheFileAccessLogs right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="CacheFileAccessLogs"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="NetAppCacheFileAccessLogs"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(CacheFileAccessLogs left, CacheFileAccessLogs right) => !left.Equals(right);
+        public static bool operator !=(NetAppCacheFileAccessLogs left, NetAppCacheFileAccessLogs right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="CacheFileAccessLogs"/>. </summary>
+        /// <summary> Converts a string to a <see cref="NetAppCacheFileAccessLogs"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CacheFileAccessLogs(string value) => new CacheFileAccessLogs(value);
+        public static implicit operator NetAppCacheFileAccessLogs(string value) => new NetAppCacheFileAccessLogs(value);
 
-        /// <summary> Converts a string to a <see cref="CacheFileAccessLogs"/>. </summary>
+        /// <summary> Converts a string to a <see cref="NetAppCacheFileAccessLogs"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator CacheFileAccessLogs?(string value) => value == null ? null : new CacheFileAccessLogs(value);
+        public static implicit operator NetAppCacheFileAccessLogs?(string value) => value == null ? null : new NetAppCacheFileAccessLogs(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is CacheFileAccessLogs other && Equals(other);
+        public override bool Equals(object obj) => obj is NetAppCacheFileAccessLogs other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(CacheFileAccessLogs other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(NetAppCacheFileAccessLogs other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
