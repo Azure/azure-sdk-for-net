@@ -50,15 +50,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Forced delete resource item. </summary>
         public bool? IsForceDeletion { get; set; }
 
-        /// <summary> Retry policy the user can pass. </summary>
-        public BulkOperationRetryPolicy ExecutionParametersRetryPolicy
-        {
-            get
-            {
-                return ExecutionParameters.RetryPolicy;
-            }
-        }
-
         /// <summary> The resource ids used for the request. </summary>
         public IList<ResourceIdentifier> ResourcesIds
         {
