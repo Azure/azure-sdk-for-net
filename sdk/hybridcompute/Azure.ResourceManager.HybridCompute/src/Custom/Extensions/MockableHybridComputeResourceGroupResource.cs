@@ -16,9 +16,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
     {
         // Backward-compat justification: the GA mockable resource group APIs exposed ArcSettings-based UpdateSetting overloads.
         /// <summary>
-        /// Updates the base Settings of the target resource.
-        /// This method preserves the AutoRest-generated mockable API for backward compatibility.
-        /// Use <see cref="HybridComputeSettingsResource.UpdateAsync(ArcSettingsData, CancellationToken)"/> instead.
+        /// Update the base Settings of the target resource.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -36,9 +34,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         }
 
         /// <summary>
-        /// Updates the base Settings of the target resource.
-        /// This method preserves the AutoRest-generated mockable API for backward compatibility.
-        /// Use <see cref="HybridComputeSettingsResource.Update(ArcSettingsData, CancellationToken)"/> instead.
+        /// Update the base Settings of the target resource.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -82,8 +78,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
 
         // Backward-compat justification: the GA mockable resource group APIs exposed machine get overloads with an expand parameter.
         /// <summary>
-        /// Gets a hybrid machine.
-        /// This overload includes a string <paramref name="expand"/> parameter for backward compatibility.
+        /// Retrieves information about the model view or the instance view of a hybrid machine.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -91,8 +86,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
             => GetHybridComputeMachines().GetAsync(machineName, expand, cancellationToken);
 
         /// <summary>
-        /// Gets a hybrid machine.
-        /// This overload includes a string <paramref name="expand"/> parameter for backward compatibility.
+        /// Retrieves information about the model view or the instance view of a hybrid machine.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]

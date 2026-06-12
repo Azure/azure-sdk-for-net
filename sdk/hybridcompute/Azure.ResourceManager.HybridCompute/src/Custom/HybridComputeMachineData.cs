@@ -6,7 +6,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    // Backward-compat justification: the GA SDK exposed HybridComputeMachineData.Identity as ManagedServiceIdentity.
+    // Backward-compat justification: keep the conversion helpers that let regeneration preserve the GA
+    // HybridComputeMachineData.Identity type by mapping between the service wire Identity model and ManagedServiceIdentity.
     public partial class HybridComputeMachineData
     {
         internal static Models.Identity ToIdentity(ManagedServiceIdentity identity)

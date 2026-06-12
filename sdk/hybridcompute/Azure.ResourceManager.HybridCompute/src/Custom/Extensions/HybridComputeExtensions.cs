@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.HybridCompute
     public static partial class HybridComputeExtensions
     {
         // ----- SubscriptionResource overloads -----
+        // Backward-compat justification: preserve the GA subscription extension methods for validating a Private Link Scope.
         /// <summary>
         /// Returns a Azure Arc PrivateLinkScope's validation details.
-        /// This method was renamed to <see cref="GetValidationDetailsAsync(SubscriptionResource, AzureLocation, string, CancellationToken)"/>.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Task<Response<PrivateLinkScopeValidationDetails>> GetValidationDetailsPrivateLinkScopeAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string privateLinkScopeId, CancellationToken cancellationToken = default)
@@ -27,7 +27,6 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary>
         /// Returns a Azure Arc PrivateLinkScope's validation details.
-        /// This method was renamed to <see cref="GetValidationDetails(SubscriptionResource, AzureLocation, string, CancellationToken)"/>.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<PrivateLinkScopeValidationDetails> GetValidationDetailsPrivateLinkScope(this SubscriptionResource subscriptionResource, AzureLocation location, string privateLinkScopeId, CancellationToken cancellationToken = default)
@@ -36,9 +35,9 @@ namespace Azure.ResourceManager.HybridCompute
             return GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetValidationDetailsPrivateLinkScope(location, privateLinkScopeId, cancellationToken);
         }
 
+        // Backward-compat justification: preserve the GA subscription extension methods for validating a license.
         /// <summary>
-        /// Validates a license.
-        /// This method was renamed to <see cref="ValidateLicenseAsync(SubscriptionResource, WaitUntil, HybridComputeLicenseData, CancellationToken)"/>.
+        /// The operation to validate a license.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Task<ArmOperation<HybridComputeLicenseResource>> ValidateLicenseLicenseAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, HybridComputeLicenseData data, CancellationToken cancellationToken = default)
@@ -48,8 +47,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Validates a license.
-        /// This method was renamed to <see cref="ValidateLicense(SubscriptionResource, WaitUntil, HybridComputeLicenseData, CancellationToken)"/>.
+        /// The operation to validate a license.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ArmOperation<HybridComputeLicenseResource> ValidateLicenseLicense(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, HybridComputeLicenseData data, CancellationToken cancellationToken = default)
@@ -59,12 +57,9 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         // ----- ResourceGroupResource overloads -----
-        // Backward-compat justification: the GA resource group extension methods exposed ArcSettings-based settings APIs and expand overloads.
-
+        // Backward-compat justification: preserve the GA resource group extension methods that update settings using ArcSettings.
         /// <summary>
-        /// Updates the base Settings of the target resource.
-        /// This method preserves the AutoRest-generated ResourceGroupResource convenience API for backward compatibility.
-        /// Use <see cref="HybridComputeSettingsResource.UpdateAsync(ArcSettingsData, CancellationToken)"/> instead.
+        /// Update the base Settings of the target resource.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -75,9 +70,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Updates the base Settings of the target resource.
-        /// This method preserves the AutoRest-generated ResourceGroupResource convenience API for backward compatibility.
-        /// Use <see cref="HybridComputeSettingsResource.Update(ArcSettingsData, CancellationToken)"/> instead.
+        /// Update the base Settings of the target resource.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -87,9 +80,9 @@ namespace Azure.ResourceManager.HybridCompute
             return GetMockableHybridComputeResourceGroupResource(resourceGroupResource).UpdateSetting(baseProvider, baseResourceType, baseResourceName, settingsResourceName, arcSettings, cancellationToken);
         }
 
+        // Backward-compat justification: preserve the GA resource group extension methods that get a machine with a string expand parameter.
         /// <summary>
-        /// Gets a hybrid machine.
-        /// This overload includes a string <paramref name="expand"/> parameter for backward compatibility.
+        /// Retrieves information about the model view or the instance view of a hybrid machine.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -100,8 +93,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Gets a hybrid machine.
-        /// This overload includes a string <paramref name="expand"/> parameter for backward compatibility.
+        /// Retrieves information about the model view or the instance view of a hybrid machine.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
