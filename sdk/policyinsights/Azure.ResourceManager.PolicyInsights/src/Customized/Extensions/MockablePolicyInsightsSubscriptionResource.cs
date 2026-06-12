@@ -274,5 +274,153 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         {
             throw new NotSupportedException("This overload is no longer supported. Use the new GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates overload on ArmClient instead.");
         }
+
+        // ===== Orphaned GA Mockable Get/Summarize* with (string name, ...) signature (obsolete + throw) =====
+        // These were never reached by any extension method on PolicyInsightsExtensions in GA.
+        // Retained only to satisfy ApiCompat; use the dedicated SubscriptionPolicyDefinitionResource / SubscriptionPolicySetDefinitionResource / PolicyAssignmentResource APIs instead.
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated SubscriptionPolicyDefinitionResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated SubscriptionPolicyDefinitionResource APIs instead.")]
+        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEventsAsync(string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated SubscriptionPolicyDefinitionResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated SubscriptionPolicyDefinitionResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated SubscriptionPolicyDefinitionResource APIs instead.")]
+        public virtual Pageable<PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEvents(string policyDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated SubscriptionPolicyDefinitionResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated SubscriptionPolicyDefinitionResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated SubscriptionPolicyDefinitionResource APIs instead.")]
+        public virtual AsyncPageable<PolicyState> GetQueryResultsForPolicyDefinitionPolicyStatesAsync(string policyDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated SubscriptionPolicyDefinitionResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated SubscriptionPolicyDefinitionResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated SubscriptionPolicyDefinitionResource APIs instead.")]
+        public virtual Pageable<PolicyState> GetQueryResultsForPolicyDefinitionPolicyStates(string policyDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated SubscriptionPolicyDefinitionResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated SubscriptionPolicySetDefinitionResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated SubscriptionPolicySetDefinitionResource APIs instead.")]
+        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEventsAsync(string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated SubscriptionPolicySetDefinitionResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated SubscriptionPolicySetDefinitionResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated SubscriptionPolicySetDefinitionResource APIs instead.")]
+        public virtual Pageable<PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEvents(string policySetDefinitionName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated SubscriptionPolicySetDefinitionResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated SubscriptionPolicySetDefinitionResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated SubscriptionPolicySetDefinitionResource APIs instead.")]
+        public virtual AsyncPageable<PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStatesAsync(string policySetDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated SubscriptionPolicySetDefinitionResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated SubscriptionPolicySetDefinitionResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated SubscriptionPolicySetDefinitionResource APIs instead.")]
+        public virtual Pageable<PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStates(string policySetDefinitionName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated SubscriptionPolicySetDefinitionResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated PolicyAssignmentResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.")]
+        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEventsAsync(string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated PolicyAssignmentResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.")]
+        public virtual Pageable<PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents(string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated PolicyAssignmentResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.")]
+        public virtual AsyncPageable<PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated PolicyAssignmentResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.")]
+        public virtual Pageable<PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates(string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated SubscriptionPolicyDefinitionResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated SubscriptionPolicyDefinitionResource APIs instead.")]
+        public virtual AsyncPageable<PolicySummary> SummarizeForPolicyDefinitionPolicyStatesAsync(string policyDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated SubscriptionPolicyDefinitionResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated SubscriptionPolicyDefinitionResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated SubscriptionPolicyDefinitionResource APIs instead.")]
+        public virtual Pageable<PolicySummary> SummarizeForPolicyDefinitionPolicyStates(string policyDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated SubscriptionPolicyDefinitionResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated SubscriptionPolicySetDefinitionResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated SubscriptionPolicySetDefinitionResource APIs instead.")]
+        public virtual AsyncPageable<PolicySummary> SummarizeForPolicySetDefinitionPolicyStatesAsync(string policySetDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated SubscriptionPolicySetDefinitionResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated SubscriptionPolicySetDefinitionResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated SubscriptionPolicySetDefinitionResource APIs instead.")]
+        public virtual Pageable<PolicySummary> SummarizeForPolicySetDefinitionPolicyStates(string policySetDefinitionName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated SubscriptionPolicySetDefinitionResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated PolicyAssignmentResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.")]
+        public virtual AsyncPageable<PolicySummary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(string policyAssignmentName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated PolicyAssignmentResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.")]
+        public virtual Pageable<PolicySummary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates(string policyAssignmentName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.");
+        }
+
     }
 }

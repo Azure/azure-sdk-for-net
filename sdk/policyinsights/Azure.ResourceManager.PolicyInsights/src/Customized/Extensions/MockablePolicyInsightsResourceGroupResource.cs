@@ -257,5 +257,57 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         {
             throw new NotSupportedException("This overload is no longer supported. Use the new GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates overload on ArmClient instead.");
         }
+
+        // ===== Orphaned GA Mockable Get/Summarize* with (string name, ...) signature (obsolete + throw) =====
+        // These were never reached by any extension method on PolicyInsightsExtensions in GA.
+        // Retained only to satisfy ApiCompat; use the dedicated Subscription/RG PolicyDefinition/PolicyAssignment resources instead.
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated *PolicyAssignmentResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.")]
+        public virtual AsyncPageable<PolicyEvent> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEventsAsync(string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated *PolicyAssignmentResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.")]
+        public virtual Pageable<PolicyEvent> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEvents(string policyAssignmentName, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated *PolicyAssignmentResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.")]
+        public virtual AsyncPageable<PolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStatesAsync(string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated *PolicyAssignmentResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.")]
+        public virtual Pageable<PolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStates(string policyAssignmentName, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated *PolicyAssignmentResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.")]
+        public virtual AsyncPageable<PolicySummary> SummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesAsync(string policyAssignmentName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.");
+        }
+
+        /// <summary> [Obsolete] Orphan GA shape. No replacement; use the dedicated *PolicyAssignmentResource APIs. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.")]
+        public virtual Pageable<PolicySummary> SummarizeForResourceGroupLevelPolicyAssignmentPolicyStates(string policyAssignmentName, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
+        {
+            throw new NotSupportedException("This overload is no longer supported. Use the dedicated PolicyAssignmentResource APIs instead.");
+        }
     }
 }
