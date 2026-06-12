@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct PrimingJobState : IEquatable<PrimingJobState>
     {
         private readonly string _value;
+        /// <summary> Queued. </summary>
+        private const string QueuedValue = "Queued";
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Paused. </summary>
+        private const string PausedValue = "Paused";
+        /// <summary> Complete. </summary>
+        private const string CompleteValue = "Complete";
 
         /// <summary> Initializes a new instance of <see cref="PrimingJobState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PrimingJobState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string QueuedValue = "Queued";
-        private const string RunningValue = "Running";
-        private const string PausedValue = "Paused";
-        private const string CompleteValue = "Complete";
+            _value = value;
+        }
 
         /// <summary> Queued. </summary>
         public static PrimingJobState Queued { get; } = new PrimingJobState(QueuedValue);
+
         /// <summary> Running. </summary>
         public static PrimingJobState Running { get; } = new PrimingJobState(RunningValue);
+
         /// <summary> Paused. </summary>
         public static PrimingJobState Paused { get; } = new PrimingJobState(PausedValue);
+
         /// <summary> Complete. </summary>
         public static PrimingJobState Complete { get; } = new PrimingJobState(CompleteValue);
+
         /// <summary> Determines if two <see cref="PrimingJobState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PrimingJobState left, PrimingJobState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PrimingJobState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PrimingJobState left, PrimingJobState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PrimingJobState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PrimingJobState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PrimingJobState(string value) => new PrimingJobState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PrimingJobState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PrimingJobState?(string value) => value == null ? null : new PrimingJobState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PrimingJobState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PrimingJobState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
