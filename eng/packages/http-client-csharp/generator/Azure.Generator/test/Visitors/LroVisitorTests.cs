@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -476,15 +475,11 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsNotNull(asyncProtocolMethod);
             var actual = asyncProtocolMethod!.BodyStatements!.ToDisplayString();
 
-            // The outer scope (DistributedTracingVisitor) must be present and use the stripped name.
-            Assert.IsTrue(actual.Contains("CreateScope(\"TestClient.Foo\")"), actual);
-            // The async protocol method must call ProcessMessageAsync (LroVisitor rewrite).
-            Assert.IsTrue(actual.Contains("ProcessMessageAsync"), actual);
-            // Both the outer scope and the ProcessMessageAsync scope argument must use the
-            // stripped literal, so it should appear at least twice.
-            Assert.GreaterOrEqual(Regex.Matches(actual, "\"TestClient\\.Foo\"").Count, 2, actual);
-            // The Async suffix must not leak into either scope name.
-            Assert.IsFalse(actual.Contains("TestClient.FooAsync"), actual);
+            // The expected snapshot captures both the outer scope (added by
+            // DistributedTracingVisitor) and the ProcessMessageAsync scope argument (added by
+            // LroVisitor), both of which must use the stripped scope name "TestClient.Foo"
+            // rather than the Async-suffixed "TestClient.FooAsync".
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), actual);
         }
 
         private class TestLroVisitor : LroVisitor
