@@ -44,6 +44,11 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             : base(isAsync, mode)
         {
             _serviceVersion = serviceVersion;
+
+            // PoP token binding adds this header unconditionally in the beta but existing
+            // recordings were captured without it. Exclude it from request matching so that
+            // playback tests pass against old recordings.
+            LegacyExcludedHeaders.Add("x-ms-tokenboundauth");
         }
 
         internal SecretClient GetClient(TokenCredential credential = default)
