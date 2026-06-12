@@ -7,76 +7,66 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A Class representing an AutomationAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomationAccountResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetAutomationAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAutomationAccount method.
+    /// A class representing a AutomationAccount along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AutomationAccountResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAutomationAccounts method.
     /// </summary>
     public partial class AutomationAccountResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AutomationAccountResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="automationAccountName"> The automationAccountName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
         private readonly ClientDiagnostics _automationAccountClientDiagnostics;
-        private readonly AutomationAccountRestOperations _automationAccountRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
+        private readonly AutomationAccount _automationAccountRestClient;
         private readonly ClientDiagnostics _agentRegistrationInformationClientDiagnostics;
-        private readonly AgentRegistrationInformationRestOperations _agentRegistrationInformationRestClient;
-        private readonly ClientDiagnostics _dscCompilationJobClientDiagnostics;
-        private readonly DscCompilationJobRestOperations _dscCompilationJobRestClient;
-        private readonly ClientDiagnostics _dscCompilationJobStreamClientDiagnostics;
-        private readonly DscCompilationJobStreamRestOperations _dscCompilationJobStreamRestClient;
-        private readonly ClientDiagnostics _nodeCountInformationClientDiagnostics;
-        private readonly NodeCountInformationRestOperations _nodeCountInformationRestClient;
-        private readonly ClientDiagnostics _statisticsClientDiagnostics;
-        private readonly StatisticsRestOperations _statisticsRestClient;
-        private readonly ClientDiagnostics _usagesClientDiagnostics;
-        private readonly UsagesRestOperations _usagesRestClient;
-        private readonly ClientDiagnostics _keysClientDiagnostics;
-        private readonly KeysRestOperations _keysRestClient;
-        private readonly ClientDiagnostics _linkedWorkspaceClientDiagnostics;
-        private readonly LinkedWorkspaceRestOperations _linkedWorkspaceRestClient;
-        private readonly ClientDiagnostics _objectDataTypesClientDiagnostics;
-        private readonly ObjectDataTypesRestOperations _objectDataTypesRestClient;
-        private readonly ClientDiagnostics _defaultClientDiagnostics;
-        private readonly AutomationRestOperations _defaultRestClient;
-        private readonly ClientDiagnostics _softwareUpdateConfigurationRunsClientDiagnostics;
-        private readonly SoftwareUpdateConfigurationRunsRestOperations _softwareUpdateConfigurationRunsRestClient;
+        private readonly AgentRegistrationInformation _agentRegistrationInformationRestClient;
+        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _automationAccountsClientDiagnostics;
+        private readonly AutomationAccounts _automationAccountsRestClient;
+        private readonly ClientDiagnostics _webhookClientDiagnostics;
+        private readonly Webhook _webhookRestClient;
         private readonly ClientDiagnostics _softwareUpdateConfigurationMachineRunsClientDiagnostics;
-        private readonly SoftwareUpdateConfigurationMachineRunsRestOperations _softwareUpdateConfigurationMachineRunsRestClient;
-        private readonly ClientDiagnostics _automationWebhookWebhookClientDiagnostics;
-        private readonly WebhookRestOperations _automationWebhookWebhookRestClient;
+        private readonly SoftwareUpdateConfigurationMachineRuns _softwareUpdateConfigurationMachineRunsRestClient;
+        private readonly ClientDiagnostics _jobClientDiagnostics;
+        private readonly Job _jobRestClient;
+        private readonly ClientDiagnostics _keysClientDiagnostics;
+        private readonly Keys _keysRestClient;
+        private readonly ClientDiagnostics _linkedWorkspaceClientDiagnostics;
+        private readonly LinkedWorkspace _linkedWorkspaceRestClient;
+        private readonly ClientDiagnostics _statisticsClientDiagnostics;
+        private readonly Statistics _statisticsRestClient;
+        private readonly ClientDiagnostics _objectDataTypesClientDiagnostics;
+        private readonly ObjectDataTypes _objectDataTypesRestClient;
+        private readonly ClientDiagnostics _nodeCountInformationClientDiagnostics;
+        private readonly NodeCountInformation _nodeCountInformationRestClient;
+        private readonly ClientDiagnostics _softwareUpdateConfigurationRunsClientDiagnostics;
+        private readonly SoftwareUpdateConfigurationRuns _softwareUpdateConfigurationRunsRestClient;
+        private readonly ClientDiagnostics _softwareUpdateConfigurationsClientDiagnostics;
+        private readonly SoftwareUpdateConfigurations _softwareUpdateConfigurationsRestClient;
+        private readonly ClientDiagnostics _usagesClientDiagnostics;
+        private readonly Usages _usagesRestClient;
         private readonly AutomationAccountData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts";
 
-        /// <summary> Initializes a new instance of the <see cref="AutomationAccountResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AutomationAccountResource for mocking. </summary>
         protected AutomationAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AutomationAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomationAccountResource(ArmClient client, AutomationAccountData data) : this(client, data.Id)
@@ -85,1550 +75,120 @@ namespace Azure.ResourceManager.Automation
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AutomationAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AutomationAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _automationAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string automationAccountApiVersion);
-            _automationAccountRestClient = new AutomationAccountRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automationAccountApiVersion);
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _agentRegistrationInformationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _agentRegistrationInformationRestClient = new AgentRegistrationInformationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _dscCompilationJobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", DscCompilationJobResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DscCompilationJobResource.ResourceType, out string dscCompilationJobApiVersion);
-            _dscCompilationJobRestClient = new DscCompilationJobRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dscCompilationJobApiVersion);
-            _dscCompilationJobStreamClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _dscCompilationJobStreamRestClient = new DscCompilationJobStreamRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _nodeCountInformationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _nodeCountInformationRestClient = new NodeCountInformationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _statisticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _statisticsRestClient = new StatisticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _usagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _usagesRestClient = new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _keysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _keysRestClient = new KeysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _linkedWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _linkedWorkspaceRestClient = new LinkedWorkspaceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _objectDataTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _objectDataTypesRestClient = new ObjectDataTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _defaultRestClient = new AutomationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _softwareUpdateConfigurationRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _softwareUpdateConfigurationRunsRestClient = new SoftwareUpdateConfigurationRunsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _softwareUpdateConfigurationMachineRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _softwareUpdateConfigurationMachineRunsRestClient = new SoftwareUpdateConfigurationMachineRunsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _automationWebhookWebhookClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", AutomationWebhookResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AutomationWebhookResource.ResourceType, out string automationWebhookWebhookApiVersion);
-            _automationWebhookWebhookRestClient = new WebhookRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, automationWebhookWebhookApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _automationAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _automationAccountRestClient = new AutomationAccount(_automationAccountClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _agentRegistrationInformationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _agentRegistrationInformationRestClient = new AgentRegistrationInformation(_agentRegistrationInformationClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _automationAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _automationAccountsRestClient = new AutomationAccounts(_automationAccountsClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _webhookClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _webhookRestClient = new Webhook(_webhookClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _softwareUpdateConfigurationMachineRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _softwareUpdateConfigurationMachineRunsRestClient = new SoftwareUpdateConfigurationMachineRuns(_softwareUpdateConfigurationMachineRunsClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _jobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _keysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _keysRestClient = new Keys(_keysClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _linkedWorkspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _linkedWorkspaceRestClient = new LinkedWorkspace(_linkedWorkspaceClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _statisticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _statisticsRestClient = new Statistics(_statisticsClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _objectDataTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _objectDataTypesRestClient = new ObjectDataTypes(_objectDataTypesClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _nodeCountInformationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _nodeCountInformationRestClient = new NodeCountInformation(_nodeCountInformationClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _softwareUpdateConfigurationRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _softwareUpdateConfigurationRunsRestClient = new SoftwareUpdateConfigurationRuns(_softwareUpdateConfigurationRunsClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _softwareUpdateConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _softwareUpdateConfigurationsRestClient = new SoftwareUpdateConfigurations(_softwareUpdateConfigurationsClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            _usagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _usagesRestClient = new Usages(_usagesClientDiagnostics, Pipeline, Endpoint, automationAccountApiVersion ?? "2024-10-23");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual AutomationAccountData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="automationAccountName"> The automationAccountName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of AutomationPrivateEndpointConnectionResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of AutomationPrivateEndpointConnectionResources and their operations over a AutomationPrivateEndpointConnectionResource. </returns>
-        public virtual AutomationPrivateEndpointConnectionCollection GetAutomationPrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new AutomationPrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a private endpoint connection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationPrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutomationPrivateEndpointConnectionResource>> GetAutomationPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutomationPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a private endpoint connection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationPrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutomationPrivateEndpointConnectionResource> GetAutomationPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            return GetAutomationPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutomationAccountPython2PackageResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of AutomationAccountPython2PackageResources and their operations over a AutomationAccountPython2PackageResource. </returns>
-        public virtual AutomationAccountPython2PackageCollection GetAutomationAccountPython2Packages()
-        {
-            return GetCachedClient(client => new AutomationAccountPython2PackageCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the python 2 package identified by package name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Python2Package_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountPython2PackageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="packageName"> The python package name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutomationAccountPython2PackageResource>> GetAutomationAccountPython2PackageAsync(string packageName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutomationAccountPython2Packages().GetAsync(packageName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the python 2 package identified by package name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Python2Package_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountPython2PackageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="packageName"> The python package name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutomationAccountPython2PackageResource> GetAutomationAccountPython2Package(string packageName, CancellationToken cancellationToken = default)
-        {
-            return GetAutomationAccountPython2Packages().Get(packageName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutomationAccountModuleResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of AutomationAccountModuleResources and their operations over a AutomationAccountModuleResource. </returns>
-        public virtual AutomationAccountModuleCollection GetAutomationAccountModules()
-        {
-            return GetCachedClient(client => new AutomationAccountModuleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the module identified by module name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Module_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountModuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="moduleName"> The module name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="moduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutomationAccountModuleResource>> GetAutomationAccountModuleAsync(string moduleName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutomationAccountModules().GetAsync(moduleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the module identified by module name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/modules/{moduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Module_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountModuleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="moduleName"> The module name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="moduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutomationAccountModuleResource> GetAutomationAccountModule(string moduleName, CancellationToken cancellationToken = default)
-        {
-            return GetAutomationAccountModules().Get(moduleName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DscNodeResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of DscNodeResources and their operations over a DscNodeResource. </returns>
-        public virtual DscNodeCollection GetDscNodes()
-        {
-            return GetCachedClient(client => new DscNodeCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the dsc node identified by node id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscNode_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscNodeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="nodeId"> The node id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nodeId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DscNodeResource>> GetDscNodeAsync(string nodeId, CancellationToken cancellationToken = default)
-        {
-            return await GetDscNodes().GetAsync(nodeId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the dsc node identified by node id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodes/{nodeId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscNode_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscNodeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="nodeId"> The node id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nodeId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DscNodeResource> GetDscNode(string nodeId, CancellationToken cancellationToken = default)
-        {
-            return GetDscNodes().Get(nodeId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DscNodeConfigurationResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of DscNodeConfigurationResources and their operations over a DscNodeConfigurationResource. </returns>
-        public virtual DscNodeConfigurationCollection GetDscNodeConfigurations()
-        {
-            return GetCachedClient(client => new DscNodeConfigurationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the Dsc node configurations by node configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodeConfigurations/{nodeConfigurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscNodeConfiguration_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscNodeConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="nodeConfigurationName"> The Dsc node configuration name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nodeConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nodeConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DscNodeConfigurationResource>> GetDscNodeConfigurationAsync(string nodeConfigurationName, CancellationToken cancellationToken = default)
-        {
-            return await GetDscNodeConfigurations().GetAsync(nodeConfigurationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the Dsc node configurations by node configuration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodeConfigurations/{nodeConfigurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscNodeConfiguration_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscNodeConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="nodeConfigurationName"> The Dsc node configuration name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nodeConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="nodeConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DscNodeConfigurationResource> GetDscNodeConfiguration(string nodeConfigurationName, CancellationToken cancellationToken = default)
-        {
-            return GetDscNodeConfigurations().Get(nodeConfigurationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DscCompilationJobResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of DscCompilationJobResources and their operations over a DscCompilationJobResource. </returns>
-        public virtual DscCompilationJobCollection GetDscCompilationJobs()
-        {
-            return GetCachedClient(client => new DscCompilationJobCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the Dsc configuration compilation job identified by job id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscCompilationJob_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscCompilationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="compilationJobName"> The DSC configuration Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="compilationJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DscCompilationJobResource>> GetDscCompilationJobAsync(string compilationJobName, CancellationToken cancellationToken = default)
-        {
-            return await GetDscCompilationJobs().GetAsync(compilationJobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the Dsc configuration compilation job identified by job id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscCompilationJob_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscCompilationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="compilationJobName"> The DSC configuration Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="compilationJobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DscCompilationJobResource> GetDscCompilationJob(string compilationJobName, CancellationToken cancellationToken = default)
-        {
-            return GetDscCompilationJobs().Get(compilationJobName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutomationSourceControlResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of AutomationSourceControlResources and their operations over a AutomationSourceControlResource. </returns>
-        public virtual AutomationSourceControlCollection GetAutomationSourceControls()
-        {
-            return GetCachedClient(client => new AutomationSourceControlCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the source control identified by source control name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControl_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationSourceControlResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sourceControlName"> The name of source control. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutomationSourceControlResource>> GetAutomationSourceControlAsync(string sourceControlName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutomationSourceControls().GetAsync(sourceControlName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the source control identified by source control name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/sourceControls/{sourceControlName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SourceControl_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationSourceControlResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sourceControlName"> The name of source control. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutomationSourceControlResource> GetAutomationSourceControl(string sourceControlName, CancellationToken cancellationToken = default)
-        {
-            return GetAutomationSourceControls().Get(sourceControlName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutomationCertificateResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of AutomationCertificateResources and their operations over a AutomationCertificateResource. </returns>
-        public virtual AutomationCertificateCollection GetAutomationCertificates()
-        {
-            return GetCachedClient(client => new AutomationCertificateCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the certificate identified by certificate name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/certificates/{certificateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificate_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="certificateName"> The name of certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutomationCertificateResource>> GetAutomationCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutomationCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the certificate identified by certificate name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/certificates/{certificateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Certificate_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationCertificateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="certificateName"> The name of certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutomationCertificateResource> GetAutomationCertificate(string certificateName, CancellationToken cancellationToken = default)
-        {
-            return GetAutomationCertificates().Get(certificateName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutomationConnectionResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of AutomationConnectionResources and their operations over a AutomationConnectionResource. </returns>
-        public virtual AutomationConnectionCollection GetAutomationConnections()
-        {
-            return GetCachedClient(client => new AutomationConnectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the connection identified by connection name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connections/{connectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connection_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="connectionName"> The name of connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutomationConnectionResource>> GetAutomationConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutomationConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the connection identified by connection name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connections/{connectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Connection_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="connectionName"> The name of connection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutomationConnectionResource> GetAutomationConnection(string connectionName, CancellationToken cancellationToken = default)
-        {
-            return GetAutomationConnections().Get(connectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutomationConnectionTypeResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of AutomationConnectionTypeResources and their operations over a AutomationConnectionTypeResource. </returns>
-        public virtual AutomationConnectionTypeCollection GetAutomationConnectionTypes()
-        {
-            return GetCachedClient(client => new AutomationConnectionTypeCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the connection type identified by connection type name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionType_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationConnectionTypeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="connectionTypeName"> The name of connection type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutomationConnectionTypeResource>> GetAutomationConnectionTypeAsync(string connectionTypeName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutomationConnectionTypes().GetAsync(connectionTypeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the connection type identified by connection type name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/connectionTypes/{connectionTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConnectionType_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationConnectionTypeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="connectionTypeName"> The name of connection type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutomationConnectionTypeResource> GetAutomationConnectionType(string connectionTypeName, CancellationToken cancellationToken = default)
-        {
-            return GetAutomationConnectionTypes().Get(connectionTypeName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutomationCredentialResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of AutomationCredentialResources and their operations over a AutomationCredentialResource. </returns>
-        public virtual AutomationCredentialCollection GetAutomationCredentials()
-        {
-            return GetCachedClient(client => new AutomationCredentialCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the credential identified by credential name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/credentials/{credentialName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Credential_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationCredentialResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="credentialName"> The name of credential. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutomationCredentialResource>> GetAutomationCredentialAsync(string credentialName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutomationCredentials().GetAsync(credentialName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the credential identified by credential name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/credentials/{credentialName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Credential_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationCredentialResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="credentialName"> The name of credential. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutomationCredentialResource> GetAutomationCredential(string credentialName, CancellationToken cancellationToken = default)
-        {
-            return GetAutomationCredentials().Get(credentialName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutomationJobScheduleResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of AutomationJobScheduleResources and their operations over a AutomationJobScheduleResource. </returns>
-        public virtual AutomationJobScheduleCollection GetAutomationJobSchedules()
-        {
-            return GetCachedClient(client => new AutomationJobScheduleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the job schedule identified by job schedule name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobSchedules/{jobScheduleId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobSchedule_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobScheduleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobScheduleId"> The job schedule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutomationJobScheduleResource>> GetAutomationJobScheduleAsync(Guid jobScheduleId, CancellationToken cancellationToken = default)
-        {
-            return await GetAutomationJobSchedules().GetAsync(jobScheduleId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the job schedule identified by job schedule name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobSchedules/{jobScheduleId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobSchedule_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobScheduleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobScheduleId"> The job schedule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<AutomationJobScheduleResource> GetAutomationJobSchedule(Guid jobScheduleId, CancellationToken cancellationToken = default)
-        {
-            return GetAutomationJobSchedules().Get(jobScheduleId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutomationScheduleResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of AutomationScheduleResources and their operations over a AutomationScheduleResource. </returns>
-        public virtual AutomationScheduleCollection GetAutomationSchedules()
-        {
-            return GetCachedClient(client => new AutomationScheduleCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the schedule identified by schedule name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schedule_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationScheduleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scheduleName"> The schedule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutomationScheduleResource>> GetAutomationScheduleAsync(string scheduleName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutomationSchedules().GetAsync(scheduleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the schedule identified by schedule name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/schedules/{scheduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schedule_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationScheduleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scheduleName"> The schedule name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutomationScheduleResource> GetAutomationSchedule(string scheduleName, CancellationToken cancellationToken = default)
-        {
-            return GetAutomationSchedules().Get(scheduleName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutomationVariableResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of AutomationVariableResources and their operations over a AutomationVariableResource. </returns>
-        public virtual AutomationVariableCollection GetAutomationVariables()
-        {
-            return GetCachedClient(client => new AutomationVariableCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the variable identified by variable name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/variables/{variableName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Variable_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationVariableResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="variableName"> The name of variable. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="variableName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutomationVariableResource>> GetAutomationVariableAsync(string variableName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutomationVariables().GetAsync(variableName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the variable identified by variable name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/variables/{variableName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Variable_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationVariableResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="variableName"> The name of variable. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="variableName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutomationVariableResource> GetAutomationVariable(string variableName, CancellationToken cancellationToken = default)
-        {
-            return GetAutomationVariables().Get(variableName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutomationWatcherResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of AutomationWatcherResources and their operations over a AutomationWatcherResource. </returns>
-        public virtual AutomationWatcherCollection GetAutomationWatchers()
-        {
-            return GetCachedClient(client => new AutomationWatcherCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the watcher identified by watcher name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/watchers/{watcherName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watcher_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationWatcherResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="watcherName"> The watcher name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutomationWatcherResource>> GetAutomationWatcherAsync(string watcherName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutomationWatchers().GetAsync(watcherName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the watcher identified by watcher name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/watchers/{watcherName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watcher_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationWatcherResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="watcherName"> The watcher name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutomationWatcherResource> GetAutomationWatcher(string watcherName, CancellationToken cancellationToken = default)
-        {
-            return GetAutomationWatchers().Get(watcherName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DscConfigurationResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of DscConfigurationResources and their operations over a DscConfigurationResource. </returns>
-        public virtual DscConfigurationCollection GetDscConfigurations()
-        {
-            return GetCachedClient(client => new DscConfigurationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the configuration identified by configuration name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscConfiguration_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationName"> The configuration name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DscConfigurationResource>> GetDscConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
-        {
-            return await GetDscConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the configuration identified by configuration name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/configurations/{configurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscConfiguration_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="configurationName"> The configuration name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DscConfigurationResource> GetDscConfiguration(string configurationName, CancellationToken cancellationToken = default)
-        {
-            return GetDscConfigurations().Get(configurationName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutomationJobResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of AutomationJobResources and their operations over a AutomationJobResource. </returns>
-        public virtual AutomationJobCollection GetAutomationJobs()
-        {
-            return GetCachedClient(client => new AutomationJobCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the job identified by job name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobName"> The job name. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutomationJobResource>> GetAutomationJobAsync(string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            return await GetAutomationJobs().GetAsync(jobName, clientRequestId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the job identified by job name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobName"> The job name. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutomationJobResource> GetAutomationJob(string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            return GetAutomationJobs().Get(jobName, clientRequestId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SoftwareUpdateConfigurationResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of SoftwareUpdateConfigurationResources and their operations over a SoftwareUpdateConfigurationResource. </returns>
-        public virtual SoftwareUpdateConfigurationCollection GetSoftwareUpdateConfigurations()
-        {
-            return GetCachedClient(client => new SoftwareUpdateConfigurationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a single software update configuration by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurations_GetByName</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SoftwareUpdateConfigurationResource>> GetSoftwareUpdateConfigurationAsync(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            return await GetSoftwareUpdateConfigurations().GetAsync(softwareUpdateConfigurationName, clientRequestId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a single software update configuration by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurations/{softwareUpdateConfigurationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurations_GetByName</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SoftwareUpdateConfigurationResource> GetSoftwareUpdateConfiguration(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            return GetSoftwareUpdateConfigurations().Get(softwareUpdateConfigurationName, clientRequestId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutomationRunbookResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of AutomationRunbookResources and their operations over a AutomationRunbookResource. </returns>
-        public virtual AutomationRunbookCollection GetAutomationRunbooks()
-        {
-            return GetCachedClient(client => new AutomationRunbookCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the runbook identified by runbook name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Runbook_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationRunbookResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="runbookName"> The runbook name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutomationRunbookResource>> GetAutomationRunbookAsync(string runbookName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutomationRunbooks().GetAsync(runbookName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the runbook identified by runbook name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/runbooks/{runbookName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Runbook_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-06-30</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationRunbookResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="runbookName"> The runbook name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutomationRunbookResource> GetAutomationRunbook(string runbookName, CancellationToken cancellationToken = default)
-        {
-            return GetAutomationRunbooks().Get(runbookName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of AutomationWebhookResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of AutomationWebhookResources and their operations over a AutomationWebhookResource. </returns>
-        public virtual AutomationWebhookCollection GetAutomationWebhooks()
-        {
-            return GetCachedClient(client => new AutomationWebhookCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve the webhook identified by webhook name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Webhook_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-10-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationWebhookResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="webhookName"> The webhook name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AutomationWebhookResource>> GetAutomationWebhookAsync(string webhookName, CancellationToken cancellationToken = default)
-        {
-            return await GetAutomationWebhooks().GetAsync(webhookName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve the webhook identified by webhook name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/{webhookName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Webhook_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-10-31</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationWebhookResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="webhookName"> The webhook name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AutomationWebhookResource> GetAutomationWebhook(string webhookName, CancellationToken cancellationToken = default)
-        {
-            return GetAutomationWebhooks().Get(webhookName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of HybridRunbookWorkerGroupResources in the AutomationAccount. </summary>
-        /// <returns> An object representing collection of HybridRunbookWorkerGroupResources and their operations over a HybridRunbookWorkerGroupResource. </returns>
-        public virtual HybridRunbookWorkerGroupCollection GetHybridRunbookWorkerGroups()
-        {
-            return GetCachedClient(client => new HybridRunbookWorkerGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieve a hybrid runbook worker group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/hybridRunbookWorkerGroups/{hybridRunbookWorkerGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridRunbookWorkerGroup_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-22</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridRunbookWorkerGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="hybridRunbookWorkerGroupName"> The hybrid runbook worker group name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<HybridRunbookWorkerGroupResource>> GetHybridRunbookWorkerGroupAsync(string hybridRunbookWorkerGroupName, CancellationToken cancellationToken = default)
-        {
-            return await GetHybridRunbookWorkerGroups().GetAsync(hybridRunbookWorkerGroupName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieve a hybrid runbook worker group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/hybridRunbookWorkerGroups/{hybridRunbookWorkerGroupName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridRunbookWorkerGroup_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-22</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridRunbookWorkerGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="hybridRunbookWorkerGroupName"> The hybrid runbook worker group name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<HybridRunbookWorkerGroupResource> GetHybridRunbookWorkerGroup(string hybridRunbookWorkerGroupName, CancellationToken cancellationToken = default)
-        {
-            return GetHybridRunbookWorkerGroups().Get(hybridRunbookWorkerGroupName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get information about an Automation Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AutomationAccountResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.Get");
+            using DiagnosticScope scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.Get");
             scope.Start();
             try
             {
-                var response = await _automationAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutomationAccountData> response = Response.FromValue(AutomationAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -1642,122 +202,42 @@ namespace Azure.ResourceManager.Automation
         /// Get information about an Automation Account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AutomationAccountResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.Get");
+            using DiagnosticScope scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.Get");
             scope.Start();
             try
             {
-                var response = _automationAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutomationAccountData> response = Response.FromValue(AutomationAccountData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationAccountResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete an automation account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _automationAccountRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _automationAccountRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AutomationArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete an automation account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _automationAccountRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var uri = _automationAccountRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new AutomationArmOperation(response, rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -1770,20 +250,20 @@ namespace Azure.ResourceManager.Automation
         /// Update an automation account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1794,11 +274,21 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.Update");
+            using DiagnosticScope scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.Update");
             scope.Start();
             try
             {
-                var response = await _automationAccountRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationAccountRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutomationAccountPatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutomationAccountData> response = Response.FromValue(AutomationAccountData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -1812,20 +302,20 @@ namespace Azure.ResourceManager.Automation
         /// Update an automation account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1836,11 +326,21 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.Update");
+            using DiagnosticScope scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.Update");
             scope.Start();
             try
             {
-                var response = _automationAccountRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationAccountRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AutomationAccountPatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutomationAccountData> response = Response.FromValue(AutomationAccountData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutomationAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -1851,44 +351,259 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Gets the private link resources that need to be created for Automation account.
+        /// Delete an automation account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/privateLinkResources</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Automation</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationAccountRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AutomationArmOperation operation = new AutomationArmOperation(response, rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete an automation account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationAccountRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AutomationArmOperation operation = new AutomationArmOperation(response, rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve the automation agent registration information.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_AgentRegistrationInformationGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationPrivateLinkResource> AutomationPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AgentRegistration>> GetAgentRegistrationInformationAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateAutomationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationPrivateLinkResource.DeserializeAutomationPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "AutomationAccountResource.AutomationPrivateLinkResources", "value", null, cancellationToken);
+            using DiagnosticScope scope = _agentRegistrationInformationClientDiagnostics.CreateScope("AutomationAccountResource.GetAgentRegistrationInformation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _agentRegistrationInformationRestClient.CreateGetAgentRegistrationInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AgentRegistration> response = Response.FromValue(AgentRegistration.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve the automation agent registration information.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_AgentRegistrationInformationGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<AgentRegistration> GetAgentRegistrationInformation(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _agentRegistrationInformationClientDiagnostics.CreateScope("AutomationAccountResource.GetAgentRegistrationInformation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _agentRegistrationInformationRestClient.CreateGetAgentRegistrationInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AgentRegistration> response = Response.FromValue(AgentRegistration.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Gets the private link resources that need to be created for Automation account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/privateLinkResources</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/privateLinkResources. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_Automation</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_Automation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomationPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationPrivateLinkResource> AutomationPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PrivateLinkResourcesAutomationPrivateLinkResourcesAsyncCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AutomationAccountResource.AutomationPrivateLinkResources");
+        }
+
+        /// <summary>
+        /// Gets the private link resources that need to be created for Automation account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/privateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_Automation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1896,640 +611,37 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationPrivateLinkResource> AutomationPrivateLinkResources(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateAutomationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationPrivateLinkResource.DeserializeAutomationPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "AutomationAccountResource.AutomationPrivateLinkResources", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve the automation agent registration information.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AgentRegistrationInformation_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AgentRegistration>> GetAgentRegistrationInformationAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _agentRegistrationInformationClientDiagnostics.CreateScope("AutomationAccountResource.GetAgentRegistrationInformation");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                var response = await _agentRegistrationInformationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve the automation agent registration information.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AgentRegistrationInformation_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AgentRegistration> GetAgentRegistrationInformation(CancellationToken cancellationToken = default)
-        {
-            using var scope = _agentRegistrationInformationClientDiagnostics.CreateScope("AutomationAccountResource.GetAgentRegistrationInformation");
-            scope.Start();
-            try
-            {
-                var response = _agentRegistrationInformationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerate a primary or secondary agent registration key
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation/regenerateKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AgentRegistrationInformation_RegenerateKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The name of the agent registration key to be regenerated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<AgentRegistration>> RegenerateKeyAgentRegistrationInformationAsync(AgentRegistrationRegenerateKeyContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _agentRegistrationInformationClientDiagnostics.CreateScope("AutomationAccountResource.RegenerateKeyAgentRegistrationInformation");
-            scope.Start();
-            try
-            {
-                var response = await _agentRegistrationInformationRestClient.RegenerateKeyAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerate a primary or secondary agent registration key
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation/regenerateKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AgentRegistrationInformation_RegenerateKey</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The name of the agent registration key to be regenerated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<AgentRegistration> RegenerateKeyAgentRegistrationInformation(AgentRegistrationRegenerateKeyContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _agentRegistrationInformationClientDiagnostics.CreateScope("AutomationAccountResource.RegenerateKeyAgentRegistrationInformation");
-            scope.Start();
-            try
-            {
-                var response = _agentRegistrationInformationRestClient.RegenerateKey(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve the job stream identified by job stream id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams/{jobStreamId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscCompilationJob_GetStream</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscCompilationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The job id. </param>
-        /// <param name="jobStreamId"> The job stream id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobStreamId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobStreamId"/> is null. </exception>
-        public virtual async Task<Response<AutomationJobStream>> GetStreamDscCompilationJobAsync(Guid jobId, string jobStreamId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobStreamId, nameof(jobStreamId));
-
-            using var scope = _dscCompilationJobClientDiagnostics.CreateScope("AutomationAccountResource.GetStreamDscCompilationJob");
-            scope.Start();
-            try
-            {
-                var response = await _dscCompilationJobRestClient.GetStreamAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, jobStreamId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve the job stream identified by job stream id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams/{jobStreamId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscCompilationJob_GetStream</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscCompilationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The job id. </param>
-        /// <param name="jobStreamId"> The job stream id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobStreamId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobStreamId"/> is null. </exception>
-        public virtual Response<AutomationJobStream> GetStreamDscCompilationJob(Guid jobId, string jobStreamId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobStreamId, nameof(jobStreamId));
-
-            using var scope = _dscCompilationJobClientDiagnostics.CreateScope("AutomationAccountResource.GetStreamDscCompilationJob");
-            scope.Start();
-            try
-            {
-                var response = _dscCompilationJobRestClient.GetStream(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId, jobStreamId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve all the job streams for the compilation Job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscCompilationJobStream_ListByJob</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The job id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationJobStream> GetDscCompilationJobStreamsAsync(Guid jobId, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dscCompilationJobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationJobStream.DeserializeAutomationJobStream(e), _dscCompilationJobStreamClientDiagnostics, Pipeline, "AutomationAccountResource.GetDscCompilationJobStreams", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve all the job streams for the compilation Job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscCompilationJobStream_ListByJob</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobId"> The job id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomationJobStream> GetDscCompilationJobStreams(Guid jobId, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _dscCompilationJobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationJobStream.DeserializeAutomationJobStream(e), _dscCompilationJobStreamClientDiagnostics, Pipeline, "AutomationAccountResource.GetDscCompilationJobStreams", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve counts for Dsc Nodes.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodecounts/{countType}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NodeCountInformation_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="countType"> The type of counts to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DscNodeCount"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DscNodeCount> GetAllNodeCountInformationAsync(AutomationCountType countType, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeCountInformationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, countType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => DscNodeCount.DeserializeDscNodeCount(e), _nodeCountInformationClientDiagnostics, Pipeline, "AutomationAccountResource.GetAllNodeCountInformation", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve counts for Dsc Nodes.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodecounts/{countType}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NodeCountInformation_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="countType"> The type of counts to retrieve. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DscNodeCount"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DscNodeCount> GetAllNodeCountInformation(AutomationCountType countType, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeCountInformationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, countType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => DscNodeCount.DeserializeDscNodeCount(e), _nodeCountInformationClientDiagnostics, Pipeline, "AutomationAccountResource.GetAllNodeCountInformation", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve the statistics for the account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/statistics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Statistics_ListByAutomationAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationAccountStatistics"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationAccountStatistics> GetStatisticsAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _statisticsRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationAccountStatistics.DeserializeAutomationAccountStatistics(e), _statisticsClientDiagnostics, Pipeline, "AutomationAccountResource.GetStatistics", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve the statistics for the account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/statistics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Statistics_ListByAutomationAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationAccountStatistics"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomationAccountStatistics> GetStatistics(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _statisticsRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationAccountStatistics.DeserializeAutomationAccountStatistics(e), _statisticsClientDiagnostics, Pipeline, "AutomationAccountResource.GetStatistics", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve the usage for the account id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_ListByAutomationAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationUsage> GetUsagesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationUsage.DeserializeAutomationUsage(e), _usagesClientDiagnostics, Pipeline, "AutomationAccountResource.GetUsages", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve the usage for the account id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Usages_ListByAutomationAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomationUsage> GetUsages(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationUsage.DeserializeAutomationUsage(e), _usagesClientDiagnostics, Pipeline, "AutomationAccountResource.GetUsages", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve the automation keys for an account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/listKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Keys_ListByAutomationAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationKey> GetAutomationAccountKeysAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _keysRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationKey.DeserializeAutomationKey(e), _keysClientDiagnostics, Pipeline, "AutomationAccountResource.GetAutomationAccountKeys", "keys", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve the automation keys for an account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/listKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Keys_ListByAutomationAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationKey"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomationKey> GetAutomationAccountKeys(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _keysRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationKey.DeserializeAutomationKey(e), _keysClientDiagnostics, Pipeline, "AutomationAccountResource.GetAutomationAccountKeys", "keys", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve the linked workspace for the account id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/linkedWorkspace</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedWorkspace_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AutomationLinkedWorkspace>> GetLinkedWorkspaceAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _linkedWorkspaceClientDiagnostics.CreateScope("AutomationAccountResource.GetLinkedWorkspace");
-            scope.Start();
-            try
-            {
-                var response = await _linkedWorkspaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve the linked workspace for the account id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/linkedWorkspace</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LinkedWorkspace_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AutomationLinkedWorkspace> GetLinkedWorkspace(CancellationToken cancellationToken = default)
-        {
-            using var scope = _linkedWorkspaceClientDiagnostics.CreateScope("AutomationAccountResource.GetLinkedWorkspace");
-            scope.Start();
-            try
-            {
-                var response = _linkedWorkspaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Retrieve a list of fields of a given type across all accessible modules.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/objectDataTypes/{typeName}/fields</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ObjectDataTypes_ListFieldsByType</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="typeName"> The name of type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AutomationModuleField"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AutomationModuleField> GetFieldsByTypeAsync(string typeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountResource.GetFieldsByType", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Retrieve a list of fields of a given type across all accessible modules.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/objectDataTypes/{typeName}/fields</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ObjectDataTypes_ListFieldsByType</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="typeName"> The name of type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
-        /// <returns> A collection of <see cref="AutomationModuleField"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AutomationModuleField> GetFieldsByType(string typeName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountResource.GetFieldsByType", "value", null, cancellationToken);
+                CancellationToken = cancellationToken
+            };
+            return new PrivateLinkResourcesAutomationPrivateLinkResourcesCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AutomationAccountResource.AutomationPrivateLinkResources");
         }
 
         /// <summary>
         /// Post operation to serialize or deserialize GraphRunbookContent
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/convertGraphRunbookContent</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/convertGraphRunbookContent. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConvertGraphRunbookContent</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_ConvertGraphRunbookContent. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2540,11 +652,21 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("AutomationAccountResource.ConvertGraphRunbookContent");
+            using DiagnosticScope scope = _automationAccountsClientDiagnostics.CreateScope("AutomationAccountResource.ConvertGraphRunbookContent");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.ConvertGraphRunbookContentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationAccountsRestClient.CreateConvertGraphRunbookContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GraphicalRunbookContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GraphicalRunbookContent> response = Response.FromValue(GraphicalRunbookContent.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -2558,16 +680,20 @@ namespace Azure.ResourceManager.Automation
         /// Post operation to serialize or deserialize GraphRunbookContent
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/convertGraphRunbookContent</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/convertGraphRunbookContent. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConvertGraphRunbookContent</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_ConvertGraphRunbookContent. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2578,11 +704,21 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _defaultClientDiagnostics.CreateScope("AutomationAccountResource.ConvertGraphRunbookContent");
+            using DiagnosticScope scope = _automationAccountsClientDiagnostics.CreateScope("AutomationAccountResource.ConvertGraphRunbookContent");
             scope.Start();
             try
             {
-                var response = _defaultRestClient.ConvertGraphRunbookContent(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationAccountsRestClient.CreateConvertGraphRunbookContentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, GraphicalRunbookContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GraphicalRunbookContent> response = Response.FromValue(GraphicalRunbookContent.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -2593,32 +729,44 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Get a single software update configuration Run by Id.
+        /// Generates a Uri for use in creating a webhook.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns/{softwareUpdateConfigurationRunId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/generateUri. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurationRuns_GetById</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_GenerateUri. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="softwareUpdateConfigurationRunId"> The Id of the software update configuration run. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SoftwareUpdateConfigurationRun>> GetSoftwareUpdateConfigurationRunAsync(Guid softwareUpdateConfigurationRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> GenerateUriWebhookAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _softwareUpdateConfigurationRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationRun");
+            using DiagnosticScope scope = _webhookClientDiagnostics.CreateScope("AutomationAccountResource.GenerateUriWebhook");
             scope.Start();
             try
             {
-                var response = await _softwareUpdateConfigurationRunsRestClient.GetByIdAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationRunId, clientRequestId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webhookRestClient.CreateGenerateUriWebhookRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -2629,126 +777,44 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Get a single software update configuration Run by Id.
+        /// Generates a Uri for use in creating a webhook.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns/{softwareUpdateConfigurationRunId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/generateUri. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurationRuns_GetById</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_GenerateUri. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="softwareUpdateConfigurationRunId"> The Id of the software update configuration run. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRun(Guid softwareUpdateConfigurationRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual Response<string> GenerateUriWebhook(CancellationToken cancellationToken = default)
         {
-            using var scope = _softwareUpdateConfigurationRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationRun");
+            using DiagnosticScope scope = _webhookClientDiagnostics.CreateScope("AutomationAccountResource.GenerateUriWebhook");
             scope.Start();
             try
             {
-                var response = _softwareUpdateConfigurationRunsRestClient.GetById(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationRunId, clientRequestId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Return list of software update configuration runs
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurationRuns_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: 'properties/osType', 'properties/status', 'properties/startTime', and 'properties/softwareUpdateConfiguration/name'. </param>
-        /// <param name="skip"> Number of entries you skip before returning results. </param>
-        /// <param name="top"> Maximum number of entries returned in the results collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SoftwareUpdateConfigurationRun"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRunsAsync(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun(e), _softwareUpdateConfigurationRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationRuns", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Return list of software update configuration runs
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurationRuns_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: 'properties/osType', 'properties/status', 'properties/startTime', and 'properties/softwareUpdateConfiguration/name'. </param>
-        /// <param name="skip"> Number of entries you skip before returning results. </param>
-        /// <param name="top"> Maximum number of entries returned in the results collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SoftwareUpdateConfigurationRun"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRuns(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun(e), _softwareUpdateConfigurationRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationRuns", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a single software update configuration machine run by Id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns/{softwareUpdateConfigurationMachineRunId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurationMachineRuns_GetById</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="softwareUpdateConfigurationMachineRunId"> The Id of the software update configuration machine run. </param>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SoftwareUpdateConfigurationMachineRun>> GetSoftwareUpdateConfigurationMachineRunAsync(Guid softwareUpdateConfigurationMachineRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
-        {
-            using var scope = _softwareUpdateConfigurationMachineRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRun");
-            scope.Start();
-            try
-            {
-                var response = await _softwareUpdateConfigurationMachineRunsRestClient.GetByIdAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationMachineRunId, clientRequestId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webhookRestClient.CreateGenerateUriWebhookRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<string> response = Response.FromValue(JsonDocument.Parse(result.Content, ModelSerializationExtensions.JsonDocumentOptions).RootElement.GetString(), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -2762,29 +828,777 @@ namespace Azure.ResourceManager.Automation
         /// Get a single software update configuration machine run by Id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns/{softwareUpdateConfigurationMachineRunId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns/{softwareUpdateConfigurationMachineRunId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurationMachineRuns_GetById</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_GetById. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationMachineRunId"> The Id of the software update configuration machine run. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRun(Guid softwareUpdateConfigurationMachineRunId, string clientRequestId = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SoftwareUpdateConfigurationMachineRun>> GetSoftwareUpdateConfigurationMachineRunAsync(Guid softwareUpdateConfigurationMachineRunId, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _softwareUpdateConfigurationMachineRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRun");
+            using DiagnosticScope scope = _softwareUpdateConfigurationMachineRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRun");
             scope.Start();
             try
             {
-                var response = _softwareUpdateConfigurationMachineRunsRestClient.GetById(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationMachineRunId, clientRequestId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softwareUpdateConfigurationMachineRunsRestClient.CreateGetSoftwareUpdateConfigurationMachineRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationMachineRunId, clientRequestId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SoftwareUpdateConfigurationMachineRun> response = Response.FromValue(SoftwareUpdateConfigurationMachineRun.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a single software update configuration machine run by Id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns/{softwareUpdateConfigurationMachineRunId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_GetById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="softwareUpdateConfigurationMachineRunId"> The Id of the software update configuration machine run. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRun(Guid softwareUpdateConfigurationMachineRunId, string clientRequestId = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _softwareUpdateConfigurationMachineRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRun");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softwareUpdateConfigurationMachineRunsRestClient.CreateGetSoftwareUpdateConfigurationMachineRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationMachineRunId, clientRequestId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SoftwareUpdateConfigurationMachineRun> response = Response.FromValue(SoftwareUpdateConfigurationMachineRun.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve a list of jobs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_JobListByAutomationAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomationJobCollectionItemData"/> that may take multiple service requests to iterate over. </returns>
+        internal virtual AsyncPageable<AutomationJobCollectionItemData> GetAutomationJobsAsync(string filter = default, string clientRequestId = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new JobGetAutomationJobsAsyncCollectionResultOfT(
+                _jobRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                clientRequestId,
+                context,
+                "AutomationAccountResource.GetAutomationJobs");
+        }
+
+        /// <summary>
+        /// Retrieve a list of jobs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/jobs. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_JobListByAutomationAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomationJobCollectionItemData"/> that may take multiple service requests to iterate over. </returns>
+        internal virtual Pageable<AutomationJobCollectionItemData> GetAutomationJobs(string filter = default, string clientRequestId = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new JobGetAutomationJobsCollectionResultOfT(
+                _jobRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                clientRequestId,
+                context,
+                "AutomationAccountResource.GetAutomationJobs");
+        }
+
+        /// <summary>
+        /// Retrieve the automation keys for an account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/listKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_KeysListByAutomationAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomationKey"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationKey> GetAutomationAccountKeysAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new KeysGetAutomationAccountKeysAsyncCollectionResultOfT(
+                _keysRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AutomationAccountResource.GetAutomationAccountKeys");
+        }
+
+        /// <summary>
+        /// Retrieve the automation keys for an account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/listKeys. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_KeysListByAutomationAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomationKey"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationKey> GetAutomationAccountKeys(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new KeysGetAutomationAccountKeysCollectionResultOfT(
+                _keysRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AutomationAccountResource.GetAutomationAccountKeys");
+        }
+
+        /// <summary>
+        /// Retrieve the linked workspace for the account id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/linkedWorkspace. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_LinkedWorkspaceGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<AutomationLinkedWorkspace>> GetLinkedWorkspaceAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _linkedWorkspaceClientDiagnostics.CreateScope("AutomationAccountResource.GetLinkedWorkspace");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _linkedWorkspaceRestClient.CreateGetLinkedWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutomationLinkedWorkspace> response = Response.FromValue(AutomationLinkedWorkspace.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve the linked workspace for the account id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/linkedWorkspace. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_LinkedWorkspaceGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<AutomationLinkedWorkspace> GetLinkedWorkspace(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _linkedWorkspaceClientDiagnostics.CreateScope("AutomationAccountResource.GetLinkedWorkspace");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _linkedWorkspaceRestClient.CreateGetLinkedWorkspaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutomationLinkedWorkspace> response = Response.FromValue(AutomationLinkedWorkspace.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve the statistics for the account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/statistics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_ListByAutomationAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomationAccountStatistics"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationAccountStatistics> GetStatisticsAsync(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new StatisticsGetStatisticsAsyncCollectionResultOfT(
+                _statisticsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                context,
+                "AutomationAccountResource.GetStatistics");
+        }
+
+        /// <summary>
+        /// Retrieve the statistics for the account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/statistics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_ListByAutomationAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomationAccountStatistics"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationAccountStatistics> GetStatistics(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new StatisticsGetStatisticsCollectionResultOfT(
+                _statisticsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                context,
+                "AutomationAccountResource.GetStatistics");
+        }
+
+        /// <summary>
+        /// Retrieve the deleted runbooks for an automation account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/listDeletedRunbooks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_ListDeletedRunbooks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedRunbook"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeletedRunbook> GetDeletedRunbooksAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AutomationAccountGetDeletedRunbooksAsyncCollectionResultOfT(
+                _automationAccountRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AutomationAccountResource.GetDeletedRunbooks");
+        }
+
+        /// <summary>
+        /// Retrieve the deleted runbooks for an automation account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/listDeletedRunbooks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_ListDeletedRunbooks. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeletedRunbook"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeletedRunbook> GetDeletedRunbooks(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AutomationAccountGetDeletedRunbooksCollectionResultOfT(
+                _automationAccountRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AutomationAccountResource.GetDeletedRunbooks");
+        }
+
+        /// <summary>
+        /// Retrieve a list of fields of a given type across all accessible modules.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/objectDataTypes/{typeName}/fields. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_ListFieldsByType. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="typeName"> The name of type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AutomationModuleField"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationModuleField> GetFieldsByTypeAsync(string typeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ObjectDataTypesGetFieldsByTypeAsyncCollectionResultOfT(
+                _objectDataTypesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                typeName,
+                context,
+                "AutomationAccountResource.GetFieldsByType");
+        }
+
+        /// <summary>
+        /// Retrieve a list of fields of a given type across all accessible modules.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/objectDataTypes/{typeName}/fields. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_ListFieldsByType. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="typeName"> The name of type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="AutomationModuleField"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationModuleField> GetFieldsByType(string typeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ObjectDataTypesGetFieldsByTypeCollectionResultOfT(
+                _objectDataTypesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                typeName,
+                context,
+                "AutomationAccountResource.GetFieldsByType");
+        }
+
+        /// <summary>
+        /// Retrieve counts for Dsc Nodes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodecounts/{countType}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_NodeCountInformationGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="countType"> The type of counts to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DscNodeCount"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DscNodeCount> GetAllNodeCountInformationAsync(AutomationCountType countType, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NodeCountInformationGetAllNodeCountInformationAsyncCollectionResultOfT(
+                _nodeCountInformationRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                countType.ToString(),
+                context,
+                "AutomationAccountResource.GetAllNodeCountInformation");
+        }
+
+        /// <summary>
+        /// Retrieve counts for Dsc Nodes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/nodecounts/{countType}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_NodeCountInformationGet. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="countType"> The type of counts to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DscNodeCount"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DscNodeCount> GetAllNodeCountInformation(AutomationCountType countType, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new NodeCountInformationGetAllNodeCountInformationCollectionResultOfT(
+                _nodeCountInformationRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                countType.ToString(),
+                context,
+                "AutomationAccountResource.GetAllNodeCountInformation");
+        }
+
+        /// <summary>
+        /// Regenerate a primary or secondary agent registration key
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation/regenerateKey. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_RegenerateKey. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The name of the agent registration key to be regenerated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<AgentRegistration>> RegenerateKeyAgentRegistrationInformationAsync(AgentRegistrationRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _agentRegistrationInformationClientDiagnostics.CreateScope("AutomationAccountResource.RegenerateKeyAgentRegistrationInformation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _agentRegistrationInformationRestClient.CreateRegenerateKeyAgentRegistrationInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AgentRegistrationRegenerateKeyContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AgentRegistration> response = Response.FromValue(AgentRegistration.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerate a primary or secondary agent registration key
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/agentRegistrationInformation/regenerateKey. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_RegenerateKey. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The name of the agent registration key to be regenerated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<AgentRegistration> RegenerateKeyAgentRegistrationInformation(AgentRegistrationRegenerateKeyContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _agentRegistrationInformationClientDiagnostics.CreateScope("AutomationAccountResource.RegenerateKeyAgentRegistrationInformation");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _agentRegistrationInformationRestClient.CreateRegenerateKeyAgentRegistrationInformationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AgentRegistrationRegenerateKeyContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AgentRegistration> response = Response.FromValue(AgentRegistration.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -2798,45 +1612,20 @@ namespace Azure.ResourceManager.Automation
         /// Return list of software update configuration machine runs
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurationMachineRuns_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_SoftwareUpdateConfigurationMachineRunsList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="clientRequestId"> Identifies this specific client request. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: 'properties/osType', 'properties/status', 'properties/startTime', and 'properties/softwareUpdateConfiguration/name'. </param>
-        /// <param name="skip"> number of entries you skip before returning results. </param>
-        /// <param name="top"> Maximum number of entries returned in the results collection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SoftwareUpdateConfigurationMachineRun"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRunsAsync(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationMachineRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SoftwareUpdateConfigurationMachineRun.DeserializeSoftwareUpdateConfigurationMachineRun(e), _softwareUpdateConfigurationMachineRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRuns", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Return list of software update configuration machine runs
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SoftwareUpdateConfigurationMachineRuns_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-06-01</description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2846,41 +1635,112 @@ namespace Azure.ResourceManager.Automation
         /// <param name="top"> Maximum number of entries returned in the results collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SoftwareUpdateConfigurationMachineRun"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRuns(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRunsAsync(string clientRequestId = default, string filter = default, string skip = default, string top = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationMachineRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SoftwareUpdateConfigurationMachineRun.DeserializeSoftwareUpdateConfigurationMachineRun(e), _softwareUpdateConfigurationMachineRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRuns", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SoftwareUpdateConfigurationMachineRunsGetSoftwareUpdateConfigurationMachineRunsAsyncCollectionResultOfT(
+                _softwareUpdateConfigurationMachineRunsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                clientRequestId,
+                filter,
+                skip,
+                top,
+                context,
+                "AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRuns");
         }
 
         /// <summary>
-        /// Generates a Uri for use in creating a webhook.
+        /// Return list of software update configuration machine runs
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/generateUri</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationMachineRuns. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Webhook_GenerateUri</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_SoftwareUpdateConfigurationMachineRunsList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-10-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationWebhookResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: 'properties/osType', 'properties/status', 'properties/startTime', and 'properties/softwareUpdateConfiguration/name'. </param>
+        /// <param name="skip"> number of entries you skip before returning results. </param>
+        /// <param name="top"> Maximum number of entries returned in the results collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<string>> GenerateUriWebhookAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SoftwareUpdateConfigurationMachineRun"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRuns(string clientRequestId = default, string filter = default, string skip = default, string top = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationAccountResource.GenerateUriWebhook");
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SoftwareUpdateConfigurationMachineRunsGetSoftwareUpdateConfigurationMachineRunsCollectionResultOfT(
+                _softwareUpdateConfigurationMachineRunsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                clientRequestId,
+                filter,
+                skip,
+                top,
+                context,
+                "AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRuns");
+        }
+
+        /// <summary>
+        /// Get a single software update configuration Run by Id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns/{softwareUpdateConfigurationRunId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_SoftwareUpdateConfigurationRunsGetById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="softwareUpdateConfigurationRunId"> The Id of the software update configuration run. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SoftwareUpdateConfigurationRun>> GetSoftwareUpdateConfigurationRunAsync(Guid softwareUpdateConfigurationRunId, string clientRequestId = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _softwareUpdateConfigurationRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationRun");
             scope.Start();
             try
             {
-                var response = await _automationWebhookWebhookRestClient.GenerateUriAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softwareUpdateConfigurationRunsRestClient.CreateGetSoftwareUpdateConfigurationRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationRunId, clientRequestId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SoftwareUpdateConfigurationRun> response = Response.FromValue(SoftwareUpdateConfigurationRun.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -2891,34 +1751,46 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Generates a Uri for use in creating a webhook.
+        /// Get a single software update configuration Run by Id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/webhooks/generateUri</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns/{softwareUpdateConfigurationRunId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Webhook_GenerateUri</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_SoftwareUpdateConfigurationRunsGetById. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-10-31</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationWebhookResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="softwareUpdateConfigurationRunId"> The Id of the software update configuration run. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<string> GenerateUriWebhook(CancellationToken cancellationToken = default)
+        public virtual Response<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRun(Guid softwareUpdateConfigurationRunId, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _automationWebhookWebhookClientDiagnostics.CreateScope("AutomationAccountResource.GenerateUriWebhook");
+            using DiagnosticScope scope = _softwareUpdateConfigurationRunsClientDiagnostics.CreateScope("AutomationAccountResource.GetSoftwareUpdateConfigurationRun");
             scope.Start();
             try
             {
-                var response = _automationWebhookWebhookRestClient.GenerateUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _softwareUpdateConfigurationRunsRestClient.CreateGetSoftwareUpdateConfigurationRunRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, softwareUpdateConfigurationRunId, clientRequestId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SoftwareUpdateConfigurationRun> response = Response.FromValue(SoftwareUpdateConfigurationRun.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -2929,26 +1801,174 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Add a tag to the current resource.
+        /// Return list of software update configuration runs
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_SoftwareUpdateConfigurationRunsList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: 'properties/osType', 'properties/status', 'properties/startTime', and 'properties/softwareUpdateConfiguration/name'. </param>
+        /// <param name="skip"> Number of entries you skip before returning results. </param>
+        /// <param name="top"> Maximum number of entries returned in the results collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SoftwareUpdateConfigurationRun"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRunsAsync(string clientRequestId = default, string filter = default, string skip = default, string top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SoftwareUpdateConfigurationRunsGetSoftwareUpdateConfigurationRunsAsyncCollectionResultOfT(
+                _softwareUpdateConfigurationRunsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                clientRequestId,
+                filter,
+                skip,
+                top,
+                context,
+                "AutomationAccountResource.GetSoftwareUpdateConfigurationRuns");
+        }
+
+        /// <summary>
+        /// Return list of software update configuration runs
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/softwareUpdateConfigurationRuns. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_SoftwareUpdateConfigurationRunsList. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="filter"> The filter to apply on the operation. You can use the following filters: 'properties/osType', 'properties/status', 'properties/startTime', and 'properties/softwareUpdateConfiguration/name'. </param>
+        /// <param name="skip"> Number of entries you skip before returning results. </param>
+        /// <param name="top"> Maximum number of entries returned in the results collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SoftwareUpdateConfigurationRun"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRuns(string clientRequestId = default, string filter = default, string skip = default, string top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SoftwareUpdateConfigurationRunsGetSoftwareUpdateConfigurationRunsCollectionResultOfT(
+                _softwareUpdateConfigurationRunsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                clientRequestId,
+                filter,
+                skip,
+                top,
+                context,
+                "AutomationAccountResource.GetSoftwareUpdateConfigurationRuns");
+        }
+
+        /// <summary>
+        /// Retrieve the usage for the account id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/usages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_UsagesListByAutomationAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomationUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AutomationUsage> GetUsagesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UsagesGetUsagesAsyncCollectionResultOfT(
+                _usagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AutomationAccountResource.GetUsages");
+        }
+
+        /// <summary>
+        /// Retrieve the usage for the account id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/usages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationAccounts_UsagesListByAutomationAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="AutomationAccountResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomationUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AutomationUsage> GetUsages(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new UsagesGetUsagesCollectionResultOfT(
+                _usagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AutomationAccountResource.GetUsages");
+        }
+
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2958,29 +1978,35 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.AddTag");
+            using DiagnosticScope scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _automationAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AutomationAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _automationAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<AutomationAccountData> response = Response.FromValue(AutomationAccountData.FromResponse(result), result);
+                    return Response.FromValue(new AutomationAccountResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AutomationAccountPatch();
-                    foreach (var tag in current.Tags)
+                    AutomationAccountData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AutomationAccountPatch patch = new AutomationAccountPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<AutomationAccountResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -2990,27 +2016,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3020,29 +2026,35 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.AddTag");
+            using DiagnosticScope scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _automationAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AutomationAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _automationAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<AutomationAccountData> response = Response.FromValue(AutomationAccountData.FromResponse(result), result);
+                    return Response.FromValue(new AutomationAccountResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AutomationAccountPatch();
-                    foreach (var tag in current.Tags)
+                    AutomationAccountData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AutomationAccountPatch patch = new AutomationAccountPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<AutomationAccountResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -3052,54 +2064,40 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<AutomationAccountResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.SetTags");
+            using DiagnosticScope scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _automationAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AutomationAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _automationAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<AutomationAccountData> response = Response.FromValue(AutomationAccountData.FromResponse(result), result);
+                    return Response.FromValue(new AutomationAccountResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AutomationAccountPatch();
+                    AutomationAccountData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AutomationAccountPatch patch = new AutomationAccountPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<AutomationAccountResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -3109,54 +2107,40 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<AutomationAccountResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.SetTags");
+            using DiagnosticScope scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _automationAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AutomationAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _automationAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<AutomationAccountData> response = Response.FromValue(AutomationAccountData.FromResponse(result), result);
+                    return Response.FromValue(new AutomationAccountResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AutomationAccountPatch();
+                    AutomationAccountData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AutomationAccountPatch patch = new AutomationAccountPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<AutomationAccountResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -3166,27 +2150,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -3194,29 +2158,35 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.RemoveTag");
+            using DiagnosticScope scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _automationAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new AutomationAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _automationAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<AutomationAccountData> response = Response.FromValue(AutomationAccountData.FromResponse(result), result);
+                    return Response.FromValue(new AutomationAccountResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new AutomationAccountPatch();
-                    foreach (var tag in current.Tags)
+                    AutomationAccountData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AutomationAccountPatch patch = new AutomationAccountPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<AutomationAccountResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -3226,27 +2196,7 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AutomationAccount_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-06-22</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutomationAccountResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -3254,29 +2204,35 @@ namespace Azure.ResourceManager.Automation
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.RemoveTag");
+            using DiagnosticScope scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _automationAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new AutomationAccountResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _automationAccountRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<AutomationAccountData> response = Response.FromValue(AutomationAccountData.FromResponse(result), result);
+                    return Response.FromValue(new AutomationAccountResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new AutomationAccountPatch();
-                    foreach (var tag in current.Tags)
+                    AutomationAccountData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AutomationAccountPatch patch = new AutomationAccountPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<AutomationAccountResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -3284,6 +2240,761 @@ namespace Azure.ResourceManager.Automation
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of DscCompilationJobs in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of DscCompilationJobs and their operations over a DscCompilationJobResource. </returns>
+        public virtual DscCompilationJobCollection GetDscCompilationJobs()
+        {
+            return GetCachedClient(client => new DscCompilationJobCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the Dsc configuration compilation job identified by job id. </summary>
+        /// <param name="compilationJobName"> The name of the DscCompilationJob. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="compilationJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DscCompilationJobResource>> GetDscCompilationJobAsync(string compilationJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
+
+            return await GetDscCompilationJobs().GetAsync(compilationJobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the Dsc configuration compilation job identified by job id. </summary>
+        /// <param name="compilationJobName"> The name of the DscCompilationJob. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="compilationJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DscCompilationJobResource> GetDscCompilationJob(string compilationJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
+
+            return GetDscCompilationJobs().Get(compilationJobName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SoftwareUpdateConfigurations in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of SoftwareUpdateConfigurations and their operations over a SoftwareUpdateConfigurationResource. </returns>
+        public virtual SoftwareUpdateConfigurationCollection GetSoftwareUpdateConfigurations()
+        {
+            return GetCachedClient(client => new SoftwareUpdateConfigurationCollection(client, Id));
+        }
+
+        /// <summary> Get a single software update configuration by name. </summary>
+        /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SoftwareUpdateConfigurationResource>> GetSoftwareUpdateConfigurationAsync(string softwareUpdateConfigurationName, string clientRequestId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
+
+            return await GetSoftwareUpdateConfigurations().GetAsync(softwareUpdateConfigurationName, clientRequestId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a single software update configuration by name. </summary>
+        /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SoftwareUpdateConfigurationResource> GetSoftwareUpdateConfiguration(string softwareUpdateConfigurationName, string clientRequestId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(softwareUpdateConfigurationName, nameof(softwareUpdateConfigurationName));
+
+            return GetSoftwareUpdateConfigurations().Get(softwareUpdateConfigurationName, clientRequestId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutomationAccountPython2Packages in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationAccountPython2Packages and their operations over a AutomationAccountPython2PackageResource. </returns>
+        public virtual AutomationAccountPython2PackageCollection GetAutomationAccountPython2Packages()
+        {
+            return GetCachedClient(client => new AutomationAccountPython2PackageCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the python 2 package identified by package name. </summary>
+        /// <param name="packageName"> The python package name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutomationAccountPython2PackageResource>> GetAutomationAccountPython2PackageAsync(string packageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
+
+            return await GetAutomationAccountPython2Packages().GetAsync(packageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the python 2 package identified by package name. </summary>
+        /// <param name="packageName"> The python package name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationAccountPython2PackageResource> GetAutomationAccountPython2Package(string packageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
+
+            return GetAutomationAccountPython2Packages().Get(packageName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of Python3Packages in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of Python3Packages and their operations over a Python3PackageResource. </returns>
+        public virtual Python3PackageCollection GetPython3Packages()
+        {
+            return GetCachedClient(client => new Python3PackageCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the python 3 package identified by package name. </summary>
+        /// <param name="packageName"> The python package name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<Python3PackageResource>> GetPython3PackageAsync(string packageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
+
+            return await GetPython3Packages().GetAsync(packageName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the python 3 package identified by package name. </summary>
+        /// <param name="packageName"> The python package name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<Python3PackageResource> GetPython3Package(string packageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(packageName, nameof(packageName));
+
+            return GetPython3Packages().Get(packageName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of RuntimeEnvironments in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of RuntimeEnvironments and their operations over a RuntimeEnvironmentResource. </returns>
+        public virtual RuntimeEnvironmentCollection GetRuntimeEnvironments()
+        {
+            return GetCachedClient(client => new RuntimeEnvironmentCollection(client, Id));
+        }
+
+        /// <summary> Get information about the Runtime Environment. </summary>
+        /// <param name="runtimeEnvironmentName"> The name of the Runtime Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runtimeEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runtimeEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RuntimeEnvironmentResource>> GetRuntimeEnvironmentAsync(string runtimeEnvironmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runtimeEnvironmentName, nameof(runtimeEnvironmentName));
+
+            return await GetRuntimeEnvironments().GetAsync(runtimeEnvironmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get information about the Runtime Environment. </summary>
+        /// <param name="runtimeEnvironmentName"> The name of the Runtime Environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runtimeEnvironmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runtimeEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RuntimeEnvironmentResource> GetRuntimeEnvironment(string runtimeEnvironmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runtimeEnvironmentName, nameof(runtimeEnvironmentName));
+
+            return GetRuntimeEnvironments().Get(runtimeEnvironmentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutomationPrivateEndpointConnections in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationPrivateEndpointConnections and their operations over a AutomationPrivateEndpointConnectionResource. </returns>
+        public virtual AutomationPrivateEndpointConnectionCollection GetAutomationPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new AutomationPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary> Gets a private endpoint connection. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutomationPrivateEndpointConnectionResource>> GetAutomationPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetAutomationPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a private endpoint connection. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationPrivateEndpointConnectionResource> GetAutomationPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetAutomationPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutomationJobs in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationJobs and their operations over a AutomationJobResource. </returns>
+        public virtual AutomationJobCollection GetAutomationJobs()
+        {
+            return GetCachedClient(client => new AutomationJobCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the job identified by job name. </summary>
+        /// <param name="jobName"> The job name. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutomationJobResource>> GetAutomationJobAsync(string jobName, string clientRequestId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            return await GetAutomationJobs().GetAsync(jobName, clientRequestId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the job identified by job name. </summary>
+        /// <param name="jobName"> The job name. </param>
+        /// <param name="clientRequestId"> Identifies this specific client request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationJobResource> GetAutomationJob(string jobName, string clientRequestId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            return GetAutomationJobs().Get(jobName, clientRequestId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutomationWebhooks in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationWebhooks and their operations over a AutomationWebhookResource. </returns>
+        public virtual AutomationWebhookCollection GetAutomationWebhooks()
+        {
+            return GetCachedClient(client => new AutomationWebhookCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the webhook identified by webhook name. </summary>
+        /// <param name="webhookName"> The webhook name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutomationWebhookResource>> GetAutomationWebhookAsync(string webhookName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
+
+            return await GetAutomationWebhooks().GetAsync(webhookName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the webhook identified by webhook name. </summary>
+        /// <param name="webhookName"> The webhook name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationWebhookResource> GetAutomationWebhook(string webhookName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(webhookName, nameof(webhookName));
+
+            return GetAutomationWebhooks().Get(webhookName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DscNodes in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of DscNodes and their operations over a DscNodeResource. </returns>
+        public virtual DscNodeCollection GetDscNodes()
+        {
+            return GetCachedClient(client => new DscNodeCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the dsc node identified by node id. </summary>
+        /// <param name="nodeId"> The node id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DscNodeResource>> GetDscNodeAsync(string nodeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
+
+            return await GetDscNodes().GetAsync(nodeId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the dsc node identified by node id. </summary>
+        /// <param name="nodeId"> The node id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DscNodeResource> GetDscNode(string nodeId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
+
+            return GetDscNodes().Get(nodeId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutomationCertificates in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationCertificates and their operations over a AutomationCertificateResource. </returns>
+        public virtual AutomationCertificateCollection GetAutomationCertificates()
+        {
+            return GetCachedClient(client => new AutomationCertificateCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the certificate identified by certificate name. </summary>
+        /// <param name="certificateName"> The name of certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutomationCertificateResource>> GetAutomationCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            return await GetAutomationCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the certificate identified by certificate name. </summary>
+        /// <param name="certificateName"> The name of certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationCertificateResource> GetAutomationCertificate(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            return GetAutomationCertificates().Get(certificateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutomationConnections in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationConnections and their operations over a AutomationConnectionResource. </returns>
+        public virtual AutomationConnectionCollection GetAutomationConnections()
+        {
+            return GetCachedClient(client => new AutomationConnectionCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the connection identified by connection name. </summary>
+        /// <param name="connectionName"> The name of connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutomationConnectionResource>> GetAutomationConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+
+            return await GetAutomationConnections().GetAsync(connectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the connection identified by connection name. </summary>
+        /// <param name="connectionName"> The name of connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationConnectionResource> GetAutomationConnection(string connectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+
+            return GetAutomationConnections().Get(connectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutomationConnectionTypes in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationConnectionTypes and their operations over a AutomationConnectionTypeResource. </returns>
+        public virtual AutomationConnectionTypeCollection GetAutomationConnectionTypes()
+        {
+            return GetCachedClient(client => new AutomationConnectionTypeCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the connection type identified by connection type name. </summary>
+        /// <param name="connectionTypeName"> The name of connection type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutomationConnectionTypeResource>> GetAutomationConnectionTypeAsync(string connectionTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
+
+            return await GetAutomationConnectionTypes().GetAsync(connectionTypeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the connection type identified by connection type name. </summary>
+        /// <param name="connectionTypeName"> The name of connection type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationConnectionTypeResource> GetAutomationConnectionType(string connectionTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionTypeName, nameof(connectionTypeName));
+
+            return GetAutomationConnectionTypes().Get(connectionTypeName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutomationCredentials in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationCredentials and their operations over a AutomationCredentialResource. </returns>
+        public virtual AutomationCredentialCollection GetAutomationCredentials()
+        {
+            return GetCachedClient(client => new AutomationCredentialCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the credential identified by credential name. </summary>
+        /// <param name="credentialName"> The name of credential. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutomationCredentialResource>> GetAutomationCredentialAsync(string credentialName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+
+            return await GetAutomationCredentials().GetAsync(credentialName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the credential identified by credential name. </summary>
+        /// <param name="credentialName"> The name of credential. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationCredentialResource> GetAutomationCredential(string credentialName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(credentialName, nameof(credentialName));
+
+            return GetAutomationCredentials().Get(credentialName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DscConfigurations in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of DscConfigurations and their operations over a DscConfigurationResource. </returns>
+        public virtual DscConfigurationCollection GetDscConfigurations()
+        {
+            return GetCachedClient(client => new DscConfigurationCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the configuration identified by configuration name. </summary>
+        /// <param name="configurationName"> The configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DscConfigurationResource>> GetDscConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return await GetDscConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the configuration identified by configuration name. </summary>
+        /// <param name="configurationName"> The configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DscConfigurationResource> GetDscConfiguration(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            return GetDscConfigurations().Get(configurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DscNodeConfigurations in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of DscNodeConfigurations and their operations over a DscNodeConfigurationResource. </returns>
+        public virtual DscNodeConfigurationCollection GetDscNodeConfigurations()
+        {
+            return GetCachedClient(client => new DscNodeConfigurationCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the Dsc node configurations by node configuration. </summary>
+        /// <param name="nodeConfigurationName"> The Dsc node configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nodeConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nodeConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DscNodeConfigurationResource>> GetDscNodeConfigurationAsync(string nodeConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(nodeConfigurationName, nameof(nodeConfigurationName));
+
+            return await GetDscNodeConfigurations().GetAsync(nodeConfigurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the Dsc node configurations by node configuration. </summary>
+        /// <param name="nodeConfigurationName"> The Dsc node configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nodeConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nodeConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DscNodeConfigurationResource> GetDscNodeConfiguration(string nodeConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(nodeConfigurationName, nameof(nodeConfigurationName));
+
+            return GetDscNodeConfigurations().Get(nodeConfigurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of HybridRunbookWorkerGroups in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of HybridRunbookWorkerGroups and their operations over a HybridRunbookWorkerGroupResource. </returns>
+        public virtual HybridRunbookWorkerGroupCollection GetHybridRunbookWorkerGroups()
+        {
+            return GetCachedClient(client => new HybridRunbookWorkerGroupCollection(client, Id));
+        }
+
+        /// <summary> Retrieve a hybrid runbook worker group. </summary>
+        /// <param name="hybridRunbookWorkerGroupName"> The hybrid runbook worker group name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HybridRunbookWorkerGroupResource>> GetHybridRunbookWorkerGroupAsync(string hybridRunbookWorkerGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
+
+            return await GetHybridRunbookWorkerGroups().GetAsync(hybridRunbookWorkerGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve a hybrid runbook worker group. </summary>
+        /// <param name="hybridRunbookWorkerGroupName"> The hybrid runbook worker group name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HybridRunbookWorkerGroupResource> GetHybridRunbookWorkerGroup(string hybridRunbookWorkerGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(hybridRunbookWorkerGroupName, nameof(hybridRunbookWorkerGroupName));
+
+            return GetHybridRunbookWorkerGroups().Get(hybridRunbookWorkerGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutomationJobSchedules in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationJobSchedules and their operations over a AutomationJobScheduleResource. </returns>
+        public virtual AutomationJobScheduleCollection GetAutomationJobSchedules()
+        {
+            return GetCachedClient(client => new AutomationJobScheduleCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the job schedule identified by job schedule name. </summary>
+        /// <param name="jobScheduleId"> The job schedule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutomationJobScheduleResource>> GetAutomationJobScheduleAsync(Guid jobScheduleId, CancellationToken cancellationToken = default)
+        {
+            return await GetAutomationJobSchedules().GetAsync(jobScheduleId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the job schedule identified by job schedule name. </summary>
+        /// <param name="jobScheduleId"> The job schedule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationJobScheduleResource> GetAutomationJobSchedule(Guid jobScheduleId, CancellationToken cancellationToken = default)
+        {
+            return GetAutomationJobSchedules().Get(jobScheduleId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutomationAccountModules in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationAccountModules and their operations over a AutomationAccountModuleResource. </returns>
+        public virtual AutomationAccountModuleCollection GetAutomationAccountModules()
+        {
+            return GetCachedClient(client => new AutomationAccountModuleCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the module identified by module name. </summary>
+        /// <param name="moduleName"> The module name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="moduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutomationAccountModuleResource>> GetAutomationAccountModuleAsync(string moduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
+
+            return await GetAutomationAccountModules().GetAsync(moduleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the module identified by module name. </summary>
+        /// <param name="moduleName"> The module name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="moduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationAccountModuleResource> GetAutomationAccountModule(string moduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(moduleName, nameof(moduleName));
+
+            return GetAutomationAccountModules().Get(moduleName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutomationRunbooks in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationRunbooks and their operations over a AutomationRunbookResource. </returns>
+        public virtual AutomationRunbookCollection GetAutomationRunbooks()
+        {
+            return GetCachedClient(client => new AutomationRunbookCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the runbook identified by runbook name. </summary>
+        /// <param name="runbookName"> The runbook name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutomationRunbookResource>> GetAutomationRunbookAsync(string runbookName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
+
+            return await GetAutomationRunbooks().GetAsync(runbookName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the runbook identified by runbook name. </summary>
+        /// <param name="runbookName"> The runbook name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationRunbookResource> GetAutomationRunbook(string runbookName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runbookName, nameof(runbookName));
+
+            return GetAutomationRunbooks().Get(runbookName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutomationSchedules in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationSchedules and their operations over a AutomationScheduleResource. </returns>
+        public virtual AutomationScheduleCollection GetAutomationSchedules()
+        {
+            return GetCachedClient(client => new AutomationScheduleCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the schedule identified by schedule name. </summary>
+        /// <param name="scheduleName"> The schedule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutomationScheduleResource>> GetAutomationScheduleAsync(string scheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+
+            return await GetAutomationSchedules().GetAsync(scheduleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the schedule identified by schedule name. </summary>
+        /// <param name="scheduleName"> The schedule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationScheduleResource> GetAutomationSchedule(string scheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+
+            return GetAutomationSchedules().Get(scheduleName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutomationSourceControls in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationSourceControls and their operations over a AutomationSourceControlResource. </returns>
+        public virtual AutomationSourceControlCollection GetAutomationSourceControls()
+        {
+            return GetCachedClient(client => new AutomationSourceControlCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the source control identified by source control name. </summary>
+        /// <param name="sourceControlName"> The name of source control. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutomationSourceControlResource>> GetAutomationSourceControlAsync(string sourceControlName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+
+            return await GetAutomationSourceControls().GetAsync(sourceControlName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the source control identified by source control name. </summary>
+        /// <param name="sourceControlName"> The name of source control. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationSourceControlResource> GetAutomationSourceControl(string sourceControlName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceControlName, nameof(sourceControlName));
+
+            return GetAutomationSourceControls().Get(sourceControlName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutomationVariables in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationVariables and their operations over a AutomationVariableResource. </returns>
+        public virtual AutomationVariableCollection GetAutomationVariables()
+        {
+            return GetCachedClient(client => new AutomationVariableCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the variable identified by variable name. </summary>
+        /// <param name="variableName"> The name of variable. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="variableName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutomationVariableResource>> GetAutomationVariableAsync(string variableName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(variableName, nameof(variableName));
+
+            return await GetAutomationVariables().GetAsync(variableName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the variable identified by variable name. </summary>
+        /// <param name="variableName"> The name of variable. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="variableName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationVariableResource> GetAutomationVariable(string variableName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(variableName, nameof(variableName));
+
+            return GetAutomationVariables().Get(variableName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AutomationWatchers in the <see cref="AutomationAccountResource"/>. </summary>
+        /// <returns> An object representing collection of AutomationWatchers and their operations over a AutomationWatcherResource. </returns>
+        public virtual AutomationWatcherCollection GetAutomationWatchers()
+        {
+            return GetCachedClient(client => new AutomationWatcherCollection(client, Id));
+        }
+
+        /// <summary> Retrieve the watcher identified by watcher name. </summary>
+        /// <param name="watcherName"> The watcher name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AutomationWatcherResource>> GetAutomationWatcherAsync(string watcherName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
+
+            return await GetAutomationWatchers().GetAsync(watcherName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieve the watcher identified by watcher name. </summary>
+        /// <param name="watcherName"> The watcher name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AutomationWatcherResource> GetAutomationWatcher(string watcherName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(watcherName, nameof(watcherName));
+
+            return GetAutomationWatchers().Get(watcherName, cancellationToken);
         }
     }
 }

@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Gets or sets the provisioning state of the runbook. </summary>
+    /// <summary> SDK-only compatibility extensible enum for the previous RunbookProvisioningState API. </summary>
     public readonly partial struct RunbookProvisioningState : IEquatable<RunbookProvisioningState>
     {
         private readonly string _value;
+        private const string SucceededValue = "Succeeded";
 
         /// <summary> Initializes a new instance of <see cref="RunbookProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RunbookProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> Gets the Succeeded. </summary>
         public static RunbookProvisioningState Succeeded { get; } = new RunbookProvisioningState(SucceededValue);
+
         /// <summary> Determines if two <see cref="RunbookProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RunbookProvisioningState left, RunbookProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RunbookProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RunbookProvisioningState left, RunbookProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RunbookProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RunbookProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RunbookProvisioningState(string value) => new RunbookProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RunbookProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RunbookProvisioningState?(string value) => value == null ? null : new RunbookProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RunbookProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RunbookProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

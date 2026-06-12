@@ -6,47 +6,38 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A Class representing a DscCompilationJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DscCompilationJobResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDscCompilationJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetDscCompilationJob method.
+    /// A class representing a DscCompilationJob along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DscCompilationJobResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomationAccountResource"/> using the GetDscCompilationJobs method.
     /// </summary>
     public partial class DscCompilationJobResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DscCompilationJobResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="automationAccountName"> The automationAccountName. </param>
-        /// <param name="compilationJobName"> The compilationJobName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName, string compilationJobName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _dscCompilationJobClientDiagnostics;
-        private readonly DscCompilationJobRestOperations _dscCompilationJobRestClient;
+        private readonly ClientDiagnostics _dscCompilationJobsClientDiagnostics;
+        private readonly DscCompilationJobs _dscCompilationJobsRestClient;
+        private readonly ClientDiagnostics _automationAccountClientDiagnostics;
+        private readonly AutomationAccount _automationAccountRestClient;
         private readonly DscCompilationJobData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/compilationjobs";
 
-        /// <summary> Initializes a new instance of the <see cref="DscCompilationJobResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DscCompilationJobResource for mocking. </summary>
         protected DscCompilationJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DscCompilationJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscCompilationJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DscCompilationJobResource(ArmClient client, DscCompilationJobData data) : this(client, data.Id)
@@ -55,71 +46,95 @@ namespace Azure.ResourceManager.Automation
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DscCompilationJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DscCompilationJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DscCompilationJobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _dscCompilationJobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string dscCompilationJobApiVersion);
-            _dscCompilationJobRestClient = new DscCompilationJobRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dscCompilationJobApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _dscCompilationJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _dscCompilationJobsRestClient = new DscCompilationJobs(_dscCompilationJobsClientDiagnostics, Pipeline, Endpoint, dscCompilationJobApiVersion ?? "2024-10-23");
+            _automationAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Automation", ResourceType.Namespace, Diagnostics);
+            _automationAccountRestClient = new AutomationAccount(_automationAccountClientDiagnostics, Pipeline, Endpoint, dscCompilationJobApiVersion ?? "2024-10-23");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DscCompilationJobData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="automationAccountName"> The automationAccountName. </param>
+        /// <param name="compilationJobName"> The compilationJobName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationAccountName, string compilationJobName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Retrieve the Dsc configuration compilation job identified by job id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscCompilationJob_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DscCompilationJobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscCompilationJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DscCompilationJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DscCompilationJobResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobResource.Get");
+            using DiagnosticScope scope = _dscCompilationJobsClientDiagnostics.CreateScope("DscCompilationJobResource.Get");
             scope.Start();
             try
             {
-                var response = await _dscCompilationJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dscCompilationJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DscCompilationJobData> response = Response.FromValue(DscCompilationJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DscCompilationJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +148,41 @@ namespace Azure.ResourceManager.Automation
         /// Retrieve the Dsc configuration compilation job identified by job id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscCompilationJob_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DscCompilationJobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscCompilationJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DscCompilationJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DscCompilationJobResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobResource.Get");
+            using DiagnosticScope scope = _dscCompilationJobsClientDiagnostics.CreateScope("DscCompilationJobResource.Get");
             scope.Start();
             try
             {
-                var response = _dscCompilationJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dscCompilationJobsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DscCompilationJobData> response = Response.FromValue(DscCompilationJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DscCompilationJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -170,42 +193,228 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Creates the Dsc compilation job of the configuration.
+        /// Retrieve all the job streams for the compilation Job.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscCompilationJob_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Automation_GetDscCompilationJobStreams. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscCompilationJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DscCompilationJobResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
+        internal virtual AsyncPageable<AutomationJobStream> GetDscCompilationJobStreamsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AutomationAccountGetDscCompilationJobStreamsAsyncCollectionResultOfT(
+                _automationAccountRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Guid.Parse(Id.Name),
+                context,
+                "DscCompilationJobResource.GetDscCompilationJobStreams");
+        }
+
+        /// <summary>
+        /// Retrieve all the job streams for the compilation Job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Automation_GetDscCompilationJobStreams. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DscCompilationJobResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AutomationJobStream"/> that may take multiple service requests to iterate over. </returns>
+        internal virtual Pageable<AutomationJobStream> GetDscCompilationJobStreams(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AutomationAccountGetDscCompilationJobStreamsCollectionResultOfT(
+                _automationAccountRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Guid.Parse(Id.Name),
+                context,
+                "DscCompilationJobResource.GetDscCompilationJobStreams");
+        }
+
+        /// <summary>
+        /// Retrieve the job stream identified by job stream id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams/{jobStreamId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Automation_GetStreamDscCompilationJob. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DscCompilationJobResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobStreamId"> The job stream id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal virtual async Task<Response<AutomationJobStream>> GetStreamDscCompilationJobAsync(string jobStreamId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _automationAccountClientDiagnostics.CreateScope("DscCompilationJobResource.GetStreamDscCompilationJob");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationAccountRestClient.CreateGetStreamDscCompilationJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), jobStreamId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutomationJobStream> response = Response.FromValue(AutomationJobStream.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve the job stream identified by job stream id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{jobId}/streams/{jobStreamId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Automation_GetStreamDscCompilationJob. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DscCompilationJobResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobStreamId"> The job stream id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal virtual Response<AutomationJobStream> GetStreamDscCompilationJob(string jobStreamId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _automationAccountClientDiagnostics.CreateScope("DscCompilationJobResource.GetStreamDscCompilationJob");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _automationAccountRestClient.CreateGetStreamDscCompilationJobRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), jobStreamId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutomationJobStream> response = Response.FromValue(AutomationJobStream.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a DscCompilationJob.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DscCompilationJobs_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DscCompilationJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The parameters supplied to the create compilation job operation. </param>
+        /// <param name="content"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DscCompilationJobResource>> UpdateAsync(WaitUntil waitUntil, DscCompilationJobCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobResource.Update");
+            using DiagnosticScope scope = _dscCompilationJobsClientDiagnostics.CreateScope("DscCompilationJobResource.Update");
             scope.Start();
             try
             {
-                var response = await _dscCompilationJobRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<DscCompilationJobResource>(new DscCompilationJobOperationSource(Client), _dscCompilationJobClientDiagnostics, Pipeline, _dscCompilationJobRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dscCompilationJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DscCompilationJobCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DscCompilationJobData> response = Response.FromValue(DscCompilationJobData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AutomationArmOperation<DscCompilationJobResource> operation = new AutomationArmOperation<DscCompilationJobResource>(Response.FromValue(new DscCompilationJobResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -216,42 +425,52 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// Creates the Dsc compilation job of the configuration.
+        /// Update a DscCompilationJob.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DscCompilationJob_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> DscCompilationJobs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-01-13-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-23. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DscCompilationJobResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DscCompilationJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The parameters supplied to the create compilation job operation. </param>
+        /// <param name="content"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DscCompilationJobResource> Update(WaitUntil waitUntil, DscCompilationJobCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobResource.Update");
+            using DiagnosticScope scope = _dscCompilationJobsClientDiagnostics.CreateScope("DscCompilationJobResource.Update");
             scope.Start();
             try
             {
-                var response = _dscCompilationJobRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new AutomationArmOperation<DscCompilationJobResource>(new DscCompilationJobOperationSource(Client), _dscCompilationJobClientDiagnostics, Pipeline, _dscCompilationJobRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dscCompilationJobsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DscCompilationJobCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DscCompilationJobData> response = Response.FromValue(DscCompilationJobData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AutomationArmOperation<DscCompilationJobResource> operation = new AutomationArmOperation<DscCompilationJobResource>(Response.FromValue(new DscCompilationJobResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Gets or sets the provisioning state of the module. </summary>
+    /// <summary> SDK-only compatibility fixed enum for the previous ModuleProvisioningState API. </summary>
     public enum ModuleProvisioningState
     {
         /// <summary> Created. </summary>

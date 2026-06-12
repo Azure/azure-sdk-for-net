@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> Gets or sets the provisioning state of the configuration. </summary>
+    /// <summary> SDK-only compatibility extensible enum for the previous DscConfigurationProvisioningState API. </summary>
     public readonly partial struct DscConfigurationProvisioningState : IEquatable<DscConfigurationProvisioningState>
     {
         private readonly string _value;
+        private const string SucceededValue = "Succeeded";
 
         /// <summary> Initializes a new instance of <see cref="DscConfigurationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DscConfigurationProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> Gets the Succeeded. </summary>
         public static DscConfigurationProvisioningState Succeeded { get; } = new DscConfigurationProvisioningState(SucceededValue);
+
         /// <summary> Determines if two <see cref="DscConfigurationProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DscConfigurationProvisioningState left, DscConfigurationProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DscConfigurationProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DscConfigurationProvisioningState left, DscConfigurationProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DscConfigurationProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DscConfigurationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DscConfigurationProvisioningState(string value) => new DscConfigurationProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DscConfigurationProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DscConfigurationProvisioningState?(string value) => value == null ? null : new DscConfigurationProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DscConfigurationProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DscConfigurationProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
