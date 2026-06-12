@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public partial class OperationalInsightsWorkspaceFeatures
     {
         /// <summary> Gets the AdditionalProperties. </summary>
+        [WirePath("AdditionalProperties")]
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
 
         internal static OperationalInsightsWorkspaceFeatures DeserializeOperationalInsightsWorkspaceFeatures(JsonElement element, ModelReaderWriterOptions options)
