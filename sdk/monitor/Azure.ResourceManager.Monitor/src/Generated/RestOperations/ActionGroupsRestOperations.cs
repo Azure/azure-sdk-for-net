@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        internal HttpMessage CreateCreateNotificationsAtActionGroupResourceLevelRequest(Guid subscriptionId, string resourceGroupName, string actionGroupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateNotificationsRequest(Guid subscriptionId, string resourceGroupName, string actionGroupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        internal HttpMessage CreateGetTestNotificationsAtActionGroupResourceLevelRequest(Guid subscriptionId, string resourceGroupName, string actionGroupName, string notificationId, RequestContext context)
+        internal HttpMessage CreateGetNotificationStatusRequest(Guid subscriptionId, string resourceGroupName, string actionGroupName, string notificationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

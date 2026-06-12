@@ -20,9 +20,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a DataCollectionEndpointResource along with the instance operations that can be performed on it.
+    /// A class representing a DataCollectionEndpoint along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataCollectionEndpointResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataCollectionEndpointResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataCollectionEndpoints method.
     /// </summary>
     public partial class DataCollectionEndpointResource : ArmResource
     {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor
         private readonly DataCollectionRuleAssociations _dataCollectionRuleAssociationsRestClient;
         private readonly ClientDiagnostics _nspDataCollectionEndpointClientDiagnostics;
         private readonly NspDataCollectionEndpoint _nspDataCollectionEndpointRestClient;
-        private readonly DataCollectionEndpointResourceData _data;
+        private readonly DataCollectionEndpointData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/dataCollectionEndpoints";
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataCollectionEndpointResource(ArmClient client, DataCollectionEndpointResourceData data) : this(client, data.Id)
+        internal DataCollectionEndpointResource(ArmClient client, DataCollectionEndpointData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -55,13 +55,13 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataCollectionEndpointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dataCollectionEndpointResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string dataCollectionEndpointApiVersion);
             _dataCollectionEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _dataCollectionEndpointsRestClient = new DataCollectionEndpoints(_dataCollectionEndpointsClientDiagnostics, Pipeline, Endpoint, dataCollectionEndpointResourceApiVersion ?? "2024-03-11");
+            _dataCollectionEndpointsRestClient = new DataCollectionEndpoints(_dataCollectionEndpointsClientDiagnostics, Pipeline, Endpoint, dataCollectionEndpointApiVersion ?? "2024-03-11");
             _dataCollectionRuleAssociationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociations(_dataCollectionRuleAssociationsClientDiagnostics, Pipeline, Endpoint, dataCollectionEndpointResourceApiVersion ?? "2024-03-11");
+            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociations(_dataCollectionRuleAssociationsClientDiagnostics, Pipeline, Endpoint, dataCollectionEndpointApiVersion ?? "2024-03-11");
             _nspDataCollectionEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _nspDataCollectionEndpointRestClient = new NspDataCollectionEndpoint(_nspDataCollectionEndpointClientDiagnostics, Pipeline, Endpoint, dataCollectionEndpointResourceApiVersion ?? "2021-10-01");
+            _nspDataCollectionEndpointRestClient = new NspDataCollectionEndpoint(_nspDataCollectionEndpointClientDiagnostics, Pipeline, Endpoint, dataCollectionEndpointApiVersion ?? "2021-10-01");
             ValidateResourceId(id);
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual DataCollectionEndpointResourceData Data
+        public virtual DataCollectionEndpointData Data
         {
             get
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataCollectionEndpointResourceData> response = Response.FromValue(DataCollectionEndpointResourceData.FromResponse(result), result);
+                Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataCollectionEndpointResourceData> response = Response.FromValue(DataCollectionEndpointResourceData.FromResponse(result), result);
+                Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _dataCollectionEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ResourceForUpdate.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataCollectionEndpointResourceData> response = Response.FromValue(DataCollectionEndpointResourceData.FromResponse(result), result);
+                Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _dataCollectionEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ResourceForUpdate.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataCollectionEndpointResourceData> response = Response.FromValue(DataCollectionEndpointResourceData.FromResponse(result), result);
+                Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -788,12 +788,12 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DataCollectionEndpointResourceData> response = Response.FromValue(DataCollectionEndpointResourceData.FromResponse(result), result);
+                    Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionEndpointResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataCollectionEndpointResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DataCollectionEndpointData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ResourceForUpdate patch = new ResourceForUpdate();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -836,12 +836,12 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DataCollectionEndpointResourceData> response = Response.FromValue(DataCollectionEndpointResourceData.FromResponse(result), result);
+                    Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionEndpointResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataCollectionEndpointResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DataCollectionEndpointData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ResourceForUpdate patch = new ResourceForUpdate();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -883,12 +883,12 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DataCollectionEndpointResourceData> response = Response.FromValue(DataCollectionEndpointResourceData.FromResponse(result), result);
+                    Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionEndpointResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataCollectionEndpointResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DataCollectionEndpointData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ResourceForUpdate patch = new ResourceForUpdate();
                     patch.Tags.ReplaceWith(tags);
                     Response<DataCollectionEndpointResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -926,12 +926,12 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DataCollectionEndpointResourceData> response = Response.FromValue(DataCollectionEndpointResourceData.FromResponse(result), result);
+                    Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionEndpointResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataCollectionEndpointResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DataCollectionEndpointData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ResourceForUpdate patch = new ResourceForUpdate();
                     patch.Tags.ReplaceWith(tags);
                     Response<DataCollectionEndpointResource> result = Update(patch, cancellationToken: cancellationToken);
@@ -968,12 +968,12 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DataCollectionEndpointResourceData> response = Response.FromValue(DataCollectionEndpointResourceData.FromResponse(result), result);
+                    Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionEndpointResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataCollectionEndpointResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DataCollectionEndpointData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ResourceForUpdate patch = new ResourceForUpdate();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -1014,12 +1014,12 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _dataCollectionEndpointsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DataCollectionEndpointResourceData> response = Response.FromValue(DataCollectionEndpointResourceData.FromResponse(result), result);
+                    Response<DataCollectionEndpointData> response = Response.FromValue(DataCollectionEndpointData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionEndpointResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataCollectionEndpointResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DataCollectionEndpointData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ResourceForUpdate patch = new ResourceForUpdate();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {

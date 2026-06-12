@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string autoscaleSettingName, string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, RequestContext context)
+        internal HttpMessage CreateGetPredictiveMetricRequest(Guid subscriptionId, string resourceGroupName, string autoscaleSettingName, string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

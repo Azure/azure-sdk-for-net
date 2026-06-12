@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The DataCollectionEndpointResourceProperties. </summary>
-    internal partial class DataCollectionEndpointResourceProperties : DataCollectionEndpoint
+    internal partial class DataCollectionEndpointResourceProperties : DataCollectionEndpointProperties
     {
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointResourceProperties"/>. </summary>
         public DataCollectionEndpointResourceProperties()
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="failoverConfiguration"> Metadata for the resource. This property can only be updated by Log Analytics Control Plane for Data Collection Endpoint with Log Analytics Destination. </param>
         /// <param name="metadata"> Metadata for the resource. This property can only be updated by Log Analytics Control Plane for Data Collection Endpoint with Log Analytics Destination. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionEndpointResourceProperties(string description, string immutableId, DataCollectionEndpointConfigurationAccess configurationAccess, DataCollectionEndpointLogsIngestion logsIngestion, DataCollectionEndpointMetricsIngestion metricsIngestion, DataCollectionEndpointNetworkAcls networkAcls, KnownDataCollectionEndpointProvisioningState? provisioningState, IReadOnlyList<PrivateLinkScopedResource> privateLinkScopedResources, DataCollectionEndpointFailoverConfiguration failoverConfiguration, DataCollectionEndpointMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(description, immutableId, configurationAccess, logsIngestion, metricsIngestion, networkAcls, provisioningState, privateLinkScopedResources, failoverConfiguration, metadata, additionalBinaryDataProperties)
+        internal DataCollectionEndpointResourceProperties(string description, string immutableId, DataCollectionEndpointConfigurationAccess configurationAccess, DataCollectionEndpointLogsIngestion logsIngestion, DataCollectionEndpointMetricsIngestion metricsIngestion, DataCollectionEndpointNetworkAcls networkAcls, DataCollectionEndpointProvisioningState? provisioningState, IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo> privateLinkScopedResources, DataCollectionEndpointFailoverConfiguration failoverConfiguration, DataCollectionEndpointMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(description, immutableId, configurationAccess, logsIngestion, metricsIngestion, networkAcls, provisioningState, privateLinkScopedResources, failoverConfiguration, metadata, additionalBinaryDataProperties)
         {
         }
     }

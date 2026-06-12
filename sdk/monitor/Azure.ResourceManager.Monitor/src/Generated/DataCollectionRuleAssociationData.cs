@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The resource ID of the data collection rule that is to be associated. </summary>
-        public string DataCollectionRuleId
+        public ResourceIdentifier DataCollectionRuleId
         {
             get
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The resource ID of the data collection endpoint that is to be associated. </summary>
-        public string DataCollectionEndpointId
+        public ResourceIdentifier DataCollectionEndpointId
         {
             get
             {

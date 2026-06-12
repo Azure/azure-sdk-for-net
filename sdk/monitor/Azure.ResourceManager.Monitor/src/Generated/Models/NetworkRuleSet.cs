@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
         /// <param name="publicNetworkAccess"> The configuration to set whether network access from public internet to the endpoints are allowed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkRuleSet(KnownPublicNetworkAccessOptions? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkRuleSet(MonitorPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicNetworkAccess = publicNetworkAccess;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The configuration to set whether network access from public internet to the endpoints are allowed. </summary>
-        public KnownPublicNetworkAccessOptions? PublicNetworkAccess { get; set; }
+        public MonitorPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

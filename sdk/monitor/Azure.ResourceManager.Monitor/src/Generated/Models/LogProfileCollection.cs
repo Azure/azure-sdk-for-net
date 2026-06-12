@@ -13,14 +13,14 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents a collection of log profiles. </summary>
-    internal partial class LogProfileCollection
+    public partial class LogProfileCollection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LogProfileCollection"/>. </summary>
         /// <param name="value"> the values of the log profiles. </param>
-        internal LogProfileCollection(IEnumerable<LogProfileResourceData> value)
+        internal LogProfileCollection(IEnumerable<LogProfileData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="value"> the values of the log profiles. </param>
         /// <param name="nextLink"> the URL to get the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogProfileCollection(IList<LogProfileResourceData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogProfileCollection(IList<LogProfileData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> the values of the log profiles. </summary>
-        public IList<LogProfileResourceData> Value { get; }
+        public IList<LogProfileData> Value { get; }
 
         /// <summary> the URL to get the next set of results. </summary>
         public string NextLink { get; }

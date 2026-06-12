@@ -54,6 +54,18 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Whether the alert rule exists. </returns>
         public virtual Task<Response<bool>> ExistsAsync(string ruleName, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
 
+        /// <summary> Gets an alert rule if it exists. </summary>
+        /// <param name="ruleName"> The rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The alert rule resource if it exists. </returns>
+        public virtual NullableResponse<AlertRuleResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets an alert rule if it exists. </summary>
+        /// <param name="ruleName"> The rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The alert rule resource if it exists. </returns>
+        public virtual Task<NullableResponse<AlertRuleResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
         /// <summary> Creates or updates an alert rule. </summary>
         /// <param name="waitUntil"> Completion behavior for the operation. </param>
         /// <param name="ruleName"> The rule name. </param>

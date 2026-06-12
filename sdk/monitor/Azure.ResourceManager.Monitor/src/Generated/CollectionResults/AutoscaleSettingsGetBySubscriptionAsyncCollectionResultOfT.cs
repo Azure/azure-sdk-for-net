@@ -15,7 +15,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal partial class AutoscaleSettingsGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<AutoscaleSettingResourceData>
+    internal partial class AutoscaleSettingsGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<AutoscaleSettingData>
     {
         private readonly AutoscaleSettings _client;
         private readonly Guid _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of AutoscaleSettingsGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<AutoscaleSettingResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<AutoscaleSettingData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Monitor
                 {
                     yield break;
                 }
-                Models.AutoscaleSettingResourceCollection result = Models.AutoscaleSettingResourceCollection.FromResponse(response);
-                yield return Page<AutoscaleSettingResourceData>.FromValues((IReadOnlyList<AutoscaleSettingResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                AutoscaleSettingResourceCollection result = AutoscaleSettingResourceCollection.FromResponse(response);
+                yield return Page<AutoscaleSettingData>.FromValues((IReadOnlyList<AutoscaleSettingData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

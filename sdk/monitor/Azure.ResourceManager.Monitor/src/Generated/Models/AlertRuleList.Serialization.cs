@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ActivityLogAlertResourceData item in Value)
+            foreach (ActivityLogAlertData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<ActivityLogAlertResourceData> value = default;
+            IList<ActivityLogAlertData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ActivityLogAlertResourceData> array = new List<ActivityLogAlertResourceData>();
+                    List<ActivityLogAlertData> array = new List<ActivityLogAlertData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ActivityLogAlertResourceData.DeserializeActivityLogAlertResourceData(item, options));
+                        array.Add(ActivityLogAlertData.DeserializeActivityLogAlertData(item, options));
                     }
                     value = array;
                     continue;

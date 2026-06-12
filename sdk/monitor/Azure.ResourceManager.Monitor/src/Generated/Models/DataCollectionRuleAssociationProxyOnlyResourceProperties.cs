@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="metadata"> Metadata about the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionRuleAssociationProxyOnlyResourceProperties(string description, string dataCollectionRuleId, string dataCollectionEndpointId, DataCollectionRuleAssociationProvisioningState? provisioningState, DataCollectionRuleAssociationMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(description, dataCollectionRuleId, dataCollectionEndpointId, provisioningState, metadata, additionalBinaryDataProperties)
+        internal DataCollectionRuleAssociationProxyOnlyResourceProperties(string description, ResourceIdentifier dataCollectionRuleId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleAssociationProvisioningState? provisioningState, DataCollectionRuleAssociationMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(description, dataCollectionRuleId, dataCollectionEndpointId, provisioningState, metadata, additionalBinaryDataProperties)
         {
         }
     }

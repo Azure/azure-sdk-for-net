@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> An Azure action group for patch operations. </summary>
-    internal partial class ActionGroupPatch
+    /// <summary> An action group object for the body of patch operations. </summary>
+    public partial class ActionGroupPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -19,18 +21,46 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="ActionGroupPatch"/>. </summary>
         public ActionGroupPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ActionGroupPatch"/>. </summary>
-        /// <param name="enabled"> Indicates whether this action group is enabled. If an action group is not enabled, then none of its actions will be activated. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="properties"> The action group settings for an update operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActionGroupPatch(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActionGroupPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ActionGroupPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            Tags = tags;
+            Identity = identity;
+            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+
+        /// <summary> The action group settings for an update operation. </summary>
+        internal ActionGroupPatchProperties Properties { get; set; }
+
         /// <summary> Indicates whether this action group is enabled. If an action group is not enabled, then none of its actions will be activated. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ActionGroupPatchProperties();
+                }
+                Properties.IsEnabled = value;
+            }
+        }
     }
 }

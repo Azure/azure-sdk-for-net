@@ -14,7 +14,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal partial class ActionGroupsGetBySubscriptionIdCollectionResultOfT : Pageable<ActionGroupResourceData>
+    internal partial class ActionGroupsGetBySubscriptionIdCollectionResultOfT : Pageable<ActionGroupData>
     {
         private readonly ActionGroups _client;
         private readonly Guid _subscriptionId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ActionGroupsGetBySubscriptionIdCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ActionGroupResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ActionGroupData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 ActionGroupList result = ActionGroupList.FromResponse(response);
-                yield return Page<ActionGroupResourceData>.FromValues((IReadOnlyList<ActionGroupResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ActionGroupData>.FromValues((IReadOnlyList<ActionGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

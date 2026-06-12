@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointNetworkAcls"/>. </summary>
         /// <param name="publicNetworkAccess"> The configuration to set whether network access from public internet to the endpoints are allowed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionEndpointNetworkAcls(KnownPublicNetworkAccessOptions? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(publicNetworkAccess, additionalBinaryDataProperties)
+        internal DataCollectionEndpointNetworkAcls(MonitorPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(publicNetworkAccess, additionalBinaryDataProperties)
         {
         }
     }

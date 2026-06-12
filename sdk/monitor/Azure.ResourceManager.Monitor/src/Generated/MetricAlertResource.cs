@@ -20,9 +20,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a MetricAlertResource along with the instance operations that can be performed on it.
+    /// A class representing a MetricAlert along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MetricAlertResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMetricAlertResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMetricAlerts method.
     /// </summary>
     public partial class MetricAlertResource : ArmResource
     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor
         private readonly MetricAlerts _metricAlertsRestClient;
         private readonly ClientDiagnostics _metricAlertsStatusClientDiagnostics;
         private readonly MetricAlertsStatus _metricAlertsStatusRestClient;
-        private readonly MetricAlertResourceData _data;
+        private readonly MetricAlertData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/metricAlerts";
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of <see cref="MetricAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MetricAlertResource(ArmClient client, MetricAlertResourceData data) : this(client, data.Id)
+        internal MetricAlertResource(ArmClient client, MetricAlertData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MetricAlertResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string metricAlertResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string metricAlertApiVersion);
             _metricAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _metricAlertsRestClient = new MetricAlerts(_metricAlertsClientDiagnostics, Pipeline, Endpoint, metricAlertResourceApiVersion ?? "2024-03-01-preview");
+            _metricAlertsRestClient = new MetricAlerts(_metricAlertsClientDiagnostics, Pipeline, Endpoint, metricAlertApiVersion ?? "2024-03-01-preview");
             _metricAlertsStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _metricAlertsStatusRestClient = new MetricAlertsStatus(_metricAlertsStatusClientDiagnostics, Pipeline, Endpoint, metricAlertResourceApiVersion ?? "2024-03-01-preview");
+            _metricAlertsStatusRestClient = new MetricAlertsStatus(_metricAlertsStatusClientDiagnostics, Pipeline, Endpoint, metricAlertApiVersion ?? "2024-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MetricAlertResourceData Data
+        public virtual MetricAlertData Data
         {
             get
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MetricAlertResourceData> response = Response.FromValue(MetricAlertResourceData.FromResponse(result), result);
+                Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MetricAlertResourceData> response = Response.FromValue(MetricAlertResourceData.FromResponse(result), result);
+                Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> The parameters of the rule to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<MetricAlertResource>> UpdateAsync(MetricAlertResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MetricAlertResource>> UpdateAsync(MetricAlertPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -229,9 +229,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, MetricAlertResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _metricAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, MetricAlertPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MetricAlertResourceData> response = Response.FromValue(MetricAlertResourceData.FromResponse(result), result);
+                Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> The parameters of the rule to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<MetricAlertResource> Update(MetricAlertResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<MetricAlertResource> Update(MetricAlertPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -281,9 +281,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, MetricAlertResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _metricAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, MetricAlertPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MetricAlertResourceData> response = Response.FromValue(MetricAlertResourceData.FromResponse(result), result);
+                Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -634,13 +634,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<MetricAlertResourceData> response = Response.FromValue(MetricAlertResourceData.FromResponse(result), result);
+                    Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MetricAlertResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    MetricAlertResourcePatch patch = new MetricAlertResourcePatch();
+                    MetricAlertData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    MetricAlertPatch patch = new MetricAlertPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -682,13 +682,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<MetricAlertResourceData> response = Response.FromValue(MetricAlertResourceData.FromResponse(result), result);
+                    Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MetricAlertResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    MetricAlertResourcePatch patch = new MetricAlertResourcePatch();
+                    MetricAlertData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    MetricAlertPatch patch = new MetricAlertPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -729,13 +729,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<MetricAlertResourceData> response = Response.FromValue(MetricAlertResourceData.FromResponse(result), result);
+                    Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MetricAlertResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    MetricAlertResourcePatch patch = new MetricAlertResourcePatch();
+                    MetricAlertData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    MetricAlertPatch patch = new MetricAlertPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<MetricAlertResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -772,13 +772,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<MetricAlertResourceData> response = Response.FromValue(MetricAlertResourceData.FromResponse(result), result);
+                    Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MetricAlertResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    MetricAlertResourcePatch patch = new MetricAlertResourcePatch();
+                    MetricAlertData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    MetricAlertPatch patch = new MetricAlertPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<MetricAlertResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -814,13 +814,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<MetricAlertResourceData> response = Response.FromValue(MetricAlertResourceData.FromResponse(result), result);
+                    Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MetricAlertResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    MetricAlertResourcePatch patch = new MetricAlertResourcePatch();
+                    MetricAlertData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    MetricAlertPatch patch = new MetricAlertPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -860,13 +860,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _metricAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<MetricAlertResourceData> response = Response.FromValue(MetricAlertResourceData.FromResponse(result), result);
+                    Response<MetricAlertData> response = Response.FromValue(MetricAlertData.FromResponse(result), result);
                     return Response.FromValue(new MetricAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MetricAlertResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    MetricAlertResourcePatch patch = new MetricAlertResourcePatch();
+                    MetricAlertData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    MetricAlertPatch patch = new MetricAlertPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

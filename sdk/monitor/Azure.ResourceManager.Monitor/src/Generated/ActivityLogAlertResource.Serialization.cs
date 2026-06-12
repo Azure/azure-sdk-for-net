@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary></summary>
-    public partial class ActivityLogAlertResource : IJsonModel<ActivityLogAlertResourceData>
+    public partial class ActivityLogAlertResource : IJsonModel<ActivityLogAlertData>
     {
-        private static IJsonModel<ActivityLogAlertResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<ActivityLogAlertData> s_dataDeserializationInstance;
 
-        private static IJsonModel<ActivityLogAlertResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ActivityLogAlertResourceData();
+        private static IJsonModel<ActivityLogAlertData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ActivityLogAlertData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ActivityLogAlertResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ActivityLogAlertResourceData>)Data).Write(writer, options);
+        void IJsonModel<ActivityLogAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ActivityLogAlertData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActivityLogAlertResourceData IJsonModel<ActivityLogAlertResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        ActivityLogAlertData IJsonModel<ActivityLogAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ActivityLogAlertResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ActivityLogAlertResourceData>(Data, options, AzureResourceManagerMonitorContext.Default);
+        BinaryData IPersistableModel<ActivityLogAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ActivityLogAlertData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ActivityLogAlertResourceData IPersistableModel<ActivityLogAlertResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ActivityLogAlertResourceData>(data, options, AzureResourceManagerMonitorContext.Default);
+        ActivityLogAlertData IPersistableModel<ActivityLogAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ActivityLogAlertData>(data, options, AzureResourceManagerMonitorContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ActivityLogAlertResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<ActivityLogAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

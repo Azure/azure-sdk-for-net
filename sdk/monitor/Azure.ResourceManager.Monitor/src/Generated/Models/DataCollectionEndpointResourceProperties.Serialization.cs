@@ -14,11 +14,11 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The DataCollectionEndpointResourceProperties. </summary>
-    internal partial class DataCollectionEndpointResourceProperties : DataCollectionEndpoint, IJsonModel<DataCollectionEndpointResourceProperties>
+    internal partial class DataCollectionEndpointResourceProperties : DataCollectionEndpointProperties, IJsonModel<DataCollectionEndpointResourceProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataCollectionEndpoint PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override DataCollectionEndpointProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataCollectionEndpoint JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override DataCollectionEndpointProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Monitor.Models
             DataCollectionEndpointLogsIngestion logsIngestion = default;
             DataCollectionEndpointMetricsIngestion metricsIngestion = default;
             DataCollectionEndpointNetworkAcls networkAcls = default;
-            KnownDataCollectionEndpointProvisioningState? provisioningState = default;
-            IReadOnlyList<PrivateLinkScopedResource> privateLinkScopedResources = default;
+            DataCollectionEndpointProvisioningState? provisioningState = default;
+            IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo> privateLinkScopedResources = default;
             DataCollectionEndpointFailoverConfiguration failoverConfiguration = default;
             DataCollectionEndpointMetadata metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    provisioningState = new KnownDataCollectionEndpointProvisioningState(prop.Value.GetString());
+                    provisioningState = new DataCollectionEndpointProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateLinkScopedResources"u8))
@@ -176,10 +176,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<PrivateLinkScopedResource> array = new List<PrivateLinkScopedResource>();
+                    List<DataCollectionRulePrivateLinkScopedResourceInfo> array = new List<DataCollectionRulePrivateLinkScopedResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkScopedResource.DeserializePrivateLinkScopedResource(item, options));
+                        array.Add(DataCollectionRulePrivateLinkScopedResourceInfo.DeserializeDataCollectionRulePrivateLinkScopedResourceInfo(item, options));
                     }
                     privateLinkScopedResources = array;
                     continue;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 metricsIngestion,
                 networkAcls,
                 provisioningState,
-                privateLinkScopedResources ?? new ChangeTrackingList<PrivateLinkScopedResource>(),
+                privateLinkScopedResources ?? new ChangeTrackingList<DataCollectionRulePrivateLinkScopedResourceInfo>(),
                 failoverConfiguration,
                 metadata,
                 additionalBinaryDataProperties);

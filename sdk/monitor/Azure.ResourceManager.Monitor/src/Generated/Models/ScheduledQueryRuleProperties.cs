@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="autoMitigate"> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of kinds LogAlert and SimpleLogAlert. </param>
         /// <param name="resolveConfiguration"> Defines the configuration for resolving fired alerts. Relevant only for rules of kinds LogAlert and SimpleLogAlert. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledQueryRuleProperties(string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? enabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IList<string> targetResourceTypes, ScheduledQueryRuleCriteria criteria, TimeSpan? muteActionsDuration, Actions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate, RuleResolveConfiguration resolveConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledQueryRuleProperties(string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? enabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IList<string> targetResourceTypes, ScheduledQueryRuleCriteria criteria, TimeSpan? muteActionsDuration, ScheduledQueryRuleActions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate, RuleResolveConfiguration resolveConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedWithApiVersion = createdWithApiVersion;
             IsLegacyLogAnalyticsRule = isLegacyLogAnalyticsRule;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public TimeSpan? MuteActionsDuration { get; set; }
 
         /// <summary> Actions to invoke when the alert fires. </summary>
-        public Actions Actions { get; set; }
+        public ScheduledQueryRuleActions Actions { get; set; }
 
         /// <summary> The flag which indicates whether this scheduled query rule has been configured to be stored in the customer's storage. The default is false. </summary>
         public bool? IsWorkspaceAlertsStorageConfigured { get; }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public RuleResolveConfiguration ResolveConfiguration { get; set; }
 
         /// <summary> A list of conditions to evaluate against the specified scopes. </summary>
-        public IList<Condition> CriteriaAllOf
+        public IList<ScheduledQueryRuleCondition> CriteriaAllOf
         {
             get
             {

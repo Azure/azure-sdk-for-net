@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary></summary>
-    public partial class DataCollectionRuleResource : IJsonModel<DataCollectionRuleResourceData>
+    public partial class DataCollectionRuleResource : IJsonModel<DataCollectionRuleData>
     {
-        private static IJsonModel<DataCollectionRuleResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<DataCollectionRuleData> s_dataDeserializationInstance;
 
-        private static IJsonModel<DataCollectionRuleResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataCollectionRuleResourceData();
+        private static IJsonModel<DataCollectionRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DataCollectionRuleData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DataCollectionRuleResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataCollectionRuleResourceData>)Data).Write(writer, options);
+        void IJsonModel<DataCollectionRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataCollectionRuleData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataCollectionRuleResourceData IJsonModel<DataCollectionRuleResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        DataCollectionRuleData IJsonModel<DataCollectionRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataCollectionRuleResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataCollectionRuleResourceData>(Data, options, AzureResourceManagerMonitorContext.Default);
+        BinaryData IPersistableModel<DataCollectionRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataCollectionRuleData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataCollectionRuleResourceData IPersistableModel<DataCollectionRuleResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataCollectionRuleResourceData>(data, options, AzureResourceManagerMonitorContext.Default);
+        DataCollectionRuleData IPersistableModel<DataCollectionRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataCollectionRuleData>(data, options, AzureResourceManagerMonitorContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataCollectionRuleResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<DataCollectionRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

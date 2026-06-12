@@ -20,9 +20,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a AutoscaleSettingResource along with the instance operations that can be performed on it.
+    /// A class representing a AutoscaleSetting along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AutoscaleSettingResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAutoscaleSettingResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAutoscaleSettings method.
     /// </summary>
     public partial class AutoscaleSettingResource : ArmResource
     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor
         private readonly AutoscaleSettings _autoscaleSettingsRestClient;
         private readonly ClientDiagnostics _predictiveMetricClientDiagnostics;
         private readonly PredictiveMetric _predictiveMetricRestClient;
-        private readonly AutoscaleSettingResourceData _data;
+        private readonly AutoscaleSettingData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/autoscalesettings";
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of <see cref="AutoscaleSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AutoscaleSettingResource(ArmClient client, AutoscaleSettingResourceData data) : this(client, data.Id)
+        internal AutoscaleSettingResource(ArmClient client, AutoscaleSettingData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AutoscaleSettingResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string autoscaleSettingResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string autoscaleSettingApiVersion);
             _autoscaleSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _autoscaleSettingsRestClient = new AutoscaleSettings(_autoscaleSettingsClientDiagnostics, Pipeline, Endpoint, autoscaleSettingResourceApiVersion ?? "2022-10-01");
+            _autoscaleSettingsRestClient = new AutoscaleSettings(_autoscaleSettingsClientDiagnostics, Pipeline, Endpoint, autoscaleSettingApiVersion ?? "2022-10-01");
             _predictiveMetricClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _predictiveMetricRestClient = new PredictiveMetric(_predictiveMetricClientDiagnostics, Pipeline, Endpoint, autoscaleSettingResourceApiVersion ?? "2022-10-01");
+            _predictiveMetricRestClient = new PredictiveMetric(_predictiveMetricClientDiagnostics, Pipeline, Endpoint, autoscaleSettingApiVersion ?? "2022-10-01");
             ValidateResourceId(id);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AutoscaleSettingResourceData Data
+        public virtual AutoscaleSettingData Data
         {
             get
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AutoscaleSettingResourceData> response = Response.FromValue(AutoscaleSettingResourceData.FromResponse(result), result);
+                Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AutoscaleSettingResourceData> response = Response.FromValue(AutoscaleSettingResourceData.FromResponse(result), result);
+                Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<AutoscaleSettingResource>> UpdateAsync(AutoscaleSettingResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AutoscaleSettingResource>> UpdateAsync(AutoscaleSettingPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -229,9 +229,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoscaleSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, AutoscaleSettingResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _autoscaleSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, AutoscaleSettingPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AutoscaleSettingResourceData> response = Response.FromValue(AutoscaleSettingResourceData.FromResponse(result), result);
+                Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<AutoscaleSettingResource> Update(AutoscaleSettingResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<AutoscaleSettingResource> Update(AutoscaleSettingPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -281,9 +281,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _autoscaleSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, AutoscaleSettingResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _autoscaleSettingsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, AutoscaleSettingPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AutoscaleSettingResourceData> response = Response.FromValue(AutoscaleSettingResourceData.FromResponse(result), result);
+                Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -428,14 +428,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PredictiveResponse>> GetAsync(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PredictiveResponse>> GetPredictiveMetricAsync(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
             Argument.AssertNotNullOrEmpty(aggregation, nameof(aggregation));
 
-            using DiagnosticScope scope = _predictiveMetricClientDiagnostics.CreateScope("AutoscaleSettingResource.Get");
+            using DiagnosticScope scope = _predictiveMetricClientDiagnostics.CreateScope("AutoscaleSettingResource.GetPredictiveMetric");
             scope.Start();
             try
             {
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _predictiveMetricRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, timespan, interval, metricNamespace, metricName, aggregation, context);
+                HttpMessage message = _predictiveMetricRestClient.CreateGetPredictiveMetricRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, timespan, interval, metricNamespace, metricName, aggregation, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PredictiveResponse> response = Response.FromValue(PredictiveResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -488,14 +488,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PredictiveResponse> Get(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
+        public virtual Response<PredictiveResponse> GetPredictiveMetric(string timespan, TimeSpan interval, string metricNamespace, string metricName, string aggregation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(timespan, nameof(timespan));
             Argument.AssertNotNullOrEmpty(metricNamespace, nameof(metricNamespace));
             Argument.AssertNotNullOrEmpty(metricName, nameof(metricName));
             Argument.AssertNotNullOrEmpty(aggregation, nameof(aggregation));
 
-            using DiagnosticScope scope = _predictiveMetricClientDiagnostics.CreateScope("AutoscaleSettingResource.Get");
+            using DiagnosticScope scope = _predictiveMetricClientDiagnostics.CreateScope("AutoscaleSettingResource.GetPredictiveMetric");
             scope.Start();
             try
             {
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _predictiveMetricRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, timespan, interval, metricNamespace, metricName, aggregation, context);
+                HttpMessage message = _predictiveMetricRestClient.CreateGetPredictiveMetricRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, timespan, interval, metricNamespace, metricName, aggregation, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PredictiveResponse> response = Response.FromValue(PredictiveResponse.FromResponse(result), result);
                 if (response.Value == null)
@@ -544,13 +544,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AutoscaleSettingResourceData> response = Response.FromValue(AutoscaleSettingResourceData.FromResponse(result), result);
+                    Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                     return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AutoscaleSettingResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    AutoscaleSettingResourcePatch patch = new AutoscaleSettingResourcePatch();
+                    AutoscaleSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AutoscaleSettingPatch patch = new AutoscaleSettingPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -592,13 +592,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AutoscaleSettingResourceData> response = Response.FromValue(AutoscaleSettingResourceData.FromResponse(result), result);
+                    Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                     return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AutoscaleSettingResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    AutoscaleSettingResourcePatch patch = new AutoscaleSettingResourcePatch();
+                    AutoscaleSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AutoscaleSettingPatch patch = new AutoscaleSettingPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -639,13 +639,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AutoscaleSettingResourceData> response = Response.FromValue(AutoscaleSettingResourceData.FromResponse(result), result);
+                    Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                     return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AutoscaleSettingResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    AutoscaleSettingResourcePatch patch = new AutoscaleSettingResourcePatch();
+                    AutoscaleSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AutoscaleSettingPatch patch = new AutoscaleSettingPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<AutoscaleSettingResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -682,13 +682,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AutoscaleSettingResourceData> response = Response.FromValue(AutoscaleSettingResourceData.FromResponse(result), result);
+                    Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                     return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AutoscaleSettingResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    AutoscaleSettingResourcePatch patch = new AutoscaleSettingResourcePatch();
+                    AutoscaleSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AutoscaleSettingPatch patch = new AutoscaleSettingPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<AutoscaleSettingResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -724,13 +724,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<AutoscaleSettingResourceData> response = Response.FromValue(AutoscaleSettingResourceData.FromResponse(result), result);
+                    Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                     return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AutoscaleSettingResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    AutoscaleSettingResourcePatch patch = new AutoscaleSettingResourcePatch();
+                    AutoscaleSettingData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AutoscaleSettingPatch patch = new AutoscaleSettingPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -770,13 +770,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _autoscaleSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<AutoscaleSettingResourceData> response = Response.FromValue(AutoscaleSettingResourceData.FromResponse(result), result);
+                    Response<AutoscaleSettingData> response = Response.FromValue(AutoscaleSettingData.FromResponse(result), result);
                     return Response.FromValue(new AutoscaleSettingResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    AutoscaleSettingResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    AutoscaleSettingResourcePatch patch = new AutoscaleSettingResourcePatch();
+                    AutoscaleSettingData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AutoscaleSettingPatch patch = new AutoscaleSettingPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

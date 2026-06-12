@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -103,8 +104,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string description = default;
-            string dataCollectionRuleId = default;
-            string dataCollectionEndpointId = default;
+            ResourceIdentifier dataCollectionRuleId = default;
+            ResourceIdentifier dataCollectionEndpointId = default;
             DataCollectionRuleAssociationProvisioningState? provisioningState = default;
             DataCollectionRuleAssociationMetadata metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -117,12 +118,20 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("dataCollectionRuleId"u8))
                 {
-                    dataCollectionRuleId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataCollectionRuleId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dataCollectionEndpointId"u8))
                 {
-                    dataCollectionEndpointId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataCollectionEndpointId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

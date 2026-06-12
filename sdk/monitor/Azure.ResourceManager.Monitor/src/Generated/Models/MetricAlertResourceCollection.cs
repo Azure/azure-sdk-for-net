@@ -12,7 +12,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents a collection of alert rule resources. </summary>
-    public partial class MetricAlertResourceCollection
+    internal partial class MetricAlertResourceCollection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="MetricAlertResourceCollection"/>. </summary>
         internal MetricAlertResourceCollection()
         {
-            Value = new ChangeTrackingList<MetricAlertResourceData>();
+            Value = new ChangeTrackingList<MetricAlertData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricAlertResourceCollection"/>. </summary>
         /// <param name="value"> The values for the alert rule resources. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricAlertResourceCollection(IList<MetricAlertResourceData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricAlertResourceCollection(IList<MetricAlertData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The values for the alert rule resources. </summary>
-        public IList<MetricAlertResourceData> Value { get; }
+        public IList<MetricAlertData> Value { get; }
 
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }

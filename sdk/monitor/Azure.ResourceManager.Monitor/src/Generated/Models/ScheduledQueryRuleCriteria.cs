@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleCriteria"/>. </summary>
         public ScheduledQueryRuleCriteria()
         {
-            AllOf = new ChangeTrackingList<Condition>();
+            AllOf = new ChangeTrackingList<ScheduledQueryRuleCondition>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleCriteria"/>. </summary>
         /// <param name="allOf"> A list of conditions to evaluate against the specified scopes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledQueryRuleCriteria(IList<Condition> allOf, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledQueryRuleCriteria(IList<ScheduledQueryRuleCondition> allOf, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllOf = allOf;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of conditions to evaluate against the specified scopes. </summary>
-        public IList<Condition> AllOf { get; }
+        public IList<ScheduledQueryRuleCondition> AllOf { get; }
     }
 }

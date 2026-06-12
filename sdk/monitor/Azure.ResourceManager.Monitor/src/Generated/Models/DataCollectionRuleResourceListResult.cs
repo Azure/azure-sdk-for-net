@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleResourceListResult"/>. </summary>
         /// <param name="value"> The DataCollectionRuleResource items on this page. </param>
-        internal DataCollectionRuleResourceListResult(IEnumerable<DataCollectionRuleResourceData> value)
+        internal DataCollectionRuleResourceListResult(IEnumerable<DataCollectionRuleData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="value"> The DataCollectionRuleResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionRuleResourceListResult(IList<DataCollectionRuleResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataCollectionRuleResourceListResult(IList<DataCollectionRuleData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The DataCollectionRuleResource items on this page. </summary>
-        public IList<DataCollectionRuleResourceData> Value { get; }
+        public IList<DataCollectionRuleData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

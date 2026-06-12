@@ -20,15 +20,15 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a ActivityLogAlertResource along with the instance operations that can be performed on it.
+    /// A class representing a ActivityLogAlert along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ActivityLogAlertResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetActivityLogAlertResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetActivityLogAlerts method.
     /// </summary>
     public partial class ActivityLogAlertResource : ArmResource
     {
         private readonly ClientDiagnostics _activityLogAlertsClientDiagnostics;
         private readonly ActivityLogAlerts _activityLogAlertsRestClient;
-        private readonly ActivityLogAlertResourceData _data;
+        private readonly ActivityLogAlertData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/activityLogAlerts";
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of <see cref="ActivityLogAlertResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ActivityLogAlertResource(ArmClient client, ActivityLogAlertResourceData data) : this(client, data.Id)
+        internal ActivityLogAlertResource(ArmClient client, ActivityLogAlertData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ActivityLogAlertResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string activityLogAlertResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string activityLogAlertApiVersion);
             _activityLogAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _activityLogAlertsRestClient = new ActivityLogAlerts(_activityLogAlertsClientDiagnostics, Pipeline, Endpoint, activityLogAlertResourceApiVersion ?? "2023-01-01-preview");
+            _activityLogAlertsRestClient = new ActivityLogAlerts(_activityLogAlertsClientDiagnostics, Pipeline, Endpoint, activityLogAlertApiVersion ?? "2023-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ActivityLogAlertResourceData Data
+        public virtual ActivityLogAlertData Data
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ActivityLogAlertResourceData> response = Response.FromValue(ActivityLogAlertResourceData.FromResponse(result), result);
+                Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ActivityLogAlertResourceData> response = Response.FromValue(ActivityLogAlertResourceData.FromResponse(result), result);
+                Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ActivityLogAlertResource>> UpdateAsync(ActivityLogAlertResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ActivityLogAlertResource>> UpdateAsync(ActivityLogAlertPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -225,9 +225,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activityLogAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ActivityLogAlertResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _activityLogAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ActivityLogAlertPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ActivityLogAlertResourceData> response = Response.FromValue(ActivityLogAlertResourceData.FromResponse(result), result);
+                Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ActivityLogAlertResource> Update(ActivityLogAlertResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<ActivityLogAlertResource> Update(ActivityLogAlertPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -277,9 +277,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _activityLogAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ActivityLogAlertResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _activityLogAlertsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ActivityLogAlertPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ActivityLogAlertResourceData> response = Response.FromValue(ActivityLogAlertResourceData.FromResponse(result), result);
+                Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -420,13 +420,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ActivityLogAlertResourceData> response = Response.FromValue(ActivityLogAlertResourceData.FromResponse(result), result);
+                    Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                     return Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ActivityLogAlertResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ActivityLogAlertResourcePatch patch = new ActivityLogAlertResourcePatch();
+                    ActivityLogAlertData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ActivityLogAlertPatch patch = new ActivityLogAlertPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -468,13 +468,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ActivityLogAlertResourceData> response = Response.FromValue(ActivityLogAlertResourceData.FromResponse(result), result);
+                    Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                     return Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ActivityLogAlertResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ActivityLogAlertResourcePatch patch = new ActivityLogAlertResourcePatch();
+                    ActivityLogAlertData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ActivityLogAlertPatch patch = new ActivityLogAlertPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -515,13 +515,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ActivityLogAlertResourceData> response = Response.FromValue(ActivityLogAlertResourceData.FromResponse(result), result);
+                    Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                     return Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ActivityLogAlertResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ActivityLogAlertResourcePatch patch = new ActivityLogAlertResourcePatch();
+                    ActivityLogAlertData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ActivityLogAlertPatch patch = new ActivityLogAlertPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<ActivityLogAlertResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -558,13 +558,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ActivityLogAlertResourceData> response = Response.FromValue(ActivityLogAlertResourceData.FromResponse(result), result);
+                    Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                     return Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ActivityLogAlertResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ActivityLogAlertResourcePatch patch = new ActivityLogAlertResourcePatch();
+                    ActivityLogAlertData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ActivityLogAlertPatch patch = new ActivityLogAlertPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<ActivityLogAlertResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -600,13 +600,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ActivityLogAlertResourceData> response = Response.FromValue(ActivityLogAlertResourceData.FromResponse(result), result);
+                    Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                     return Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ActivityLogAlertResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ActivityLogAlertResourcePatch patch = new ActivityLogAlertResourcePatch();
+                    ActivityLogAlertData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ActivityLogAlertPatch patch = new ActivityLogAlertPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -646,13 +646,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _activityLogAlertsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ActivityLogAlertResourceData> response = Response.FromValue(ActivityLogAlertResourceData.FromResponse(result), result);
+                    Response<ActivityLogAlertData> response = Response.FromValue(ActivityLogAlertData.FromResponse(result), result);
                     return Response.FromValue(new ActivityLogAlertResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ActivityLogAlertResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ActivityLogAlertResourcePatch patch = new ActivityLogAlertResourcePatch();
+                    ActivityLogAlertData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ActivityLogAlertPatch patch = new ActivityLogAlertPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

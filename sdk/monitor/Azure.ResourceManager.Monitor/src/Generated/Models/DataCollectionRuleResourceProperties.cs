@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The DataCollectionRuleResourceProperties. </summary>
-    internal partial class DataCollectionRuleResourceProperties : DataCollectionRule
+    internal partial class DataCollectionRuleResourceProperties : DataCollectionRuleProperties
     {
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleResourceProperties"/>. </summary>
         public DataCollectionRuleResourceProperties()
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="ingestionQuotas"> The specification for ingestion limits. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionRuleResourceProperties(string description, string immutableId, string dataCollectionEndpointId, DataCollectionRuleMetadata metadata, DataCollectionRuleEndpoints endpoints, DataCollectionRuleReferences references, DataCollectionRuleAgentSettings agentSettings, IDictionary<string, StreamDeclaration> streamDeclarations, DataCollectionRuleDataSources dataSources, DataCollectionRuleDirectDataSources directDataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, DataCollectionRuleIngestionQuotas ingestionQuotas, KnownDataCollectionRuleProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(description, immutableId, dataCollectionEndpointId, metadata, endpoints, references, agentSettings, streamDeclarations, dataSources, directDataSources, destinations, dataFlows, ingestionQuotas, provisioningState, additionalBinaryDataProperties)
+        internal DataCollectionRuleResourceProperties(string description, string immutableId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleMetadata metadata, DataCollectionRuleEndpoints endpoints, DataCollectionRuleReferences references, DataCollectionRuleAgentSettings agentSettings, IDictionary<string, DataStreamDeclaration> streamDeclarations, DataCollectionRuleDataSources dataSources, DataCollectionRuleDirectDataSources directDataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, DataCollectionRuleIngestionQuotas ingestionQuotas, DataCollectionRuleProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(description, immutableId, dataCollectionEndpointId, metadata, endpoints, references, agentSettings, streamDeclarations, dataSources, directDataSources, destinations, dataFlows, ingestionQuotas, provisioningState, additionalBinaryDataProperties)
         {
         }
     }

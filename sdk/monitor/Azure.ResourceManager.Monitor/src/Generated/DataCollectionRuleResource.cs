@@ -20,9 +20,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a DataCollectionRuleResource along with the instance operations that can be performed on it.
+    /// A class representing a DataCollectionRule along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataCollectionRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataCollectionRuleResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataCollectionRules method.
     /// </summary>
     public partial class DataCollectionRuleResource : ArmResource
     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor
         private readonly DataCollectionRules _dataCollectionRulesRestClient;
         private readonly ClientDiagnostics _dataCollectionRuleAssociationsClientDiagnostics;
         private readonly DataCollectionRuleAssociations _dataCollectionRuleAssociationsRestClient;
-        private readonly DataCollectionRuleResourceData _data;
+        private readonly DataCollectionRuleData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/dataCollectionRules";
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataCollectionRuleResource(ArmClient client, DataCollectionRuleResourceData data) : this(client, data.Id)
+        internal DataCollectionRuleResource(ArmClient client, DataCollectionRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataCollectionRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dataCollectionRuleResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string dataCollectionRuleApiVersion);
             _dataCollectionRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _dataCollectionRulesRestClient = new DataCollectionRules(_dataCollectionRulesClientDiagnostics, Pipeline, Endpoint, dataCollectionRuleResourceApiVersion ?? "2024-03-11");
+            _dataCollectionRulesRestClient = new DataCollectionRules(_dataCollectionRulesClientDiagnostics, Pipeline, Endpoint, dataCollectionRuleApiVersion ?? "2024-03-11");
             _dataCollectionRuleAssociationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociations(_dataCollectionRuleAssociationsClientDiagnostics, Pipeline, Endpoint, dataCollectionRuleResourceApiVersion ?? "2024-03-11");
+            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociations(_dataCollectionRuleAssociationsClientDiagnostics, Pipeline, Endpoint, dataCollectionRuleApiVersion ?? "2024-03-11");
             ValidateResourceId(id);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual DataCollectionRuleResourceData Data
+        public virtual DataCollectionRuleData Data
         {
             get
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                Response<DataCollectionRuleData> response = Response.FromValue(DataCollectionRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                Response<DataCollectionRuleData> response = Response.FromValue(DataCollectionRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _dataCollectionRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ResourceForUpdate.ToRequestContent(body), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                Response<DataCollectionRuleData> response = Response.FromValue(DataCollectionRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _dataCollectionRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ResourceForUpdate.ToRequestContent(body), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                Response<DataCollectionRuleData> response = Response.FromValue(DataCollectionRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -504,12 +504,12 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                    Response<DataCollectionRuleData> response = Response.FromValue(DataCollectionRuleData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataCollectionRuleResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DataCollectionRuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ResourceForUpdate patch = new ResourceForUpdate();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -552,12 +552,12 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                    Response<DataCollectionRuleData> response = Response.FromValue(DataCollectionRuleData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataCollectionRuleResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DataCollectionRuleData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ResourceForUpdate patch = new ResourceForUpdate();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -599,12 +599,12 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                    Response<DataCollectionRuleData> response = Response.FromValue(DataCollectionRuleData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataCollectionRuleResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DataCollectionRuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ResourceForUpdate patch = new ResourceForUpdate();
                     patch.Tags.ReplaceWith(tags);
                     Response<DataCollectionRuleResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -642,12 +642,12 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                    Response<DataCollectionRuleData> response = Response.FromValue(DataCollectionRuleData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataCollectionRuleResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DataCollectionRuleData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ResourceForUpdate patch = new ResourceForUpdate();
                     patch.Tags.ReplaceWith(tags);
                     Response<DataCollectionRuleResource> result = Update(patch, cancellationToken: cancellationToken);
@@ -684,12 +684,12 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                    Response<DataCollectionRuleData> response = Response.FromValue(DataCollectionRuleData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataCollectionRuleResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    DataCollectionRuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ResourceForUpdate patch = new ResourceForUpdate();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -730,12 +730,12 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _dataCollectionRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DataCollectionRuleResourceData> response = Response.FromValue(DataCollectionRuleResourceData.FromResponse(result), result);
+                    Response<DataCollectionRuleData> response = Response.FromValue(DataCollectionRuleData.FromResponse(result), result);
                     return Response.FromValue(new DataCollectionRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DataCollectionRuleResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    DataCollectionRuleData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ResourceForUpdate patch = new ResourceForUpdate();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {

@@ -635,27 +635,27 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Gets a collection of DataCollectionEndpointResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of DataCollectionEndpoints in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionEndpointResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionEndpoints()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DataCollectionEndpointResources and their operations over a DataCollectionEndpointResource. </returns>
-        public static DataCollectionEndpointResourceCollection GetDataCollectionEndpointResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DataCollectionEndpoints and their operations over a DataCollectionEndpointResource. </returns>
+        public static DataCollectionEndpointCollection GetDataCollectionEndpoints(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionEndpointResources();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionEndpoints();
         }
 
         /// <summary>
         /// Returns the specified data collection endpoint.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionEndpointResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionEndpointAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -663,18 +663,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DataCollectionEndpointResource>> GetDataCollectionEndpointResourceAsync(this ResourceGroupResource resourceGroupResource, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataCollectionEndpointResource>> GetDataCollectionEndpointAsync(this ResourceGroupResource resourceGroupResource, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionEndpointResourceAsync(dataCollectionEndpointName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionEndpointAsync(dataCollectionEndpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns the specified data collection endpoint.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionEndpointResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionEndpoint(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -682,35 +682,35 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DataCollectionEndpointResource> GetDataCollectionEndpointResource(this ResourceGroupResource resourceGroupResource, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
+        public static Response<DataCollectionEndpointResource> GetDataCollectionEndpoint(this ResourceGroupResource resourceGroupResource, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionEndpointResource(dataCollectionEndpointName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionEndpoint(dataCollectionEndpointName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of DataCollectionRuleResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of DataCollectionRules in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionRuleResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionRules()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of DataCollectionRuleResources and their operations over a DataCollectionRuleResource. </returns>
-        public static DataCollectionRuleResourceCollection GetDataCollectionRuleResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DataCollectionRules and their operations over a DataCollectionRuleResource. </returns>
+        public static DataCollectionRuleCollection GetDataCollectionRules(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionRuleResources();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionRules();
         }
 
         /// <summary>
         /// Returns the specified data collection rule.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionRuleResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionRuleAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -718,18 +718,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DataCollectionRuleResource>> GetDataCollectionRuleResourceAsync(this ResourceGroupResource resourceGroupResource, string dataCollectionRuleName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataCollectionRuleResource>> GetDataCollectionRuleAsync(this ResourceGroupResource resourceGroupResource, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionRuleResourceAsync(dataCollectionRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionRuleAsync(dataCollectionRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Returns the specified data collection rule.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionRuleResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionRule(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -737,11 +737,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DataCollectionRuleResource> GetDataCollectionRuleResource(this ResourceGroupResource resourceGroupResource, string dataCollectionRuleName, CancellationToken cancellationToken = default)
+        public static Response<DataCollectionRuleResource> GetDataCollectionRule(this ResourceGroupResource resourceGroupResource, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionRuleResource(dataCollectionRuleName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionRule(dataCollectionRuleName, cancellationToken);
         }
 
         /// <summary>
@@ -800,27 +800,27 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Gets a collection of AutoscaleSettingResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of AutoscaleSettings in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetAutoscaleSettingResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetAutoscaleSettings()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of AutoscaleSettingResources and their operations over a AutoscaleSettingResource. </returns>
-        public static AutoscaleSettingResourceCollection GetAutoscaleSettingResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of AutoscaleSettings and their operations over a AutoscaleSettingResource. </returns>
+        public static AutoscaleSettingCollection GetAutoscaleSettings(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetAutoscaleSettingResources();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetAutoscaleSettings();
         }
 
         /// <summary>
         /// Gets an autoscale setting
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetAutoscaleSettingResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetAutoscaleSettingAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -828,18 +828,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AutoscaleSettingResource>> GetAutoscaleSettingResourceAsync(this ResourceGroupResource resourceGroupResource, string autoscaleSettingName, CancellationToken cancellationToken = default)
+        public static async Task<Response<AutoscaleSettingResource>> GetAutoscaleSettingAsync(this ResourceGroupResource resourceGroupResource, string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetAutoscaleSettingResourceAsync(autoscaleSettingName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetAutoscaleSettingAsync(autoscaleSettingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets an autoscale setting
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetAutoscaleSettingResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetAutoscaleSetting(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -847,35 +847,35 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AutoscaleSettingResource> GetAutoscaleSettingResource(this ResourceGroupResource resourceGroupResource, string autoscaleSettingName, CancellationToken cancellationToken = default)
+        public static Response<AutoscaleSettingResource> GetAutoscaleSetting(this ResourceGroupResource resourceGroupResource, string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetAutoscaleSettingResource(autoscaleSettingName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetAutoscaleSetting(autoscaleSettingName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of ActivityLogAlertResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ActivityLogAlerts in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActivityLogAlertResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActivityLogAlerts()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ActivityLogAlertResources and their operations over a ActivityLogAlertResource. </returns>
-        public static ActivityLogAlertResourceCollection GetActivityLogAlertResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ActivityLogAlerts and their operations over a ActivityLogAlertResource. </returns>
+        public static ActivityLogAlertCollection GetActivityLogAlerts(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActivityLogAlertResources();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActivityLogAlerts();
         }
 
         /// <summary>
         /// Get an Activity Log Alert rule.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActivityLogAlertResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActivityLogAlertAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -883,18 +883,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ActivityLogAlertResource>> GetActivityLogAlertResourceAsync(this ResourceGroupResource resourceGroupResource, string activityLogAlertName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ActivityLogAlertResource>> GetActivityLogAlertAsync(this ResourceGroupResource resourceGroupResource, string activityLogAlertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActivityLogAlertResourceAsync(activityLogAlertName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActivityLogAlertAsync(activityLogAlertName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get an Activity Log Alert rule.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActivityLogAlertResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActivityLogAlert(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -902,54 +902,35 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ActivityLogAlertResource> GetActivityLogAlertResource(this ResourceGroupResource resourceGroupResource, string activityLogAlertName, CancellationToken cancellationToken = default)
+        public static Response<ActivityLogAlertResource> GetActivityLogAlert(this ResourceGroupResource resourceGroupResource, string activityLogAlertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActivityLogAlertResource(activityLogAlertName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActivityLogAlert(activityLogAlertName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of MetricAlertResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of MetricAlerts in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetMetricAlertResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetMetricAlerts()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of MetricAlertResources and their operations over a MetricAlertResource. </returns>
-        public static MetricAlertResourceCollection GetMetricAlertResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of MetricAlerts and their operations over a MetricAlertResource. </returns>
+        public static MetricAlertCollection GetMetricAlerts(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetMetricAlertResources();
-        }
-
-        /// <summary>
-        /// Retrieve an alert rule definition.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetMetricAlertResourceAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<MetricAlertResource>> GetMetricAlertResourceAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetMetricAlertResourceAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetMetricAlerts();
         }
 
         /// <summary>
         /// Retrieve an alert rule definition.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetMetricAlertResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetMetricAlertAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -957,35 +938,54 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<MetricAlertResource> GetMetricAlertResource(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MetricAlertResource>> GetMetricAlertAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetMetricAlertResource(ruleName, cancellationToken);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetMetricAlertAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets a collection of ScheduledQueryRuleResources in the <see cref="ResourceGroupResource"/>
+        /// Retrieve an alert rule definition.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetScheduledQueryRuleResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetMetricAlert(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="ruleName"> The name of the rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<MetricAlertResource> GetMetricAlert(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetMetricAlert(ruleName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ScheduledQueryRules in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetScheduledQueryRules()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ScheduledQueryRuleResources and their operations over a ScheduledQueryRuleResource. </returns>
-        public static ScheduledQueryRuleResourceCollection GetScheduledQueryRuleResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ScheduledQueryRules and their operations over a ScheduledQueryRuleResource. </returns>
+        public static ScheduledQueryRuleCollection GetScheduledQueryRules(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetScheduledQueryRuleResources();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetScheduledQueryRules();
         }
 
         /// <summary>
         /// Retrieve an scheduled query rule definition.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetScheduledQueryRuleResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetScheduledQueryRuleAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -993,18 +993,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ScheduledQueryRuleResource>> GetScheduledQueryRuleResourceAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ScheduledQueryRuleResource>> GetScheduledQueryRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetScheduledQueryRuleResourceAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetScheduledQueryRuleAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Retrieve an scheduled query rule definition.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetScheduledQueryRuleResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetScheduledQueryRule(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1012,35 +1012,35 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ScheduledQueryRuleResource> GetScheduledQueryRuleResource(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
+        public static Response<ScheduledQueryRuleResource> GetScheduledQueryRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetScheduledQueryRuleResource(ruleName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetScheduledQueryRule(ruleName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of ActionGroupResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ActionGroups in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActionGroupResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActionGroups()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ActionGroupResources and their operations over a ActionGroupResource. </returns>
-        public static ActionGroupResourceCollection GetActionGroupResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ActionGroups and their operations over a ActionGroupResource. </returns>
+        public static ActionGroupCollection GetActionGroups(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActionGroupResources();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActionGroups();
         }
 
         /// <summary>
         /// Get an action group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActionGroupResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActionGroupAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1048,18 +1048,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ActionGroupResource>> GetActionGroupResourceAsync(this ResourceGroupResource resourceGroupResource, string actionGroupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ActionGroupResource>> GetActionGroupAsync(this ResourceGroupResource resourceGroupResource, string actionGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActionGroupResourceAsync(actionGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActionGroupAsync(actionGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get an action group.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActionGroupResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActionGroup(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -1067,11 +1067,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ActionGroupResource> GetActionGroupResource(this ResourceGroupResource resourceGroupResource, string actionGroupName, CancellationToken cancellationToken = default)
+        public static Response<ActionGroupResource> GetActionGroup(this ResourceGroupResource resourceGroupResource, string actionGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActionGroupResource(actionGroupName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActionGroup(actionGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -1191,27 +1191,27 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Gets a collection of LogProfileResources in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of LogProfiles in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetLogProfileResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetLogProfiles()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of LogProfileResources and their operations over a LogProfileResource. </returns>
-        public static LogProfileResourceCollection GetLogProfileResources(this SubscriptionResource subscriptionResource)
+        /// <returns> An object representing collection of LogProfiles and their operations over a LogProfileResource. </returns>
+        public static LogProfileCollection GetLogProfiles(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetLogProfileResources();
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetLogProfiles();
         }
 
         /// <summary>
         /// Gets the log profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetLogProfileResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetLogProfileAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1219,18 +1219,18 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<LogProfileResource>> GetLogProfileResourceAsync(this SubscriptionResource subscriptionResource, string logProfileName, CancellationToken cancellationToken = default)
+        public static async Task<Response<LogProfileResource>> GetLogProfileAsync(this SubscriptionResource subscriptionResource, string logProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableMonitorSubscriptionResource(subscriptionResource).GetLogProfileResourceAsync(logProfileName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorSubscriptionResource(subscriptionResource).GetLogProfileAsync(logProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the log profile.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetLogProfileResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetLogProfile(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -1238,83 +1238,83 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<LogProfileResource> GetLogProfileResource(this SubscriptionResource subscriptionResource, string logProfileName, CancellationToken cancellationToken = default)
+        public static Response<LogProfileResource> GetLogProfile(this SubscriptionResource subscriptionResource, string logProfileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetLogProfileResource(logProfileName, cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetLogProfile(logProfileName, cancellationToken);
         }
 
         /// <summary>
         /// Lists all data collection endpoints in the specified subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetDataCollectionEndpointResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetDataCollectionEndpointsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataCollectionEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataCollectionEndpointResource> GetDataCollectionEndpointResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DataCollectionEndpointResource> GetDataCollectionEndpointsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetDataCollectionEndpointResourcesAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetDataCollectionEndpointsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all data collection endpoints in the specified subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetDataCollectionEndpointResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetDataCollectionEndpoints(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataCollectionEndpointResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataCollectionEndpointResource> GetDataCollectionEndpointResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<DataCollectionEndpointResource> GetDataCollectionEndpoints(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetDataCollectionEndpointResources(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetDataCollectionEndpoints(cancellationToken);
         }
 
         /// <summary>
         /// Lists all data collection rules in the specified subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetDataCollectionRuleResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetDataCollectionRulesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataCollectionRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataCollectionRuleResource> GetDataCollectionRuleResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<DataCollectionRuleResource> GetDataCollectionRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetDataCollectionRuleResourcesAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetDataCollectionRulesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all data collection rules in the specified subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetDataCollectionRuleResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetDataCollectionRules(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="DataCollectionRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataCollectionRuleResource> GetDataCollectionRuleResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<DataCollectionRuleResource> GetDataCollectionRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetDataCollectionRuleResources(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetDataCollectionRules(cancellationToken);
         }
 
         /// <summary>
@@ -1357,180 +1357,180 @@ namespace Azure.ResourceManager.Monitor
         /// Lists the autoscale settings for a subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetAutoscaleSettingResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetAutoscaleSettingsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AutoscaleSettingResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AutoscaleSettingResource> GetAutoscaleSettingResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<AutoscaleSettingResource> GetAutoscaleSettingsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetAutoscaleSettingResourcesAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetAutoscaleSettingsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists the autoscale settings for a subscription
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetAutoscaleSettingResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetAutoscaleSettings(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="AutoscaleSettingResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AutoscaleSettingResource> GetAutoscaleSettingResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<AutoscaleSettingResource> GetAutoscaleSettings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetAutoscaleSettingResources(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetAutoscaleSettings(cancellationToken);
         }
 
         /// <summary>
         /// Get a list of all Activity Log Alert rules in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActivityLogAlertResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActivityLogAlertsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ActivityLogAlertResource> GetActivityLogAlertResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ActivityLogAlertResource> GetActivityLogAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActivityLogAlertResourcesAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActivityLogAlertsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Get a list of all Activity Log Alert rules in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActivityLogAlertResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActivityLogAlerts(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ActivityLogAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ActivityLogAlertResource> GetActivityLogAlertResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ActivityLogAlertResource> GetActivityLogAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActivityLogAlertResources(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActivityLogAlerts(cancellationToken);
         }
 
         /// <summary>
         /// Retrieve alert rule definitions in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMetricAlertResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMetricAlertsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="MetricAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MetricAlertResource> GetMetricAlertResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MetricAlertResource> GetMetricAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMetricAlertResourcesAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMetricAlertsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Retrieve alert rule definitions in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMetricAlertResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMetricAlerts(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="MetricAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MetricAlertResource> GetMetricAlertResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<MetricAlertResource> GetMetricAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMetricAlertResources(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMetricAlerts(cancellationToken);
         }
 
         /// <summary>
         /// Retrieve a scheduled query rule definitions in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetScheduledQueryRuleResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetScheduledQueryRulesAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ScheduledQueryRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ScheduledQueryRuleResource> GetScheduledQueryRuleResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ScheduledQueryRuleResource> GetScheduledQueryRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetScheduledQueryRuleResourcesAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetScheduledQueryRulesAsync(cancellationToken);
         }
 
         /// <summary>
         /// Retrieve a scheduled query rule definitions in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetScheduledQueryRuleResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetScheduledQueryRules(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ScheduledQueryRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ScheduledQueryRuleResource> GetScheduledQueryRuleResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ScheduledQueryRuleResource> GetScheduledQueryRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetScheduledQueryRuleResources(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetScheduledQueryRules(cancellationToken);
         }
 
         /// <summary>
         /// Get a list of all action groups in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActionGroupResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActionGroupsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ActionGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ActionGroupResource> GetActionGroupResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ActionGroupResource> GetActionGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActionGroupResourcesAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActionGroupsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Get a list of all action groups in a subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActionGroupResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActionGroups(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ActionGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ActionGroupResource> GetActionGroupResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ActionGroupResource> GetActionGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActionGroupResources(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActionGroups(cancellationToken);
         }
 
         /// <summary>

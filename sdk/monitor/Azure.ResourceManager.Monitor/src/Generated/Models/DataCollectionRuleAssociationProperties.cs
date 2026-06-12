@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="metadata"> Metadata about the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionRuleAssociationProperties(string description, string dataCollectionRuleId, string dataCollectionEndpointId, DataCollectionRuleAssociationProvisioningState? provisioningState, DataCollectionRuleAssociationMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataCollectionRuleAssociationProperties(string description, ResourceIdentifier dataCollectionRuleId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleAssociationProvisioningState? provisioningState, DataCollectionRuleAssociationMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             DataCollectionRuleId = dataCollectionRuleId;
@@ -42,10 +43,10 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Description { get; set; }
 
         /// <summary> The resource ID of the data collection rule that is to be associated. </summary>
-        public string DataCollectionRuleId { get; set; }
+        public ResourceIdentifier DataCollectionRuleId { get; set; }
 
         /// <summary> The resource ID of the data collection endpoint that is to be associated. </summary>
-        public string DataCollectionEndpointId { get; set; }
+        public ResourceIdentifier DataCollectionEndpointId { get; set; }
 
         /// <summary> The resource provisioning state. </summary>
         public DataCollectionRuleAssociationProvisioningState? ProvisioningState { get; }

@@ -9,16 +9,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The DataCollectionRuleResourceProperties. </summary>
-    internal partial class DataCollectionRuleResourceProperties : DataCollectionRule, IJsonModel<DataCollectionRuleResourceProperties>
+    internal partial class DataCollectionRuleResourceProperties : DataCollectionRuleProperties, IJsonModel<DataCollectionRuleResourceProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataCollectionRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override DataCollectionRuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DataCollectionRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override DataCollectionRuleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -104,18 +105,18 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             string description = default;
             string immutableId = default;
-            string dataCollectionEndpointId = default;
+            ResourceIdentifier dataCollectionEndpointId = default;
             DataCollectionRuleMetadata metadata = default;
             DataCollectionRuleEndpoints endpoints = default;
             DataCollectionRuleReferences references = default;
             DataCollectionRuleAgentSettings agentSettings = default;
-            IDictionary<string, StreamDeclaration> streamDeclarations = default;
+            IDictionary<string, DataStreamDeclaration> streamDeclarations = default;
             DataCollectionRuleDataSources dataSources = default;
             DataCollectionRuleDirectDataSources directDataSources = default;
             DataCollectionRuleDestinations destinations = default;
             IList<DataFlow> dataFlows = default;
             DataCollectionRuleIngestionQuotas ingestionQuotas = default;
-            KnownDataCollectionRuleProvisioningState? provisioningState = default;
+            DataCollectionRuleProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +132,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("dataCollectionEndpointId"u8))
                 {
-                    dataCollectionEndpointId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataCollectionEndpointId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
@@ -176,10 +181,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    Dictionary<string, StreamDeclaration> dictionary = new Dictionary<string, StreamDeclaration>();
+                    Dictionary<string, DataStreamDeclaration> dictionary = new Dictionary<string, DataStreamDeclaration>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, StreamDeclaration.DeserializeStreamDeclaration(prop0.Value, options));
+                        dictionary.Add(prop0.Name, DataStreamDeclaration.DeserializeDataStreamDeclaration(prop0.Value, options));
                     }
                     streamDeclarations = dictionary;
                     continue;
@@ -240,7 +245,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    provisioningState = new KnownDataCollectionRuleProvisioningState(prop.Value.GetString());
+                    provisioningState = new DataCollectionRuleProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -256,7 +261,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 endpoints,
                 references,
                 agentSettings,
-                streamDeclarations ?? new ChangeTrackingDictionary<string, StreamDeclaration>(),
+                streamDeclarations ?? new ChangeTrackingDictionary<string, DataStreamDeclaration>(),
                 dataSources,
                 directDataSources,
                 destinations,

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ActionGroupResourceData item in Value)
+            foreach (ActionGroupData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<ActionGroupResourceData> value = default;
+            IList<ActionGroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ActionGroupResourceData> array = new List<ActionGroupResourceData>();
+                    List<ActionGroupData> array = new List<ActionGroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ActionGroupResourceData.DeserializeActionGroupResourceData(item, options));
+                        array.Add(ActionGroupData.DeserializeActionGroupData(item, options));
                     }
                     value = array;
                     continue;

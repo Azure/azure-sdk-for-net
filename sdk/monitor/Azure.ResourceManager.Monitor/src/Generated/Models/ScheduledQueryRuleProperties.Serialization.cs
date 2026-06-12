@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<string> targetResourceTypes = default;
             ScheduledQueryRuleCriteria criteria = default;
             TimeSpan? muteActionsDuration = default;
-            Actions actions = default;
+            ScheduledQueryRuleActions actions = default;
             bool? isWorkspaceAlertsStorageConfigured = default;
             bool? checkWorkspaceAlertsStorageConfigured = default;
             bool? skipQueryValidation = default;
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    actions = Actions.DeserializeActions(prop.Value, options);
+                    actions = ScheduledQueryRuleActions.DeserializeScheduledQueryRuleActions(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("isWorkspaceAlertsStorageConfigured"u8))

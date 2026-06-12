@@ -14,7 +14,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal partial class DataCollectionEndpointsGetByResourceGroupCollectionResultOfT : Pageable<DataCollectionEndpointResourceData>
+    internal partial class DataCollectionEndpointsGetByResourceGroupCollectionResultOfT : Pageable<DataCollectionEndpointData>
     {
         private readonly DataCollectionEndpoints _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DataCollectionEndpointsGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DataCollectionEndpointResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<DataCollectionEndpointData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 DataCollectionEndpointResourceListResult result = DataCollectionEndpointResourceListResult.FromResponse(response);
-                yield return Page<DataCollectionEndpointResourceData>.FromValues((IReadOnlyList<DataCollectionEndpointResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DataCollectionEndpointData>.FromValues((IReadOnlyList<DataCollectionEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

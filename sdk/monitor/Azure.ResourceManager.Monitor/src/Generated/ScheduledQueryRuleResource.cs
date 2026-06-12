@@ -20,9 +20,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a ScheduledQueryRuleResource along with the instance operations that can be performed on it.
+    /// A class representing a ScheduledQueryRule along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScheduledQueryRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetScheduledQueryRuleResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetScheduledQueryRules method.
     /// </summary>
     public partial class ScheduledQueryRuleResource : ArmResource
     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor
         private readonly ScheduledQueryRules _scheduledQueryRulesRestClient;
         private readonly ClientDiagnostics _scheduledQueryRuleClientDiagnostics;
         private readonly ScheduledQueryRule _scheduledQueryRuleRestClient;
-        private readonly ScheduledQueryRuleResourceData _data;
+        private readonly ScheduledQueryRuleData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/scheduledQueryRules";
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ScheduledQueryRuleResource(ArmClient client, ScheduledQueryRuleResourceData data) : this(client, data.Id)
+        internal ScheduledQueryRuleResource(ArmClient client, ScheduledQueryRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ScheduledQueryRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string scheduledQueryRuleResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string scheduledQueryRuleApiVersion);
             _scheduledQueryRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _scheduledQueryRulesRestClient = new ScheduledQueryRules(_scheduledQueryRulesClientDiagnostics, Pipeline, Endpoint, scheduledQueryRuleResourceApiVersion ?? "2025-01-01-preview");
+            _scheduledQueryRulesRestClient = new ScheduledQueryRules(_scheduledQueryRulesClientDiagnostics, Pipeline, Endpoint, scheduledQueryRuleApiVersion ?? "2025-01-01-preview");
             _scheduledQueryRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _scheduledQueryRuleRestClient = new ScheduledQueryRule(_scheduledQueryRuleClientDiagnostics, Pipeline, Endpoint, scheduledQueryRuleResourceApiVersion ?? "2021-10-01");
+            _scheduledQueryRuleRestClient = new ScheduledQueryRule(_scheduledQueryRuleClientDiagnostics, Pipeline, Endpoint, scheduledQueryRuleApiVersion ?? "2021-10-01");
             ValidateResourceId(id);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ScheduledQueryRuleResourceData Data
+        public virtual ScheduledQueryRuleData Data
         {
             get
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ScheduledQueryRuleResourceData> response = Response.FromValue(ScheduledQueryRuleResourceData.FromResponse(result), result);
+                Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ScheduledQueryRuleResourceData> response = Response.FromValue(ScheduledQueryRuleResourceData.FromResponse(result), result);
+                Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> The parameters of the rule to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ScheduledQueryRuleResource>> UpdateAsync(ScheduledQueryRuleResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScheduledQueryRuleResource>> UpdateAsync(ScheduledQueryRulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -229,9 +229,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ScheduledQueryRuleResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ScheduledQueryRulePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ScheduledQueryRuleResourceData> response = Response.FromValue(ScheduledQueryRuleResourceData.FromResponse(result), result);
+                Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> The parameters of the rule to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ScheduledQueryRuleResource> Update(ScheduledQueryRuleResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<ScheduledQueryRuleResource> Update(ScheduledQueryRulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -281,9 +281,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledQueryRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ScheduledQueryRuleResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _scheduledQueryRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ScheduledQueryRulePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ScheduledQueryRuleResourceData> response = Response.FromValue(ScheduledQueryRuleResourceData.FromResponse(result), result);
+                Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -714,13 +714,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ScheduledQueryRuleResourceData> response = Response.FromValue(ScheduledQueryRuleResourceData.FromResponse(result), result);
+                    Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                     return Response.FromValue(new ScheduledQueryRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ScheduledQueryRuleResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ScheduledQueryRuleResourcePatch patch = new ScheduledQueryRuleResourcePatch();
+                    ScheduledQueryRuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ScheduledQueryRulePatch patch = new ScheduledQueryRulePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -762,13 +762,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ScheduledQueryRuleResourceData> response = Response.FromValue(ScheduledQueryRuleResourceData.FromResponse(result), result);
+                    Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                     return Response.FromValue(new ScheduledQueryRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ScheduledQueryRuleResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ScheduledQueryRuleResourcePatch patch = new ScheduledQueryRuleResourcePatch();
+                    ScheduledQueryRuleData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ScheduledQueryRulePatch patch = new ScheduledQueryRulePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -809,13 +809,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ScheduledQueryRuleResourceData> response = Response.FromValue(ScheduledQueryRuleResourceData.FromResponse(result), result);
+                    Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                     return Response.FromValue(new ScheduledQueryRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ScheduledQueryRuleResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ScheduledQueryRuleResourcePatch patch = new ScheduledQueryRuleResourcePatch();
+                    ScheduledQueryRuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ScheduledQueryRulePatch patch = new ScheduledQueryRulePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<ScheduledQueryRuleResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -852,13 +852,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ScheduledQueryRuleResourceData> response = Response.FromValue(ScheduledQueryRuleResourceData.FromResponse(result), result);
+                    Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                     return Response.FromValue(new ScheduledQueryRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ScheduledQueryRuleResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ScheduledQueryRuleResourcePatch patch = new ScheduledQueryRuleResourcePatch();
+                    ScheduledQueryRuleData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ScheduledQueryRulePatch patch = new ScheduledQueryRulePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<ScheduledQueryRuleResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -894,13 +894,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ScheduledQueryRuleResourceData> response = Response.FromValue(ScheduledQueryRuleResourceData.FromResponse(result), result);
+                    Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                     return Response.FromValue(new ScheduledQueryRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ScheduledQueryRuleResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ScheduledQueryRuleResourcePatch patch = new ScheduledQueryRuleResourcePatch();
+                    ScheduledQueryRuleData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ScheduledQueryRulePatch patch = new ScheduledQueryRulePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -940,13 +940,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _scheduledQueryRulesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ScheduledQueryRuleResourceData> response = Response.FromValue(ScheduledQueryRuleResourceData.FromResponse(result), result);
+                    Response<ScheduledQueryRuleData> response = Response.FromValue(ScheduledQueryRuleData.FromResponse(result), result);
                     return Response.FromValue(new ScheduledQueryRuleResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ScheduledQueryRuleResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ScheduledQueryRuleResourcePatch patch = new ScheduledQueryRuleResourcePatch();
+                    ScheduledQueryRuleData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ScheduledQueryRulePatch patch = new ScheduledQueryRulePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            KnownPublicNetworkAccessOptions? publicNetworkAccess = default;
+            MonitorPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new KnownPublicNetworkAccessOptions(prop.Value.GetString());
+                    publicNetworkAccess = new MonitorPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

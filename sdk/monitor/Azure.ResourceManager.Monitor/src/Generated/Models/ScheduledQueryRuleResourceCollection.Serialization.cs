@@ -15,7 +15,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents a collection of scheduled query rule resources. </summary>
-    public partial class ScheduledQueryRuleResourceCollection : IJsonModel<ScheduledQueryRuleResourceCollection>
+    internal partial class ScheduledQueryRuleResourceCollection : IJsonModel<ScheduledQueryRuleResourceCollection>
     {
         /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleResourceCollection"/> for deserialization. </summary>
         internal ScheduledQueryRuleResourceCollection()
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ScheduledQueryRuleResourceData item in Value)
+            foreach (ScheduledQueryRuleData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<ScheduledQueryRuleResourceData> value = default;
+            IList<ScheduledQueryRuleData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ScheduledQueryRuleResourceData> array = new List<ScheduledQueryRuleResourceData>();
+                    List<ScheduledQueryRuleData> array = new List<ScheduledQueryRuleData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ScheduledQueryRuleResourceData.DeserializeScheduledQueryRuleResourceData(item, options));
+                        array.Add(ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(item, options));
                     }
                     value = array;
                     continue;

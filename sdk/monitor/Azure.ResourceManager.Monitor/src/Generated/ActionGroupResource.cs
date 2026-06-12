@@ -20,9 +20,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a ActionGroupResource along with the instance operations that can be performed on it.
+    /// A class representing a ActionGroup along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ActionGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetActionGroupResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetActionGroups method.
     /// </summary>
     public partial class ActionGroupResource : ArmResource
     {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor
         private readonly ActionGroups _actionGroupsRestClient;
         private readonly ClientDiagnostics _nspActionGroupClientDiagnostics;
         private readonly NspActionGroup _nspActionGroupRestClient;
-        private readonly ActionGroupResourceData _data;
+        private readonly ActionGroupData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/actionGroups";
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of <see cref="ActionGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ActionGroupResource(ArmClient client, ActionGroupResourceData data) : this(client, data.Id)
+        internal ActionGroupResource(ArmClient client, ActionGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ActionGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string actionGroupResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string actionGroupApiVersion);
             _actionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _actionGroupsRestClient = new ActionGroups(_actionGroupsClientDiagnostics, Pipeline, Endpoint, actionGroupResourceApiVersion ?? "2024-10-01-preview");
+            _actionGroupsRestClient = new ActionGroups(_actionGroupsClientDiagnostics, Pipeline, Endpoint, actionGroupApiVersion ?? "2024-10-01-preview");
             _nspActionGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _nspActionGroupRestClient = new NspActionGroup(_nspActionGroupClientDiagnostics, Pipeline, Endpoint, actionGroupResourceApiVersion ?? "2021-10-01");
+            _nspActionGroupRestClient = new NspActionGroup(_nspActionGroupClientDiagnostics, Pipeline, Endpoint, actionGroupApiVersion ?? "2021-10-01");
             ValidateResourceId(id);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ActionGroupResourceData Data
+        public virtual ActionGroupData Data
         {
             get
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                Response<ActionGroupData> response = Response.FromValue(ActionGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                Response<ActionGroupData> response = Response.FromValue(ActionGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ActionGroupResource>> UpdateAsync(ActionGroupResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ActionGroupResource>> UpdateAsync(ActionGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -229,9 +229,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _actionGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ActionGroupResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _actionGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ActionGroupPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                Response<ActionGroupData> response = Response.FromValue(ActionGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ActionGroupResource> Update(ActionGroupResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<ActionGroupResource> Update(ActionGroupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -281,9 +281,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _actionGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ActionGroupResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _actionGroupsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ActionGroupPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                Response<ActionGroupData> response = Response.FromValue(ActionGroupData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -421,14 +421,14 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
-        public virtual async Task<ArmOperation<TestNotificationDetailsResponse>> CreateNotificationsAtActionGroupResourceLevelAsync(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.CreateNotificationsAtActionGroupResourceLevel");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.CreateNotifications");
             scope.Start();
             try
             {
@@ -436,10 +436,10 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _actionGroupsRestClient.CreateCreateNotificationsAtActionGroupResourceLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, NotificationRequestBody.ToRequestContent(notificationRequest), context);
+                HttpMessage message = _actionGroupsRestClient.CreateCreateNotificationsRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, NotificationContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MonitorArmOperation<TestNotificationDetailsResponse> operation = new MonitorArmOperation<TestNotificationDetailsResponse>(
-                    new TestNotificationDetailsResponseOperationSource(),
+                MonitorArmOperation<NotificationStatus> operation = new MonitorArmOperation<NotificationStatus>(
+                    new NotificationStatusOperationSource(),
                     _actionGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -480,14 +480,14 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notificationRequest"/> is null. </exception>
-        public virtual ArmOperation<TestNotificationDetailsResponse> CreateNotificationsAtActionGroupResourceLevel(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<NotificationStatus> CreateNotifications(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(notificationRequest, nameof(notificationRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.CreateNotificationsAtActionGroupResourceLevel");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.CreateNotifications");
             scope.Start();
             try
             {
@@ -495,10 +495,10 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _actionGroupsRestClient.CreateCreateNotificationsAtActionGroupResourceLevelRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, NotificationRequestBody.ToRequestContent(notificationRequest), context);
+                HttpMessage message = _actionGroupsRestClient.CreateCreateNotificationsRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, NotificationContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MonitorArmOperation<TestNotificationDetailsResponse> operation = new MonitorArmOperation<TestNotificationDetailsResponse>(
-                    new TestNotificationDetailsResponseOperationSource(),
+                MonitorArmOperation<NotificationStatus> operation = new MonitorArmOperation<NotificationStatus>(
+                    new NotificationStatusOperationSource(),
                     _actionGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="content"> The receiver to re-enable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response> EnableReceiverAsync(EnableRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> EnableReceiverAsync(ActionGroupEnableContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _actionGroupsRestClient.CreateEnableReceiverRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, EnableRequest.ToRequestContent(content), context);
+                HttpMessage message = _actionGroupsRestClient.CreateEnableReceiverRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ActionGroupEnableContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="content"> The receiver to re-enable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response EnableReceiver(EnableRequest content, CancellationToken cancellationToken = default)
+        public virtual Response EnableReceiver(ActionGroupEnableContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _actionGroupsRestClient.CreateEnableReceiverRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, EnableRequest.ToRequestContent(content), context);
+                HttpMessage message = _actionGroupsRestClient.CreateEnableReceiverRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, ActionGroupEnableContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -638,13 +638,13 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<TestNotificationDetailsResponse>> GetTestNotificationsAtActionGroupResourceLevelAsync(string resourceGroupName, string actionGroupName, string notificationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationStatus>> GetNotificationStatusAsync(string resourceGroupName, string actionGroupName, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
-            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.GetTestNotificationsAtActionGroupResourceLevel");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.GetNotificationStatus");
             scope.Start();
             try
             {
@@ -652,9 +652,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _actionGroupsRestClient.CreateGetTestNotificationsAtActionGroupResourceLevelRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, actionGroupName, notificationId, context);
+                HttpMessage message = _actionGroupsRestClient.CreateGetNotificationStatusRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, actionGroupName, notificationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<TestNotificationDetailsResponse> response = Response.FromValue(TestNotificationDetailsResponse.FromResponse(result), result);
+                Response<NotificationStatus> response = Response.FromValue(NotificationStatus.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -695,13 +695,13 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<TestNotificationDetailsResponse> GetTestNotificationsAtActionGroupResourceLevel(string resourceGroupName, string actionGroupName, string notificationId, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationStatus> GetNotificationStatus(string resourceGroupName, string actionGroupName, string notificationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
             Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
 
-            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.GetTestNotificationsAtActionGroupResourceLevel");
+            using DiagnosticScope scope = _actionGroupsClientDiagnostics.CreateScope("ActionGroupResource.GetNotificationStatus");
             scope.Start();
             try
             {
@@ -709,9 +709,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _actionGroupsRestClient.CreateGetTestNotificationsAtActionGroupResourceLevelRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, actionGroupName, notificationId, context);
+                HttpMessage message = _actionGroupsRestClient.CreateGetNotificationStatusRequest(Guid.Parse(Id.SubscriptionId), resourceGroupName, actionGroupName, notificationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<TestNotificationDetailsResponse> response = Response.FromValue(TestNotificationDetailsResponse.FromResponse(result), result);
+                Response<NotificationStatus> response = Response.FromValue(NotificationStatus.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1040,13 +1040,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                    Response<ActionGroupData> response = Response.FromValue(ActionGroupData.FromResponse(result), result);
                     return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ActionGroupResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ActionGroupResourcePatch patch = new ActionGroupResourcePatch();
+                    ActionGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ActionGroupPatch patch = new ActionGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1088,13 +1088,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                    Response<ActionGroupData> response = Response.FromValue(ActionGroupData.FromResponse(result), result);
                     return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ActionGroupResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ActionGroupResourcePatch patch = new ActionGroupResourcePatch();
+                    ActionGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ActionGroupPatch patch = new ActionGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1135,13 +1135,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                    Response<ActionGroupData> response = Response.FromValue(ActionGroupData.FromResponse(result), result);
                     return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ActionGroupResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ActionGroupResourcePatch patch = new ActionGroupResourcePatch();
+                    ActionGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ActionGroupPatch patch = new ActionGroupPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<ActionGroupResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1178,13 +1178,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                    Response<ActionGroupData> response = Response.FromValue(ActionGroupData.FromResponse(result), result);
                     return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ActionGroupResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ActionGroupResourcePatch patch = new ActionGroupResourcePatch();
+                    ActionGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ActionGroupPatch patch = new ActionGroupPatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<ActionGroupResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1220,13 +1220,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                    Response<ActionGroupData> response = Response.FromValue(ActionGroupData.FromResponse(result), result);
                     return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ActionGroupResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ActionGroupResourcePatch patch = new ActionGroupResourcePatch();
+                    ActionGroupData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ActionGroupPatch patch = new ActionGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1266,13 +1266,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _actionGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ActionGroupResourceData> response = Response.FromValue(ActionGroupResourceData.FromResponse(result), result);
+                    Response<ActionGroupData> response = Response.FromValue(ActionGroupData.FromResponse(result), result);
                     return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ActionGroupResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ActionGroupResourcePatch patch = new ActionGroupResourcePatch();
+                    ActionGroupData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ActionGroupPatch patch = new ActionGroupPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

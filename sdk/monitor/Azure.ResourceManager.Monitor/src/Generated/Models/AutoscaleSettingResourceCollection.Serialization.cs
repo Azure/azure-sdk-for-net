@@ -15,7 +15,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents a collection of autoscale setting resources. </summary>
-    public partial class AutoscaleSettingResourceCollection : IJsonModel<AutoscaleSettingResourceCollection>
+    internal partial class AutoscaleSettingResourceCollection : IJsonModel<AutoscaleSettingResourceCollection>
     {
         /// <summary> Initializes a new instance of <see cref="AutoscaleSettingResourceCollection"/> for deserialization. </summary>
         internal AutoscaleSettingResourceCollection()
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AutoscaleSettingResourceData item in Value)
+            foreach (AutoscaleSettingData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<AutoscaleSettingResourceData> value = default;
+            IList<AutoscaleSettingData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AutoscaleSettingResourceData> array = new List<AutoscaleSettingResourceData>();
+                    List<AutoscaleSettingData> array = new List<AutoscaleSettingData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AutoscaleSettingResourceData.DeserializeAutoscaleSettingResourceData(item, options));
+                        array.Add(AutoscaleSettingData.DeserializeAutoscaleSettingData(item, options));
                     }
                     value = array;
                     continue;

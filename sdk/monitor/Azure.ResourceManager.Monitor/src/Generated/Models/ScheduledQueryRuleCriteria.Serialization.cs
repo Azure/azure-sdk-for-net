@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("allOf"u8);
                 writer.WriteStartArray();
-                foreach (Condition item in AllOf)
+                foreach (ScheduledQueryRuleCondition item in AllOf)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<Condition> allOf = default;
+            IList<ScheduledQueryRuleCondition> allOf = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<Condition> array = new List<Condition>();
+                    List<ScheduledQueryRuleCondition> array = new List<ScheduledQueryRuleCondition>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Condition.DeserializeCondition(item, options));
+                        array.Add(ScheduledQueryRuleCondition.DeserializeScheduledQueryRuleCondition(item, options));
                     }
                     allOf = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScheduledQueryRuleCriteria(allOf ?? new ChangeTrackingList<Condition>(), additionalBinaryDataProperties);
+            return new ScheduledQueryRuleCriteria(allOf ?? new ChangeTrackingList<ScheduledQueryRuleCondition>(), additionalBinaryDataProperties);
         }
     }
 }

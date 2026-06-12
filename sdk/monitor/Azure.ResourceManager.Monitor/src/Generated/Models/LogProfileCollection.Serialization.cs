@@ -15,7 +15,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents a collection of log profiles. </summary>
-    internal partial class LogProfileCollection : IJsonModel<LogProfileCollection>
+    public partial class LogProfileCollection : IJsonModel<LogProfileCollection>
     {
         /// <summary> Initializes a new instance of <see cref="LogProfileCollection"/> for deserialization. </summary>
         internal LogProfileCollection()
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (LogProfileResourceData item in Value)
+            foreach (LogProfileData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<LogProfileResourceData> value = default;
+            IList<LogProfileData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<LogProfileResourceData> array = new List<LogProfileResourceData>();
+                    List<LogProfileData> array = new List<LogProfileData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LogProfileResourceData.DeserializeLogProfileResourceData(item, options));
+                        array.Add(LogProfileData.DeserializeLogProfileData(item, options));
                     }
                     value = array;
                     continue;

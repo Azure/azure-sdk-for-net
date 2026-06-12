@@ -20,15 +20,15 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a LogProfileResource along with the instance operations that can be performed on it.
+    /// A class representing a LogProfile along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogProfileResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetLogProfileResources method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetLogProfiles method.
     /// </summary>
     public partial class LogProfileResource : ArmResource
     {
         private readonly ClientDiagnostics _logProfilesClientDiagnostics;
         private readonly LogProfiles _logProfilesRestClient;
-        private readonly LogProfileResourceData _data;
+        private readonly LogProfileData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/logprofiles";
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of <see cref="LogProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LogProfileResource(ArmClient client, LogProfileResourceData data) : this(client, data.Id)
+        internal LogProfileResource(ArmClient client, LogProfileData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal LogProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string logProfileResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string logProfileApiVersion);
             _logProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _logProfilesRestClient = new LogProfiles(_logProfilesClientDiagnostics, Pipeline, Endpoint, logProfileResourceApiVersion ?? "2016-03-01");
+            _logProfilesRestClient = new LogProfiles(_logProfilesClientDiagnostics, Pipeline, Endpoint, logProfileApiVersion ?? "2016-03-01");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual LogProfileResourceData Data
+        public virtual LogProfileData Data
         {
             get
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                Response<LogProfileData> response = Response.FromValue(LogProfileData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                Response<LogProfileData> response = Response.FromValue(LogProfileData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<LogProfileResource>> UpdateAsync(LogProfileResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogProfileResource>> UpdateAsync(LogProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -224,9 +224,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logProfilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, LogProfileResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _logProfilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, LogProfilePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                Response<LogProfileData> response = Response.FromValue(LogProfileData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="patch"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<LogProfileResource> Update(LogProfileResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<LogProfileResource> Update(LogProfilePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -276,9 +276,9 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _logProfilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, LogProfileResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _logProfilesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, LogProfilePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                Response<LogProfileData> response = Response.FromValue(LogProfileData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -419,13 +419,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                    Response<LogProfileData> response = Response.FromValue(LogProfileData.FromResponse(result), result);
                     return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    LogProfileResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    LogProfileResourcePatch patch = new LogProfileResourcePatch();
+                    LogProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    LogProfilePatch patch = new LogProfilePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -467,13 +467,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                    Response<LogProfileData> response = Response.FromValue(LogProfileData.FromResponse(result), result);
                     return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    LogProfileResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    LogProfileResourcePatch patch = new LogProfileResourcePatch();
+                    LogProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    LogProfilePatch patch = new LogProfilePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -514,13 +514,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                    Response<LogProfileData> response = Response.FromValue(LogProfileData.FromResponse(result), result);
                     return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    LogProfileResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    LogProfileResourcePatch patch = new LogProfileResourcePatch();
+                    LogProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    LogProfilePatch patch = new LogProfilePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<LogProfileResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -557,13 +557,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                    Response<LogProfileData> response = Response.FromValue(LogProfileData.FromResponse(result), result);
                     return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    LogProfileResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    LogProfileResourcePatch patch = new LogProfileResourcePatch();
+                    LogProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    LogProfilePatch patch = new LogProfilePatch();
                     patch.Tags.ReplaceWith(tags);
                     Response<LogProfileResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -599,13 +599,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                    Response<LogProfileData> response = Response.FromValue(LogProfileData.FromResponse(result), result);
                     return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    LogProfileResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    LogProfileResourcePatch patch = new LogProfileResourcePatch();
+                    LogProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    LogProfilePatch patch = new LogProfilePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -645,13 +645,13 @@ namespace Azure.ResourceManager.Monitor
                     };
                     HttpMessage message = _logProfilesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<LogProfileResourceData> response = Response.FromValue(LogProfileResourceData.FromResponse(result), result);
+                    Response<LogProfileData> response = Response.FromValue(LogProfileData.FromResponse(result), result);
                     return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    LogProfileResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    LogProfileResourcePatch patch = new LogProfileResourcePatch();
+                    LogProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    LogProfilePatch patch = new LogProfilePatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

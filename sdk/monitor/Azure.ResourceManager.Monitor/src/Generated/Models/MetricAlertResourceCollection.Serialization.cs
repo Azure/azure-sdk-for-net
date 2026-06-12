@@ -15,7 +15,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Represents a collection of alert rule resources. </summary>
-    public partial class MetricAlertResourceCollection : IJsonModel<MetricAlertResourceCollection>
+    internal partial class MetricAlertResourceCollection : IJsonModel<MetricAlertResourceCollection>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (MetricAlertResourceData item in Value)
+                foreach (MetricAlertData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<MetricAlertResourceData> value = default;
+            IList<MetricAlertData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<MetricAlertResourceData> array = new List<MetricAlertResourceData>();
+                    List<MetricAlertData> array = new List<MetricAlertData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MetricAlertResourceData.DeserializeMetricAlertResourceData(item, options));
+                        array.Add(MetricAlertData.DeserializeMetricAlertData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MetricAlertResourceCollection(value ?? new ChangeTrackingList<MetricAlertResourceData>(), nextLink, additionalBinaryDataProperties);
+            return new MetricAlertResourceCollection(value ?? new ChangeTrackingList<MetricAlertData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
