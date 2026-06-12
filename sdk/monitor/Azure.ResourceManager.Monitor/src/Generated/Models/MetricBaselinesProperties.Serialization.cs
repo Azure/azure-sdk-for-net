@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("baselines"u8);
             writer.WriteStartArray();
-            foreach (TimeSeriesBaseline item in Baselines)
+            foreach (MonitorTimeSeriesBaseline item in Baselines)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string timespan = default;
             TimeSpan interval = default;
             string @namespace = default;
-            IList<TimeSeriesBaseline> baselines = default;
+            IList<MonitorTimeSeriesBaseline> baselines = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,10 +161,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("baselines"u8))
                 {
-                    List<TimeSeriesBaseline> array = new List<TimeSeriesBaseline>();
+                    List<MonitorTimeSeriesBaseline> array = new List<MonitorTimeSeriesBaseline>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesBaseline.DeserializeTimeSeriesBaseline(item, options));
+                        array.Add(MonitorTimeSeriesBaseline.DeserializeMonitorTimeSeriesBaseline(item, options));
                     }
                     baselines = array;
                     continue;

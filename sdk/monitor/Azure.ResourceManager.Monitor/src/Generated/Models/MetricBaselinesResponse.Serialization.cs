@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (SingleMetricBaseline item in Value)
+                foreach (MonitorSingleMetricBaseline item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<SingleMetricBaseline> value = default;
+            IList<MonitorSingleMetricBaseline> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<SingleMetricBaseline> array = new List<SingleMetricBaseline>();
+                    List<MonitorSingleMetricBaseline> array = new List<MonitorSingleMetricBaseline>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SingleMetricBaseline.DeserializeSingleMetricBaseline(item, options));
+                        array.Add(MonitorSingleMetricBaseline.DeserializeMonitorSingleMetricBaseline(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MetricBaselinesResponse(value ?? new ChangeTrackingList<SingleMetricBaseline>(), nextLink, additionalBinaryDataProperties);
+            return new MetricBaselinesResponse(value ?? new ChangeTrackingList<MonitorSingleMetricBaseline>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

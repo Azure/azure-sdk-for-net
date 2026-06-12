@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocalizableString"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LocalizableString> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorLocalizableString"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorLocalizableString> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocalizableString"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LocalizableString> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorLocalizableString"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorLocalizableString> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The <b>$filter</b> is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceGroupName eq '&lt;ResourceGroupName&gt;'.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceUri eq '&lt;ResourceURI&gt;'.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation'.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceProvider eq '&lt;ResourceProviderName&gt;'.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and eventChannels eq 'Admin, Operation' and correlationId eq '&lt;CorrelationID&gt;'.&lt;br&gt;<b>NOTE</b>: No other syntax is allowed. </param>
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The <b>$select</b> argument is a comma separated list of property names to be returned. Possible values are: <i>authorization</i>, <i>claims</i>, <i>correlationId</i>, <i>description</i>, <i>eventDataId</i>, <i>eventName</i>, <i>eventTimestamp</i>, <i>httpRequest</i>, <i>level</i>, <i>operationId</i>, <i>operationName</i>, <i>properties</i>, <i>resourceGroupName</i>, <i>resourceProviderName</i>, <i>resourceId</i>, <i>status</i>, <i>submissionTimestamp</i>, <i>subStatus</i>, <i>subscriptionId</i>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EventData> GetAllAsync(string filter = default, string @select = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EventDataInfo> GetAllAsync(string filter = default, string @select = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The <b>$filter</b> is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceGroupName eq '&lt;ResourceGroupName&gt;'.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceUri eq '&lt;ResourceURI&gt;'.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation'.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceProvider eq '&lt;ResourceProviderName&gt;'.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and eventChannels eq 'Admin, Operation' and correlationId eq '&lt;CorrelationID&gt;'.&lt;br&gt;<b>NOTE</b>: No other syntax is allowed. </param>
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The <b>$select</b> argument is a comma separated list of property names to be returned. Possible values are: <i>authorization</i>, <i>claims</i>, <i>correlationId</i>, <i>description</i>, <i>eventDataId</i>, <i>eventName</i>, <i>eventTimestamp</i>, <i>httpRequest</i>, <i>level</i>, <i>operationId</i>, <i>operationName</i>, <i>properties</i>, <i>resourceGroupName</i>, <i>resourceProviderName</i>, <i>resourceId</i>, <i>status</i>, <i>submissionTimestamp</i>, <i>subStatus</i>, <i>subscriptionId</i>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EventData> GetAll(string filter = default, string @select = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="EventDataInfo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EventDataInfo> GetAll(string filter = default, string @select = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

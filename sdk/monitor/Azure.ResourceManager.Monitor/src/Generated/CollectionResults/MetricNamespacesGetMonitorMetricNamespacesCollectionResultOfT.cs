@@ -14,7 +14,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal partial class MetricNamespacesGetMonitorMetricNamespacesCollectionResultOfT : Pageable<MetricNamespace>
+    internal partial class MetricNamespacesGetMonitorMetricNamespacesCollectionResultOfT : Pageable<MonitorMetricNamespace>
     {
         private readonly MetricNamespaces _client;
         private readonly string _resourceUri;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of MetricNamespacesGetMonitorMetricNamespacesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<MetricNamespace>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<MonitorMetricNamespace>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 MetricNamespaceCollection result = MetricNamespaceCollection.FromResponse(response);
-                yield return Page<MetricNamespace>.FromValues((IReadOnlyList<MetricNamespace>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MonitorMetricNamespace>.FromValues((IReadOnlyList<MonitorMetricNamespace>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="SubscriptionScopeMetricDefinition"/>. </summary>
         internal SubscriptionScopeMetricDefinition()
         {
-            SupportedAggregationTypes = new ChangeTrackingList<MetricAggregationType>();
-            MetricAvailabilities = new ChangeTrackingList<MetricAvailability>();
-            Dimensions = new ChangeTrackingList<LocalizableString>();
+            SupportedAggregationTypes = new ChangeTrackingList<MonitorAggregationType>();
+            MetricAvailabilities = new ChangeTrackingList<MonitorMetricAvailability>();
+            Dimensions = new ChangeTrackingList<MonitorLocalizableString>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionScopeMetricDefinition"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="id"> The resource identifier of the metric definition. </param>
         /// <param name="dimensions"> The name and the display name of the dimension, i.e. it is a localizable string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionScopeMetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, LocalizableString name, string displayDescription, string category, MetricClass? metricClass, MetricUnit? unit, MetricAggregationType? primaryAggregationType, IList<MetricAggregationType> supportedAggregationTypes, IList<MetricAvailability> metricAvailabilities, string id, IList<LocalizableString> dimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionScopeMetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, MonitorLocalizableString name, string displayDescription, string category, MonitorMetricClass? metricClass, MonitorMetricUnit? unit, MonitorAggregationType? primaryAggregationType, IList<MonitorAggregationType> supportedAggregationTypes, IList<MonitorMetricAvailability> metricAvailabilities, string id, IList<MonitorLocalizableString> dimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsDimensionRequired = isDimensionRequired;
             ResourceId = resourceId;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Namespace { get; }
 
         /// <summary> The name and the display name of the metric, i.e. it is a localizable string. </summary>
-        public LocalizableString Name { get; }
+        public MonitorLocalizableString Name { get; }
 
         /// <summary> Detailed description of this metric. </summary>
         public string DisplayDescription { get; }
@@ -77,24 +77,24 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Category { get; }
 
         /// <summary> The class of the metric. </summary>
-        public MetricClass? MetricClass { get; }
+        public MonitorMetricClass? MetricClass { get; }
 
         /// <summary> The unit of the metric. </summary>
-        public MetricUnit? Unit { get; }
+        public MonitorMetricUnit? Unit { get; }
 
         /// <summary> The primary aggregation type value defining how to use the values for display. </summary>
-        public MetricAggregationType? PrimaryAggregationType { get; }
+        public MonitorAggregationType? PrimaryAggregationType { get; }
 
         /// <summary> The collection of what aggregation types are supported. </summary>
-        public IList<MetricAggregationType> SupportedAggregationTypes { get; }
+        public IList<MonitorAggregationType> SupportedAggregationTypes { get; }
 
         /// <summary> The collection of what aggregation intervals are available to be queried. </summary>
-        public IList<MetricAvailability> MetricAvailabilities { get; }
+        public IList<MonitorMetricAvailability> MetricAvailabilities { get; }
 
         /// <summary> The resource identifier of the metric definition. </summary>
         public string Id { get; }
 
         /// <summary> The name and the display name of the dimension, i.e. it is a localizable string. </summary>
-        public IList<LocalizableString> Dimensions { get; }
+        public IList<MonitorLocalizableString> Dimensions { get; }
     }
 }

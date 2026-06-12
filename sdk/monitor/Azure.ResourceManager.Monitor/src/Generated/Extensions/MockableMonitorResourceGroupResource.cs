@@ -23,10 +23,8 @@ namespace Azure.ResourceManager.Monitor.Mocking
     {
         private ClientDiagnostics _privateLinkScopeOperationStatusClientDiagnostics;
         private PrivateLinkScopeOperationStatus _privateLinkScopeOperationStatusRestClient;
-        private ClientDiagnostics _metricAlertsStatusClientDiagnostics;
-        private MetricAlertsStatus _metricAlertsStatusRestClient;
-        private ClientDiagnostics _actionGroupsClientDiagnostics;
-        private ActionGroups _actionGroupsRestClient;
+        private ClientDiagnostics _alertRuleIncidentsClientDiagnostics;
+        private AlertRuleIncidents _alertRuleIncidentsRestClient;
 
         /// <summary> Initializes a new instance of MockableMonitorResourceGroupResource for mocking. </summary>
         protected MockableMonitorResourceGroupResource()
@@ -44,13 +42,9 @@ namespace Azure.ResourceManager.Monitor.Mocking
 
         private PrivateLinkScopeOperationStatus PrivateLinkScopeOperationStatusRestClient => _privateLinkScopeOperationStatusRestClient ??= new PrivateLinkScopeOperationStatus(PrivateLinkScopeOperationStatusClientDiagnostics, Pipeline, Endpoint, "2023-06-01-preview");
 
-        private ClientDiagnostics MetricAlertsStatusClientDiagnostics => _metricAlertsStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics AlertRuleIncidentsClientDiagnostics => _alertRuleIncidentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MetricAlertsStatus MetricAlertsStatusRestClient => _metricAlertsStatusRestClient ??= new MetricAlertsStatus(MetricAlertsStatusClientDiagnostics, Pipeline, Endpoint, "2024-03-01-preview");
-
-        private ClientDiagnostics ActionGroupsClientDiagnostics => _actionGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private ActionGroups ActionGroupsRestClient => _actionGroupsRestClient ??= new ActionGroups(ActionGroupsClientDiagnostics, Pipeline, Endpoint, "2024-10-01-preview");
+        private AlertRuleIncidents AlertRuleIncidentsRestClient => _alertRuleIncidentsRestClient ??= new AlertRuleIncidents(AlertRuleIncidentsClientDiagnostics, Pipeline, Endpoint, "2016-03-01");
 
         /// <summary>
         /// Get the status of an azure asynchronous operation associated with a private link scope operation.
@@ -151,33 +145,35 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Retrieve an alert rule status.
+        /// Gets an incident associated to an alert rule
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}/status/{statusName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.insights/alertrules/{ruleName}/incidents/{incidentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MetricAlertResources_ListByName. </description>
+        /// <description> AlertRuleIncidentsOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-03-01-preview. </description>
+        /// <description> 2016-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="statusName"> The name of the status. </param>
+        /// <param name="incidentName"> The name of the incident to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="statusName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> or <paramref name="statusName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<MetricAlertStatusCollection>> GetByNameAsync(string ruleName, string statusName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="incidentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="incidentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<Incident>> GetAsync(string resourceGroupName, string ruleName, string incidentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
-            Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
+            Argument.AssertNotNullOrEmpty(incidentName, nameof(incidentName));
 
-            using DiagnosticScope scope = MetricAlertsStatusClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.GetByName");
+            using DiagnosticScope scope = AlertRuleIncidentsClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.Get");
             scope.Start();
             try
             {
@@ -185,9 +181,9 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MetricAlertsStatusRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ruleName, statusName, context);
+                HttpMessage message = AlertRuleIncidentsRestClient.CreateGetRequest(resourceGroupName, ruleName, incidentName, Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MetricAlertStatusCollection> response = Response.FromValue(MetricAlertStatusCollection.FromResponse(result), result);
+                Response<Incident> response = Response.FromValue(Incident.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -202,33 +198,35 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Retrieve an alert rule status.
+        /// Gets an incident associated to an alert rule
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}/status/{statusName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/microsoft.insights/alertrules/{ruleName}/incidents/{incidentName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MetricAlertResources_ListByName. </description>
+        /// <description> AlertRuleIncidentsOperationGroup_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-03-01-preview. </description>
+        /// <description> 2016-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="ruleName"> The name of the rule. </param>
-        /// <param name="statusName"> The name of the status. </param>
+        /// <param name="incidentName"> The name of the incident to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="statusName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> or <paramref name="statusName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<MetricAlertStatusCollection> GetByName(string ruleName, string statusName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="incidentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="ruleName"/> or <paramref name="incidentName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<Incident> Get(string resourceGroupName, string ruleName, string incidentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
-            Argument.AssertNotNullOrEmpty(statusName, nameof(statusName));
+            Argument.AssertNotNullOrEmpty(incidentName, nameof(incidentName));
 
-            using DiagnosticScope scope = MetricAlertsStatusClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.GetByName");
+            using DiagnosticScope scope = AlertRuleIncidentsClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.Get");
             scope.Start();
             try
             {
@@ -236,9 +234,9 @@ namespace Azure.ResourceManager.Monitor.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = MetricAlertsStatusRestClient.CreateGetByNameRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ruleName, statusName, context);
+                HttpMessage message = AlertRuleIncidentsRestClient.CreateGetRequest(resourceGroupName, ruleName, incidentName, Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MetricAlertStatusCollection> response = Response.FromValue(MetricAlertStatusCollection.FromResponse(result), result);
+                Response<Incident> response = Response.FromValue(Incident.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -253,105 +251,85 @@ namespace Azure.ResourceManager.Monitor.Mocking
         }
 
         /// <summary>
-        /// Get the test notifications by the notification id
+        /// Gets a list of incidents associated to an alert rule
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/notificationStatus/{notificationId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/alertrules/{ruleName}/incidents. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ActionGroupResources_GetTestNotificationsAtActionGroupResourceLevel. </description>
+        /// <description> AlertRuleIncidentsOperationGroup_ListByAlertRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01-preview. </description>
+        /// <description> 2016-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="actionGroupName"> The name of the action group. </param>
-        /// <param name="notificationId"> The notification id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<NotificationStatus>> GetNotificationStatusAsync(string actionGroupName, string notificationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="Incident"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Incident> GetByAlertRuleAsync(string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
-            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = ActionGroupsClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.GetNotificationStatus");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ActionGroupsRestClient.CreateGetNotificationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, actionGroupName, notificationId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NotificationStatus> response = Response.FromValue(NotificationStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new AlertRuleIncidentsGetByAlertRuleAsyncCollectionResultOfT(
+                AlertRuleIncidentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                resourceGroupName,
+                ruleName,
+                context,
+                "MockableMonitorResourceGroupResource.GetByAlertRule");
         }
 
         /// <summary>
-        /// Get the test notifications by the notification id
+        /// Gets a list of incidents associated to an alert rule
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}/notificationStatus/{notificationId}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/alertrules/{ruleName}/incidents. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ActionGroupResources_GetTestNotificationsAtActionGroupResourceLevel. </description>
+        /// <description> AlertRuleIncidentsOperationGroup_ListByAlertRule. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01-preview. </description>
+        /// <description> 2016-03-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="actionGroupName"> The name of the action group. </param>
-        /// <param name="notificationId"> The notification id. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> or <paramref name="notificationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<NotificationStatus> GetNotificationStatus(string actionGroupName, string notificationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="Incident"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Incident> GetByAlertRule(string resourceGroupName, string ruleName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
-            Argument.AssertNotNullOrEmpty(notificationId, nameof(notificationId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = ActionGroupsClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.GetNotificationStatus");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ActionGroupsRestClient.CreateGetNotificationStatusRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, actionGroupName, notificationId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<NotificationStatus> response = Response.FromValue(NotificationStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new AlertRuleIncidentsGetByAlertRuleCollectionResultOfT(
+                AlertRuleIncidentsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                resourceGroupName,
+                ruleName,
+                context,
+                "MockableMonitorResourceGroupResource.GetByAlertRule");
         }
     }
 }

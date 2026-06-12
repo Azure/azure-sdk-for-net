@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -1756,13 +1757,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="submissionTimestamp"> the timestamp of when the event became available for querying via this API. It is in ISO 8601 format. This value should not be confused eventTimestamp. As there might be a delay between the occurrence time of the event, and the time that the event is submitted to the Azure logging infrastructure. </param>
         /// <param name="subscriptionId"> the Azure subscription Id usually a GUID. </param>
         /// <param name="tenantId"> the Azure tenant Id. </param>
-        /// <returns> A new <see cref="Models.EventData"/> instance for mocking. </returns>
-        public static EventData EventData(SenderAuthorization authorization = default, IReadOnlyDictionary<string, string> claims = default, string caller = default, string description = default, string id = default, string eventDataId = default, string correlationId = default, LocalizableString eventName = default, LocalizableString category = default, HttpRequestInfo httpRequest = default, EventLevel? level = default, string resourceGroupName = default, LocalizableString resourceProviderName = default, string resourceId = default, LocalizableString resourceType = default, string operationId = default, LocalizableString operationName = default, IReadOnlyDictionary<string, string> properties = default, LocalizableString status = default, LocalizableString subStatus = default, DateTimeOffset? eventTimestamp = default, DateTimeOffset? submissionTimestamp = default, string subscriptionId = default, string tenantId = default)
+        /// <returns> A new <see cref="Models.EventDataInfo"/> instance for mocking. </returns>
+        public static EventDataInfo EventDataInfo(SenderAuthorization authorization = default, IReadOnlyDictionary<string, string> claims = default, string caller = default, string description = default, string id = default, string eventDataId = default, string correlationId = default, MonitorLocalizableString eventName = default, MonitorLocalizableString category = default, EventDataHttpRequestInfo httpRequest = default, MonitorEventLevel? level = default, string resourceGroupName = default, MonitorLocalizableString resourceProviderName = default, ResourceIdentifier resourceId = default, MonitorLocalizableString resourceType = default, string operationId = default, MonitorLocalizableString operationName = default, IReadOnlyDictionary<string, string> properties = default, MonitorLocalizableString status = default, MonitorLocalizableString subStatus = default, DateTimeOffset? eventTimestamp = default, DateTimeOffset? submissionTimestamp = default, string subscriptionId = default, Guid? tenantId = default)
         {
             claims ??= new ChangeTrackingDictionary<string, string>();
             properties ??= new ChangeTrackingDictionary<string, string>();
 
-            return new EventData(
+            return new EventDataInfo(
                 authorization,
                 claims ?? new ChangeTrackingDictionary<string, string>(),
                 caller,
@@ -1801,20 +1802,20 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="value"> the invariant value. </param>
         /// <param name="localizedValue"> the locale specific value. </param>
-        /// <returns> A new <see cref="Models.LocalizableString"/> instance for mocking. </returns>
-        public static LocalizableString LocalizableString(string value = default, string localizedValue = default)
+        /// <returns> A new <see cref="Models.MonitorLocalizableString"/> instance for mocking. </returns>
+        public static MonitorLocalizableString MonitorLocalizableString(string value = default, string localizedValue = default)
         {
-            return new LocalizableString(value, localizedValue, default);
+            return new MonitorLocalizableString(value, localizedValue, default);
         }
 
         /// <param name="clientRequestId"> the client request id. </param>
         /// <param name="clientIpAddress"> the client Ip Address. </param>
         /// <param name="method"> the Http request method. </param>
         /// <param name="uri"> the Uri. </param>
-        /// <returns> A new <see cref="Models.HttpRequestInfo"/> instance for mocking. </returns>
-        public static HttpRequestInfo HttpRequestInfo(string clientRequestId = default, string clientIpAddress = default, string @method = default, string uri = default)
+        /// <returns> A new <see cref="Models.EventDataHttpRequestInfo"/> instance for mocking. </returns>
+        public static EventDataHttpRequestInfo EventDataHttpRequestInfo(string clientRequestId = default, string clientIpAddress = default, string @method = default, Uri uri = default)
         {
-            return new HttpRequestInfo(clientRequestId, clientIpAddress, @method, uri, default);
+            return new EventDataHttpRequestInfo(clientRequestId, clientIpAddress, @method, uri, default);
         }
 
         /// <param name="isDimensionRequired"> Flag to indicate whether the dimension is required. </param>
@@ -1831,11 +1832,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="id"> The resource identifier of the metric definition. </param>
         /// <param name="dimensions"> The name and the display name of the dimension, i.e. it is a localizable string. </param>
         /// <returns> A new <see cref="Models.SubscriptionScopeMetricDefinition"/> instance for mocking. </returns>
-        public static SubscriptionScopeMetricDefinition SubscriptionScopeMetricDefinition(bool? isDimensionRequired = default, string resourceId = default, string @namespace = default, LocalizableString name = default, string displayDescription = default, string category = default, MetricClass? metricClass = default, MetricUnit? unit = default, MetricAggregationType? primaryAggregationType = default, IEnumerable<MetricAggregationType> supportedAggregationTypes = default, IEnumerable<MetricAvailability> metricAvailabilities = default, string id = default, IEnumerable<LocalizableString> dimensions = default)
+        public static SubscriptionScopeMetricDefinition SubscriptionScopeMetricDefinition(bool? isDimensionRequired = default, string resourceId = default, string @namespace = default, MonitorLocalizableString name = default, string displayDescription = default, string category = default, MonitorMetricClass? metricClass = default, MonitorMetricUnit? unit = default, MonitorAggregationType? primaryAggregationType = default, IEnumerable<MonitorAggregationType> supportedAggregationTypes = default, IEnumerable<MonitorMetricAvailability> metricAvailabilities = default, string id = default, IEnumerable<MonitorLocalizableString> dimensions = default)
         {
-            supportedAggregationTypes ??= new ChangeTrackingList<MetricAggregationType>();
-            metricAvailabilities ??= new ChangeTrackingList<MetricAvailability>();
-            dimensions ??= new ChangeTrackingList<LocalizableString>();
+            supportedAggregationTypes ??= new ChangeTrackingList<MonitorAggregationType>();
+            metricAvailabilities ??= new ChangeTrackingList<MonitorMetricAvailability>();
+            dimensions ??= new ChangeTrackingList<MonitorLocalizableString>();
 
             return new SubscriptionScopeMetricDefinition(
                 isDimensionRequired,
@@ -1847,19 +1848,19 @@ namespace Azure.ResourceManager.Monitor.Models
                 metricClass,
                 unit,
                 primaryAggregationType,
-                (supportedAggregationTypes ?? new ChangeTrackingList<MetricAggregationType>()).ToList(),
-                (metricAvailabilities ?? new ChangeTrackingList<MetricAvailability>()).ToList(),
+                (supportedAggregationTypes ?? new ChangeTrackingList<MonitorAggregationType>()).ToList(),
+                (metricAvailabilities ?? new ChangeTrackingList<MonitorMetricAvailability>()).ToList(),
                 id,
-                (dimensions ?? new ChangeTrackingList<LocalizableString>()).ToList(),
+                (dimensions ?? new ChangeTrackingList<MonitorLocalizableString>()).ToList(),
                 default);
         }
 
         /// <param name="timeGrain"> The time grain specifies a supported aggregation interval for the metric. Expressed as a duration 'PT1M', 'P1D', etc. </param>
         /// <param name="retention"> The retention period for the metric at the specified timegrain.  Expressed as a duration 'PT1M', 'P1D', etc. </param>
-        /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
-        public static MetricAvailability MetricAvailability(TimeSpan? timeGrain = default, TimeSpan? retention = default)
+        /// <returns> A new <see cref="Models.MonitorMetricAvailability"/> instance for mocking. </returns>
+        public static MonitorMetricAvailability MonitorMetricAvailability(TimeSpan? timeGrain = default, TimeSpan? retention = default)
         {
-            return new MetricAvailability(timeGrain, retention, default);
+            return new MonitorMetricAvailability(timeGrain, retention, default);
         }
 
         /// <param name="isDimensionRequired"> Flag to indicate whether the dimension is required. </param>
@@ -1875,14 +1876,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metricAvailabilities"> The collection of what aggregation intervals are available to be queried. </param>
         /// <param name="id"> The resource identifier of the metric definition. </param>
         /// <param name="dimensions"> The name and the display name of the dimension, i.e. it is a localizable string. </param>
-        /// <returns> A new <see cref="Models.MetricDefinition"/> instance for mocking. </returns>
-        public static MetricDefinition MetricDefinition(bool? isDimensionRequired = default, string resourceId = default, string @namespace = default, LocalizableString name = default, string displayDescription = default, string category = default, MetricClass? metricClass = default, MetricUnit? unit = default, AggregationType? primaryAggregationType = default, IEnumerable<AggregationType> supportedAggregationTypes = default, IEnumerable<MetricAvailability> metricAvailabilities = default, string id = default, IEnumerable<LocalizableString> dimensions = default)
+        /// <returns> A new <see cref="Models.MonitorMetricDefinition"/> instance for mocking. </returns>
+        public static MonitorMetricDefinition MonitorMetricDefinition(bool? isDimensionRequired = default, string resourceId = default, string @namespace = default, MonitorLocalizableString name = default, string displayDescription = default, string category = default, MonitorMetricClass? metricClass = default, MonitorMetricUnit? unit = default, MonitorAggregationType? primaryAggregationType = default, IEnumerable<MonitorAggregationType> supportedAggregationTypes = default, IEnumerable<MonitorMetricAvailability> metricAvailabilities = default, string id = default, IEnumerable<MonitorLocalizableString> dimensions = default)
         {
-            supportedAggregationTypes ??= new ChangeTrackingList<AggregationType>();
-            metricAvailabilities ??= new ChangeTrackingList<MetricAvailability>();
-            dimensions ??= new ChangeTrackingList<LocalizableString>();
+            supportedAggregationTypes ??= new ChangeTrackingList<MonitorAggregationType>();
+            metricAvailabilities ??= new ChangeTrackingList<MonitorMetricAvailability>();
+            dimensions ??= new ChangeTrackingList<MonitorLocalizableString>();
 
-            return new MetricDefinition(
+            return new MonitorMetricDefinition(
                 isDimensionRequired,
                 resourceId,
                 @namespace,
@@ -1892,10 +1893,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 metricClass,
                 unit,
                 primaryAggregationType,
-                (supportedAggregationTypes ?? new ChangeTrackingList<AggregationType>()).ToList(),
-                (metricAvailabilities ?? new ChangeTrackingList<MetricAvailability>()).ToList(),
+                (supportedAggregationTypes ?? new ChangeTrackingList<MonitorAggregationType>()).ToList(),
+                (metricAvailabilities ?? new ChangeTrackingList<MonitorMetricAvailability>()).ToList(),
                 id,
-                (dimensions ?? new ChangeTrackingList<LocalizableString>()).ToList(),
+                (dimensions ?? new ChangeTrackingList<MonitorLocalizableString>()).ToList(),
                 default);
         }
 
@@ -1904,10 +1905,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> The escaped name of the namespace. </param>
         /// <param name="classification"> Kind of namespace. </param>
         /// <param name="metricNamespaceNameProperty"> The metric namespace name. </param>
-        /// <returns> A new <see cref="Models.MetricNamespace"/> instance for mocking. </returns>
-        public static MetricNamespace MetricNamespace(string id = default, string @type = default, string name = default, NamespaceClassification? classification = default, string metricNamespaceNameProperty = default)
+        /// <returns> A new <see cref="Models.MonitorMetricNamespace"/> instance for mocking. </returns>
+        public static MonitorMetricNamespace MonitorMetricNamespace(string id = default, string @type = default, string name = default, MonitorNamespaceClassification? classification = default, string metricNamespaceNameProperty = default)
         {
-            return new MetricNamespace(
+            return new MonitorMetricNamespace(
                 id,
                 @type,
                 name,
@@ -1926,9 +1927,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceregion"> The region of the resource being queried for metrics. </param>
         /// <param name="value"> The value of the collection. </param>
         /// <returns> A new <see cref="Models.Response"/> instance for mocking. </returns>
-        public static Response Response(int? cost = default, string timespan = default, string interval = default, string @namespace = default, string resourceregion = default, IEnumerable<Metric> value = default)
+        public static Response Response(int? cost = default, string timespan = default, string interval = default, string @namespace = default, string resourceregion = default, IEnumerable<MonitorMetric> value = default)
         {
-            value ??= new ChangeTrackingList<Metric>();
+            value ??= new ChangeTrackingList<MonitorMetric>();
 
             return new Response(
                 cost,
@@ -1936,52 +1937,52 @@ namespace Azure.ResourceManager.Monitor.Models
                 interval,
                 @namespace,
                 resourceregion,
-                (value ?? new ChangeTrackingList<Metric>()).ToList(),
+                (value ?? new ChangeTrackingList<MonitorMetric>()).ToList(),
                 default);
         }
 
         /// <param name="id"> The metric Id. </param>
-        /// <param name="type"> The resource type of the metric resource. </param>
+        /// <param name="metricType"> The resource type of the metric resource. </param>
         /// <param name="name"> The name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="displayDescription"> Detailed description of this metric. </param>
         /// <param name="errorCode"> 'Success' or the error details on query failures for this metric. </param>
         /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeseries"> The time series returned when a data query is performed. </param>
-        /// <returns> A new <see cref="Models.Metric"/> instance for mocking. </returns>
-        public static Metric Metric(string id = default, string @type = default, LocalizableString name = default, string displayDescription = default, string errorCode = default, string errorMessage = default, MetricUnit unit = default, IEnumerable<TimeSeriesElement> timeseries = default)
+        /// <returns> A new <see cref="Models.MonitorMetric"/> instance for mocking. </returns>
+        public static MonitorMetric MonitorMetric(string id = default, string metricType = default, MonitorLocalizableString name = default, string displayDescription = default, string errorCode = default, string errorMessage = default, MonitorMetricUnit unit = default, IEnumerable<MonitorTimeSeriesElement> timeseries = default)
         {
-            timeseries ??= new ChangeTrackingList<TimeSeriesElement>();
+            timeseries ??= new ChangeTrackingList<MonitorTimeSeriesElement>();
 
-            return new Metric(
+            return new MonitorMetric(
                 id,
-                @type,
+                default,
                 name,
                 displayDescription,
                 errorCode,
                 errorMessage,
                 unit,
-                (timeseries ?? new ChangeTrackingList<TimeSeriesElement>()).ToList(),
+                (timeseries ?? new ChangeTrackingList<MonitorTimeSeriesElement>()).ToList(),
                 default);
         }
 
         /// <param name="metadatavalues"> The metadata values returned if $filter was specified in the call. </param>
         /// <param name="data"> An array of data points representing the metric values.  This is only returned if a result type of data is specified. </param>
-        /// <returns> A new <see cref="Models.TimeSeriesElement"/> instance for mocking. </returns>
-        public static TimeSeriesElement TimeSeriesElement(IEnumerable<MetadataValue> metadatavalues = default, IEnumerable<MetricValue> data = default)
+        /// <returns> A new <see cref="Models.MonitorTimeSeriesElement"/> instance for mocking. </returns>
+        public static MonitorTimeSeriesElement MonitorTimeSeriesElement(IEnumerable<MonitorMetadataValue> metadatavalues = default, IEnumerable<MonitorMetricValue> data = default)
         {
-            metadatavalues ??= new ChangeTrackingList<MetadataValue>();
-            data ??= new ChangeTrackingList<MetricValue>();
+            metadatavalues ??= new ChangeTrackingList<MonitorMetadataValue>();
+            data ??= new ChangeTrackingList<MonitorMetricValue>();
 
-            return new TimeSeriesElement((metadatavalues ?? new ChangeTrackingList<MetadataValue>()).ToList(), (data ?? new ChangeTrackingList<MetricValue>()).ToList(), default);
+            return new MonitorTimeSeriesElement((metadatavalues ?? new ChangeTrackingList<MonitorMetadataValue>()).ToList(), (data ?? new ChangeTrackingList<MonitorMetricValue>()).ToList(), default);
         }
 
         /// <param name="name"> The name of the metadata. </param>
         /// <param name="value"> The value of the metadata. </param>
-        /// <returns> A new <see cref="Models.MetadataValue"/> instance for mocking. </returns>
-        public static MetadataValue MetadataValue(LocalizableString name = default, string value = default)
+        /// <returns> A new <see cref="Models.MonitorMetadataValue"/> instance for mocking. </returns>
+        public static MonitorMetadataValue MonitorMetadataValue(MonitorLocalizableString name = default, string value = default)
         {
-            return new MetadataValue(name, value, default);
+            return new MonitorMetadataValue(name, value, default);
         }
 
         /// <param name="timeStamp"> The timestamp for the metric value in ISO 8601 format. </param>
@@ -1990,10 +1991,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="maximum"> The greatest value in the time range. </param>
         /// <param name="total"> The sum of all of the values in the time range. </param>
         /// <param name="count"> The number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </param>
-        /// <returns> A new <see cref="Models.MetricValue"/> instance for mocking. </returns>
-        public static MetricValue MetricValue(DateTimeOffset timeStamp = default, double? average = default, double? minimum = default, double? maximum = default, double? total = default, double? count = default)
+        /// <returns> A new <see cref="Models.MonitorMetricValue"/> instance for mocking. </returns>
+        public static MonitorMetricValue MonitorMetricValue(DateTimeOffset timeStamp = default, double? average = default, double? minimum = default, double? maximum = default, double? total = default, double? count = default)
         {
-            return new MetricValue(
+            return new MonitorMetricValue(
                 timeStamp,
                 average,
                 minimum,
@@ -2853,10 +2854,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="namespace"> The namespace of the metrics been queried. </param>
         /// <param name="baselines"> The baseline for each time series that was queried. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/> or <paramref name="baselines"/> is null. </exception>
-        /// <returns> A new <see cref="Models.SingleMetricBaseline"/> instance for mocking. </returns>
-        public static SingleMetricBaseline SingleMetricBaseline(string id = default, string @type = default, string name = default, string timespan = default, TimeSpan interval = default, string @namespace = default, IEnumerable<TimeSeriesBaseline> baselines = default)
+        /// <returns> A new <see cref="Models.MonitorSingleMetricBaseline"/> instance for mocking. </returns>
+        public static MonitorSingleMetricBaseline MonitorSingleMetricBaseline(string id = default, string @type = default, string name = default, string timespan = default, TimeSpan interval = default, string @namespace = default, IEnumerable<MonitorTimeSeriesBaseline> baselines = default)
         {
-            return new SingleMetricBaseline(id, @type, name, default, default);
+            return new MonitorSingleMetricBaseline(id, @type, name, default, default);
         }
 
         /// <param name="aggregation"> The aggregation type of the metric. </param>
@@ -2864,49 +2865,49 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="timestamps"> The list of timestamps of the baselines. </param>
         /// <param name="data"> The baseline values for each sensitivity. </param>
         /// <param name="metadataValues"> The baseline metadata values. </param>
-        /// <returns> A new <see cref="Models.TimeSeriesBaseline"/> instance for mocking. </returns>
-        public static TimeSeriesBaseline TimeSeriesBaseline(string aggregation = default, IEnumerable<MetricSingleDimension> dimensions = default, IEnumerable<DateTimeOffset> timestamps = default, IEnumerable<SingleBaseline> data = default, IEnumerable<BaselineMetadata> metadataValues = default)
+        /// <returns> A new <see cref="Models.MonitorTimeSeriesBaseline"/> instance for mocking. </returns>
+        public static MonitorTimeSeriesBaseline MonitorTimeSeriesBaseline(string aggregation = default, IEnumerable<MonitorMetricSingleDimension> dimensions = default, IEnumerable<DateTimeOffset> timestamps = default, IEnumerable<MonitorSingleBaseline> data = default, IEnumerable<MonitorBaselineMetadata> metadataValues = default)
         {
-            dimensions ??= new ChangeTrackingList<MetricSingleDimension>();
+            dimensions ??= new ChangeTrackingList<MonitorMetricSingleDimension>();
             timestamps ??= new ChangeTrackingList<DateTimeOffset>();
-            data ??= new ChangeTrackingList<SingleBaseline>();
-            metadataValues ??= new ChangeTrackingList<BaselineMetadata>();
+            data ??= new ChangeTrackingList<MonitorSingleBaseline>();
+            metadataValues ??= new ChangeTrackingList<MonitorBaselineMetadata>();
 
-            return new TimeSeriesBaseline(
+            return new MonitorTimeSeriesBaseline(
                 aggregation,
-                (dimensions ?? new ChangeTrackingList<MetricSingleDimension>()).ToList(),
+                (dimensions ?? new ChangeTrackingList<MonitorMetricSingleDimension>()).ToList(),
                 (timestamps ?? new ChangeTrackingList<DateTimeOffset>()).ToList(),
-                (data ?? new ChangeTrackingList<SingleBaseline>()).ToList(),
-                (metadataValues ?? new ChangeTrackingList<BaselineMetadata>()).ToList(),
+                (data ?? new ChangeTrackingList<MonitorSingleBaseline>()).ToList(),
+                (metadataValues ?? new ChangeTrackingList<MonitorBaselineMetadata>()).ToList(),
                 default);
         }
 
         /// <param name="name"> Name of the dimension. </param>
         /// <param name="value"> Value of the dimension. </param>
-        /// <returns> A new <see cref="Models.MetricSingleDimension"/> instance for mocking. </returns>
-        public static MetricSingleDimension MetricSingleDimension(string name = default, string value = default)
+        /// <returns> A new <see cref="Models.MonitorMetricSingleDimension"/> instance for mocking. </returns>
+        public static MonitorMetricSingleDimension MonitorMetricSingleDimension(string name = default, string value = default)
         {
-            return new MetricSingleDimension(name, value, default);
+            return new MonitorMetricSingleDimension(name, value, default);
         }
 
         /// <param name="sensitivity"> the sensitivity of the baseline. </param>
         /// <param name="lowThresholds"> The low thresholds of the baseline. </param>
         /// <param name="highThresholds"> The high thresholds of the baseline. </param>
-        /// <returns> A new <see cref="Models.SingleBaseline"/> instance for mocking. </returns>
-        public static SingleBaseline SingleBaseline(BaselineSensitivity sensitivity = default, IEnumerable<double> lowThresholds = default, IEnumerable<double> highThresholds = default)
+        /// <returns> A new <see cref="Models.MonitorSingleBaseline"/> instance for mocking. </returns>
+        public static MonitorSingleBaseline MonitorSingleBaseline(MonitorBaselineSensitivity sensitivity = default, IEnumerable<double> lowThresholds = default, IEnumerable<double> highThresholds = default)
         {
             lowThresholds ??= new ChangeTrackingList<double>();
             highThresholds ??= new ChangeTrackingList<double>();
 
-            return new SingleBaseline(sensitivity, (lowThresholds ?? new ChangeTrackingList<double>()).ToList(), (highThresholds ?? new ChangeTrackingList<double>()).ToList(), default);
+            return new MonitorSingleBaseline(sensitivity, (lowThresholds ?? new ChangeTrackingList<double>()).ToList(), (highThresholds ?? new ChangeTrackingList<double>()).ToList(), default);
         }
 
         /// <param name="name"> Name of the baseline metadata. </param>
         /// <param name="value"> Value of the baseline metadata. </param>
-        /// <returns> A new <see cref="Models.BaselineMetadata"/> instance for mocking. </returns>
-        public static BaselineMetadata BaselineMetadata(string name = default, string value = default)
+        /// <returns> A new <see cref="Models.MonitorBaselineMetadata"/> instance for mocking. </returns>
+        public static MonitorBaselineMetadata MonitorBaselineMetadata(string name = default, string value = default)
         {
-            return new BaselineMetadata(name, value, default);
+            return new MonitorBaselineMetadata(name, value, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3419,6 +3420,34 @@ namespace Azure.ResourceManager.Monitor.Models
                 default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.EventDataHttpRequestInfo"/>. </summary>
+        /// <param name="clientRequestId"> the client request id. </param>
+        /// <param name="clientIPAddress"> the client Ip Address. </param>
+        /// <param name="method"> the Http request method. </param>
+        /// <param name="uri"> the Uri. </param>
+        /// <returns> A new <see cref="Models.EventDataHttpRequestInfo"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EventDataHttpRequestInfo EventDataHttpRequestInfo(string clientRequestId = default, IPAddress clientIPAddress = default, string @method = default, Uri uri = default)
+        {
+            return new EventDataHttpRequestInfo(clientRequestId, default, @method, uri, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorSingleMetricBaseline"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
+        /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
+        /// <param name="namespace"> The namespace of the metrics been queried. </param>
+        /// <param name="baselines"> The baseline for each time series that was queried. </param>
+        /// <returns> A new <see cref="Models.MonitorSingleMetricBaseline"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MonitorSingleMetricBaseline MonitorSingleMetricBaseline(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string timespan = default, TimeSpan interval = default, string @namespace = default, IEnumerable<MonitorTimeSeriesBaseline> baselines = default)
+        {
+            return new MonitorSingleMetricBaseline(default, default, name, timespan is null && @namespace is null && baselines is null ? default : new MetricBaselinesProperties(timespan, interval, @namespace, (baselines ?? new ChangeTrackingList<MonitorTimeSeriesBaseline>()).ToList(), default), default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Monitor.MetricAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3642,6 +3671,26 @@ namespace Azure.ResourceManager.Monitor.Models
                 autoMitigate,
                 default,
                 default), default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MonitorMetricNamespace"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="classification"> Kind of namespace. </param>
+        /// <param name="metricNamespaceNameValue"> Properties which include the fully qualified namespace name. </param>
+        /// <returns> A new <see cref="Models.MonitorMetricNamespace"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MonitorMetricNamespace MonitorMetricNamespace(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorNamespaceClassification? classification = default, string metricNamespaceNameValue = default)
+        {
+            return new MonitorMetricNamespace(
+                default,
+                default,
+                name,
+                classification,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.MonitorPrivateLinkScopeData"/>. </summary>

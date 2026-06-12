@@ -5,7 +5,9 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
+using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor.Mocking
 {
@@ -34,5 +36,35 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> A collection of <see cref="MonitorWorkspaceResource"/> objects. </returns>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
         public virtual AsyncPageable<MonitorWorkspaceResource> GetMonitorWorkspaceResourcesAsync(CancellationToken cancellationToken = default) => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
+
+        /// <summary> Sends test notifications. </summary>
+        public virtual ArmOperation<NotificationStatus> CreateNotifications(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Sends test notifications. </summary>
+        public virtual Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets activity logs. </summary>
+        public virtual Pageable<EventDataInfo> GetActivityLogs(string filter, string select, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets activity logs. </summary>
+        public virtual AsyncPageable<EventDataInfo> GetActivityLogsAsync(string filter, string select, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets monitor metrics. </summary>
+        public virtual Pageable<SubscriptionMonitorMetric> GetMonitorMetrics(SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets monitor metrics. </summary>
+        public virtual AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsAsync(SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets monitor metrics with POST. </summary>
+        public virtual Pageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPost(SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets monitor metrics with POST. </summary>
+        public virtual AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPostAsync(SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets notification status. </summary>
+        public virtual Response<NotificationStatus> GetNotificationStatus(string notificationId, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets notification status. </summary>
+        public virtual Task<Response<NotificationStatus>> GetNotificationStatusAsync(string notificationId, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
     }
 }

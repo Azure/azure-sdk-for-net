@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor.Mocking
 {
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The diagnostic settings category resource. </returns>
         [Obsolete("This API is no longer supported.", false)]
+        [ForwardsClientCalls]
         public virtual Response<DiagnosticSettingsCategoryResource> GetDiagnosticSettingsCategory(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets a diagnostic settings category. </summary>
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The diagnostic settings category resource. </returns>
         [Obsolete("This API is no longer supported.", false)]
+        [ForwardsClientCalls]
         public virtual Task<Response<DiagnosticSettingsCategoryResource>> GetDiagnosticSettingsCategoryAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets an object representing a <see cref="MonitorWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -64,5 +67,17 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
         [Obsolete("This API is no longer supported.", false)]
         public virtual VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatus(ResourceIdentifier scope) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets metric baselines for a resource. </summary>
+        public virtual Pageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselines(ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets metric baselines for a resource. </summary>
+        public virtual AsyncPageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselinesAsync(ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets metrics for a resource. </summary>
+        public virtual Pageable<MonitorMetric> GetMonitorMetrics(ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets metrics for a resource. </summary>
+        public virtual AsyncPageable<MonitorMetric> GetMonitorMetricsAsync(ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="baselines"> The baseline for each time series that was queried. </param>
-        internal MetricBaselinesProperties(string timespan, TimeSpan interval, IEnumerable<TimeSeriesBaseline> baselines)
+        internal MetricBaselinesProperties(string timespan, TimeSpan interval, IEnumerable<MonitorTimeSeriesBaseline> baselines)
         {
             Timespan = timespan;
             Interval = interval;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="namespace"> The namespace of the metrics been queried. </param>
         /// <param name="baselines"> The baseline for each time series that was queried. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricBaselinesProperties(string timespan, TimeSpan interval, string @namespace, IList<TimeSeriesBaseline> baselines, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricBaselinesProperties(string timespan, TimeSpan interval, string @namespace, IList<MonitorTimeSeriesBaseline> baselines, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Timespan = timespan;
             Interval = interval;
@@ -54,6 +54,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Namespace { get; }
 
         /// <summary> The baseline for each time series that was queried. </summary>
-        public IList<TimeSeriesBaseline> Baselines { get; } = new ChangeTrackingList<TimeSeriesBaseline>();
+        public IList<MonitorTimeSeriesBaseline> Baselines { get; } = new ChangeTrackingList<MonitorTimeSeriesBaseline>();
     }
 }

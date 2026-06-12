@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="Response"/>. </summary>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="value"> The value of the collection. </param>
-        internal Response(string timespan, IEnumerable<Metric> value)
+        internal Response(string timespan, IEnumerable<MonitorMetric> value)
         {
             Timespan = timespan;
             Value = value.ToList();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceregion"> The region of the resource being queried for metrics. </param>
         /// <param name="value"> The value of the collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Response(int? cost, string timespan, string interval, string @namespace, string resourceregion, IList<Metric> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Response(int? cost, string timespan, string interval, string @namespace, string resourceregion, IList<MonitorMetric> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Cost = cost;
             Timespan = timespan;
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Resourceregion { get; }
 
         /// <summary> The value of the collection. </summary>
-        public IList<Metric> Value { get; }
+        public IList<MonitorMetric> Value { get; }
     }
 }

@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (Metric item in Value)
+            foreach (MonitorMetric item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string interval = default;
             string @namespace = default;
             string resourceregion = default;
-            IList<Metric> value = default;
+            IList<MonitorMetric> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("value"u8))
                 {
-                    List<Metric> array = new List<Metric>();
+                    List<MonitorMetric> array = new List<MonitorMetric>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Metric.DeserializeMetric(item, options));
+                        array.Add(MonitorMetric.DeserializeMonitorMetric(item, options));
                     }
                     value = array;
                     continue;

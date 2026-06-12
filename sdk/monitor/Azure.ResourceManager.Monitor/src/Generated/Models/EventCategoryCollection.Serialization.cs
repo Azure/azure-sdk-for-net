@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (LocalizableString item in Value)
+            foreach (MonitorLocalizableString item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<LocalizableString> value = default;
+            IList<MonitorLocalizableString> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<LocalizableString> array = new List<LocalizableString>();
+                    List<MonitorLocalizableString> array = new List<MonitorLocalizableString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LocalizableString.DeserializeLocalizableString(item, options));
+                        array.Add(MonitorLocalizableString.DeserializeMonitorLocalizableString(item, options));
                     }
                     value = array;
                     continue;

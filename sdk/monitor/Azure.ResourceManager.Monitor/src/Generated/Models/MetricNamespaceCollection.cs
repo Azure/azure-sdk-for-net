@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="MetricNamespaceCollection"/>. </summary>
         /// <param name="value"> The values for the metric namespaces. </param>
-        internal MetricNamespaceCollection(IEnumerable<MetricNamespace> value)
+        internal MetricNamespaceCollection(IEnumerable<MonitorMetricNamespace> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="value"> The values for the metric namespaces. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricNamespaceCollection(IList<MetricNamespace> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricNamespaceCollection(IList<MonitorMetricNamespace> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The values for the metric namespaces. </summary>
-        public IList<MetricNamespace> Value { get; }
+        public IList<MonitorMetricNamespace> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }

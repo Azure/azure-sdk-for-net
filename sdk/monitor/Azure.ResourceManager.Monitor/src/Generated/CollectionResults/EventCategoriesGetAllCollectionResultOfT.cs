@@ -14,7 +14,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal partial class EventCategoriesGetAllCollectionResultOfT : Pageable<LocalizableString>
+    internal partial class EventCategoriesGetAllCollectionResultOfT : Pageable<MonitorLocalizableString>
     {
         private readonly EventCategories _client;
         private readonly RequestContext _context;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of EventCategoriesGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<LocalizableString>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<MonitorLocalizableString>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 EventCategoryCollection result = EventCategoryCollection.FromResponse(response);
-                yield return Page<LocalizableString>.FromValues((IReadOnlyList<LocalizableString>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MonitorLocalizableString>.FromValues((IReadOnlyList<MonitorLocalizableString>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

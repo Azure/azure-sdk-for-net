@@ -8,19 +8,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A class representing a collection of <see cref="DataCollectionRuleResource"/> and their operations.
-    /// Each <see cref="DataCollectionRuleResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="DataCollectionRuleCollection"/> instance call the GetDataCollectionRules method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="DataCollectionRuleResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DataCollectionRuleCollection"/> instance call the GetDataCollectionRules method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DataCollectionRuleCollection : ArmCollection, IEnumerable<DataCollectionRuleResource>, IAsyncEnumerable<DataCollectionRuleResource>
     {
@@ -40,6 +42,17 @@ namespace Azure.ResourceManager.Monitor
             TryGetApiVersion(DataCollectionRuleResource.ResourceType, out string dataCollectionRuleApiVersion);
             _dataCollectionRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionRuleResource.ResourceType.Namespace, Diagnostics);
             _dataCollectionRulesRestClient = new DataCollectionRules(_dataCollectionRulesClientDiagnostics, Pipeline, Endpoint, dataCollectionRuleApiVersion ?? "2024-03-11");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("supportedAggregationTypes"u8);
                 writer.WriteStartArray();
-                foreach (MetricAggregationType item in SupportedAggregationTypes)
+                foreach (MonitorAggregationType item in SupportedAggregationTypes)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("metricAvailabilities"u8);
                 writer.WriteStartArray();
-                foreach (MetricAvailability item in MetricAvailabilities)
+                foreach (MonitorMetricAvailability item in MetricAvailabilities)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
-                foreach (LocalizableString item in Dimensions)
+                foreach (MonitorLocalizableString item in Dimensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -199,16 +199,16 @@ namespace Azure.ResourceManager.Monitor.Models
             bool? isDimensionRequired = default;
             string resourceId = default;
             string @namespace = default;
-            LocalizableString name = default;
+            MonitorLocalizableString name = default;
             string displayDescription = default;
             string category = default;
-            MetricClass? metricClass = default;
-            MetricUnit? unit = default;
-            MetricAggregationType? primaryAggregationType = default;
-            IList<MetricAggregationType> supportedAggregationTypes = default;
-            IList<MetricAvailability> metricAvailabilities = default;
+            MonitorMetricClass? metricClass = default;
+            MonitorMetricUnit? unit = default;
+            MonitorAggregationType? primaryAggregationType = default;
+            IList<MonitorAggregationType> supportedAggregationTypes = default;
+            IList<MonitorMetricAvailability> metricAvailabilities = default;
             string id = default;
-            IList<LocalizableString> dimensions = default;
+            IList<MonitorLocalizableString> dimensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    name = LocalizableString.DeserializeLocalizableString(prop.Value, options);
+                    name = MonitorLocalizableString.DeserializeMonitorLocalizableString(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("displayDescription"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    metricClass = new MetricClass(prop.Value.GetString());
+                    metricClass = new MonitorMetricClass(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("unit"u8))
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    unit = new MetricUnit(prop.Value.GetString());
+                    unit = new MonitorMetricUnit(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("primaryAggregationType"u8))
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    primaryAggregationType = new MetricAggregationType(prop.Value.GetString());
+                    primaryAggregationType = new MonitorAggregationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("supportedAggregationTypes"u8))
@@ -283,10 +283,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<MetricAggregationType> array = new List<MetricAggregationType>();
+                    List<MonitorAggregationType> array = new List<MonitorAggregationType>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new MetricAggregationType(item.GetString()));
+                        array.Add(new MonitorAggregationType(item.GetString()));
                     }
                     supportedAggregationTypes = array;
                     continue;
@@ -297,10 +297,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<MetricAvailability> array = new List<MetricAvailability>();
+                    List<MonitorMetricAvailability> array = new List<MonitorMetricAvailability>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MetricAvailability.DeserializeMetricAvailability(item, options));
+                        array.Add(MonitorMetricAvailability.DeserializeMonitorMetricAvailability(item, options));
                     }
                     metricAvailabilities = array;
                     continue;
@@ -316,10 +316,10 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    List<LocalizableString> array = new List<LocalizableString>();
+                    List<MonitorLocalizableString> array = new List<MonitorLocalizableString>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LocalizableString.DeserializeLocalizableString(item, options));
+                        array.Add(MonitorLocalizableString.DeserializeMonitorLocalizableString(item, options));
                     }
                     dimensions = array;
                     continue;
@@ -339,10 +339,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 metricClass,
                 unit,
                 primaryAggregationType,
-                supportedAggregationTypes ?? new ChangeTrackingList<MetricAggregationType>(),
-                metricAvailabilities ?? new ChangeTrackingList<MetricAvailability>(),
+                supportedAggregationTypes ?? new ChangeTrackingList<MonitorAggregationType>(),
+                metricAvailabilities ?? new ChangeTrackingList<MonitorMetricAvailability>(),
                 id,
-                dimensions ?? new ChangeTrackingList<LocalizableString>(),
+                dimensions ?? new ChangeTrackingList<MonitorLocalizableString>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="EventCategoryCollection"/>. </summary>
         /// <param name="value"> the list that includes the Azure event categories. </param>
-        internal EventCategoryCollection(IEnumerable<LocalizableString> value)
+        internal EventCategoryCollection(IEnumerable<MonitorLocalizableString> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="value"> the list that includes the Azure event categories. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventCategoryCollection(IList<LocalizableString> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventCategoryCollection(IList<MonitorLocalizableString> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> the list that includes the Azure event categories. </summary>
-        public IList<LocalizableString> Value { get; }
+        public IList<MonitorLocalizableString> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }

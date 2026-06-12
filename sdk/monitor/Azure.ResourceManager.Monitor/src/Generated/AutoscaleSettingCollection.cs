@@ -8,19 +8,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A class representing a collection of <see cref="AutoscaleSettingResource"/> and their operations.
-    /// Each <see cref="AutoscaleSettingResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="AutoscaleSettingCollection"/> instance call the GetAutoscaleSettings method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="AutoscaleSettingResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="AutoscaleSettingCollection"/> instance call the GetAutoscaleSettings method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AutoscaleSettingCollection : ArmCollection, IEnumerable<AutoscaleSettingResource>, IAsyncEnumerable<AutoscaleSettingResource>
     {
@@ -40,6 +42,17 @@ namespace Azure.ResourceManager.Monitor
             TryGetApiVersion(AutoscaleSettingResource.ResourceType, out string autoscaleSettingApiVersion);
             _autoscaleSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", AutoscaleSettingResource.ResourceType.Namespace, Diagnostics);
             _autoscaleSettingsRestClient = new AutoscaleSettings(_autoscaleSettingsClientDiagnostics, Pipeline, Endpoint, autoscaleSettingApiVersion ?? "2022-10-01");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>

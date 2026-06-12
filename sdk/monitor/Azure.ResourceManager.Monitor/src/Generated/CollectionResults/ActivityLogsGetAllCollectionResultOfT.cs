@@ -14,7 +14,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal partial class ActivityLogsGetAllCollectionResultOfT : Pageable<EventData>
+    internal partial class ActivityLogsGetAllCollectionResultOfT : Pageable<EventDataInfo>
     {
         private readonly ActivityLogs _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ActivityLogsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<EventData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<EventDataInfo>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 EventDataCollection result = EventDataCollection.FromResponse(response);
-                yield return Page<EventData>.FromValues((IReadOnlyList<EventData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<EventDataInfo>.FromValues((IReadOnlyList<EventDataInfo>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

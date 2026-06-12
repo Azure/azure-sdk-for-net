@@ -15,7 +15,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal partial class BaselinesGetAllAsyncCollectionResultOfT : AsyncPageable<SingleMetricBaseline>
+    internal partial class BaselinesGetAllAsyncCollectionResultOfT : AsyncPageable<MonitorSingleMetricBaseline>
     {
         private readonly Baselines _client;
         private readonly string _resourceUri;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of BaselinesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<SingleMetricBaseline>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<MonitorSingleMetricBaseline>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 MetricBaselinesResponse result = MetricBaselinesResponse.FromResponse(response);
-                yield return Page<SingleMetricBaseline>.FromValues((IReadOnlyList<SingleMetricBaseline>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MonitorSingleMetricBaseline>.FromValues((IReadOnlyList<MonitorSingleMetricBaseline>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
