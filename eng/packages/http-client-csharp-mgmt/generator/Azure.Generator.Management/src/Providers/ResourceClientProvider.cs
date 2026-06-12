@@ -73,8 +73,9 @@ namespace Azure.Generator.Management.Providers
 
             _resourceServiceMethods = resourceMethods;
             _readMethod = resourceMethods.First(m => m.Kind == ResourceOperationKind.Read)!;
-            OriginalResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
-            ResourceData = ResolveResourceData(model, OriginalResourceData);
+            var defaultResourceData = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model)!;
+            _originalResourceDataType = defaultResourceData.Type;
+            ResourceData = ResolveResourceData(model, defaultResourceData);
 
             // Initialize client info dictionary using extension method
             _clientInfos = resourceMetadata.CreateClientInfosMap(this, resourceMethods);
@@ -94,7 +95,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override FormattableString BuildDescription() => $"A class representing a {ResourceName} along with the instance operations that can be performed on it.\nIf you have a {typeof(ResourceIdentifier):C} you can construct a {Type:C} from an instance of {typeof(ArmClient):C} using the GetResource method.\nOtherwise you can get one from its parent resource {TypeOfParentResource:C} using the {FactoryMethodSignature.Name} method.";
 
-        internal ModelProvider OriginalResourceData { get; }
+        private readonly CSharpType _originalResourceDataType;
         internal TypeProvider ResourceData { get; }
         internal string ResourceName { get; }
 
@@ -104,7 +105,20 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
-        internal bool IsResourceDataType(CSharpType type) => ResourceData.Type.Equals(type) || OriginalResourceData.Type.Equals(type);
+        internal bool IsResourceDataType(CSharpType type) => ResourceData.Type.Equals(type) || _originalResourceDataType.Equals(type);
+
+        internal bool TryGetResourceDataTypeOverride(CSharpType originalType, out CSharpType resourceDataType)
+        {
+            if (_originalResourceDataType.Equals(originalType) &&
+                !ResourceData.Type.Equals(originalType))
+            {
+                resourceDataType = ResourceData.Type;
+                return true;
+            }
+
+            resourceDataType = null!;
+            return false;
+        }
 
         private TypeProvider ResolveResourceData(InputModelType model, ModelProvider defaultResourceData)
         {
@@ -133,7 +147,7 @@ namespace Azure.Generator.Management.Providers
                 }
 
                 ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
-                    "general-warning",
+                    "codegen-resource-data-not-found",
                     $"Cannot find resource data type {customizedDataType.Namespace}.{customizedDataType.Name} specified by CodeGenResourceDataAttribute for resource {ResourceName}.");
             }
 

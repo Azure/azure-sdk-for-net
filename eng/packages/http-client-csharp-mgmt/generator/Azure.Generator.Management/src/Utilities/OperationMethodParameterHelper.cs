@@ -161,10 +161,9 @@ namespace Azure.Generator.Management.Utilities
             };
 
             if (resource is not null &&
-                resource.OriginalResourceData.Type.Equals(type) &&
-                !resource.ResourceData.Type.Equals(type))
+                resource.TryGetResourceDataTypeOverride(type, out var resourceDataType))
             {
-                return resource.ResourceData.Type;
+                return resourceDataType;
             }
 
             return null;
