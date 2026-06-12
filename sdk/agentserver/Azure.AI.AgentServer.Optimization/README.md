@@ -19,7 +19,6 @@ dotnet add package Azure.AI.AgentServer.Optimization --prerelease
 ### Prerequisites
 
 - An [Azure subscription](https://azure.microsoft.com/free/dotnet/)
-- .NET 8.0 or later
 
 ## Key concepts
 
