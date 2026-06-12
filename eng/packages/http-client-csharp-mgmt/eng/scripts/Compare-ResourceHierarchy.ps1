@@ -99,17 +99,17 @@ function Build-ParentTypeMap {
                 if ($byName.ContainsKey($pName)) { [void] $parentTypes.Add($byName[$pName]) }
             }
         }
-        $result[$rt] = $parentTypes.ToArray()
+        $result[$rt.ToLowerInvariant()] = $parentTypes.ToArray()
     }
     return $result
 }
 
 function ConvertTo-Set {
     param([string[]] $Values)
-    $set = New-Object 'System.Collections.Generic.HashSet[string]' ([System.StringComparer]::Ordinal)
+    $set = New-Object 'System.Collections.Generic.HashSet[string]'
     if ($null -eq $Values) { return $set }
     foreach ($v in $Values) {
-        if ($null -ne $v) { [void] $set.Add([string]$v) }
+        if ($null -ne $v) { [void] $set.Add(([string]$v).ToLowerInvariant()) }
     }
     return $set
 }
@@ -134,7 +134,7 @@ $newParentMap = Build-ParentTypeMap -Entries $newEntries
 
 $newByType = @{}
 foreach ($e in $newEntries) {
-    if ($e.ResourceType) { $newByType[[string]$e.ResourceType] = $e }
+    if ($e.ResourceType) { $newByType[[string]$e.ResourceType.ToLowerInvariant()] = $e }
 }
 
 # --- Compare --------------------------------------------------------------------
@@ -147,7 +147,9 @@ foreach ($ga in $gaEntries) {
     $gaType = [string]$ga.ResourceType
     if (-not $gaType) { continue }   # skip degenerate entries
 
-    if (-not $newByType.ContainsKey($gaType)) {
+    $gaTypeKey = $gaType.ToLowerInvariant()
+
+    if (-not $newByType.ContainsKey($gaTypeKey)) {
         $missing.Add([pscustomobject]@{
             ResourceType = $gaType
             GAName       = [string]$ga.Name
@@ -155,7 +157,7 @@ foreach ($ga in $gaEntries) {
         continue
     }
 
-    $new = $newByType[$gaType]
+    $new = $newByType[$gaTypeKey]
     $issues = New-Object System.Collections.Generic.List[string]
 
     # Singleton flag.
@@ -166,8 +168,8 @@ foreach ($ga in $gaEntries) {
     }
 
     # Parent set (by ResourceType, not class name).
-    $gaParents  = ConvertTo-Set $gaParentMap[$gaType]
-    $newParents = ConvertTo-Set $newParentMap[$gaType]
+    $gaParents  = ConvertTo-Set $gaParentMap[$gaTypeKey]
+    $newParents = ConvertTo-Set $newParentMap[$gaTypeKey]
     if (-not (Test-SetsEqual $gaParents $newParents)) {
         $issues.Add("parents: GA=[$([string]::Join(',', @($gaParents)))] new=[$([string]::Join(',', @($newParents)))]") | Out-Null
     }

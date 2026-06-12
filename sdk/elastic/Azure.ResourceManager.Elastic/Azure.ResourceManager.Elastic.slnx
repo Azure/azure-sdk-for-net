@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.Elastic.csproj" />
+  <Project Path="tests/Azure.ResourceManager.Elastic.Tests.csproj" />
+</Solution>

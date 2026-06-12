@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.Cdn.Models
     // The old string Id property is preserved here (delegating to ResourceId?.ToString()) and marked as EditorBrowsable.Never.
     public partial class MigrateResult
     {
+        /// <summary> Backward-compatibility shim retained when the model was regenerated from TypeSpec; hidden from IntelliSense. See the file-level comment for details. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string Id => ResourceId?.ToString();
     }

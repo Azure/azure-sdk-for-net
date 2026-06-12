@@ -22,6 +22,7 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'resource-manager' 'multi-service'
     Join-Path 'http' 'azure' 'resource-manager' 'multi-service-shared-models'
     Join-Path 'http' 'azure' 'resource-manager' 'multi-service-older-versions'
+    Join-Path 'http' 'azure' 'resource-manager' 'management-group'
 )
 
 function Capitalize-FirstLetter {

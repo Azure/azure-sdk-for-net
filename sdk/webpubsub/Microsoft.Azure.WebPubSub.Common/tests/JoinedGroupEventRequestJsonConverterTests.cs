@@ -18,14 +18,14 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             JoinedGroupEventRequest request = JsonSerializer.Deserialize<JoinedGroupEventRequest>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(request);
-            Assert.AreEqual("myGroup", request.Group);
+            Assert.That(request, Is.Not.Null);
+            Assert.That(request.Group, Is.EqualTo("myGroup"));
 
             string serialized = JsonSerializer.Serialize(request, JsonSerializationOptions);
             JoinedGroupEventRequest converted = JsonSerializer.Deserialize<JoinedGroupEventRequest>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual("myGroup", converted.Group);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Group, Is.EqualTo("myGroup"));
         }
     }
 }

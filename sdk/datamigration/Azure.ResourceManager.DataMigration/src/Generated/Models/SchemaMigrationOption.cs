@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct SchemaMigrationOption : IEquatable<SchemaMigrationOption>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> ExtractFromSource. </summary>
+        private const string ExtractFromSourceValue = "ExtractFromSource";
+        /// <summary> UseStorageFile. </summary>
+        private const string UseStorageFileValue = "UseStorageFile";
 
         /// <summary> Initializes a new instance of <see cref="SchemaMigrationOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SchemaMigrationOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string ExtractFromSourceValue = "ExtractFromSource";
-        private const string UseStorageFileValue = "UseStorageFile";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static SchemaMigrationOption None { get; } = new SchemaMigrationOption(NoneValue);
+
         /// <summary> ExtractFromSource. </summary>
         public static SchemaMigrationOption ExtractFromSource { get; } = new SchemaMigrationOption(ExtractFromSourceValue);
+
         /// <summary> UseStorageFile. </summary>
         public static SchemaMigrationOption UseStorageFile { get; } = new SchemaMigrationOption(UseStorageFileValue);
+
         /// <summary> Determines if two <see cref="SchemaMigrationOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SchemaMigrationOption left, SchemaMigrationOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SchemaMigrationOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SchemaMigrationOption left, SchemaMigrationOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SchemaMigrationOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SchemaMigrationOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SchemaMigrationOption(string value) => new SchemaMigrationOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SchemaMigrationOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SchemaMigrationOption?(string value) => value == null ? null : new SchemaMigrationOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SchemaMigrationOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SchemaMigrationOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
