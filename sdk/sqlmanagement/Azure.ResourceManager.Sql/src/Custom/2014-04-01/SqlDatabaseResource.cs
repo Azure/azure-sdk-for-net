@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Threading;
 using Azure.ResourceManager.Sql.Models;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql
 {
     public partial class SqlDatabaseResource : ArmResource

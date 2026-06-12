@@ -8,19 +8,77 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlDatabaseBlobAuditingPolicyData : IUtf8JsonSerializable, IJsonModel<SqlDatabaseBlobAuditingPolicyData>
+    /// <summary> A database blob auditing policy. </summary>
+    public partial class SqlDatabaseBlobAuditingPolicyData : ResourceData, IJsonModel<SqlDatabaseBlobAuditingPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabaseBlobAuditingPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseBlobAuditingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSqlDatabaseBlobAuditingPolicyData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlDatabaseBlobAuditingPolicyData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseBlobAuditingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SqlDatabaseBlobAuditingPolicyData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SqlDatabaseBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlDatabaseBlobAuditingPolicyData IPersistableModel<SqlDatabaseBlobAuditingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SqlDatabaseBlobAuditingPolicyData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlDatabaseBlobAuditingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="sqlDatabaseBlobAuditingPolicyData"> The <see cref="SqlDatabaseBlobAuditingPolicyData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SqlDatabaseBlobAuditingPolicyData sqlDatabaseBlobAuditingPolicyData)
+        {
+            if (sqlDatabaseBlobAuditingPolicyData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(sqlDatabaseBlobAuditingPolicyData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SqlDatabaseBlobAuditingPolicyData"/> from. </param>
+        internal static SqlDatabaseBlobAuditingPolicyData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSqlDatabaseBlobAuditingPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlDatabaseBlobAuditingPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,585 +90,117 @@ namespace Azure.ResourceManager.Sql
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseBlobAuditingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseBlobAuditingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlDatabaseBlobAuditingPolicyData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(RetentionDays))
-            {
-                writer.WritePropertyName("retentionDays"u8);
-                writer.WriteNumberValue(RetentionDays.Value);
-            }
-            if (Optional.IsCollectionDefined(AuditActionsAndGroups))
-            {
-                writer.WritePropertyName("auditActionsAndGroups"u8);
-                writer.WriteStartArray();
-                foreach (var item in AuditActionsAndGroups)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsStorageSecondaryKeyInUse))
-            {
-                writer.WritePropertyName("isStorageSecondaryKeyInUse"u8);
-                writer.WriteBooleanValue(IsStorageSecondaryKeyInUse.Value);
-            }
-            if (Optional.IsDefined(IsAzureMonitorTargetEnabled))
-            {
-                writer.WritePropertyName("isAzureMonitorTargetEnabled"u8);
-                writer.WriteBooleanValue(IsAzureMonitorTargetEnabled.Value);
-            }
-            if (Optional.IsDefined(QueueDelayMs))
-            {
-                writer.WritePropertyName("queueDelayMs"u8);
-                writer.WriteNumberValue(QueueDelayMs.Value);
-            }
-            if (Optional.IsDefined(IsManagedIdentityInUse))
-            {
-                writer.WritePropertyName("isManagedIdentityInUse"u8);
-                writer.WriteBooleanValue(IsManagedIdentityInUse.Value);
-            }
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(StorageEndpoint))
-            {
-                writer.WritePropertyName("storageEndpoint"u8);
-                writer.WriteStringValue(StorageEndpoint);
-            }
-            if (Optional.IsDefined(StorageAccountAccessKey))
-            {
-                writer.WritePropertyName("storageAccountAccessKey"u8);
-                writer.WriteStringValue(StorageAccountAccessKey);
-            }
-            if (Optional.IsDefined(StorageAccountSubscriptionId))
-            {
-                writer.WritePropertyName("storageAccountSubscriptionId"u8);
-                writer.WriteStringValue(StorageAccountSubscriptionId.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        SqlDatabaseBlobAuditingPolicyData IJsonModel<SqlDatabaseBlobAuditingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlDatabaseBlobAuditingPolicyData IJsonModel<SqlDatabaseBlobAuditingPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SqlDatabaseBlobAuditingPolicyData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseBlobAuditingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseBlobAuditingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlDatabaseBlobAuditingPolicyData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSqlDatabaseBlobAuditingPolicyData(document.RootElement, options);
         }
 
-        internal static SqlDatabaseBlobAuditingPolicyData DeserializeSqlDatabaseBlobAuditingPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SqlDatabaseBlobAuditingPolicyData DeserializeSqlDatabaseBlobAuditingPolicyData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            int? retentionDays = default;
-            IList<string> auditActionsAndGroups = default;
-            bool? isStorageSecondaryKeyInUse = default;
-            bool? isAzureMonitorTargetEnabled = default;
-            int? queueDelayMs = default;
-            bool? isManagedIdentityInUse = default;
-            BlobAuditingPolicyState? state = default;
-            string storageEndpoint = default;
-            string storageAccountAccessKey = default;
-            Guid? storageAccountSubscriptionId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DatabaseBlobAuditingPolicyProperties properties = default;
+            string kind = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("retentionDays"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            retentionDays = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("auditActionsAndGroups"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            auditActionsAndGroups = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("isStorageSecondaryKeyInUse"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isStorageSecondaryKeyInUse = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isAzureMonitorTargetEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isAzureMonitorTargetEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("queueDelayMs"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            queueDelayMs = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("isManagedIdentityInUse"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isManagedIdentityInUse = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("state"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            state = property0.Value.GetString().ToBlobAuditingPolicyState();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageEndpoint"u8))
-                        {
-                            storageEndpoint = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageAccountAccessKey"u8))
-                        {
-                            storageAccountAccessKey = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("storageAccountSubscriptionId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            storageAccountSubscriptionId = property0.Value.GetGuid();
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = DatabaseBlobAuditingPolicyProperties.DeserializeDatabaseBlobAuditingPolicyProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SqlDatabaseBlobAuditingPolicyData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                kind,
-                retentionDays,
-                auditActionsAndGroups ?? new ChangeTrackingList<string>(),
-                isStorageSecondaryKeyInUse,
-                isAzureMonitorTargetEnabled,
-                queueDelayMs,
-                isManagedIdentityInUse,
-                state,
-                storageEndpoint,
-                storageAccountAccessKey,
-                storageAccountSubscriptionId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties,
+                kind);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Kind))
-                {
-                    builder.Append("  kind: ");
-                    if (Kind.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Kind}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Kind}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionDays), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    retentionDays: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RetentionDays))
-                {
-                    builder.Append("    retentionDays: ");
-                    builder.AppendLine($"{RetentionDays.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuditActionsAndGroups), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    auditActionsAndGroups: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AuditActionsAndGroups))
-                {
-                    if (AuditActionsAndGroups.Any())
-                    {
-                        builder.Append("    auditActionsAndGroups: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AuditActionsAndGroups)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsStorageSecondaryKeyInUse), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isStorageSecondaryKeyInUse: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsStorageSecondaryKeyInUse))
-                {
-                    builder.Append("    isStorageSecondaryKeyInUse: ");
-                    var boolValue = IsStorageSecondaryKeyInUse.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAzureMonitorTargetEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isAzureMonitorTargetEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsAzureMonitorTargetEnabled))
-                {
-                    builder.Append("    isAzureMonitorTargetEnabled: ");
-                    var boolValue = IsAzureMonitorTargetEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueueDelayMs), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    queueDelayMs: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(QueueDelayMs))
-                {
-                    builder.Append("    queueDelayMs: ");
-                    builder.AppendLine($"{QueueDelayMs.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsManagedIdentityInUse), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isManagedIdentityInUse: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsManagedIdentityInUse))
-                {
-                    builder.Append("    isManagedIdentityInUse: ");
-                    var boolValue = IsManagedIdentityInUse.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    state: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(State))
-                {
-                    builder.Append("    state: ");
-                    builder.AppendLine($"'{State.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageEndpoint), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    storageEndpoint: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StorageEndpoint))
-                {
-                    builder.Append("    storageEndpoint: ");
-                    if (StorageEndpoint.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{StorageEndpoint}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{StorageEndpoint}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountAccessKey), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    storageAccountAccessKey: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StorageAccountAccessKey))
-                {
-                    builder.Append("    storageAccountAccessKey: ");
-                    if (StorageAccountAccessKey.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{StorageAccountAccessKey}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{StorageAccountAccessKey}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountSubscriptionId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    storageAccountSubscriptionId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StorageAccountSubscriptionId))
-                {
-                    builder.Append("    storageAccountSubscriptionId: ");
-                    builder.AppendLine($"'{StorageAccountSubscriptionId.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SqlDatabaseBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseBlobAuditingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SqlDatabaseBlobAuditingPolicyData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SqlDatabaseBlobAuditingPolicyData IPersistableModel<SqlDatabaseBlobAuditingPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseBlobAuditingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSqlDatabaseBlobAuditingPolicyData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SqlDatabaseBlobAuditingPolicyData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SqlDatabaseBlobAuditingPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

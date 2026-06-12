@@ -7,6 +7,7 @@ using System;
 using System.ComponentModel;
 using Azure.Core;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An update request for virtual cluster. </summary>

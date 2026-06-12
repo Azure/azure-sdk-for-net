@@ -13,43 +13,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the SqlServerDatabaseReplicationLink data model.
-    /// A replication link.
-    /// </summary>
+    /// <summary> A replication link. </summary>
     public partial class SqlServerDatabaseReplicationLinkData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlServerDatabaseReplicationLinkData"/>. </summary>
         public SqlServerDatabaseReplicationLinkData()
@@ -57,75 +25,138 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlServerDatabaseReplicationLinkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="partnerServer"> Resource partner server. </param>
-        /// <param name="partnerDatabase"> Resource partner database. </param>
-        /// <param name="partnerDatabaseId"> Resource partner database Id. </param>
-        /// <param name="partnerLocation"> Resource partner location. </param>
-        /// <param name="role"> Local replication role. </param>
-        /// <param name="partnerRole"> Partner replication role. </param>
-        /// <param name="replicationMode"> Replication mode. </param>
-        /// <param name="startOn"> Time at which the link was created. </param>
-        /// <param name="percentComplete"> Seeding completion percentage for the link. </param>
-        /// <param name="replicationState"> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </param>
-        /// <param name="isTerminationAllowed"> Whether the user is currently allowed to terminate the link. </param>
-        /// <param name="linkType"> Link type (GEO, NAMED, STANDBY). Update operation does not support NAMED. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerDatabaseReplicationLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string partnerServer, string partnerDatabase, string partnerDatabaseId, AzureLocation? partnerLocation, SqlServerDatabaseReplicationRole? role, SqlServerDatabaseReplicationRole? partnerRole, string replicationMode, DateTimeOffset? startOn, int? percentComplete, ReplicationLinkState? replicationState, bool? isTerminationAllowed, ReplicationLinkType? linkType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal SqlServerDatabaseReplicationLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReplicationLinkProperties properties) : base(id, name, resourceType, systemData)
         {
-            PartnerServer = partnerServer;
-            PartnerDatabase = partnerDatabase;
-            PartnerDatabaseId = partnerDatabaseId;
-            PartnerLocation = partnerLocation;
-            Role = role;
-            PartnerRole = partnerRole;
-            ReplicationMode = replicationMode;
-            StartOn = startOn;
-            PercentComplete = percentComplete;
-            ReplicationState = replicationState;
-            IsTerminationAllowed = isTerminationAllowed;
-            LinkType = linkType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal ReplicationLinkProperties Properties { get; set; }
 
         /// <summary> Resource partner server. </summary>
         [WirePath("properties.partnerServer")]
-        public string PartnerServer { get; }
+        public string PartnerServer
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerServer;
+            }
+        }
+
         /// <summary> Resource partner database. </summary>
         [WirePath("properties.partnerDatabase")]
-        public string PartnerDatabase { get; }
+        public string PartnerDatabase
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerDatabase;
+            }
+        }
+
         /// <summary> Resource partner database Id. </summary>
         [WirePath("properties.partnerDatabaseId")]
-        public string PartnerDatabaseId { get; }
+        public string PartnerDatabaseId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerDatabaseId;
+            }
+        }
+
         /// <summary> Resource partner location. </summary>
         [WirePath("properties.partnerLocation")]
-        public AzureLocation? PartnerLocation { get; }
+        public AzureLocation? PartnerLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerLocation;
+            }
+        }
+
         /// <summary> Local replication role. </summary>
         [WirePath("properties.role")]
-        public SqlServerDatabaseReplicationRole? Role { get; }
+        public SqlServerDatabaseReplicationRole? Role
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Role;
+            }
+        }
+
         /// <summary> Partner replication role. </summary>
         [WirePath("properties.partnerRole")]
-        public SqlServerDatabaseReplicationRole? PartnerRole { get; }
+        public SqlServerDatabaseReplicationRole? PartnerRole
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerRole;
+            }
+        }
+
         /// <summary> Replication mode. </summary>
         [WirePath("properties.replicationMode")]
-        public string ReplicationMode { get; }
+        public string ReplicationMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicationMode;
+            }
+        }
+
         /// <summary> Time at which the link was created. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+        }
+
         /// <summary> Seeding completion percentage for the link. </summary>
         [WirePath("properties.percentComplete")]
-        public int? PercentComplete { get; }
-        /// <summary> Replication state (PENDING, SEEDING, CATCHUP, SUSPENDED). </summary>
-        [WirePath("properties.replicationState")]
-        public ReplicationLinkState? ReplicationState { get; }
+        public int? PercentComplete
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PercentComplete;
+            }
+        }
+
         /// <summary> Whether the user is currently allowed to terminate the link. </summary>
         [WirePath("properties.isTerminationAllowed")]
-        public bool? IsTerminationAllowed { get; }
+        public bool? IsTerminationAllowed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsTerminationAllowed;
+            }
+        }
+
         /// <summary> Link type (GEO, NAMED, STANDBY). Update operation does not support NAMED. </summary>
         [WirePath("properties.linkType")]
-        public ReplicationLinkType? LinkType { get; set; }
+        public ReplicationLinkType? LinkType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ReplicationLinkProperties();
+                }
+                Properties.LinkType = value;
+            }
+        }
     }
 }

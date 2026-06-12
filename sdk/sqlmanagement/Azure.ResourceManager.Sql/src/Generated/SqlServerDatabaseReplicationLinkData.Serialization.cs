@@ -10,16 +10,75 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerDatabaseReplicationLinkData : IUtf8JsonSerializable, IJsonModel<SqlServerDatabaseReplicationLinkData>
+    /// <summary> A replication link. </summary>
+    public partial class SqlServerDatabaseReplicationLinkData : ResourceData, IJsonModel<SqlServerDatabaseReplicationLinkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerDatabaseReplicationLinkData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerDatabaseReplicationLinkData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSqlServerDatabaseReplicationLinkData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlServerDatabaseReplicationLinkData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerDatabaseReplicationLinkData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SqlServerDatabaseReplicationLinkData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerDatabaseReplicationLinkData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SqlServerDatabaseReplicationLinkData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlServerDatabaseReplicationLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="sqlServerDatabaseReplicationLinkData"> The <see cref="SqlServerDatabaseReplicationLinkData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SqlServerDatabaseReplicationLinkData sqlServerDatabaseReplicationLinkData)
+        {
+            if (sqlServerDatabaseReplicationLinkData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(sqlServerDatabaseReplicationLinkData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SqlServerDatabaseReplicationLinkData"/> from. </param>
+        internal static SqlServerDatabaseReplicationLinkData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSqlServerDatabaseReplicationLinkData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlServerDatabaseReplicationLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,588 +90,105 @@ namespace Azure.ResourceManager.Sql
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlServerDatabaseReplicationLinkData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerDatabaseReplicationLinkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlServerDatabaseReplicationLinkData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PartnerServer))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("partnerServer"u8);
-                writer.WriteStringValue(PartnerServer);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(PartnerDatabase))
-            {
-                writer.WritePropertyName("partnerDatabase"u8);
-                writer.WriteStringValue(PartnerDatabase);
-            }
-            if (options.Format != "W" && Optional.IsDefined(PartnerDatabaseId))
-            {
-                writer.WritePropertyName("partnerDatabaseId"u8);
-                writer.WriteStringValue(PartnerDatabaseId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(PartnerLocation))
-            {
-                writer.WritePropertyName("partnerLocation"u8);
-                writer.WriteStringValue(PartnerLocation.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Role))
-            {
-                writer.WritePropertyName("role"u8);
-                writer.WriteStringValue(Role.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(PartnerRole))
-            {
-                writer.WritePropertyName("partnerRole"u8);
-                writer.WriteStringValue(PartnerRole.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationMode))
-            {
-                writer.WritePropertyName("replicationMode"u8);
-                writer.WriteStringValue(ReplicationMode);
-            }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
-            {
-                writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
-            {
-                writer.WritePropertyName("percentComplete"u8);
-                writer.WriteNumberValue(PercentComplete.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationState))
-            {
-                writer.WritePropertyName("replicationState"u8);
-                writer.WriteStringValue(ReplicationState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsTerminationAllowed))
-            {
-                writer.WritePropertyName("isTerminationAllowed"u8);
-                writer.WriteBooleanValue(IsTerminationAllowed.Value);
-            }
-            if (Optional.IsDefined(LinkType))
-            {
-                writer.WritePropertyName("linkType"u8);
-                writer.WriteStringValue(LinkType.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        SqlServerDatabaseReplicationLinkData IJsonModel<SqlServerDatabaseReplicationLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerDatabaseReplicationLinkData IJsonModel<SqlServerDatabaseReplicationLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SqlServerDatabaseReplicationLinkData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlServerDatabaseReplicationLinkData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlServerDatabaseReplicationLinkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlServerDatabaseReplicationLinkData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSqlServerDatabaseReplicationLinkData(document.RootElement, options);
         }
 
-        internal static SqlServerDatabaseReplicationLinkData DeserializeSqlServerDatabaseReplicationLinkData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SqlServerDatabaseReplicationLinkData DeserializeSqlServerDatabaseReplicationLinkData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string partnerServer = default;
-            string partnerDatabase = default;
-            string partnerDatabaseId = default;
-            AzureLocation? partnerLocation = default;
-            SqlServerDatabaseReplicationRole? role = default;
-            SqlServerDatabaseReplicationRole? partnerRole = default;
-            string replicationMode = default;
-            DateTimeOffset? startTime = default;
-            int? percentComplete = default;
-            ReplicationLinkState? replicationState = default;
-            bool? isTerminationAllowed = default;
-            ReplicationLinkType? linkType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ReplicationLinkProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("partnerServer"u8))
-                        {
-                            partnerServer = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("partnerDatabase"u8))
-                        {
-                            partnerDatabase = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("partnerDatabaseId"u8))
-                        {
-                            partnerDatabaseId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("partnerLocation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            partnerLocation = new AzureLocation(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("role"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            role = property0.Value.GetString().ToSqlServerDatabaseReplicationRole();
-                            continue;
-                        }
-                        if (property0.NameEquals("partnerRole"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            partnerRole = property0.Value.GetString().ToSqlServerDatabaseReplicationRole();
-                            continue;
-                        }
-                        if (property0.NameEquals("replicationMode"u8))
-                        {
-                            replicationMode = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("startTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            startTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("percentComplete"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            percentComplete = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("replicationState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            replicationState = new ReplicationLinkState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("isTerminationAllowed"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isTerminationAllowed = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("linkType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            linkType = new ReplicationLinkType(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ReplicationLinkProperties.DeserializeReplicationLinkProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SqlServerDatabaseReplicationLinkData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                partnerServer,
-                partnerDatabase,
-                partnerDatabaseId,
-                partnerLocation,
-                role,
-                partnerRole,
-                replicationMode,
-                startTime,
-                percentComplete,
-                replicationState,
-                isTerminationAllowed,
-                linkType,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerServer), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    partnerServer: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PartnerServer))
-                {
-                    builder.Append("    partnerServer: ");
-                    if (PartnerServer.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PartnerServer}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PartnerServer}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerDatabase), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    partnerDatabase: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PartnerDatabase))
-                {
-                    builder.Append("    partnerDatabase: ");
-                    if (PartnerDatabase.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PartnerDatabase}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PartnerDatabase}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerDatabaseId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    partnerDatabaseId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PartnerDatabaseId))
-                {
-                    builder.Append("    partnerDatabaseId: ");
-                    if (PartnerDatabaseId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PartnerDatabaseId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PartnerDatabaseId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerLocation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    partnerLocation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PartnerLocation))
-                {
-                    builder.Append("    partnerLocation: ");
-                    builder.AppendLine($"'{PartnerLocation.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Role), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    role: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Role))
-                {
-                    builder.Append("    role: ");
-                    builder.AppendLine($"'{Role.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerRole), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    partnerRole: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PartnerRole))
-                {
-                    builder.Append("    partnerRole: ");
-                    builder.AppendLine($"'{PartnerRole.Value.ToSerialString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicationMode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    replicationMode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ReplicationMode))
-                {
-                    builder.Append("    replicationMode: ");
-                    if (ReplicationMode.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ReplicationMode}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ReplicationMode}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    startTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StartOn))
-                {
-                    builder.Append("    startTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PercentComplete), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    percentComplete: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PercentComplete))
-                {
-                    builder.Append("    percentComplete: ");
-                    builder.AppendLine($"{PercentComplete.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicationState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    replicationState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ReplicationState))
-                {
-                    builder.Append("    replicationState: ");
-                    builder.AppendLine($"'{ReplicationState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsTerminationAllowed), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isTerminationAllowed: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsTerminationAllowed))
-                {
-                    builder.Append("    isTerminationAllowed: ");
-                    var boolValue = IsTerminationAllowed.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    linkType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LinkType))
-                {
-                    builder.Append("    linkType: ");
-                    builder.AppendLine($"'{LinkType.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlServerDatabaseReplicationLinkData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SqlServerDatabaseReplicationLinkData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SqlServerDatabaseReplicationLinkData IPersistableModel<SqlServerDatabaseReplicationLinkData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlServerDatabaseReplicationLinkData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSqlServerDatabaseReplicationLinkData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SqlServerDatabaseReplicationLinkData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SqlServerDatabaseReplicationLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -13,124 +13,107 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the LongTermRetentionBackup data model.
-    /// A long term retention backup.
-    /// </summary>
+    /// <summary> A long term retention backup. </summary>
     public partial class LongTermRetentionBackupData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LongTermRetentionBackupData"/>. </summary>
-        public LongTermRetentionBackupData()
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal LongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, LongTermRetentionBackupProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LongTermRetentionBackupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="serverName"> The server name that the backup database belong to. </param>
-        /// <param name="serverCreateOn"> The create time of the server. </param>
-        /// <param name="databaseName"> The name of the database the backup belong to. </param>
-        /// <param name="databaseDeletedOn"> The delete time of the database. </param>
-        /// <param name="backupOn"> The time the backup was taken. </param>
-        /// <param name="backupExpireOn"> The time the long term retention backup will expire. </param>
-        /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
-        /// <param name="requestedBackupStorageRedundancy"> The storage redundancy type of the backup. </param>
-        /// <param name="isBackupImmutable"> The setting whether the LTR backup is immutable. </param>
-        /// <param name="timeBasedImmutability"> The setting for whether or not time-based immutability is enabled for the LTR backup. When time-based immutability is enabled and locked, the backup cannot be deleted until BackupExpirationTime. </param>
-        /// <param name="timeBasedImmutabilityMode"> The time-based immutability mode. Only applicable if time-based immutability is enabled. </param>
-        /// <param name="legalHoldImmutability"> The setting for whether LegalHold is enabled or disabled on the LTR backup. When LegalHold is enabled, the backup cannot be deleted until the LegalHold is removed. </param>
-        /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LongTermRetentionBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serverName, DateTimeOffset? serverCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isBackupImmutable, TimeBasedImmutability? timeBasedImmutability, TimeBasedImmutabilityMode? timeBasedImmutabilityMode, SetLegalHoldImmutability? legalHoldImmutability, SqlBackupStorageAccessTier? backupStorageAccessTier, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            ServerName = serverName;
-            ServerCreateOn = serverCreateOn;
-            DatabaseName = databaseName;
-            DatabaseDeletedOn = databaseDeletedOn;
-            BackupOn = backupOn;
-            BackupExpireOn = backupExpireOn;
-            BackupStorageRedundancy = backupStorageRedundancy;
-            RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
-            IsBackupImmutable = isBackupImmutable;
-            TimeBasedImmutability = timeBasedImmutability;
-            TimeBasedImmutabilityMode = timeBasedImmutabilityMode;
-            LegalHoldImmutability = legalHoldImmutability;
-            BackupStorageAccessTier = backupStorageAccessTier;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal LongTermRetentionBackupProperties Properties { get; }
 
         /// <summary> The server name that the backup database belong to. </summary>
         [WirePath("properties.serverName")]
-        public string ServerName { get; }
+        public string ServerName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerName;
+            }
+        }
+
         /// <summary> The create time of the server. </summary>
         [WirePath("properties.serverCreateTime")]
-        public DateTimeOffset? ServerCreateOn { get; }
+        public DateTimeOffset? ServerCreateOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerCreateOn;
+            }
+        }
+
         /// <summary> The name of the database the backup belong to. </summary>
         [WirePath("properties.databaseName")]
-        public string DatabaseName { get; }
+        public string DatabaseName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseName;
+            }
+        }
+
         /// <summary> The delete time of the database. </summary>
         [WirePath("properties.databaseDeletionTime")]
-        public DateTimeOffset? DatabaseDeletedOn { get; }
+        public DateTimeOffset? DatabaseDeletionOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseDeletionOn;
+            }
+        }
+
         /// <summary> The time the backup was taken. </summary>
         [WirePath("properties.backupTime")]
-        public DateTimeOffset? BackupOn { get; }
+        public DateTimeOffset? BackupOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackupOn;
+            }
+        }
+
         /// <summary> The time the long term retention backup will expire. </summary>
         [WirePath("properties.backupExpirationTime")]
-        public DateTimeOffset? BackupExpireOn { get; }
+        public DateTimeOffset? BackupExpirationOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackupExpirationOn;
+            }
+        }
+
         /// <summary> The storage redundancy type of the backup. </summary>
         [WirePath("properties.backupStorageRedundancy")]
-        public SqlBackupStorageRedundancy? BackupStorageRedundancy { get; }
-        /// <summary> The storage redundancy type of the backup. </summary>
-        [WirePath("properties.requestedBackupStorageRedundancy")]
-        public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
-        /// <summary> The setting whether the LTR backup is immutable. </summary>
-        [WirePath("properties.isBackupImmutable")]
-        public bool? IsBackupImmutable { get; set; }
-        /// <summary> The setting for whether or not time-based immutability is enabled for the LTR backup. When time-based immutability is enabled and locked, the backup cannot be deleted until BackupExpirationTime. </summary>
-        [WirePath("properties.timeBasedImmutability")]
-        public TimeBasedImmutability? TimeBasedImmutability { get; set; }
-        /// <summary> The time-based immutability mode. Only applicable if time-based immutability is enabled. </summary>
-        [WirePath("properties.timeBasedImmutabilityMode")]
-        public TimeBasedImmutabilityMode? TimeBasedImmutabilityMode { get; set; }
-        /// <summary> The setting for whether LegalHold is enabled or disabled on the LTR backup. When LegalHold is enabled, the backup cannot be deleted until the LegalHold is removed. </summary>
-        [WirePath("properties.legalHoldImmutability")]
-        public SetLegalHoldImmutability? LegalHoldImmutability { get; set; }
+        public SqlBackupStorageRedundancy? BackupStorageRedundancy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackupStorageRedundancy;
+            }
+        }
+
         /// <summary> The BackupStorageAccessTier for the LTR backup. </summary>
         [WirePath("properties.backupStorageAccessTier")]
-        public SqlBackupStorageAccessTier? BackupStorageAccessTier { get; }
+        public SqlBackupStorageAccessTier? BackupStorageAccessTier
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackupStorageAccessTier;
+            }
+        }
     }
 }

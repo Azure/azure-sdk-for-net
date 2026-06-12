@@ -8,6 +8,7 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Sql.Mocking;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.Sql. </summary>

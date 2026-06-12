@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -11,8 +11,16 @@ using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql.Models
 {
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SensitivityLabelUpdate", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(SensitivityLabelUpdateKind?), typeof(string), typeof(string), typeof(string), typeof(SensitivityLabelProperties))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SqlDatabaseExtension", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(OperationMode?), typeof(StorageKeyType?), typeof(string), typeof(Uri), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(NetworkIsolationSettings))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SqlDistributedAvailabilityGroupData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(Guid?), typeof(SqlReplicationModeType?), typeof(LinkRole?), typeof(string), typeof(string), typeof(LinkRole?), typeof(string), typeof(SqlServerFailoverModeType?), typeof(SeedingModeType?), typeof(IEnumerable<DistributedAvailabilityGroupDatabase>))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SqlServerDatabaseReplicationLinkData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(string), typeof(string), typeof(AzureLocation?), typeof(SqlServerDatabaseReplicationRole?), typeof(SqlServerDatabaseReplicationRole?), typeof(string), typeof(DateTimeOffset?), typeof(int?), typeof(ReplicationState?), typeof(bool?), typeof(ReplicationLinkType?))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SqlServerData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SqlServerPrivateEndpointConnection>), typeof(SqlMinimalTlsVersion?), typeof(ServerPublicNetworkAccessFlag?), typeof(ServerWorkspaceFeature?), typeof(ResourceIdentifier), typeof(Guid?), typeof(Uri), typeof(ServerExternalAdministrator), typeof(ServerNetworkAccessFlag?), typeof(ServerNetworkAccessFlag?), typeof(ExternalGovernanceStatus?), typeof(int?), typeof(SqlServerCreateMode?), typeof(ManagedServiceIdentity), typeof(string))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SqlServerPatch", typeof(ManagedServiceIdentity), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<SqlServerPrivateEndpointConnection>), typeof(SqlMinimalTlsVersion?), typeof(ServerPublicNetworkAccessFlag?), typeof(ServerWorkspaceFeature?), typeof(ResourceIdentifier), typeof(Guid?), typeof(Uri), typeof(ServerExternalAdministrator), typeof(ServerNetworkAccessFlag?), typeof(ServerNetworkAccessFlag?), typeof(ExternalGovernanceStatus?), typeof(int?), typeof(SqlServerCreateMode?), typeof(IDictionary<string, string>))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SqlVulnerabilityAssessmentScanResultData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(RuleStatus?), typeof(string), typeof(bool?), typeof(IEnumerable<IList<string>>), typeof(Remediation), typeof(BaselineAdjustedResult), typeof(VaRule))]
     public static partial class ArmSqlModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Sql.RecommendedActionData"/>. </summary>
@@ -48,43 +56,36 @@ namespace Azure.ResourceManager.Sql.Models
         /// <returns> A new <see cref="Sql.RecommendedActionData"/> instance for mocking. </returns>
         public static RecommendedActionData RecommendedActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string recommendationReason = null, DateTimeOffset? validSince = null, DateTimeOffset? lastRefresh = null, RecommendedActionStateInfo state = null, bool? isExecutableAction = null, bool? isRevertableAction = null, bool? isArchivedAction = null, DateTimeOffset? executeActionStartOn = null, TimeSpan? executeActionDuration = null, DateTimeOffset? revertActionStartOn = null, TimeSpan? revertActionDuration = null, RecommendedActionInitiatedBy? executeActionInitiatedBy = null, DateTimeOffset? executeActionInitiatedOn = null, RecommendedActionInitiatedBy? revertActionInitiatedBy = null, DateTimeOffset? revertActionInitiatedOn = null, int? score = null, RecommendedActionImplementationInfo implementationDetails = null, RecommendedActionErrorInfo errorDetails = null, IEnumerable<RecommendedActionImpactRecord> estimatedImpact = null, IEnumerable<RecommendedActionImpactRecord> observedImpact = null, IEnumerable<RecommendedActionMetricInfo> timeSeries = null, IEnumerable<string> linkedObjects = null, IReadOnlyDictionary<string, string> additionalDetails = null)
         {
-            estimatedImpact ??= new List<RecommendedActionImpactRecord>();
-            observedImpact ??= new List<RecommendedActionImpactRecord>();
-            timeSeries ??= new List<RecommendedActionMetricInfo>();
-            linkedObjects ??= new List<string>();
-            additionalDetails ??= new Dictionary<string, string>();
-
-            return new RecommendedActionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                kind,
-                location,
-                recommendationReason,
-                validSince,
-                lastRefresh,
-                state,
-                isExecutableAction,
-                isRevertableAction,
-                isArchivedAction,
-                executeActionStartOn,
-                executeActionDuration,
-                revertActionStartOn,
-                revertActionDuration,
-                executeActionInitiatedBy,
-                executeActionInitiatedOn,
-                revertActionInitiatedBy,
-                revertActionInitiatedOn,
-                score,
-                implementationDetails,
-                errorDetails,
-                estimatedImpact?.ToList(),
-                observedImpact?.ToList(),
-                timeSeries?.ToList(),
-                linkedObjects?.ToList(),
-                additionalDetails,
-                serializedAdditionalRawData: null);
+            return RecommendedActionData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                recommendationReason: recommendationReason,
+                validSince: validSince,
+                lastRefresh: lastRefresh,
+                state: state,
+                isExecutableAction: isExecutableAction,
+                isRevertableAction: isRevertableAction,
+                isArchivedAction: isArchivedAction,
+                executeActionStartOn: executeActionStartOn,
+                executeActionDuration: executeActionDuration,
+                revertActionStartOn: revertActionStartOn,
+                revertActionDuration: revertActionDuration,
+                executeActionInitiatedBy: executeActionInitiatedBy,
+                executeActionInitiatedOn: executeActionInitiatedOn,
+                revertActionInitiatedBy: revertActionInitiatedBy,
+                revertActionInitiatedOn: revertActionInitiatedOn,
+                score: score,
+                implementationDetails: implementationDetails,
+                errorDetails: errorDetails,
+                estimatedImpact: estimatedImpact,
+                observedImpact: observedImpact,
+                timeSeries: timeSeries,
+                linkedObjects: linkedObjects,
+                details: additionalDetails,
+                kind: kind,
+                location: location);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedInstanceVcoresCapability"/>. </summary>
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <returns> A new <see cref="Models.ManagedInstanceVcoresCapability"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ManagedInstanceVcoresCapability ManagedInstanceVcoresCapability(string name, int? value, MaxLimitRangeCapability supportedMemorySizesInGB , MaxSizeCapability includedMaxSize, IEnumerable<MaxSizeRangeCapability> supportedStorageSizes = null, long? includedStorageIOps = null, MaxLimitRangeCapability supportedStorageIOps = null, double? iopsMinValueOverrideFactorPerSelectedStorageGB = null, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB = null, long? includedStorageThroughputMBps = null, MaxLimitRangeCapability supportedStorageThroughputMBps = null, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB = null, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = null, bool? isInstancePoolSupported = null, bool? isStandaloneSupported = null, IEnumerable<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = null, SqlCapabilityStatus? status = null, string reason = null)
-            => ManagedInstanceVcoresCapability(name, value, null, supportedMemorySizesInGB, includedMaxSize, supportedStorageSizes, includedStorageIOps, supportedStorageIOps, iopsMinValueOverrideFactorPerSelectedStorageGB, iopsIncludedValueOverrideFactorPerSelectedStorageGB, includedStorageThroughputMBps, supportedStorageThroughputMBps, throughputMBpsMinValueOverrideFactorPerSelectedStorageGB, throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB, isInstancePoolSupported , isStandaloneSupported, supportedMaintenanceConfigurations, status, reason);
+        public static ManagedInstanceVcoresCapability ManagedInstanceVcoresCapability(string name, int? value, MaxLimitRangeCapability supportedMemorySizesInGB, MaxSizeCapability includedMaxSize, IEnumerable<MaxSizeRangeCapability> supportedStorageSizes = null, long? includedStorageIOps = null, MaxLimitRangeCapability supportedStorageIOps = null, double? iopsMinValueOverrideFactorPerSelectedStorageGB = null, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB = null, long? includedStorageThroughputMBps = null, MaxLimitRangeCapability supportedStorageThroughputMBps = null, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB = null, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = null, bool? isInstancePoolSupported = null, bool? isStandaloneSupported = null, IEnumerable<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = null, SqlCapabilityStatus? status = null, string reason = null)
+            => ManagedInstanceVcoresCapability(name, value, null, supportedMemorySizesInGB, includedMaxSize, supportedStorageSizes, includedStorageIOps, supportedStorageIOps, iopsMinValueOverrideFactorPerSelectedStorageGB, iopsIncludedValueOverrideFactorPerSelectedStorageGB, includedStorageThroughputMBps, supportedStorageThroughputMBps, throughputMBpsMinValueOverrideFactorPerSelectedStorageGB, throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB, isInstancePoolSupported, isStandaloneSupported, supportedMaintenanceConfigurations, status, reason);
     }
 }

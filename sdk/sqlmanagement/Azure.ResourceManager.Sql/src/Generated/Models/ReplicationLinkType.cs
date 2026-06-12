@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct ReplicationLinkType : IEquatable<ReplicationLinkType>
     {
         private readonly string _value;
+        /// <summary> GEO. </summary>
+        private const string GEOValue = "GEO";
+        /// <summary> NAMED. </summary>
+        private const string NAMEDValue = "NAMED";
+        /// <summary> STANDBY. </summary>
+        private const string STANDBYValue = "STANDBY";
 
         /// <summary> Initializes a new instance of <see cref="ReplicationLinkType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReplicationLinkType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string GeoValue = "GEO";
-        private const string NamedValue = "NAMED";
-        private const string StandbyValue = "STANDBY";
-
         /// <summary> GEO. </summary>
-        public static ReplicationLinkType Geo { get; } = new ReplicationLinkType(GeoValue);
+        public static ReplicationLinkType GEO { get; } = new ReplicationLinkType(GEOValue);
+
         /// <summary> NAMED. </summary>
-        public static ReplicationLinkType Named { get; } = new ReplicationLinkType(NamedValue);
+        public static ReplicationLinkType NAMED { get; } = new ReplicationLinkType(NAMEDValue);
+
         /// <summary> STANDBY. </summary>
-        public static ReplicationLinkType Standby { get; } = new ReplicationLinkType(StandbyValue);
+        public static ReplicationLinkType STANDBY { get; } = new ReplicationLinkType(STANDBYValue);
+
         /// <summary> Determines if two <see cref="ReplicationLinkType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReplicationLinkType left, ReplicationLinkType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReplicationLinkType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReplicationLinkType left, ReplicationLinkType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReplicationLinkType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReplicationLinkType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReplicationLinkType(string value) => new ReplicationLinkType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReplicationLinkType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReplicationLinkType?(string value) => value == null ? null : new ReplicationLinkType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReplicationLinkType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReplicationLinkType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

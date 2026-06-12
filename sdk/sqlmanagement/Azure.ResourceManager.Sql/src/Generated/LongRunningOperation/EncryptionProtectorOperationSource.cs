@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class EncryptionProtectorOperationSource : IOperationSource<EncryptionProtectorResource>
+    /// <summary></summary>
+    internal partial class EncryptionProtectorOperationSource : IOperationSource<EncryptionProtectorResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal EncryptionProtectorOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         EncryptionProtectorResource IOperationSource<EncryptionProtectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EncryptionProtectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            EncryptionProtectorData data = EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new EncryptionProtectorResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<EncryptionProtectorResource> IOperationSource<EncryptionProtectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EncryptionProtectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new EncryptionProtectorResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            EncryptionProtectorData data = EncryptionProtectorData.DeserializeEncryptionProtectorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EncryptionProtectorResource(_client, data);
         }
     }
 }

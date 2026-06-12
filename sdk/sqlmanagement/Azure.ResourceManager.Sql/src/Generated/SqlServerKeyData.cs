@@ -13,43 +13,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the SqlServerKey data model.
-    /// A server key.
-    /// </summary>
+    /// <summary> A server key. </summary>
     public partial class SqlServerKeyData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlServerKeyData"/>. </summary>
         public SqlServerKeyData()
@@ -57,60 +25,121 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlServerKeyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="subregion"> Subregion of the server key. </param>
-        /// <param name="serverKeyType"> The server key type like 'ServiceManaged', 'AzureKeyVault'. </param>
-        /// <param name="uri"> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. The AKV URI is required to be in this format: 'https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion' or can be 'https://YourVaultName.vault.azure.net/keys/YourKeyName'. </param>
-        /// <param name="thumbprint"> Thumbprint of the server key. </param>
-        /// <param name="createdOn"> The server key creation date. </param>
-        /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        /// <param name="keyVersion"> The version of the server key. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled, string keyVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerKeyProperties properties, string kind, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Kind = kind;
             Location = location;
-            Subregion = subregion;
-            ServerKeyType = serverKeyType;
-            Uri = uri;
-            Thumbprint = thumbprint;
-            CreatedOn = createdOn;
-            IsAutoRotationEnabled = isAutoRotationEnabled;
-            KeyVersion = keyVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal ServerKeyProperties Properties { get; set; }
 
         /// <summary> Kind of encryption protector. This is metadata used for the Azure portal experience. </summary>
         [WirePath("kind")]
         public string Kind { get; }
+
         /// <summary> Resource location. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
+
         /// <summary> Subregion of the server key. </summary>
         [WirePath("properties.subregion")]
-        public string Subregion { get; }
+        public string Subregion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subregion;
+            }
+        }
+
         /// <summary> The server key type like 'ServiceManaged', 'AzureKeyVault'. </summary>
         [WirePath("properties.serverKeyType")]
-        public SqlServerKeyType? ServerKeyType { get; set; }
+        public SqlServerKeyType? ServerKeyType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerKeyType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ServerKeyProperties();
+                    }
+                    Properties.ServerKeyType = value.Value;
+                }
+            }
+        }
+
         /// <summary> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. The AKV URI is required to be in this format: 'https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion' or can be 'https://YourVaultName.vault.azure.net/keys/YourKeyName'. </summary>
         [WirePath("properties.uri")]
-        public Uri Uri { get; set; }
+        public Uri Uri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Uri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerKeyProperties();
+                }
+                Properties.Uri = value;
+            }
+        }
+
         /// <summary> Thumbprint of the server key. </summary>
         [WirePath("properties.thumbprint")]
-        public string Thumbprint { get; }
+        public string Thumbprint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Thumbprint;
+            }
+        }
+
         /// <summary> The server key creation date. </summary>
         [WirePath("properties.creationDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
         [WirePath("properties.autoRotationEnabled")]
-        public bool? IsAutoRotationEnabled { get; }
+        public bool? IsAutoRotationEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAutoRotationEnabled;
+            }
+        }
+
         /// <summary> The version of the server key. </summary>
         [WirePath("properties.keyVersion")]
-        public string KeyVersion { get; }
+        public string KeyVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVersion;
+            }
+        }
     }
 }

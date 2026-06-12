@@ -4,11 +4,17 @@
 #nullable disable
 
 using System.ComponentModel;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql
 {
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetImportExportExtensionsOperationResult", typeof(string), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetImportExportExtensionsOperationResultAsync", typeof(string), typeof(CancellationToken))]
     public partial class SqlDatabaseResource : ArmResource
     {
         /// <summary>
@@ -57,6 +63,36 @@ namespace Azure.ResourceManager.Sql
         public virtual DataMaskingPolicyResource GetDataMaskingPolicy()
         {
             return new DataMaskingPolicyResource(Client, Id.AppendChildResource("dataMaskingPolicies", "Default"));
+        }
+
+        [ForwardsClientCalls]
+        public virtual Response GetImportExportExtensionsOperationResult(string extensionName, CancellationToken cancellationToken = default)
+        {
+            if (extensionName is null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException($"{nameof(extensionName)} cannot be an empty string.", nameof(extensionName));
+            }
+
+            return GetImportExportExtensionsOperationResults().Get(extensionName, cancellationToken);
+        }
+
+        [ForwardsClientCalls]
+        public virtual async Task<Response> GetImportExportExtensionsOperationResultAsync(string extensionName, CancellationToken cancellationToken = default)
+        {
+            if (extensionName is null)
+            {
+                throw new ArgumentNullException(nameof(extensionName));
+            }
+            if (extensionName.Length == 0)
+            {
+                throw new ArgumentException($"{nameof(extensionName)} cannot be an empty string.", nameof(extensionName));
+            }
+
+            return await GetImportExportExtensionsOperationResults().GetAsync(extensionName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The SqlNameAvailabilityResourceType. </summary>
+    /// <summary></summary>
     public readonly partial struct SqlNameAvailabilityResourceType : IEquatable<SqlNameAvailabilityResourceType>
     {
         private readonly string _value;
+        /// <summary> Microsoft.Sql/servers. </summary>
+        private const string MicrosoftSqlServersValue = "Microsoft.Sql/servers";
 
         /// <summary> Initializes a new instance of <see cref="SqlNameAvailabilityResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlNameAvailabilityResourceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MicrosoftSqlServersValue = "Microsoft.Sql/servers";
+            _value = value;
+        }
 
         /// <summary> Microsoft.Sql/servers. </summary>
         public static SqlNameAvailabilityResourceType MicrosoftSqlServers { get; } = new SqlNameAvailabilityResourceType(MicrosoftSqlServersValue);
+
         /// <summary> Determines if two <see cref="SqlNameAvailabilityResourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlNameAvailabilityResourceType left, SqlNameAvailabilityResourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlNameAvailabilityResourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlNameAvailabilityResourceType left, SqlNameAvailabilityResourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlNameAvailabilityResourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlNameAvailabilityResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlNameAvailabilityResourceType(string value) => new SqlNameAvailabilityResourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlNameAvailabilityResourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlNameAvailabilityResourceType?(string value) => value == null ? null : new SqlNameAvailabilityResourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlNameAvailabilityResourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlNameAvailabilityResourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -13,97 +13,129 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the InstancePool data model.
-    /// An Azure SQL instance pool.
-    /// </summary>
+    /// <summary> An Azure SQL instance pool. </summary>
     public partial class InstancePoolData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InstancePoolData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public InstancePoolData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="InstancePoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="sku"> The name and tier of the SKU. </param>
-        /// <param name="subnetId"> Resource ID of the subnet to place this instance pool in. </param>
-        /// <param name="vCores"> Count of vCores belonging to this instance pool. </param>
-        /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (price for SQL license is included) and 'BasePrice' (without SQL license price). </param>
-        /// <param name="dnsZone"> The Dns Zone that the managed instance pool is in. </param>
-        /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstancePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, ResourceIdentifier subnetId, int? vCores, InstancePoolLicenseType? licenseType, string dnsZone, ResourceIdentifier maintenanceConfigurationId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal InstancePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, InstancePoolProperties properties, SqlSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
-            SubnetId = subnetId;
-            VCores = vCores;
-            LicenseType = licenseType;
-            DnsZone = dnsZone;
-            MaintenanceConfigurationId = maintenanceConfigurationId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InstancePoolData"/> for deserialization. </summary>
-        internal InstancePoolData()
-        {
-        }
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal InstancePoolProperties Properties { get; set; }
 
         /// <summary> The name and tier of the SKU. </summary>
         [WirePath("sku")]
         public SqlSku Sku { get; set; }
+
         /// <summary> Resource ID of the subnet to place this instance pool in. </summary>
         [WirePath("properties.subnetId")]
-        public ResourceIdentifier SubnetId { get; set; }
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InstancePoolProperties();
+                }
+                Properties.SubnetId = value;
+            }
+        }
+
         /// <summary> Count of vCores belonging to this instance pool. </summary>
         [WirePath("properties.vCores")]
-        public int? VCores { get; set; }
+        public int? VCores
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VCores;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new InstancePoolProperties();
+                    }
+                    Properties.VCores = value.Value;
+                }
+            }
+        }
+
         /// <summary> The license type. Possible values are 'LicenseIncluded' (price for SQL license is included) and 'BasePrice' (without SQL license price). </summary>
         [WirePath("properties.licenseType")]
-        public InstancePoolLicenseType? LicenseType { get; set; }
+        public InstancePoolLicenseType? LicenseType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LicenseType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new InstancePoolProperties();
+                    }
+                    Properties.LicenseType = value.Value;
+                }
+            }
+        }
+
         /// <summary> The Dns Zone that the managed instance pool is in. </summary>
         [WirePath("properties.dnsZone")]
-        public string DnsZone { get; }
+        public string DnsZone
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsZone;
+            }
+        }
+
         /// <summary> Specifies maintenance configuration id to apply to this managed instance. </summary>
         [WirePath("properties.maintenanceConfigurationId")]
-        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
+        public ResourceIdentifier MaintenanceConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaintenanceConfigurationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new InstancePoolProperties();
+                }
+                Properties.MaintenanceConfigurationId = value;
+            }
+        }
     }
 }

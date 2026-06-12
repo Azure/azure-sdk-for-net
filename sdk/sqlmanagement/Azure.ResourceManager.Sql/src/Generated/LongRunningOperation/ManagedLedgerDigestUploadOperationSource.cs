@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class ManagedLedgerDigestUploadOperationSource : IOperationSource<ManagedLedgerDigestUploadResource>
+    /// <summary></summary>
+    internal partial class ManagedLedgerDigestUploadOperationSource : IOperationSource<ManagedLedgerDigestUploadResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ManagedLedgerDigestUploadOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ManagedLedgerDigestUploadResource IOperationSource<ManagedLedgerDigestUploadResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedLedgerDigestUploadData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ManagedLedgerDigestUploadData data = ManagedLedgerDigestUploadData.DeserializeManagedLedgerDigestUploadData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ManagedLedgerDigestUploadResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ManagedLedgerDigestUploadResource> IOperationSource<ManagedLedgerDigestUploadResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedLedgerDigestUploadData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new ManagedLedgerDigestUploadResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ManagedLedgerDigestUploadData data = ManagedLedgerDigestUploadData.DeserializeManagedLedgerDigestUploadData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ManagedLedgerDigestUploadResource(_client, data);
         }
     }
 }

@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.Sql.Tests
             // 1.GetAll
             var list = await collection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-            Guid operationName = new Guid(list.FirstOrDefault().Data.Name);
+            string operationName = list.FirstOrDefault().Data.Name;
 
             // 2.CheckIfExist
             Assert.IsTrue(await collection.ExistsAsync(operationName));
 
             // 3.Get
             var getOperation = await collection.GetAsync(operationName);
-            Assert.AreEqual(operationName.ToString(), getOperation.Value.Data.Name);
+            Assert.AreEqual(operationName, getOperation.Value.Data.Name);
 
             // 4.GetIfExist
             Assert.IsTrue(await collection.ExistsAsync(operationName));

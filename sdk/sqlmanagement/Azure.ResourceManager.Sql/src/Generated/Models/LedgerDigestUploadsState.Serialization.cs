@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class LedgerDigestUploadsStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this LedgerDigestUploadsState value) => value switch
         {
             LedgerDigestUploadsState.Enabled => "Enabled",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LedgerDigestUploadsState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static LedgerDigestUploadsState ToLedgerDigestUploadsState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return LedgerDigestUploadsState.Enabled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return LedgerDigestUploadsState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled"))
+            {
+                return LedgerDigestUploadsState.Enabled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled"))
+            {
+                return LedgerDigestUploadsState.Disabled;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LedgerDigestUploadsState value.");
         }
     }

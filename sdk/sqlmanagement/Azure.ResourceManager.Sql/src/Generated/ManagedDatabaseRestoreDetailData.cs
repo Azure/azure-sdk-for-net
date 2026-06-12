@@ -13,173 +13,217 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the ManagedDatabaseRestoreDetail data model.
-    /// A managed database restore details.
-    /// </summary>
+    /// <summary> A managed database restore details. </summary>
     public partial class ManagedDatabaseRestoreDetailData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailData"/>. </summary>
-        public ManagedDatabaseRestoreDetailData()
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal ManagedDatabaseRestoreDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedDatabaseRestoreDetailsProperties properties) : base(id, name, resourceType, systemData)
         {
-            FullBackupSets = new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>();
-            DiffBackupSets = new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>();
-            LogBackupSets = new ChangeTrackingList<ManagedDatabaseRestoreDetailBackupSetProperties>();
-            UnrestorableFileList = new ChangeTrackingList<ManagedDatabaseRestoreDetailUnrestorableFileProperties>();
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedDatabaseRestoreDetailData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="restoreType"> Restore type. </param>
-        /// <param name="status"> Restore status. </param>
-        /// <param name="blockReason"> The reason why restore is in Blocked state. </param>
-        /// <param name="lastUploadedFileName"> Last uploaded file name. </param>
-        /// <param name="lastUploadedFileOn"> Last uploaded file time. </param>
-        /// <param name="lastRestoredFileName"> Last restored file name. </param>
-        /// <param name="lastRestoredFileOn"> Last restored file time. </param>
-        /// <param name="completedPercent"> Percent completed. </param>
-        /// <param name="currentRestoredSizeInMB"> Current restored size MB. </param>
-        /// <param name="currentRestorePlanSizeInMB"> Current restore plan size MB. </param>
-        /// <param name="currentBackupType"> Current backup type. </param>
-        /// <param name="currentRestoringFileName"> Current restoring file name. </param>
-        /// <param name="numberOfFilesFound"> Number of files detected. </param>
-        /// <param name="numberOfFilesQueued"> Number of files queued. </param>
-        /// <param name="numberOfFilesSkipped"> Number of files skipped. </param>
-        /// <param name="numberOfFilesRestoring"> Number of files restoring. </param>
-        /// <param name="numberOfFilesRestored"> Number of files restored. </param>
-        /// <param name="numberOfFilesUnrestorable"> Number of files unrestorable. </param>
-        /// <param name="fullBackupSets"> Full backup sets. </param>
-        /// <param name="diffBackupSets"> Diff backup sets. </param>
-        /// <param name="logBackupSets"> Log backup sets. </param>
-        /// <param name="unrestorableFileList"> Unrestorable files. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDatabaseRestoreDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string restoreType, string status, string blockReason, string lastUploadedFileName, DateTimeOffset? lastUploadedFileOn, string lastRestoredFileName, DateTimeOffset? lastRestoredFileOn, int? completedPercent, int? currentRestoredSizeInMB, int? currentRestorePlanSizeInMB, string currentBackupType, string currentRestoringFileName, int? numberOfFilesFound, int? numberOfFilesQueued, int? numberOfFilesSkipped, int? numberOfFilesRestoring, int? numberOfFilesRestored, int? numberOfFilesUnrestorable, IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> fullBackupSets, IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> diffBackupSets, IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> logBackupSets, IReadOnlyList<ManagedDatabaseRestoreDetailUnrestorableFileProperties> unrestorableFileList, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            RestoreType = restoreType;
-            Status = status;
-            BlockReason = blockReason;
-            LastUploadedFileName = lastUploadedFileName;
-            LastUploadedFileOn = lastUploadedFileOn;
-            LastRestoredFileName = lastRestoredFileName;
-            LastRestoredFileOn = lastRestoredFileOn;
-            CompletedPercent = completedPercent;
-            CurrentRestoredSizeInMB = currentRestoredSizeInMB;
-            CurrentRestorePlanSizeInMB = currentRestorePlanSizeInMB;
-            CurrentBackupType = currentBackupType;
-            CurrentRestoringFileName = currentRestoringFileName;
-            NumberOfFilesFound = numberOfFilesFound;
-            NumberOfFilesQueued = numberOfFilesQueued;
-            NumberOfFilesSkipped = numberOfFilesSkipped;
-            NumberOfFilesRestoring = numberOfFilesRestoring;
-            NumberOfFilesRestored = numberOfFilesRestored;
-            NumberOfFilesUnrestorable = numberOfFilesUnrestorable;
-            FullBackupSets = fullBackupSets;
-            DiffBackupSets = diffBackupSets;
-            LogBackupSets = logBackupSets;
-            UnrestorableFileList = unrestorableFileList;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal ManagedDatabaseRestoreDetailsProperties Properties { get; }
 
         /// <summary> Restore type. </summary>
         [WirePath("properties.type")]
-        public string RestoreType { get; }
+        public string Type
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Type;
+            }
+        }
+
         /// <summary> Restore status. </summary>
         [WirePath("properties.status")]
-        public string Status { get; }
+        public string Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> The reason why restore is in Blocked state. </summary>
         [WirePath("properties.blockReason")]
-        public string BlockReason { get; }
+        public string BlockReason
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BlockReason;
+            }
+        }
+
         /// <summary> Last uploaded file name. </summary>
         [WirePath("properties.lastUploadedFileName")]
-        public string LastUploadedFileName { get; }
+        public string LastUploadedFileName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastUploadedFileName;
+            }
+        }
+
         /// <summary> Last uploaded file time. </summary>
         [WirePath("properties.lastUploadedFileTime")]
-        public DateTimeOffset? LastUploadedFileOn { get; }
+        public DateTimeOffset? LastUploadedFileOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastUploadedFileOn;
+            }
+        }
+
         /// <summary> Last restored file name. </summary>
         [WirePath("properties.lastRestoredFileName")]
-        public string LastRestoredFileName { get; }
+        public string LastRestoredFileName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastRestoredFileName;
+            }
+        }
+
         /// <summary> Last restored file time. </summary>
         [WirePath("properties.lastRestoredFileTime")]
-        public DateTimeOffset? LastRestoredFileOn { get; }
-        /// <summary> Percent completed. </summary>
-        [WirePath("properties.percentCompleted")]
-        public int? CompletedPercent { get; }
+        public DateTimeOffset? LastRestoredFileOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastRestoredFileOn;
+            }
+        }
+
         /// <summary> Current restored size MB. </summary>
         [WirePath("properties.currentRestoredSizeMB")]
-        public int? CurrentRestoredSizeInMB { get; }
+        public int? CurrentRestoredSizeMB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentRestoredSizeMB;
+            }
+        }
+
         /// <summary> Current restore plan size MB. </summary>
         [WirePath("properties.currentRestorePlanSizeMB")]
-        public int? CurrentRestorePlanSizeInMB { get; }
+        public int? CurrentRestorePlanSizeMB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentRestorePlanSizeMB;
+            }
+        }
+
         /// <summary> Current backup type. </summary>
         [WirePath("properties.currentBackupType")]
-        public string CurrentBackupType { get; }
+        public string CurrentBackupType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentBackupType;
+            }
+        }
+
         /// <summary> Current restoring file name. </summary>
         [WirePath("properties.currentRestoringFileName")]
-        public string CurrentRestoringFileName { get; }
-        /// <summary> Number of files detected. </summary>
-        [WirePath("properties.numberOfFilesDetected")]
-        public int? NumberOfFilesFound { get; }
+        public string CurrentRestoringFileName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CurrentRestoringFileName;
+            }
+        }
+
         /// <summary> Number of files queued. </summary>
         [WirePath("properties.numberOfFilesQueued")]
-        public int? NumberOfFilesQueued { get; }
+        public int? NumberOfFilesQueued
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NumberOfFilesQueued;
+            }
+        }
+
         /// <summary> Number of files skipped. </summary>
         [WirePath("properties.numberOfFilesSkipped")]
-        public int? NumberOfFilesSkipped { get; }
+        public int? NumberOfFilesSkipped
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NumberOfFilesSkipped;
+            }
+        }
+
         /// <summary> Number of files restoring. </summary>
         [WirePath("properties.numberOfFilesRestoring")]
-        public int? NumberOfFilesRestoring { get; }
+        public int? NumberOfFilesRestoring
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NumberOfFilesRestoring;
+            }
+        }
+
         /// <summary> Number of files restored. </summary>
         [WirePath("properties.numberOfFilesRestored")]
-        public int? NumberOfFilesRestored { get; }
+        public int? NumberOfFilesRestored
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NumberOfFilesRestored;
+            }
+        }
+
         /// <summary> Number of files unrestorable. </summary>
         [WirePath("properties.numberOfFilesUnrestorable")]
-        public int? NumberOfFilesUnrestorable { get; }
+        public int? NumberOfFilesUnrestorable
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NumberOfFilesUnrestorable;
+            }
+        }
+
         /// <summary> Full backup sets. </summary>
         [WirePath("properties.fullBackupSets")]
-        public IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> FullBackupSets { get; }
+        public IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> FullBackupSets
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FullBackupSets;
+            }
+        }
+
         /// <summary> Diff backup sets. </summary>
         [WirePath("properties.diffBackupSets")]
-        public IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> DiffBackupSets { get; }
+        public IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> DiffBackupSets
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiffBackupSets;
+            }
+        }
+
         /// <summary> Log backup sets. </summary>
         [WirePath("properties.logBackupSets")]
-        public IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> LogBackupSets { get; }
-        /// <summary> Unrestorable files. </summary>
-        [WirePath("properties.unrestorableFiles")]
-        public IReadOnlyList<ManagedDatabaseRestoreDetailUnrestorableFileProperties> UnrestorableFileList { get; }
+        public IReadOnlyList<ManagedDatabaseRestoreDetailBackupSetProperties> LogBackupSets
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LogBackupSets;
+            }
+        }
     }
 }

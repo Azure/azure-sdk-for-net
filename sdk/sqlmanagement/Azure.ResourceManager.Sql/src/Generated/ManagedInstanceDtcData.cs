@@ -13,85 +13,120 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the ManagedInstanceDtc data model.
-    /// SQL Managed Instance DTC
-    /// </summary>
+    /// <summary> SQL Managed Instance DTC. </summary>
     public partial class ManagedInstanceDtcData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcData"/>. </summary>
         public ManagedInstanceDtcData()
         {
-            ExternalDnsSuffixSearchList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="dtcEnabled"> Active status of managed instance DTC. </param>
-        /// <param name="securitySettings"> Security settings of managed instance DTC. </param>
-        /// <param name="externalDnsSuffixSearchList"> External dns suffix search list of managed instance DTC. </param>
-        /// <param name="dtcHostNameDnsSuffix"> Host name dns suffix of managed instance DTC. </param>
-        /// <param name="provisioningState"> Provisioning state of managed instance DTC. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceDtcData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? dtcEnabled, ManagedInstanceDtcSecuritySettings securitySettings, IList<string> externalDnsSuffixSearchList, string dtcHostNameDnsSuffix, JobExecutionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal ManagedInstanceDtcData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedInstanceDtcProperties properties) : base(id, name, resourceType, systemData)
         {
-            DtcEnabled = dtcEnabled;
-            SecuritySettings = securitySettings;
-            ExternalDnsSuffixSearchList = externalDnsSuffixSearchList;
-            DtcHostNameDnsSuffix = dtcHostNameDnsSuffix;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal ManagedInstanceDtcProperties Properties { get; set; }
 
         /// <summary> Active status of managed instance DTC. </summary>
         [WirePath("properties.dtcEnabled")]
-        public bool? DtcEnabled { get; set; }
+        public bool? DtcEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DtcEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceDtcProperties();
+                }
+                Properties.DtcEnabled = value;
+            }
+        }
+
         /// <summary> Security settings of managed instance DTC. </summary>
         [WirePath("properties.securitySettings")]
-        public ManagedInstanceDtcSecuritySettings SecuritySettings { get; set; }
+        public ManagedInstanceDtcSecuritySettings SecuritySettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecuritySettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceDtcProperties();
+                }
+                Properties.SecuritySettings = value;
+            }
+        }
+
         /// <summary> External dns suffix search list of managed instance DTC. </summary>
         [WirePath("properties.externalDnsSuffixSearchList")]
-        public IList<string> ExternalDnsSuffixSearchList { get; }
+        public IList<string> ExternalDnsSuffixSearchList
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceDtcProperties();
+                }
+                return Properties.ExternalDnsSuffixSearchList;
+            }
+        }
+
         /// <summary> Host name dns suffix of managed instance DTC. </summary>
         [WirePath("properties.dtcHostNameDnsSuffix")]
-        public string DtcHostNameDnsSuffix { get; }
+        public string DtcHostNameDnsSuffix
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DtcHostNameDnsSuffix;
+            }
+        }
+
+        /// <summary> Status of FQDN of managed instance DTC. Toggling this setting might trigger a restart of the managed instance. </summary>
+        [WirePath("properties.fqdnEnabled")]
+        public bool? FqdnEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FqdnEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedInstanceDtcProperties();
+                }
+                Properties.FqdnEnabled = value;
+            }
+        }
+
         /// <summary> Provisioning state of managed instance DTC. </summary>
         [WirePath("properties.provisioningState")]
-        public JobExecutionProvisioningState? ProvisioningState { get; }
+        public JobExecutionProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

@@ -9,43 +9,15 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> An Import, Export, or PolybaseImport resource. </summary>
     public partial class SqlDatabaseExtension : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlDatabaseExtension"/>. </summary>
         public SqlDatabaseExtension()
@@ -53,70 +25,146 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlDatabaseExtension"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="operationMode"> Operation mode of the operation: Import, Export, or PolybaseImport. </param>
-        /// <param name="storageKeyType"> Storage key type: StorageAccessKey, SharedAccessKey or ManagedIdentity. </param>
-        /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
-        /// <param name="storageUri"> Storage Uri for the storage account. </param>
-        /// <param name="administratorLogin"> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
-        /// <param name="administratorLoginPassword"> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </param>
-        /// <param name="authenticationType"> Authentication type used to access the SQL: Sql, ADPassword or ManagedIdentity. </param>
-        /// <param name="databaseEdition"> Database edition for the newly created database in the case of an import operation. </param>
-        /// <param name="serviceObjectiveName"> Database service level objective for the newly created database in the case of an import operation. </param>
-        /// <param name="maxSizeBytes"> Database max size in bytes for the newly created database in the case of an import operation. </param>
-        /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlDatabaseExtension(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatabaseExtensionOperationMode? operationMode, StorageKeyType? storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword, string authenticationType, string databaseEdition, string serviceObjectiveName, string maxSizeBytes, NetworkIsolationSettings networkIsolation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal SqlDatabaseExtension(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DatabaseExtensionsProperties properties) : base(id, name, resourceType, systemData)
         {
-            OperationMode = operationMode;
-            StorageKeyType = storageKeyType;
-            StorageKey = storageKey;
-            StorageUri = storageUri;
-            AdministratorLogin = administratorLogin;
-            AdministratorLoginPassword = administratorLoginPassword;
-            AuthenticationType = authenticationType;
-            DatabaseEdition = databaseEdition;
-            ServiceObjectiveName = serviceObjectiveName;
-            MaxSizeBytes = maxSizeBytes;
-            NetworkIsolation = networkIsolation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Operation mode of the operation: Import, Export, or PolybaseImport. </summary>
-        [WirePath("properties.operationMode")]
-        public DatabaseExtensionOperationMode? OperationMode { get; set; }
-        /// <summary> Storage key type: StorageAccessKey, SharedAccessKey or ManagedIdentity. </summary>
-        [WirePath("properties.storageKeyType")]
-        public StorageKeyType? StorageKeyType { get; set; }
-        /// <summary> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </summary>
-        [WirePath("properties.storageKey")]
-        public string StorageKey { get; set; }
-        /// <summary> Storage Uri for the storage account. </summary>
-        [WirePath("properties.storageUri")]
-        public Uri StorageUri { get; set; }
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal DatabaseExtensionsProperties Properties { get; set; }
+
         /// <summary> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </summary>
         [WirePath("properties.administratorLogin")]
-        public string AdministratorLogin { get; set; }
+        public string AdministratorLogin
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorLogin;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseExtensionsProperties();
+                }
+                Properties.AdministratorLogin = value;
+            }
+        }
+
         /// <summary> Administrator login password. If AuthenticationType is ManagedIdentity, this field should not be specified. </summary>
         [WirePath("properties.administratorLoginPassword")]
-        public string AdministratorLoginPassword { get; set; }
+        public string AdministratorLoginPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministratorLoginPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseExtensionsProperties();
+                }
+                Properties.AdministratorLoginPassword = value;
+            }
+        }
+
         /// <summary> Authentication type used to access the SQL: Sql, ADPassword or ManagedIdentity. </summary>
         [WirePath("properties.authenticationType")]
-        public string AuthenticationType { get; set; }
+        public string AuthenticationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthenticationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseExtensionsProperties();
+                }
+                Properties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> Database edition for the newly created database in the case of an import operation. </summary>
         [WirePath("properties.databaseEdition")]
-        public string DatabaseEdition { get; set; }
+        public string DatabaseEdition
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseEdition;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseExtensionsProperties();
+                }
+                Properties.DatabaseEdition = value;
+            }
+        }
+
         /// <summary> Database service level objective for the newly created database in the case of an import operation. </summary>
         [WirePath("properties.serviceObjectiveName")]
-        public string ServiceObjectiveName { get; set; }
+        public string ServiceObjectiveName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceObjectiveName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseExtensionsProperties();
+                }
+                Properties.ServiceObjectiveName = value;
+            }
+        }
+
         /// <summary> Database max size in bytes for the newly created database in the case of an import operation. </summary>
         [WirePath("properties.maxSizeBytes")]
-        public string MaxSizeBytes { get; set; }
+        public string MaxSizeBytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxSizeBytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseExtensionsProperties();
+                }
+                Properties.MaxSizeBytes = value;
+            }
+        }
+
         /// <summary> Optional resource information to enable network isolation for request. </summary>
         [WirePath("properties.networkIsolation")]
-        public NetworkIsolationSettings NetworkIsolation { get; set; }
+        public NetworkIsolationSettings NetworkIsolation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkIsolation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseExtensionsProperties();
+                }
+                Properties.NetworkIsolation = value;
+            }
+        }
     }
 }

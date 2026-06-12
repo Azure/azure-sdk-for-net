@@ -9,94 +9,101 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A LongTermRetentionBackup operation result resource. </summary>
     public partial class LongTermRetentionBackupOperationResult : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LongTermRetentionBackupOperationResult"/>. </summary>
-        public LongTermRetentionBackupOperationResult()
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal LongTermRetentionBackupOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, LongTermRetentionOperationResultProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LongTermRetentionBackupOperationResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="requestId"> Request Id. </param>
-        /// <param name="operationType"> Operation type. </param>
-        /// <param name="fromBackupResourceId"> Source backup resource id. </param>
-        /// <param name="toBackupResourceId"> Target backup resource id. </param>
-        /// <param name="targetBackupStorageRedundancy"> The storage redundancy type of the copied backup. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="message"> Progress message. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LongTermRetentionBackupOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? requestId, string operationType, ResourceIdentifier fromBackupResourceId, ResourceIdentifier toBackupResourceId, SqlBackupStorageRedundancy? targetBackupStorageRedundancy, string status, string message, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
-        {
-            RequestId = requestId;
-            OperationType = operationType;
-            FromBackupResourceId = fromBackupResourceId;
-            ToBackupResourceId = toBackupResourceId;
-            TargetBackupStorageRedundancy = targetBackupStorageRedundancy;
-            Status = status;
-            Message = message;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal LongTermRetentionOperationResultProperties Properties { get; }
 
         /// <summary> Request Id. </summary>
         [WirePath("properties.requestId")]
-        public Guid? RequestId { get; }
+        public Guid? RequestId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequestId;
+            }
+        }
+
         /// <summary> Operation type. </summary>
         [WirePath("properties.operationType")]
-        public string OperationType { get; }
+        public string OperationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperationType;
+            }
+        }
+
         /// <summary> Source backup resource id. </summary>
         [WirePath("properties.fromBackupResourceId")]
-        public ResourceIdentifier FromBackupResourceId { get; }
+        public ResourceIdentifier FromBackupResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FromBackupResourceId;
+            }
+        }
+
         /// <summary> Target backup resource id. </summary>
         [WirePath("properties.toBackupResourceId")]
-        public ResourceIdentifier ToBackupResourceId { get; }
+        public ResourceIdentifier ToBackupResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ToBackupResourceId;
+            }
+        }
+
         /// <summary> The storage redundancy type of the copied backup. </summary>
         [WirePath("properties.targetBackupStorageRedundancy")]
-        public SqlBackupStorageRedundancy? TargetBackupStorageRedundancy { get; }
+        public SqlBackupStorageRedundancy? TargetBackupStorageRedundancy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetBackupStorageRedundancy;
+            }
+        }
+
         /// <summary> Operation status. </summary>
         [WirePath("properties.status")]
-        public string Status { get; }
+        public string Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> Progress message. </summary>
         [WirePath("properties.message")]
-        public string Message { get; }
+        public string Message
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Message;
+            }
+        }
     }
 }

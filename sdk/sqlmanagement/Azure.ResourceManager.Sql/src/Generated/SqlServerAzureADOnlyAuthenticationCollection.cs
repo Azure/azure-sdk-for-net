@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerAzureADOnlyAuthenticationCollection : ArmCollection, IEnumerable<SqlServerAzureADOnlyAuthenticationResource>, IAsyncEnumerable<SqlServerAzureADOnlyAuthenticationResource>
     {
-        private readonly ClientDiagnostics _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics;
-        private readonly ServerAzureADOnlyAuthenticationsRestOperations _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient;
+        private readonly ClientDiagnostics _serverAzureADOnlyAuthenticationsClientDiagnostics;
+        private readonly ServerAzureADOnlyAuthentications _serverAzureADOnlyAuthenticationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerAzureADOnlyAuthenticationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SqlServerAzureADOnlyAuthenticationCollection for mocking. </summary>
         protected SqlServerAzureADOnlyAuthenticationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerAzureADOnlyAuthenticationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerAzureADOnlyAuthenticationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlServerAzureADOnlyAuthenticationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerAzureADOnlyAuthenticationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SqlServerAzureADOnlyAuthenticationResource.ResourceType, out string sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsApiVersion);
-            _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient = new ServerAzureADOnlyAuthenticationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SqlServerAzureADOnlyAuthenticationResource.ResourceType, out string sqlServerAzureADOnlyAuthenticationApiVersion);
+            _serverAzureADOnlyAuthenticationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerAzureADOnlyAuthenticationResource.ResourceType.Namespace, Diagnostics);
+            _serverAzureADOnlyAuthenticationsRestClient = new ServerAzureADOnlyAuthentications(_serverAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, Endpoint, sqlServerAzureADOnlyAuthenticationApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SqlServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Sets Server Active Directory only authentication property or updates an existing server Active Directory only authentication property.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAzureADOnlyAuthentications_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerAzureADOnlyAuthentications_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerAzureADOnlyAuthenticationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,14 +81,27 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _serverAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerAzureADOnlyAuthenticationResource>(new SqlServerAzureADOnlyAuthenticationOperationSource(Client), _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), SqlServerAzureADOnlyAuthenticationData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SqlArmOperation<SqlServerAzureADOnlyAuthenticationResource> operation = new SqlArmOperation<SqlServerAzureADOnlyAuthenticationResource>(
+                    new SqlServerAzureADOnlyAuthenticationOperationSource(Client),
+                    _serverAzureADOnlyAuthenticationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -103,20 +115,16 @@ namespace Azure.ResourceManager.Sql
         /// Sets Server Active Directory only authentication property or updates an existing server Active Directory only authentication property.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAzureADOnlyAuthentications_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerAzureADOnlyAuthentications_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerAzureADOnlyAuthenticationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,14 +137,27 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _serverAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerAzureADOnlyAuthenticationResource>(new SqlServerAzureADOnlyAuthenticationOperationSource(Client), _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), SqlServerAzureADOnlyAuthenticationData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SqlArmOperation<SqlServerAzureADOnlyAuthenticationResource> operation = new SqlArmOperation<SqlServerAzureADOnlyAuthenticationResource>(
+                    new SqlServerAzureADOnlyAuthenticationOperationSource(Client),
+                    _serverAzureADOnlyAuthenticationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -150,20 +171,16 @@ namespace Azure.ResourceManager.Sql
         /// Gets a specific Azure Active Directory only authentication property.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAzureADOnlyAuthentications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerAzureADOnlyAuthentications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerAzureADOnlyAuthenticationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,13 +188,21 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SqlServerAzureADOnlyAuthenticationResource>> GetAsync(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.Get");
+            using DiagnosticScope scope = _serverAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SqlServerAzureADOnlyAuthenticationData> response = Response.FromValue(SqlServerAzureADOnlyAuthenticationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerAzureADOnlyAuthenticationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -191,20 +216,16 @@ namespace Azure.ResourceManager.Sql
         /// Gets a specific Azure Active Directory only authentication property.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAzureADOnlyAuthentications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerAzureADOnlyAuthentications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerAzureADOnlyAuthenticationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,13 +233,21 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SqlServerAzureADOnlyAuthenticationResource> Get(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.Get");
+            using DiagnosticScope scope = _serverAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.Get");
             scope.Start();
             try
             {
-                var response = _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SqlServerAzureADOnlyAuthenticationData> response = Response.FromValue(SqlServerAzureADOnlyAuthenticationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerAzureADOnlyAuthenticationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -232,50 +261,50 @@ namespace Azure.ResourceManager.Sql
         /// Gets a list of server Azure Active Directory only authentications.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAzureADOnlyAuthentications_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerAzureADOnlyAuthentications_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerAzureADOnlyAuthenticationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerAzureADOnlyAuthenticationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerAzureADOnlyAuthenticationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerAzureADOnlyAuthenticationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerAzureADOnlyAuthenticationResource(Client, SqlServerAzureADOnlyAuthenticationData.DeserializeSqlServerAzureADOnlyAuthenticationData(e)), _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, "SqlServerAzureADOnlyAuthenticationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SqlServerAzureADOnlyAuthenticationData, SqlServerAzureADOnlyAuthenticationResource>(new ServerAzureADOnlyAuthenticationsGetByServerAsyncCollectionResultOfT(
+                _serverAzureADOnlyAuthenticationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SqlServerAzureADOnlyAuthenticationCollection.GetAll"), data => new SqlServerAzureADOnlyAuthenticationResource(Client, data));
         }
 
         /// <summary>
         /// Gets a list of server Azure Active Directory only authentications.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAzureADOnlyAuthentications_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerAzureADOnlyAuthentications_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerAzureADOnlyAuthenticationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,29 +312,33 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerAzureADOnlyAuthenticationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerAzureADOnlyAuthenticationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerAzureADOnlyAuthenticationResource(Client, SqlServerAzureADOnlyAuthenticationData.DeserializeSqlServerAzureADOnlyAuthenticationData(e)), _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics, Pipeline, "SqlServerAzureADOnlyAuthenticationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SqlServerAzureADOnlyAuthenticationData, SqlServerAzureADOnlyAuthenticationResource>(new ServerAzureADOnlyAuthenticationsGetByServerCollectionResultOfT(
+                _serverAzureADOnlyAuthenticationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SqlServerAzureADOnlyAuthenticationCollection.GetAll"), data => new SqlServerAzureADOnlyAuthenticationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAzureADOnlyAuthentications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerAzureADOnlyAuthentications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerAzureADOnlyAuthenticationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -313,11 +346,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.Exists");
+            using DiagnosticScope scope = _serverAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SqlServerAzureADOnlyAuthenticationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerAzureADOnlyAuthenticationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerAzureADOnlyAuthenticationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -331,20 +382,16 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAzureADOnlyAuthentications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerAzureADOnlyAuthentications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerAzureADOnlyAuthenticationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,11 +399,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.Exists");
+            using DiagnosticScope scope = _serverAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SqlServerAzureADOnlyAuthenticationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerAzureADOnlyAuthenticationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerAzureADOnlyAuthenticationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -370,20 +435,16 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAzureADOnlyAuthentications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerAzureADOnlyAuthentications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerAzureADOnlyAuthenticationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -391,13 +452,33 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<SqlServerAzureADOnlyAuthenticationResource>> GetIfExistsAsync(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.GetIfExists");
+            using DiagnosticScope scope = _serverAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SqlServerAzureADOnlyAuthenticationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerAzureADOnlyAuthenticationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerAzureADOnlyAuthenticationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SqlServerAzureADOnlyAuthenticationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerAzureADOnlyAuthenticationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -411,20 +492,16 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/azureADOnlyAuthentications/{authenticationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAzureADOnlyAuthentications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerAzureADOnlyAuthentications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerAzureADOnlyAuthenticationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -432,13 +509,33 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<SqlServerAzureADOnlyAuthenticationResource> GetIfExists(AuthenticationName authenticationName, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.GetIfExists");
+            using DiagnosticScope scope = _serverAzureADOnlyAuthenticationsClientDiagnostics.CreateScope("SqlServerAzureADOnlyAuthenticationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _sqlServerAzureADOnlyAuthenticationServerAzureADOnlyAuthenticationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, authenticationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverAzureADOnlyAuthenticationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authenticationName.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SqlServerAzureADOnlyAuthenticationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerAzureADOnlyAuthenticationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerAzureADOnlyAuthenticationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SqlServerAzureADOnlyAuthenticationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerAzureADOnlyAuthenticationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -458,6 +555,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SqlServerAzureADOnlyAuthenticationResource> IAsyncEnumerable<SqlServerAzureADOnlyAuthenticationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

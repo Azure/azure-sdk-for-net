@@ -7,53 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The SqlNetworkSecurityPerimeterConfigAccessRuleProperties. </summary>
     public partial class SqlNetworkSecurityPerimeterConfigAccessRuleProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="SqlNetworkSecurityPerimeterConfigAccessRuleProperties"/>. </summary>
-        public SqlNetworkSecurityPerimeterConfigAccessRuleProperties()
-        {
-            AddressPrefixes = new ChangeTrackingList<string>();
-            FullyQualifiedDomainNames = new ChangeTrackingList<string>();
-            Subscriptions = new ChangeTrackingList<string>();
-            NetworkSecurityPerimeters = new ChangeTrackingList<SqlNetworkSecurityPerimeterConfigRule>();
-            ServiceTags = new ChangeTrackingList<string>();
-        }
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlNetworkSecurityPerimeterConfigAccessRuleProperties"/>. </summary>
         /// <param name="direction"></param>
@@ -62,8 +24,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="subscriptions"></param>
         /// <param name="networkSecurityPerimeters"></param>
         /// <param name="serviceTags"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlNetworkSecurityPerimeterConfigAccessRuleProperties(string direction, IList<string> addressPrefixes, IList<string> fullyQualifiedDomainNames, IList<string> subscriptions, IList<SqlNetworkSecurityPerimeterConfigRule> networkSecurityPerimeters, IList<string> serviceTags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlNetworkSecurityPerimeterConfigAccessRuleProperties(string direction, IList<string> addressPrefixes, IList<string> fullyQualifiedDomainNames, IList<string> subscriptions, IList<SqlNetworkSecurityPerimeterConfigRule> networkSecurityPerimeters, IList<string> serviceTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -71,25 +33,26 @@ namespace Azure.ResourceManager.Sql.Models
             Subscriptions = subscriptions;
             NetworkSecurityPerimeters = networkSecurityPerimeters;
             ServiceTags = serviceTags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the direction. </summary>
-        [WirePath("direction")]
-        public string Direction { get; set; }
-        /// <summary> Gets the address prefixes. </summary>
+        /// <summary> Gets the AddressPrefixes. </summary>
         [WirePath("addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
-        /// <summary> Gets the fully qualified domain names. </summary>
+
+        /// <summary> Gets the FullyQualifiedDomainNames. </summary>
         [WirePath("fullyQualifiedDomainNames")]
         public IList<string> FullyQualifiedDomainNames { get; }
-        /// <summary> Gets the subscriptions. </summary>
+
+        /// <summary> Gets the Subscriptions. </summary>
         [WirePath("subscriptions")]
         public IList<string> Subscriptions { get; }
-        /// <summary> Gets the network security perimeters. </summary>
+
+        /// <summary> Gets the NetworkSecurityPerimeters. </summary>
         [WirePath("networkSecurityPerimeters")]
         public IList<SqlNetworkSecurityPerimeterConfigRule> NetworkSecurityPerimeters { get; }
-        /// <summary> Gets the service tags. </summary>
+
+        /// <summary> Gets the ServiceTags. </summary>
         [WirePath("serviceTags")]
         public IList<string> ServiceTags { get; }
     }

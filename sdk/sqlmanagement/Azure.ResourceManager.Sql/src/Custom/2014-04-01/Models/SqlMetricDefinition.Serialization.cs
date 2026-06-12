@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
+#pragma warning disable CS1591
 namespace Azure.ResourceManager.Sql.Models
 {
     public partial class SqlMetricDefinition : IUtf8JsonSerializable, IJsonModel<SqlMetricDefinition>
@@ -193,7 +194,7 @@ namespace Azure.ResourceManager.Sql.Models
                 if (Optional.IsDefined(Name))
                 {
                     builder.Append("  name: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Name, options, 2, false, "  name: ");
+                    builder.AppendLine(((IPersistableModel<SqlMetricName>)Name).Write(options).ToString());
                 }
             }
 
@@ -266,7 +267,7 @@ namespace Azure.ResourceManager.Sql.Models
                         builder.AppendLine("[");
                         foreach (var item in MetricAvailabilities)
                         {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  metricAvailabilities: ");
+                            builder.AppendLine(((IPersistableModel<SqlMetricAvailability>)item).Write(options).ToString());
                         }
                         builder.AppendLine("  ]");
                     }

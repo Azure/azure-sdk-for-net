@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -24,71 +25,82 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerDnsAliasCollection : ArmCollection, IEnumerable<SqlServerDnsAliasResource>, IAsyncEnumerable<SqlServerDnsAliasResource>
     {
-        private readonly ClientDiagnostics _sqlServerDnsAliasServerDnsAliasesClientDiagnostics;
-        private readonly ServerDnsAliasesRestOperations _sqlServerDnsAliasServerDnsAliasesRestClient;
+        private readonly ClientDiagnostics _serverDnsAliasesClientDiagnostics;
+        private readonly ServerDnsAliases _serverDnsAliasesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerDnsAliasCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SqlServerDnsAliasCollection for mocking. </summary>
         protected SqlServerDnsAliasCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerDnsAliasCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerDnsAliasCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlServerDnsAliasCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlServerDnsAliasServerDnsAliasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDnsAliasResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SqlServerDnsAliasResource.ResourceType, out string sqlServerDnsAliasServerDnsAliasesApiVersion);
-            _sqlServerDnsAliasServerDnsAliasesRestClient = new ServerDnsAliasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerDnsAliasServerDnsAliasesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SqlServerDnsAliasResource.ResourceType, out string sqlServerDnsAliasApiVersion);
+            _serverDnsAliasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerDnsAliasResource.ResourceType.Namespace, Diagnostics);
+            _serverDnsAliasesRestClient = new ServerDnsAliases(_serverDnsAliasesClientDiagnostics, Pipeline, Endpoint, sqlServerDnsAliasApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SqlServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SqlServerResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a server DNS alias.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDnsAliases_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDnsAliases_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDnsAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SqlServerDnsAliasResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _sqlServerDnsAliasServerDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _serverDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sqlServerDnsAliasServerDnsAliasesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerDnsAliasResource>(new SqlServerDnsAliasOperationSource(Client), _sqlServerDnsAliasServerDnsAliasesClientDiagnostics, Pipeline, _sqlServerDnsAliasServerDnsAliasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDnsAliasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SqlArmOperation<SqlServerDnsAliasResource> operation = new SqlArmOperation<SqlServerDnsAliasResource>(
+                    new SqlServerDnsAliasOperationSource(Client),
+                    _serverDnsAliasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -102,40 +114,49 @@ namespace Azure.ResourceManager.Sql
         /// Creates a server DNS alias.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDnsAliases_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDnsAliases_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDnsAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SqlServerDnsAliasResource> CreateOrUpdate(WaitUntil waitUntil, string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _sqlServerDnsAliasServerDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _serverDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sqlServerDnsAliasServerDnsAliasesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerDnsAliasResource>(new SqlServerDnsAliasOperationSource(Client), _sqlServerDnsAliasServerDnsAliasesClientDiagnostics, Pipeline, _sqlServerDnsAliasServerDnsAliasesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDnsAliasesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SqlArmOperation<SqlServerDnsAliasResource> operation = new SqlArmOperation<SqlServerDnsAliasResource>(
+                    new SqlServerDnsAliasOperationSource(Client),
+                    _serverDnsAliasesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -149,38 +170,42 @@ namespace Azure.ResourceManager.Sql
         /// Gets a server DNS alias.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDnsAliases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDnsAliases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDnsAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SqlServerDnsAliasResource>> GetAsync(string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _sqlServerDnsAliasServerDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.Get");
+            using DiagnosticScope scope = _serverDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sqlServerDnsAliasServerDnsAliasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SqlServerDnsAliasData> response = Response.FromValue(SqlServerDnsAliasData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerDnsAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -194,38 +219,42 @@ namespace Azure.ResourceManager.Sql
         /// Gets a server DNS alias.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDnsAliases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDnsAliases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDnsAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SqlServerDnsAliasResource> Get(string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _sqlServerDnsAliasServerDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.Get");
+            using DiagnosticScope scope = _serverDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.Get");
             scope.Start();
             try
             {
-                var response = _sqlServerDnsAliasServerDnsAliasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SqlServerDnsAliasData> response = Response.FromValue(SqlServerDnsAliasData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerDnsAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,50 +268,50 @@ namespace Azure.ResourceManager.Sql
         /// Gets a list of server DNS aliases for a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDnsAliases_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDnsAliases_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDnsAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerDnsAliasResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerDnsAliasResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerDnsAliasResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDnsAliasServerDnsAliasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDnsAliasServerDnsAliasesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerDnsAliasResource(Client, SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(e)), _sqlServerDnsAliasServerDnsAliasesClientDiagnostics, Pipeline, "SqlServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SqlServerDnsAliasData, SqlServerDnsAliasResource>(new ServerDnsAliasesGetByServerAsyncCollectionResultOfT(
+                _serverDnsAliasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SqlServerDnsAliasCollection.GetAll"), data => new SqlServerDnsAliasResource(Client, data));
         }
 
         /// <summary>
         /// Gets a list of server DNS aliases for a server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDnsAliases_ListByServer</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDnsAliases_ListByServer. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDnsAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,45 +319,67 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerDnsAliasResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerDnsAliasResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerDnsAliasServerDnsAliasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sqlServerDnsAliasServerDnsAliasesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerDnsAliasResource(Client, SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(e)), _sqlServerDnsAliasServerDnsAliasesClientDiagnostics, Pipeline, "SqlServerDnsAliasCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SqlServerDnsAliasData, SqlServerDnsAliasResource>(new ServerDnsAliasesGetByServerCollectionResultOfT(
+                _serverDnsAliasesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SqlServerDnsAliasCollection.GetAll"), data => new SqlServerDnsAliasResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDnsAliases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDnsAliases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDnsAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _sqlServerDnsAliasServerDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.Exists");
+            using DiagnosticScope scope = _serverDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _sqlServerDnsAliasServerDnsAliasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SqlServerDnsAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerDnsAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerDnsAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -342,36 +393,50 @@ namespace Azure.ResourceManager.Sql
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDnsAliases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDnsAliases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDnsAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _sqlServerDnsAliasServerDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.Exists");
+            using DiagnosticScope scope = _serverDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.Exists");
             scope.Start();
             try
             {
-                var response = _sqlServerDnsAliasServerDnsAliasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SqlServerDnsAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerDnsAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerDnsAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -385,38 +450,54 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDnsAliases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDnsAliases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDnsAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SqlServerDnsAliasResource>> GetIfExistsAsync(string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _sqlServerDnsAliasServerDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.GetIfExists");
+            using DiagnosticScope scope = _serverDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _sqlServerDnsAliasServerDnsAliasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SqlServerDnsAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerDnsAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerDnsAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SqlServerDnsAliasResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerDnsAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -430,38 +511,54 @@ namespace Azure.ResourceManager.Sql
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/dnsAliases/{dnsAliasName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerDnsAliases_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerDnsAliases_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerDnsAliasResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dnsAliasName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SqlServerDnsAliasResource> GetIfExists(string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
 
-            using var scope = _sqlServerDnsAliasServerDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.GetIfExists");
+            using DiagnosticScope scope = _serverDnsAliasesClientDiagnostics.CreateScope("SqlServerDnsAliasCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _sqlServerDnsAliasServerDnsAliasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dnsAliasName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverDnsAliasesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, dnsAliasName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SqlServerDnsAliasData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SqlServerDnsAliasData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SqlServerDnsAliasData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SqlServerDnsAliasResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerDnsAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -481,6 +578,7 @@ namespace Azure.ResourceManager.Sql
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SqlServerDnsAliasResource> IAsyncEnumerable<SqlServerDnsAliasResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal class SqlServerSecurityAlertPolicyOperationSource : IOperationSource<SqlServerSecurityAlertPolicyResource>
+    /// <summary></summary>
+    internal partial class SqlServerSecurityAlertPolicyOperationSource : IOperationSource<SqlServerSecurityAlertPolicyResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SqlServerSecurityAlertPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SqlServerSecurityAlertPolicyResource IOperationSource<SqlServerSecurityAlertPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerSecurityAlertPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SqlServerSecurityAlertPolicyData data = SqlServerSecurityAlertPolicyData.DeserializeSqlServerSecurityAlertPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SqlServerSecurityAlertPolicyResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SqlServerSecurityAlertPolicyResource> IOperationSource<SqlServerSecurityAlertPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlServerSecurityAlertPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
-            return await Task.FromResult(new SqlServerSecurityAlertPolicyResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SqlServerSecurityAlertPolicyData data = SqlServerSecurityAlertPolicyData.DeserializeSqlServerSecurityAlertPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SqlServerSecurityAlertPolicyResource(_client, data);
         }
     }
 }
