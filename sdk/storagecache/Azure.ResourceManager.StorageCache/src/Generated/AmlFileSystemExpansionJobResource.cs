@@ -20,40 +20,40 @@ using Azure.ResourceManager.StorageCache.Models;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
-    /// A class representing a ExpansionJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ExpansionJobResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AmlFileSystemResource"/> using the GetExpansionJobs method.
+    /// A class representing a AmlFileSystemExpansionJob along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AmlFileSystemExpansionJobResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AmlFileSystemResource"/> using the GetAmlFileSystemExpansionJobs method.
     /// </summary>
-    public partial class ExpansionJobResource : ArmResource
+    public partial class AmlFileSystemExpansionJobResource : ArmResource
     {
         private readonly ClientDiagnostics _expansionJobsClientDiagnostics;
         private readonly ExpansionJobs _expansionJobsRestClient;
-        private readonly ExpansionJobData _data;
+        private readonly AmlFileSystemExpansionJobData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.StorageCache/amlFilesystems/expansionJobs";
 
-        /// <summary> Initializes a new instance of ExpansionJobResource for mocking. </summary>
-        protected ExpansionJobResource()
+        /// <summary> Initializes a new instance of AmlFileSystemExpansionJobResource for mocking. </summary>
+        protected AmlFileSystemExpansionJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExpansionJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemExpansionJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ExpansionJobResource(ArmClient client, ExpansionJobData data) : this(client, data.Id)
+        internal AmlFileSystemExpansionJobResource(ArmClient client, AmlFileSystemExpansionJobData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExpansionJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemExpansionJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ExpansionJobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AmlFileSystemExpansionJobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string expansionJobApiVersion);
+            TryGetApiVersion(ResourceType, out string amlFileSystemExpansionJobApiVersion);
             _expansionJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", ResourceType.Namespace, Diagnostics);
-            _expansionJobsRestClient = new ExpansionJobs(_expansionJobsClientDiagnostics, Pipeline, Endpoint, expansionJobApiVersion ?? "2026-01-01");
+            _expansionJobsRestClient = new ExpansionJobs(_expansionJobsClientDiagnostics, Pipeline, Endpoint, amlFileSystemExpansionJobApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StorageCache
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ExpansionJobData Data
+        public virtual AmlFileSystemExpansionJobData Data
         {
             get
             {
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ExpansionJobResource"/>. </description>
+        /// <description> <see cref="AmlFileSystemExpansionJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ExpansionJobResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AmlFileSystemExpansionJobResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.Get");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("AmlFileSystemExpansionJobResource.Get");
             scope.Start();
             try
             {
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.StorageCache
                 };
                 HttpMessage message = _expansionJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ExpansionJobData> response = Response.FromValue(ExpansionJobData.FromResponse(result), result);
+                Response<AmlFileSystemExpansionJobData> response = Response.FromValue(AmlFileSystemExpansionJobData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExpansionJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AmlFileSystemExpansionJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -159,14 +159,14 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ExpansionJobResource"/>. </description>
+        /// <description> <see cref="AmlFileSystemExpansionJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ExpansionJobResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AmlFileSystemExpansionJobResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.Get");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("AmlFileSystemExpansionJobResource.Get");
             scope.Start();
             try
             {
@@ -176,12 +176,12 @@ namespace Azure.ResourceManager.StorageCache
                 };
                 HttpMessage message = _expansionJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ExpansionJobData> response = Response.FromValue(ExpansionJobData.FromResponse(result), result);
+                Response<AmlFileSystemExpansionJobData> response = Response.FromValue(AmlFileSystemExpansionJobData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExpansionJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AmlFileSystemExpansionJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ExpansionJobResource"/>. </description>
+        /// <description> <see cref="AmlFileSystemExpansionJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,11 +215,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="patch"> Object containing the user-selectable properties of the expansion job. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<ExpansionJobResource>> UpdateAsync(WaitUntil waitUntil, ExpansionJobPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AmlFileSystemExpansionJobResource>> UpdateAsync(WaitUntil waitUntil, AmlFileSystemExpansionJobPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.Update");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("AmlFileSystemExpansionJobResource.Update");
             scope.Start();
             try
             {
@@ -227,10 +227,10 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expansionJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ExpansionJobPatch.ToRequestContent(patch), context);
+                HttpMessage message = _expansionJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, AmlFileSystemExpansionJobPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                StorageCacheArmOperation<ExpansionJobResource> operation = new StorageCacheArmOperation<ExpansionJobResource>(
-                    new ExpansionJobResourceOperationSource(Client),
+                StorageCacheArmOperation<AmlFileSystemExpansionJobResource> operation = new StorageCacheArmOperation<AmlFileSystemExpansionJobResource>(
+                    new AmlFileSystemExpansionJobResourceOperationSource(Client),
                     _expansionJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ExpansionJobResource"/>. </description>
+        /// <description> <see cref="AmlFileSystemExpansionJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="patch"> Object containing the user-selectable properties of the expansion job. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<ExpansionJobResource> Update(WaitUntil waitUntil, ExpansionJobPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AmlFileSystemExpansionJobResource> Update(WaitUntil waitUntil, AmlFileSystemExpansionJobPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.Update");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("AmlFileSystemExpansionJobResource.Update");
             scope.Start();
             try
             {
@@ -286,10 +286,10 @@ namespace Azure.ResourceManager.StorageCache
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expansionJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ExpansionJobPatch.ToRequestContent(patch), context);
+                HttpMessage message = _expansionJobsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, AmlFileSystemExpansionJobPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                StorageCacheArmOperation<ExpansionJobResource> operation = new StorageCacheArmOperation<ExpansionJobResource>(
-                    new ExpansionJobResourceOperationSource(Client),
+                StorageCacheArmOperation<AmlFileSystemExpansionJobResource> operation = new StorageCacheArmOperation<AmlFileSystemExpansionJobResource>(
+                    new AmlFileSystemExpansionJobResourceOperationSource(Client),
                     _expansionJobsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ExpansionJobResource"/>. </description>
+        /// <description> <see cref="AmlFileSystemExpansionJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.Delete");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("AmlFileSystemExpansionJobResource.Delete");
             scope.Start();
             try
             {
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ExpansionJobResource"/>. </description>
+        /// <description> <see cref="AmlFileSystemExpansionJobResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.Delete");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("AmlFileSystemExpansionJobResource.Delete");
             scope.Start();
             try
             {
@@ -411,12 +411,12 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<ExpansionJobResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AmlFileSystemExpansionJobResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.AddTag");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("AmlFileSystemExpansionJobResource.AddTag");
             scope.Start();
             try
             {
@@ -431,19 +431,19 @@ namespace Azure.ResourceManager.StorageCache
                     };
                     HttpMessage message = _expansionJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ExpansionJobData> response = Response.FromValue(ExpansionJobData.FromResponse(result), result);
-                    return Response.FromValue(new ExpansionJobResource(Client, response.Value), response.GetRawResponse());
+                    Response<AmlFileSystemExpansionJobData> response = Response.FromValue(AmlFileSystemExpansionJobData.FromResponse(result), result);
+                    return Response.FromValue(new AmlFileSystemExpansionJobResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ExpansionJobData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ExpansionJobPatch patch = new ExpansionJobPatch();
+                    AmlFileSystemExpansionJobData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AmlFileSystemExpansionJobPatch patch = new AmlFileSystemExpansionJobPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<ExpansionJobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<AmlFileSystemExpansionJobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -459,12 +459,12 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ExpansionJobResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<AmlFileSystemExpansionJobResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.AddTag");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("AmlFileSystemExpansionJobResource.AddTag");
             scope.Start();
             try
             {
@@ -479,19 +479,19 @@ namespace Azure.ResourceManager.StorageCache
                     };
                     HttpMessage message = _expansionJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ExpansionJobData> response = Response.FromValue(ExpansionJobData.FromResponse(result), result);
-                    return Response.FromValue(new ExpansionJobResource(Client, response.Value), response.GetRawResponse());
+                    Response<AmlFileSystemExpansionJobData> response = Response.FromValue(AmlFileSystemExpansionJobData.FromResponse(result), result);
+                    return Response.FromValue(new AmlFileSystemExpansionJobResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ExpansionJobData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ExpansionJobPatch patch = new ExpansionJobPatch();
+                    AmlFileSystemExpansionJobData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AmlFileSystemExpansionJobPatch patch = new AmlFileSystemExpansionJobPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<ExpansionJobResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<AmlFileSystemExpansionJobResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -506,11 +506,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<ExpansionJobResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AmlFileSystemExpansionJobResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.SetTags");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("AmlFileSystemExpansionJobResource.SetTags");
             scope.Start();
             try
             {
@@ -526,15 +526,15 @@ namespace Azure.ResourceManager.StorageCache
                     };
                     HttpMessage message = _expansionJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ExpansionJobData> response = Response.FromValue(ExpansionJobData.FromResponse(result), result);
-                    return Response.FromValue(new ExpansionJobResource(Client, response.Value), response.GetRawResponse());
+                    Response<AmlFileSystemExpansionJobData> response = Response.FromValue(AmlFileSystemExpansionJobData.FromResponse(result), result);
+                    return Response.FromValue(new AmlFileSystemExpansionJobResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ExpansionJobData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ExpansionJobPatch patch = new ExpansionJobPatch();
+                    AmlFileSystemExpansionJobData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AmlFileSystemExpansionJobPatch patch = new AmlFileSystemExpansionJobPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<ExpansionJobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<AmlFileSystemExpansionJobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -549,11 +549,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ExpansionJobResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<AmlFileSystemExpansionJobResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.SetTags");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("AmlFileSystemExpansionJobResource.SetTags");
             scope.Start();
             try
             {
@@ -569,15 +569,15 @@ namespace Azure.ResourceManager.StorageCache
                     };
                     HttpMessage message = _expansionJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ExpansionJobData> response = Response.FromValue(ExpansionJobData.FromResponse(result), result);
-                    return Response.FromValue(new ExpansionJobResource(Client, response.Value), response.GetRawResponse());
+                    Response<AmlFileSystemExpansionJobData> response = Response.FromValue(AmlFileSystemExpansionJobData.FromResponse(result), result);
+                    return Response.FromValue(new AmlFileSystemExpansionJobResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ExpansionJobData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ExpansionJobPatch patch = new ExpansionJobPatch();
+                    AmlFileSystemExpansionJobData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AmlFileSystemExpansionJobPatch patch = new AmlFileSystemExpansionJobPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<ExpansionJobResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<AmlFileSystemExpansionJobResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -592,11 +592,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<ExpansionJobResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AmlFileSystemExpansionJobResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.RemoveTag");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("AmlFileSystemExpansionJobResource.RemoveTag");
             scope.Start();
             try
             {
@@ -611,19 +611,19 @@ namespace Azure.ResourceManager.StorageCache
                     };
                     HttpMessage message = _expansionJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<ExpansionJobData> response = Response.FromValue(ExpansionJobData.FromResponse(result), result);
-                    return Response.FromValue(new ExpansionJobResource(Client, response.Value), response.GetRawResponse());
+                    Response<AmlFileSystemExpansionJobData> response = Response.FromValue(AmlFileSystemExpansionJobData.FromResponse(result), result);
+                    return Response.FromValue(new AmlFileSystemExpansionJobResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ExpansionJobData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    ExpansionJobPatch patch = new ExpansionJobPatch();
+                    AmlFileSystemExpansionJobData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    AmlFileSystemExpansionJobPatch patch = new AmlFileSystemExpansionJobPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<ExpansionJobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<AmlFileSystemExpansionJobResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -638,11 +638,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ExpansionJobResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<AmlFileSystemExpansionJobResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("ExpansionJobResource.RemoveTag");
+            using DiagnosticScope scope = _expansionJobsClientDiagnostics.CreateScope("AmlFileSystemExpansionJobResource.RemoveTag");
             scope.Start();
             try
             {
@@ -657,19 +657,19 @@ namespace Azure.ResourceManager.StorageCache
                     };
                     HttpMessage message = _expansionJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<ExpansionJobData> response = Response.FromValue(ExpansionJobData.FromResponse(result), result);
-                    return Response.FromValue(new ExpansionJobResource(Client, response.Value), response.GetRawResponse());
+                    Response<AmlFileSystemExpansionJobData> response = Response.FromValue(AmlFileSystemExpansionJobData.FromResponse(result), result);
+                    return Response.FromValue(new AmlFileSystemExpansionJobResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    ExpansionJobData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    ExpansionJobPatch patch = new ExpansionJobPatch();
+                    AmlFileSystemExpansionJobData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    AmlFileSystemExpansionJobPatch patch = new AmlFileSystemExpansionJobPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<ExpansionJobResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<AmlFileSystemExpansionJobResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

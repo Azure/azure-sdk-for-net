@@ -12,21 +12,21 @@ using Azure.ResourceManager.StorageCache;
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> An expansion job update instance. </summary>
-    public partial class ExpansionJobPatch
+    public partial class AmlFileSystemExpansionJobPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExpansionJobPatch"/>. </summary>
-        public ExpansionJobPatch()
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemExpansionJobPatch"/>. </summary>
+        public AmlFileSystemExpansionJobPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExpansionJobPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemExpansionJobPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpansionJobPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AmlFileSystemExpansionJobPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

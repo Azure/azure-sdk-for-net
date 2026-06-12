@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ExpansionJobData item in Value)
+                foreach (AmlFileSystemExpansionJobData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            IList<ExpansionJobData> value = default;
+            IList<AmlFileSystemExpansionJobData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    List<ExpansionJobData> array = new List<ExpansionJobData>();
+                    List<AmlFileSystemExpansionJobData> array = new List<AmlFileSystemExpansionJobData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExpansionJobData.DeserializeExpansionJobData(item, options));
+                        array.Add(AmlFileSystemExpansionJobData.DeserializeAmlFileSystemExpansionJobData(item, options));
                     }
                     value = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExpansionJobsListResult(value ?? new ChangeTrackingList<ExpansionJobData>(), nextLink, additionalBinaryDataProperties);
+            return new ExpansionJobsListResult(value ?? new ChangeTrackingList<AmlFileSystemExpansionJobData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

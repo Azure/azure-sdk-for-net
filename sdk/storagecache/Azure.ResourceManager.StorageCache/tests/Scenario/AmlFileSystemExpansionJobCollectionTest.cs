@@ -9,10 +9,10 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 {
-    internal class ExpansionJobCollectionTest : StorageCacheManagementTestBase
+    internal class AmlFileSystemExpansionJobCollectionTest : StorageCacheManagementTestBase
     {
         private AmlFileSystemResource DefaultAmlFS { get; set; }
-        public ExpansionJobCollectionTest(bool isAsync)
+        public AmlFileSystemExpansionJobCollectionTest(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         public async Task CreateOrUpdate()
         {
             string name = Recording.GenerateAssetName("testexpansionjob1");
-            ExpansionJobResource expansionJobResource = null;
+            AmlFileSystemExpansionJobResource expansionJobResource = null;
 
             // Check if an expansion job already exists
-            var expansionJobs = DefaultAmlFS.GetExpansionJobs().GetAllAsync();
+            var expansionJobs = DefaultAmlFS.GetAmlFileSystemExpansionJobs().GetAllAsync();
             await foreach (var expansionJob in expansionJobs)
             {
                 if (expansionJob.Data.Name.Contains(name))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
             if (null == expansionJobResource)
             {
-                ExpansionJobData dataVar = new ExpansionJobData(this.DefaultLocation)
+                AmlFileSystemExpansionJobData dataVar = new AmlFileSystemExpansionJobData(this.DefaultLocation)
                 {
                     NewStorageCapacityTiB = 64,
                 };
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         public async Task Get()
         {
             string job = "testexpansionjob1";
-            ExpansionJobResource expansionJobResource = null;
-            var expansionJobs = DefaultAmlFS.GetExpansionJobs().GetAllAsync();
+            AmlFileSystemExpansionJobResource expansionJobResource = null;
+            var expansionJobs = DefaultAmlFS.GetAmlFileSystemExpansionJobs().GetAllAsync();
 
             await foreach (var expansionJob in expansionJobs)
             {
@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
             if (null == expansionJobResource)
             {
-                ExpansionJobData dataVar = new ExpansionJobData(this.DefaultLocation)
+                AmlFileSystemExpansionJobData dataVar = new AmlFileSystemExpansionJobData(this.DefaultLocation)
                 {
                     NewStorageCapacityTiB = 64,
                 };
                 expansionJobResource = await this.CreateOrUpdateExpansionJob(DefaultAmlFS, name: job, dataVar: dataVar);
             }
 
-            ExpansionJobResource result = await this.DefaultAmlFS.GetExpansionJobs().GetAsync(expansionJobResource.Data.Name);
+            AmlFileSystemExpansionJobResource result = await this.DefaultAmlFS.GetAmlFileSystemExpansionJobs().GetAsync(expansionJobResource.Data.Name);
 
             this.VerifyExpansionJob(result, expansionJobResource.Data);
         }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
             // Check if an expansion job already exists
             bool alreadyExists = false;
-            var expansionJobs = DefaultAmlFS.GetExpansionJobs().GetAllAsync();
+            var expansionJobs = DefaultAmlFS.GetAmlFileSystemExpansionJobs().GetAllAsync();
             await foreach (var expansionJob in expansionJobs)
             {
                 if (expansionJob.Data.Name.Contains(name))
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
             if (!alreadyExists)
             {
-                ExpansionJobData dataVar = new ExpansionJobData(this.DefaultLocation)
+                AmlFileSystemExpansionJobData dataVar = new AmlFileSystemExpansionJobData(this.DefaultLocation)
                 {
                     NewStorageCapacityTiB = 64,
                 };
                 await this.CreateOrUpdateExpansionJob(DefaultAmlFS, name, dataVar);
             }
 
-            bool exists = await this.DefaultAmlFS.GetExpansionJobs().ExistsAsync(name);
+            bool exists = await this.DefaultAmlFS.GetAmlFileSystemExpansionJobs().ExistsAsync(name);
             Assert.IsTrue(exists);
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         [RecordedTest]
         public async Task GetAll()
         {
-            var expansionJobs = DefaultAmlFS.GetExpansionJobs().GetAllAsync();
+            var expansionJobs = DefaultAmlFS.GetAmlFileSystemExpansionJobs().GetAllAsync();
 
             int count = 0;
             await foreach (var expansionJob in expansionJobs)
@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
         public async Task Delete()
         {
             string name = "testexpansionjob1";
-            ExpansionJobResource expansionJobResource = null;
+            AmlFileSystemExpansionJobResource expansionJobResource = null;
 
             // Check if an expansion job already exists
-            var expansionJobs = DefaultAmlFS.GetExpansionJobs().GetAllAsync();
+            var expansionJobs = DefaultAmlFS.GetAmlFileSystemExpansionJobs().GetAllAsync();
             await foreach (var expansionJob in expansionJobs)
             {
                 if (expansionJob.Data.Name.Contains(name))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
 
             if (null == expansionJobResource)
             {
-                ExpansionJobData dataVar = new ExpansionJobData(this.DefaultLocation)
+                AmlFileSystemExpansionJobData dataVar = new AmlFileSystemExpansionJobData(this.DefaultLocation)
                 {
                     NewStorageCapacityTiB = 64,
                 };
@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
             await this.WaitForExpansionJobCompletion(DefaultAmlFS, expansionJobResource.Data.Name);
 
             // Verify the job exists before deleting
-            ExpansionJobResource gotBeforeDelete = await this.DefaultAmlFS.GetExpansionJobs().GetAsync(expansionJobResource.Data.Name);
+            AmlFileSystemExpansionJobResource gotBeforeDelete = await this.DefaultAmlFS.GetAmlFileSystemExpansionJobs().GetAsync(expansionJobResource.Data.Name);
             Assert.IsNotNull(gotBeforeDelete);
 
             await expansionJobResource.DeleteAsync(WaitUntil.Completed);
 
-            bool exists = await this.DefaultAmlFS.GetExpansionJobs().ExistsAsync(expansionJobResource.Data.Name);
+            bool exists = await this.DefaultAmlFS.GetAmlFileSystemExpansionJobs().ExistsAsync(expansionJobResource.Data.Name);
             Assert.IsFalse(exists);
         }
     }

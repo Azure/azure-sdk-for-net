@@ -12,7 +12,7 @@ using Azure.ResourceManager.StorageCache;
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> The operational state of the expansion job. InProgress indicates the expansion is still running. Completed indicates expansion finished successfully. Failed means the expansion was unable to complete due to a fatal error. Deleting indicates the expansion is being rolled back. </summary>
-    public readonly partial struct ExpansionJobStatusType : IEquatable<ExpansionJobStatusType>
+    public readonly partial struct AmlFileSystemExpansionJobStatusType : IEquatable<AmlFileSystemExpansionJobStatusType>
     {
         private readonly string _value;
         /// <summary> InProgress. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> RollingBack. </summary>
         private const string RollingBackValue = "RollingBack";
 
-        /// <summary> Initializes a new instance of <see cref="ExpansionJobStatusType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemExpansionJobStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ExpansionJobStatusType(string value)
+        public AmlFileSystemExpansionJobStatusType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,44 +37,44 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> InProgress. </summary>
-        public static ExpansionJobStatusType InProgress { get; } = new ExpansionJobStatusType(InProgressValue);
+        public static AmlFileSystemExpansionJobStatusType InProgress { get; } = new AmlFileSystemExpansionJobStatusType(InProgressValue);
 
         /// <summary> Completed. </summary>
-        public static ExpansionJobStatusType Completed { get; } = new ExpansionJobStatusType(CompletedValue);
+        public static AmlFileSystemExpansionJobStatusType Completed { get; } = new AmlFileSystemExpansionJobStatusType(CompletedValue);
 
         /// <summary> Failed. </summary>
-        public static ExpansionJobStatusType Failed { get; } = new ExpansionJobStatusType(FailedValue);
+        public static AmlFileSystemExpansionJobStatusType Failed { get; } = new AmlFileSystemExpansionJobStatusType(FailedValue);
 
         /// <summary> Deleting. </summary>
-        public static ExpansionJobStatusType Deleting { get; } = new ExpansionJobStatusType(DeletingValue);
+        public static AmlFileSystemExpansionJobStatusType Deleting { get; } = new AmlFileSystemExpansionJobStatusType(DeletingValue);
 
         /// <summary> RollingBack. </summary>
-        public static ExpansionJobStatusType RollingBack { get; } = new ExpansionJobStatusType(RollingBackValue);
+        public static AmlFileSystemExpansionJobStatusType RollingBack { get; } = new AmlFileSystemExpansionJobStatusType(RollingBackValue);
 
-        /// <summary> Determines if two <see cref="ExpansionJobStatusType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AmlFileSystemExpansionJobStatusType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ExpansionJobStatusType left, ExpansionJobStatusType right) => left.Equals(right);
+        public static bool operator ==(AmlFileSystemExpansionJobStatusType left, AmlFileSystemExpansionJobStatusType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ExpansionJobStatusType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AmlFileSystemExpansionJobStatusType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ExpansionJobStatusType left, ExpansionJobStatusType right) => !left.Equals(right);
+        public static bool operator !=(AmlFileSystemExpansionJobStatusType left, AmlFileSystemExpansionJobStatusType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ExpansionJobStatusType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AmlFileSystemExpansionJobStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpansionJobStatusType(string value) => new ExpansionJobStatusType(value);
+        public static implicit operator AmlFileSystemExpansionJobStatusType(string value) => new AmlFileSystemExpansionJobStatusType(value);
 
-        /// <summary> Converts a string to a <see cref="ExpansionJobStatusType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AmlFileSystemExpansionJobStatusType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ExpansionJobStatusType?(string value) => value == null ? null : new ExpansionJobStatusType(value);
+        public static implicit operator AmlFileSystemExpansionJobStatusType?(string value) => value == null ? null : new AmlFileSystemExpansionJobStatusType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ExpansionJobStatusType other && Equals(other);
+        public override bool Equals(object obj) => obj is AmlFileSystemExpansionJobStatusType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ExpansionJobStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AmlFileSystemExpansionJobStatusType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

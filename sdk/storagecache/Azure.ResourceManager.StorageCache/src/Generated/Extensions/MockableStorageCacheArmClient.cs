@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.StorageCache.Mocking
             return new AutoImportJobResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ExpansionJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AmlFileSystemExpansionJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExpansionJobResource"/> object. </returns>
-        public virtual ExpansionJobResource GetExpansionJobResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AmlFileSystemExpansionJobResource"/> object. </returns>
+        public virtual AmlFileSystemExpansionJobResource GetAmlFileSystemExpansionJobResource(ResourceIdentifier id)
         {
-            ExpansionJobResource.ValidateResourceId(id);
-            return new ExpansionJobResource(Client, id);
+            AmlFileSystemExpansionJobResource.ValidateResourceId(id);
+            return new AmlFileSystemExpansionJobResource(Client, id);
         }
     }
 }

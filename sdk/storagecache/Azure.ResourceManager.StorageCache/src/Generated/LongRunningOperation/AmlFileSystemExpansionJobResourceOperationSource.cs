@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary></summary>
-    internal partial class ExpansionJobResourceOperationSource : IOperationSource<ExpansionJobResource>
+    internal partial class AmlFileSystemExpansionJobResourceOperationSource : IOperationSource<AmlFileSystemExpansionJobResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal ExpansionJobResourceOperationSource(ArmClient client)
+        internal AmlFileSystemExpansionJobResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ExpansionJobResource IOperationSource<ExpansionJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        AmlFileSystemExpansionJobResource IOperationSource<AmlFileSystemExpansionJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ExpansionJobData data = ExpansionJobData.DeserializeExpansionJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ExpansionJobResource(_client, data);
+            AmlFileSystemExpansionJobData data = AmlFileSystemExpansionJobData.DeserializeAmlFileSystemExpansionJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AmlFileSystemExpansionJobResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ExpansionJobResource> IOperationSource<ExpansionJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<AmlFileSystemExpansionJobResource> IOperationSource<AmlFileSystemExpansionJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ExpansionJobData data = ExpansionJobData.DeserializeExpansionJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new ExpansionJobResource(_client, data);
+            AmlFileSystemExpansionJobData data = AmlFileSystemExpansionJobData.DeserializeAmlFileSystemExpansionJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new AmlFileSystemExpansionJobResource(_client, data);
         }
     }
 }

@@ -952,11 +952,11 @@ namespace Azure.ResourceManager.StorageCache
             return GetAutoImportJobs().Get(autoImportJobName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExpansionJobs in the <see cref="AmlFileSystemResource"/>. </summary>
-        /// <returns> An object representing collection of ExpansionJobs and their operations over a ExpansionJobResource. </returns>
-        public virtual ExpansionJobCollection GetExpansionJobs()
+        /// <summary> Gets a collection of AmlFileSystemExpansionJobs in the <see cref="AmlFileSystemResource"/>. </summary>
+        /// <returns> An object representing collection of AmlFileSystemExpansionJobs and their operations over a AmlFileSystemExpansionJobResource. </returns>
+        public virtual AmlFileSystemExpansionJobCollection GetAmlFileSystemExpansionJobs()
         {
-            return GetCachedClient(client => new ExpansionJobCollection(client, Id));
+            return GetCachedClient(client => new AmlFileSystemExpansionJobCollection(client, Id));
         }
 
         /// <summary> Returns an expansion job. </summary>
@@ -965,11 +965,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExpansionJobResource>> GetExpansionJobAsync(string expansionJobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AmlFileSystemExpansionJobResource>> GetAmlFileSystemExpansionJobAsync(string expansionJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
 
-            return await GetExpansionJobs().GetAsync(expansionJobName, cancellationToken).ConfigureAwait(false);
+            return await GetAmlFileSystemExpansionJobs().GetAsync(expansionJobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Returns an expansion job. </summary>
@@ -978,11 +978,11 @@ namespace Azure.ResourceManager.StorageCache
         /// <exception cref="ArgumentNullException"> <paramref name="expansionJobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="expansionJobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExpansionJobResource> GetExpansionJob(string expansionJobName, CancellationToken cancellationToken = default)
+        public virtual Response<AmlFileSystemExpansionJobResource> GetAmlFileSystemExpansionJob(string expansionJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(expansionJobName, nameof(expansionJobName));
 
-            return GetExpansionJobs().Get(expansionJobName, cancellationToken);
+            return GetAmlFileSystemExpansionJobs().Get(expansionJobName, cancellationToken);
         }
     }
 }

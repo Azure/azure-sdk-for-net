@@ -18,10 +18,10 @@ using Azure.ResourceManager.StorageCache.Models;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary> An expansion job instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md. </summary>
-    public partial class ExpansionJobData : TrackedResourceData, IJsonModel<ExpansionJobData>
+    public partial class AmlFileSystemExpansionJobData : TrackedResourceData, IJsonModel<AmlFileSystemExpansionJobData>
     {
-        /// <summary> Initializes a new instance of <see cref="ExpansionJobData"/> for deserialization. </summary>
-        internal ExpansionJobData()
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemExpansionJobData"/> for deserialization. </summary>
+        internal AmlFileSystemExpansionJobData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExpansionJobData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemExpansionJobData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExpansionJobData(document.RootElement, options);
+                        return DeserializeAmlFileSystemExpansionJobData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpansionJobData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemExpansionJobData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExpansionJobData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemExpansionJobData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExpansionJobData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemExpansionJobData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExpansionJobData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AmlFileSystemExpansionJobData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExpansionJobData IPersistableModel<ExpansionJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExpansionJobData)PersistableModelCreateCore(data, options);
+        AmlFileSystemExpansionJobData IPersistableModel<AmlFileSystemExpansionJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AmlFileSystemExpansionJobData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExpansionJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AmlFileSystemExpansionJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="expansionJobData"> The <see cref="ExpansionJobData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ExpansionJobData expansionJobData)
+        /// <param name="amlFileSystemExpansionJobData"> The <see cref="AmlFileSystemExpansionJobData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(AmlFileSystemExpansionJobData amlFileSystemExpansionJobData)
         {
-            if (expansionJobData == null)
+            if (amlFileSystemExpansionJobData == null)
             {
                 return null;
             }
-            return RequestContent.Create(expansionJobData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(amlFileSystemExpansionJobData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExpansionJobData"/> from. </param>
-        internal static ExpansionJobData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AmlFileSystemExpansionJobData"/> from. </param>
+        internal static AmlFileSystemExpansionJobData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeExpansionJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAmlFileSystemExpansionJobData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExpansionJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AmlFileSystemExpansionJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExpansionJobData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemExpansionJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpansionJobData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemExpansionJobData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.StorageCache
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExpansionJobData IJsonModel<ExpansionJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExpansionJobData)JsonModelCreateCore(ref reader, options);
+        AmlFileSystemExpansionJobData IJsonModel<AmlFileSystemExpansionJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AmlFileSystemExpansionJobData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExpansionJobData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemExpansionJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpansionJobData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemExpansionJobData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExpansionJobData(document.RootElement, options);
+            return DeserializeAmlFileSystemExpansionJobData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExpansionJobData DeserializeExpansionJobData(JsonElement element, ModelReaderWriterOptions options)
+        internal static AmlFileSystemExpansionJobData DeserializeAmlFileSystemExpansionJobData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.StorageCache
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExpansionJobData(
+            return new AmlFileSystemExpansionJobData(
                 id,
                 name,
                 resourceType,

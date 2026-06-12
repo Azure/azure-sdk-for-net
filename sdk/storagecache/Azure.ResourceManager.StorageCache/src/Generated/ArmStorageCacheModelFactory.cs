@@ -852,12 +852,12 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="percentComplete"> The percentage of expansion job completion. </param>
         /// <param name="startTimeUTC"> The time (in UTC) the expansion job started. </param>
         /// <param name="completionTimeUTC"> The time (in UTC) when the expansion job completed. Only populated when job reaches a terminal state. </param>
-        /// <returns> A new <see cref="StorageCache.ExpansionJobData"/> instance for mocking. </returns>
-        public static ExpansionJobData ExpansionJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExpansionJobProvisioningState? provisioningState = default, float? newStorageCapacityTiB = default, ExpansionJobStatusType? state = default, string statusCode = default, string statusMessage = default, float? percentComplete = default, DateTimeOffset? startTimeUTC = default, DateTimeOffset? completionTimeUTC = default)
+        /// <returns> A new <see cref="StorageCache.AmlFileSystemExpansionJobData"/> instance for mocking. </returns>
+        public static AmlFileSystemExpansionJobData AmlFileSystemExpansionJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AmlFileSystemExpansionJobProvisioningState? provisioningState = default, float? newStorageCapacityTiB = default, AmlFileSystemExpansionJobStatusType? state = default, string statusCode = default, string statusMessage = default, float? percentComplete = default, DateTimeOffset? startTimeUTC = default, DateTimeOffset? completionTimeUTC = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ExpansionJobData(
+            return new AmlFileSystemExpansionJobData(
                 id,
                 name,
                 resourceType,
@@ -876,12 +876,12 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.ExpansionJobPatch"/> instance for mocking. </returns>
-        public static ExpansionJobPatch ExpansionJobPatch(IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Models.AmlFileSystemExpansionJobPatch"/> instance for mocking. </returns>
+        public static AmlFileSystemExpansionJobPatch AmlFileSystemExpansionJobPatch(IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ExpansionJobPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new AmlFileSystemExpansionJobPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>

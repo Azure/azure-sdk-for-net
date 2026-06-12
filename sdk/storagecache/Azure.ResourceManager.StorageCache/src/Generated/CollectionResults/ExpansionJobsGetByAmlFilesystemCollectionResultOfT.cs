@@ -14,7 +14,7 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    internal partial class ExpansionJobsGetByAmlFilesystemCollectionResultOfT : Pageable<ExpansionJobData>
+    internal partial class ExpansionJobsGetByAmlFilesystemCollectionResultOfT : Pageable<AmlFileSystemExpansionJobData>
     {
         private readonly ExpansionJobs _client;
         private readonly string _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ExpansionJobsGetByAmlFilesystemCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ExpansionJobData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<AmlFileSystemExpansionJobData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StorageCache
                     yield break;
                 }
                 ExpansionJobsListResult result = ExpansionJobsListResult.FromResponse(response);
-                yield return Page<ExpansionJobData>.FromValues((IReadOnlyList<ExpansionJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<AmlFileSystemExpansionJobData>.FromValues((IReadOnlyList<AmlFileSystemExpansionJobData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

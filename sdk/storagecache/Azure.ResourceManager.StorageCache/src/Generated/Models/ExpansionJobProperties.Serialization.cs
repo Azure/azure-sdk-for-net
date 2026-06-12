@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            ExpansionJobProvisioningState? provisioningState = default;
+            AmlFileSystemExpansionJobProvisioningState? provisioningState = default;
             float? newStorageCapacityTiB = default;
             ExpansionJobPropertiesStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    provisioningState = new ExpansionJobProvisioningState(prop.Value.GetString());
+                    provisioningState = new AmlFileSystemExpansionJobProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("newStorageCapacityTiB"u8))

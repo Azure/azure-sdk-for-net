@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="startTimeUTC"> The time (in UTC) the expansion job started. </param>
         /// <param name="completionTimeUTC"> The time (in UTC) when the expansion job completed. Only populated when job reaches a terminal state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpansionJobPropertiesStatus(ExpansionJobStatusType? state, string statusCode, string statusMessage, float? percentComplete, DateTimeOffset? startTimeUTC, DateTimeOffset? completionTimeUTC, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpansionJobPropertiesStatus(AmlFileSystemExpansionJobStatusType? state, string statusCode, string statusMessage, float? percentComplete, DateTimeOffset? startTimeUTC, DateTimeOffset? completionTimeUTC, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             StatusCode = statusCode;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> The operational state of the expansion job. InProgress indicates the expansion is still running. Completed indicates expansion finished successfully. Failed means the expansion was unable to complete due to a fatal error. Deleting indicates the expansion is being rolled back. </summary>
-        public ExpansionJobStatusType? State { get; }
+        public AmlFileSystemExpansionJobStatusType? State { get; }
 
         /// <summary> Server-defined status code for expansion job. </summary>
         public string StatusCode { get; }

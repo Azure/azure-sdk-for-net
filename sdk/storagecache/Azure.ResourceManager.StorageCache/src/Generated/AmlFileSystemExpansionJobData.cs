@@ -14,18 +14,18 @@ using Azure.ResourceManager.StorageCache.Models;
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary> An expansion job instance. Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md. </summary>
-    public partial class ExpansionJobData : TrackedResourceData
+    public partial class AmlFileSystemExpansionJobData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ExpansionJobData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemExpansionJobData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public ExpansionJobData(AzureLocation location) : base(location)
+        public AmlFileSystemExpansionJobData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExpansionJobData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlFileSystemExpansionJobData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of the expansion job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpansionJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExpansionJobProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal AmlFileSystemExpansionJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExpansionJobProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StorageCache
         internal ExpansionJobProperties Properties { get; set; }
 
         /// <summary> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </summary>
-        public ExpansionJobProvisioningState? ProvisioningState
+        public AmlFileSystemExpansionJobProvisioningState? ProvisioningState
         {
             get
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary> The operational state of the expansion job. InProgress indicates the expansion is still running. Completed indicates expansion finished successfully. Failed means the expansion was unable to complete due to a fatal error. Deleting indicates the expansion is being rolled back. </summary>
-        public ExpansionJobStatusType? State
+        public AmlFileSystemExpansionJobStatusType? State
         {
             get
             {

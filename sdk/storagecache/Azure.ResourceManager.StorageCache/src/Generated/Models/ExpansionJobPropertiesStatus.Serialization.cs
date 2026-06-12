@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 return null;
             }
-            ExpansionJobStatusType? state = default;
+            AmlFileSystemExpansionJobStatusType? state = default;
             string statusCode = default;
             string statusMessage = default;
             float? percentComplete = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    state = new ExpansionJobStatusType(prop.Value.GetString());
+                    state = new AmlFileSystemExpansionJobStatusType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("statusCode"u8))

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="newStorageCapacityTiB"> The new storage capacity in TiB for the AML file system after expansion. This must be a multiple of the Sku step size, and greater than the current storage capacity of the AML file system. </param>
         /// <param name="status"> The status of the expansion job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpansionJobProperties(ExpansionJobProvisioningState? provisioningState, float? newStorageCapacityTiB, ExpansionJobPropertiesStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpansionJobProperties(AmlFileSystemExpansionJobProvisioningState? provisioningState, float? newStorageCapacityTiB, ExpansionJobPropertiesStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             NewStorageCapacityTiB = newStorageCapacityTiB;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </summary>
-        public ExpansionJobProvisioningState? ProvisioningState { get; }
+        public AmlFileSystemExpansionJobProvisioningState? ProvisioningState { get; }
 
         /// <summary> The new storage capacity in TiB for the AML file system after expansion. This must be a multiple of the Sku step size, and greater than the current storage capacity of the AML file system. </summary>
         public float? NewStorageCapacityTiB { get; set; }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         internal ExpansionJobPropertiesStatus Status { get; }
 
         /// <summary> The operational state of the expansion job. InProgress indicates the expansion is still running. Completed indicates expansion finished successfully. Failed means the expansion was unable to complete due to a fatal error. Deleting indicates the expansion is being rolled back. </summary>
-        public ExpansionJobStatusType? State
+        public AmlFileSystemExpansionJobStatusType? State
         {
             get
             {
