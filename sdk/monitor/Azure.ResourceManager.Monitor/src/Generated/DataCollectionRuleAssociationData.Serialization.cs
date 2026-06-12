@@ -18,68 +18,68 @@ using Azure.ResourceManager.Monitor.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> Definition of generic ARM proxy resource. </summary>
-    public partial class DataCollectionRuleAssociationProxyOnlyResourceData : ResourceData, IJsonModel<DataCollectionRuleAssociationProxyOnlyResourceData>
+    public partial class DataCollectionRuleAssociationData : ResourceData, IJsonModel<DataCollectionRuleAssociationData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationProxyOnlyResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDataCollectionRuleAssociationProxyOnlyResourceData(document.RootElement, options);
+                        return DeserializeDataCollectionRuleAssociationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleAssociationProxyOnlyResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleAssociationData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationProxyOnlyResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleAssociationProxyOnlyResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleAssociationData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DataCollectionRuleAssociationProxyOnlyResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DataCollectionRuleAssociationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataCollectionRuleAssociationProxyOnlyResourceData IPersistableModel<DataCollectionRuleAssociationProxyOnlyResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataCollectionRuleAssociationProxyOnlyResourceData)PersistableModelCreateCore(data, options);
+        DataCollectionRuleAssociationData IPersistableModel<DataCollectionRuleAssociationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataCollectionRuleAssociationData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DataCollectionRuleAssociationProxyOnlyResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataCollectionRuleAssociationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="dataCollectionRuleAssociationProxyOnlyResourceData"> The <see cref="DataCollectionRuleAssociationProxyOnlyResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DataCollectionRuleAssociationProxyOnlyResourceData dataCollectionRuleAssociationProxyOnlyResourceData)
+        /// <param name="dataCollectionRuleAssociationData"> The <see cref="DataCollectionRuleAssociationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DataCollectionRuleAssociationData dataCollectionRuleAssociationData)
         {
-            if (dataCollectionRuleAssociationProxyOnlyResourceData == null)
+            if (dataCollectionRuleAssociationData == null)
             {
                 return null;
             }
-            return RequestContent.Create(dataCollectionRuleAssociationProxyOnlyResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(dataCollectionRuleAssociationData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataCollectionRuleAssociationProxyOnlyResourceData"/> from. </param>
-        internal static DataCollectionRuleAssociationProxyOnlyResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataCollectionRuleAssociationData"/> from. </param>
+        internal static DataCollectionRuleAssociationData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDataCollectionRuleAssociationProxyOnlyResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDataCollectionRuleAssociationData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DataCollectionRuleAssociationProxyOnlyResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataCollectionRuleAssociationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationProxyOnlyResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleAssociationProxyOnlyResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleAssociationData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.Monitor
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DataCollectionRuleAssociationProxyOnlyResourceData IJsonModel<DataCollectionRuleAssociationProxyOnlyResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataCollectionRuleAssociationProxyOnlyResourceData)JsonModelCreateCore(ref reader, options);
+        DataCollectionRuleAssociationData IJsonModel<DataCollectionRuleAssociationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataCollectionRuleAssociationData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationProxyOnlyResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleAssociationProxyOnlyResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleAssociationData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataCollectionRuleAssociationProxyOnlyResourceData(document.RootElement, options);
+            return DeserializeDataCollectionRuleAssociationData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DataCollectionRuleAssociationProxyOnlyResourceData DeserializeDataCollectionRuleAssociationProxyOnlyResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataCollectionRuleAssociationData DeserializeDataCollectionRuleAssociationData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Monitor
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataCollectionRuleAssociationProxyOnlyResourceData(
+            return new DataCollectionRuleAssociationData(
                 id,
                 name,
                 resourceType,

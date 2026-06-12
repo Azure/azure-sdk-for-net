@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing a DataCollectionEndpointResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataCollectionEndpointResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDataCollectionEndpointResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataCollectionEndpointResources method.
     /// </summary>
     public partial class DataCollectionEndpointResource : ArmResource
     {
@@ -419,20 +419,20 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataCollectionRuleAssociationProxyOnlyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataCollectionRuleAssociationProxyOnlyResource> GetByDataCollectionEndpointAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataCollectionRuleAssociationResource> GetByDataCollectionEndpointAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataCollectionRuleAssociationProxyOnlyResourceData, DataCollectionRuleAssociationProxyOnlyResource>(new DataCollectionRuleAssociationsGetByDataCollectionEndpointAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetByDataCollectionEndpointAsyncCollectionResultOfT(
                 _dataCollectionRuleAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "DataCollectionEndpointResource.GetByDataCollectionEndpoint"), data => new DataCollectionRuleAssociationProxyOnlyResource(Client, data));
+                "DataCollectionEndpointResource.GetByDataCollectionEndpoint"), data => new DataCollectionRuleAssociationResource(Client, data));
         }
 
         /// <summary>
@@ -457,20 +457,20 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataCollectionRuleAssociationProxyOnlyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataCollectionRuleAssociationProxyOnlyResource> GetByDataCollectionEndpoint(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataCollectionRuleAssociationResource> GetByDataCollectionEndpoint(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataCollectionRuleAssociationProxyOnlyResourceData, DataCollectionRuleAssociationProxyOnlyResource>(new DataCollectionRuleAssociationsGetByDataCollectionEndpointCollectionResultOfT(
+            return new PageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetByDataCollectionEndpointCollectionResultOfT(
                 _dataCollectionRuleAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "DataCollectionEndpointResource.GetByDataCollectionEndpoint"), data => new DataCollectionRuleAssociationProxyOnlyResource(Client, data));
+                "DataCollectionEndpointResource.GetByDataCollectionEndpoint"), data => new DataCollectionRuleAssociationResource(Client, data));
         }
 
         /// <summary>

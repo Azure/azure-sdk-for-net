@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Definition of association of a data collection rule with a monitored Azure resource. </summary>
-    internal partial class DataCollectionRuleAssociation
+    internal partial class DataCollectionRuleAssociationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociation"/>. </summary>
-        public DataCollectionRuleAssociation()
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationProperties"/>. </summary>
+        public DataCollectionRuleAssociationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationProperties"/>. </summary>
         /// <param name="description"> Description of the association. </param>
         /// <param name="dataCollectionRuleId"> The resource ID of the data collection rule that is to be associated. </param>
         /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that is to be associated. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="metadata"> Metadata about the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionRuleAssociation(string description, string dataCollectionRuleId, string dataCollectionEndpointId, KnownDataCollectionRuleAssociationProvisioningState? provisioningState, DataCollectionRuleAssociationMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataCollectionRuleAssociationProperties(string description, string dataCollectionRuleId, string dataCollectionEndpointId, DataCollectionRuleAssociationProvisioningState? provisioningState, DataCollectionRuleAssociationMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             DataCollectionRuleId = dataCollectionRuleId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string DataCollectionEndpointId { get; set; }
 
         /// <summary> The resource provisioning state. </summary>
-        public KnownDataCollectionRuleAssociationProvisioningState? ProvisioningState { get; }
+        public DataCollectionRuleAssociationProvisioningState? ProvisioningState { get; }
 
         /// <summary> Metadata about the resource. </summary>
         public DataCollectionRuleAssociationMetadata Metadata { get; }

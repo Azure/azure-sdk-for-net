@@ -14,7 +14,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal partial class DataCollectionRuleAssociationsGetByRuleCollectionResultOfT : Pageable<DataCollectionRuleAssociationProxyOnlyResourceData>
+    internal partial class DataCollectionRuleAssociationsGetByRuleCollectionResultOfT : Pageable<DataCollectionRuleAssociationData>
     {
         private readonly DataCollectionRuleAssociations _client;
         private readonly Guid _subscriptionId;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DataCollectionRuleAssociationsGetByRuleCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DataCollectionRuleAssociationProxyOnlyResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<DataCollectionRuleAssociationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 DataCollectionRuleAssociationProxyOnlyResourceListResult result = DataCollectionRuleAssociationProxyOnlyResourceListResult.FromResponse(response);
-                yield return Page<DataCollectionRuleAssociationProxyOnlyResourceData>.FromValues((IReadOnlyList<DataCollectionRuleAssociationProxyOnlyResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DataCollectionRuleAssociationData>.FromValues((IReadOnlyList<DataCollectionRuleAssociationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

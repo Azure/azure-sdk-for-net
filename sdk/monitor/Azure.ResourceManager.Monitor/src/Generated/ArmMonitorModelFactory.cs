@@ -404,10 +404,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="metadata"> Metadata about the resource. </param>
         /// <param name="eTag"> Resource entity tag (ETag). </param>
-        /// <returns> A new <see cref="Monitor.DataCollectionRuleAssociationProxyOnlyResourceData"/> instance for mocking. </returns>
-        public static DataCollectionRuleAssociationProxyOnlyResourceData DataCollectionRuleAssociationProxyOnlyResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string dataCollectionRuleId = default, string dataCollectionEndpointId = default, KnownDataCollectionRuleAssociationProvisioningState? provisioningState = default, DataCollectionRuleAssociationMetadata metadata = default, string eTag = default)
+        /// <returns> A new <see cref="Monitor.DataCollectionRuleAssociationData"/> instance for mocking. </returns>
+        public static DataCollectionRuleAssociationData DataCollectionRuleAssociationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string dataCollectionRuleId = default, string dataCollectionEndpointId = default, DataCollectionRuleAssociationProvisioningState? provisioningState = default, DataCollectionRuleAssociationMetadata metadata = default, string eTag = default)
         {
-            return new DataCollectionRuleAssociationProxyOnlyResourceData(
+            return new DataCollectionRuleAssociationData(
                 id,
                 name,
                 resourceType,
@@ -2079,17 +2079,17 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="workspaceId"> The workspace ID (resource ID of a Log Analytics workspace) for a Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Monitor.ServiceDiagnosticSettingsResourceData"/> instance for mocking. </returns>
-        public static ServiceDiagnosticSettingsResourceData ServiceDiagnosticSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string storageAccountId = default, string serviceBusRuleId = default, string eventHubAuthorizationRuleId = default, IEnumerable<MetricSettings> metrics = default, IEnumerable<LogSettings> logs = default, string workspaceId = default, string location = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Monitor.DiagnosticSettingData"/> instance for mocking. </returns>
+        public static DiagnosticSettingData DiagnosticSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string storageAccountId = default, string serviceBusRuleId = default, string eventHubAuthorizationRuleId = default, IEnumerable<MetricSettings> metrics = default, IEnumerable<LogSettings> logs = default, string workspaceId = default, string location = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ServiceDiagnosticSettingsResourceData(
+            return new DiagnosticSettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                storageAccountId is null && serviceBusRuleId is null && eventHubAuthorizationRuleId is null && metrics is null && logs is null && workspaceId is null ? default : new ServiceDiagnosticSettings(
+                storageAccountId is null && serviceBusRuleId is null && eventHubAuthorizationRuleId is null && metrics is null && logs is null && workspaceId is null ? default : new DiagnosticSettingsProperties(
                     storageAccountId,
                     serviceBusRuleId,
                     eventHubAuthorizationRuleId,
@@ -2135,12 +2135,12 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metrics"> the list of metric settings. </param>
         /// <param name="logs"> the list of logs settings. </param>
         /// <param name="workspaceId"> The workspace ID (resource ID of a Log Analytics workspace) for a Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </param>
-        /// <returns> A new <see cref="Models.ServiceDiagnosticSettingsResourcePatch"/> instance for mocking. </returns>
-        public static ServiceDiagnosticSettingsResourcePatch ServiceDiagnosticSettingsResourcePatch(IDictionary<string, string> tags = default, string storageAccountId = default, string serviceBusRuleId = default, string eventHubAuthorizationRuleId = default, IEnumerable<MetricSettings> metrics = default, IEnumerable<LogSettings> logs = default, string workspaceId = default)
+        /// <returns> A new <see cref="Models.DiagnosticSettingPatch"/> instance for mocking. </returns>
+        public static DiagnosticSettingPatch DiagnosticSettingPatch(IDictionary<string, string> tags = default, string storageAccountId = default, string serviceBusRuleId = default, string eventHubAuthorizationRuleId = default, IEnumerable<MetricSettings> metrics = default, IEnumerable<LogSettings> logs = default, string workspaceId = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ServiceDiagnosticSettingsResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), storageAccountId is null && serviceBusRuleId is null && eventHubAuthorizationRuleId is null && metrics is null && logs is null && workspaceId is null ? default : new ServiceDiagnosticSettings(
+            return new DiagnosticSettingPatch(tags ?? new ChangeTrackingDictionary<string, string>(), storageAccountId is null && serviceBusRuleId is null && eventHubAuthorizationRuleId is null && metrics is null && logs is null && workspaceId is null ? default : new DiagnosticSettingsProperties(
                 storageAccountId,
                 serviceBusRuleId,
                 eventHubAuthorizationRuleId,
@@ -3290,6 +3290,42 @@ namespace Azure.ResourceManager.Monitor.Models
             return new EnableRequest(receiverName, default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Monitor.DiagnosticSettingData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="storageAccountId"> The resource ID of the storage account to which you would like to send Diagnostic Logs. </param>
+        /// <param name="serviceBusRuleId"> The service bus rule Id of the diagnostic setting. This is here to maintain backwards compatibility. </param>
+        /// <param name="eventHubAuthorizationRuleId"> The resource Id for the event hub authorization rule. </param>
+        /// <param name="eventHubName"> The name of the event hub. If none is specified, the default event hub will be selected. </param>
+        /// <param name="metrics"> The list of metric settings. </param>
+        /// <param name="logs"> The list of logs settings. </param>
+        /// <param name="workspaceId"> The full ARM resource ID of the Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </param>
+        /// <param name="marketplacePartnerId"> The full ARM resource ID of the Marketplace resource to which you would like to send Diagnostic Logs. </param>
+        /// <param name="logAnalyticsDestinationType"> A string indicating whether the export to Log Analytics should use the default destination type, i.e. AzureDiagnostics, or use a destination type constructed as follows: &lt;normalized service identity&gt;_&lt;normalized category name&gt;. Possible values are: Dedicated and null (null is default.). </param>
+        /// <returns> A new <see cref="Monitor.DiagnosticSettingData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DiagnosticSettingData DiagnosticSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier storageAccountId = default, ResourceIdentifier serviceBusRuleId = default, ResourceIdentifier eventHubAuthorizationRuleId = default, string eventHubName = default, IEnumerable<MetricSettings> metrics = default, IEnumerable<LogSettings> logs = default, ResourceIdentifier workspaceId = default, ResourceIdentifier marketplacePartnerId = default, string logAnalyticsDestinationType = default)
+        {
+            return new DiagnosticSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                metrics is null && logs is null ? default : new DiagnosticSettingsProperties(
+                    default,
+                    default,
+                    default,
+                    (metrics ?? new ChangeTrackingList<MetricSettings>()).ToList(),
+                    (logs ?? new ChangeTrackingList<LogSettings>()).ToList(),
+                    default,
+                    default),
+                default,
+                default,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.MetricAlertStatus"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3357,6 +3393,37 @@ namespace Azure.ResourceManager.Monitor.Models
         public static DataCollectionEndpointMetadata DataCollectionEndpointMetadata(string provisionedBy = default, string provisionedByResourceId = default)
         {
             return new DataCollectionEndpointMetadata(provisionedBy, provisionedByResourceId, default, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Monitor.DataCollectionRuleAssociationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Resource entity tag (ETag). </param>
+        /// <param name="description"> Description of the association. </param>
+        /// <param name="dataCollectionRuleId"> The resource ID of the data collection rule that is to be associated. </param>
+        /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that is to be associated. </param>
+        /// <param name="provisioningState"> The resource provisioning state. </param>
+        /// <param name="metadata"> Metadata about the resource. </param>
+        /// <returns> A new <see cref="Monitor.DataCollectionRuleAssociationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataCollectionRuleAssociationData DataCollectionRuleAssociationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, string description = default, ResourceIdentifier dataCollectionRuleId = default, ResourceIdentifier dataCollectionEndpointId = default, DataCollectionRuleAssociationProvisioningState? provisioningState = default, DataCollectionRuleAssociationMetadata metadata = default)
+        {
+            return new DataCollectionRuleAssociationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && provisioningState is null && metadata is null ? default : new DataCollectionRuleAssociationProxyOnlyResourceProperties(
+                    description,
+                    default,
+                    default,
+                    provisioningState,
+                    metadata,
+                    default),
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataCollectionRuleAssociationMetadata"/>. </summary>

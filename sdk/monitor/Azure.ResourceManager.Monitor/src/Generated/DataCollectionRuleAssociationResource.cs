@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a DataCollectionRuleAssociationProxyOnlyResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataCollectionRuleAssociationProxyOnlyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDataCollectionRuleAssociationProxyOnlyResources method.
+    /// A class representing a DataCollectionRuleAssociation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataCollectionRuleAssociationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDataCollectionRuleAssociations method.
     /// </summary>
-    public partial class DataCollectionRuleAssociationProxyOnlyResource : ArmResource
+    public partial class DataCollectionRuleAssociationResource : ArmResource
     {
         private readonly ClientDiagnostics _dataCollectionRuleAssociationsClientDiagnostics;
         private readonly DataCollectionRuleAssociations _dataCollectionRuleAssociationsRestClient;
-        private readonly DataCollectionRuleAssociationProxyOnlyResourceData _data;
+        private readonly DataCollectionRuleAssociationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/dataCollectionRuleAssociations";
 
-        /// <summary> Initializes a new instance of DataCollectionRuleAssociationProxyOnlyResource for mocking. </summary>
-        protected DataCollectionRuleAssociationProxyOnlyResource()
+        /// <summary> Initializes a new instance of DataCollectionRuleAssociationResource for mocking. </summary>
+        protected DataCollectionRuleAssociationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationProxyOnlyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataCollectionRuleAssociationProxyOnlyResource(ArmClient client, DataCollectionRuleAssociationProxyOnlyResourceData data) : this(client, data.Id)
+        internal DataCollectionRuleAssociationResource(ArmClient client, DataCollectionRuleAssociationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationProxyOnlyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataCollectionRuleAssociationProxyOnlyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataCollectionRuleAssociationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dataCollectionRuleAssociationProxyOnlyResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string dataCollectionRuleAssociationApiVersion);
             _dataCollectionRuleAssociationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociations(_dataCollectionRuleAssociationsClientDiagnostics, Pipeline, Endpoint, dataCollectionRuleAssociationProxyOnlyResourceApiVersion ?? "2024-03-11");
+            _dataCollectionRuleAssociationsRestClient = new DataCollectionRuleAssociations(_dataCollectionRuleAssociationsClientDiagnostics, Pipeline, Endpoint, dataCollectionRuleAssociationApiVersion ?? "2024-03-11");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual DataCollectionRuleAssociationProxyOnlyResourceData Data
+        public virtual DataCollectionRuleAssociationData Data
         {
             get
             {
@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataCollectionRuleAssociationProxyOnlyResource"/>. </description>
+        /// <description> <see cref="DataCollectionRuleAssociationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataCollectionRuleAssociationProxyOnlyResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataCollectionRuleAssociationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationProxyOnlyResource.Get");
+            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationResource.Get");
             scope.Start();
             try
             {
@@ -123,12 +123,12 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataCollectionRuleAssociationProxyOnlyResourceData> response = Response.FromValue(DataCollectionRuleAssociationProxyOnlyResourceData.FromResponse(result), result);
+                Response<DataCollectionRuleAssociationData> response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DataCollectionRuleAssociationProxyOnlyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,14 +154,14 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataCollectionRuleAssociationProxyOnlyResource"/>. </description>
+        /// <description> <see cref="DataCollectionRuleAssociationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataCollectionRuleAssociationProxyOnlyResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DataCollectionRuleAssociationResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationProxyOnlyResource.Get");
+            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationResource.Get");
             scope.Start();
             try
             {
@@ -171,12 +171,12 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataCollectionRuleAssociationProxyOnlyResourceData> response = Response.FromValue(DataCollectionRuleAssociationProxyOnlyResourceData.FromResponse(result), result);
+                Response<DataCollectionRuleAssociationData> response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DataCollectionRuleAssociationProxyOnlyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataCollectionRuleAssociationProxyOnlyResource"/>. </description>
+        /// <description> <see cref="DataCollectionRuleAssociationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationProxyOnlyResource.Delete");
+            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationResource.Delete");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataCollectionRuleAssociationProxyOnlyResource"/>. </description>
+        /// <description> <see cref="DataCollectionRuleAssociationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationProxyOnlyResource.Delete");
+            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationResource.Delete");
             scope.Start();
             try
             {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Update a DataCollectionRuleAssociationProxyOnlyResource.
+        /// Update a DataCollectionRuleAssociation.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -304,16 +304,16 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataCollectionRuleAssociationProxyOnlyResource"/>. </description>
+        /// <description> <see cref="DataCollectionRuleAssociationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<DataCollectionRuleAssociationProxyOnlyResource>> UpdateAsync(WaitUntil waitUntil, DataCollectionRuleAssociationProxyOnlyResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataCollectionRuleAssociationResource>> UpdateAsync(WaitUntil waitUntil, DataCollectionRuleAssociationData data, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationProxyOnlyResource.Update");
+            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationResource.Update");
             scope.Start();
             try
             {
@@ -321,12 +321,12 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, DataCollectionRuleAssociationProxyOnlyResourceData.ToRequestContent(data), context);
+                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, DataCollectionRuleAssociationData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataCollectionRuleAssociationProxyOnlyResourceData> response = Response.FromValue(DataCollectionRuleAssociationProxyOnlyResourceData.FromResponse(result), result);
+                Response<DataCollectionRuleAssociationData> response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MonitorArmOperation<DataCollectionRuleAssociationProxyOnlyResource> operation = new MonitorArmOperation<DataCollectionRuleAssociationProxyOnlyResource>(Response.FromValue(new DataCollectionRuleAssociationProxyOnlyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MonitorArmOperation<DataCollectionRuleAssociationResource> operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Update a DataCollectionRuleAssociationProxyOnlyResource.
+        /// Update a DataCollectionRuleAssociation.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -357,16 +357,16 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataCollectionRuleAssociationProxyOnlyResource"/>. </description>
+        /// <description> <see cref="DataCollectionRuleAssociationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<DataCollectionRuleAssociationProxyOnlyResource> Update(WaitUntil waitUntil, DataCollectionRuleAssociationProxyOnlyResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataCollectionRuleAssociationResource> Update(WaitUntil waitUntil, DataCollectionRuleAssociationData data, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationProxyOnlyResource.Update");
+            using DiagnosticScope scope = _dataCollectionRuleAssociationsClientDiagnostics.CreateScope("DataCollectionRuleAssociationResource.Update");
             scope.Start();
             try
             {
@@ -374,12 +374,12 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, DataCollectionRuleAssociationProxyOnlyResourceData.ToRequestContent(data), context);
+                HttpMessage message = _dataCollectionRuleAssociationsRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, DataCollectionRuleAssociationData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataCollectionRuleAssociationProxyOnlyResourceData> response = Response.FromValue(DataCollectionRuleAssociationProxyOnlyResourceData.FromResponse(result), result);
+                Response<DataCollectionRuleAssociationData> response = Response.FromValue(DataCollectionRuleAssociationData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MonitorArmOperation<DataCollectionRuleAssociationProxyOnlyResource> operation = new MonitorArmOperation<DataCollectionRuleAssociationProxyOnlyResource>(Response.FromValue(new DataCollectionRuleAssociationProxyOnlyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MonitorArmOperation<DataCollectionRuleAssociationResource> operation = new MonitorArmOperation<DataCollectionRuleAssociationResource>(Response.FromValue(new DataCollectionRuleAssociationResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

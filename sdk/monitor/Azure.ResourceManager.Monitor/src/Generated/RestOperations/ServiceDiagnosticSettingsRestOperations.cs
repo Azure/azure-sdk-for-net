@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/microsoft.insights/diagnosticSettings/", false);
+            uri.AppendPath("/providers/Microsoft.Insights/diagnosticSettings/", false);
             uri.AppendPath(diagnosticSetting, true);
             if (_apiVersion != null)
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/microsoft.insights/diagnosticSettings/", false);
+            uri.AppendPath("/providers/Microsoft.Insights/diagnosticSettings/", false);
             uri.AppendPath(diagnosticSetting, true);
             if (_apiVersion != null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/microsoft.insights/diagnosticSettings/", false);
+            uri.AppendPath("/providers/Microsoft.Insights/diagnosticSettings/", false);
             uri.AppendPath(diagnosticSetting, true);
             if (_apiVersion != null)
             {

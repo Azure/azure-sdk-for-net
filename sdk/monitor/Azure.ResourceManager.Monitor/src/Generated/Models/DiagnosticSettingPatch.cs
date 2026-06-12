@@ -12,22 +12,22 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Service diagnostic setting resource for patch operations. </summary>
-    public partial class ServiceDiagnosticSettingsResourcePatch
+    public partial class DiagnosticSettingPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceDiagnosticSettingsResourcePatch"/>. </summary>
-        public ServiceDiagnosticSettingsResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingPatch"/>. </summary>
+        public DiagnosticSettingPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceDiagnosticSettingsResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The service diagnostics settings for an update operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceDiagnosticSettingsResourcePatch(IDictionary<string, string> tags, ServiceDiagnosticSettings properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticSettingPatch(IDictionary<string, string> tags, DiagnosticSettingsProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The service diagnostics settings for an update operation. </summary>
-        internal ServiceDiagnosticSettings Properties { get; set; }
+        internal DiagnosticSettingsProperties Properties { get; set; }
 
         /// <summary> The resource ID of the storage account to which you would like to send Diagnostic Logs. </summary>
         public string StorageAccountId
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new ServiceDiagnosticSettings();
+                    Properties = new DiagnosticSettingsProperties();
                 }
                 Properties.StorageAccountId = value;
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new ServiceDiagnosticSettings();
+                    Properties = new DiagnosticSettingsProperties();
                 }
                 Properties.ServiceBusRuleId = value;
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new ServiceDiagnosticSettings();
+                    Properties = new DiagnosticSettingsProperties();
                 }
                 Properties.EventHubAuthorizationRuleId = value;
             }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new ServiceDiagnosticSettings();
+                    Properties = new DiagnosticSettingsProperties();
                 }
                 return Properties.Metrics;
             }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new ServiceDiagnosticSettings();
+                    Properties = new DiagnosticSettingsProperties();
                 }
                 return Properties.Logs;
             }
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new ServiceDiagnosticSettings();
+                    Properties = new DiagnosticSettingsProperties();
                 }
                 Properties.WorkspaceId = value;
             }

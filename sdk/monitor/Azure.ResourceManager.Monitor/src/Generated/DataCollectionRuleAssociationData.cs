@@ -14,17 +14,17 @@ using Azure.ResourceManager.Monitor.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> Definition of generic ARM proxy resource. </summary>
-    public partial class DataCollectionRuleAssociationProxyOnlyResourceData : ResourceData
+    public partial class DataCollectionRuleAssociationData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationProxyOnlyResourceData"/>. </summary>
-        public DataCollectionRuleAssociationProxyOnlyResourceData()
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationData"/>. </summary>
+        public DataCollectionRuleAssociationData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationProxyOnlyResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="properties"></param>
         /// <param name="eTag"> Resource entity tag (ETag). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionRuleAssociationProxyOnlyResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataCollectionRuleAssociationProxyOnlyResourceProperties properties, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal DataCollectionRuleAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataCollectionRuleAssociationProxyOnlyResourceProperties properties, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The resource provisioning state. </summary>
-        public KnownDataCollectionRuleAssociationProvisioningState? ProvisioningState
+        public DataCollectionRuleAssociationProvisioningState? ProvisioningState
         {
             get
             {

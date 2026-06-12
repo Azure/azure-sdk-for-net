@@ -14,15 +14,15 @@ using Azure.ResourceManager.Monitor.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> Description of a service diagnostic setting. </summary>
-    public partial class ServiceDiagnosticSettingsResourceData : ResourceData
+    public partial class DiagnosticSettingData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceDiagnosticSettingsResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingData"/>. </summary>
         /// <param name="location"> Resource location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public ServiceDiagnosticSettingsResourceData(string location)
+        public DiagnosticSettingData(string location)
         {
             Argument.AssertNotNull(location, nameof(location));
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceDiagnosticSettingsResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceDiagnosticSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Models.ServiceDiagnosticSettings properties, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal DiagnosticSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DiagnosticSettingsProperties properties, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The service diagnostics settings of the resource. </summary>
-        internal Models.ServiceDiagnosticSettings Properties { get; set; }
+        internal DiagnosticSettingsProperties Properties { get; set; }
 
         /// <summary> Resource location. </summary>
         public string Location { get; set; }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (Properties is null)
                 {
-                    Properties = new Models.ServiceDiagnosticSettings();
+                    Properties = new DiagnosticSettingsProperties();
                 }
                 Properties.StorageAccountId = value;
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (Properties is null)
                 {
-                    Properties = new Models.ServiceDiagnosticSettings();
+                    Properties = new DiagnosticSettingsProperties();
                 }
                 Properties.ServiceBusRuleId = value;
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (Properties is null)
                 {
-                    Properties = new Models.ServiceDiagnosticSettings();
+                    Properties = new DiagnosticSettingsProperties();
                 }
                 Properties.EventHubAuthorizationRuleId = value;
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (Properties is null)
                 {
-                    Properties = new Models.ServiceDiagnosticSettings();
+                    Properties = new DiagnosticSettingsProperties();
                 }
                 return Properties.Metrics;
             }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (Properties is null)
                 {
-                    Properties = new Models.ServiceDiagnosticSettings();
+                    Properties = new DiagnosticSettingsProperties();
                 }
                 return Properties.Logs;
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (Properties is null)
                 {
-                    Properties = new Models.ServiceDiagnosticSettings();
+                    Properties = new DiagnosticSettingsProperties();
                 }
                 Properties.WorkspaceId = value;
             }

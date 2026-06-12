@@ -15,7 +15,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal partial class DataCollectionRuleAssociationsGetByResourceAsyncCollectionResultOfT : AsyncPageable<DataCollectionRuleAssociationProxyOnlyResourceData>
+    internal partial class DataCollectionRuleAssociationsGetByResourceAsyncCollectionResultOfT : AsyncPageable<DataCollectionRuleAssociationData>
     {
         private readonly DataCollectionRuleAssociations _client;
         private readonly string _resourceUri;
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> Initializes a new instance of DataCollectionRuleAssociationsGetByResourceAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DataCollectionRuleAssociations client used to send requests. </param>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
         public DataCollectionRuleAssociationsGetByResourceAsyncCollectionResultOfT(DataCollectionRuleAssociations client, string resourceUri, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DataCollectionRuleAssociationsGetByResourceAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<DataCollectionRuleAssociationProxyOnlyResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<DataCollectionRuleAssociationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 DataCollectionRuleAssociationProxyOnlyResourceListResult result = DataCollectionRuleAssociationProxyOnlyResourceListResult.FromResponse(response);
-                yield return Page<DataCollectionRuleAssociationProxyOnlyResourceData>.FromValues((IReadOnlyList<DataCollectionRuleAssociationProxyOnlyResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DataCollectionRuleAssociationData>.FromValues((IReadOnlyList<DataCollectionRuleAssociationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

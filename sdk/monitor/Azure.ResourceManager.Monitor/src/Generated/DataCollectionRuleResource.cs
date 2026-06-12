@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing a DataCollectionRuleResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataCollectionRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDataCollectionRuleResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataCollectionRuleResources method.
     /// </summary>
     public partial class DataCollectionRuleResource : ArmResource
     {
@@ -419,14 +419,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="skipToken"> (Optional) The continuation token for paginated responses. </param>
         /// <param name="top"> (Optional) The max number of items to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataCollectionRuleAssociationProxyOnlyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataCollectionRuleAssociationProxyOnlyResource> GetByRuleAsync(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataCollectionRuleAssociationResource> GetByRuleAsync(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataCollectionRuleAssociationProxyOnlyResourceData, DataCollectionRuleAssociationProxyOnlyResource>(new DataCollectionRuleAssociationsGetByRuleAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetByRuleAsyncCollectionResultOfT(
                 _dataCollectionRuleAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Monitor
                 skipToken,
                 top,
                 context,
-                "DataCollectionRuleResource.GetByRule"), data => new DataCollectionRuleAssociationProxyOnlyResource(Client, data));
+                "DataCollectionRuleResource.GetByRule"), data => new DataCollectionRuleAssociationResource(Client, data));
         }
 
         /// <summary>
@@ -461,14 +461,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="skipToken"> (Optional) The continuation token for paginated responses. </param>
         /// <param name="top"> (Optional) The max number of items to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataCollectionRuleAssociationProxyOnlyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataCollectionRuleAssociationProxyOnlyResource> GetByRule(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataCollectionRuleAssociationResource> GetByRule(string skipToken = default, int? top = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataCollectionRuleAssociationProxyOnlyResourceData, DataCollectionRuleAssociationProxyOnlyResource>(new DataCollectionRuleAssociationsGetByRuleCollectionResultOfT(
+            return new PageableWrapper<DataCollectionRuleAssociationData, DataCollectionRuleAssociationResource>(new DataCollectionRuleAssociationsGetByRuleCollectionResultOfT(
                 _dataCollectionRuleAssociationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Monitor
                 skipToken,
                 top,
                 context,
-                "DataCollectionRuleResource.GetByRule"), data => new DataCollectionRuleAssociationProxyOnlyResource(Client, data));
+                "DataCollectionRuleResource.GetByRule"), data => new DataCollectionRuleAssociationResource(Client, data));
         }
 
         /// <summary> Add a tag to the current resource. </summary>

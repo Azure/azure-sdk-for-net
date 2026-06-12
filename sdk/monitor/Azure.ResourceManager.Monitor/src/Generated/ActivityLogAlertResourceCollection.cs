@@ -8,19 +8,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A class representing a collection of <see cref="ActivityLogAlertResource"/> and their operations.
-    /// Each <see cref="ActivityLogAlertResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="ActivityLogAlertResourceCollection"/> instance call the GetActivityLogAlertResources method from an instance of <see cref="ArmResource"/>.
+    /// Each <see cref="ActivityLogAlertResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ActivityLogAlertResourceCollection"/> instance call the GetActivityLogAlertResources method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ActivityLogAlertResourceCollection : ArmCollection, IEnumerable<ActivityLogAlertResource>, IAsyncEnumerable<ActivityLogAlertResource>
     {
@@ -40,6 +42,17 @@ namespace Azure.ResourceManager.Monitor
             TryGetApiVersion(ActivityLogAlertResource.ResourceType, out string activityLogAlertResourceApiVersion);
             _activityLogAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ActivityLogAlertResource.ResourceType.Namespace, Diagnostics);
             _activityLogAlertsRestClient = new ActivityLogAlerts(_activityLogAlertsClientDiagnostics, Pipeline, Endpoint, activityLogAlertResourceApiVersion ?? "2023-01-01-preview");
+            ValidateResourceId(id);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
+        internal static void ValidateResourceId(ResourceIdentifier id)
+        {
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DataCollectionRuleAssociationProxyOnlyResourceData item in Value)
+            foreach (DataCollectionRuleAssociationData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<DataCollectionRuleAssociationProxyOnlyResourceData> value = default;
+            IList<DataCollectionRuleAssociationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DataCollectionRuleAssociationProxyOnlyResourceData> array = new List<DataCollectionRuleAssociationProxyOnlyResourceData>();
+                    List<DataCollectionRuleAssociationData> array = new List<DataCollectionRuleAssociationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleAssociationProxyOnlyResourceData.DeserializeDataCollectionRuleAssociationProxyOnlyResourceData(item, options));
+                        array.Add(DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(item, options));
                     }
                     value = array;
                     continue;

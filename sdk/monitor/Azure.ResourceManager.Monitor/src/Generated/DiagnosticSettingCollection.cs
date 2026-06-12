@@ -16,28 +16,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceDiagnosticSettingsResource"/> and their operations.
-    /// Each <see cref="ServiceDiagnosticSettingsResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="ServiceDiagnosticSettingsResourceCollection"/> instance call the GetServiceDiagnosticSettingsResources method from an instance of <see cref="ArmResource"/>.
+    /// A class representing a collection of <see cref="DiagnosticSettingResource"/> and their operations.
+    /// Each <see cref="DiagnosticSettingResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="DiagnosticSettingCollection"/> instance call the GetDiagnosticSettings method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class ServiceDiagnosticSettingsResourceCollection : ArmCollection
+    public partial class DiagnosticSettingCollection : ArmCollection
     {
         private readonly ClientDiagnostics _serviceDiagnosticSettingsClientDiagnostics;
         private readonly ServiceDiagnosticSettings _serviceDiagnosticSettingsRestClient;
 
-        /// <summary> Initializes a new instance of ServiceDiagnosticSettingsResourceCollection for mocking. </summary>
-        protected ServiceDiagnosticSettingsResourceCollection()
+        /// <summary> Initializes a new instance of DiagnosticSettingCollection for mocking. </summary>
+        protected DiagnosticSettingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceDiagnosticSettingsResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServiceDiagnosticSettingsResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DiagnosticSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ServiceDiagnosticSettingsResource.ResourceType, out string serviceDiagnosticSettingsResourceApiVersion);
-            _serviceDiagnosticSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ServiceDiagnosticSettingsResource.ResourceType.Namespace, Diagnostics);
-            _serviceDiagnosticSettingsRestClient = new ServiceDiagnosticSettings(_serviceDiagnosticSettingsClientDiagnostics, Pipeline, Endpoint, serviceDiagnosticSettingsResourceApiVersion ?? "2016-09-01");
+            TryGetApiVersion(DiagnosticSettingResource.ResourceType, out string diagnosticSettingApiVersion);
+            _serviceDiagnosticSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", DiagnosticSettingResource.ResourceType.Namespace, Diagnostics);
+            _serviceDiagnosticSettingsRestClient = new ServiceDiagnosticSettings(_serviceDiagnosticSettingsClientDiagnostics, Pipeline, Endpoint, diagnosticSettingApiVersion ?? "2016-09-01");
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/microsoft.insights/diagnosticSettings/{diagnosticSetting}. </description>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{diagnosticSetting}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="diagnosticSetting"></param>
+        /// <param name="diagnosticSetting"> The name of the diagnostic setting. </param>
         /// <param name="data"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticSetting"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticSetting"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ServiceDiagnosticSettingsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diagnosticSetting, ServiceDiagnosticSettingsResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DiagnosticSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string diagnosticSetting, DiagnosticSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticSetting, nameof(diagnosticSetting));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("ServiceDiagnosticSettingsResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), diagnosticSetting, ServiceDiagnosticSettingsResourceData.ToRequestContent(data), context);
+                HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), diagnosticSetting, DiagnosticSettingData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ServiceDiagnosticSettingsResourceData> response = Response.FromValue(ServiceDiagnosticSettingsResourceData.FromResponse(result), result);
+                Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MonitorArmOperation<ServiceDiagnosticSettingsResource> operation = new MonitorArmOperation<ServiceDiagnosticSettingsResource>(Response.FromValue(new ServiceDiagnosticSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MonitorArmOperation<DiagnosticSettingResource> operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/microsoft.insights/diagnosticSettings/{diagnosticSetting}. </description>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{diagnosticSetting}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="diagnosticSetting"></param>
+        /// <param name="diagnosticSetting"> The name of the diagnostic setting. </param>
         /// <param name="data"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticSetting"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticSetting"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ServiceDiagnosticSettingsResource> CreateOrUpdate(WaitUntil waitUntil, string diagnosticSetting, ServiceDiagnosticSettingsResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DiagnosticSettingResource> CreateOrUpdate(WaitUntil waitUntil, string diagnosticSetting, DiagnosticSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticSetting, nameof(diagnosticSetting));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("ServiceDiagnosticSettingsResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), diagnosticSetting, ServiceDiagnosticSettingsResourceData.ToRequestContent(data), context);
+                HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), diagnosticSetting, DiagnosticSettingData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ServiceDiagnosticSettingsResourceData> response = Response.FromValue(ServiceDiagnosticSettingsResourceData.FromResponse(result), result);
+                Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                MonitorArmOperation<ServiceDiagnosticSettingsResource> operation = new MonitorArmOperation<ServiceDiagnosticSettingsResource>(Response.FromValue(new ServiceDiagnosticSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                MonitorArmOperation<DiagnosticSettingResource> operation = new MonitorArmOperation<DiagnosticSettingResource>(Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Monitor
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/microsoft.insights/diagnosticSettings/{diagnosticSetting}. </description>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{diagnosticSetting}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -167,15 +167,15 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diagnosticSetting"></param>
+        /// <param name="diagnosticSetting"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticSetting"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticSetting"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ServiceDiagnosticSettingsResource>> GetAsync(string diagnosticSetting, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiagnosticSettingResource>> GetAsync(string diagnosticSetting, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticSetting, nameof(diagnosticSetting));
 
-            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("ServiceDiagnosticSettingsResourceCollection.Get");
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingCollection.Get");
             scope.Start();
             try
             {
@@ -185,12 +185,12 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.ToString(), diagnosticSetting, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ServiceDiagnosticSettingsResourceData> response = Response.FromValue(ServiceDiagnosticSettingsResourceData.FromResponse(result), result);
+                Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ServiceDiagnosticSettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Monitor
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/microsoft.insights/diagnosticSettings/{diagnosticSetting}. </description>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{diagnosticSetting}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -216,15 +216,15 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diagnosticSetting"></param>
+        /// <param name="diagnosticSetting"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticSetting"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticSetting"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ServiceDiagnosticSettingsResource> Get(string diagnosticSetting, CancellationToken cancellationToken = default)
+        public virtual Response<DiagnosticSettingResource> Get(string diagnosticSetting, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticSetting, nameof(diagnosticSetting));
 
-            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("ServiceDiagnosticSettingsResourceCollection.Get");
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingCollection.Get");
             scope.Start();
             try
             {
@@ -234,12 +234,12 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.ToString(), diagnosticSetting, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ServiceDiagnosticSettingsResourceData> response = Response.FromValue(ServiceDiagnosticSettingsResourceData.FromResponse(result), result);
+                Response<DiagnosticSettingData> response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ServiceDiagnosticSettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Monitor
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/microsoft.insights/diagnosticSettings/{diagnosticSetting}. </description>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{diagnosticSetting}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diagnosticSetting"></param>
+        /// <param name="diagnosticSetting"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticSetting"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticSetting"/> is an empty string, and was expected to be non-empty. </exception>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(diagnosticSetting, nameof(diagnosticSetting));
 
-            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("ServiceDiagnosticSettingsResourceCollection.Exists");
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingCollection.Exists");
             scope.Start();
             try
             {
@@ -284,14 +284,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.ToString(), diagnosticSetting, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ServiceDiagnosticSettingsResourceData> response = default;
+                Response<DiagnosticSettingData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ServiceDiagnosticSettingsResourceData.FromResponse(result), result);
+                        response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ServiceDiagnosticSettingsResourceData)null, result);
+                        response = Response.FromValue((DiagnosticSettingData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Monitor
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/microsoft.insights/diagnosticSettings/{diagnosticSetting}. </description>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{diagnosticSetting}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diagnosticSetting"></param>
+        /// <param name="diagnosticSetting"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticSetting"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticSetting"/> is an empty string, and was expected to be non-empty. </exception>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(diagnosticSetting, nameof(diagnosticSetting));
 
-            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("ServiceDiagnosticSettingsResourceCollection.Exists");
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingCollection.Exists");
             scope.Start();
             try
             {
@@ -341,14 +341,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.ToString(), diagnosticSetting, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ServiceDiagnosticSettingsResourceData> response = default;
+                Response<DiagnosticSettingData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ServiceDiagnosticSettingsResourceData.FromResponse(result), result);
+                        response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ServiceDiagnosticSettingsResourceData)null, result);
+                        response = Response.FromValue((DiagnosticSettingData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Monitor
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/microsoft.insights/diagnosticSettings/{diagnosticSetting}. </description>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{diagnosticSetting}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -379,15 +379,15 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diagnosticSetting"></param>
+        /// <param name="diagnosticSetting"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticSetting"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticSetting"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ServiceDiagnosticSettingsResource>> GetIfExistsAsync(string diagnosticSetting, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DiagnosticSettingResource>> GetIfExistsAsync(string diagnosticSetting, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticSetting, nameof(diagnosticSetting));
 
-            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("ServiceDiagnosticSettingsResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -398,23 +398,23 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.ToString(), diagnosticSetting, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ServiceDiagnosticSettingsResourceData> response = default;
+                Response<DiagnosticSettingData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ServiceDiagnosticSettingsResourceData.FromResponse(result), result);
+                        response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ServiceDiagnosticSettingsResourceData)null, result);
+                        response = Response.FromValue((DiagnosticSettingData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ServiceDiagnosticSettingsResource>(response.GetRawResponse());
+                    return new NoValueResponse<DiagnosticSettingResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ServiceDiagnosticSettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Monitor
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{resourceUri}/providers/microsoft.insights/diagnosticSettings/{diagnosticSetting}. </description>
+        /// <description> /{resourceUri}/providers/Microsoft.Insights/diagnosticSettings/{diagnosticSetting}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -440,15 +440,15 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="diagnosticSetting"></param>
+        /// <param name="diagnosticSetting"> The name of the diagnostic setting. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticSetting"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="diagnosticSetting"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ServiceDiagnosticSettingsResource> GetIfExists(string diagnosticSetting, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DiagnosticSettingResource> GetIfExists(string diagnosticSetting, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diagnosticSetting, nameof(diagnosticSetting));
 
-            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("ServiceDiagnosticSettingsResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _serviceDiagnosticSettingsClientDiagnostics.CreateScope("DiagnosticSettingCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -459,23 +459,23 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _serviceDiagnosticSettingsRestClient.CreateGetRequest(Id.ToString(), diagnosticSetting, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ServiceDiagnosticSettingsResourceData> response = default;
+                Response<DiagnosticSettingData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ServiceDiagnosticSettingsResourceData.FromResponse(result), result);
+                        response = Response.FromValue(DiagnosticSettingData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ServiceDiagnosticSettingsResourceData)null, result);
+                        response = Response.FromValue((DiagnosticSettingData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ServiceDiagnosticSettingsResource>(response.GetRawResponse());
+                    return new NoValueResponse<DiagnosticSettingResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ServiceDiagnosticSettingsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DiagnosticSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

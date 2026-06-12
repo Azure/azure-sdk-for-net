@@ -12,19 +12,19 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The diagnostic settings for service. </summary>
-    internal partial class ServiceDiagnosticSettings
+    internal partial class DiagnosticSettingsProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceDiagnosticSettings"/>. </summary>
-        public ServiceDiagnosticSettings()
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsProperties"/>. </summary>
+        public DiagnosticSettingsProperties()
         {
             Metrics = new ChangeTrackingList<MetricSettings>();
             Logs = new ChangeTrackingList<LogSettings>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceDiagnosticSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsProperties"/>. </summary>
         /// <param name="storageAccountId"> The resource ID of the storage account to which you would like to send Diagnostic Logs. </param>
         /// <param name="serviceBusRuleId"> The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming Diagnostic Logs. The rule ID is of the format: '{service bus resource ID}/authorizationrules/{key name}'. </param>
         /// <param name="eventHubAuthorizationRuleId"> The resource Id for the event hub namespace authorization rule. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="logs"> the list of logs settings. </param>
         /// <param name="workspaceId"> The workspace ID (resource ID of a Log Analytics workspace) for a Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceDiagnosticSettings(string storageAccountId, string serviceBusRuleId, string eventHubAuthorizationRuleId, IList<MetricSettings> metrics, IList<LogSettings> logs, string workspaceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticSettingsProperties(string storageAccountId, string serviceBusRuleId, string eventHubAuthorizationRuleId, IList<MetricSettings> metrics, IList<LogSettings> logs, string workspaceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountId = storageAccountId;
             ServiceBusRuleId = serviceBusRuleId;

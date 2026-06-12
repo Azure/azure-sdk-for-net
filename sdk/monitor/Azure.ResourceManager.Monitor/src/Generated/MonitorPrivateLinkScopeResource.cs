@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing a MonitorPrivateLinkScope along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MonitorPrivateLinkScopeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetMonitorPrivateLinkScopes method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMonitorPrivateLinkScopes method.
     /// </summary>
     public partial class MonitorPrivateLinkScopeResource : ArmResource
     {

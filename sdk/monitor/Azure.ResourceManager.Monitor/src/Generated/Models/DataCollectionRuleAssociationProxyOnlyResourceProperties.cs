@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The DataCollectionRuleAssociationProxyOnlyResourceProperties. </summary>
-    internal partial class DataCollectionRuleAssociationProxyOnlyResourceProperties : DataCollectionRuleAssociation
+    internal partial class DataCollectionRuleAssociationProxyOnlyResourceProperties : DataCollectionRuleAssociationProperties
     {
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationProxyOnlyResourceProperties"/>. </summary>
         public DataCollectionRuleAssociationProxyOnlyResourceProperties()
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="metadata"> Metadata about the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionRuleAssociationProxyOnlyResourceProperties(string description, string dataCollectionRuleId, string dataCollectionEndpointId, KnownDataCollectionRuleAssociationProvisioningState? provisioningState, DataCollectionRuleAssociationMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(description, dataCollectionRuleId, dataCollectionEndpointId, provisioningState, metadata, additionalBinaryDataProperties)
+        internal DataCollectionRuleAssociationProxyOnlyResourceProperties(string description, string dataCollectionRuleId, string dataCollectionEndpointId, DataCollectionRuleAssociationProvisioningState? provisioningState, DataCollectionRuleAssociationMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(description, dataCollectionRuleId, dataCollectionEndpointId, provisioningState, metadata, additionalBinaryDataProperties)
         {
         }
     }
