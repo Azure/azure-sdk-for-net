@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ConnectionAuthenticationType : IEquatable<ConnectionAuthenticationType>
     {
         private readonly string _value;
+        /// <summary> Pre-shared key authentication method for VPN gateway connections. </summary>
+        private const string PSKValue = "PSK";
+        /// <summary> Certificate-based authentication method for VPN gateway connections. </summary>
+        private const string CertificateValue = "Certificate";
 
         /// <summary> Initializes a new instance of <see cref="ConnectionAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectionAuthenticationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PSKValue = "PSK";
-        private const string CertificateValue = "Certificate";
+            _value = value;
+        }
 
         /// <summary> Pre-shared key authentication method for VPN gateway connections. </summary>
         public static ConnectionAuthenticationType PSK { get; } = new ConnectionAuthenticationType(PSKValue);
+
         /// <summary> Certificate-based authentication method for VPN gateway connections. </summary>
         public static ConnectionAuthenticationType Certificate { get; } = new ConnectionAuthenticationType(CertificateValue);
+
         /// <summary> Determines if two <see cref="ConnectionAuthenticationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectionAuthenticationType left, ConnectionAuthenticationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectionAuthenticationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectionAuthenticationType left, ConnectionAuthenticationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectionAuthenticationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectionAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectionAuthenticationType(string value) => new ConnectionAuthenticationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectionAuthenticationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectionAuthenticationType?(string value) => value == null ? null : new ConnectionAuthenticationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectionAuthenticationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectionAuthenticationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

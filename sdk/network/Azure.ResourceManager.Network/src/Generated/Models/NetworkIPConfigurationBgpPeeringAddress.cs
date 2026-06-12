@@ -7,78 +7,53 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of IPConfigurationBgpPeeringAddress. </summary>
     public partial class NetworkIPConfigurationBgpPeeringAddress
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkIPConfigurationBgpPeeringAddress"/>. </summary>
         public NetworkIPConfigurationBgpPeeringAddress()
         {
-            DefaultBgpIPAddresses = new ChangeTrackingList<string>();
-            CustomBgpIPAddresses = new ChangeTrackingList<string>();
-            TunnelIPAddresses = new ChangeTrackingList<string>();
+            DefaultBgpIpAddresses = new ChangeTrackingList<string>();
+            CustomBgpIpAddresses = new ChangeTrackingList<string>();
+            TunnelIpAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkIPConfigurationBgpPeeringAddress"/>. </summary>
-        /// <param name="ipConfigurationId"> The ID of IP configuration which belongs to gateway. </param>
-        /// <param name="defaultBgpIPAddresses"> The list of default BGP peering addresses which belong to IP configuration. </param>
-        /// <param name="customBgpIPAddresses"> The list of custom BGP peering addresses which belong to IP configuration. </param>
-        /// <param name="tunnelIPAddresses"> The list of tunnel public IP addresses which belong to IP configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkIPConfigurationBgpPeeringAddress(string ipConfigurationId, IReadOnlyList<string> defaultBgpIPAddresses, IList<string> customBgpIPAddresses, IReadOnlyList<string> tunnelIPAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="ipconfigurationId"> The ID of IP configuration which belongs to gateway. </param>
+        /// <param name="defaultBgpIpAddresses"> The list of default BGP peering addresses which belong to IP configuration. </param>
+        /// <param name="customBgpIpAddresses"> The list of custom BGP peering addresses which belong to IP configuration. </param>
+        /// <param name="tunnelIpAddresses"> The list of tunnel public IP addresses which belong to IP configuration. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkIPConfigurationBgpPeeringAddress(string ipconfigurationId, IReadOnlyList<string> defaultBgpIpAddresses, IList<string> customBgpIpAddresses, IReadOnlyList<string> tunnelIpAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IPConfigurationId = ipConfigurationId;
-            DefaultBgpIPAddresses = defaultBgpIPAddresses;
-            CustomBgpIPAddresses = customBgpIPAddresses;
-            TunnelIPAddresses = tunnelIPAddresses;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            IpconfigurationId = ipconfigurationId;
+            DefaultBgpIpAddresses = defaultBgpIpAddresses;
+            CustomBgpIpAddresses = customBgpIpAddresses;
+            TunnelIpAddresses = tunnelIpAddresses;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of IP configuration which belongs to gateway. </summary>
         [WirePath("ipconfigurationId")]
-        public string IPConfigurationId { get; set; }
+        public string IpconfigurationId { get; set; }
+
         /// <summary> The list of default BGP peering addresses which belong to IP configuration. </summary>
         [WirePath("defaultBgpIpAddresses")]
-        public IReadOnlyList<string> DefaultBgpIPAddresses { get; }
+        public IReadOnlyList<string> DefaultBgpIpAddresses { get; }
+
         /// <summary> The list of custom BGP peering addresses which belong to IP configuration. </summary>
         [WirePath("customBgpIpAddresses")]
-        public IList<string> CustomBgpIPAddresses { get; }
+        public IList<string> CustomBgpIpAddresses { get; }
+
         /// <summary> The list of tunnel public IP addresses which belong to IP configuration. </summary>
         [WirePath("tunnelIpAddresses")]
-        public IReadOnlyList<string> TunnelIPAddresses { get; }
+        public IReadOnlyList<string> TunnelIpAddresses { get; }
     }
 }

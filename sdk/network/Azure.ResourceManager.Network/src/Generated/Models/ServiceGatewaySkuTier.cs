@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ServiceGatewaySkuTier : IEquatable<ServiceGatewaySkuTier>
     {
         private readonly string _value;
+        /// <summary> Regional. </summary>
+        private const string RegionalValue = "Regional";
 
         /// <summary> Initializes a new instance of <see cref="ServiceGatewaySkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceGatewaySkuTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RegionalValue = "Regional";
+            _value = value;
+        }
 
         /// <summary> Regional. </summary>
         public static ServiceGatewaySkuTier Regional { get; } = new ServiceGatewaySkuTier(RegionalValue);
+
         /// <summary> Determines if two <see cref="ServiceGatewaySkuTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceGatewaySkuTier left, ServiceGatewaySkuTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceGatewaySkuTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceGatewaySkuTier left, ServiceGatewaySkuTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceGatewaySkuTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceGatewaySkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceGatewaySkuTier(string value) => new ServiceGatewaySkuTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceGatewaySkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceGatewaySkuTier?(string value) => value == null ? null : new ServiceGatewaySkuTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceGatewaySkuTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceGatewaySkuTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

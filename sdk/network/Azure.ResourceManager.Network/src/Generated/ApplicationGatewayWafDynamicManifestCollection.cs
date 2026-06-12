@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
@@ -21,76 +22,87 @@ namespace Azure.ResourceManager.Network
     /// <summary>
     /// A class representing a collection of <see cref="ApplicationGatewayWafDynamicManifestResource"/> and their operations.
     /// Each <see cref="ApplicationGatewayWafDynamicManifestResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get an <see cref="ApplicationGatewayWafDynamicManifestCollection"/> instance call the GetApplicationGatewayWafDynamicManifests method from an instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ApplicationGatewayWafDynamicManifestCollection"/> instance call the GetApplicationGatewayWafDynamicManifests method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ApplicationGatewayWafDynamicManifestCollection : ArmCollection, IEnumerable<ApplicationGatewayWafDynamicManifestResource>, IAsyncEnumerable<ApplicationGatewayWafDynamicManifestResource>
     {
-        private readonly ClientDiagnostics _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultClientDiagnostics;
-        private readonly ApplicationGatewayWafDynamicManifestsDefaultRestOperations _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultRestClient;
-        private readonly ClientDiagnostics _applicationGatewayWafDynamicManifestClientDiagnostics;
-        private readonly ApplicationGatewayWafDynamicManifestsRestOperations _applicationGatewayWafDynamicManifestRestClient;
-        private readonly AzureLocation _location;
+        private readonly ClientDiagnostics _applicationGatewayWafDynamicManifestsDefaultClientDiagnostics;
+        private readonly ApplicationGatewayWafDynamicManifestsDefault _applicationGatewayWafDynamicManifestsDefaultRestClient;
+        private readonly ClientDiagnostics _applicationGatewayWafDynamicManifestsClientDiagnostics;
+        private readonly ApplicationGatewayWafDynamicManifests _applicationGatewayWafDynamicManifestsRestClient;
+        /// <summary> The location. </summary>
+        private readonly string _location;
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayWafDynamicManifestCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApplicationGatewayWafDynamicManifestCollection for mocking. </summary>
         protected ApplicationGatewayWafDynamicManifestCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationGatewayWafDynamicManifestCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayWafDynamicManifestCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="location"> The region where the nrp are located at. </param>
-        internal ApplicationGatewayWafDynamicManifestCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="location"> The location for the resource. </param>
+        internal ApplicationGatewayWafDynamicManifestCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
         {
-            _location = location;
-            _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGatewayWafDynamicManifestResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApplicationGatewayWafDynamicManifestResource.ResourceType, out string applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultApiVersion);
-            _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultRestClient = new ApplicationGatewayWafDynamicManifestsDefaultRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultApiVersion);
-            _applicationGatewayWafDynamicManifestClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGatewayWafDynamicManifestResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ApplicationGatewayWafDynamicManifestResource.ResourceType, out string applicationGatewayWafDynamicManifestApiVersion);
-            _applicationGatewayWafDynamicManifestRestClient = new ApplicationGatewayWafDynamicManifestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationGatewayWafDynamicManifestApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _location = location;
+            _applicationGatewayWafDynamicManifestsDefaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGatewayWafDynamicManifestResource.ResourceType.Namespace, Diagnostics);
+            _applicationGatewayWafDynamicManifestsDefaultRestClient = new ApplicationGatewayWafDynamicManifestsDefault(_applicationGatewayWafDynamicManifestsDefaultClientDiagnostics, Pipeline, Endpoint, applicationGatewayWafDynamicManifestApiVersion ?? "2025-07-01");
+            _applicationGatewayWafDynamicManifestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ApplicationGatewayWafDynamicManifestResource.ResourceType.Namespace, Diagnostics);
+            _applicationGatewayWafDynamicManifestsRestClient = new ApplicationGatewayWafDynamicManifests(_applicationGatewayWafDynamicManifestsClientDiagnostics, Pipeline, Endpoint, applicationGatewayWafDynamicManifestApiVersion ?? "2025-07-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the regional application gateway waf manifest.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/{applicationGatewayWafDynamicManifestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewayWafDynamicManifestResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="applicationGatewayWafDynamicManifestName"> The name of the Application Gateway WAF Dynamic Manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplicationGatewayWafDynamicManifestResource>> GetAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ApplicationGatewayWafDynamicManifestResource>> GetAsync(string applicationGatewayWafDynamicManifestName, CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.Get");
+            Argument.AssertNotNullOrEmpty(applicationGatewayWafDynamicManifestName, nameof(applicationGatewayWafDynamicManifestName));
+
+            using DiagnosticScope scope = _applicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.Get");
             scope.Start();
             try
             {
-                var response = await _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationGatewayWafDynamicManifestsDefaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, applicationGatewayWafDynamicManifestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplicationGatewayWafDynamicManifestData> response = Response.FromValue(ApplicationGatewayWafDynamicManifestData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationGatewayWafDynamicManifestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -104,33 +116,42 @@ namespace Azure.ResourceManager.Network
         /// Gets the regional application gateway waf manifest.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/{applicationGatewayWafDynamicManifestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewayWafDynamicManifestResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="applicationGatewayWafDynamicManifestName"> The name of the Application Gateway WAF Dynamic Manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplicationGatewayWafDynamicManifestResource> Get(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ApplicationGatewayWafDynamicManifestResource> Get(string applicationGatewayWafDynamicManifestName, CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.Get");
+            Argument.AssertNotNullOrEmpty(applicationGatewayWafDynamicManifestName, nameof(applicationGatewayWafDynamicManifestName));
+
+            using DiagnosticScope scope = _applicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.Get");
             scope.Start();
             try
             {
-                var response = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationGatewayWafDynamicManifestsDefaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, applicationGatewayWafDynamicManifestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplicationGatewayWafDynamicManifestData> response = Response.FromValue(ApplicationGatewayWafDynamicManifestData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationGatewayWafDynamicManifestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,50 +165,44 @@ namespace Azure.ResourceManager.Network
         /// Gets the regional application gateway waf manifest.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayWafDynamicManifests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewayWafDynamicManifestResults_ApplicationGatewayWafDynamicManifestsGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGatewayWafDynamicManifestResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationGatewayWafDynamicManifestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayWafDynamicManifestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayWafDynamicManifestRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayWafDynamicManifestRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayWafDynamicManifestResource(Client, ApplicationGatewayWafDynamicManifestData.DeserializeApplicationGatewayWafDynamicManifestData(e)), _applicationGatewayWafDynamicManifestClientDiagnostics, Pipeline, "ApplicationGatewayWafDynamicManifestCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApplicationGatewayWafDynamicManifestData, ApplicationGatewayWafDynamicManifestResource>(new ApplicationGatewayWafDynamicManifestsGetAsyncCollectionResultOfT(_applicationGatewayWafDynamicManifestsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ApplicationGatewayWafDynamicManifestCollection.GetAll"), data => new ApplicationGatewayWafDynamicManifestResource(Client, data));
         }
 
         /// <summary>
         /// Gets the regional application gateway waf manifest.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayWafDynamicManifests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewayWafDynamicManifestResults_ApplicationGatewayWafDynamicManifestsGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,40 +210,61 @@ namespace Azure.ResourceManager.Network
         /// <returns> A collection of <see cref="ApplicationGatewayWafDynamicManifestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayWafDynamicManifestResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayWafDynamicManifestRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationGatewayWafDynamicManifestRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationGatewayWafDynamicManifestResource(Client, ApplicationGatewayWafDynamicManifestData.DeserializeApplicationGatewayWafDynamicManifestData(e)), _applicationGatewayWafDynamicManifestClientDiagnostics, Pipeline, "ApplicationGatewayWafDynamicManifestCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApplicationGatewayWafDynamicManifestData, ApplicationGatewayWafDynamicManifestResource>(new ApplicationGatewayWafDynamicManifestsGetCollectionResultOfT(_applicationGatewayWafDynamicManifestsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ApplicationGatewayWafDynamicManifestCollection.GetAll"), data => new ApplicationGatewayWafDynamicManifestResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/{applicationGatewayWafDynamicManifestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewayWafDynamicManifestResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="applicationGatewayWafDynamicManifestName"> The name of the Application Gateway WAF Dynamic Manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string applicationGatewayWafDynamicManifestName, CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.Exists");
+            Argument.AssertNotNullOrEmpty(applicationGatewayWafDynamicManifestName, nameof(applicationGatewayWafDynamicManifestName));
+
+            using DiagnosticScope scope = _applicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationGatewayWafDynamicManifestsDefaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, applicationGatewayWafDynamicManifestName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApplicationGatewayWafDynamicManifestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationGatewayWafDynamicManifestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationGatewayWafDynamicManifestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -242,31 +278,50 @@ namespace Azure.ResourceManager.Network
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/{applicationGatewayWafDynamicManifestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewayWafDynamicManifestResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="applicationGatewayWafDynamicManifestName"> The name of the Application Gateway WAF Dynamic Manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string applicationGatewayWafDynamicManifestName, CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.Exists");
+            Argument.AssertNotNullOrEmpty(applicationGatewayWafDynamicManifestName, nameof(applicationGatewayWafDynamicManifestName));
+
+            using DiagnosticScope scope = _applicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.Exists");
             scope.Start();
             try
             {
-                var response = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationGatewayWafDynamicManifestsDefaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, applicationGatewayWafDynamicManifestName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApplicationGatewayWafDynamicManifestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationGatewayWafDynamicManifestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationGatewayWafDynamicManifestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -280,33 +335,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/{applicationGatewayWafDynamicManifestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewayWafDynamicManifestResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="applicationGatewayWafDynamicManifestName"> The name of the Application Gateway WAF Dynamic Manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<ApplicationGatewayWafDynamicManifestResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<ApplicationGatewayWafDynamicManifestResource>> GetIfExistsAsync(string applicationGatewayWafDynamicManifestName, CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.GetIfExists");
+            Argument.AssertNotNullOrEmpty(applicationGatewayWafDynamicManifestName, nameof(applicationGatewayWafDynamicManifestName));
+
+            using DiagnosticScope scope = _applicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationGatewayWafDynamicManifestsDefaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, applicationGatewayWafDynamicManifestName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApplicationGatewayWafDynamicManifestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationGatewayWafDynamicManifestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationGatewayWafDynamicManifestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApplicationGatewayWafDynamicManifestResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationGatewayWafDynamicManifestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -320,33 +396,54 @@ namespace Azure.ResourceManager.Network
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/{applicationGatewayWafDynamicManifestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationGatewayWafDynamicManifestResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="applicationGatewayWafDynamicManifestName"> The name of the Application Gateway WAF Dynamic Manifest. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<ApplicationGatewayWafDynamicManifestResource> GetIfExists(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGatewayWafDynamicManifestName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<ApplicationGatewayWafDynamicManifestResource> GetIfExists(string applicationGatewayWafDynamicManifestName, CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.GetIfExists");
+            Argument.AssertNotNullOrEmpty(applicationGatewayWafDynamicManifestName, nameof(applicationGatewayWafDynamicManifestName));
+
+            using DiagnosticScope scope = _applicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _applicationGatewayWafDynamicManifestsDefaultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, applicationGatewayWafDynamicManifestName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApplicationGatewayWafDynamicManifestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationGatewayWafDynamicManifestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationGatewayWafDynamicManifestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApplicationGatewayWafDynamicManifestResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationGatewayWafDynamicManifestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -366,6 +463,7 @@ namespace Azure.ResourceManager.Network
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ApplicationGatewayWafDynamicManifestResource> IAsyncEnumerable<ApplicationGatewayWafDynamicManifestResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

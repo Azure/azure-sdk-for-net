@@ -10,47 +10,14 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the NetworkSecurityPerimeterAssociation data model.
-    /// The NSP resource association resource
-    /// </summary>
+    /// <summary> The NSP resource association resource. </summary>
     public partial class NetworkSecurityPerimeterAssociationData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociationData"/>. </summary>
         public NetworkSecurityPerimeterAssociationData()
@@ -58,64 +25,101 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource  association resource. </param>
-        /// <param name="privateLinkResource"> The PaaS resource to be associated. </param>
-        /// <param name="profile"> Profile id to which the PaaS resource is associated. </param>
-        /// <param name="accessMode"> Access mode on the association. </param>
-        /// <param name="hasProvisioningIssues"> Specifies if there are provisioning issues. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterProvisioningState? provisioningState, WritableSubResource privateLinkResource, WritableSubResource profile, NetworkSecurityPerimeterAssociationAccessMode? accessMode, string hasProvisioningIssues, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Properties of the NSP resource association. </param>
+        /// <param name="name"> The name of the NSP association. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSecurityPerimeterAssociationData(NspAssociationProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : this(default, name, default, default, properties, name, additionalBinaryDataProperties)
         {
-            ProvisioningState = provisioningState;
-            PrivateLinkResource = privateLinkResource;
-            Profile = profile;
-            AccessMode = accessMode;
-            HasProvisioningIssues = hasProvisioningIssues;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociationData"/>. </summary>
+        internal NetworkSecurityPerimeterAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NspAssociationProperties properties, string associationName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        {
+            Properties = properties;
+            Name = associationName;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Properties of the NSP resource association. </summary>
+        [WirePath("properties")]
+        internal NspAssociationProperties Properties { get; set; }
+
+        /// <summary> The name of the NSP association. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The provisioning state of the resource  association resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkSecurityPerimeterProvisioningState? ProvisioningState { get; }
-        /// <summary> The PaaS resource to be associated. </summary>
-        internal WritableSubResource PrivateLinkResource { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.privateLinkResource.id")]
-        public ResourceIdentifier PrivateLinkResourceId
+        public NetworkSecurityPerimeterProvisioningState? ProvisioningState
         {
-            get => PrivateLinkResource is null ? default : PrivateLinkResource.Id;
-            set
+            get
             {
-                if (PrivateLinkResource is null)
-                    PrivateLinkResource = new WritableSubResource();
-                PrivateLinkResource.Id = value;
-            }
-        }
-
-        /// <summary> Profile id to which the PaaS resource is associated. </summary>
-        internal WritableSubResource Profile { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.profile.id")]
-        public ResourceIdentifier ProfileId
-        {
-            get => Profile is null ? default : Profile.Id;
-            set
-            {
-                if (Profile is null)
-                    Profile = new WritableSubResource();
-                Profile.Id = value;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
         /// <summary> Access mode on the association. </summary>
         [WirePath("properties.accessMode")]
-        public NetworkSecurityPerimeterAssociationAccessMode? AccessMode { get; set; }
+        public NetworkSecurityPerimeterAssociationAccessMode? AccessMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AccessMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspAssociationProperties();
+                }
+                Properties.AccessMode = value;
+            }
+        }
+
         /// <summary> Specifies if there are provisioning issues. </summary>
         [WirePath("properties.hasProvisioningIssues")]
-        public string HasProvisioningIssues { get; }
+        public string HasProvisioningIssues
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HasProvisioningIssues;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.privateLinkResource.id")]
+        public ResourceIdentifier PrivateLinkResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspAssociationProperties();
+                }
+                Properties.PrivateLinkResourceId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.profile.id")]
+        public ResourceIdentifier ProfileId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProfileId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspAssociationProperties();
+                }
+                Properties.ProfileId = value;
+            }
+        }
     }
 }

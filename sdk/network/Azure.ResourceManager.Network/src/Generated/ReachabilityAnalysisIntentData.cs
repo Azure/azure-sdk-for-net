@@ -7,49 +7,16 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the ReachabilityAnalysisIntent data model.
-    /// Configuration information or intent on which to do the analysis on.
-    /// </summary>
+    /// <summary> Configuration information or intent on which to do the analysis on. </summary>
     public partial class ReachabilityAnalysisIntentData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReachabilityAnalysisIntentData"/>. </summary>
         /// <param name="properties"> Represents the Reachability Analysis Intent properties. </param>
@@ -62,25 +29,28 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Initializes a new instance of <see cref="ReachabilityAnalysisIntentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Represents the Reachability Analysis Intent properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReachabilityAnalysisIntentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReachabilityAnalysisIntentProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="name"> Reachability Analysis Intent name. </param>
+        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReachabilityAnalysisIntentData(ReachabilityAnalysisIntentProperties properties, string name, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ReachabilityAnalysisIntentData"/> for deserialization. </summary>
-        internal ReachabilityAnalysisIntentData()
-        {
+            Name = name;
+            SystemData = systemData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents the Reachability Analysis Intent properties. </summary>
         [WirePath("properties")]
         public ReachabilityAnalysisIntentProperties Properties { get; set; }
+
+        /// <summary> Reachability Analysis Intent name. </summary>
+        [WirePath("name")]
+        public string Name { get; }
+
+        /// <summary> The system metadata related to this resource. </summary>
+        [WirePath("systemData")]
+        public SystemData SystemData { get; }
     }
 }

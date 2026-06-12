@@ -1,0 +1,9 @@
+# Temporary MPG migration compatibility base shims intentionally preserve GA inheritance.
+# Generated model members hide inherited ResourceData/TrackedResourceData members until the
+# generator can emit compatible overrides/new members for this migration shape.
+nowarn:CS0108
+nowarn:CS0114
+
+# Temporary MPG migration compatibility shims group many small removed GA types/base declarations
+# so the compatibility layer can be audited and removed together.
+nowarn:SA1402

@@ -7,130 +7,200 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the FrontendIPConfiguration data model.
-    /// Frontend IP address of the load balancer.
-    /// </summary>
+    /// <summary> Frontend IP address of the load balancer. </summary>
     public partial class FrontendIPConfigurationData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="FrontendIPConfigurationData"/>. </summary>
         public FrontendIPConfigurationData()
         {
             Zones = new ChangeTrackingList<string>();
-            InboundNatRules = new ChangeTrackingList<WritableSubResource>();
-            InboundNatPools = new ChangeTrackingList<WritableSubResource>();
-            OutboundRules = new ChangeTrackingList<WritableSubResource>();
-            LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontendIPConfigurationData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the load balancer probe. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="zones"> A list of availability zones denoting the IP allocated for the resource needs to come from. </param>
-        /// <param name="inboundNatRules"> An array of references to inbound rules that use this frontend IP. </param>
-        /// <param name="inboundNatPools"> An array of references to inbound pools that use this frontend IP. </param>
-        /// <param name="outboundRules"> An array of references to outbound rules that use this frontend IP. </param>
-        /// <param name="loadBalancingRules"> An array of references to load balancing rules that use this frontend IP. </param>
-        /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
-        /// <param name="privateIPAllocationMethod"> The Private IP allocation method. </param>
-        /// <param name="privateIPAddressVersion"> Whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. </param>
-        /// <param name="subnet"> The reference to the subnet resource. </param>
-        /// <param name="publicIPAddress"> The reference to the Public IP resource. </param>
-        /// <param name="publicIPPrefix"> The reference to the Public IP Prefix resource. </param>
-        /// <param name="gatewayLoadBalancer"> The reference to gateway load balancer frontend IP. </param>
-        /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
-        internal FrontendIPConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<string> zones, IReadOnlyList<WritableSubResource> inboundNatRules, IReadOnlyList<WritableSubResource> inboundNatPools, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> loadBalancingRules, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkIPVersion? privateIPAddressVersion, SubnetData subnet, PublicIPAddressData publicIPAddress, WritableSubResource publicIPPrefix, WritableSubResource gatewayLoadBalancer, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        internal FrontendIPConfigurationData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, FrontendIPConfigurationPropertiesFormat properties, ETag? eTag, IList<string> zones) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
+            Properties = properties;
+            ETag = eTag;
             Zones = zones;
-            InboundNatRules = inboundNatRules;
-            InboundNatPools = inboundNatPools;
-            OutboundRules = outboundRules;
-            LoadBalancingRules = loadBalancingRules;
-            PrivateIPAddress = privateIPAddress;
-            PrivateIPAllocationMethod = privateIPAllocationMethod;
-            PrivateIPAddressVersion = privateIPAddressVersion;
-            Subnet = subnet;
-            PublicIPAddress = publicIPAddress;
-            PublicIPPrefix = publicIPPrefix;
-            GatewayLoadBalancer = gatewayLoadBalancer;
-            ProvisioningState = provisioningState;
         }
+
+        /// <summary> Properties of the load balancer probe. </summary>
+        [WirePath("properties")]
+        internal FrontendIPConfigurationPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> A list of availability zones denoting the IP allocated for the resource needs to come from. </summary>
         [WirePath("zones")]
         public IList<string> Zones { get; }
-        /// <summary> An array of references to inbound rules that use this frontend IP. </summary>
-        [WirePath("properties.inboundNatRules")]
-        public IReadOnlyList<WritableSubResource> InboundNatRules { get; }
-        /// <summary> An array of references to inbound pools that use this frontend IP. </summary>
-        [WirePath("properties.inboundNatPools")]
-        public IReadOnlyList<WritableSubResource> InboundNatPools { get; }
-        /// <summary> An array of references to outbound rules that use this frontend IP. </summary>
-        [WirePath("properties.outboundRules")]
-        public IReadOnlyList<WritableSubResource> OutboundRules { get; }
-        /// <summary> An array of references to load balancing rules that use this frontend IP. </summary>
-        [WirePath("properties.loadBalancingRules")]
-        public IReadOnlyList<WritableSubResource> LoadBalancingRules { get; }
+
         /// <summary> The private IP address of the IP configuration. </summary>
         [WirePath("properties.privateIPAddress")]
-        public string PrivateIPAddress { get; set; }
-        /// <summary> The Private IP allocation method. </summary>
-        [WirePath("properties.privateIPAllocationMethod")]
-        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
-        /// <summary> Whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. </summary>
-        [WirePath("properties.privateIPAddressVersion")]
-        public NetworkIPVersion? PrivateIPAddressVersion { get; set; }
-        /// <summary> The reference to the subnet resource. </summary>
-        [WirePath("properties.subnet")]
-        public SubnetData Subnet { get; set; }
-        /// <summary> The reference to the Public IP resource. </summary>
-        [WirePath("properties.publicIPAddress")]
-        public PublicIPAddressData PublicIPAddress { get; set; }
-        /// <summary> The reference to the Public IP Prefix resource. </summary>
-        internal WritableSubResource PublicIPPrefix { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.publicIPPrefix.id")]
-        public ResourceIdentifier PublicIPPrefixId
+        public string PrivateIPAddress
         {
-            get => PublicIPPrefix is null ? default : PublicIPPrefix.Id;
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddress;
+            }
             set
             {
-                if (PublicIPPrefix is null)
-                    PublicIPPrefix = new WritableSubResource();
-                PublicIPPrefix.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new FrontendIPConfigurationPropertiesFormat();
+                }
+                Properties.PrivateIPAddress = value;
             }
         }
 
-        /// <summary> The reference to gateway load balancer frontend IP. </summary>
-        internal WritableSubResource GatewayLoadBalancer { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        [WirePath("properties.gatewayLoadBalancer.id")]
-        public ResourceIdentifier GatewayLoadBalancerId
+        /// <summary> The Private IP allocation method. </summary>
+        [WirePath("properties.privateIPAllocationMethod")]
+        public NetworkIPAllocationMethod? PrivateIPAllocationMethod
         {
-            get => GatewayLoadBalancer is null ? default : GatewayLoadBalancer.Id;
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAllocationMethod;
+            }
             set
             {
-                if (GatewayLoadBalancer is null)
-                    GatewayLoadBalancer = new WritableSubResource();
-                GatewayLoadBalancer.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new FrontendIPConfigurationPropertiesFormat();
+                }
+                Properties.PrivateIPAllocationMethod = value;
+            }
+        }
+
+        /// <summary> Whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. </summary>
+        [WirePath("properties.privateIPAddressVersion")]
+        public NetworkIPVersion? PrivateIPAddressVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddressVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendIPConfigurationPropertiesFormat();
+                }
+                Properties.PrivateIPAddressVersion = value;
+            }
+        }
+
+        /// <summary> The reference to the subnet resource. </summary>
+        [WirePath("properties.subnet")]
+        public SubnetData Subnet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subnet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendIPConfigurationPropertiesFormat();
+                }
+                Properties.Subnet = value;
+            }
+        }
+
+        /// <summary> The reference to the Public IP resource. </summary>
+        [WirePath("properties.publicIPAddress")]
+        public PublicIPAddressData PublicIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendIPConfigurationPropertiesFormat();
+                }
+                Properties.PublicIPAddress = value;
             }
         }
 
         /// <summary> The provisioning state of the frontend IP configuration resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.publicIPPrefix.id")]
+        public ResourceIdentifier PublicIPPrefixId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPPrefixId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendIPConfigurationPropertiesFormat();
+                }
+                Properties.PublicIPPrefixId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.gatewayLoadBalancer.id")]
+        public ResourceIdentifier GatewayLoadBalancerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GatewayLoadBalancerId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendIPConfigurationPropertiesFormat();
+                }
+                Properties.GatewayLoadBalancerId = value;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.ddosSettings.ddosCustomPolicy.id")]
+        public ResourceIdentifier DdosCustomPolicyId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DdosCustomPolicyId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendIPConfigurationPropertiesFormat();
+                }
+                Properties.DdosCustomPolicyId = value;
+            }
+        }
     }
 }

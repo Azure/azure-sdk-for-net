@@ -7,72 +7,121 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Resource that is onboarded to use network security perimeter. Also referred as perimeter associable resource. </summary>
     public partial class NetworkSecurityPerimeterAssociableResourceType : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociableResourceType"/>. </summary>
         internal NetworkSecurityPerimeterAssociableResourceType()
         {
-            PublicDnsZones = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociableResourceType"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> A friendly name for the properties of perimeter associable resources. </param>
-        /// <param name="publicDnsZones"> Public DNS zone names of the resources. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAssociableResourceType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<string> publicDnsZones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Properties of the perimeter associable resource. </param>
+        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="id"> Identifier of the perimeter associable resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSecurityPerimeterAssociableResourceType(PerimeterAssociableResourceProperties properties, string name, string id, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DisplayName = displayName;
-            PublicDnsZones = publicDnsZones;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            Name = name;
+            Id = id;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties of the perimeter associable resource. </summary>
+        [WirePath("properties")]
+        internal PerimeterAssociableResourceProperties Properties { get; }
+
+        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
+        [WirePath("name")]
+        public string Name { get; }
+
+        /// <summary> Identifier of the perimeter associable resource. </summary>
+        [WirePath("id")]
+        public string Id { get; }
+
+        /// <summary> Resource type. </summary>
+        [WirePath("type")]
+        public string Type { get; }
 
         /// <summary> A friendly name for the properties of perimeter associable resources. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
+
+        /// <summary> Resource type/provider name. </summary>
+        [WirePath("properties.resourceType")]
+        public string ResourceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceType;
+            }
+        }
+
         /// <summary> Public DNS zone names of the resources. </summary>
         [WirePath("properties.publicDnsZones")]
-        public IReadOnlyList<string> PublicDnsZones { get; }
+        public IReadOnlyList<string> PublicDnsZones
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicDnsZones;
+            }
+        }
+
+        /// <summary> Service tags associated with the resource provider. </summary>
+        [WirePath("properties.serviceTags")]
+        public IReadOnlyList<string> ServiceTags
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceTags;
+            }
+        }
+
+        /// <summary> The readiness state of the resource type for NSP support. </summary>
+        [WirePath("properties.readinessState")]
+        public NspReadinessState? ReadinessState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReadinessState;
+            }
+        }
+
+        /// <summary> Indicates whether the resource type supports outbound scenario. </summary>
+        [WirePath("properties.outboundSupported")]
+        public bool? OutboundSupported
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OutboundSupported;
+            }
+        }
+
+        /// <summary> Description of the PaaS resource type. </summary>
+        [WirePath("properties.description")]
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
     }
 }

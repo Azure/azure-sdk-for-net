@@ -10,115 +10,154 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the NetworkSecurityPerimeterAccessRule data model.
-    /// The NSP access rule resource
-    /// </summary>
+    /// <summary> The NSP access rule resource. </summary>
     public partial class NetworkSecurityPerimeterAccessRuleData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRuleData"/>. </summary>
         public NetworkSecurityPerimeterAccessRuleData()
         {
-            AddressPrefixes = new ChangeTrackingList<string>();
-            FullyQualifiedDomainNames = new ChangeTrackingList<string>();
-            Subscriptions = new ChangeTrackingList<WritableSubResource>();
-            NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeterBasedAccessRule>();
-            EmailAddresses = new ChangeTrackingList<string>();
-            PhoneNumbers = new ChangeTrackingList<string>();
-            ServiceTags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
-        /// <param name="direction"> Direction that specifies whether the access rules is inbound/outbound. </param>
-        /// <param name="addressPrefixes"> Inbound address prefixes (IPv4/IPv6). </param>
-        /// <param name="fullyQualifiedDomainNames"> Outbound rules in fully qualified domain name format. </param>
-        /// <param name="subscriptions"> List of subscription ids. </param>
-        /// <param name="networkSecurityPerimeters"> Rule specified by the perimeter id. </param>
-        /// <param name="emailAddresses"> Outbound rules in email address format. This access rule type is currently unavailable for use. </param>
-        /// <param name="phoneNumbers"> Outbound rules in phone number format. This access rule type is currently unavailable for use. </param>
-        /// <param name="serviceTags"> Inbound rules of type service tag. This access rule type is currently unavailable for use. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAccessRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterProvisioningState? provisioningState, NetworkSecurityPerimeterAccessRuleDirection? direction, IList<string> addressPrefixes, IList<string> fullyQualifiedDomainNames, IList<WritableSubResource> subscriptions, IReadOnlyList<NetworkSecurityPerimeterBasedAccessRule> networkSecurityPerimeters, IList<string> emailAddresses, IList<string> phoneNumbers, IList<string> serviceTags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Properties of the NSP access rule. </param>
+        /// <param name="name"> The name of the NSP access rule. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSecurityPerimeterAccessRuleData(NspAccessRuleProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : this(default, name, default, default, properties, name, additionalBinaryDataProperties)
         {
-            ProvisioningState = provisioningState;
-            Direction = direction;
-            AddressPrefixes = addressPrefixes;
-            FullyQualifiedDomainNames = fullyQualifiedDomainNames;
-            Subscriptions = subscriptions;
-            NetworkSecurityPerimeters = networkSecurityPerimeters;
-            EmailAddresses = emailAddresses;
-            PhoneNumbers = phoneNumbers;
-            ServiceTags = serviceTags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAccessRuleData"/>. </summary>
+        internal NetworkSecurityPerimeterAccessRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NspAccessRuleProperties properties, string accessRuleName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        {
+            Properties = properties;
+            Name = accessRuleName;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Properties of the NSP access rule. </summary>
+        [WirePath("properties")]
+        internal NspAccessRuleProperties Properties { get; set; }
+
+        /// <summary> The name of the NSP access rule. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The provisioning state of the scope assignment resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkSecurityPerimeterProvisioningState? ProvisioningState { get; }
+        public NetworkSecurityPerimeterProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Direction that specifies whether the access rules is inbound/outbound. </summary>
         [WirePath("properties.direction")]
-        public NetworkSecurityPerimeterAccessRuleDirection? Direction { get; set; }
+        public NetworkSecurityPerimeterAccessRuleDirection? Direction
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Direction;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspAccessRuleProperties();
+                }
+                Properties.Direction = value;
+            }
+        }
+
         /// <summary> Inbound address prefixes (IPv4/IPv6). </summary>
         [WirePath("properties.addressPrefixes")]
-        public IList<string> AddressPrefixes { get; }
+        public IList<string> AddressPrefixes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspAccessRuleProperties();
+                }
+                return Properties.AddressPrefixes;
+            }
+        }
+
         /// <summary> Outbound rules in fully qualified domain name format. </summary>
         [WirePath("properties.fullyQualifiedDomainNames")]
-        public IList<string> FullyQualifiedDomainNames { get; }
-        /// <summary> List of subscription ids. </summary>
-        [WirePath("properties.subscriptions")]
-        public IList<WritableSubResource> Subscriptions { get; }
+        public IList<string> FullyQualifiedDomainNames
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspAccessRuleProperties();
+                }
+                return Properties.FullyQualifiedDomainNames;
+            }
+        }
+
         /// <summary> Rule specified by the perimeter id. </summary>
         [WirePath("properties.networkSecurityPerimeters")]
-        public IReadOnlyList<NetworkSecurityPerimeterBasedAccessRule> NetworkSecurityPerimeters { get; }
+        public IReadOnlyList<NetworkSecurityPerimeterBasedAccessRule> NetworkSecurityPerimeters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspAccessRuleProperties();
+                }
+                return Properties.NetworkSecurityPerimeters;
+            }
+        }
+
         /// <summary> Outbound rules in email address format. This access rule type is currently unavailable for use. </summary>
         [WirePath("properties.emailAddresses")]
-        public IList<string> EmailAddresses { get; }
+        public IList<string> EmailAddresses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspAccessRuleProperties();
+                }
+                return Properties.EmailAddresses;
+            }
+        }
+
         /// <summary> Outbound rules in phone number format. This access rule type is currently unavailable for use. </summary>
         [WirePath("properties.phoneNumbers")]
-        public IList<string> PhoneNumbers { get; }
+        public IList<string> PhoneNumbers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspAccessRuleProperties();
+                }
+                return Properties.PhoneNumbers;
+            }
+        }
+
         /// <summary> Inbound rules of type service tag. This access rule type is currently unavailable for use. </summary>
         [WirePath("properties.serviceTags")]
-        public IList<string> ServiceTags { get; }
+        public IList<string> ServiceTags
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspAccessRuleProperties();
+                }
+                return Properties.ServiceTags;
+            }
+        }
     }
 }

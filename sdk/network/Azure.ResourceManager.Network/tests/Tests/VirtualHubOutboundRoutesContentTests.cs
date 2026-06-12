@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             using var stream = new MemoryStream();
             using var writer = new Utf8JsonWriter(stream);
-            model.WriteResourceUri(writer, default);
+            ((IJsonModel<VirtualHubOutboundRoutesContent>)model).Write(writer, ModelReaderWriterOptions.Json);
             writer.Flush();
             var json = Encoding.UTF8.GetString(stream.ToArray());
             Assert.IsTrue(json.Contains(absoluteUri.AbsoluteUri));
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             using var stream = new MemoryStream();
             using var writer = new Utf8JsonWriter(stream);
-            model.WriteResourceUri(writer, default);
+            ((IJsonModel<VirtualHubOutboundRoutesContent>)model).Write(writer, ModelReaderWriterOptions.Json);
             writer.Flush();
             var json = Encoding.UTF8.GetString(stream.ToArray());
             Assert.IsTrue(json.Contains(relativeUri.OriginalString));

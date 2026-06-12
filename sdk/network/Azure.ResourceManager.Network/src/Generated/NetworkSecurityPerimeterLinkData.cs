@@ -13,113 +13,161 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the NetworkSecurityPerimeterLink data model.
-    /// The network security perimeter link resource
-    /// </summary>
+    /// <summary> The network security perimeter link resource. </summary>
     public partial class NetworkSecurityPerimeterLinkData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLinkData"/>. </summary>
         public NetworkSecurityPerimeterLinkData()
         {
-            LocalInboundProfiles = new ChangeTrackingList<string>();
-            LocalOutboundProfiles = new ChangeTrackingList<string>();
-            RemoteInboundProfiles = new ChangeTrackingList<string>();
-            RemoteOutboundProfiles = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLinkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The provisioning state of the NSP Link resource. </param>
-        /// <param name="autoApprovedRemotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have Microsoft.Network/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </param>
-        /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link gets created. </param>
-        /// <param name="remotePerimeterLocation"> Remote NSP location with which the link gets created. </param>
-        /// <param name="localInboundProfiles"> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </param>
-        /// <param name="localOutboundProfiles"> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
-        /// <param name="remoteInboundProfiles"> Remote Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. This property can only be updated in auto-approval mode. </param>
-        /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
-        /// <param name="description"> A message passed to the owner of the remote NSP link resource with this connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. Restricted to 140 chars. </param>
-        /// <param name="status"> The NSP link state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkSecurityPerimeterLinkProvisioningState? provisioningState, ResourceIdentifier autoApprovedRemotePerimeterResourceId, Guid? remotePerimeterGuid, string remotePerimeterLocation, IList<string> localInboundProfiles, IReadOnlyList<string> localOutboundProfiles, IList<string> remoteInboundProfiles, IReadOnlyList<string> remoteOutboundProfiles, string description, NetworkSecurityPerimeterLinkStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Properties of the network security perimeter link resource. </param>
+        /// <param name="name"> The name of the NSP link. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSecurityPerimeterLinkData(NspLinkProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : this(default, name, default, default, properties, name, additionalBinaryDataProperties)
         {
-            ProvisioningState = provisioningState;
-            AutoApprovedRemotePerimeterResourceId = autoApprovedRemotePerimeterResourceId;
-            RemotePerimeterGuid = remotePerimeterGuid;
-            RemotePerimeterLocation = remotePerimeterLocation;
-            LocalInboundProfiles = localInboundProfiles;
-            LocalOutboundProfiles = localOutboundProfiles;
-            RemoteInboundProfiles = remoteInboundProfiles;
-            RemoteOutboundProfiles = remoteOutboundProfiles;
-            Description = description;
-            Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterLinkData"/>. </summary>
+        internal NetworkSecurityPerimeterLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NspLinkProperties properties, string linkName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        {
+            Properties = properties;
+            Name = linkName;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Properties of the network security perimeter link resource. </summary>
+        [WirePath("properties")]
+        internal NspLinkProperties Properties { get; set; }
+
+        /// <summary> The name of the NSP link. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The provisioning state of the NSP Link resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkSecurityPerimeterLinkProvisioningState? ProvisioningState { get; }
+        public NetworkSecurityPerimeterLinkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have Microsoft.Network/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </summary>
         [WirePath("properties.autoApprovedRemotePerimeterResourceId")]
-        public ResourceIdentifier AutoApprovedRemotePerimeterResourceId { get; set; }
-        /// <summary> Remote NSP Guid with which the link gets created. </summary>
-        [WirePath("properties.remotePerimeterGuid")]
-        public Guid? RemotePerimeterGuid { get; }
+        public ResourceIdentifier AutoApprovedRemotePerimeterResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoApprovedRemotePerimeterResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspLinkProperties();
+                }
+                Properties.AutoApprovedRemotePerimeterResourceId = value;
+            }
+        }
+
         /// <summary> Remote NSP location with which the link gets created. </summary>
         [WirePath("properties.remotePerimeterLocation")]
-        public string RemotePerimeterLocation { get; }
+        public string RemotePerimeterLocation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RemotePerimeterLocation;
+            }
+        }
+
         /// <summary> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </summary>
         [WirePath("properties.localInboundProfiles")]
-        public IList<string> LocalInboundProfiles { get; }
+        public IList<string> LocalInboundProfiles
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspLinkProperties();
+                }
+                return Properties.LocalInboundProfiles;
+            }
+        }
+
         /// <summary> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </summary>
         [WirePath("properties.localOutboundProfiles")]
-        public IReadOnlyList<string> LocalOutboundProfiles { get; }
+        public IReadOnlyList<string> LocalOutboundProfiles
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspLinkProperties();
+                }
+                return Properties.LocalOutboundProfiles;
+            }
+        }
+
         /// <summary> Remote Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. This property can only be updated in auto-approval mode. </summary>
         [WirePath("properties.remoteInboundProfiles")]
-        public IList<string> RemoteInboundProfiles { get; }
+        public IList<string> RemoteInboundProfiles
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspLinkProperties();
+                }
+                return Properties.RemoteInboundProfiles;
+            }
+        }
+
         /// <summary> Remote Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </summary>
         [WirePath("properties.remoteOutboundProfiles")]
-        public IReadOnlyList<string> RemoteOutboundProfiles { get; }
+        public IReadOnlyList<string> RemoteOutboundProfiles
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspLinkProperties();
+                }
+                return Properties.RemoteOutboundProfiles;
+            }
+        }
+
         /// <summary> A message passed to the owner of the remote NSP link resource with this connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. Restricted to 140 chars. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NspLinkProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The NSP link state. </summary>
         [WirePath("properties.status")]
-        public NetworkSecurityPerimeterLinkStatus? Status { get; }
+        public NetworkSecurityPerimeterLinkStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
     }
 }

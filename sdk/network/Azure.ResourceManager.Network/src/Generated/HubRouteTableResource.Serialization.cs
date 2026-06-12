@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class HubRouteTableResource : IJsonModel<HubRouteTableData>
     {
-        private static HubRouteTableData s_dataDeserializationInstance;
-        private static HubRouteTableData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HubRouteTableData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HubRouteTableData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HubRouteTableData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HubRouteTableData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HubRouteTableData>)Data).Write(writer, options);
 
-        HubRouteTableData IJsonModel<HubRouteTableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HubRouteTableData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HubRouteTableData IJsonModel<HubRouteTableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HubRouteTableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HubRouteTableData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HubRouteTableData IPersistableModel<HubRouteTableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HubRouteTableData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<HubRouteTableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HubRouteTableData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HubRouteTableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

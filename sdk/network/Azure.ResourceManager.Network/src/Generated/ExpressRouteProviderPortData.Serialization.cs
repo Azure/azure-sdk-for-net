@@ -8,18 +8,65 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteProviderPortData : IUtf8JsonSerializable, IJsonModel<ExpressRouteProviderPortData>
+    /// <summary> ExpressRouteProviderPort resource. </summary>
+    public partial class ExpressRouteProviderPortData : TrackedResourceData, IJsonModel<ExpressRouteProviderPortData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteProviderPortData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExpressRouteProviderPortData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteProviderPortData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExpressRouteProviderPortData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteProviderPortData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteProviderPortData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteProviderPortData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExpressRouteProviderPortData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpressRouteProviderPortData IPersistableModel<ExpressRouteProviderPortData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExpressRouteProviderPortData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ExpressRouteProviderPortData"/> from. </param>
+        internal static ExpressRouteProviderPortData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeExpressRouteProviderPortData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExpressRouteProviderPortData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,567 +76,95 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteProviderPortData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteProviderPortData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExpressRouteProviderPortData)} does not support writing '{format}' format.");
             }
-
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PortPairDescriptor))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("portPairDescriptor"u8);
-                writer.WriteStringValue(PortPairDescriptor);
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(PrimaryAzurePort))
-            {
-                writer.WritePropertyName("primaryAzurePort"u8);
-                writer.WriteStringValue(PrimaryAzurePort);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SecondaryAzurePort))
-            {
-                writer.WritePropertyName("secondaryAzurePort"u8);
-                writer.WriteStringValue(SecondaryAzurePort);
-            }
-            if (Optional.IsDefined(PeeringLocation))
-            {
-                writer.WritePropertyName("peeringLocation"u8);
-                writer.WriteStringValue(PeeringLocation);
-            }
-            if (Optional.IsDefined(OverprovisionFactor))
-            {
-                writer.WritePropertyName("overprovisionFactor"u8);
-                writer.WriteNumberValue(OverprovisionFactor.Value);
-            }
-            if (Optional.IsDefined(PortBandwidthInMbps))
-            {
-                writer.WritePropertyName("portBandwidthInMbps"u8);
-                writer.WriteNumberValue(PortBandwidthInMbps.Value);
-            }
-            if (Optional.IsDefined(UsedBandwidthInMbps))
-            {
-                writer.WritePropertyName("usedBandwidthInMbps"u8);
-                writer.WriteNumberValue(UsedBandwidthInMbps.Value);
-            }
-            if (Optional.IsDefined(RemainingBandwidthInMbps))
-            {
-                writer.WritePropertyName("remainingBandwidthInMbps"u8);
-                writer.WriteNumberValue(RemainingBandwidthInMbps.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        ExpressRouteProviderPortData IJsonModel<ExpressRouteProviderPortData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpressRouteProviderPortData IJsonModel<ExpressRouteProviderPortData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExpressRouteProviderPortData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteProviderPortData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteProviderPortData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExpressRouteProviderPortData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExpressRouteProviderPortData(document.RootElement, options);
         }
 
-        internal static ExpressRouteProviderPortData DeserializeExpressRouteProviderPortData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExpressRouteProviderPortData DeserializeExpressRouteProviderPortData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
-            ResourceIdentifier id = default;
+            ExpressRouteProviderPortProperties properties = default;
             string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
-            string portPairDescriptor = default;
-            string primaryAzurePort = default;
-            string secondaryAzurePort = default;
-            string peeringLocation = default;
-            int? overprovisionFactor = default;
-            int? portBandwidthInMbps = default;
-            int? usedBandwidthInMbps = default;
-            int? remainingBandwidthInMbps = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ETag? eTag = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    properties = ExpressRouteProviderPortProperties.DeserializeExpressRouteProviderPortProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("etag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("portPairDescriptor"u8))
-                        {
-                            portPairDescriptor = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("primaryAzurePort"u8))
-                        {
-                            primaryAzurePort = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("secondaryAzurePort"u8))
-                        {
-                            secondaryAzurePort = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("peeringLocation"u8))
-                        {
-                            peeringLocation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("overprovisionFactor"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            overprovisionFactor = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("portBandwidthInMbps"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            portBandwidthInMbps = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("usedBandwidthInMbps"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            usedBandwidthInMbps = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("remainingBandwidthInMbps"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            remainingBandwidthInMbps = property0.Value.GetInt32();
-                            continue;
-                        }
-                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ExpressRouteProviderPortData(
-                id,
-                name,
-                type,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                etag,
-                portPairDescriptor,
-                primaryAzurePort,
-                secondaryAzurePort,
-                peeringLocation,
-                overprovisionFactor,
-                portBandwidthInMbps,
-                usedBandwidthInMbps,
-                remainingBandwidthInMbps,
-                serializedAdditionalRawData);
+            return new ExpressRouteProviderPortData(properties, name, eTag, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  location: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  location: ");
-                builder.AppendLine($"'{Location.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("  tags: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Tags)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PortPairDescriptor), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    portPairDescriptor: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PortPairDescriptor))
-                {
-                    builder.Append("    portPairDescriptor: ");
-                    if (PortPairDescriptor.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PortPairDescriptor}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PortPairDescriptor}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryAzurePort), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    primaryAzurePort: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrimaryAzurePort))
-                {
-                    builder.Append("    primaryAzurePort: ");
-                    if (PrimaryAzurePort.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrimaryAzurePort}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrimaryAzurePort}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryAzurePort), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    secondaryAzurePort: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SecondaryAzurePort))
-                {
-                    builder.Append("    secondaryAzurePort: ");
-                    if (SecondaryAzurePort.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SecondaryAzurePort}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SecondaryAzurePort}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PeeringLocation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    peeringLocation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PeeringLocation))
-                {
-                    builder.Append("    peeringLocation: ");
-                    if (PeeringLocation.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PeeringLocation}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PeeringLocation}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OverprovisionFactor), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    overprovisionFactor: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OverprovisionFactor))
-                {
-                    builder.Append("    overprovisionFactor: ");
-                    builder.AppendLine($"{OverprovisionFactor.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PortBandwidthInMbps), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    portBandwidthInMbps: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PortBandwidthInMbps))
-                {
-                    builder.Append("    portBandwidthInMbps: ");
-                    builder.AppendLine($"{PortBandwidthInMbps.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UsedBandwidthInMbps), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    usedBandwidthInMbps: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UsedBandwidthInMbps))
-                {
-                    builder.Append("    usedBandwidthInMbps: ");
-                    builder.AppendLine($"{UsedBandwidthInMbps.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemainingBandwidthInMbps), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    remainingBandwidthInMbps: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RemainingBandwidthInMbps))
-                {
-                    builder.Append("    remainingBandwidthInMbps: ");
-                    builder.AppendLine($"{RemainingBandwidthInMbps.Value}");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ExpressRouteProviderPortData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteProviderPortData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ExpressRouteProviderPortData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ExpressRouteProviderPortData IPersistableModel<ExpressRouteProviderPortData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteProviderPortData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExpressRouteProviderPortData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExpressRouteProviderPortData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ExpressRouteProviderPortData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

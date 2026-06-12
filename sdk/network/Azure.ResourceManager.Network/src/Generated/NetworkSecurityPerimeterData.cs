@@ -13,47 +13,14 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the NetworkSecurityPerimeter data model.
-    /// The Network Security Perimeter resource
-    /// </summary>
+    /// <summary> The Network Security Perimeter resource. </summary>
     public partial class NetworkSecurityPerimeterData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public NetworkSecurityPerimeterData(AzureLocation location) : base(location)
+        public NetworkSecurityPerimeterData() : base(default)
         {
         }
 
@@ -62,28 +29,34 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
-        /// <param name="perimeterGuid"> perimeter guid of the network security perimeter. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkSecurityPerimeterProvisioningState? provisioningState, Guid? perimeterGuid, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The network security perimeter properties. </param>
+        /// <param name="networkSecurityPerimeterName"> The name of the network security perimeter. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSecurityPerimeterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkSecurityPerimeterProperties properties, string networkSecurityPerimeterName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ProvisioningState = provisioningState;
-            PerimeterGuid = perimeterGuid;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            Name = networkSecurityPerimeterName;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterData"/> for deserialization. </summary>
-        internal NetworkSecurityPerimeterData()
-        {
-        }
+        /// <summary> The network security perimeter properties. </summary>
+        [WirePath("properties")]
+        internal NetworkSecurityPerimeterProperties Properties { get; set; }
+
+        /// <summary> The name of the network security perimeter. </summary>
+        [WirePath("name")]
+        public string Name { get; }
 
         /// <summary> The provisioning state of the scope assignment resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkSecurityPerimeterProvisioningState? ProvisioningState { get; }
-        /// <summary> perimeter guid of the network security perimeter. </summary>
-        [WirePath("properties.perimeterGuid")]
-        public Guid? PerimeterGuid { get; }
+        public NetworkSecurityPerimeterProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class FirewallPolicyExplicitProxy : IUtf8JsonSerializable, IJsonModel<FirewallPolicyExplicitProxy>
+    /// <summary> Explicit Proxy Settings in Firewall Policy. </summary>
+    public partial class FirewallPolicyExplicitProxy : IJsonModel<FirewallPolicyExplicitProxy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyExplicitProxy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FirewallPolicyExplicitProxy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyExplicitProxy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFirewallPolicyExplicitProxy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyExplicitProxy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FirewallPolicyExplicitProxy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FirewallPolicyExplicitProxy IPersistableModel<FirewallPolicyExplicitProxy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FirewallPolicyExplicitProxy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FirewallPolicyExplicitProxy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,23 +69,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyExplicitProxy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyExplicitProxy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(EnableExplicitProxy))
             {
-                if (EnableExplicitProxy != null)
-                {
-                    writer.WritePropertyName("enableExplicitProxy"u8);
-                    writer.WriteBooleanValue(EnableExplicitProxy.Value);
-                }
-                else
-                {
-                    writer.WriteNull("enableExplicitProxy");
-                }
+                writer.WritePropertyName("enableExplicitProxy"u8);
+                writer.WriteBooleanValue(EnableExplicitProxy.Value);
             }
             if (Optional.IsDefined(HttpPort))
             {
@@ -59,15 +91,8 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(EnablePacFile))
             {
-                if (EnablePacFile != null)
-                {
-                    writer.WritePropertyName("enablePacFile"u8);
-                    writer.WriteBooleanValue(EnablePacFile.Value);
-                }
-                else
-                {
-                    writer.WriteNull("enablePacFile");
-                }
+                writer.WritePropertyName("enablePacFile"u8);
+                writer.WriteBooleanValue(EnablePacFile.Value);
             }
             if (Optional.IsDefined(PacFilePort))
             {
@@ -79,15 +104,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("pacFile"u8);
                 writer.WriteStringValue(PacFile);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,22 +121,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        FirewallPolicyExplicitProxy IJsonModel<FirewallPolicyExplicitProxy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FirewallPolicyExplicitProxy IJsonModel<FirewallPolicyExplicitProxy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FirewallPolicyExplicitProxy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyExplicitProxy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyExplicitProxy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFirewallPolicyExplicitProxy(document.RootElement, options);
         }
 
-        internal static FirewallPolicyExplicitProxy DeserializeFirewallPolicyExplicitProxy(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FirewallPolicyExplicitProxy DeserializeFirewallPolicyExplicitProxy(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -122,68 +152,66 @@ namespace Azure.ResourceManager.Network.Models
             bool? enablePacFile = default;
             int? pacFilePort = default;
             string pacFile = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("enableExplicitProxy"u8))
+                if (prop.NameEquals("enableExplicitProxy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         enableExplicitProxy = null;
                         continue;
                     }
-                    enableExplicitProxy = property.Value.GetBoolean();
+                    enableExplicitProxy = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("httpPort"u8))
+                if (prop.NameEquals("httpPort"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    httpPort = property.Value.GetInt32();
+                    httpPort = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("httpsPort"u8))
+                if (prop.NameEquals("httpsPort"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    httpsPort = property.Value.GetInt32();
+                    httpsPort = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("enablePacFile"u8))
+                if (prop.NameEquals("enablePacFile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         enablePacFile = null;
                         continue;
                     }
-                    enablePacFile = property.Value.GetBoolean();
+                    enablePacFile = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("pacFilePort"u8))
+                if (prop.NameEquals("pacFilePort"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pacFilePort = property.Value.GetInt32();
+                    pacFilePort = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("pacFile"u8))
+                if (prop.NameEquals("pacFile"u8))
                 {
-                    pacFile = property.Value.GetString();
+                    pacFile = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FirewallPolicyExplicitProxy(
                 enableExplicitProxy,
                 httpPort,
@@ -191,155 +219,7 @@ namespace Azure.ResourceManager.Network.Models
                 enablePacFile,
                 pacFilePort,
                 pacFile,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableExplicitProxy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableExplicitProxy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableExplicitProxy))
-                {
-                    builder.Append("  enableExplicitProxy: ");
-                    var boolValue = EnableExplicitProxy.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpPort), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  httpPort: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HttpPort))
-                {
-                    builder.Append("  httpPort: ");
-                    builder.AppendLine($"{HttpPort.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpsPort), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  httpsPort: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HttpsPort))
-                {
-                    builder.Append("  httpsPort: ");
-                    builder.AppendLine($"{HttpsPort.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnablePacFile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enablePacFile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnablePacFile))
-                {
-                    builder.Append("  enablePacFile: ");
-                    var boolValue = EnablePacFile.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PacFilePort), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  pacFilePort: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PacFilePort))
-                {
-                    builder.Append("  pacFilePort: ");
-                    builder.AppendLine($"{PacFilePort.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PacFile), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  pacFile: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PacFile))
-                {
-                    builder.Append("  pacFile: ");
-                    if (PacFile.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PacFile}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PacFile}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<FirewallPolicyExplicitProxy>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyExplicitProxy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FirewallPolicyExplicitProxy IPersistableModel<FirewallPolicyExplicitProxy>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyExplicitProxy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFirewallPolicyExplicitProxy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FirewallPolicyExplicitProxy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
