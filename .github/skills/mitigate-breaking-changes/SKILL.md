@@ -112,7 +112,7 @@ Do **not** use `@@hierarchyBuilding` for C# base-model/base-type compatibility d
 2. Add `#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "..."` before each `@@hierarchyBuilding` call
 3. After adding the decorator, regenerate the SDK code
 
-**Legacy approved example** (from KeyVault migration):
+**Legacy-approved example** (from KeyVault migration):
 ```typespec
 import "@azure-tools/typespec-client-generator-core";
 using Azure.ClientGenerator.Core.Legacy;
@@ -148,7 +148,9 @@ options:
 
 Then regenerate the SDK.
 
-**Avoid** attempting to fix this by creating `ApiCompatBaseline.txt` or disabling ApiCompat. The emitter option is the correct solution.
+If the remaining ApiCompat diff is only `WirePathAttribute` removal, it is acceptable to add targeted entries to the centralized baseline file under `eng/apicompatbaselines/<Project>.txt`. Do not add SDK custom code just to restore `WirePathAttribute`; the maintenance cost is not worth it for this compatibility diff.
+
+Do not create a local `ApiCompatBaseline.txt`, do not baseline unrelated ApiCompat errors, and do not disable ApiCompat.
 
 ## Extension Resources
 
