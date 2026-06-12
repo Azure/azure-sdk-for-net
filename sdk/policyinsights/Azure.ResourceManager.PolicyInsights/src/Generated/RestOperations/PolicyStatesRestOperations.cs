@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateSummarizeForManagementGroupRequest(string policyStatesSummaryResource, string managementGroupName, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
+        internal HttpMessage CreateSummarizeForManagementGroupRequest(string policyStatesSummaryResource, string managementGroupName, int? maxCount, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (@from != null)
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateSummarizeForSubscriptionRequest(string subscriptionId, string policyStatesSummaryResource, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
+        internal HttpMessage CreateSummarizeForSubscriptionRequest(string subscriptionId, string policyStatesSummaryResource, int? maxCount, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -247,9 +247,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (@from != null)
             {
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateSummarizeForResourceGroupRequest(string subscriptionId, string resourceGroupName, string policyStatesSummaryResource, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
+        internal HttpMessage CreateSummarizeForResourceGroupRequest(string subscriptionId, string resourceGroupName, string policyStatesSummaryResource, int? maxCount, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -364,9 +364,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (@from != null)
             {
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateSummarizeForResourceRequest(string policyStatesSummaryResource, string resourceId, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
+        internal HttpMessage CreateSummarizeForResourceRequest(string policyStatesSummaryResource, string resourceId, int? maxCount, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -481,9 +481,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (@from != null)
             {
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateSummarizeForPolicySetDefinitionPolicyStatesRequest(string subscriptionId, string policyStatesSummaryResource, string policySetDefinitionName, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
+        internal HttpMessage CreateSummarizeForPolicySetDefinitionPolicyStatesRequest(string subscriptionId, string policyStatesSummaryResource, string policySetDefinitionName, int? maxCount, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -640,9 +640,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (@from != null)
             {
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateSummarizeForPolicyDefinitionPolicyStatesRequest(string subscriptionId, string policyStatesSummaryResource, string policyDefinitionName, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
+        internal HttpMessage CreateSummarizeForPolicyDefinitionPolicyStatesRequest(string subscriptionId, string policyStatesSummaryResource, string policyDefinitionName, int? maxCount, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -761,9 +761,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (@from != null)
             {
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateSummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesRequest(string subscriptionId, string policyStatesSummaryResource, string policyAssignmentName, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
+        internal HttpMessage CreateSummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesRequest(string subscriptionId, string policyStatesSummaryResource, string policyAssignmentName, int? maxCount, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -882,9 +882,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (@from != null)
             {
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateSummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesRequest(string subscriptionId, string resourceGroupName, string policyStatesSummaryResource, string policyAssignmentName, int? top, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
+        internal HttpMessage CreateSummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesRequest(string subscriptionId, string resourceGroupName, string policyStatesSummaryResource, string policyAssignmentName, int? maxCount, DateTimeOffset? @from, DateTimeOffset? to, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1007,9 +1007,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (@from != null)
             {
