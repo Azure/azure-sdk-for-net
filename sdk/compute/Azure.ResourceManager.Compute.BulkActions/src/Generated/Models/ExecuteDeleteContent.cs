@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public bool? IsForceDeletion { get; set; }
 
         /// <summary> Retry policy the user can pass. </summary>
-        public UserRequestRetryPolicy ExecutionParametersRetryPolicy
+        public BulkOperationRetryPolicy ExecutionParametersRetryPolicy
         {
             get
             {

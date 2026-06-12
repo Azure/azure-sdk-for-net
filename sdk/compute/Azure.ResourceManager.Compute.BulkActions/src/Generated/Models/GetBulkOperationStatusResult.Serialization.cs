@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             writer.WritePropertyName("results"u8);
             writer.WriteStartArray();
-            foreach (ResourceOperationResult item in Results)
+            foreach (ComputeBulkOperationResult item in Results)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -136,16 +136,16 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            IList<ResourceOperationResult> results = default;
+            IList<ComputeBulkOperationResult> results = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("results"u8))
                 {
-                    List<ResourceOperationResult> array = new List<ResourceOperationResult>();
+                    List<ComputeBulkOperationResult> array = new List<ComputeBulkOperationResult>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceOperationResult.DeserializeResourceOperationResult(item, options));
+                        array.Add(ComputeBulkOperationResult.DeserializeComputeBulkOperationResult(item, options));
                     }
                     results = array;
                     continue;

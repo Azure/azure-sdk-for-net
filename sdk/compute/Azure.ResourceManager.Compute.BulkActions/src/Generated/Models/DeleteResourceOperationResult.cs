@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             Description = description;
             ResourceType = resourceType;
             Location = location;
-            Results = new ChangeTrackingList<ResourceOperationResult>();
+            Results = new ChangeTrackingList<ComputeBulkOperationResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeleteResourceOperationResult"/>. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="location"> The location of the delete request eg westus. </param>
         /// <param name="results"> The results from the delete request if no errors exist. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeleteResourceOperationResult(string description, string resourceType, AzureLocation location, IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeleteResourceOperationResult(string description, string resourceType, AzureLocation location, IList<ComputeBulkOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             ResourceType = resourceType;
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public AzureLocation Location { get; }
 
         /// <summary> The results from the delete request if no errors exist. </summary>
-        public IList<ResourceOperationResult> Results { get; }
+        public IList<ComputeBulkOperationResult> Results { get; }
     }
 }

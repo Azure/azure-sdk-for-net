@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         internal UserRequestResources Resources { get; }
 
         /// <summary> Retry policy the user can pass. </summary>
-        public UserRequestRetryPolicy ExecutionParametersRetryPolicy
+        public BulkOperationRetryPolicy ExecutionParametersRetryPolicy
         {
             get
             {

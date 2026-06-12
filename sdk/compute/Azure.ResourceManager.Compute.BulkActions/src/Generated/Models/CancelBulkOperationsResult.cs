@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Initializes a new instance of <see cref="CancelBulkOperationsResult"/>. </summary>
         /// <param name="results"> An array of resource operations that were successfully cancelled. </param>
-        internal CancelBulkOperationsResult(IEnumerable<ResourceOperationResult> results)
+        internal CancelBulkOperationsResult(IEnumerable<ComputeBulkOperationResult> results)
         {
             Results = results.ToList();
         }
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Initializes a new instance of <see cref="CancelBulkOperationsResult"/>. </summary>
         /// <param name="results"> An array of resource operations that were successfully cancelled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CancelBulkOperationsResult(IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CancelBulkOperationsResult(IList<ComputeBulkOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Results = results;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An array of resource operations that were successfully cancelled. </summary>
-        public IList<ResourceOperationResult> Results { get; }
+        public IList<ComputeBulkOperationResult> Results { get; }
     }
 }

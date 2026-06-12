@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            UserRequestRetryPolicy retryPolicy = default;
+            BulkOperationRetryPolicy retryPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    retryPolicy = UserRequestRetryPolicy.DeserializeUserRequestRetryPolicy(prop.Value, options);
+                    retryPolicy = BulkOperationRetryPolicy.DeserializeBulkOperationRetryPolicy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

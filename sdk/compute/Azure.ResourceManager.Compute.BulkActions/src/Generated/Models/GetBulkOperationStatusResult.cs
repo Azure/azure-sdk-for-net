@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Initializes a new instance of <see cref="GetBulkOperationStatusResult"/>. </summary>
         /// <param name="results"> An array of resource operations based on their operation ids. </param>
-        internal GetBulkOperationStatusResult(IEnumerable<ResourceOperationResult> results)
+        internal GetBulkOperationStatusResult(IEnumerable<ComputeBulkOperationResult> results)
         {
             Results = results.ToList();
         }
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Initializes a new instance of <see cref="GetBulkOperationStatusResult"/>. </summary>
         /// <param name="results"> An array of resource operations based on their operation ids. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetBulkOperationStatusResult(IList<ResourceOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetBulkOperationStatusResult(IList<ComputeBulkOperationResult> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Results = results;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An array of resource operations based on their operation ids. </summary>
-        public IList<ResourceOperationResult> Results { get; }
+        public IList<ComputeBulkOperationResult> Results { get; }
     }
 }

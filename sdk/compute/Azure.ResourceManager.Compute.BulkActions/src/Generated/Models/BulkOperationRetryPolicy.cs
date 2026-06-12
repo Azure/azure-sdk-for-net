@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The retry policy for the user request. </summary>
-    public partial class UserRequestRetryPolicy
+    public partial class BulkOperationRetryPolicy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UserRequestRetryPolicy"/>. </summary>
-        public UserRequestRetryPolicy()
+        /// <summary> Initializes a new instance of <see cref="BulkOperationRetryPolicy"/>. </summary>
+        public BulkOperationRetryPolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserRequestRetryPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BulkOperationRetryPolicy"/>. </summary>
         /// <param name="retryCount"> Retry count for user request. </param>
         /// <param name="retryWindowInMinutes"> Retry window in minutes for user request. </param>
         /// <param name="onFailureAction"> Action to take on failure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserRequestRetryPolicy(int? retryCount, int? retryWindowInMinutes, ComputeBulkOperationType? onFailureAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkOperationRetryPolicy(int? retryCount, int? retryWindowInMinutes, ComputeBulkOperationType? onFailureAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RetryCount = retryCount;
             RetryWindowInMinutes = retryWindowInMinutes;

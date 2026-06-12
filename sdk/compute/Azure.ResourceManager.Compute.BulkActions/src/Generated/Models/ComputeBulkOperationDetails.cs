@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkOperationDetails(string operationId, IList<ResourceIdentifier> resourceIds, ComputeBulkOperationType? operationType, string subscriptionId, DateTimeOffset? deadlineOn, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkOperationDetails(string operationId, IList<ResourceIdentifier> resourceIds, ComputeBulkOperationType? operationType, string subscriptionId, DateTimeOffset? deadlineOn, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, BulkOperationRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             ResourceIds = resourceIds;
@@ -91,6 +91,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public DateTimeOffset? CompletedOn { get; }
 
         /// <summary> Retry policy the user can pass. </summary>
-        public UserRequestRetryPolicy RetryPolicy { get; }
+        public BulkOperationRetryPolicy RetryPolicy { get; }
     }
 }

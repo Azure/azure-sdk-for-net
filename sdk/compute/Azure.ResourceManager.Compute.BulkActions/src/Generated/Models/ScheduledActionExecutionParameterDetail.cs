@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Initializes a new instance of <see cref="ScheduledActionExecutionParameterDetail"/>. </summary>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionExecutionParameterDetail(UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionExecutionParameterDetail(BulkOperationRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RetryPolicy = retryPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Retry policy the user can pass. </summary>
-        public UserRequestRetryPolicy RetryPolicy { get; set; }
+        public BulkOperationRetryPolicy RetryPolicy { get; set; }
     }
 }

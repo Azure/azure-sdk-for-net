@@ -13,24 +13,24 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> High level response from an operation on a resource. </summary>
-    public partial class ResourceOperationResult
+    public partial class ComputeBulkOperationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceOperationResult"/>. </summary>
-        internal ResourceOperationResult()
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationResult"/>. </summary>
+        internal ComputeBulkOperationResult()
         {
             ResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceOperationResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationResult"/>. </summary>
         /// <param name="resourceIds"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
         /// <param name="errorCode"> Resource level error code if it exists. </param>
         /// <param name="errorDetails"> Resource level error details if they exist. </param>
         /// <param name="operation"> Details of the operation performed on a resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceOperationResult(IList<ResourceIdentifier> resourceIds, string errorCode, string errorDetails, ComputeBulkOperationDetails operation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkOperationResult(IList<ResourceIdentifier> resourceIds, string errorCode, string errorDetails, ComputeBulkOperationDetails operation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceIds = resourceIds;
             ErrorCode = errorCode;
