@@ -218,8 +218,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    createdAt = DateTimeOffset.Parse(prop.Value.ToString());
-                    //createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("updated_at"u8))
@@ -228,8 +227,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    updatedAt = DateTimeOffset.Parse(prop.Value.ToString());
-                    //updatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    updatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")

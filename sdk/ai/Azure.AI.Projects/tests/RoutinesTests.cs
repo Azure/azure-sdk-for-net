@@ -54,23 +54,23 @@ public class RoutinesTests : ProjectsClientTestBase
         Assert.That(created.Enabled, Is.True);
 
         ProjectsRoutine disabled = await projectClient.Routines.DisableRoutineAsync(routineName);
-        Assert.That(created.Name, Is.EqualTo(routineName));
-        Assert.That(created.Enabled, Is.False);
+        Assert.That(disabled.Name, Is.EqualTo(routineName));
+        Assert.That(disabled.Enabled, Is.False);
 
         ProjectsRoutine fetched = await projectClient.Routines.GetRoutineAsync(routineName);
-        Assert.That(created.Name, Is.EqualTo(routineName));
-        Assert.That(created.Enabled, Is.False);
+        Assert.That(fetched.Name, Is.EqualTo(routineName));
+        Assert.That(fetched.Enabled, Is.False);
 
         ProjectsRoutine enabled = await projectClient.Routines.EnableRoutineAsync(routineName);
-        Assert.That(created.Name, Is.EqualTo(routineName));
-        Assert.That(created.Enabled, Is.True);
+        Assert.That(enabled.Name, Is.EqualTo(routineName));
+        Assert.That(enabled.Enabled, Is.True);
 
         List<string> routineNames = await projectClient.Routines.GetRoutinesAsync().Where(x => string.Equals(x.Name, routineName)).Select(x => x.Name).ToListAsync();
         Assert.That(routineNames, Has.Count.EqualTo(1));
         Assert.That(routineNames[0], Is.EqualTo(routineName));
         //InvokeAgentResponsesApiDispatchPayload
 
-        DispatchRoutineResponse response = await projectClient.Routines.DispatchAsyncRoutineAsync(routineName, new InvokeAgentResponsesApiDispatchPayload(BinaryData.FromString("Hello, tell me a joke")));
+        DispatchRoutineResponse response = await projectClient.Routines.DispatchAsyncRoutineAsync(routineName, new InvokeAgentResponsesApiDispatchPayload(BinaryData.FromObjectAsJson("Hello, tell me a joke")));
         Assert.That(response.DispatchId, Is.Not.Null);
         Assert.That(response.TaskId, Is.Not.Null);
         Assert.That(response.ActionCorrelationId, Is.Not.Null);
@@ -300,7 +300,7 @@ public class RoutinesTests : ProjectsClientTestBase
         if (Mode == RecordedTestMode.Playback)
             return;
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
-        AIProjectClient projectClient = new(connectionString, TestEnvironment.Credential);
+        AIProjectClient projectClient = new(connectionString, GetTestTokenProvider());
         // Remove Routnes
         List<string> routines = await projectClient.Routines.GetRoutinesAsync().Where(x => x.Name.StartsWith(ROUTINE_NAME_PREFIX)).Select(x => x.Name).ToListAsync();
         foreach (string routineName in routines)

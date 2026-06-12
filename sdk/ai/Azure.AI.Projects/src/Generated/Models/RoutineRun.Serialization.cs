@@ -324,8 +324,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    triggeredAt = DateTimeOffset.Parse(prop.Value.GetString());
-                    //triggeredAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    triggeredAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("scheduled_fire_at"u8))
@@ -334,8 +333,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    scheduledFireAt = DateTimeOffset.Parse(prop.Value.GetString());
-                    //scheduledFireAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    scheduledFireAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("started_at"u8))
@@ -344,8 +342,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    startedAt = DateTimeOffset.Parse(prop.Value.GetString());
-                    //startedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    startedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("ended_at"u8))
@@ -354,8 +351,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    endedAt = DateTimeOffset.Parse(prop.Value.GetString());
-                    //endedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    endedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("dispatch_id"u8))
