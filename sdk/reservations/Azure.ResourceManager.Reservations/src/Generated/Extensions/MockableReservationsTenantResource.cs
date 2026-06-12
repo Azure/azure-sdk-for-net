@@ -8,218 +8,188 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Reservations;
 using Azure.ResourceManager.Reservations.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Reservations.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableReservationsTenantResource : ArmResource
     {
-        private ClientDiagnostics _reservationDetailReservationClientDiagnostics;
-        private ReservationRestOperations _reservationDetailReservationRestClient;
+        private ClientDiagnostics _reservationClientDiagnostics;
+        private Reservation _reservationRestClient;
         private ClientDiagnostics _reservationOrderClientDiagnostics;
-        private ReservationOrderRestOperations _reservationOrderRestClient;
+        private ReservationOrder _reservationOrderRestClient;
         private ClientDiagnostics _calculateExchangeClientDiagnostics;
-        private CalculateExchangeRestOperations _calculateExchangeRestClient;
+        private CalculateExchange _calculateExchangeRestClient;
         private ClientDiagnostics _exchangeClientDiagnostics;
-        private ExchangeRestOperations _exchangeRestClient;
+        private Exchange _exchangeRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableReservationsTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableReservationsTenantResource for mocking. </summary>
         protected MockableReservationsTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableReservationsTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableReservationsTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableReservationsTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ReservationDetailReservationClientDiagnostics => _reservationDetailReservationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations", ReservationDetailResource.ResourceType.Namespace, Diagnostics);
-        private ReservationRestOperations ReservationDetailReservationRestClient => _reservationDetailReservationRestClient ??= new ReservationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ReservationDetailResource.ResourceType));
-        private ClientDiagnostics ReservationOrderClientDiagnostics => _reservationOrderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations", ReservationOrderResource.ResourceType.Namespace, Diagnostics);
-        private ReservationOrderRestOperations ReservationOrderRestClient => _reservationOrderRestClient ??= new ReservationOrderRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ReservationOrderResource.ResourceType));
-        private ClientDiagnostics CalculateExchangeClientDiagnostics => _calculateExchangeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private CalculateExchangeRestOperations CalculateExchangeRestClient => _calculateExchangeRestClient ??= new CalculateExchangeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ExchangeClientDiagnostics => _exchangeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ExchangeRestOperations ExchangeRestClient => _exchangeRestClient ??= new ExchangeRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ReservationClientDiagnostics => _reservationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Reservation ReservationRestClient => _reservationRestClient ??= new Reservation(ReservationClientDiagnostics, Pipeline, Endpoint, "2022-11-01");
 
-        /// <summary> Gets a collection of ReservationOrderResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of ReservationOrderResources and their operations over a ReservationOrderResource. </returns>
+        private ClientDiagnostics ReservationOrderClientDiagnostics => _reservationOrderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ReservationOrder ReservationOrderRestClient => _reservationOrderRestClient ??= new ReservationOrder(ReservationOrderClientDiagnostics, Pipeline, Endpoint, "2022-11-01");
+
+        private ClientDiagnostics CalculateExchangeClientDiagnostics => _calculateExchangeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private CalculateExchange CalculateExchangeRestClient => _calculateExchangeRestClient ??= new CalculateExchange(CalculateExchangeClientDiagnostics, Pipeline, Endpoint, "2022-11-01");
+
+        private ClientDiagnostics ExchangeClientDiagnostics => _exchangeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Exchange ExchangeRestClient => _exchangeRestClient ??= new Exchange(ExchangeClientDiagnostics, Pipeline, Endpoint, "2022-11-01");
+
+        /// <summary> Gets a collection of ReservationOrders in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of ReservationOrders and their operations over a ReservationOrderResource. </returns>
         public virtual ReservationOrderCollection GetReservationOrders()
         {
             return GetCachedClient(client => new ReservationOrderCollection(client, Id));
         }
 
         /// <summary>
-        /// Get the details of the `ReservationOrder`.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrder_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReservationOrderResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="expand"> May be used to expand the planInformation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ReservationOrderResource>> GetReservationOrderAsync(Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return await GetReservationOrders().GetAsync(reservationOrderId, expand, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the details of the `ReservationOrder`.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrder_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReservationOrderResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="expand"> May be used to expand the planInformation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<ReservationOrderResource> GetReservationOrder(Guid reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
-        {
-            return GetReservationOrders().Get(reservationOrderId, expand, cancellationToken);
-        }
-
-        /// <summary>
         /// List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservations</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Reservation_ListAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOperationGroup_ListAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReservationDetailResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
-        {
-            options ??= new TenantResourceGetReservationDetailsOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationDetailReservationRestClient.CreateListAllRequest(options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationDetailReservationRestClient.CreateListAllNextPageRequest(nextLink, options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "MockableReservationsTenantResource.GetReservationDetails", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/reservations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Reservation_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReservationDetailResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="filter"> May be used to filter by reservation properties. The filter supports 'eq', 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or 'not'. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, expiryDateTime, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
+        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
+        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
+        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
+        /// <param name="selectedState"> The selected provisioning state. </param>
+        /// <param name="take"> To number of reservations to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationDetailResource> GetReservationDetails(TenantResourceGetReservationDetailsOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(string filter = default, string @orderby = default, string refreshSummary = default, float? skiptoken = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
         {
-            options ??= new TenantResourceGetReservationDetailsOptions();
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationGetReservationDetailsAsyncCollectionResultOfT(
+                ReservationRestClient,
+                filter,
+                @orderby,
+                refreshSummary,
+                skiptoken,
+                selectedState,
+                take,
+                context,
+                "MockableReservationsTenantResource.GetReservationDetails"), data => new ReservationDetailResource(Client, data));
+        }
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationDetailReservationRestClient.CreateListAllRequest(options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationDetailReservationRestClient.CreateListAllNextPageRequest(nextLink, options.Filter, options.Orderby, options.RefreshSummary, options.Skiptoken, options.SelectedState, options.Take);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReservationDetailResource(Client, ReservationDetailData.DeserializeReservationDetailData(e)), ReservationDetailReservationClientDiagnostics, Pipeline, "MockableReservationsTenantResource.GetReservationDetails", "value", "nextLink", cancellationToken);
+        /// <summary>
+        /// List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/reservations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOperationGroup_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> May be used to filter by reservation properties. The filter supports 'eq', 'or', and 'and'. It does not currently support 'ne', 'gt', 'le', 'ge', or 'not'. Reservation properties include sku/name, properties/{appliedScopeType, archived, displayName, displayProvisioningState, effectiveDateTime, expiryDate, expiryDateTime, provisioningState, quantity, renew, reservedResourceType, term, userFriendlyAppliedScopeType, userFriendlyRenewState}. </param>
+        /// <param name="orderby"> May be used to sort order by reservation properties. </param>
+        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
+        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
+        /// <param name="selectedState"> The selected provisioning state. </param>
+        /// <param name="take"> To number of reservations to return. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ReservationDetailResource> GetReservationDetails(string filter = default, string @orderby = default, string refreshSummary = default, float? skiptoken = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationGetReservationDetailsCollectionResultOfT(
+                ReservationRestClient,
+                filter,
+                @orderby,
+                refreshSummary,
+                skiptoken,
+                selectedState,
+                take,
+                context,
+                "MockableReservationsTenantResource.GetReservationDetails"), data => new ReservationDetailResource(Client, data));
         }
 
         /// <summary>
         /// Calculate price for placing a `ReservationOrder`.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/calculatePrice</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/calculatePrice. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrder_Calculate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderOperationGroup_Calculate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReservationOrderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CalculatePriceResult>> CalculateReservationOrderAsync(ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ReservationOrderClientDiagnostics.CreateScope("MockableReservationsTenantResource.CalculateReservationOrder");
+            using DiagnosticScope scope = ReservationOrderClientDiagnostics.CreateScope("MockableReservationsTenantResource.CalculateReservationOrder");
             scope.Start();
             try
             {
-                var response = await ReservationOrderRestClient.CalculateAsync(content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReservationOrderRestClient.CreateCalculateReservationOrderRequest(ReservationPurchaseContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CalculatePriceResult> response = Response.FromValue(CalculatePriceResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -233,35 +203,41 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// Calculate price for placing a `ReservationOrder`.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/calculatePrice</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/calculatePrice. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrder_Calculate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrderOperationGroup_Calculate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReservationOrderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Information needed for calculate or purchase reservation. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CalculatePriceResult> CalculateReservationOrder(ReservationPurchaseContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ReservationOrderClientDiagnostics.CreateScope("MockableReservationsTenantResource.CalculateReservationOrder");
+            using DiagnosticScope scope = ReservationOrderClientDiagnostics.CreateScope("MockableReservationsTenantResource.CalculateReservationOrder");
             scope.Start();
             try
             {
-                var response = ReservationOrderRestClient.Calculate(content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ReservationOrderRestClient.CreateCalculateReservationOrderRequest(ReservationPurchaseContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CalculatePriceResult> response = Response.FromValue(CalculatePriceResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -273,38 +249,50 @@ namespace Azure.ResourceManager.Reservations.Mocking
 
         /// <summary>
         /// Calculates price for exchanging `Reservations` if there are no policy errors.
-        ///
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/calculateExchange</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/calculateExchange. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CalculateExchange_Post</description>
+        /// <term> Operation Id. </term>
+        /// <description> CalculateExchangeOperationGroup_Post. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CalculateExchangeResult>> CalculateReservationExchangeAsync(WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = CalculateExchangeClientDiagnostics.CreateScope("MockableReservationsTenantResource.CalculateReservationExchange");
+            using DiagnosticScope scope = CalculateExchangeClientDiagnostics.CreateScope("MockableReservationsTenantResource.CalculateReservationExchange");
             scope.Start();
             try
             {
-                var response = await CalculateExchangeRestClient.PostAsync(content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<CalculateExchangeResult>(new CalculateExchangeResultOperationSource(), CalculateExchangeClientDiagnostics, Pipeline, CalculateExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CalculateExchangeRestClient.CreateCalculateReservationExchangeRequest(CalculateExchangeContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ReservationsArmOperation<CalculateExchangeResult> operation = new ReservationsArmOperation<CalculateExchangeResult>(
+                    new CalculateExchangeResultOperationSource(),
+                    CalculateExchangeClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -316,38 +304,50 @@ namespace Azure.ResourceManager.Reservations.Mocking
 
         /// <summary>
         /// Calculates price for exchanging `Reservations` if there are no policy errors.
-        ///
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/calculateExchange</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/calculateExchange. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CalculateExchange_Post</description>
+        /// <term> Operation Id. </term>
+        /// <description> CalculateExchangeOperationGroup_Post. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request containing purchases and refunds that need to be executed. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CalculateExchangeResult> CalculateReservationExchange(WaitUntil waitUntil, CalculateExchangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = CalculateExchangeClientDiagnostics.CreateScope("MockableReservationsTenantResource.CalculateReservationExchange");
+            using DiagnosticScope scope = CalculateExchangeClientDiagnostics.CreateScope("MockableReservationsTenantResource.CalculateReservationExchange");
             scope.Start();
             try
             {
-                var response = CalculateExchangeRestClient.Post(content, cancellationToken);
-                var operation = new ReservationsArmOperation<CalculateExchangeResult>(new CalculateExchangeResultOperationSource(), CalculateExchangeClientDiagnostics, Pipeline, CalculateExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CalculateExchangeRestClient.CreateCalculateReservationExchangeRequest(CalculateExchangeContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ReservationsArmOperation<CalculateExchangeResult> operation = new ReservationsArmOperation<CalculateExchangeResult>(
+                    new CalculateExchangeResultOperationSource(),
+                    CalculateExchangeClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -359,38 +359,50 @@ namespace Azure.ResourceManager.Reservations.Mocking
 
         /// <summary>
         /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
-        ///
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/exchange</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/exchange. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exchange_Post</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExchangeOperationGroup_Post. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ExchangeResult>> ExchangeAsync(WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ExchangeClientDiagnostics.CreateScope("MockableReservationsTenantResource.Exchange");
+            using DiagnosticScope scope = ExchangeClientDiagnostics.CreateScope("MockableReservationsTenantResource.Exchange");
             scope.Start();
             try
             {
-                var response = await ExchangeRestClient.PostAsync(content, cancellationToken).ConfigureAwait(false);
-                var operation = new ReservationsArmOperation<ExchangeResult>(new ExchangeResultOperationSource(), ExchangeClientDiagnostics, Pipeline, ExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ExchangeRestClient.CreateExchangeRequest(ExchangeContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ReservationsArmOperation<ExchangeResult> operation = new ReservationsArmOperation<ExchangeResult>(
+                    new ExchangeResultOperationSource(),
+                    ExchangeClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -402,38 +414,50 @@ namespace Azure.ResourceManager.Reservations.Mocking
 
         /// <summary>
         /// Returns one or more `Reservations` in exchange for one or more `Reservation` purchases.
-        ///
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Capacity/exchange</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Capacity/exchange. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Exchange_Post</description>
+        /// <term> Operation Id. </term>
+        /// <description> ExchangeOperationGroup_Post. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-11-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-11-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Request containing the refunds and purchases that need to be executed. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ExchangeResult> Exchange(WaitUntil waitUntil, ExchangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ExchangeClientDiagnostics.CreateScope("MockableReservationsTenantResource.Exchange");
+            using DiagnosticScope scope = ExchangeClientDiagnostics.CreateScope("MockableReservationsTenantResource.Exchange");
             scope.Start();
             try
             {
-                var response = ExchangeRestClient.Post(content, cancellationToken);
-                var operation = new ReservationsArmOperation<ExchangeResult>(new ExchangeResultOperationSource(), ExchangeClientDiagnostics, Pipeline, ExchangeRestClient.CreatePostRequest(content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ExchangeRestClient.CreateExchangeRequest(ExchangeContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ReservationsArmOperation<ExchangeResult> operation = new ReservationsArmOperation<ExchangeResult>(
+                    new ExchangeResultOperationSource(),
+                    ExchangeClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
