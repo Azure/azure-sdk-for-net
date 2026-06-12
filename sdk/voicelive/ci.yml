@@ -18,3 +18,8 @@ extends:
     Artifacts:
     - name: Azure.AI.VoiceLive
       safeName: AzureAIVoiceLive
+      skipTagRepository: true
+      skipPublishPackage: true
+      skipSymbolsUpload: true
+      skipPublishDocGithubIo: true
+      skipUpdatePackageVersion: true
