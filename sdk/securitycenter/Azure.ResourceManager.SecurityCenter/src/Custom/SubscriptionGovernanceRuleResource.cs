@@ -33,10 +33,17 @@ namespace Azure.ResourceManager.SecurityCenter
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SubscriptionGovernanceRuleResource : ArmResource
     {
+        private readonly SecurityConnectorGovernanceRuleResource _innerResource;
+
         public static readonly ResourceType ResourceType;
         protected SubscriptionGovernanceRuleResource() { }
+        internal SubscriptionGovernanceRuleResource(ArmClient client, SecurityConnectorGovernanceRuleResource innerResource) : base(client, innerResource.Id)
+        {
+            _innerResource = innerResource;
+        }
+
         public virtual GovernanceRuleData Data { get { throw new NotSupportedException("This API is no longer supported by the service."); } }
-        public virtual bool HasData { get { throw new NotSupportedException("This API is no longer supported by the service."); } }
+        public virtual bool HasData => _innerResource?.HasData == true;
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string ruleId) { throw new NotSupportedException("This API is no longer supported by the service."); }
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
         public virtual Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
