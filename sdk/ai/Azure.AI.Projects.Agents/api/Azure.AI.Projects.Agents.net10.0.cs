@@ -1781,6 +1781,7 @@ namespace Azure.AI.Projects.Agents
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ProjectsAgentProtocol(string value) { throw null; }
+        public static Azure.AI.Projects.Agents.ProjectsAgentProtocol A2a { get { throw null; } }
         public static Azure.AI.Projects.Agents.ProjectsAgentProtocol ActivityProtocol { get { throw null; } }
         public static Azure.AI.Projects.Agents.ProjectsAgentProtocol Invocations { get { throw null; } }
         public static Azure.AI.Projects.Agents.ProjectsAgentProtocol InvocationsWs { get { throw null; } }
