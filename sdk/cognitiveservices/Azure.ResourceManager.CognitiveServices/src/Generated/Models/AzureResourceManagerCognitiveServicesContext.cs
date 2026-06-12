@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CognitiveServices
     [ModelReaderWriterBuildable(typeof(CognitiveServicesManagedAgentDeployment))]
     [ModelReaderWriterBuildable(typeof(CognitiveServicesManagedNetworkConfiguration))]
     [ModelReaderWriterBuildable(typeof(CognitiveServicesManagedNetworkConfigurationExtended))]
-    [ModelReaderWriterBuildable(typeof(CognitiveServicesManagedNetworkProvisionOptions))]
+    [ModelReaderWriterBuildable(typeof(CognitiveServicesManagedNetworkProvisionConfig))]
     [ModelReaderWriterBuildable(typeof(CognitiveServicesManagedNetworkProvisionStatus))]
     [ModelReaderWriterBuildable(typeof(CognitiveServicesManagedNetworkSettingsContent))]
     [ModelReaderWriterBuildable(typeof(CognitiveServicesManagedNetworkSettingsData))]

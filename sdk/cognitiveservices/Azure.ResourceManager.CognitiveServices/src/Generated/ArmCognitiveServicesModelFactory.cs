@@ -506,13 +506,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <param name="mode"> Gets or sets the auto-upgrade mode. </param>
-        /// <param name="plannedByMicrosoft"> Gets or sets a value indicating whether the auto-upgrade is planned by Microsoft. </param>
+        /// <param name="isPlannedByMicrosoft"> Gets or sets a value indicating whether the auto-upgrade is planned by Microsoft. </param>
         /// <param name="statusReason"> Gets or sets the status reason for the auto-upgrade configuration. </param>
         /// <param name="scheduledOn"> Gets or sets the scheduled time for the auto-upgrade. </param>
         /// <returns> A new <see cref="Models.FoundryAutoUpgrade"/> instance for mocking. </returns>
-        public static FoundryAutoUpgrade FoundryAutoUpgrade(FoundryAutoUpgradeMode? mode = default, bool? plannedByMicrosoft = default, string statusReason = default, DateTimeOffset? scheduledOn = default)
+        public static FoundryAutoUpgrade FoundryAutoUpgrade(FoundryAutoUpgradeMode? mode = default, bool? isPlannedByMicrosoft = default, string statusReason = default, DateTimeOffset? scheduledOn = default)
         {
-            return new FoundryAutoUpgrade(mode, plannedByMicrosoft, statusReason, scheduledOn, default);
+            return new FoundryAutoUpgrade(mode, isPlannedByMicrosoft, statusReason, scheduledOn, default);
         }
 
         /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
@@ -2431,10 +2431,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesManagedNetworkProvisionStatus(managedNetworkStatus, default);
         }
 
-        /// <returns> A new <see cref="Models.CognitiveServicesManagedNetworkProvisionOptions"/> instance for mocking. </returns>
-        public static CognitiveServicesManagedNetworkProvisionOptions CognitiveServicesManagedNetworkProvisionOptions()
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedNetworkProvisionConfig"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedNetworkProvisionConfig CognitiveServicesManagedNetworkProvisionConfig()
         {
-            return new CognitiveServicesManagedNetworkProvisionOptions(default);
+            return new CognitiveServicesManagedNetworkProvisionConfig(default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
