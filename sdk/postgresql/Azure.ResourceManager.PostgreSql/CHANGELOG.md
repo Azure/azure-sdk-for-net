@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.1 (2026-06-15)
+## 1.5.0-beta.1 (2026-06-15)
 
 ### Features Added
 
@@ -9,12 +9,6 @@
 - Add operations for MajorVersionUpgradePrecheck: Get and List by Server.
 - Add operations for Server: StartMajorVersionUpgradePrecheck.
 - Add new properties for multi-tenant Microsoft Entra application for Server.
-
-## 1.5.0-beta.1 (Unreleased)
-
-### Features Added
-
-- Upgraded API version to `2026-01-01-preview`.
 - Migrated from AutoRest to TypeSpec-based generation while preserving compatibility with the previously shipped public API surface.
 
 ## 1.4.2 (2026-04-28)
