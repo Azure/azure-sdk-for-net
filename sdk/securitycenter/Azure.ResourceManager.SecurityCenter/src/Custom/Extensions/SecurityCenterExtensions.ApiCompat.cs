@@ -4,6 +4,7 @@
 #nullable disable
 
 #pragma warning disable CA1822 // Compatibility instance members intentionally preserve previous signatures.
+#pragma warning disable CS0618 // Compatibility shims intentionally reference obsolete API.
 #pragma warning disable CS1591 // Hidden obsolete compatibility shims do not need public docs.
 
 using System;
@@ -11,6 +12,7 @@ using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,6 +29,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    [CodeGenSuppress("GetDiscoveredSecuritySolution", typeof(ResourceGroupResource), typeof(AzureLocation), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetDiscoveredSecuritySolutionAsync", typeof(ResourceGroupResource), typeof(AzureLocation), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSecuritySolution", typeof(ResourceGroupResource), typeof(AzureLocation), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetSecuritySolutionAsync", typeof(ResourceGroupResource), typeof(AzureLocation), typeof(string), typeof(CancellationToken))]
     public static partial class SecurityCenterExtensions
     {
         // Backward compatibility for legacy provider-action list methods that are now generated as resource-returning APIs.
@@ -80,6 +86,38 @@ namespace Azure.ResourceManager.SecurityCenter
         public static ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
             => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityAlerts(ascLocation);
         [ForwardsClientCalls]
+        [Obsolete("This method is obsolete and will be removed in a future release. Please use GetDiscoveredSecuritySolutions.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<DiscoveredSecuritySolution> GetDiscoveredSecuritySolution(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            Response<DiscoveredSecuritySolutionResource> response = GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetDiscoveredSecuritySolution(ascLocation, discoveredSecuritySolutionName, cancellationToken);
+            return Response.FromValue(new DiscoveredSecuritySolution(response.Value.Data), response.GetRawResponse());
+        }
+        [ForwardsClientCalls]
+        [Obsolete("This method is obsolete and will be removed in a future release. Please use GetDiscoveredSecuritySolutions.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static async Task<Response<DiscoveredSecuritySolution>> GetDiscoveredSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string discoveredSecuritySolutionName, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            Response<DiscoveredSecuritySolutionResource> response = await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetDiscoveredSecuritySolutionAsync(ascLocation, discoveredSecuritySolutionName, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new DiscoveredSecuritySolution(response.Value.Data), response.GetRawResponse());
+        }
+        [ForwardsClientCalls]
+        [Obsolete("This method is obsolete and will be removed in a future release. Please use GetSecuritySolutions.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<SecuritySolution> GetSecuritySolution(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            Response<SecuritySolutionResource> response = GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecuritySolution(ascLocation, securitySolutionName, cancellationToken);
+            return Response.FromValue(new SecuritySolution(response.Value.Data), response.GetRawResponse());
+        }
+        [ForwardsClientCalls]
+        [Obsolete("This method is obsolete and will be removed in a future release. Please use GetSecuritySolutions.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static async Task<Response<SecuritySolution>> GetSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string securitySolutionName, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            Response<SecuritySolutionResource> response = await GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetSecuritySolutionAsync(ascLocation, securitySolutionName, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(new SecuritySolution(response.Value.Data), response.GetRawResponse());
+        }
+        [ForwardsClientCalls]
         public static ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation)
             => GetMockableSecurityCenterResourceGroupResource(resourceGroupResource).GetResourceGroupSecurityTasks(ascLocation);
         [ForwardsClientCalls]
@@ -94,6 +132,32 @@ namespace Azure.ResourceManager.SecurityCenter
         [Obsolete("This API is no longer supported by the service.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SecurityCenterPricingCollection GetSecurityCenterPricings(this SubscriptionResource subscriptionResource) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [ForwardsClientCalls]
+        [Obsolete("This method is obsolete and will be removed in a future release. Please use GetDiscoveredSecuritySolutions.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AsyncPageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default(CancellationToken))
+            => new LegacyDiscoveredSecuritySolutionAsyncPageable(GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetDiscoveredSecuritySolutionsAsync(default, cancellationToken));
+        [ForwardsClientCalls]
+        [Obsolete("This method is obsolete and will be removed in a future release. Please use GetDiscoveredSecuritySolutions.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Pageable<DiscoveredSecuritySolution> GetDiscoveredSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default(CancellationToken))
+            => new LegacyDiscoveredSecuritySolutionPageable(GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetDiscoveredSecuritySolutions(default, cancellationToken));
+        [ForwardsClientCalls]
+        [Obsolete("This method is obsolete and will be removed in a future release. Please use GetSecurityContacts.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<SecurityContactResource> GetSecurityContact(this SubscriptionResource subscriptionResource, string securityContactName, CancellationToken cancellationToken = default(CancellationToken))
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityContact(securityContactName, cancellationToken);
+        [ForwardsClientCalls]
+        [Obsolete("This method is obsolete and will be removed in a future release. Please use GetSecurityContacts.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Task<Response<SecurityContactResource>> GetSecurityContactAsync(this SubscriptionResource subscriptionResource, string securityContactName, CancellationToken cancellationToken = default(CancellationToken))
+            => GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSecurityContactAsync(securityContactName, cancellationToken);
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AsyncPageable<SecuritySolution> GetSecuritySolutionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Pageable<SecuritySolution> GetSecuritySolutions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
         [Obsolete("This method is obsolete and will be removed in a future release. Please use GetGovernanceRules.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules(this SubscriptionResource subscriptionResource)
@@ -141,5 +205,41 @@ namespace Azure.ResourceManager.SecurityCenter
         [Obsolete("This API is no longer supported by the service.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Task<Response<SecuritySettingResource>> GetSecuritySettingAsync(this SubscriptionResource subscriptionResource, SecuritySettingName settingName, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+
+        private sealed class LegacyDiscoveredSecuritySolutionPageable : Pageable<DiscoveredSecuritySolution>
+        {
+            private readonly Pageable<DiscoveredSecuritySolutionResource> _inner;
+
+            public LegacyDiscoveredSecuritySolutionPageable(Pageable<DiscoveredSecuritySolutionResource> inner)
+            {
+                _inner = inner;
+            }
+
+            public override IEnumerable<Page<DiscoveredSecuritySolution>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                foreach (Page<DiscoveredSecuritySolutionResource> page in _inner.AsPages(continuationToken, pageSizeHint))
+                {
+                    yield return Page<DiscoveredSecuritySolution>.FromValues(page.Values.Select(resource => new DiscoveredSecuritySolution(resource.Data)).ToArray(), page.ContinuationToken, page.GetRawResponse());
+                }
+            }
+        }
+
+        private sealed class LegacyDiscoveredSecuritySolutionAsyncPageable : AsyncPageable<DiscoveredSecuritySolution>
+        {
+            private readonly AsyncPageable<DiscoveredSecuritySolutionResource> _inner;
+
+            public LegacyDiscoveredSecuritySolutionAsyncPageable(AsyncPageable<DiscoveredSecuritySolutionResource> inner)
+            {
+                _inner = inner;
+            }
+
+            public override async IAsyncEnumerable<Page<DiscoveredSecuritySolution>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                await foreach (Page<DiscoveredSecuritySolutionResource> page in _inner.AsPages(continuationToken, pageSizeHint).ConfigureAwait(false))
+                {
+                    yield return Page<DiscoveredSecuritySolution>.FromValues(page.Values.Select(resource => new DiscoveredSecuritySolution(resource.Data)).ToArray(), page.ContinuationToken, page.GetRawResponse());
+                }
+            }
+        }
     }
 }

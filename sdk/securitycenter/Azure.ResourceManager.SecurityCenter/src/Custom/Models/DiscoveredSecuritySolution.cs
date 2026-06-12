@@ -30,12 +30,31 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class DiscoveredSecuritySolution : ResourceData, IJsonModel<DiscoveredSecuritySolution>, IPersistableModel<DiscoveredSecuritySolution>
     {
-        public DiscoveredSecuritySolution(SecurityFamily securityFamily, string offer, string publisher, string sku) { }
-        public AzureLocation? Location { get { throw new NotSupportedException("This API is no longer supported by the service."); } }
-        public string Offer { get { throw new NotSupportedException("This API is no longer supported by the service."); } set { throw new NotSupportedException("This API is no longer supported by the service."); } }
-        public string Publisher { get { throw new NotSupportedException("This API is no longer supported by the service."); } set { throw new NotSupportedException("This API is no longer supported by the service."); } }
-        public SecurityFamily SecurityFamily { get { throw new NotSupportedException("This API is no longer supported by the service."); } set { throw new NotSupportedException("This API is no longer supported by the service."); } }
-        public string Sku { get { throw new NotSupportedException("This API is no longer supported by the service."); } set { throw new NotSupportedException("This API is no longer supported by the service."); } }
+        private AzureLocation? _location;
+        private string _offer;
+        private string _publisher;
+        private SecurityFamily _securityFamily;
+        private string _sku;
+
+        public DiscoveredSecuritySolution(SecurityFamily securityFamily, string offer, string publisher, string sku)
+        {
+            _securityFamily = securityFamily;
+            _offer = offer;
+            _publisher = publisher;
+            _sku = sku;
+        }
+
+        internal DiscoveredSecuritySolution(DiscoveredSecuritySolutionData data)
+            : this(data.SecurityFamily, data.Offer, data.Publisher, data.Sku)
+        {
+            _location = data.Location is null ? default(AzureLocation?) : new AzureLocation(data.Location);
+        }
+
+        public AzureLocation? Location { get => _location; }
+        public string Offer { get => _offer; set => _offer = value; }
+        public string Publisher { get => _publisher; set => _publisher = value; }
+        public SecurityFamily SecurityFamily { get => _securityFamily; set => _securityFamily = value; }
+        public string Sku { get => _sku; set => _sku = value; }
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         DiscoveredSecuritySolution IJsonModel<DiscoveredSecuritySolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
         void IJsonModel<DiscoveredSecuritySolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }

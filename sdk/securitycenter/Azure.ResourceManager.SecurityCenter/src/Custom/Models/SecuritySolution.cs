@@ -30,12 +30,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SecuritySolution : ResourceData, IJsonModel<SecuritySolution>, IPersistableModel<SecuritySolution>
     {
+        private AzureLocation? _location;
+        private string _protectionStatus;
+        private SecurityFamilyProvisioningState? _provisioningState;
+        private SecurityFamily? _securityFamily;
+        private string _template;
+
         public SecuritySolution() { }
-        public AzureLocation? Location { get { throw new NotSupportedException("This API is no longer supported by the service."); } }
-        public string ProtectionStatus { get { throw new NotSupportedException("This API is no longer supported by the service."); } set { throw new NotSupportedException("This API is no longer supported by the service."); } }
-        public SecurityFamilyProvisioningState? ProvisioningState { get { throw new NotSupportedException("This API is no longer supported by the service."); } set { throw new NotSupportedException("This API is no longer supported by the service."); } }
-        public SecurityFamily? SecurityFamily { get { throw new NotSupportedException("This API is no longer supported by the service."); } set { throw new NotSupportedException("This API is no longer supported by the service."); } }
-        public string Template { get { throw new NotSupportedException("This API is no longer supported by the service."); } set { throw new NotSupportedException("This API is no longer supported by the service."); } }
+
+        internal SecuritySolution(SecuritySolutionData data)
+        {
+            _location = data.Location is null ? default(AzureLocation?) : new AzureLocation(data.Location);
+            _protectionStatus = data.ProtectionStatus;
+            _securityFamily = data.SecurityFamily;
+            _template = data.Template;
+        }
+
+        public AzureLocation? Location { get => _location; }
+        public string ProtectionStatus { get => _protectionStatus; set => _protectionStatus = value; }
+        public SecurityFamilyProvisioningState? ProvisioningState { get => _provisioningState; set => _provisioningState = value; }
+        public SecurityFamily? SecurityFamily { get => _securityFamily; set => _securityFamily = value; }
+        public string Template { get => _template; set => _template = value; }
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
         SecuritySolution IJsonModel<SecuritySolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) { throw new NotSupportedException("This API is no longer supported by the service."); }
         void IJsonModel<SecuritySolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         {
             string ascLocation = "";
             string discoveredSecuritySolutionName = "";
-            var discoveredSecuritySolution = await _resourceGroup.GetDiscoveredSecuritySolutionAsync(ascLocation, discoveredSecuritySolutionName);
+            var discoveredSecuritySolution = await _resourceGroup.GetDiscoveredSecuritySolutions().GetAsync(ascLocation, discoveredSecuritySolutionName);
             Assert.IsNotNull(discoveredSecuritySolution);
         }
 
