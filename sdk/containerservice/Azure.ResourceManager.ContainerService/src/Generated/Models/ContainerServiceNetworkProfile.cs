@@ -38,13 +38,19 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="outboundType"> The outbound (egress) routing method. This can only be set at cluster creation time and cannot be changed later. For more information see [egress outbound type](https://docs.microsoft.com/azure/aks/egress-outboundtype). </param>
         /// <param name="loadBalancerSku"> The load balancer sku for the managed cluster. The default is 'standard'. See [Azure Load Balancer SKUs](https://docs.microsoft.com/azure/load-balancer/skus) for more information about the differences between load balancer SKUs. </param>
         /// <param name="loadBalancerProfile"> Profile of the cluster load balancer. </param>
+        /// <param name="bastionProfile">
+        /// Profile of the Bastion Host associated with the managed cluster.
+        /// See https://aka.ms/aks/BastionConnect for more details.
+        /// </param>
         /// <param name="natGatewayProfile"> Profile of the cluster NAT gateway. </param>
         /// <param name="staticEgressGatewayProfile"> The profile for Static Egress Gateway addon. For more details about Static Egress Gateway, see https://aka.ms/aks/static-egress-gateway. </param>
         /// <param name="podCidrs"> The CIDR notation IP ranges from which to assign pod IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
         /// <param name="serviceCidrs"> The CIDR notation IP ranges from which to assign service cluster IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. They must not overlap with any Subnet IP ranges. </param>
         /// <param name="networkIPFamilies"> The IP families used to specify IP versions available to the cluster. IP families are used to determine single-stack or dual-stack clusters. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </param>
+        /// <param name="podLinkLocalAccess"> Defines access to special link local addresses (Azure Instance Metadata Service, aka IMDS) for pods with hostNetwork=false. if not specified, the default is 'IMDS'. </param>
+        /// <param name="kubeProxyConfig"> Holds configuration customizations for kube-proxy. Any values not defined will use the kube-proxy defaulting behavior. See https://v&lt;version&gt;.docs.kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/ where &lt;version&gt; is represented by a &lt;major version&gt;-&lt;minor version&gt; string. Kubernetes version 1.23 would be '1-23'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, NetworkDataplane? networkDataplane, ManagedClusterAdvancedNetworking advancedNetworking, string podCidr, string serviceCidr, string dnsServiceIP, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, ManagedClusterNatGatewayProfile natGatewayProfile, ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<ContainerServiceIPFamily> networkIPFamilies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, NetworkDataplane? networkDataplane, ManagedClusterAdvancedNetworking advancedNetworking, string podCidr, string serviceCidr, string dnsServiceIP, ContainerServiceOutboundType? outboundType, ContainerServiceLoadBalancerSku? loadBalancerSku, ManagedClusterLoadBalancerProfile loadBalancerProfile, BastionProfile bastionProfile, ManagedClusterNatGatewayProfile natGatewayProfile, ManagedClusterStaticEgressGatewayProfile staticEgressGatewayProfile, IList<string> podCidrs, IList<string> serviceCidrs, IList<ContainerServiceIPFamily> networkIPFamilies, PodLinkLocalAccess? podLinkLocalAccess, ContainerServiceNetworkProfileKubeProxyConfig kubeProxyConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkPlugin = networkPlugin;
             NetworkPluginMode = networkPluginMode;
@@ -58,11 +64,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             OutboundType = outboundType;
             LoadBalancerSku = loadBalancerSku;
             LoadBalancerProfile = loadBalancerProfile;
+            BastionProfile = bastionProfile;
             NatGatewayProfile = natGatewayProfile;
             StaticEgressGatewayProfile = staticEgressGatewayProfile;
             PodCidrs = podCidrs;
             ServiceCidrs = serviceCidrs;
             NetworkIPFamilies = networkIPFamilies;
+            PodLinkLocalAccess = podLinkLocalAccess;
+            KubeProxyConfig = kubeProxyConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -114,6 +123,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("loadBalancerProfile")]
         public ManagedClusterLoadBalancerProfile LoadBalancerProfile { get; set; }
 
+        /// <summary>
+        /// Profile of the Bastion Host associated with the managed cluster.
+        /// See https://aka.ms/aks/BastionConnect for more details.
+        /// </summary>
+        [WirePath("bastionProfile")]
+        public BastionProfile BastionProfile { get; set; }
+
         /// <summary> Profile of the cluster NAT gateway. </summary>
         [WirePath("natGatewayProfile")]
         public ManagedClusterNatGatewayProfile NatGatewayProfile { get; set; }
@@ -133,6 +149,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The IP families used to specify IP versions available to the cluster. IP families are used to determine single-stack or dual-stack clusters. For single-stack, the expected value is IPv4. For dual-stack, the expected values are IPv4 and IPv6. </summary>
         [WirePath("ipFamilies")]
         public IList<ContainerServiceIPFamily> NetworkIPFamilies { get; }
+
+        /// <summary> Defines access to special link local addresses (Azure Instance Metadata Service, aka IMDS) for pods with hostNetwork=false. if not specified, the default is 'IMDS'. </summary>
+        [WirePath("podLinkLocalAccess")]
+        public PodLinkLocalAccess? PodLinkLocalAccess { get; set; }
+
+        /// <summary> Holds configuration customizations for kube-proxy. Any values not defined will use the kube-proxy defaulting behavior. See https://v&lt;version&gt;.docs.kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/ where &lt;version&gt; is represented by a &lt;major version&gt;-&lt;minor version&gt; string. Kubernetes version 1.23 would be '1-23'. </summary>
+        [WirePath("kubeProxyConfig")]
+        public ContainerServiceNetworkProfileKubeProxyConfig KubeProxyConfig { get; set; }
 
         /// <summary> Enable Static Egress Gateway addon. Indicates if Static Egress Gateway addon is enabled or not. </summary>
         [WirePath("staticEgressGatewayProfile.enabled")]
