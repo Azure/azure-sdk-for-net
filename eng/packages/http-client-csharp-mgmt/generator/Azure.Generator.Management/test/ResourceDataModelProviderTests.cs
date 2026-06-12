@@ -175,6 +175,24 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void ResourceDataModelUsesCustomizationNamespace()
+        {
+            var (client, models) = InputResourceData.ClientWithResource();
+            var resourceModel = models.Single();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [client]);
+
+            var modelProvider = plugin.Object.TypeFactory.CreateModel(resourceModel)!;
+            ManagementMockHelpers.SetCustomCodeView(modelProvider, new ModelsNamespaceCustomCodeView());
+
+            var visitor = new TestableResourceVisitor();
+            var result = visitor.InvokeVisitType(modelProvider);
+
+            Assert.That(result!.Type.Namespace, Is.EqualTo("Samples.Models"));
+        }
+
+        [Test]
         public void DerivedSerializationFromResponseHidesBaseWithNewModifier()
         {
             var baseModel = InputFactory.Model(
@@ -244,6 +262,13 @@ namespace Azure.Generator.Mgmt.Tests
             {
                 return base.VisitMethod(method);
             }
+        }
+
+        private class ModelsNamespaceCustomCodeView : TypeProvider
+        {
+            protected override string BuildName() => "ResponseTypeData";
+            protected override string BuildNamespace() => "Samples.Models";
+            protected override string BuildRelativeFilePath() => "ResponseTypeData.cs";
         }
     }
 }
