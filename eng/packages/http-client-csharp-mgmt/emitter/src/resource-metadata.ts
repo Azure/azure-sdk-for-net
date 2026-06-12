@@ -817,12 +817,11 @@ function operationPathEndsWithResourceType(
   resourceType: string
 ): boolean {
   const lastTypeSegment = resourceType.split("/").at(-1);
+  const lastOperationSegment = operationPath.segments.at(-1);
   return (
     lastTypeSegment !== undefined &&
-    literalSegmentsEqual(
-      operationPath.segments[operationPath.length - 1],
-      lastTypeSegment
-    )
+    lastOperationSegment !== undefined &&
+    literalSegmentsEqual(lastOperationSegment, lastTypeSegment)
   );
 }
 
