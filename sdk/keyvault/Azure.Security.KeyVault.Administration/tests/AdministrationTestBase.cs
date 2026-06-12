@@ -33,11 +33,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
             : base(isAsync, mode)
         {
             ServiceVersion = serviceVersion;
-
-            // PoP token binding adds this header unconditionally in the beta but existing
-            // recordings were captured without it. Exclude it from request matching so that
-            // playback tests pass against old recordings.
-            LegacyExcludedHeaders.Add("x-ms-tokenboundauth");
         }
 
         /// <summary>
