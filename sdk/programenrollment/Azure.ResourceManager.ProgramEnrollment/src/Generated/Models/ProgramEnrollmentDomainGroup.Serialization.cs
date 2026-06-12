@@ -16,56 +16,56 @@ using Azure.ResourceManager.ProgramEnrollment;
 namespace Azure.ResourceManager.ProgramEnrollment.Models
 {
     /// <summary> A group of edu domains scoped to an Entra tenant. </summary>
-    public partial class DomainGroup : IJsonModel<DomainGroup>
+    public partial class ProgramEnrollmentDomainGroup : IJsonModel<ProgramEnrollmentDomainGroup>
     {
-        /// <summary> Initializes a new instance of <see cref="DomainGroup"/> for deserialization. </summary>
-        internal DomainGroup()
+        /// <summary> Initializes a new instance of <see cref="ProgramEnrollmentDomainGroup"/> for deserialization. </summary>
+        internal ProgramEnrollmentDomainGroup()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DomainGroup PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProgramEnrollmentDomainGroup PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainGroup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProgramEnrollmentDomainGroup>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDomainGroup(document.RootElement, options);
+                        return DeserializeProgramEnrollmentDomainGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DomainGroup)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProgramEnrollmentDomainGroup)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainGroup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProgramEnrollmentDomainGroup>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerProgramEnrollmentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DomainGroup)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProgramEnrollmentDomainGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DomainGroup>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProgramEnrollmentDomainGroup>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DomainGroup IPersistableModel<DomainGroup>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProgramEnrollmentDomainGroup IPersistableModel<ProgramEnrollmentDomainGroup>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DomainGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProgramEnrollmentDomainGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DomainGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProgramEnrollmentDomainGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainGroup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProgramEnrollmentDomainGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainGroup)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProgramEnrollmentDomainGroup)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("domainNames"u8);
             writer.WriteStartArray();
@@ -127,24 +127,24 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DomainGroup IJsonModel<DomainGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProgramEnrollmentDomainGroup IJsonModel<ProgramEnrollmentDomainGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DomainGroup JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProgramEnrollmentDomainGroup JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DomainGroup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProgramEnrollmentDomainGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainGroup)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProgramEnrollmentDomainGroup)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDomainGroup(document.RootElement, options);
+            return DeserializeProgramEnrollmentDomainGroup(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DomainGroup DeserializeDomainGroup(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProgramEnrollmentDomainGroup DeserializeProgramEnrollmentDomainGroup(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
             }
             IList<string> domainNames = default;
             Guid? tenantId = default;
-            DomainGroupState? state = default;
+            ProgramEnrollmentDomainGroupState? state = default;
             ResponseError failureReason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
                     {
                         continue;
                     }
-                    state = new DomainGroupState(prop.Value.GetString());
+                    state = new ProgramEnrollmentDomainGroupState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("failureReason"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DomainGroup(domainNames, tenantId, state, failureReason, additionalBinaryDataProperties);
+            return new ProgramEnrollmentDomainGroup(domainNames, tenantId, state, failureReason, additionalBinaryDataProperties);
         }
     }
 }

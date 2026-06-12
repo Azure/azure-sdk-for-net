@@ -97,46 +97,10 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
 {
     public static partial class ArmProgramEnrollmentModelFactory
     {
-        public static Azure.ResourceManager.ProgramEnrollment.Models.DomainGroup DomainGroup(System.Collections.Generic.IEnumerable<string> domainNames = null, System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.ProgramEnrollment.Models.DomainGroupState? state = default(Azure.ResourceManager.ProgramEnrollment.Models.DomainGroupState?), Azure.ResponseError failureReason = null) { throw null; }
         public static Azure.ResourceManager.ProgramEnrollment.EduEnrollmentData EduEnrollmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ProgramEnrollment.Models.EduEnrollmentProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ProgramEnrollment.Models.EduEnrollmentPatch EduEnrollmentPatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
-        public static Azure.ResourceManager.ProgramEnrollment.Models.EduEnrollmentProperties EduEnrollmentProperties(Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProgramEnrollment.Models.DomainGroup> domains = null, Azure.ResponseError failureReason = null) { throw null; }
-    }
-    public partial class DomainGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProgramEnrollment.Models.DomainGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgramEnrollment.Models.DomainGroup>
-    {
-        public DomainGroup(System.Collections.Generic.IEnumerable<string> domainNames) { }
-        public System.Collections.Generic.IList<string> DomainNames { get { throw null; } }
-        public Azure.ResponseError FailureReason { get { throw null; } }
-        public Azure.ResourceManager.ProgramEnrollment.Models.DomainGroupState? State { get { throw null; } }
-        public System.Guid? TenantId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ProgramEnrollment.Models.DomainGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ProgramEnrollment.Models.DomainGroup PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ProgramEnrollment.Models.DomainGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProgramEnrollment.Models.DomainGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProgramEnrollment.Models.DomainGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ProgramEnrollment.Models.DomainGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgramEnrollment.Models.DomainGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgramEnrollment.Models.DomainGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgramEnrollment.Models.DomainGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DomainGroupState : System.IEquatable<Azure.ResourceManager.ProgramEnrollment.Models.DomainGroupState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DomainGroupState(string value) { throw null; }
-        public static Azure.ResourceManager.ProgramEnrollment.Models.DomainGroupState ActionRequired { get { throw null; } }
-        public static Azure.ResourceManager.ProgramEnrollment.Models.DomainGroupState Failed { get { throw null; } }
-        public static Azure.ResourceManager.ProgramEnrollment.Models.DomainGroupState Pending { get { throw null; } }
-        public static Azure.ResourceManager.ProgramEnrollment.Models.DomainGroupState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ProgramEnrollment.Models.DomainGroupState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ProgramEnrollment.Models.DomainGroupState left, Azure.ResourceManager.ProgramEnrollment.Models.DomainGroupState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProgramEnrollment.Models.DomainGroupState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProgramEnrollment.Models.DomainGroupState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ProgramEnrollment.Models.DomainGroupState left, Azure.ResourceManager.ProgramEnrollment.Models.DomainGroupState right) { throw null; }
-        public override string ToString() { throw null; }
+        public static Azure.ResourceManager.ProgramEnrollment.Models.EduEnrollmentProperties EduEnrollmentProperties(Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState? provisioningState = default(Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup> domains = null, Azure.ResponseError failureReason = null) { throw null; }
+        public static Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup ProgramEnrollmentDomainGroup(System.Collections.Generic.IEnumerable<string> domainNames = null, System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroupState? state = default(Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroupState?), Azure.ResponseError failureReason = null) { throw null; }
     }
     public partial class EduEnrollmentPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProgramEnrollment.Models.EduEnrollmentPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgramEnrollment.Models.EduEnrollmentPatch>
     {
@@ -154,10 +118,10 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
     }
     public partial class EduEnrollmentProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProgramEnrollment.Models.EduEnrollmentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgramEnrollment.Models.EduEnrollmentProperties>
     {
-        public EduEnrollmentProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProgramEnrollment.Models.DomainGroup> domains) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ProgramEnrollment.Models.DomainGroup> Domains { get { throw null; } }
+        public EduEnrollmentProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup> domains) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup> Domains { get { throw null; } }
         public Azure.ResponseError FailureReason { get { throw null; } }
-        public Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.ProgramEnrollment.Models.EduEnrollmentProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ProgramEnrollment.Models.EduEnrollmentProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -168,25 +132,61 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgramEnrollment.Models.EduEnrollmentProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgramEnrollment.Models.EduEnrollmentProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ProgramEnrollmentDomainGroup : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup>
+    {
+        public ProgramEnrollmentDomainGroup(System.Collections.Generic.IEnumerable<string> domainNames) { }
+        public System.Collections.Generic.IList<string> DomainNames { get { throw null; } }
+        public Azure.ResponseError FailureReason { get { throw null; } }
+        public Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroupState? State { get { throw null; } }
+        public System.Guid? TenantId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroup>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState>
+    public readonly partial struct ProgramEnrollmentDomainGroupState : System.IEquatable<Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroupState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState Provisioning { get { throw null; } }
-        public static Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState other) { throw null; }
+        public ProgramEnrollmentDomainGroupState(string value) { throw null; }
+        public static Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroupState ActionRequired { get { throw null; } }
+        public static Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroupState Failed { get { throw null; } }
+        public static Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroupState Pending { get { throw null; } }
+        public static Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroupState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroupState other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState left, Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState left, Azure.ResourceManager.ProgramEnrollment.Models.ProvisioningState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroupState left, Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroupState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroupState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroupState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroupState left, Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentDomainGroupState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProgramEnrollmentProvisioningState : System.IEquatable<Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProgramEnrollmentProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState Provisioning { get { throw null; } }
+        public static Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState left, Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState left, Azure.ResourceManager.ProgramEnrollment.Models.ProgramEnrollmentProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
 }
