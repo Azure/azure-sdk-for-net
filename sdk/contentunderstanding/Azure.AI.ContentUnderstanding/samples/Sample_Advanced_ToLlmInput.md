@@ -9,7 +9,7 @@ The `.ToLlmInput` method converts a CU `AnalysisResult` into a formatted text st
 When using Content Understanding with large language models, you typically need to convert the structured `AnalysisResult` into a text format that an LLM can consume. The `ToLlmInput` helper handles this conversion automatically:
 
 - **YAML front matter** with content type, extracted fields, page numbers, and optional metadata
-- **Markdown body** with the document content and page markers (e.g., `<!-- page 1 -->`)
+- **Markdown body** with the document content and page markers (e.g., `<!-- InputPageNumber: 1 -->`)
 
 The helper supports all content types (documents, images, audio, video) and handles multi-segment results (e.g., video with multiple scenes) by rendering each segment with its time range. For classification results, it automatically skips the parent document and renders each categorized child with its category label.
 
@@ -97,7 +97,8 @@ Uri multiPageUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azur
 // Analyze specific pages using ContentRange.
 // Page markers in the output will use the original document page numbers,
 // so even though we only requested pages 2-3 and 5, the markers will say
-// <!-- page 2 -->, <!-- page 3 -->, <!-- page 5 --> (not 1, 2, 3).
+// <!-- InputPageNumber: 2 -->, <!-- InputPageNumber: 3 -->, <!-- InputPageNumber: 5 -->
+// (not 1, 2, 3).
 Operation<AnalysisResult> multiPageOperation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",

@@ -38,7 +38,7 @@ namespace Azure.AI.Projects.Agents
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] Create a new version of a toolbox. If the toolbox does not exist, it will be created.
+        /// [Protocol Method] Creates a new toolbox version, provisioning the toolbox itself if it does not already exist.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -62,7 +62,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Create a new version of a toolbox. If the toolbox does not exist, it will be created.
+        /// [Protocol Method] Creates a new toolbox version, provisioning the toolbox itself if it does not already exist.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -85,7 +85,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Create a new version of a toolbox. If the toolbox does not exist, it will be created. </summary>
+        /// <summary> Creates a new toolbox version, provisioning the toolbox itself if it does not already exist. </summary>
         /// <param name="name"> The name of the toolbox. If the toolbox does not exist, it will be created. </param>
         /// <param name="tools"> The list of tools to include in this version. </param>
         /// <param name="description"> A human-readable description of the toolbox. </param>
@@ -112,7 +112,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((ToolboxVersion)result, result.GetRawResponse());
         }
 
-        /// <summary> Create a new version of a toolbox. If the toolbox does not exist, it will be created. </summary>
+        /// <summary> Creates a new toolbox version, provisioning the toolbox itself if it does not already exist. </summary>
         /// <param name="name"> The name of the toolbox. If the toolbox does not exist, it will be created. </param>
         /// <param name="tools"> The list of tools to include in this version. </param>
         /// <param name="description"> A human-readable description of the toolbox. </param>
@@ -140,7 +140,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a toolbox.
+        /// [Protocol Method] Retrieves the specified toolbox and its current configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -162,7 +162,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a toolbox.
+        /// [Protocol Method] Retrieves the specified toolbox and its current configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -183,7 +183,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Retrieve a toolbox. </summary>
+        /// <summary> Retrieves the specified toolbox and its current configuration. </summary>
         /// <param name="name"> The name of the toolbox to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -197,7 +197,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((ToolboxRecord)result, result.GetRawResponse());
         }
 
-        /// <summary> Retrieve a toolbox. </summary>
+        /// <summary> Retrieves the specified toolbox and its current configuration. </summary>
         /// <param name="name"> The name of the toolbox to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -212,7 +212,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] List all toolboxes.
+        /// [Protocol Method] Returns the toolboxes available in the current project.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -252,7 +252,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] List all toolboxes.
+        /// [Protocol Method] Returns the toolboxes available in the current project.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -292,7 +292,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] List all versions of a toolbox.
+        /// [Protocol Method] Returns the available versions for the specified toolbox.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -338,7 +338,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] List all versions of a toolbox.
+        /// [Protocol Method] Returns the available versions for the specified toolbox.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -384,7 +384,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a specific version of a toolbox.
+        /// [Protocol Method] Retrieves the specified version of a toolbox by name and version identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -408,7 +408,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a specific version of a toolbox.
+        /// [Protocol Method] Retrieves the specified version of a toolbox by name and version identifier.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -431,7 +431,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Retrieve a specific version of a toolbox. </summary>
+        /// <summary> Retrieves the specified version of a toolbox by name and version identifier. </summary>
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -447,7 +447,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((ToolboxVersion)result, result.GetRawResponse());
         }
 
-        /// <summary> Retrieve a specific version of a toolbox. </summary>
+        /// <summary> Retrieves the specified version of a toolbox by name and version identifier. </summary>
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="version"> The version identifier to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -464,7 +464,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Update a toolbox to point to a specific version.
+        /// [Protocol Method] Updates the toolbox's default version pointer to the specified version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -488,7 +488,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Update a toolbox to point to a specific version.
+        /// [Protocol Method] Updates the toolbox's default version pointer to the specified version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -512,7 +512,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a toolbox and all its versions.
+        /// [Protocol Method] Removes the specified toolbox along with all of its versions.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -534,7 +534,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a toolbox and all its versions.
+        /// [Protocol Method] Removes the specified toolbox along with all of its versions.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -555,7 +555,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Delete a toolbox and all its versions. </summary>
+        /// <summary> Removes the specified toolbox along with all of its versions. </summary>
         /// <param name="name"> The name of the toolbox to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -568,7 +568,7 @@ namespace Azure.AI.Projects.Agents
             return DeleteToolbox(name, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Delete a toolbox and all its versions. </summary>
+        /// <summary> Removes the specified toolbox along with all of its versions. </summary>
         /// <param name="name"> The name of the toolbox to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -582,7 +582,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a specific version of a toolbox.
+        /// [Protocol Method] Removes the specified version of a toolbox.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -606,7 +606,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Delete a specific version of a toolbox.
+        /// [Protocol Method] Removes the specified version of a toolbox.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -629,7 +629,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Delete a specific version of a toolbox. </summary>
+        /// <summary> Removes the specified version of a toolbox. </summary>
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -644,7 +644,7 @@ namespace Azure.AI.Projects.Agents
             return DeleteToolboxVersion(name, version, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Delete a specific version of a toolbox. </summary>
+        /// <summary> Removes the specified version of a toolbox. </summary>
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="version"> The version identifier to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
