@@ -55,6 +55,17 @@ describe("RequestPath", () => {
       ok(parent.isPrefixOf(child));
     });
 
+    it("should match fixed ARM path segments case-insensitively", () => {
+      const parent = new RequestPath(
+        "/subscriptions/{subscriptionId}/resourceGroups/{rg}/providers/Microsoft.Devices/IotHubs/{resourceName}"
+      );
+      const child = new RequestPath(
+        "/subscriptions/{subscriptionId}/resourceGroups/{rg}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateLinkResources/{groupId}"
+      );
+
+      ok(parent.isPrefixOf(child));
+    });
+
     it("should return true when paths are equal", () => {
       const rp1 = new RequestPath("/a/{b}/c");
       const rp2 = new RequestPath("/a/{b}/c");
@@ -138,6 +149,17 @@ describe("RequestPath", () => {
       const rp2 = new RequestPath(
         "/providers/Microsoft.Management/managementGroups/{groupId}"
       );
+      ok(rp1.equals(rp2));
+    });
+
+    it("should return true when fixed ARM path segment casing differs", () => {
+      const rp1 = new RequestPath(
+        "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Devices/IotHubs/{resourceName}"
+      );
+      const rp2 = new RequestPath(
+        "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{hubName}"
+      );
+
       ok(rp1.equals(rp2));
     });
 

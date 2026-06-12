@@ -35,6 +35,10 @@ export function getVariableSegmentName(segment: string): string {
   return segment.slice(1, -1);
 }
 
+function literalSegmentsEqual(left: string, right: string): boolean {
+  return left.toLowerCase() === right.toLowerCase();
+}
+
 /**
  * Represents a parsed ARM request path with pre-computed segment information.
  *
@@ -107,7 +111,7 @@ export class RequestPath {
         isVariableSegment(other.segments[i])
       ) {
         count++;
-      } else if (this.segments[i] === other.segments[i]) {
+      } else if (literalSegmentsEqual(this.segments[i], other.segments[i])) {
         count++;
       } else {
         break;
@@ -143,7 +147,8 @@ export class RequestPath {
       ) {
         continue;
       }
-      if (this.segments[i] !== other.segments[i]) return false;
+      if (!literalSegmentsEqual(this.segments[i], other.segments[i]))
+        return false;
     }
     return true;
   }
@@ -1302,32 +1307,7 @@ function canBeListResourceScope(
   listPath: RequestPath,
   resourceInstancePath: RequestPath
 ): boolean {
-  // Check if resourceInstancePath is a prefix of listPath
-  if (listPath.length < resourceInstancePath.length) {
-    return false;
-  }
-  for (let i = 0; i < resourceInstancePath.length; i++) {
-    // if both segments are variables, we consider it as a match
-    if (
-      isVariableSegment(listPath.segments[i]) &&
-      isVariableSegment(resourceInstancePath.segments[i])
-    ) {
-      continue;
-    }
-    // if one of them is a variable, the other is not, we consider it as not a match
-    if (
-      isVariableSegment(listPath.segments[i]) ||
-      isVariableSegment(resourceInstancePath.segments[i])
-    ) {
-      return false;
-    }
-    // both are fixed strings, they must match
-    if (listPath.segments[i] !== resourceInstancePath.segments[i]) {
-      return false;
-    }
-  }
-  // here it means every segment in resourceInstancePath matches the corresponding segment in listPath
-  return true;
+  return resourceInstancePath.isPrefixOf(listPath);
 }
 
 /**
