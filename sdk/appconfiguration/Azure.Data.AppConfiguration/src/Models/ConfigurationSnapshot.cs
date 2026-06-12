@@ -73,6 +73,11 @@ namespace Azure.Data.AppConfiguration
             }
             set
             {
+                if (value == null)
+                {
+                    _retentionPeriod = null;
+                    return;
+                }
                 var seconds = value.Value.TotalSeconds;
                 long secondsLong;
                 try
