@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationServiceProvisioningState : IEquatable<DataMigrationServiceProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Deploying. </summary>
+        private const string DeployingValue = "Deploying";
+        /// <summary> Stopped. </summary>
+        private const string StoppedValue = "Stopped";
+        /// <summary> Stopping. </summary>
+        private const string StoppingValue = "Stopping";
+        /// <summary> Starting. </summary>
+        private const string StartingValue = "Starting";
+        /// <summary> FailedToStart. </summary>
+        private const string FailedToStartValue = "FailedToStart";
+        /// <summary> FailedToStop. </summary>
+        private const string FailedToStopValue = "FailedToStop";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationServiceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationServiceProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AcceptedValue = "Accepted";
-        private const string DeletingValue = "Deleting";
-        private const string DeployingValue = "Deploying";
-        private const string StoppedValue = "Stopped";
-        private const string StoppingValue = "Stopping";
-        private const string StartingValue = "Starting";
-        private const string FailedToStartValue = "FailedToStart";
-        private const string FailedToStopValue = "FailedToStop";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Accepted. </summary>
         public static DataMigrationServiceProvisioningState Accepted { get; } = new DataMigrationServiceProvisioningState(AcceptedValue);
+
         /// <summary> Deleting. </summary>
         public static DataMigrationServiceProvisioningState Deleting { get; } = new DataMigrationServiceProvisioningState(DeletingValue);
+
         /// <summary> Deploying. </summary>
         public static DataMigrationServiceProvisioningState Deploying { get; } = new DataMigrationServiceProvisioningState(DeployingValue);
+
         /// <summary> Stopped. </summary>
         public static DataMigrationServiceProvisioningState Stopped { get; } = new DataMigrationServiceProvisioningState(StoppedValue);
+
         /// <summary> Stopping. </summary>
         public static DataMigrationServiceProvisioningState Stopping { get; } = new DataMigrationServiceProvisioningState(StoppingValue);
+
         /// <summary> Starting. </summary>
         public static DataMigrationServiceProvisioningState Starting { get; } = new DataMigrationServiceProvisioningState(StartingValue);
+
         /// <summary> FailedToStart. </summary>
         public static DataMigrationServiceProvisioningState FailedToStart { get; } = new DataMigrationServiceProvisioningState(FailedToStartValue);
+
         /// <summary> FailedToStop. </summary>
         public static DataMigrationServiceProvisioningState FailedToStop { get; } = new DataMigrationServiceProvisioningState(FailedToStopValue);
+
         /// <summary> Succeeded. </summary>
         public static DataMigrationServiceProvisioningState Succeeded { get; } = new DataMigrationServiceProvisioningState(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static DataMigrationServiceProvisioningState Failed { get; } = new DataMigrationServiceProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="DataMigrationServiceProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationServiceProvisioningState left, DataMigrationServiceProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationServiceProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationServiceProvisioningState left, DataMigrationServiceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationServiceProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationServiceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationServiceProvisioningState(string value) => new DataMigrationServiceProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationServiceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationServiceProvisioningState?(string value) => value == null ? null : new DataMigrationServiceProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationServiceProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationServiceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
