@@ -1,6 +1,6 @@
 directory: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/HybridCompute
 commit: 7616b30c22691bb0c6c86255ee9ddc452e261a0f
-repo: mcgallan/azure-rest-api-specs
+repo: Azure/azure-rest-api-specs
 additionalDirectories:
 
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
