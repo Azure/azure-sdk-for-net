@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetQueryResultsForSubscriptionComponentPolicyStatesRequest(string subscriptionId, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForSubscriptionComponentPolicyStatesRequest(string subscriptionId, string componentPolicyStatesResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (orderBy != null)
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateGetQueryResultsForResourceGroupComponentPolicyStatesRequest(string subscriptionId, string resourceGroupName, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForResourceGroupComponentPolicyStatesRequest(string subscriptionId, string resourceGroupName, string componentPolicyStatesResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (orderBy != null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateGetQueryResultsForResourceComponentPolicyStatesRequest(string resourceId, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string expand, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForResourceComponentPolicyStatesRequest(string resourceId, string componentPolicyStatesResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (orderBy != null)
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateGetQueryResultsForPolicyDefinitionComponentPolicyStatesRequest(string subscriptionId, string policyDefinitionName, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForPolicyDefinitionComponentPolicyStatesRequest(string subscriptionId, string policyDefinitionName, string componentPolicyStatesResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -211,9 +211,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (orderBy != null)
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesRequest(string subscriptionId, string policyAssignmentName, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesRequest(string subscriptionId, string policyAssignmentName, string componentPolicyStatesResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (orderBy != null)
             {
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return message;
         }
 
-        internal HttpMessage CreateGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesRequest(string subscriptionId, string resourceGroupName, string policyAssignmentName, string componentPolicyStatesResource, int? top, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
+        internal HttpMessage CreateGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesRequest(string subscriptionId, string resourceGroupName, string policyAssignmentName, string componentPolicyStatesResource, int? maxCount, string orderBy, string @select, DateTimeOffset? @from, DateTimeOffset? to, string filter, string apply, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -319,9 +319,9 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(maxCount), true);
             }
             if (orderBy != null)
             {

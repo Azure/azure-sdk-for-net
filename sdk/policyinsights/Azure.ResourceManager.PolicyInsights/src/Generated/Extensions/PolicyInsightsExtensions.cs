@@ -227,11 +227,12 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForResourceComponentPolicyStatesAsync(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceComponentPolicyStatesAsync(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockablePolicyInsightsArmClient(client).GetQueryResultsForResourceComponentPolicyStatesAsync(scope, componentPolicyStatesResource, queryOptions, cancellationToken).ConfigureAwait(false);
+            return GetMockablePolicyInsightsArmClient(client).GetQueryResultsForResourceComponentPolicyStatesAsync(scope, componentPolicyStatesResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +248,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<ComponentPolicyStatesQueryResults> GetQueryResultsForResourceComponentPolicyStates(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ComponentPolicyState> GetQueryResultsForResourceComponentPolicyStates(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -267,11 +269,12 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockablePolicyInsightsArmClient(client).GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(scope, componentPolicyStatesResource, queryOptions, cancellationToken).ConfigureAwait(false);
+            return GetMockablePolicyInsightsArmClient(client).GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(scope, componentPolicyStatesResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -287,7 +290,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<ComponentPolicyStatesQueryResults> GetQueryResultsForPolicyDefinitionComponentPolicyStates(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ComponentPolicyState> GetQueryResultsForPolicyDefinitionComponentPolicyStates(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -307,11 +311,12 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockablePolicyInsightsArmClient(client).GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(scope, componentPolicyStatesResource, queryOptions, cancellationToken).ConfigureAwait(false);
+            return GetMockablePolicyInsightsArmClient(client).GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(scope, componentPolicyStatesResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -327,7 +332,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<ComponentPolicyStatesQueryResults> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ComponentPolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -347,11 +353,12 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsync(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsync(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockablePolicyInsightsArmClient(client).GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsync(scope, componentPolicyStatesResource, queryOptions, cancellationToken).ConfigureAwait(false);
+            return GetMockablePolicyInsightsArmClient(client).GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsync(scope, componentPolicyStatesResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -367,7 +374,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<ComponentPolicyStatesQueryResults> GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ComponentPolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates(this ArmClient client, ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -422,11 +430,12 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForResourceGroupComponentPolicyStatesAsync(this ResourceGroupResource resourceGroupResource, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceGroupComponentPolicyStatesAsync(this ResourceGroupResource resourceGroupResource, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetQueryResultsForResourceGroupComponentPolicyStatesAsync(componentPolicyStatesResource, queryOptions, cancellationToken).ConfigureAwait(false);
+            return GetMockablePolicyInsightsResourceGroupResource(resourceGroupResource).GetQueryResultsForResourceGroupComponentPolicyStatesAsync(componentPolicyStatesResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -441,7 +450,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ComponentPolicyStatesQueryResults> GetQueryResultsForResourceGroupComponentPolicyStates(this ResourceGroupResource resourceGroupResource, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ComponentPolicyState> GetQueryResultsForResourceGroupComponentPolicyStates(this ResourceGroupResource resourceGroupResource, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -496,11 +506,12 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForSubscriptionComponentPolicyStatesAsync(this SubscriptionResource subscriptionResource, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ComponentPolicyState> GetQueryResultsForSubscriptionComponentPolicyStatesAsync(this SubscriptionResource subscriptionResource, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForSubscriptionComponentPolicyStatesAsync(componentPolicyStatesResource, queryOptions, cancellationToken).ConfigureAwait(false);
+            return GetMockablePolicyInsightsSubscriptionResource(subscriptionResource).GetQueryResultsForSubscriptionComponentPolicyStatesAsync(componentPolicyStatesResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -515,7 +526,8 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ComponentPolicyStatesQueryResults> GetQueryResultsForSubscriptionComponentPolicyStates(this SubscriptionResource subscriptionResource, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ComponentPolicyState> GetQueryResultsForSubscriptionComponentPolicyStates(this SubscriptionResource subscriptionResource, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

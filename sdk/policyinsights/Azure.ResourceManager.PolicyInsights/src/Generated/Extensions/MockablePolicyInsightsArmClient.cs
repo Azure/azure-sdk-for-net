@@ -184,32 +184,29 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForResourceComponentPolicyStatesAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceComponentPolicyStatesAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using DiagnosticScope scope0 = ComponentPolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.GetQueryResultsForResourceComponentPolicyStates");
-            scope0.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ComponentPolicyStatesRestClient.CreateGetQueryResultsForResourceComponentPolicyStatesRequest(scope.ToString(), componentPolicyStatesResource.ToString(), default, default, default, default, default, default, default, default, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ComponentPolicyStatesQueryResults> response = Response.FromValue(ComponentPolicyStatesQueryResults.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new ComponentPolicyStatesGetQueryResultsForResourceComponentPolicyStatesAsyncCollectionResultOfT(
+                ComponentPolicyStatesRestClient,
+                scope.ToString(),
+                componentPolicyStatesResource.ToString(),
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                context,
+                "MockablePolicyInsightsArmClient.GetQueryResultsForResourceComponentPolicyStates");
         }
 
         /// <summary>
@@ -234,32 +231,29 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<ComponentPolicyStatesQueryResults> GetQueryResultsForResourceComponentPolicyStates(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComponentPolicyState> GetQueryResultsForResourceComponentPolicyStates(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using DiagnosticScope scope0 = ComponentPolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.GetQueryResultsForResourceComponentPolicyStates");
-            scope0.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ComponentPolicyStatesRestClient.CreateGetQueryResultsForResourceComponentPolicyStatesRequest(scope.ToString(), componentPolicyStatesResource.ToString(), default, default, default, default, default, default, default, default, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ComponentPolicyStatesQueryResults> response = Response.FromValue(ComponentPolicyStatesQueryResults.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new ComponentPolicyStatesGetQueryResultsForResourceComponentPolicyStatesCollectionResultOfT(
+                ComponentPolicyStatesRestClient,
+                scope.ToString(),
+                componentPolicyStatesResource.ToString(),
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                context,
+                "MockablePolicyInsightsArmClient.GetQueryResultsForResourceComponentPolicyStates");
         }
 
         /// <summary>
@@ -284,32 +278,29 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using DiagnosticScope scope0 = ComponentPolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.GetQueryResultsForPolicyDefinitionComponentPolicyStates");
-            scope0.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ComponentPolicyStatesRestClient.CreateGetQueryResultsForPolicyDefinitionComponentPolicyStatesRequest(scope.SubscriptionId, scope.Name, componentPolicyStatesResource.ToString(), default, default, default, default, default, default, default, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ComponentPolicyStatesQueryResults> response = Response.FromValue(ComponentPolicyStatesQueryResults.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new ComponentPolicyStatesGetQueryResultsForPolicyDefinitionComponentPolicyStatesAsyncCollectionResultOfT(
+                ComponentPolicyStatesRestClient,
+                scope.SubscriptionId,
+                scope.Name,
+                componentPolicyStatesResource.ToString(),
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                context,
+                "MockablePolicyInsightsArmClient.GetQueryResultsForPolicyDefinitionComponentPolicyStates");
         }
 
         /// <summary>
@@ -334,32 +325,29 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<ComponentPolicyStatesQueryResults> GetQueryResultsForPolicyDefinitionComponentPolicyStates(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComponentPolicyState> GetQueryResultsForPolicyDefinitionComponentPolicyStates(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using DiagnosticScope scope0 = ComponentPolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.GetQueryResultsForPolicyDefinitionComponentPolicyStates");
-            scope0.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ComponentPolicyStatesRestClient.CreateGetQueryResultsForPolicyDefinitionComponentPolicyStatesRequest(scope.SubscriptionId, scope.Name, componentPolicyStatesResource.ToString(), default, default, default, default, default, default, default, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ComponentPolicyStatesQueryResults> response = Response.FromValue(ComponentPolicyStatesQueryResults.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new ComponentPolicyStatesGetQueryResultsForPolicyDefinitionComponentPolicyStatesCollectionResultOfT(
+                ComponentPolicyStatesRestClient,
+                scope.SubscriptionId,
+                scope.Name,
+                componentPolicyStatesResource.ToString(),
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                context,
+                "MockablePolicyInsightsArmClient.GetQueryResultsForPolicyDefinitionComponentPolicyStates");
         }
 
         /// <summary>
@@ -384,32 +372,29 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using DiagnosticScope scope0 = ComponentPolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates");
-            scope0.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ComponentPolicyStatesRestClient.CreateGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesRequest(scope.SubscriptionId, scope.Name, componentPolicyStatesResource.ToString(), default, default, default, default, default, default, default, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ComponentPolicyStatesQueryResults> response = Response.FromValue(ComponentPolicyStatesQueryResults.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new ComponentPolicyStatesGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsyncCollectionResultOfT(
+                ComponentPolicyStatesRestClient,
+                scope.SubscriptionId,
+                scope.Name,
+                componentPolicyStatesResource.ToString(),
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                context,
+                "MockablePolicyInsightsArmClient.GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates");
         }
 
         /// <summary>
@@ -434,32 +419,29 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<ComponentPolicyStatesQueryResults> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComponentPolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using DiagnosticScope scope0 = ComponentPolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates");
-            scope0.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ComponentPolicyStatesRestClient.CreateGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesRequest(scope.SubscriptionId, scope.Name, componentPolicyStatesResource.ToString(), default, default, default, default, default, default, default, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ComponentPolicyStatesQueryResults> response = Response.FromValue(ComponentPolicyStatesQueryResults.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new ComponentPolicyStatesGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesCollectionResultOfT(
+                ComponentPolicyStatesRestClient,
+                scope.SubscriptionId,
+                scope.Name,
+                componentPolicyStatesResource.ToString(),
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                context,
+                "MockablePolicyInsightsArmClient.GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates");
         }
 
         /// <summary>
@@ -484,32 +466,30 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<ComponentPolicyStatesQueryResults>> GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using DiagnosticScope scope0 = ComponentPolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates");
-            scope0.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ComponentPolicyStatesRestClient.CreateGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesRequest(scope.SubscriptionId, scope.ResourceGroupName, scope.Name, componentPolicyStatesResource.ToString(), default, default, default, default, default, default, default, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ComponentPolicyStatesQueryResults> response = Response.FromValue(ComponentPolicyStatesQueryResults.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new ComponentPolicyStatesGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsyncCollectionResultOfT(
+                ComponentPolicyStatesRestClient,
+                scope.SubscriptionId,
+                scope.ResourceGroupName,
+                scope.Name,
+                componentPolicyStatesResource.ToString(),
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                context,
+                "MockablePolicyInsightsArmClient.GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates");
         }
 
         /// <summary>
@@ -534,32 +514,30 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <param name="queryOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<ComponentPolicyStatesQueryResults> GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComponentPolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            using DiagnosticScope scope0 = ComponentPolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsArmClient.GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates");
-            scope0.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = ComponentPolicyStatesRestClient.CreateGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesRequest(scope.SubscriptionId, scope.ResourceGroupName, scope.Name, componentPolicyStatesResource.ToString(), default, default, default, default, default, default, default, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ComponentPolicyStatesQueryResults> response = Response.FromValue(ComponentPolicyStatesQueryResults.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new ComponentPolicyStatesGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesCollectionResultOfT(
+                ComponentPolicyStatesRestClient,
+                scope.SubscriptionId,
+                scope.ResourceGroupName,
+                scope.Name,
+                componentPolicyStatesResource.ToString(),
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                default,
+                context,
+                "MockablePolicyInsightsArmClient.GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates");
         }
     }
 }

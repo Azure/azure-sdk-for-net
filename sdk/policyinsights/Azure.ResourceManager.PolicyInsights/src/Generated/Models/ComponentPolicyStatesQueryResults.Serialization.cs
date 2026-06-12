@@ -15,7 +15,7 @@ using Azure.ResourceManager.PolicyInsights;
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Query results. </summary>
-    public partial class ComponentPolicyStatesQueryResults : IJsonModel<ComponentPolicyStatesQueryResults>
+    internal partial class ComponentPolicyStatesQueryResults : IJsonModel<ComponentPolicyStatesQueryResults>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

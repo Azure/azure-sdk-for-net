@@ -669,17 +669,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new CheckManagementGroupPolicyRestrictionsContent(resourceDetails, (pendingFields ?? new ChangeTrackingList<PendingField>()).ToList(), default);
         }
 
-        /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
-        /// <param name="odataCount"> OData entity count; represents the number of policy state records returned. </param>
-        /// <param name="value"> Query results. </param>
-        /// <returns> A new <see cref="Models.ComponentPolicyStatesQueryResults"/> instance for mocking. </returns>
-        public static ComponentPolicyStatesQueryResults ComponentPolicyStatesQueryResults(string odataContext = default, int? odataCount = default, IEnumerable<ComponentPolicyState> value = default)
-        {
-            value ??= new ChangeTrackingList<ComponentPolicyState>();
-
-            return new ComponentPolicyStatesQueryResults(odataContext, odataCount, (value ?? new ChangeTrackingList<ComponentPolicyState>()).ToList(), default);
-        }
-
         /// <param name="odataId"> OData entity ID; always set to null since component policy state records do not have an entity ID. </param>
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="timestamp"> Timestamp for the component policy state record. </param>
