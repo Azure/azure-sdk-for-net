@@ -1492,7 +1492,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetInnerError(exceptionType, errorDetail, default);
         }
 
-        /// <summary> A Launch mode Fleet's virtual machine. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
