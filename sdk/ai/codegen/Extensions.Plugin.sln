@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.6.11822.322 stable
+VisualStudioVersion = 18.6.11822.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions.Plugin", "Extensions.Plugin.csproj", "{9E96B617-FA6B-BEF6-8110-B823F4807855}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions.Plugin", "src\Extensions.Plugin.csproj", "{4D129CF1-61EE-1BE7-D1ED-D1C1F82260C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Extensions.Plugin", "test\Test.Extensions.Plugin.csproj", "{B7C595B3-200D-226E-B256-98995BB38CD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9E96B617-FA6B-BEF6-8110-B823F4807855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E96B617-FA6B-BEF6-8110-B823F4807855}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E96B617-FA6B-BEF6-8110-B823F4807855}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E96B617-FA6B-BEF6-8110-B823F4807855}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D129CF1-61EE-1BE7-D1ED-D1C1F82260C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D129CF1-61EE-1BE7-D1ED-D1C1F82260C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D129CF1-61EE-1BE7-D1ED-D1C1F82260C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D129CF1-61EE-1BE7-D1ED-D1C1F82260C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7C595B3-200D-226E-B256-98995BB38CD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7C595B3-200D-226E-B256-98995BB38CD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7C595B3-200D-226E-B256-98995BB38CD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7C595B3-200D-226E-B256-98995BB38CD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

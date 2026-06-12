@@ -48,3 +48,4 @@ stableTypes:
 # Manually added entries
 - Azure.AI.Projects.AIProjectClient
 - Azure.AI.Projects.AIProjectClientOptions
+- Azure.AI.Projects.AzureAIProjectsModelFactory

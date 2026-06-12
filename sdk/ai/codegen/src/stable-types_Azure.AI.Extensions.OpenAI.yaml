@@ -106,3 +106,4 @@ stableTypes:
 - Azure.AI.Extensions.OpenAI.ProjectConversation
 - Azure.AI.Extensions.OpenAI.ProjectConversationCreationOptions
 - Azure.AI.Extensions.OpenAI.ProjectConversationUpdateOptions
+- Azure.AI.Extensions.OpenAI.ExtensionsOpenAIModelFactory
