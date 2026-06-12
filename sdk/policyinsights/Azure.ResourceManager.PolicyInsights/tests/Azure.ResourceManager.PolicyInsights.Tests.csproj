@@ -1,4 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!--
+      Auto-generated sample files reference obsolete GA-compat overloads (Options classes +
+      extension methods) that are intentionally marked [Obsolete] in our customization.
+      Samples are [Ignore]-d at runtime (only compilation-checked), so suppressing CS0618 for
+      the test project avoids spurious build breaks whenever the obsolete surface changes.
+    -->
+    <NoWarn>$(NoWarn);CS0618</NoWarn>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.PolicyInsights.csproj" />
   </ItemGroup>
