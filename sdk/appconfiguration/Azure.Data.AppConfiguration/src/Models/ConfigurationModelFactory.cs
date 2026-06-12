@@ -25,21 +25,21 @@ namespace Azure.Data.AppConfiguration
         /// <param name="value">The configuration setting's value.</param>
         /// <param name="label">A label used to group configuration settings.</param>
         /// <param name="contentType">The content type of the configuration setting's value.</param>
-        /// <param name="tags">A dictionary of tags used to assign additional properties to the configuration setting.</param>
-        /// <param name="description">A description of the configuration setting.</param>
         /// <param name="eTag">An ETag indicating the version of a configuration setting within a configuration store.</param>
         /// <param name="lastModified">The last time a modifying operation was performed on the given configuration setting.</param>
         /// <param name="isReadOnly">A value indicating whether the configuration setting is read only.</param>
+        /// <param name="tags">A dictionary of tags used to assign additional properties to the configuration setting.</param>
+        /// <param name="description">A description of the configuration setting.</param>
         public static ConfigurationSetting ConfigurationSetting(
             string key,
             string value,
             string label = null,
             string contentType = null,
-            IDictionary<string, string> tags = null,
-            string description = null,
             ETag eTag = default,
             DateTimeOffset? lastModified = null,
-            bool? isReadOnly = null)
+            bool? isReadOnly = null,
+            IDictionary<string, string> tags = null,
+            string description = null)
         {
             ConfigurationSetting setting = new ConfigurationSetting(key, value, label)
             {
@@ -81,11 +81,11 @@ namespace Azure.Data.AppConfiguration
                 value: value,
                 label: label,
                 contentType: contentType,
-                tags: default,
-                description: default,
                 eTag: eTag,
                 lastModified: lastModified,
-                isReadOnly: isReadOnly);
+                isReadOnly: isReadOnly,
+                tags: default,
+                description: default);
         }
 
         /// <summary>
