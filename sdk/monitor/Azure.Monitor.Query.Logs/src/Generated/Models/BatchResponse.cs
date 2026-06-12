@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Monitor.Query.Logs;
 
 namespace Azure.Monitor.Query.Logs.Models
 {

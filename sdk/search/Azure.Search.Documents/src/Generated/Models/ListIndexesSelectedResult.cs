@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models

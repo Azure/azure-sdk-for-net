@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Monitor.Query.Metrics;
 
 namespace Azure.Monitor.Query.Metrics.Models
 {

@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.Language.Conversations;
 
 namespace Azure.AI.Language.Conversations.Models
 {

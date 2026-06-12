@@ -9,8 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.Data.SchemaRegistry;
 
 namespace Azure.Data.SchemaRegistry.Models
 {

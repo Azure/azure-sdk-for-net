@@ -10,7 +10,6 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Azure;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
