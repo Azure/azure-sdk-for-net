@@ -37,7 +37,7 @@ namespace Azure.AI.Projects.Evaluation
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] Get an evaluation rule.
+        /// [Protocol Method] Retrieves the specified evaluation rule and its configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -59,7 +59,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Get an evaluation rule.
+        /// [Protocol Method] Retrieves the specified evaluation rule and its configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -80,7 +80,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get an evaluation rule. </summary>
+        /// <summary> Retrieves the specified evaluation rule and its configuration. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -94,7 +94,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
         }
 
-        /// <summary> Get an evaluation rule. </summary>
+        /// <summary> Retrieves the specified evaluation rule and its configuration. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -109,7 +109,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Delete an evaluation rule.
+        /// [Protocol Method] Removes the specified evaluation rule from the project.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -131,7 +131,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Delete an evaluation rule.
+        /// [Protocol Method] Removes the specified evaluation rule from the project.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -152,7 +152,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Delete an evaluation rule. </summary>
+        /// <summary> Removes the specified evaluation rule from the project. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -165,7 +165,7 @@ namespace Azure.AI.Projects.Evaluation
             return Delete(id, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Delete an evaluation rule. </summary>
+        /// <summary> Removes the specified evaluation rule from the project. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -179,7 +179,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Create or update an evaluation rule.
+        /// [Protocol Method] Creates a new evaluation rule, or replaces the existing rule when the identifier matches.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -204,7 +204,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Create or update an evaluation rule.
+        /// [Protocol Method] Creates a new evaluation rule, or replaces the existing rule when the identifier matches.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -228,7 +228,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Create or update an evaluation rule. </summary>
+        /// <summary> Creates a new evaluation rule, or replaces the existing rule when the identifier matches. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="evaluationRule"> Evaluation rule resource. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -245,7 +245,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
         }
 
-        /// <summary> Create or update an evaluation rule. </summary>
+        /// <summary> Creates a new evaluation rule, or replaces the existing rule when the identifier matches. </summary>
         /// <param name="id"> Unique identifier for the evaluation rule. </param>
         /// <param name="evaluationRule"> Evaluation rule resource. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -263,7 +263,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] List all evaluation rules.
+        /// [Protocol Method] Returns the evaluation rules configured for the project, optionally filtered by action type, agent name, or enabled state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -282,7 +282,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] List all evaluation rules.
+        /// [Protocol Method] Returns the evaluation rules configured for the project, optionally filtered by action type, agent name, or enabled state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -300,7 +300,7 @@ namespace Azure.AI.Projects.Evaluation
             return new EvaluationRulesGetAllAsyncCollectionResult(this, actionType, agentName, enabled, options);
         }
 
-        /// <summary> List all evaluation rules. </summary>
+        /// <summary> Returns the evaluation rules configured for the project, optionally filtered by action type, agent name, or enabled state. </summary>
         /// <param name="actionType"> Filter by the type of evaluation rule. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
@@ -311,7 +311,7 @@ namespace Azure.AI.Projects.Evaluation
             return new EvaluationRulesGetAllCollectionResultOfT(this, actionType?.ToString(), agentName, enabled, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> List all evaluation rules. </summary>
+        /// <summary> Returns the evaluation rules configured for the project, optionally filtered by action type, agent name, or enabled state. </summary>
         /// <param name="actionType"> Filter by the type of evaluation rule. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>

@@ -37,7 +37,7 @@ namespace Azure.AI.Projects.Evaluation
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] Generate Insights
+        /// [Protocol Method] Generates an insights report from the provided evaluation configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -59,7 +59,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Generate Insights
+        /// [Protocol Method] Generates an insights report from the provided evaluation configuration.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -80,7 +80,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Generate Insights. </summary>
+        /// <summary> Generates an insights report from the provided evaluation configuration. </summary>
         /// <param name="insight"> Complete evaluation configuration including data source, evaluators, and result settings. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -94,7 +94,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromValue((ProjectsInsight)result, result.GetRawResponse());
         }
 
-        /// <summary> Generate Insights. </summary>
+        /// <summary> Generates an insights report from the provided evaluation configuration. </summary>
         /// <param name="insight"> Complete evaluation configuration including data source, evaluators, and result settings. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -109,7 +109,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Get a specific insight by Id.
+        /// [Protocol Method] Retrieves the specified insight report and its results.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -133,7 +133,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Get a specific insight by Id.
+        /// [Protocol Method] Retrieves the specified insight report and its results.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -156,7 +156,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Get a specific insight by Id. </summary>
+        /// <summary> Retrieves the specified insight report and its results. </summary>
         /// <param name="id"> The unique identifier for the insights report. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
@@ -172,7 +172,7 @@ namespace Azure.AI.Projects.Evaluation
             return ClientResult.FromValue((ProjectsInsight)result, result.GetRawResponse());
         }
 
-        /// <summary> Get a specific insight by Id. </summary>
+        /// <summary> Retrieves the specified insight report and its results. </summary>
         /// <param name="id"> The unique identifier for the insights report. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="includeCoordinates"> Whether to include coordinates for visualization in the response. Defaults to false. </param>
@@ -189,7 +189,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] List all insights in reverse chronological order (newest first).
+        /// [Protocol Method] Returns insights in reverse chronological order, with the most recent entries first.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -219,7 +219,7 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] List all insights in reverse chronological order (newest first).
+        /// [Protocol Method] Returns insights in reverse chronological order, with the most recent entries first.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -248,7 +248,7 @@ namespace Azure.AI.Projects.Evaluation
                 options);
         }
 
-        /// <summary> List all insights in reverse chronological order (newest first). </summary>
+        /// <summary> Returns insights in reverse chronological order, with the most recent entries first. </summary>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="type"> Filter by the type of analysis. </param>
         /// <param name="evalId"> Filter by the evaluation ID. </param>
@@ -270,7 +270,7 @@ namespace Azure.AI.Projects.Evaluation
                 cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> List all insights in reverse chronological order (newest first). </summary>
+        /// <summary> Returns insights in reverse chronological order, with the most recent entries first. </summary>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="type"> Filter by the type of analysis. </param>
         /// <param name="evalId"> Filter by the evaluation ID. </param>

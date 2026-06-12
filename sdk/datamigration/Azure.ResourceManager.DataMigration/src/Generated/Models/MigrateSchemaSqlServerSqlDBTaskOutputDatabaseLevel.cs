@@ -14,15 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel : MigrateSchemaSqlServerSqlDBTaskOutput
     {
         /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>. </summary>
-        internal MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel()
+        internal MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel() : base("DatabaseLevelOutput")
         {
-            ResultType = "DatabaseLevelOutput";
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="state"> State of the schema migration for this database. </param>
         /// <param name="stage"> Schema migration stage for this database. </param>
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="numberOfSuccessfulOperations"> Number of successful operations for this database. </param>
         /// <param name="numberOfFailedOperations"> Number of failed operations for this database. </param>
         /// <param name="fileId"> Identifier for the file resource containing the schema of this database. </param>
-        internal MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, DataMigrationState? state, SchemaMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string databaseErrorResultPrefix, string schemaErrorResultPrefix, long? numberOfSuccessfulOperations, long? numberOfFailedOperations, string fileId) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string databaseName, DataMigrationState? state, SchemaMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string databaseErrorResultPrefix, string schemaErrorResultPrefix, long? numberOfSuccessfulOperations, long? numberOfFailedOperations, string fileId) : base(id, resultType, additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             State = state;
@@ -45,27 +44,35 @@ namespace Azure.ResourceManager.DataMigration.Models
             NumberOfSuccessfulOperations = numberOfSuccessfulOperations;
             NumberOfFailedOperations = numberOfFailedOperations;
             FileId = fileId;
-            ResultType = resultType ?? "DatabaseLevelOutput";
         }
 
         /// <summary> The name of the database. </summary>
         public string DatabaseName { get; }
+
         /// <summary> State of the schema migration for this database. </summary>
         public DataMigrationState? State { get; }
+
         /// <summary> Schema migration stage for this database. </summary>
         public SchemaMigrationStage? Stage { get; }
+
         /// <summary> Migration start time. </summary>
         public DateTimeOffset? StartedOn { get; }
+
         /// <summary> Migration end time. </summary>
         public DateTimeOffset? EndedOn { get; }
+
         /// <summary> Prefix string to use for querying errors for this database. </summary>
         public string DatabaseErrorResultPrefix { get; }
+
         /// <summary> Prefix string to use for querying schema errors for this database. </summary>
         public string SchemaErrorResultPrefix { get; }
+
         /// <summary> Number of successful operations for this database. </summary>
         public long? NumberOfSuccessfulOperations { get; }
+
         /// <summary> Number of failed operations for this database. </summary>
         public long? NumberOfFailedOperations { get; }
+
         /// <summary> Identifier for the file resource containing the schema of this database. </summary>
         public string FileId { get; }
     }

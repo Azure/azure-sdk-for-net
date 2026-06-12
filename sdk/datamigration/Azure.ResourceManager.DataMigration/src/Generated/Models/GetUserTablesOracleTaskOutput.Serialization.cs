@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class GetUserTablesOracleTaskOutput : IUtf8JsonSerializable, IJsonModel<GetUserTablesOracleTaskOutput>
+    /// <summary> Output for the task that gets the list of tables contained within a provided list of Oracle schemas. </summary>
+    public partial class GetUserTablesOracleTaskOutput : IJsonModel<GetUserTablesOracleTaskOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetUserTablesOracleTaskOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GetUserTablesOracleTaskOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetUserTablesOracleTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGetUserTablesOracleTaskOutput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GetUserTablesOracleTaskOutput)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetUserTablesOracleTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GetUserTablesOracleTaskOutput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GetUserTablesOracleTaskOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GetUserTablesOracleTaskOutput IPersistableModel<GetUserTablesOracleTaskOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GetUserTablesOracleTaskOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GetUserTablesOracleTaskOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesOracleTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetUserTablesOracleTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GetUserTablesOracleTaskOutput)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(SchemaName))
             {
                 writer.WritePropertyName("schemaName"u8);
@@ -43,7 +83,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 writer.WritePropertyName("tables"u8);
                 writer.WriteStartArray();
-                foreach (var item in Tables)
+                foreach (DataMigrationDatabaseTable item in Tables)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -53,21 +93,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValidationErrors)
+                foreach (DataMigrationReportableException item in ValidationErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +116,27 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        GetUserTablesOracleTaskOutput IJsonModel<GetUserTablesOracleTaskOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GetUserTablesOracleTaskOutput IJsonModel<GetUserTablesOracleTaskOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GetUserTablesOracleTaskOutput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesOracleTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetUserTablesOracleTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GetUserTablesOracleTaskOutput)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGetUserTablesOracleTaskOutput(document.RootElement, options);
         }
 
-        internal static GetUserTablesOracleTaskOutput DeserializeGetUserTablesOracleTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GetUserTablesOracleTaskOutput DeserializeGetUserTablesOracleTaskOutput(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -99,37 +144,36 @@ namespace Azure.ResourceManager.DataMigration.Models
             string schemaName = default;
             IReadOnlyList<DataMigrationDatabaseTable> tables = default;
             IReadOnlyList<DataMigrationReportableException> validationErrors = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("schemaName"u8))
+                if (prop.NameEquals("schemaName"u8))
                 {
-                    schemaName = property.Value.GetString();
+                    schemaName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tables"u8))
+                if (prop.NameEquals("tables"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataMigrationDatabaseTable> array = new List<DataMigrationDatabaseTable>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataMigrationDatabaseTable.DeserializeDataMigrationDatabaseTable(item, options));
                     }
                     tables = array;
                     continue;
                 }
-                if (property.NameEquals("validationErrors"u8))
+                if (prop.NameEquals("validationErrors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
@@ -138,42 +182,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new GetUserTablesOracleTaskOutput(schemaName, tables ?? new ChangeTrackingList<DataMigrationDatabaseTable>(), validationErrors ?? new ChangeTrackingList<DataMigrationReportableException>(), serializedAdditionalRawData);
+            return new GetUserTablesOracleTaskOutput(schemaName, tables ?? new ChangeTrackingList<DataMigrationDatabaseTable>(), validationErrors ?? new ChangeTrackingList<DataMigrationReportableException>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<GetUserTablesOracleTaskOutput>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesOracleTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GetUserTablesOracleTaskOutput)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GetUserTablesOracleTaskOutput IPersistableModel<GetUserTablesOracleTaskOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesOracleTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGetUserTablesOracleTaskOutput(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GetUserTablesOracleTaskOutput)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GetUserTablesOracleTaskOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
