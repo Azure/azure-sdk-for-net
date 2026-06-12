@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
     {
         // Backward-compat justification: the GA mockable resource group APIs exposed ArcSettings-based UpdateSetting overloads.
         /// <summary>
-        /// Update the base Settings of the target resource.
+        /// Updates the base Settings of the target resource.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         }
 
         /// <summary>
-        /// Update the base Settings of the target resource.
+        /// Updates the base Settings of the target resource.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]

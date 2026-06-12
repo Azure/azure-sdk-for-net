@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridCompute
         // ----- ResourceGroupResource overloads -----
         // Backward-compat justification: preserve the GA resource group extension methods that update settings using ArcSettings.
         /// <summary>
-        /// Update the base Settings of the target resource.
+        /// Updates the base Settings of the target resource.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridCompute
         }
 
         /// <summary>
-        /// Update the base Settings of the target resource.
+        /// Updates the base Settings of the target resource.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
