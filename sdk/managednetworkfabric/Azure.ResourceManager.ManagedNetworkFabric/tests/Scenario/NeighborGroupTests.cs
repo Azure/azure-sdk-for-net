@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             {
                 IPv4Addresses =
                     {
-                        IPAddress.Parse("10.10.10.10"),IPAddress.Parse("20.10.10.10"),IPAddress.Parse("30.10.10.10"),IPAddress.Parse("40.10.10.10"),IPAddress.Parse("50.10.10.10"),IPAddress.Parse("60.10.10.10"),IPAddress.Parse("70.10.10.10"),IPAddress.Parse("80.10.10.10"),IPAddress.Parse("90.10.10.10")
+                        IPAddress.Parse("10.10.10.10"), IPAddress.Parse("20.10.10.10"), IPAddress.Parse("30.10.10.10"), IPAddress.Parse("40.10.10.10"), IPAddress.Parse("50.10.10.10"), IPAddress.Parse("60.10.10.10"), IPAddress.Parse("70.10.10.10"), IPAddress.Parse("80.10.10.10"), IPAddress.Parse("90.10.10.10")
                     },
                 IPv6Addresses =
                     {
@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             Assert.AreEqual(resourceData.Name, TestEnvironment.NeighborGroupName);
 
             // Update
-            NetworkFabricNeighborGroupPatch patch = new NetworkFabricNeighborGroupPatch()
+            NetworkFabricNeighborGroupPatchContent patch = new NetworkFabricNeighborGroupPatchContent()
             {
                 Annotation = "Updating",
-                Destination = new NeighborGroupDestination()
+                DestinationSettings = new NeighborGroupDestinationPatch()
                 {
                     IPv4Addresses =
                     {
-                        IPAddress.Parse("10.10.10.10"),IPAddress.Parse("20.10.10.10"),IPAddress.Parse("30.10.10.10"),IPAddress.Parse("40.10.10.10"),IPAddress.Parse("50.10.10.10"),IPAddress.Parse("60.10.10.10"),IPAddress.Parse("70.10.10.10"),IPAddress.Parse("80.10.10.10"),IPAddress.Parse("90.10.10.10")
+                        IPAddress.Parse("10.10.10.10"), IPAddress.Parse("20.10.10.10"), IPAddress.Parse("30.10.10.10"), IPAddress.Parse("40.10.10.10"), IPAddress.Parse("50.10.10.10"), IPAddress.Parse("60.10.10.10"), IPAddress.Parse("70.10.10.10"), IPAddress.Parse("80.10.10.10"), IPAddress.Parse("90.10.10.10")
                     },
                     IPv6Addresses =
                         {
