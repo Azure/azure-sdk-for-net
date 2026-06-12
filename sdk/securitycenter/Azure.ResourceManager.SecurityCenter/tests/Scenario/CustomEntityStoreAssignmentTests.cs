@@ -14,6 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Tests
 {
+    [Ignore("Legacy Custom Entity Store Assignment API is no longer present in current TypeSpec or Swagger; kept only as ApiCompat shim.")]
     internal class CustomEntityStoreAssignmentTests : SecurityCenterManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;

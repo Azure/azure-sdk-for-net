@@ -4,14 +4,6 @@
     <NoWarn>$(NoWarn);CS0618</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <!-- These scenarios target legacy operations that are no longer service-supported and remain hidden obsolete thrower shims for ApiCompat only. -->
-    <Compile Remove="Scenario\AdaptiveApplicationControlGroupTests.cs" />
-    <Compile Remove="Scenario\AdaptiveNetworkHardening.cs" />
-    <Compile Remove="Scenario\CustomAssessmentAutomationTests.cs" />
-    <Compile Remove="Scenario\CustomEntityStoreAssignmentTests.cs" />
-    <Compile Remove="Scenario\SoftwareTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Compute" />
     <PackageReference Include="Azure.ResourceManager.IotHub" />
     <PackageReference Include="Azure.ResourceManager.Logic" />

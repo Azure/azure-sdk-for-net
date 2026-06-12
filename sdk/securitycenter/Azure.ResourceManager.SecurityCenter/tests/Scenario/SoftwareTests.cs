@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Tests
 {
+    [Ignore("Software Inventory is still in Swagger but missing from current TypeSpec; skip until the spec gap is resolved.")]
     internal class SoftwareTests : SecurityCenterManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;

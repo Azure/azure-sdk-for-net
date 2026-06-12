@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Tests
 {
+    [Ignore("Legacy Adaptive Application Control API is no longer present in current TypeSpec or Swagger; kept only as ApiCompat shim.")]
     internal class AdaptiveApplicationControlGroupTests : SecurityCenterManagementTestBase
     {
         private AdaptiveApplicationControlGroupCollection _adaptiveApplicationControlGroupCollection => GetAdaptiveApplicationControlGroupCollection().Result;
