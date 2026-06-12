@@ -22,13 +22,13 @@
 //     - CONTENTUNDERSTANDING_ENDPOINT: Primary Foundry API endpoint
 //
 //   Primary Resource (used as source for cross-resource copy):
-//     - AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID: Primary Foundry resource ID
-//     - AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION: Primary resource region
+//     - CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID: Primary Foundry resource ID
+//     - CONTENTUNDERSTANDING_SOURCE_REGION: Primary resource region
 //
 //   Secondary Resource (used as target for cross-resource copy):
 //     - CONTENTUNDERSTANDING_TARGET_ENDPOINT: Secondary Foundry API endpoint
-//     - AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID: Secondary Foundry resource ID
-//     - AZURE_CONTENT_UNDERSTANDING_TARGET_REGION: Secondary resource region
+//     - CONTENTUNDERSTANDING_TARGET_RESOURCE_ID: Secondary Foundry resource ID
+//     - CONTENTUNDERSTANDING_TARGET_REGION: Secondary resource region
 //
 //   Model Deployment Names:
 //     - GPT_4_1_DEPLOYMENT: Deployment name for gpt-4.1 model
@@ -121,15 +121,15 @@ resource targetRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-0
 output CONTENTUNDERSTANDING_ENDPOINT string = 'https://${toLower(testFoundryName)}.services.ai.azure.com/'
 
 // Primary resource outputs (used as source for cross-resource copy)
-output AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID string = sourceFoundry.id
-output AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION string = location
+output CONTENTUNDERSTANDING_SOURCE_RESOURCE_ID string = sourceFoundry.id
+output CONTENTUNDERSTANDING_SOURCE_REGION string = location
 
 // Target resource outputs (for cross-resource copy)
 // Construct endpoint from variable (endpoint format: https://{customSubDomainName}.services.ai.azure.com/)
 // Using toLower(targetFoundryName) which matches the customSubDomainName set in the resource
 output CONTENTUNDERSTANDING_TARGET_ENDPOINT string = 'https://${toLower(targetFoundryName)}.services.ai.azure.com/'
-output AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID string = targetFoundry.id
-output AZURE_CONTENT_UNDERSTANDING_TARGET_REGION string = location
+output CONTENTUNDERSTANDING_TARGET_RESOURCE_ID string = targetFoundry.id
+output CONTENTUNDERSTANDING_TARGET_REGION string = location
 
 // Model deployment outputs - deployment names for tests
 // These match what ContentUnderstandingClientTestEnvironment expects
