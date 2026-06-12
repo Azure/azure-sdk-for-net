@@ -1,0 +1,19 @@
+<!--
+  This file allows overrides and extensions to the build configuration defined
+  by the central engineering system, and is considered during pipeline builds for
+  CI, test runs, and package release.
+
+  Based on the SDKType variable (msbuild property or env variable) this will filter
+  the set of projects to match what type of SDK we are interested in building.
+
+  SDKType values
+   - "all" will build all projects
+   - "mgmt" will build the management plane SDK
+   - "mgmtclient" will build the track 2 management plane SDK
+-->
+
+<Project>
+  <ItemGroup Condition="'$(SDKType)' == 'mgmt' or '$(SDKType)' == 'mgmtclient'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
+  </ItemGroup>
+</Project>
