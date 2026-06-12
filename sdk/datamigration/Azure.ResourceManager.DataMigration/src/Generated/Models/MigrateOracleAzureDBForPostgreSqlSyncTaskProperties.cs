@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,43 +15,30 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class MigrateOracleAzureDBForPostgreSqlSyncTaskProperties : DataMigrationProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
-        public MigrateOracleAzureDBForPostgreSqlSyncTaskProperties()
+        public MigrateOracleAzureDBForPostgreSqlSyncTaskProperties() : base(DataMigrationTaskType.MigrateOracleAzureDbForPostgreSqlSync)
         {
             Output = new ChangeTrackingList<MigrateOracleAzureDBPostgreSqlSyncTaskOutput>();
-            TaskType = DataMigrationTaskType.MigrateOracleAzureDBForPostgreSqlSync;
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
-        /// <param name="commands">
-        /// Array of command properties.
-        /// Please note <see cref="DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataMigrationMongoDBCancelCommand"/>, <see cref="DataMigrationMongoDBFinishCommand"/>, <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/> and <see cref="DataMigrationMongoDBRestartCommand"/>.
-        /// </param>
+        /// <param name="commands"> Array of command properties. </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Task input. </param>
-        /// <param name="output">
-        /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel"/> and <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/>.
-        /// </param>
-        internal MigrateOracleAzureDBForPostgreSqlSyncTaskProperties(DataMigrationTaskType taskType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationTaskState? state, IReadOnlyList<DataMigrationCommandProperties> commands, IDictionary<string, string> clientData, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrateOracleAzureDBPostgreSqlSyncTaskInput input, IReadOnlyList<MigrateOracleAzureDBPostgreSqlSyncTaskOutput> output) : base(taskType, errors, state, commands, clientData, serializedAdditionalRawData)
+        /// <param name="output"> Task output. This is ignored if submitted. </param>
+        internal MigrateOracleAzureDBForPostgreSqlSyncTaskProperties(DataMigrationTaskType taskType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationTaskState? state, IReadOnlyList<DataMigrationCommandProperties> commands, IDictionary<string, string> clientData, IDictionary<string, BinaryData> additionalBinaryDataProperties, MigrateOracleAzureDBPostgreSqlSyncTaskInput input, IReadOnlyList<MigrateOracleAzureDBPostgreSqlSyncTaskOutput> output) : base(taskType, errors, state, commands, clientData, additionalBinaryDataProperties)
         {
             Input = input;
             Output = output;
-            TaskType = taskType;
         }
 
         /// <summary> Task input. </summary>
         public MigrateOracleAzureDBPostgreSqlSyncTaskInput Input { get; set; }
-        /// <summary>
-        /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel"/> and <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/>.
-        /// </summary>
+
+        /// <summary> Task output. This is ignored if submitted. </summary>
         public IReadOnlyList<MigrateOracleAzureDBPostgreSqlSyncTaskOutput> Output { get; }
     }
 }
