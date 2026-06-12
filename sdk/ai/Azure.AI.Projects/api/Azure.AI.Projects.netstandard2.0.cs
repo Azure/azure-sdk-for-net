@@ -1214,7 +1214,7 @@ namespace Azure.AI.Projects
         SkillsV1Preview = 7,
         DataGenerationJobsV1Preview = 8,
         ModelsV1Preview = 9,
-        AgentsOptimizationV1Preview = 10,
+        AgentsOptimizationV2Preview = 10,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GitHubIssueEvent : System.IEquatable<Azure.AI.Projects.GitHubIssueEvent>

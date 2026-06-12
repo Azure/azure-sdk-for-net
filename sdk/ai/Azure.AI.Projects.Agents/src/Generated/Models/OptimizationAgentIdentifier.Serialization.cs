@@ -9,57 +9,57 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> File entry in a candidate's blob directory. </summary>
-    public partial class CandidateFileInfo : IJsonModel<CandidateFileInfo>
+    /// <summary> Identifies the registered Foundry agent to optimize (request-only). Skills, tools, and system_prompt are specified in options.optimization_config. </summary>
+    public partial class OptimizationAgentIdentifier : IJsonModel<OptimizationAgentIdentifier>
     {
-        /// <summary> Initializes a new instance of <see cref="CandidateFileInfo"/> for deserialization. </summary>
-        internal CandidateFileInfo()
+        /// <summary> Initializes a new instance of <see cref="OptimizationAgentIdentifier"/> for deserialization. </summary>
+        internal OptimizationAgentIdentifier()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CandidateFileInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OptimizationAgentIdentifier PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CandidateFileInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationAgentIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCandidateFileInfo(document.RootElement, options);
+                        return DeserializeOptimizationAgentIdentifier(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CandidateFileInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OptimizationAgentIdentifier)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CandidateFileInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationAgentIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CandidateFileInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OptimizationAgentIdentifier)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CandidateFileInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OptimizationAgentIdentifier>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CandidateFileInfo IPersistableModel<CandidateFileInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OptimizationAgentIdentifier IPersistableModel<OptimizationAgentIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CandidateFileInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OptimizationAgentIdentifier>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CandidateFileInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OptimizationAgentIdentifier>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,17 +70,18 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CandidateFileInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationAgentIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CandidateFileInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OptimizationAgentIdentifier)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("path"u8);
-            writer.WriteStringValue(Path);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            writer.WritePropertyName("size_bytes"u8);
-            writer.WriteNumberValue(SizeBytes);
+            writer.WritePropertyName("agent_name"u8);
+            writer.WriteStringValue(AgentName);
+            if (Optional.IsDefined(AgentVersion))
+            {
+                writer.WritePropertyName("agent_version"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -100,48 +101,42 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CandidateFileInfo IJsonModel<CandidateFileInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OptimizationAgentIdentifier IJsonModel<OptimizationAgentIdentifier>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CandidateFileInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OptimizationAgentIdentifier JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CandidateFileInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationAgentIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CandidateFileInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OptimizationAgentIdentifier)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCandidateFileInfo(document.RootElement, options);
+            return DeserializeOptimizationAgentIdentifier(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CandidateFileInfo DeserializeCandidateFileInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static OptimizationAgentIdentifier DeserializeOptimizationAgentIdentifier(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string path = default;
-            string @type = default;
-            long sizeBytes = default;
+            string agentName = default;
+            string agentVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("path"u8))
+                if (prop.NameEquals("agent_name"u8))
                 {
-                    path = prop.Value.GetString();
+                    agentName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("agent_version"u8))
                 {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("size_bytes"u8))
-                {
-                    sizeBytes = prop.Value.GetInt64();
+                    agentVersion = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +144,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CandidateFileInfo(path, @type, sizeBytes, additionalBinaryDataProperties);
+            return new OptimizationAgentIdentifier(agentName, agentVersion, additionalBinaryDataProperties);
         }
     }
 }

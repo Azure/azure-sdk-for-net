@@ -8,26 +8,26 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Identifies the registered Foundry agent to optimize (request-only). Skills, tools, and system_prompt are specified in options.optimization_config. </summary>
-    public partial class AgentIdentifier
+    public partial class OptimizationAgentIdentifier
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentIdentifier"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptimizationAgentIdentifier"/>. </summary>
         /// <param name="agentName"> Registered Foundry agent name (required). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
-        public AgentIdentifier(string agentName)
+        public OptimizationAgentIdentifier(string agentName)
         {
             Argument.AssertNotNull(agentName, nameof(agentName));
 
             AgentName = agentName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentIdentifier"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OptimizationAgentIdentifier"/>. </summary>
         /// <param name="agentName"> Registered Foundry agent name (required). </param>
         /// <param name="agentVersion"> Pinned agent version. Defaults to latest if omitted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentIdentifier(string agentName, string agentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationAgentIdentifier(string agentName, string agentVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentName = agentName;
             AgentVersion = agentVersion;
