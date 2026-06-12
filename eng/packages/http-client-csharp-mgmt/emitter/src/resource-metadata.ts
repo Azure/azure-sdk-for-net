@@ -1207,7 +1207,7 @@ function postProcessExpandedArmResources(
     const validCandidates: RequestPath[] = [];
 
     for (const candidatePath of resourceInstancePaths) {
-      if (canBeListResourceScope(listOp.operationPath, candidatePath)) {
+      if (candidatePath.isPrefixOf(listOp.operationPath)) {
         validCandidates.push(candidatePath);
       }
     }
@@ -1297,17 +1297,6 @@ function postProcessExpandedArmResources(
   }
 
   return filteredResources;
-}
-
-/**
- * Helper function to determine if a resource path can be the scope for a list operation.
- * The resource path must be a prefix of the list operation path.
- */
-function canBeListResourceScope(
-  listPath: RequestPath,
-  resourceInstancePath: RequestPath
-): boolean {
-  return resourceInstancePath.isPrefixOf(listPath);
 }
 
 /**
