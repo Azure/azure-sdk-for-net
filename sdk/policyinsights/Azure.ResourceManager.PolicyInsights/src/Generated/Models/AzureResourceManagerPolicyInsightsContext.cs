@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.PolicyInsights
     [ModelReaderWriterBuildable(typeof(CheckPolicyRestrictionsResult))]
     [ModelReaderWriterBuildable(typeof(CheckRestrictionEvaluationDetails))]
     [ModelReaderWriterBuildable(typeof(CheckRestrictionsResourceDetails))]
-    [ModelReaderWriterBuildable(typeof(CheckRestrictionsResultContentEvaluationResult))]
     [ModelReaderWriterBuildable(typeof(ComplianceDetail))]
     [ModelReaderWriterBuildable(typeof(ComponentEventDetails))]
     [ModelReaderWriterBuildable(typeof(ComponentExpressionEvaluationDetails))]

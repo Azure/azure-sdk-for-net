@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("evaluationResult"u8);
                 writer.WriteStringValue(EvaluationResult);
             }
-            if (options.Format != "W" && Optional.IsDefined(EvaluationDetails))
+            if (options.Format != "W" && Optional.IsDefined(CheckRestrictionEvaluationDetails))
             {
                 writer.WritePropertyName("evaluationDetails"u8);
-                writer.WriteObjectValue(EvaluationDetails, options);
+                writer.WriteObjectValue(CheckRestrictionEvaluationDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EffectDetails))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
             PolicyReference policyInfo = default;
             string evaluationResult = default;
-            PolicyEvaluationDetails evaluationDetails = default;
+            CheckRestrictionEvaluationDetails checkRestrictionEvaluationDetails = default;
             PolicyEffectDetails effectDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    evaluationDetails = PolicyEvaluationDetails.DeserializePolicyEvaluationDetails(prop.Value, options);
+                    checkRestrictionEvaluationDetails = CheckRestrictionEvaluationDetails.DeserializeCheckRestrictionEvaluationDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("effectDetails"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PolicyEvaluationResult(policyInfo, evaluationResult, evaluationDetails, effectDetails, additionalBinaryDataProperties);
+            return new PolicyEvaluationResult(policyInfo, evaluationResult, checkRestrictionEvaluationDetails, effectDetails, additionalBinaryDataProperties);
         }
     }
 }

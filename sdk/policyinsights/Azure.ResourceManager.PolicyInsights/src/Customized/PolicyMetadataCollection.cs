@@ -4,6 +4,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using Azure.ResourceManager.PolicyInsights.Models;
@@ -11,7 +13,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    public partial class PolicyMetadataCollection
+    public partial class PolicyMetadataCollection : IEnumerable<SlimPolicyMetadata>, IAsyncEnumerable<SlimPolicyMetadata>
     {
         /// <summary>
         /// [Obsolete] Get a list of the policy metadata resources. The host of this operation has moved to <see cref="TenantResource"/>.
@@ -36,5 +38,18 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             throw new NotSupportedException("PolicyMetadataCollection.GetAll is no longer supported. Use TenantResource.GetAll(PolicyQuerySettings, CancellationToken) instead.");
         }
+
+        // ===== Explicit interface implementations for GA compatibility (obsolete + throw) =====
+        // GA's PolicyMetadataCollection implemented IEnumerable<SlimPolicyMetadata> and IAsyncEnumerable<SlimPolicyMetadata>
+        // by forwarding to GetAll()/GetAllAsync(). The underlying operation has moved to TenantResource;
+        // these explicit implementations are kept for binary compatibility only and now throw.
+        IEnumerator<SlimPolicyMetadata> IEnumerable<SlimPolicyMetadata>.GetEnumerator()
+            => throw new NotSupportedException("Enumerating PolicyMetadataCollection directly is no longer supported. Use TenantResource.GetAll(PolicyQuerySettings, CancellationToken) instead.");
+
+        IEnumerator IEnumerable.GetEnumerator()
+            => throw new NotSupportedException("Enumerating PolicyMetadataCollection directly is no longer supported. Use TenantResource.GetAll(PolicyQuerySettings, CancellationToken) instead.");
+
+        IAsyncEnumerator<SlimPolicyMetadata> IAsyncEnumerable<SlimPolicyMetadata>.GetAsyncEnumerator(CancellationToken cancellationToken)
+            => throw new NotSupportedException("Enumerating PolicyMetadataCollection directly is no longer supported. Use TenantResource.GetAllAsync(PolicyQuerySettings, CancellationToken) instead.");
     }
 }

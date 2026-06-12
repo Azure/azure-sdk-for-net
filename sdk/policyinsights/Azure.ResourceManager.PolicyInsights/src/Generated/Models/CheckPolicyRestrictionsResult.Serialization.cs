@@ -92,10 +92,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ContentEvaluationResult))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PolicyEvaluations))
             {
                 writer.WritePropertyName("contentEvaluationResult"u8);
-                writer.WriteObjectValue(ContentEvaluationResult, options);
+                writer.WriteStartArray();
+                foreach (PolicyEvaluationResult item in PolicyEvaluations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,7 +145,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 return null;
             }
             IReadOnlyList<FieldRestrictions> fieldRestrictions = default;
-            CheckRestrictionsResultContentEvaluationResult contentEvaluationResult = default;
+            IReadOnlyList<PolicyEvaluationResult> policyEvaluations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,7 +169,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    contentEvaluationResult = CheckRestrictionsResultContentEvaluationResult.DeserializeCheckRestrictionsResultContentEvaluationResult(prop.Value, options);
+                    List<PolicyEvaluationResult> array = new List<PolicyEvaluationResult>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(PolicyEvaluationResult.DeserializePolicyEvaluationResult(item, options));
+                    }
+                    policyEvaluations = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,7 +182,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CheckPolicyRestrictionsResult(fieldRestrictions ?? new ChangeTrackingList<FieldRestrictions>(), contentEvaluationResult, additionalBinaryDataProperties);
+            return new CheckPolicyRestrictionsResult(fieldRestrictions ?? new ChangeTrackingList<FieldRestrictions>(), policyEvaluations ?? new ChangeTrackingList<PolicyEvaluationResult>(), additionalBinaryDataProperties);
         }
     }
 }

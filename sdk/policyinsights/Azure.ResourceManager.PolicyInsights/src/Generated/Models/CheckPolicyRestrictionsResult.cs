@@ -21,16 +21,17 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         internal CheckPolicyRestrictionsResult()
         {
             FieldRestrictions = new ChangeTrackingList<FieldRestrictions>();
+            PolicyEvaluations = new ChangeTrackingList<PolicyEvaluationResult>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CheckPolicyRestrictionsResult"/>. </summary>
         /// <param name="fieldRestrictions"> The restrictions that will be placed on various fields in the resource by policy. </param>
-        /// <param name="contentEvaluationResult"> Evaluation results for the provided partial resource content. </param>
+        /// <param name="policyEvaluations"> Evaluation results for the provided partial resource content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CheckPolicyRestrictionsResult(IReadOnlyList<FieldRestrictions> fieldRestrictions, CheckRestrictionsResultContentEvaluationResult contentEvaluationResult, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CheckPolicyRestrictionsResult(IReadOnlyList<FieldRestrictions> fieldRestrictions, IReadOnlyList<PolicyEvaluationResult> policyEvaluations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FieldRestrictions = fieldRestrictions;
-            ContentEvaluationResult = contentEvaluationResult;
+            PolicyEvaluations = policyEvaluations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,15 +39,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public IReadOnlyList<FieldRestrictions> FieldRestrictions { get; }
 
         /// <summary> Evaluation results for the provided partial resource content. </summary>
-        internal CheckRestrictionsResultContentEvaluationResult ContentEvaluationResult { get; }
-
-        /// <summary> Policy evaluation results against the given resource content. This will indicate if the partial content that was provided will be denied as-is. </summary>
-        public IList<PolicyEvaluationResult> ContentEvaluationResultPolicyEvaluations
-        {
-            get
-            {
-                return ContentEvaluationResult is null ? default : ContentEvaluationResult.PolicyEvaluations;
-            }
-        }
+        public IReadOnlyList<PolicyEvaluationResult> PolicyEvaluations { get; }
     }
 }
