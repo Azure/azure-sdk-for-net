@@ -1,0 +1,45 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
+
+#pragma warning disable CS1591
+
+namespace Azure.ResourceManager.DataFactory
+{
+    // Customization restores back-compat overloads on DataFactoryLinkedServiceResource where the MPG generator
+    // changed the If-None-Match/If-Match header parameter type from `string` to `ETag?` (ARM common-types v6
+    // models them as `Azure.ETag`). These wrappers convert `string` -> `ETag?` so existing call sites compile
+    // unchanged and the on-the-wire request is identical. Marked [EditorBrowsable(Never)] to discourage
+    // new usage of the legacy signatures.
+    public partial class DataFactoryLinkedServiceResource
+    {
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<DataFactoryLinkedServiceResource>> GetAsync(string ifNoneMatch, CancellationToken cancellationToken = default)
+        {
+            return await GetAsync(ifNoneMatch != null ? new ETag(ifNoneMatch) : (ETag?)null, cancellationToken).ConfigureAwait(false);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<DataFactoryLinkedServiceResource> Get(string ifNoneMatch, CancellationToken cancellationToken = default)
+        {
+            return Get(ifNoneMatch != null ? new ETag(ifNoneMatch) : (ETag?)null, cancellationToken);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<DataFactoryLinkedServiceResource>> UpdateAsync(WaitUntil waitUntil, DataFactoryLinkedServiceData data, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return await UpdateAsync(waitUntil, data, ifMatch != null ? new ETag(ifMatch) : (ETag?)null, cancellationToken).ConfigureAwait(false);
+        }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<DataFactoryLinkedServiceResource> Update(WaitUntil waitUntil, DataFactoryLinkedServiceData data, string ifMatch, CancellationToken cancellationToken = default)
+        {
+            return Update(waitUntil, data, ifMatch != null ? new ETag(ifMatch) : (ETag?)null, cancellationToken);
+        }
+    }
+}
