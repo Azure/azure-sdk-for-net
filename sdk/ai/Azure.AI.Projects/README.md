@@ -34,6 +34,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
   - [Files operations](#files-operations)
   - [Fine-Tuning operations](#fine-tuning-operations)
   - [Memory store operations](#memory-store-operations)
+  - [Model weights](#model-weights)
   - [Evaluations](#evalustions)
     - [Agent evaluation](#agent-evaluation)
     - [Model evaluation](#model-evaluation)
@@ -629,6 +630,75 @@ Console.WriteLine($"Memory Item with ID {response.MemoryId} was{(response.Delete
 
 
 For more information about memory stores please refer [this article](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/agent-memory)
+
+### Model weights
+
+Microsoft Foundry is capable to register and store the custom model weights. First the model weights need to be uploaded to BLOB store.
+The store URI must be used to register the model.
+
+Create a new model:
+
+```C# Snippet:Sample_CreateModel_Models_Async
+ModelVersion modelVersionObj = new(dataUri)
+{
+    WeightType = FoundryModelWeightType.FullWeight,
+    Description = "Sample model registered from Azure.AI.Projects",
+};
+modelVersionObj.Tags["source"] = "Model from sample";
+CreateAsyncResponse createResponse = await projectClient.Models.CreateModelVersionRequestAsync(
+    name: modelName,
+    version: modelVersion,
+    modelVersion: modelVersionObj);
+```
+
+Update models:
+
+```C# Snippet:Sample_UpdateModel_Models_Async
+UpdateModelVersionOptions updateOptions = new()
+{
+    Description = "Updated model description."
+};
+updateOptions.Tags["new_tag"] = "The tag from update";
+ModelVersion updatedModel = await projectClient.Models.UpdateModelVersionAsync(
+    name: retrievedModel.Name,
+    version: retrievedModel.Version,
+    updateOptions: updateOptions
+);
+Console.WriteLine($"The model was updated. New description is: {updatedModel.Description}. Tags:");
+foreach (KeyValuePair<string, string> keyValyePair in updatedModel.Tags)
+{
+    Console.WriteLine($"    Key: {keyValyePair.Key} Value: {keyValyePair.Value}");
+}
+```
+
+List model versions:
+
+```C# Snippet:Sample_ListModelVersions_Models_Async
+AsyncCollectionResult<ModelVersion> modelVersions = projectClient.Models.GetModelVersionsAsync(name: updatedModel.Name);
+Console.WriteLine($"For model {updatedModel.Name} there are next versions available:");
+await foreach (ModelVersion oneModelVersion in modelVersions)
+{
+    Console.WriteLine($"    {oneModelVersion.Version}");
+}
+```
+
+List latest versions of all models:
+
+```C# Snippet:Sample_ListLatestVersions_Models_Async
+AsyncCollectionResult<ModelVersion> models = projectClient.Models.GetLatestModelVersionsAsync();
+Console.WriteLine("The next models are available in the project:");
+await foreach (ModelVersion oneModel in models)
+{
+    Console.WriteLine($"    {oneModel.Name}, latest version: {oneModel.Version}");
+}
+```
+
+Delete a version of a model weights:
+
+```C# Snippet:Sample_Cleanup_Models_Sync
+projectClient.Models.DeleteModelVersion(name: updatedModel.Name, version: updatedModel.Version);
+```
+
 
 ### Evaluations
 
