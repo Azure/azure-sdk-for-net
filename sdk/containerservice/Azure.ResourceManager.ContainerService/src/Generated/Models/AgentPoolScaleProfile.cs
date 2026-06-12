@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Specifications on how to scale a VirtualMachines agent pool. </summary>
-    internal partial class AgentPoolScaleProfile
+    public partial class AgentPoolScaleProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,19 +21,36 @@ namespace Azure.ResourceManager.ContainerService.Models
         public AgentPoolScaleProfile()
         {
             Manual = new ChangeTrackingList<ManualScaleProfile>();
+            Autoscale = new ChangeTrackingList<AgentPoolAutoScaleProfile>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolScaleProfile"/>. </summary>
         /// <param name="manual"> Specifications on how to scale the VirtualMachines agent pool to a fixed size. </param>
+        /// <param name="autoscale">
+        /// Specifications on how to auto-scale the VirtualMachines agent pool within a predefined size range.
+        /// Each profile targets a specific VM SKU and is evaluated independently.
+        /// Scaling decisions across profiles are governed by the cluster autoscaler expander,
+        /// configurable via `ManagedCluster.properties.autoScalerProfile.expander`.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolScaleProfile(IList<ManualScaleProfile> manual, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolScaleProfile(IList<ManualScaleProfile> manual, IList<AgentPoolAutoScaleProfile> autoscale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Manual = manual;
+            Autoscale = autoscale;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifications on how to scale the VirtualMachines agent pool to a fixed size. </summary>
         [WirePath("manual")]
         public IList<ManualScaleProfile> Manual { get; }
+
+        /// <summary>
+        /// Specifications on how to auto-scale the VirtualMachines agent pool within a predefined size range.
+        /// Each profile targets a specific VM SKU and is evaluated independently.
+        /// Scaling decisions across profiles are governed by the cluster autoscaler expander,
+        /// configurable via `ManagedCluster.properties.autoScalerProfile.expander`.
+        /// </summary>
+        [WirePath("autoscale")]
+        public IList<AgentPoolAutoScaleProfile> Autoscale { get; }
     }
 }
