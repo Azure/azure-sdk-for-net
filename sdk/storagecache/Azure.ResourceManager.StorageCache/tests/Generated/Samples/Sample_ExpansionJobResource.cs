@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.StorageCache.Samples
 {
-    public partial class Sample_ExpansionJobResource
+    public partial class Sample_AmlFileSystemExpansionJobResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.StorageCache.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ExpansionJobResource created on azure
-            // for more information of creating ExpansionJobResource, please refer to the document of ExpansionJobResource
+            // this example assumes you already have this AmlFileSystemExpansionJobResource created on azure
+            // for more information of creating AmlFileSystemExpansionJobResource, please refer to the document of AmlFileSystemExpansionJobResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "scgroup";
             string amlFileSystemName = "fs1";
             string expansionJobName = "expansionjob1";
-            ResourceIdentifier expansionJobResourceId = ExpansionJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName, expansionJobName);
-            ExpansionJobResource expansionJob = client.GetExpansionJobResource(expansionJobResourceId);
+            ResourceIdentifier expansionJobResourceId = AmlFileSystemExpansionJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName, expansionJobName);
+            AmlFileSystemExpansionJobResource expansionJob = client.GetAmlFileSystemExpansionJobResource(expansionJobResourceId);
 
             // invoke the operation
-            ExpansionJobResource result = await expansionJob.GetAsync();
+            AmlFileSystemExpansionJobResource result = await expansionJob.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ExpansionJobData resourceData = result.Data;
+            AmlFileSystemExpansionJobData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.StorageCache.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ExpansionJobResource created on azure
-            // for more information of creating ExpansionJobResource, please refer to the document of ExpansionJobResource
+            // this example assumes you already have this AmlFileSystemExpansionJobResource created on azure
+            // for more information of creating AmlFileSystemExpansionJobResource, please refer to the document of AmlFileSystemExpansionJobResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "scgroup";
             string amlFileSystemName = "fs1";
             string expansionJobName = "expansionjob1";
-            ResourceIdentifier expansionJobResourceId = ExpansionJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName, expansionJobName);
-            ExpansionJobResource expansionJob = client.GetExpansionJobResource(expansionJobResourceId);
+            ResourceIdentifier expansionJobResourceId = AmlFileSystemExpansionJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName, expansionJobName);
+            AmlFileSystemExpansionJobResource expansionJob = client.GetAmlFileSystemExpansionJobResource(expansionJobResourceId);
 
             // invoke the operation
             await expansionJob.DeleteAsync(WaitUntil.Completed);
@@ -86,29 +86,29 @@ namespace Azure.ResourceManager.StorageCache.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ExpansionJobResource created on azure
-            // for more information of creating ExpansionJobResource, please refer to the document of ExpansionJobResource
+            // this example assumes you already have this AmlFileSystemExpansionJobResource created on azure
+            // for more information of creating AmlFileSystemExpansionJobResource, please refer to the document of AmlFileSystemExpansionJobResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "scgroup";
             string amlFileSystemName = "fs1";
             string expansionJobName = "expansionjob1";
-            ResourceIdentifier expansionJobResourceId = ExpansionJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName, expansionJobName);
-            ExpansionJobResource expansionJob = client.GetExpansionJobResource(expansionJobResourceId);
+            ResourceIdentifier expansionJobResourceId = AmlFileSystemExpansionJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, amlFileSystemName, expansionJobName);
+            AmlFileSystemExpansionJobResource expansionJob = client.GetAmlFileSystemExpansionJobResource(expansionJobResourceId);
 
             // invoke the operation
-            ExpansionJobPatch patch = new ExpansionJobPatch
+            AmlFileSystemExpansionJobPatch patch = new AmlFileSystemExpansionJobPatch
             {
                 Tags =
 {
 ["Dept"] = "ContosoFinance"
 },
             };
-            ArmOperation<ExpansionJobResource> lro = await expansionJob.UpdateAsync(WaitUntil.Completed, patch);
-            ExpansionJobResource result = lro.Value;
+            ArmOperation<AmlFileSystemExpansionJobResource> lro = await expansionJob.UpdateAsync(WaitUntil.Completed, patch);
+            AmlFileSystemExpansionJobResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ExpansionJobData resourceData = result.Data;
+            AmlFileSystemExpansionJobData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

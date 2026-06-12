@@ -14,7 +14,7 @@ Check the package `.csproj`, `CHANGELOG.md`, and compatibility files. Comment on
 Rules:
 - **No major version bump** unless .NET architects explicitly require a coordinated management-SDK major bump. Flag `1.x` -> `2.0.0` as Critical.
 - **Do not remove `ApiCompatVersion`**. It enforces compatibility against the last stable release. If removed, recover the prior value from base branch or latest released tag for later phases.
-- **No new `ApiCompatBaseline.txt` entries**. Do not suppress compatibility errors; mitigate with customization code or generator/spec fixes.
+- **No new ApiCompat baseline entries**. Do not suppress compatibility errors; mitigate with customization code or generator/spec fixes. Exception: MPG migration `WirePathAttribute` removal diffs may use targeted entries in `eng/apicompatbaselines/<Project>.txt`.
 
 Continue to Phase 2 unless the versioning issue makes the API-review scope impossible to determine, e.g. `ApiCompatVersion` was removed and no prior stable baseline can be recovered. In that narrow case, request changes and say API review was skipped because the baseline is unknown.
 
