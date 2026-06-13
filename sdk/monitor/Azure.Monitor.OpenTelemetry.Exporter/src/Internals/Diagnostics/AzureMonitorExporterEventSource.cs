@@ -477,13 +477,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [NonEvent]
         public void CustomerSdkStatsInitializationFailed(Exception ex)
         {
-            if (IsEnabled(EventLevel.Informational))
+            if (IsEnabled(EventLevel.Warning))
             {
                 CustomerSdkStatsInitializationFailed(ex.FlattenException().ToInvariantString());
             }
         }
 
-        [Event(48, Message = "Customer SDK stats initialization failed due to an exception. This is only for internal telemetry and can safely be ignored. {0}", Level = EventLevel.Informational)]
+        [Event(48, Message = "Customer SDK stats initialization failed due to an exception. This is only for internal telemetry and can safely be ignored. {0}", Level = EventLevel.Warning)]
         public void CustomerSdkStatsInitializationFailed(string exceptionMessage) => WriteEvent(48, exceptionMessage);
 
         [Event(49, Message = "Invalid sampler type '{0}'. Supported values: microsoft.rate_limited, microsoft.fixed_percentage", Level = EventLevel.Warning)]
