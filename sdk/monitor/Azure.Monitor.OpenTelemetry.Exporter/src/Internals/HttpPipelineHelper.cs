@@ -368,7 +368,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             result.ItemsAccepted = trackResponse.ItemsAccepted;
 
-            // ASccepted envelopes within a 206 response are
+            // Accepted envelopes within a 206 response are
             // counted toward Request_Success_Count.
             if (networkSdkStatsManager != null && trackResponse.ItemsAccepted is int acceptedCount && acceptedCount > 0)
             {

@@ -477,7 +477,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [NonEvent]
         public void CustomerSdkStatsInitializationFailed(Exception ex)
         {
-            if (IsEnabled(EventLevel.Warning))
+            if (IsEnabled(EventLevel.Informational))
             {
                 CustomerSdkStatsInitializationFailed(ex.FlattenException().ToInvariantString());
             }
