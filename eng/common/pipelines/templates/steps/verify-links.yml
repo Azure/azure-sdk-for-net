@@ -1,5 +1,6 @@
 parameters:
   Directory: 'not-specified'
+  AppRegistrationResource: 'api://2d83e5a3-929f-49d5-9835-516849ceb9f4'
   IgnoreLinksFile: '$(Build.SourcesDirectory)/eng/ignore-links.txt'
   WorkingDirectory: '$(System.DefaultWorkingDirectory)'
   ScriptDirectory: 'eng/common/scripts'
@@ -15,9 +16,28 @@ steps:
   - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
     parameters:
       Condition: ${{ parameters.Condition }}
+
+  - task: AzureCLI@2
+    displayName: Get app registration access token
+    inputs:
+      azureSubscription: "Azure SDK Engineering System"
+      scriptType: pscore
+      scriptLocation: inlineScript
+      inlineScript: |
+        $resource = "${{ parameters.AppRegistrationResource }}"
+        $scope = "$resource/.default"
+        $token = az account get-access-token --scope $scope --query "accessToken" --output tsv
+        if ([string]::IsNullOrWhiteSpace($token)) {
+          throw "Failed to acquire app registration access token."
+        }
+
+        Write-Host "##vso[task.setvariable variable=APP_REGISTRATION_TOKEN;issecret=true]$token"
+
   - task: PowerShell@2
     displayName: Link verification check
     condition: ${{ parameters.Condition }}
+    env:
+      APP_REGISTRATION_TOKEN: $(APP_REGISTRATION_TOKEN)
     inputs:
       pwsh: true
       workingDirectory: '${{ parameters.WorkingDirectory }}/${{ parameters.Directory }}'
