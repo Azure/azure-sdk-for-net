@@ -111,11 +111,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         /// </summary>
         internal const int GeneralStatsbeatInterval = 86400000;
 
+        /// <summary>
+        /// 15 min == 900000 milliseconds. Short interval for Network SDKStats.
+        /// </summary>
+        internal const int NetworkStatsbeatInterval = 900000;
+
         internal const string AttachStatsbeatMeterName = "AttachStatsbeatMeter";
         internal const string AttachStatsbeatMetricName = "Attach";
 
         internal const string FeatureStatsbeatMeterName = "FeatureStatsbeatMeter";
         internal const string FeatureStatsbeatMetricName = "Feature";
+
+        /// <summary>
+        /// Meter name for Network SDKStats (short interval - 15 min). Tracks request success,
+        /// failure, retry, throttle, exception counts and request duration for outbound
+        /// transmissions to the configured ingestion endpoint.
+        /// </summary>
+        internal const string NetworkSdkStatsMeterName = "NetworkSdkStatsMeter";
+
+        /// <summary>
+        /// Value of the <c>endpoint</c> dimension on Network SDKStats metrics published by the
+        /// Azure Monitor / Application Insights exporter (Breeze ingestion).
+        /// </summary>
+        internal const string NetworkSdkStatsEndpointBreeze = "breeze";
 
         /// <summary>
         /// Meter name used by the Microsoft OpenTelemetry distro to publish distro-owned Feature
