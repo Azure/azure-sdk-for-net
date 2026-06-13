@@ -95,6 +95,54 @@ Set-StrictMode -Version 3.0
 
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
 
+$ProxyBaseUrl = "https://net-iso-proxy-b5b9dgb3h5h4fqf8.westus2-01.azurewebsites.net/api/proxy"
+
+function Invoke-ProxiedWebRequest {
+  param(
+    [Parameter(Mandatory = $true)]
+    [System.Uri]$Uri,
+    [ValidateSet('GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE')]
+    [string]$Method = 'GET',
+    [string]$UserAgent = $script:userAgent,
+    [int]$TimeoutSec = $script:requestTimeoutSec,
+    [switch]$SkipHttpErrorCheck,
+    [int]$MaximumRetryCount = 0,
+    [switch]$MaximumRedirection
+  )
+
+  $token = [Environment]::GetEnvironmentVariable('APP_REGISTRATION_TOKEN', 'Process')
+  if ([string]::IsNullOrWhiteSpace($token)) {
+    throw 'APP_REGISTRATION_TOKEN environment variable is not set.'
+  }
+
+  $proxyUri = [System.Uri]::new("${ProxyBaseUrl}?url=" + [System.Uri]::EscapeDataString($Uri.ToString()))
+  $headers = @{ Authorization = "Bearer $token" }
+  if ($UserAgent) {
+    $headers['User-Agent'] = $UserAgent
+  }
+
+  $parameters = @{
+    Uri = $proxyUri
+    Method = if ($Method -eq 'HEAD') { 'GET' } else { $Method }
+    Headers = $headers
+    TimeoutSec = $TimeoutSec
+  }
+
+  if ($SkipHttpErrorCheck) {
+    $parameters['SkipHttpErrorCheck'] = $true
+  }
+
+  if ($MaximumRetryCount -gt 0) {
+    $parameters['MaximumRetryCount'] = $MaximumRetryCount
+  }
+
+  if ($MaximumRedirection.IsPresent) {
+    $parameters['MaximumRedirection'] = 0
+  }
+
+  return Invoke-WebRequest @parameters
+}
+
 function ProcessLink([System.Uri]$linkUri) {
   # To help improve performance and rate limiting issues with github links we try to resolve them based on a local clone if one exists.
   if (($localGithubClonedRoot -or $localBuildRepoName) -and $linkUri -match '^https://github.com/(?<org>Azure)/(?<repo>[^/]+)/(?:blob|tree)/(main|.*_[^/]+|.*/v[^/]+)/(?<path>.*)$') {
@@ -136,7 +184,7 @@ function ProcessLink([System.Uri]$linkUri) {
 
 function ProcessRedirectLink([System.Uri]$linkUri, [int[]]$invalidStatusCodes) {
   # ProcessRedirectLink checks the status code of the initial response.
-  $response = Invoke-WebRequest -Uri $linkUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec -MaximumRedirection 0 -SkipHttpErrorCheck -ErrorAction SilentlyContinue
+  $response = Invoke-ProxiedWebRequest -Uri $linkUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec -MaximumRedirection -SkipHttpErrorCheck -ErrorAction SilentlyContinue
   $statusCode = $response.StatusCode
 
   if ($statusCode -in $invalidStatusCodes) {
@@ -161,7 +209,7 @@ function ProcessCratesIoLink([System.Uri]$linkUri, $path) {
   $apiUri = "https://crates.io/api/v1/$path"
 
   # Invoke-WebRequest will throw an exception for invalid status codes. They are handled in CheckLink
-  Invoke-WebRequest -Uri $apiUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec | Out-Null
+  Invoke-ProxiedWebRequest -Uri $apiUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec | Out-Null
   
   return $true
 }
@@ -169,7 +217,7 @@ function ProcessCratesIoLink([System.Uri]$linkUri, $path) {
 function ProcessNpmLink([System.Uri]$linkUri) {
   # npmjs.com started using Cloudflare which returns 403 and we need to instead check the registry api for existence checks
   # https://github.com/orgs/community/discussions/174098#discussioncomment-14461226
-  
+
   # Handle versioned URLs: https://www.npmjs.com/package/@azure/ai-agents/v/1.1.0 -> https://registry.npmjs.org/@azure/ai-agents/1.1.0
   # Handle non-versioned URLs: https://www.npmjs.com/package/@azure/ai-agents -> https://registry.npmjs.org/@azure/ai-agents
   # The regex captures the package name (which may contain a slash for scoped packages) and optionally the version.
@@ -195,14 +243,14 @@ function ProcessStandardLink([System.Uri]$linkUri) {
   $headRequestSucceeded = $true
   try {
     # Attempt HEAD request first
-    $response = Invoke-WebRequest -Uri $linkUri -Method HEAD -UserAgent $userAgent -TimeoutSec $requestTimeoutSec
+    $response = Invoke-ProxiedWebRequest -Uri $linkUri -Method HEAD -UserAgent $userAgent -TimeoutSec $requestTimeoutSec
   }
   catch {
     $headRequestSucceeded = $false
   }
   if (!$headRequestSucceeded) {
     # Attempt a GET request if the HEAD request failed.
-    $response = Invoke-WebRequest -Uri $linkUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec
+    $response = Invoke-ProxiedWebRequest -Uri $linkUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec
   }
   $statusCode = $response.StatusCode
   if ($statusCode -ne 200) {
@@ -467,7 +515,7 @@ function GetLinks([System.Uri]$pageUri)
 {
   if ($pageUri.Scheme.StartsWith("http")) {
     try {
-      $response = Invoke-WebRequest -Uri $pageUri -UserAgent $userAgent -TimeoutSec $requestTimeoutSec -MaximumRetryCount 3
+      $response = Invoke-ProxiedWebRequest -Uri $pageUri -Method GET -UserAgent $userAgent -TimeoutSec $requestTimeoutSec -MaximumRetryCount 3
       $content = $response.Content
 
       if ($pageUri.ToString().EndsWith(".md")) {
@@ -560,7 +608,7 @@ if ($inputCacheFile)
   $cacheContent = ""
   if ($inputCacheFile.StartsWith("http")) {
     try {
-      $response = Invoke-WebRequest -Uri $inputCacheFile -TimeoutSec $requestTimeoutSec -MaximumRetryCount 3
+      $response = Invoke-ProxiedWebRequest -Uri $inputCacheFile -Method GET -TimeoutSec $requestTimeoutSec -MaximumRetryCount 3
       $cacheContent = $response.Content
     }
     catch {
