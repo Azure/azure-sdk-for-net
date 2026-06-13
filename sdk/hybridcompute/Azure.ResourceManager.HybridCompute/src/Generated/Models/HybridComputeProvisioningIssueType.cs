@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct HybridComputeProvisioningIssueType : IEquatable<HybridComputeProvisioningIssueType>
     {
         private readonly string _value;
+        /// <summary> Perimeter configuration is missing. </summary>
+        private const string MissingPerimeterConfigurationValue = "MissingPerimeterConfiguration";
+        /// <summary> Identity configuration is missing. </summary>
+        private const string MissingIdentityConfigurationValue = "MissingIdentityConfiguration";
+        /// <summary> Configuration failed to propagate. </summary>
+        private const string ConfigurationPropagationFailureValue = "ConfigurationPropagationFailure";
+        /// <summary> Other failure. </summary>
+        private const string OtherValue = "Other";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeProvisioningIssueType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridComputeProvisioningIssueType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MissingPerimeterConfigurationValue = "MissingPerimeterConfiguration";
-        private const string MissingIdentityConfigurationValue = "MissingIdentityConfiguration";
-        private const string ConfigurationPropagationFailureValue = "ConfigurationPropagationFailure";
-        private const string OtherValue = "Other";
+            _value = value;
+        }
 
         /// <summary> Perimeter configuration is missing. </summary>
         public static HybridComputeProvisioningIssueType MissingPerimeterConfiguration { get; } = new HybridComputeProvisioningIssueType(MissingPerimeterConfigurationValue);
+
         /// <summary> Identity configuration is missing. </summary>
         public static HybridComputeProvisioningIssueType MissingIdentityConfiguration { get; } = new HybridComputeProvisioningIssueType(MissingIdentityConfigurationValue);
+
         /// <summary> Configuration failed to propagate. </summary>
         public static HybridComputeProvisioningIssueType ConfigurationPropagationFailure { get; } = new HybridComputeProvisioningIssueType(ConfigurationPropagationFailureValue);
+
         /// <summary> Other failure. </summary>
         public static HybridComputeProvisioningIssueType Other { get; } = new HybridComputeProvisioningIssueType(OtherValue);
+
         /// <summary> Determines if two <see cref="HybridComputeProvisioningIssueType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridComputeProvisioningIssueType left, HybridComputeProvisioningIssueType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridComputeProvisioningIssueType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridComputeProvisioningIssueType left, HybridComputeProvisioningIssueType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeProvisioningIssueType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridComputeProvisioningIssueType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridComputeProvisioningIssueType(string value) => new HybridComputeProvisioningIssueType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridComputeProvisioningIssueType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridComputeProvisioningIssueType?(string value) => value == null ? null : new HybridComputeProvisioningIssueType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridComputeProvisioningIssueType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridComputeProvisioningIssueType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
