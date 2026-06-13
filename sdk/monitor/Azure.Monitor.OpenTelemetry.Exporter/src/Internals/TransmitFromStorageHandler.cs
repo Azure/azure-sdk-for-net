@@ -97,8 +97,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         }
                         else
                         {
-                            _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
-                            HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetrySchemaTypeCounter);
+                            var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetrySchemaTypeCounter);
+                            if (transmissionResult.WillRetry)
+                            {
+                                // WillRetry is set to true if there was a transient failure sending telemetry; in these cases, we want to retain the telemetry in storage and enable backoff.
+                                _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
+                            }
                             break;
                         }
                     }

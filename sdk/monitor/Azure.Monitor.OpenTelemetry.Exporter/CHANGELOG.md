@@ -10,6 +10,9 @@
 
 ### Bugs Fixed
 
+* Fixed an issue where partial success responses with only non-retriable telemetry drops enabled exporter backoff. This could interrupt telemetry export when ingestion sampling is enabled.
+  ([#48141](https://github.com/Azure/azure-sdk-for-net/issues/48141))
+
 ### Other Changes
 
 ## 1.8.1 (2026-05-20)
