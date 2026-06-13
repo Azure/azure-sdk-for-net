@@ -1,0 +1,22 @@
+<Project>
+  <!--
+    CPM override for the Azure.AI.AgentServer.Optimization.Configuration package.
+
+    Adds package versions consumed only by the sample project under
+    samples/TravelAgent (a runnable Foundry-hosted Microsoft Agent Framework
+    travel agent). The overrides are scoped to '$(IsSamplesProject)' == 'true'
+    so the shipping library is unaffected.
+  -->
+  <ItemGroup Condition="'$(IsSamplesProject)' == 'true'">
+    <PackageVersion Include="YamlDotNet" Version="16.3.0" />
+    <PackageVersion Include="Microsoft.Agents.AI" Version="1.10.0" />
+    <PackageVersion Include="Microsoft.Agents.AI.OpenAI" Version="1.10.0" />
+    <PackageVersion Include="Microsoft.Extensions.AI" Version="10.6.0" />
+    <!--
+      Azure.AI.OpenAI 2.8.0-beta.1 is required for Microsoft.Extensions.AI 10.6.0
+      compatibility (which transitively requires OpenAI [2.8.0, )). The 2.0.0
+      default in Directory.Packages.props is too old for MAF 1.10.
+    -->
+    <PackageVersion Update="Azure.AI.OpenAI" Version="2.8.0-beta.1" />
+  </ItemGroup>
+</Project>
