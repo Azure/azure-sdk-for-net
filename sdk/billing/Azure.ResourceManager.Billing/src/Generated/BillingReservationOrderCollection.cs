@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -24,70 +25,76 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class BillingReservationOrderCollection : ArmCollection, IEnumerable<BillingReservationOrderResource>, IAsyncEnumerable<BillingReservationOrderResource>
     {
-        private readonly ClientDiagnostics _billingReservationOrderReservationOrdersClientDiagnostics;
-        private readonly ReservationOrdersRestOperations _billingReservationOrderReservationOrdersRestClient;
+        private readonly ClientDiagnostics _reservationOrdersClientDiagnostics;
+        private readonly ReservationOrders _reservationOrdersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="BillingReservationOrderCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of BillingReservationOrderCollection for mocking. </summary>
         protected BillingReservationOrderCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="BillingReservationOrderCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingReservationOrderCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal BillingReservationOrderCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _billingReservationOrderReservationOrdersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingReservationOrderResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BillingReservationOrderResource.ResourceType, out string billingReservationOrderReservationOrdersApiVersion);
-            _billingReservationOrderReservationOrdersRestClient = new ReservationOrdersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, billingReservationOrderReservationOrdersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(BillingReservationOrderResource.ResourceType, out string billingReservationOrderApiVersion);
+            _reservationOrdersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", BillingReservationOrderResource.ResourceType.Namespace, Diagnostics);
+            _reservationOrdersRestClient = new ReservationOrders(_reservationOrdersClientDiagnostics, Pipeline, Endpoint, billingReservationOrderApiVersion ?? "2024-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != BillingAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, BillingAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BillingAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get the details of the ReservationOrder in the billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrders_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrders_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingReservationOrderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        public virtual async Task<Response<BillingReservationOrderResource>> GetAsync(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<BillingReservationOrderResource>> GetAsync(string reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
 
-            using var scope = _billingReservationOrderReservationOrdersClientDiagnostics.CreateScope("BillingReservationOrderCollection.Get");
+            using DiagnosticScope scope = _reservationOrdersClientDiagnostics.CreateScope("BillingReservationOrderCollection.Get");
             scope.Start();
             try
             {
-                var response = await _billingReservationOrderReservationOrdersRestClient.GetByBillingAccountAsync(Id.Name, reservationOrderId, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BillingReservationOrderData> response = Response.FromValue(BillingReservationOrderData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingReservationOrderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,39 +108,43 @@ namespace Azure.ResourceManager.Billing
         /// Get the details of the ReservationOrder in the billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrders_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrders_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingReservationOrderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        public virtual Response<BillingReservationOrderResource> Get(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<BillingReservationOrderResource> Get(string reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
 
-            using var scope = _billingReservationOrderReservationOrdersClientDiagnostics.CreateScope("BillingReservationOrderCollection.Get");
+            using DiagnosticScope scope = _reservationOrdersClientDiagnostics.CreateScope("BillingReservationOrderCollection.Get");
             scope.Start();
             try
             {
-                var response = _billingReservationOrderReservationOrdersRestClient.GetByBillingAccount(Id.Name, reservationOrderId, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BillingReservationOrderData> response = Response.FromValue(BillingReservationOrderData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingReservationOrderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -144,56 +155,19 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// List all the `ReservationOrders in the billing account.
+        /// List all the ReservationOrders in the billing account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrders_ListByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrders_ListByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingReservationOrderResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingReservationOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingReservationOrderResource> GetAllAsync(string filter = null, string orderBy = null, float? skiptoken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingReservationOrderReservationOrdersRestClient.CreateListByBillingAccountRequest(Id.Name, filter, orderBy, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingReservationOrderReservationOrdersRestClient.CreateListByBillingAccountNextPageRequest(nextLink, Id.Name, filter, orderBy, skiptoken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingReservationOrderResource(Client, BillingReservationOrderData.DeserializeBillingReservationOrderData(e)), _billingReservationOrderReservationOrdersClientDiagnostics, Pipeline, "BillingReservationOrderCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the `ReservationOrders in the billing account.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrders_ListByBillingAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingReservationOrderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,48 +176,109 @@ namespace Azure.ResourceManager.Billing
         /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BillingReservationOrderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingReservationOrderResource> GetAll(string filter = null, string orderBy = null, float? skiptoken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BillingReservationOrderResource> GetAllAsync(string filter = default, string orderBy = default, float? skiptoken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _billingReservationOrderReservationOrdersRestClient.CreateListByBillingAccountRequest(Id.Name, filter, orderBy, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingReservationOrderReservationOrdersRestClient.CreateListByBillingAccountNextPageRequest(nextLink, Id.Name, filter, orderBy, skiptoken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingReservationOrderResource(Client, BillingReservationOrderData.DeserializeBillingReservationOrderData(e)), _billingReservationOrderReservationOrdersClientDiagnostics, Pipeline, "BillingReservationOrderCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<BillingReservationOrderData, BillingReservationOrderResource>(new ReservationOrdersGetByBillingAccountAsyncCollectionResultOfT(
+                _reservationOrdersRestClient,
+                Id.Name,
+                filter,
+                orderBy,
+                skiptoken,
+                context,
+                "BillingReservationOrderCollection.GetAll"), data => new BillingReservationOrderResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all the ReservationOrders in the billing account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrders_ListByBillingAccount. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
+        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
+        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingReservationOrderResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingReservationOrderResource> GetAll(string filter = default, string orderBy = default, float? skiptoken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<BillingReservationOrderData, BillingReservationOrderResource>(new ReservationOrdersGetByBillingAccountCollectionResultOfT(
+                _reservationOrdersRestClient,
+                Id.Name,
+                filter,
+                orderBy,
+                skiptoken,
+                context,
+                "BillingReservationOrderCollection.GetAll"), data => new BillingReservationOrderResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrders_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrders_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingReservationOrderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
 
-            using var scope = _billingReservationOrderReservationOrdersClientDiagnostics.CreateScope("BillingReservationOrderCollection.Exists");
+            using DiagnosticScope scope = _reservationOrdersClientDiagnostics.CreateScope("BillingReservationOrderCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _billingReservationOrderReservationOrdersRestClient.GetByBillingAccountAsync(Id.Name, reservationOrderId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingReservationOrderData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingReservationOrderData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingReservationOrderData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -257,37 +292,51 @@ namespace Azure.ResourceManager.Billing
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrders_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrders_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingReservationOrderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        public virtual Response<bool> Exists(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
 
-            using var scope = _billingReservationOrderReservationOrdersClientDiagnostics.CreateScope("BillingReservationOrderCollection.Exists");
+            using DiagnosticScope scope = _reservationOrdersClientDiagnostics.CreateScope("BillingReservationOrderCollection.Exists");
             scope.Start();
             try
             {
-                var response = _billingReservationOrderReservationOrdersRestClient.GetByBillingAccount(Id.Name, reservationOrderId, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingReservationOrderData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingReservationOrderData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingReservationOrderData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -301,39 +350,55 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrders_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrders_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingReservationOrderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        public virtual async Task<NullableResponse<BillingReservationOrderResource>> GetIfExistsAsync(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<BillingReservationOrderResource>> GetIfExistsAsync(string reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
 
-            using var scope = _billingReservationOrderReservationOrdersClientDiagnostics.CreateScope("BillingReservationOrderCollection.GetIfExists");
+            using DiagnosticScope scope = _reservationOrdersClientDiagnostics.CreateScope("BillingReservationOrderCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _billingReservationOrderReservationOrdersRestClient.GetByBillingAccountAsync(Id.Name, reservationOrderId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<BillingReservationOrderData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingReservationOrderData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingReservationOrderData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingReservationOrderResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingReservationOrderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,39 +412,55 @@ namespace Azure.ResourceManager.Billing
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/reservationOrders/{reservationOrderId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReservationOrders_GetByBillingAccount</description>
+        /// <term> Operation Id. </term>
+        /// <description> ReservationOrders_GetByBillingAccount. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BillingReservationOrderResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> is null. </exception>
-        public virtual NullableResponse<BillingReservationOrderResource> GetIfExists(string reservationOrderId, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<BillingReservationOrderResource> GetIfExists(string reservationOrderId, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
 
-            using var scope = _billingReservationOrderReservationOrdersClientDiagnostics.CreateScope("BillingReservationOrderCollection.GetIfExists");
+            using DiagnosticScope scope = _reservationOrdersClientDiagnostics.CreateScope("BillingReservationOrderCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _billingReservationOrderReservationOrdersRestClient.GetByBillingAccount(Id.Name, reservationOrderId, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reservationOrdersRestClient.CreateGetByBillingAccountRequest(Id.Name, reservationOrderId, expand, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<BillingReservationOrderData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(BillingReservationOrderData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((BillingReservationOrderData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<BillingReservationOrderResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new BillingReservationOrderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -399,6 +480,7 @@ namespace Azure.ResourceManager.Billing
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BillingReservationOrderResource> IAsyncEnumerable<BillingReservationOrderResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

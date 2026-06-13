@@ -6,323 +6,44 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Billing.Models;
 
 namespace Azure.ResourceManager.Billing
 {
-    internal partial class ReservationsRestOperations
+    internal partial class Reservations
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ReservationsRestOperations. </summary>
+        /// <summary> Initializes a new instance of Reservations for mocking. </summary>
+        protected Reservations()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Reservations. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ReservationsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Reservations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
         }
 
-        internal RequestUriBuilder CreateListByBillingAccountRequestUri(string billingAccountName, string filter, string orderBy, float? skiptoken, string refreshSummary, string selectedState, float? take)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetByReservationOrderRequest(string billingAccountName, string reservationOrderId, string reservationId, string expand, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/reservations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("orderBy", orderBy, true);
-            }
-            if (skiptoken != null)
-            {
-                uri.AppendQuery("skiptoken", skiptoken.Value, true);
-            }
-            if (refreshSummary != null)
-            {
-                uri.AppendQuery("refreshSummary", refreshSummary, true);
-            }
-            if (selectedState != null)
-            {
-                uri.AppendQuery("selectedState", selectedState, true);
-            }
-            if (take != null)
-            {
-                uri.AppendQuery("take", take.Value, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListByBillingAccountRequest(string billingAccountName, string filter, string orderBy, float? skiptoken, string refreshSummary, string selectedState, float? take)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/reservations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("orderBy", orderBy, true);
-            }
-            if (skiptoken != null)
-            {
-                uri.AppendQuery("skiptoken", skiptoken.Value, true);
-            }
-            if (refreshSummary != null)
-            {
-                uri.AppendQuery("refreshSummary", refreshSummary, true);
-            }
-            if (selectedState != null)
-            {
-                uri.AppendQuery("selectedState", selectedState, true);
-            }
-            if (take != null)
-            {
-                uri.AppendQuery("take", take.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists the reservations in the billing account and the roll up counts of reservations group by provisioning states. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> The number of reservations to return in API response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReservationsListResult>> ListByBillingAccountAsync(string billingAccountName, string filter = null, string orderBy = null, float? skiptoken = null, string refreshSummary = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountRequest(billingAccountName, filter, orderBy, skiptoken, refreshSummary, selectedState, take);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReservationsListResult.DeserializeReservationsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists the reservations in the billing account and the roll up counts of reservations group by provisioning states. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> The number of reservations to return in API response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReservationsListResult> ListByBillingAccount(string billingAccountName, string filter = null, string orderBy = null, float? skiptoken = null, string refreshSummary = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountRequest(billingAccountName, filter, orderBy, skiptoken, refreshSummary, selectedState, take);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReservationsListResult.DeserializeReservationsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByBillingProfileRequestUri(string billingAccountName, string billingProfileName, string filter, string orderBy, float? skiptoken, string refreshSummary, string selectedState, float? take)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/billingProfiles/", false);
-            uri.AppendPath(billingProfileName, true);
-            uri.AppendPath("/reservations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("orderBy", orderBy, true);
-            }
-            if (skiptoken != null)
-            {
-                uri.AppendQuery("skiptoken", skiptoken.Value, true);
-            }
-            if (refreshSummary != null)
-            {
-                uri.AppendQuery("refreshSummary", refreshSummary, true);
-            }
-            if (selectedState != null)
-            {
-                uri.AppendQuery("selectedState", selectedState, true);
-            }
-            if (take != null)
-            {
-                uri.AppendQuery("take", take.Value, true);
-            }
-            return uri;
-        }
-
-        internal HttpMessage CreateListByBillingProfileRequest(string billingAccountName, string billingProfileName, string filter, string orderBy, float? skiptoken, string refreshSummary, string selectedState, float? take)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/billingProfiles/", false);
-            uri.AppendPath(billingProfileName, true);
-            uri.AppendPath("/reservations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            if (orderBy != null)
-            {
-                uri.AppendQuery("orderBy", orderBy, true);
-            }
-            if (skiptoken != null)
-            {
-                uri.AppendQuery("skiptoken", skiptoken.Value, true);
-            }
-            if (refreshSummary != null)
-            {
-                uri.AppendQuery("refreshSummary", refreshSummary, true);
-            }
-            if (selectedState != null)
-            {
-                uri.AppendQuery("selectedState", selectedState, true);
-            }
-            if (take != null)
-            {
-                uri.AppendQuery("take", take.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists the reservations for a billing profile and the roll up counts of reservations group by provisioning state. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> The number of reservations to return in API response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReservationsListResult>> ListByBillingProfileAsync(string billingAccountName, string billingProfileName, string filter = null, string orderBy = null, float? skiptoken = null, string refreshSummary = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-
-            using var message = CreateListByBillingProfileRequest(billingAccountName, billingProfileName, filter, orderBy, skiptoken, refreshSummary, selectedState, take);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReservationsListResult.DeserializeReservationsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists the reservations for a billing profile and the roll up counts of reservations group by provisioning state. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> The number of reservations to return in API response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReservationsListResult> ListByBillingProfile(string billingAccountName, string billingProfileName, string filter = null, string orderBy = null, float? skiptoken = null, string refreshSummary = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-
-            using var message = CreateListByBillingProfileRequest(billingAccountName, billingProfileName, filter, orderBy, skiptoken, refreshSummary, selectedState, take);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReservationsListResult.DeserializeReservationsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetByReservationOrderRequestUri(string billingAccountName, string reservationOrderId, string reservationId, string expand)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountName, true);
@@ -330,105 +51,25 @@ namespace Azure.ResourceManager.Billing
             uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/reservations/", false);
             uri.AppendPath(reservationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (expand != null)
             {
                 uri.AppendQuery("expand", expand, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateGetByReservationOrderRequest(string billingAccountName, string reservationOrderId, string reservationId, string expand)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (expand != null)
-            {
-                uri.AppendQuery("expand", expand, true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get specific Reservation details in the billing account. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BillingReservationData>> GetByReservationOrderAsync(string billingAccountName, string reservationOrderId, string reservationId, string expand = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateByBillingAccountRequest(string billingAccountName, string reservationOrderId, string reservationId, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-
-            using var message = CreateGetByReservationOrderRequest(billingAccountName, reservationOrderId, reservationId, expand);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BillingReservationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BillingReservationData.DeserializeBillingReservationData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingReservationData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get specific Reservation details in the billing account. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="expand"> May be used to expand the detail information of some properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BillingReservationData> GetByReservationOrder(string billingAccountName, string reservationOrderId, string reservationId, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-
-            using var message = CreateGetByReservationOrderRequest(billingAccountName, reservationOrderId, reservationId, expand);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BillingReservationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BillingReservationData.DeserializeBillingReservationData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BillingReservationData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateByBillingAccountRequestUri(string billingAccountName, string reservationOrderId, string reservationId, BillingReservationPatch patch)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountName, true);
@@ -436,432 +77,196 @@ namespace Azure.ResourceManager.Billing
             uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/reservations/", false);
             uri.AppendPath(reservationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateByBillingAccountRequest(string billingAccountName, string reservationOrderId, string reservationId, BillingReservationPatch patch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
-            uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
-            uri.AppendPath("/reservations/", false);
-            uri.AppendPath(reservationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Update reservation by billing account. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="patch"> Request body for patching a reservation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateByBillingAccountAsync(string billingAccountName, string reservationOrderId, string reservationId, BillingReservationPatch patch, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetByReservationOrderRequest(string billingAccountName, string reservationOrderId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateByBillingAccountRequest(billingAccountName, reservationOrderId, reservationId, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Update reservation by billing account. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="reservationId"> Id of the reservation item. </param>
-        /// <param name="patch"> Request body for patching a reservation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/>, <paramref name="reservationOrderId"/> or <paramref name="reservationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateByBillingAccount(string billingAccountName, string reservationOrderId, string reservationId, BillingReservationPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-            Argument.AssertNotNullOrEmpty(reservationId, nameof(reservationId));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateByBillingAccountRequest(billingAccountName, reservationOrderId, reservationId, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByReservationOrderRequestUri(string billingAccountName, string reservationOrderId)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountName, true);
             uri.AppendPath("/reservationOrders/", false);
             uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/reservations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        internal HttpMessage CreateListByReservationOrderRequest(string billingAccountName, string reservationOrderId)
+        internal HttpMessage CreateNextGetByReservationOrderRequest(Uri nextPage, string billingAccountName, string reservationOrderId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetByBillingAccountRequest(string billingAccountName, string filter, string orderBy, float? skiptoken, string refreshSummary, string selectedState, float? take, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
             uri.AppendPath(billingAccountName, true);
-            uri.AppendPath("/reservationOrders/", false);
-            uri.AppendPath(reservationOrderId, true);
             uri.AppendPath("/reservations", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (orderBy != null)
+            {
+                uri.AppendQuery("orderBy", orderBy, true);
+            }
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("skiptoken", TypeFormatters.ConvertToString(skiptoken), true);
+            }
+            if (refreshSummary != null)
+            {
+                uri.AppendQuery("refreshSummary", refreshSummary, true);
+            }
+            if (selectedState != null)
+            {
+                uri.AppendQuery("selectedState", selectedState, true);
+            }
+            if (take != null)
+            {
+                uri.AppendQuery("take", TypeFormatters.ConvertToString(take), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List Reservations within a single ReservationOrder in the billing account. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="reservationOrderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReservationList>> ListByReservationOrderAsync(string billingAccountName, string reservationOrderId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-
-            using var message = CreateListByReservationOrderRequest(billingAccountName, reservationOrderId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReservationList.DeserializeReservationList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List Reservations within a single ReservationOrder in the billing account. </summary>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="reservationOrderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReservationList> ListByReservationOrder(string billingAccountName, string reservationOrderId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-
-            using var message = CreateListByReservationOrderRequest(billingAccountName, reservationOrderId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReservationList.DeserializeReservationList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByBillingAccountNextPageRequestUri(string nextLink, string billingAccountName, string filter, string orderBy, float? skiptoken, string refreshSummary, string selectedState, float? take)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByBillingAccountNextPageRequest(string nextLink, string billingAccountName, string filter, string orderBy, float? skiptoken, string refreshSummary, string selectedState, float? take)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Lists the reservations in the billing account and the roll up counts of reservations group by provisioning states. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> The number of reservations to return in API response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReservationsListResult>> ListByBillingAccountNextPageAsync(string nextLink, string billingAccountName, string filter = null, string orderBy = null, float? skiptoken = null, string refreshSummary = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetByBillingAccountRequest(Uri nextPage, string billingAccountName, string filter, string orderBy, float? skiptoken, string refreshSummary, string selectedState, float? take, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountNextPageRequest(nextLink, billingAccountName, filter, orderBy, skiptoken, refreshSummary, selectedState, take);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        ReservationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReservationsListResult.DeserializeReservationsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> Lists the reservations in the billing account and the roll up counts of reservations group by provisioning states. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> The number of reservations to return in API response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="billingAccountName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReservationsListResult> ListByBillingAccountNextPage(string nextLink, string billingAccountName, string filter = null, string orderBy = null, float? skiptoken = null, string refreshSummary = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-
-            using var message = CreateListByBillingAccountNextPageRequest(nextLink, billingAccountName, filter, orderBy, skiptoken, refreshSummary, selectedState, take);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        ReservationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReservationsListResult.DeserializeReservationsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-        }
-
-        internal RequestUriBuilder CreateListByBillingProfileNextPageRequestUri(string nextLink, string billingAccountName, string billingProfileName, string filter, string orderBy, float? skiptoken, string refreshSummary, string selectedState, float? take)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByBillingProfileNextPageRequest(string nextLink, string billingAccountName, string billingProfileName, string filter, string orderBy, float? skiptoken, string refreshSummary, string selectedState, float? take)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Lists the reservations for a billing profile and the roll up counts of reservations group by provisioning state. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> The number of reservations to return in API response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReservationsListResult>> ListByBillingProfileNextPageAsync(string nextLink, string billingAccountName, string billingProfileName, string filter = null, string orderBy = null, float? skiptoken = null, string refreshSummary = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetByBillingProfileRequest(string billingAccountName, string billingProfileName, string filter, string orderBy, float? skiptoken, string refreshSummary, string selectedState, float? take, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-
-            using var message = CreateListByBillingProfileNextPageRequest(nextLink, billingAccountName, billingProfileName, filter, orderBy, skiptoken, refreshSummary, selectedState, take);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReservationsListResult.DeserializeReservationsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists the reservations for a billing profile and the roll up counts of reservations group by provisioning state. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
-        /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
-        /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
-        /// <param name="skiptoken"> The number of reservations to skip from the list before returning results. </param>
-        /// <param name="refreshSummary"> To indicate whether to refresh the roll up counts of the reservations group by provisioning states. </param>
-        /// <param name="selectedState"> The selected provisioning state. </param>
-        /// <param name="take"> The number of reservations to return in API response. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReservationsListResult> ListByBillingProfileNextPage(string nextLink, string billingAccountName, string billingProfileName, string filter = null, string orderBy = null, float? skiptoken = null, string refreshSummary = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(billingProfileName, nameof(billingProfileName));
-
-            using var message = CreateListByBillingProfileNextPageRequest(nextLink, billingAccountName, billingProfileName, filter, orderBy, skiptoken, refreshSummary, selectedState, take);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ReservationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReservationsListResult.DeserializeReservationsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByReservationOrderNextPageRequestUri(string nextLink, string billingAccountName, string reservationOrderId)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByReservationOrderNextPageRequest(string nextLink, string billingAccountName, string reservationOrderId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileName, true);
+            uri.AppendPath("/reservations", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
+            if (orderBy != null)
+            {
+                uri.AppendQuery("orderBy", orderBy, true);
+            }
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("skiptoken", TypeFormatters.ConvertToString(skiptoken), true);
+            }
+            if (refreshSummary != null)
+            {
+                uri.AppendQuery("refreshSummary", refreshSummary, true);
+            }
+            if (selectedState != null)
+            {
+                uri.AppendQuery("selectedState", selectedState, true);
+            }
+            if (take != null)
+            {
+                uri.AppendQuery("take", TypeFormatters.ConvertToString(take), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List Reservations within a single ReservationOrder in the billing account. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="billingAccountName"/> or <paramref name="reservationOrderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ReservationList>> ListByReservationOrderNextPageAsync(string nextLink, string billingAccountName, string reservationOrderId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetByBillingProfileRequest(Uri nextPage, string billingAccountName, string billingProfileName, string filter, string orderBy, float? skiptoken, string refreshSummary, string selectedState, float? take, RequestContext context)
         {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-
-            using var message = CreateListByReservationOrderNextPageRequest(nextLink, billingAccountName, reservationOrderId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        ReservationList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ReservationList.DeserializeReservationList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> List Reservations within a single ReservationOrder in the billing account. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="reservationOrderId"> Order Id of the reservation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="billingAccountName"/> or <paramref name="reservationOrderId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="billingAccountName"/> or <paramref name="reservationOrderId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ReservationList> ListByReservationOrderNextPage(string nextLink, string billingAccountName, string reservationOrderId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(billingAccountName, nameof(billingAccountName));
-            Argument.AssertNotNullOrEmpty(reservationOrderId, nameof(reservationOrderId));
-
-            using var message = CreateListByReservationOrderNextPageRequest(nextLink, billingAccountName, reservationOrderId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        ReservationList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ReservationList.DeserializeReservationList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
     }
 }
