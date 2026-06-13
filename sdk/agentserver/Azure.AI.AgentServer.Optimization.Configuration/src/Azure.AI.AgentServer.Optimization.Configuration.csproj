@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>Azure.AI.AgentServer.Optimization.Configuration</RootNamespace>
+    <Version>1.0.0-beta.1</Version>
+    <Description>Microsoft.Extensions.Configuration source for optimization-ready Azure AI Hosted Agents. Projects optimized agent configurations into the standard IConfiguration tree so they can be bound, validated, and DI-wired like any other settings.</Description>
+    <PackageTags>Microsoft Azure AI Agent Server Optimization Config Configuration</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Nullable>annotations</Nullable>
+    <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.AI.AgentServer.Optimization\src\Azure.AI.AgentServer.Optimization.csproj" />
+  </ItemGroup>
+</Project>
