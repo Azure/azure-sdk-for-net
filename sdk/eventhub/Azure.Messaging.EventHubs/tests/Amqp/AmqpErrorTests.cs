@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Tests
             yield return new object[] { AmqpError.SequenceOutOfOrderError, typeof(EventHubsException), EventHubsException.FailureReason.InvalidClientState };
             yield return new object[] { AmqpError.ArgumentError, typeof(ArgumentException), null };
             yield return new object[] { AmqpError.ArgumentOutOfRangeError, typeof(ArgumentOutOfRangeException), null };
-            yield return new object[] { AmqpError.InvalidGeolocationOffset, typeof(FormatException), null } ;
+            yield return new object[] { AmqpError.InvalidGeolocationOffset, typeof(FormatException), null };
 
             // Stock conditions.
 
@@ -126,7 +126,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateExceptionForResponseWithTimeoutStatusAndStatusDescription()
         {
-            var description = $"This has { GetNotFoundStatusText() } embedded in it";
+            var description = $"This has {GetNotFoundStatusText()} embedded in it";
             var resourceName = "TestHub";
 
             using var response = AmqpMessage.Create();
@@ -229,7 +229,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateExceptionForResponseWithTimeoutConditionAndStatusDescription()
         {
-            var description = $"This has { GetNotFoundStatusText() } embedded in it";
+            var description = $"This has {GetNotFoundStatusText()} embedded in it";
             var resourceName = "TestHub";
 
             using var response = AmqpMessage.Create();
@@ -373,7 +373,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CreateExceptionForErrorWithTimeoutStatusDescription()
         {
-            var description = $"This has { GetNotFoundStatusText() } embedded in it";
+            var description = $"This has {GetNotFoundStatusText()} embedded in it";
             var resourceName = "TestHub";
 
             var error = new Error

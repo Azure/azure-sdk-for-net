@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+    /// <summary> Control permission for data plane traffic coming from public networks. </summary>
     public readonly partial struct AppConfigurationPublicNetworkAccess : IEquatable<AppConfigurationPublicNetworkAccess>
     {
         private readonly string _value;
+        /// <summary> Allow public network access to the data plane. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disallow public network access to the data plane. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AppConfigurationPublicNetworkAccess(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-
-        /// <summary> Enabled. </summary>
+        /// <summary> Allow public network access to the data plane. </summary>
         public static AppConfigurationPublicNetworkAccess Enabled { get; } = new AppConfigurationPublicNetworkAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Disallow public network access to the data plane. </summary>
         public static AppConfigurationPublicNetworkAccess Disabled { get; } = new AppConfigurationPublicNetworkAccess(DisabledValue);
+
         /// <summary> Determines if two <see cref="AppConfigurationPublicNetworkAccess"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppConfigurationPublicNetworkAccess left, AppConfigurationPublicNetworkAccess right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppConfigurationPublicNetworkAccess"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppConfigurationPublicNetworkAccess left, AppConfigurationPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppConfigurationPublicNetworkAccess"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppConfigurationPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppConfigurationPublicNetworkAccess(string value) => new AppConfigurationPublicNetworkAccess(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppConfigurationPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppConfigurationPublicNetworkAccess?(string value) => value == null ? null : new AppConfigurationPublicNetworkAccess(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppConfigurationPublicNetworkAccess other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppConfigurationPublicNetworkAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

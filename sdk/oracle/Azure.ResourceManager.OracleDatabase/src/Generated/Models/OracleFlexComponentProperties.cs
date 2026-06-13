@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     /// <summary> FlexComponent resource model. </summary>
     public partial class OracleFlexComponentProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OracleFlexComponentProperties"/>. </summary>
         internal OracleFlexComponentProperties()
@@ -61,8 +32,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="computeModel"> The compute model of the DB Server for this Flex Component. </param>
         /// <param name="hardwareType"> The hardware type of the DB (Compute) or Storage (Cell) Server for this Flex Component. </param>
         /// <param name="descriptionSummary"> The description summary for this Flex Component. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleFlexComponentProperties(int? minimumCoreCount, int? availableCoreCount, int? availableDBStorageInGbs, int? runtimeMinimumCoreCount, string shape, int? availableMemoryInGbs, int? availableLocalStorageInGbs, string computeModel, FlexComponentHardwareType? hardwareType, string descriptionSummary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OracleFlexComponentProperties(int? minimumCoreCount, int? availableCoreCount, int? availableDBStorageInGbs, int? runtimeMinimumCoreCount, string shape, int? availableMemoryInGbs, int? availableLocalStorageInGbs, string computeModel, FlexComponentHardwareType? hardwareType, string descriptionSummary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MinimumCoreCount = minimumCoreCount;
             AvailableCoreCount = availableCoreCount;
@@ -74,27 +45,36 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             ComputeModel = computeModel;
             HardwareType = hardwareType;
             DescriptionSummary = descriptionSummary;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The minimum number of CPU cores that can be enabled on the DB Server for this Flex Component. </summary>
         public int? MinimumCoreCount { get; }
+
         /// <summary> The maximum number of CPU cores that can be enabled on the DB Server for this Flex Component. </summary>
         public int? AvailableCoreCount { get; }
+
         /// <summary> The maximum storage that can be enabled on the Storage Server for this Flex Component. </summary>
         public int? AvailableDBStorageInGbs { get; }
+
         /// <summary> The runtime minimum number of CPU cores that can be enabled for this Flex Component. </summary>
         public int? RuntimeMinimumCoreCount { get; }
+
         /// <summary> The name of the DB system shape for this Flex Component. </summary>
         public string Shape { get; }
+
         /// <summary> The maximum memory size that can be enabled on the DB Server for this Flex Component. </summary>
         public int? AvailableMemoryInGbs { get; }
+
         /// <summary> The maximum local storage that can be enabled on the DB Server for this Flex Component. </summary>
         public int? AvailableLocalStorageInGbs { get; }
+
         /// <summary> The compute model of the DB Server for this Flex Component. </summary>
         public string ComputeModel { get; }
+
         /// <summary> The hardware type of the DB (Compute) or Storage (Cell) Server for this Flex Component. </summary>
         public FlexComponentHardwareType? HardwareType { get; }
+
         /// <summary> The description summary for this Flex Component. </summary>
         public string DescriptionSummary { get; }
     }

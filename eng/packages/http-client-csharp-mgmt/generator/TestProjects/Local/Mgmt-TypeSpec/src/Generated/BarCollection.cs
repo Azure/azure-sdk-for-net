@@ -20,8 +20,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="BarResource"/> and their operations.
-    /// Each <see cref="BarResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="BarCollection"/> instance call the GetBars method from an instance of the parent resource.
+    /// Each <see cref="BarResource"/> in the collection will belong to the same instance of <see cref="FooResource"/>.
+    /// To get a <see cref="BarCollection"/> instance call the GetBars method from an instance of <see cref="FooResource"/>.
     /// </summary>
     public partial class BarCollection : ArmCollection, IEnumerable<BarResource>, IAsyncEnumerable<BarResource>
     {
@@ -29,8 +29,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly Bars _barsRestClient;
         private readonly ClientDiagnostics _barClientDiagnostics;
         private readonly Bar _barRestClient;
-        private readonly ClientDiagnostics _employeesClientDiagnostics;
-        private readonly Employees _employeesRestClient;
 
         /// <summary> Initializes a new instance of BarCollection for mocking. </summary>
         protected BarCollection()
@@ -47,8 +45,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             _barClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BarResource.ResourceType.Namespace, Diagnostics);
             _barRestClient = new Bar(_barClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
-            _employeesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BarResource.ResourceType.Namespace, Diagnostics);
-            _employeesRestClient = new Employees(_employeesClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -58,7 +54,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             if (id.ResourceType != FooResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FooResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FooResource.ResourceType), nameof(id));
             }
         }
 
@@ -71,7 +67,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Bars_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -101,12 +97,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _barsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, barName, BarData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<BarResource> operation = new TestsArmOperation<BarResource>(
-                    new BarOperationSource(Client),
+                    new BarResourceOperationSource(Client),
                     _barsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -129,7 +126,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Bars_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -159,12 +156,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _barsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, barName, BarData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<BarResource> operation = new TestsArmOperation<BarResource>(
-                    new BarOperationSource(Client),
+                    new BarResourceOperationSource(Client),
                     _barsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                    OperationFinalStateVia.AzureAsyncOperation,
+                    true);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -187,7 +185,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Bars_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -236,7 +234,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Bars_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -276,7 +274,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> List Bar resources by Foo. </summary>
+        /// <summary>
+        /// List Bar resources by Foo
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{name}/bars. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bars_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BarResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BarResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -285,10 +299,32 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BarData, BarResource>(new BarsGetAllAsyncCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
+            return new AsyncPageableWrapper<BarData, BarResource>(new BarsGetAllAsyncCollectionResultOfT(
+                _barsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BarCollection.GetAll"), data => new BarResource(Client, data));
         }
 
-        /// <summary> List Bar resources by Foo. </summary>
+        /// <summary>
+        /// List Bar resources by Foo
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{name}/bars. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bars_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BarResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BarResource> GetAll(CancellationToken cancellationToken = default)
@@ -297,11 +333,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BarData, BarResource>(new BarsGetAllCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
+            return new PageableWrapper<BarData, BarResource>(new BarsGetAllCollectionResultOfT(
+                _barsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "BarCollection.GetAll"), data => new BarResource(Client, data));
         }
 
         /// <summary>
-        /// Get a Bar
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -309,7 +351,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Bars_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -358,7 +400,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a Bar
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -366,7 +408,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Bars_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -415,7 +457,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a Bar
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -423,7 +465,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Bars_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -476,7 +518,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a Bar
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -484,7 +526,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Bars_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

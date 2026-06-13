@@ -21,6 +21,8 @@ namespace Azure.Core.TestFramework
 
         public bool? ExpectSyncPipeline { get; set; }
 
+        public List<HttpPipelineTransportOptions> TransportUpdates { get; } = [];
+
         public MockTransport()
         {
             RequestGate = new AsyncGate<MockRequest, MockResponse>();
@@ -38,7 +40,7 @@ namespace Azure.Core.TestFramework
             };
         }
 
-        public MockTransport(Func<MockRequest, MockResponse> responseFactory): this(req => responseFactory((MockRequest)req.Request))
+        public MockTransport(Func<MockRequest, MockResponse> responseFactory) : this(req => responseFactory((MockRequest)req.Request))
         {
         }
 
@@ -72,6 +74,11 @@ namespace Azure.Core.TestFramework
             await ProcessCore(message);
         }
 
+        public override void Update(HttpPipelineTransportOptions options)
+        {
+            TransportUpdates.Add(options);
+        }
+
         private async Task ProcessCore(HttpMessage message)
         {
             if (!(message.Request is MockRequest request))
@@ -84,14 +91,7 @@ namespace Azure.Core.TestFramework
                 Requests.Add(request);
             }
 
-            if (RequestGate != null)
-            {
-                message.Response = await RequestGate.WaitForRelease(request);
-            }
-            else
-            {
-                message.Response = _responseFactory(message);
-            }
+            message.Response = await GetNextResponseAsync(request, message).ConfigureAwait(false);
 
             message.Response.ClientRequestId = request.ClientRequestId;
 
@@ -99,6 +99,21 @@ namespace Azure.Core.TestFramework
             {
                 message.Response.ContentStream = new AsyncValidatingStream(!ExpectSyncPipeline.Value, message.Response.ContentStream);
             }
+        }
+
+        protected virtual async Task<MockResponse> GetNextResponseAsync(MockRequest request, HttpMessage message)
+        {
+            MockResponse response;
+            if (RequestGate != null)
+            {
+                response = await RequestGate.WaitForRelease(request).ConfigureAwait(false);
+            }
+            else
+            {
+                response = _responseFactory(message);
+            }
+
+            return response;
         }
 
         public MockRequest SingleRequest

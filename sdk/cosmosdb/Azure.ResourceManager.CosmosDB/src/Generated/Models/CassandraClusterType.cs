@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CassandraClusterType : IEquatable<CassandraClusterType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CassandraClusterType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CassandraClusterType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ProductionValue = "Production";
         private const string NonProductionValue = "NonProduction";
 
-        /// <summary> Production. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CassandraClusterType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Production. </summary>
         public static CassandraClusterType Production { get; } = new CassandraClusterType(ProductionValue);
-        /// <summary> NonProduction. </summary>
+
+        /// <summary> Gets the NonProduction. </summary>
         public static CassandraClusterType NonProduction { get; } = new CassandraClusterType(NonProductionValue);
+
         /// <summary> Determines if two <see cref="CassandraClusterType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CassandraClusterType left, CassandraClusterType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CassandraClusterType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CassandraClusterType left, CassandraClusterType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CassandraClusterType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CassandraClusterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CassandraClusterType(string value) => new CassandraClusterType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CassandraClusterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CassandraClusterType?(string value) => value == null ? null : new CassandraClusterType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CassandraClusterType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CassandraClusterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

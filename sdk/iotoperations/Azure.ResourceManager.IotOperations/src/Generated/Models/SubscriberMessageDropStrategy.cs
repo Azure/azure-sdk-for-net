@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotOperations;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.IotOperations.Models
     public readonly partial struct SubscriberMessageDropStrategy : IEquatable<SubscriberMessageDropStrategy>
     {
         private readonly string _value;
+        /// <summary> Messages are never dropped. </summary>
+        private const string NoneValue = "None";
+        /// <summary> The oldest message is dropped. </summary>
+        private const string DropOldestValue = "DropOldest";
 
         /// <summary> Initializes a new instance of <see cref="SubscriberMessageDropStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SubscriberMessageDropStrategy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string DropOldestValue = "DropOldest";
+            _value = value;
+        }
 
         /// <summary> Messages are never dropped. </summary>
         public static SubscriberMessageDropStrategy None { get; } = new SubscriberMessageDropStrategy(NoneValue);
+
         /// <summary> The oldest message is dropped. </summary>
         public static SubscriberMessageDropStrategy DropOldest { get; } = new SubscriberMessageDropStrategy(DropOldestValue);
+
         /// <summary> Determines if two <see cref="SubscriberMessageDropStrategy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SubscriberMessageDropStrategy left, SubscriberMessageDropStrategy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SubscriberMessageDropStrategy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SubscriberMessageDropStrategy left, SubscriberMessageDropStrategy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriberMessageDropStrategy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SubscriberMessageDropStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SubscriberMessageDropStrategy(string value) => new SubscriberMessageDropStrategy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SubscriberMessageDropStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SubscriberMessageDropStrategy?(string value) => value == null ? null : new SubscriberMessageDropStrategy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SubscriberMessageDropStrategy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SubscriberMessageDropStrategy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

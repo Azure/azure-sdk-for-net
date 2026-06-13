@@ -33,11 +33,11 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         participantId: "participant1",
                         text: "Send an email to Carol about tomorrow's demo")),
                 new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
-            {
-                // Use Utf16CodeUnit for strings in .NET.
-                StringIndexType = StringIndexType.Utf16CodeUnit,
-                Verbose = true,
-            });
+                {
+                    // Use Utf16CodeUnit for strings in .NET.
+                    StringIndexType = StringIndexType.Utf16CodeUnit,
+                    Verbose = true,
+                });
 
             Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
             #endregion

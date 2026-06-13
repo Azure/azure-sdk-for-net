@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct ExascaleStorageShapeAttribute : IEquatable<ExascaleStorageShapeAttribute>
     {
         private readonly string _value;
+        /// <summary> Smart storage. </summary>
+        private const string SmartStorageValue = "SMART_STORAGE";
+        /// <summary> block storage. </summary>
+        private const string BlockStorageValue = "BLOCK_STORAGE";
 
         /// <summary> Initializes a new instance of <see cref="ExascaleStorageShapeAttribute"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ExascaleStorageShapeAttribute(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SmartStorageValue = "SMART_STORAGE";
-        private const string BlockStorageValue = "BLOCK_STORAGE";
+            _value = value;
+        }
 
         /// <summary> Smart storage. </summary>
         public static ExascaleStorageShapeAttribute SmartStorage { get; } = new ExascaleStorageShapeAttribute(SmartStorageValue);
+
         /// <summary> block storage. </summary>
         public static ExascaleStorageShapeAttribute BlockStorage { get; } = new ExascaleStorageShapeAttribute(BlockStorageValue);
+
         /// <summary> Determines if two <see cref="ExascaleStorageShapeAttribute"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExascaleStorageShapeAttribute left, ExascaleStorageShapeAttribute right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExascaleStorageShapeAttribute"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExascaleStorageShapeAttribute left, ExascaleStorageShapeAttribute right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExascaleStorageShapeAttribute"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExascaleStorageShapeAttribute"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExascaleStorageShapeAttribute(string value) => new ExascaleStorageShapeAttribute(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExascaleStorageShapeAttribute"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExascaleStorageShapeAttribute?(string value) => value == null ? null : new ExascaleStorageShapeAttribute(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExascaleStorageShapeAttribute other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExascaleStorageShapeAttribute other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

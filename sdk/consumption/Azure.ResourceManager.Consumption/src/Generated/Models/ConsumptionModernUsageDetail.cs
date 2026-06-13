@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -16,312 +17,676 @@ namespace Azure.ResourceManager.Consumption.Models
     public partial class ConsumptionModernUsageDetail : ConsumptionUsageDetail
     {
         /// <summary> Initializes a new instance of <see cref="ConsumptionModernUsageDetail"/>. </summary>
-        internal ConsumptionModernUsageDetail()
+        /// <param name="properties"> Properties for modern usage details. </param>
+        internal ConsumptionModernUsageDetail(ModernUsageDetailProperties properties) : base(UsageDetailsKind.Modern)
         {
-            Kind = UsageDetailsKind.Modern;
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsumptionModernUsageDetail"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="kind"> Specifies the kind of usage details. </param>
-        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="eTag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="billingAccountId"> Billing Account identifier. </param>
-        /// <param name="effectivePrice"> Effective Price that's charged for the usage. </param>
-        /// <param name="pricingModel"> Identifier that indicates how the meter is priced. </param>
-        /// <param name="billingAccountName"> Name of the Billing Account. </param>
-        /// <param name="billingPeriodStartOn"> Billing Period Start Date as in the invoice. </param>
-        /// <param name="billingPeriodEndOn"> Billing Period End Date as in the invoice. </param>
-        /// <param name="billingProfileId"> Identifier for the billing profile that groups costs across invoices in the a singular billing currency across across the customers who have onboarded the Microsoft customer agreement and the customers in CSP who have made entitlement purchases like SaaS, Marketplace, RI, etc. </param>
-        /// <param name="billingProfileName"> Name of the billing profile that groups costs across invoices in the a singular billing currency across across the customers who have onboarded the Microsoft customer agreement and the customers in CSP who have made entitlement purchases like SaaS, Marketplace, RI, etc. </param>
-        /// <param name="subscriptionGuid"> Unique Microsoft generated identifier for the Azure Subscription. </param>
-        /// <param name="subscriptionName"> Name of the Azure Subscription. </param>
-        /// <param name="on"> Date for the usage record. </param>
-        /// <param name="product"> Name of the product that has accrued charges by consumption or purchase as listed in the invoice. Not available for Marketplace. </param>
-        /// <param name="meterId"> The meter id (GUID). Not available for marketplace. For reserved instance this represents the primary meter for which the reservation was purchased. For the actual VM Size for which the reservation is purchased see productOrderName. </param>
-        /// <param name="meterName"> Identifies the name of the meter against which consumption is measured. </param>
-        /// <param name="meterRegion"> Identifies the location of the datacenter for certain services that are priced based on datacenter location. </param>
-        /// <param name="meterCategory"> Identifies the top-level service for the usage. </param>
-        /// <param name="meterSubCategory"> Defines the type or sub-category of Azure service that can affect the rate. </param>
-        /// <param name="serviceFamily"> List the service family for the product purchased or charged (Example: Storage ; Compute). </param>
-        /// <param name="quantity"> Measure the quantity purchased or consumed.The amount of the meter used during the billing period. </param>
-        /// <param name="unitOfMeasure"> Identifies the Unit that the service is charged in. For example, GB, hours, 10,000 s. </param>
-        /// <param name="instanceName"> Instance Name. </param>
-        /// <param name="costInUSD"> Estimated extendedCost or blended cost before tax in USD. </param>
-        /// <param name="unitPrice"> Unit Price is the price applicable to you. (your EA or other contract price). </param>
-        /// <param name="billingCurrencyCode"> The currency defining the billed cost. </param>
-        /// <param name="resourceLocation"> Name of the resource location. </param>
-        /// <param name="consumedService"> Consumed service name. Name of the azure resource provider that emits the usage or was purchased. This value is not provided for marketplace usage. </param>
-        /// <param name="serviceInfo1"> Service-specific metadata. </param>
-        /// <param name="serviceInfo2"> Legacy field with optional service-specific metadata. </param>
-        /// <param name="additionalInfo"> Additional details of this usage item. Use this field to get usage line item specific details such as the actual VM Size (ServiceType) or the ratio in which the reservation discount is applied. </param>
-        /// <param name="invoiceSectionId"> Identifier of the project that is being charged in the invoice. Not applicable for Microsoft Customer Agreements onboarded by partners. </param>
-        /// <param name="invoiceSectionName"> Name of the project that is being charged in the invoice. Not applicable for Microsoft Customer Agreements onboarded by partners. </param>
-        /// <param name="costCenter"> The cost center of this department if it is a department and a cost center is provided. </param>
-        /// <param name="resourceGroup"> Name of the Azure resource group used for cohesive lifecycle management of resources. </param>
-        /// <param name="reservationId"> ARM resource id of the reservation. Only applies to records relevant to reservations. </param>
-        /// <param name="reservationName"> User provided display name of the reservation. Last known name for a particular day is populated in the daily data. Only applies to records relevant to reservations. </param>
-        /// <param name="productOrderId"> The identifier for the asset or Azure plan name that the subscription belongs to. For example: Azure Plan. For reservations this is the Reservation Order ID. </param>
-        /// <param name="productOrderName"> Product Order Name. For reservations this is the SKU that was purchased. </param>
-        /// <param name="isAzureCreditEligible"> Determines if the cost is eligible to be paid for using Azure credits. </param>
-        /// <param name="term"> Term (in months). Displays the term for the validity of the offer. For example. In case of reserved instances it displays 12 months for yearly term of reserved instance. For one time purchases or recurring purchases, the terms displays 1 month; This is not applicable for Azure consumption. </param>
-        /// <param name="publisherName"> Name of the publisher of the service including Microsoft or Third Party publishers. </param>
-        /// <param name="publisherType"> Type of publisher that identifies if the publisher is first party, third party reseller or third party agency. </param>
-        /// <param name="chargeType"> Indicates a charge represents credits, usage, a Marketplace purchase, a reservation fee, or a refund. </param>
-        /// <param name="frequency"> Indicates how frequently this charge will occur. OneTime for purchases which only happen once, Monthly for fees which recur every month, and UsageBased for charges based on how much a service is used. </param>
-        /// <param name="costInBillingCurrency"> ExtendedCost or blended cost before tax in billed currency. </param>
-        /// <param name="costInPricingCurrency"> ExtendedCost or blended cost before tax in pricing currency to correlate with prices. </param>
-        /// <param name="exchangeRate"> Exchange rate used in conversion from pricing currency to billing currency. </param>
-        /// <param name="exchangeRateOn"> Date on which exchange rate used in conversion from pricing currency to billing currency. </param>
-        /// <param name="invoiceId"> Invoice ID as on the invoice where the specific transaction appears. </param>
-        /// <param name="previousInvoiceId"> Reference to an original invoice there is a refund (negative cost). This is populated only when there is a refund. </param>
-        /// <param name="pricingCurrencyCode"> Pricing Billing Currency. </param>
-        /// <param name="productIdentifier"> Identifier for the product that has accrued charges by consumption or purchase . This is the concatenated key of productId and SkuId in partner center. </param>
-        /// <param name="resourceLocationNormalized"> Resource Location Normalized. </param>
-        /// <param name="servicePeriodStartOn"> Start date for the rating period when the service usage was rated for charges. The prices for Azure services are determined for the rating period. </param>
-        /// <param name="servicePeriodEndOn"> End date for the period when the service usage was rated for charges. The prices for Azure services are determined based on the rating period. </param>
-        /// <param name="customerTenantId"> Identifier of the customer's AAD tenant. </param>
-        /// <param name="customerName"> Name of the customer's AAD tenant. </param>
-        /// <param name="partnerTenantId"> Identifier for the partner's AAD tenant. </param>
-        /// <param name="partnerName"> Name of the partner' AAD tenant. </param>
-        /// <param name="resellerMpnId"> MPNId for the reseller associated with the subscription. </param>
-        /// <param name="resellerName"> Reseller Name. </param>
-        /// <param name="publisherId"> Publisher Id. </param>
-        /// <param name="marketPrice"> Market Price that's charged for the usage. </param>
-        /// <param name="exchangeRatePricingToBilling"> Exchange Rate from pricing currency to billing currency. </param>
-        /// <param name="paygCostInBillingCurrency"> The amount of PayG cost before tax in billing currency. </param>
-        /// <param name="paygCostInUSD"> The amount of PayG cost before tax in US Dollar currency. </param>
-        /// <param name="partnerEarnedCreditRate"> Rate of discount applied if there is a partner earned credit (PEC) based on partner admin link access. </param>
-        /// <param name="partnerEarnedCreditApplied"> Flag to indicate if partner earned credit has been applied or not. </param>
-        /// <param name="payGPrice"> Retail price for the resource. </param>
-        /// <param name="benefitId"> Unique identifier for the applicable benefit. </param>
-        /// <param name="benefitName"> Name of the applicable benefit. </param>
-        /// <param name="provider"> Identifier for Product Category or Line Of Business, Ex - Azure, Microsoft 365, AWS e.t.c. </param>
-        /// <param name="costAllocationRuleName"> Name for Cost Allocation Rule. </param>
-        internal ConsumptionModernUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UsageDetailsKind kind, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string billingAccountId, decimal? effectivePrice, ConsumptionPricingModelType? pricingModel, string billingAccountName, DateTimeOffset? billingPeriodStartOn, DateTimeOffset? billingPeriodEndOn, string billingProfileId, string billingProfileName, string subscriptionGuid, string subscriptionName, DateTimeOffset? @on, string product, Guid? meterId, string meterName, string meterRegion, string meterCategory, string meterSubCategory, string serviceFamily, decimal? quantity, string unitOfMeasure, string instanceName, decimal? costInUSD, decimal? unitPrice, string billingCurrencyCode, string resourceLocation, string consumedService, string serviceInfo1, string serviceInfo2, string additionalInfo, string invoiceSectionId, string invoiceSectionName, string costCenter, string resourceGroup, string reservationId, string reservationName, string productOrderId, string productOrderName, bool? isAzureCreditEligible, string term, string publisherName, string publisherType, string chargeType, string frequency, decimal? costInBillingCurrency, decimal? costInPricingCurrency, string exchangeRate, DateTimeOffset? exchangeRateOn, string invoiceId, string previousInvoiceId, string pricingCurrencyCode, string productIdentifier, string resourceLocationNormalized, DateTimeOffset? servicePeriodStartOn, DateTimeOffset? servicePeriodEndOn, string customerTenantId, string customerName, string partnerTenantId, string partnerName, string resellerMpnId, string resellerName, string publisherId, decimal? marketPrice, decimal? exchangeRatePricingToBilling, decimal? paygCostInBillingCurrency, decimal? paygCostInUSD, decimal? partnerEarnedCreditRate, string partnerEarnedCreditApplied, decimal? payGPrice, string benefitId, string benefitName, string provider, string costAllocationRuleName) : base(id, name, resourceType, systemData, kind, etag, tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties for modern usage details. </param>
+        internal ConsumptionModernUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UsageDetailsKind kind, ETag? eTag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, ModernUsageDetailProperties properties) : base(id, name, resourceType, systemData, kind, eTag, tags, additionalBinaryDataProperties)
         {
-            BillingAccountId = billingAccountId;
-            EffectivePrice = effectivePrice;
-            PricingModel = pricingModel;
-            BillingAccountName = billingAccountName;
-            BillingPeriodStartOn = billingPeriodStartOn;
-            BillingPeriodEndOn = billingPeriodEndOn;
-            BillingProfileId = billingProfileId;
-            BillingProfileName = billingProfileName;
-            SubscriptionGuid = subscriptionGuid;
-            SubscriptionName = subscriptionName;
-            On = @on;
-            Product = product;
-            MeterId = meterId;
-            MeterName = meterName;
-            MeterRegion = meterRegion;
-            MeterCategory = meterCategory;
-            MeterSubCategory = meterSubCategory;
-            ServiceFamily = serviceFamily;
-            Quantity = quantity;
-            UnitOfMeasure = unitOfMeasure;
-            InstanceName = instanceName;
-            CostInUSD = costInUSD;
-            UnitPrice = unitPrice;
-            BillingCurrencyCode = billingCurrencyCode;
-            ResourceLocation = resourceLocation;
-            ConsumedService = consumedService;
-            ServiceInfo1 = serviceInfo1;
-            ServiceInfo2 = serviceInfo2;
-            AdditionalInfo = additionalInfo;
-            InvoiceSectionId = invoiceSectionId;
-            InvoiceSectionName = invoiceSectionName;
-            CostCenter = costCenter;
-            ResourceGroup = resourceGroup;
-            ReservationId = reservationId;
-            ReservationName = reservationName;
-            ProductOrderId = productOrderId;
-            ProductOrderName = productOrderName;
-            IsAzureCreditEligible = isAzureCreditEligible;
-            Term = term;
-            PublisherName = publisherName;
-            PublisherType = publisherType;
-            ChargeType = chargeType;
-            Frequency = frequency;
-            CostInBillingCurrency = costInBillingCurrency;
-            CostInPricingCurrency = costInPricingCurrency;
-            ExchangeRate = exchangeRate;
-            ExchangeRateOn = exchangeRateOn;
-            InvoiceId = invoiceId;
-            PreviousInvoiceId = previousInvoiceId;
-            PricingCurrencyCode = pricingCurrencyCode;
-            ProductIdentifier = productIdentifier;
-            ResourceLocationNormalized = resourceLocationNormalized;
-            ServicePeriodStartOn = servicePeriodStartOn;
-            ServicePeriodEndOn = servicePeriodEndOn;
-            CustomerTenantId = customerTenantId;
-            CustomerName = customerName;
-            PartnerTenantId = partnerTenantId;
-            PartnerName = partnerName;
-            ResellerMpnId = resellerMpnId;
-            ResellerName = resellerName;
-            PublisherId = publisherId;
-            MarketPrice = marketPrice;
-            ExchangeRatePricingToBilling = exchangeRatePricingToBilling;
-            PaygCostInBillingCurrency = paygCostInBillingCurrency;
-            PaygCostInUSD = paygCostInUSD;
-            PartnerEarnedCreditRate = partnerEarnedCreditRate;
-            PartnerEarnedCreditApplied = partnerEarnedCreditApplied;
-            PayGPrice = payGPrice;
-            BenefitId = benefitId;
-            BenefitName = benefitName;
-            Provider = provider;
-            CostAllocationRuleName = costAllocationRuleName;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Properties for modern usage details. </summary>
+        internal ModernUsageDetailProperties Properties { get; }
+
         /// <summary> Billing Account identifier. </summary>
-        public string BillingAccountId { get; }
+        public string BillingAccountId
+        {
+            get
+            {
+                return Properties.BillingAccountId;
+            }
+        }
+
         /// <summary> Effective Price that's charged for the usage. </summary>
-        public decimal? EffectivePrice { get; }
+        public decimal? EffectivePrice
+        {
+            get
+            {
+                return Properties.EffectivePrice;
+            }
+        }
+
         /// <summary> Identifier that indicates how the meter is priced. </summary>
-        public ConsumptionPricingModelType? PricingModel { get; }
+        public ConsumptionPricingModelType? PricingModel
+        {
+            get
+            {
+                return Properties.PricingModel;
+            }
+        }
+
         /// <summary> Name of the Billing Account. </summary>
-        public string BillingAccountName { get; }
+        public string BillingAccountName
+        {
+            get
+            {
+                return Properties.BillingAccountName;
+            }
+        }
+
         /// <summary> Billing Period Start Date as in the invoice. </summary>
-        public DateTimeOffset? BillingPeriodStartOn { get; }
+        public DateTimeOffset? BillingPeriodStartOn
+        {
+            get
+            {
+                return Properties.BillingPeriodStartOn;
+            }
+        }
+
         /// <summary> Billing Period End Date as in the invoice. </summary>
-        public DateTimeOffset? BillingPeriodEndOn { get; }
+        public DateTimeOffset? BillingPeriodEndOn
+        {
+            get
+            {
+                return Properties.BillingPeriodEndOn;
+            }
+        }
+
         /// <summary> Identifier for the billing profile that groups costs across invoices in the a singular billing currency across across the customers who have onboarded the Microsoft customer agreement and the customers in CSP who have made entitlement purchases like SaaS, Marketplace, RI, etc. </summary>
-        public string BillingProfileId { get; }
+        public string BillingProfileId
+        {
+            get
+            {
+                return Properties.BillingProfileId;
+            }
+        }
+
         /// <summary> Name of the billing profile that groups costs across invoices in the a singular billing currency across across the customers who have onboarded the Microsoft customer agreement and the customers in CSP who have made entitlement purchases like SaaS, Marketplace, RI, etc. </summary>
-        public string BillingProfileName { get; }
+        public string BillingProfileName
+        {
+            get
+            {
+                return Properties.BillingProfileName;
+            }
+        }
+
         /// <summary> Unique Microsoft generated identifier for the Azure Subscription. </summary>
-        public string SubscriptionGuid { get; }
+        public string SubscriptionGuid
+        {
+            get
+            {
+                return Properties.SubscriptionGuid;
+            }
+        }
+
         /// <summary> Name of the Azure Subscription. </summary>
-        public string SubscriptionName { get; }
+        public string SubscriptionName
+        {
+            get
+            {
+                return Properties.SubscriptionName;
+            }
+        }
+
         /// <summary> Date for the usage record. </summary>
-        public DateTimeOffset? On { get; }
+        public DateTimeOffset? On
+        {
+            get
+            {
+                return Properties.On;
+            }
+        }
+
         /// <summary> Name of the product that has accrued charges by consumption or purchase as listed in the invoice. Not available for Marketplace. </summary>
-        public string Product { get; }
+        public string Product
+        {
+            get
+            {
+                return Properties.Product;
+            }
+        }
+
         /// <summary> The meter id (GUID). Not available for marketplace. For reserved instance this represents the primary meter for which the reservation was purchased. For the actual VM Size for which the reservation is purchased see productOrderName. </summary>
-        public Guid? MeterId { get; }
+        public Guid? MeterId
+        {
+            get
+            {
+                return Properties.MeterId;
+            }
+        }
+
         /// <summary> Identifies the name of the meter against which consumption is measured. </summary>
-        public string MeterName { get; }
+        public string MeterName
+        {
+            get
+            {
+                return Properties.MeterName;
+            }
+        }
+
         /// <summary> Identifies the location of the datacenter for certain services that are priced based on datacenter location. </summary>
-        public string MeterRegion { get; }
+        public string MeterRegion
+        {
+            get
+            {
+                return Properties.MeterRegion;
+            }
+        }
+
         /// <summary> Identifies the top-level service for the usage. </summary>
-        public string MeterCategory { get; }
+        public string MeterCategory
+        {
+            get
+            {
+                return Properties.MeterCategory;
+            }
+        }
+
         /// <summary> Defines the type or sub-category of Azure service that can affect the rate. </summary>
-        public string MeterSubCategory { get; }
+        public string MeterSubCategory
+        {
+            get
+            {
+                return Properties.MeterSubCategory;
+            }
+        }
+
         /// <summary> List the service family for the product purchased or charged (Example: Storage ; Compute). </summary>
-        public string ServiceFamily { get; }
+        public string ServiceFamily
+        {
+            get
+            {
+                return Properties.ServiceFamily;
+            }
+        }
+
         /// <summary> Measure the quantity purchased or consumed.The amount of the meter used during the billing period. </summary>
-        public decimal? Quantity { get; }
+        public decimal? Quantity
+        {
+            get
+            {
+                return Properties.Quantity;
+            }
+        }
+
         /// <summary> Identifies the Unit that the service is charged in. For example, GB, hours, 10,000 s. </summary>
-        public string UnitOfMeasure { get; }
+        public string UnitOfMeasure
+        {
+            get
+            {
+                return Properties.UnitOfMeasure;
+            }
+        }
+
         /// <summary> Instance Name. </summary>
-        public string InstanceName { get; }
+        public string InstanceName
+        {
+            get
+            {
+                return Properties.InstanceName;
+            }
+        }
+
         /// <summary> Estimated extendedCost or blended cost before tax in USD. </summary>
-        public decimal? CostInUSD { get; }
+        public decimal? CostInUSD
+        {
+            get
+            {
+                return Properties.CostInUSD;
+            }
+        }
+
         /// <summary> Unit Price is the price applicable to you. (your EA or other contract price). </summary>
-        public decimal? UnitPrice { get; }
+        public decimal? UnitPrice
+        {
+            get
+            {
+                return Properties.UnitPrice;
+            }
+        }
+
         /// <summary> The currency defining the billed cost. </summary>
-        public string BillingCurrencyCode { get; }
+        public string BillingCurrencyCode
+        {
+            get
+            {
+                return Properties.BillingCurrencyCode;
+            }
+        }
+
         /// <summary> Name of the resource location. </summary>
-        public string ResourceLocation { get; }
+        public string ResourceLocation
+        {
+            get
+            {
+                return Properties.ResourceLocation;
+            }
+        }
+
         /// <summary> Consumed service name. Name of the azure resource provider that emits the usage or was purchased. This value is not provided for marketplace usage. </summary>
-        public string ConsumedService { get; }
+        public string ConsumedService
+        {
+            get
+            {
+                return Properties.ConsumedService;
+            }
+        }
+
         /// <summary> Service-specific metadata. </summary>
-        public string ServiceInfo1 { get; }
+        public string ServiceInfo1
+        {
+            get
+            {
+                return Properties.ServiceInfo1;
+            }
+        }
+
         /// <summary> Legacy field with optional service-specific metadata. </summary>
-        public string ServiceInfo2 { get; }
+        public string ServiceInfo2
+        {
+            get
+            {
+                return Properties.ServiceInfo2;
+            }
+        }
+
         /// <summary> Additional details of this usage item. Use this field to get usage line item specific details such as the actual VM Size (ServiceType) or the ratio in which the reservation discount is applied. </summary>
-        public string AdditionalInfo { get; }
+        public string AdditionalInfo
+        {
+            get
+            {
+                return Properties.AdditionalInfo;
+            }
+        }
+
         /// <summary> Identifier of the project that is being charged in the invoice. Not applicable for Microsoft Customer Agreements onboarded by partners. </summary>
-        public string InvoiceSectionId { get; }
+        public string InvoiceSectionId
+        {
+            get
+            {
+                return Properties.InvoiceSectionId;
+            }
+        }
+
         /// <summary> Name of the project that is being charged in the invoice. Not applicable for Microsoft Customer Agreements onboarded by partners. </summary>
-        public string InvoiceSectionName { get; }
+        public string InvoiceSectionName
+        {
+            get
+            {
+                return Properties.InvoiceSectionName;
+            }
+        }
+
         /// <summary> The cost center of this department if it is a department and a cost center is provided. </summary>
-        public string CostCenter { get; }
+        public string CostCenter
+        {
+            get
+            {
+                return Properties.CostCenter;
+            }
+        }
+
         /// <summary> Name of the Azure resource group used for cohesive lifecycle management of resources. </summary>
-        public string ResourceGroup { get; }
+        public string ResourceGroup
+        {
+            get
+            {
+                return Properties.ResourceGroup;
+            }
+        }
+
         /// <summary> ARM resource id of the reservation. Only applies to records relevant to reservations. </summary>
-        public string ReservationId { get; }
+        public string ReservationId
+        {
+            get
+            {
+                return Properties.ReservationId;
+            }
+        }
+
         /// <summary> User provided display name of the reservation. Last known name for a particular day is populated in the daily data. Only applies to records relevant to reservations. </summary>
-        public string ReservationName { get; }
+        public string ReservationName
+        {
+            get
+            {
+                return Properties.ReservationName;
+            }
+        }
+
         /// <summary> The identifier for the asset or Azure plan name that the subscription belongs to. For example: Azure Plan. For reservations this is the Reservation Order ID. </summary>
-        public string ProductOrderId { get; }
+        public string ProductOrderId
+        {
+            get
+            {
+                return Properties.ProductOrderId;
+            }
+        }
+
         /// <summary> Product Order Name. For reservations this is the SKU that was purchased. </summary>
-        public string ProductOrderName { get; }
+        public string ProductOrderName
+        {
+            get
+            {
+                return Properties.ProductOrderName;
+            }
+        }
+
         /// <summary> Determines if the cost is eligible to be paid for using Azure credits. </summary>
-        public bool? IsAzureCreditEligible { get; }
+        public bool? IsAzureCreditEligible
+        {
+            get
+            {
+                return Properties.IsAzureCreditEligible;
+            }
+        }
+
         /// <summary> Term (in months). Displays the term for the validity of the offer. For example. In case of reserved instances it displays 12 months for yearly term of reserved instance. For one time purchases or recurring purchases, the terms displays 1 month; This is not applicable for Azure consumption. </summary>
-        public string Term { get; }
+        public string Term
+        {
+            get
+            {
+                return Properties.Term;
+            }
+        }
+
         /// <summary> Name of the publisher of the service including Microsoft or Third Party publishers. </summary>
-        public string PublisherName { get; }
+        public string PublisherName
+        {
+            get
+            {
+                return Properties.PublisherName;
+            }
+        }
+
         /// <summary> Type of publisher that identifies if the publisher is first party, third party reseller or third party agency. </summary>
-        public string PublisherType { get; }
+        public string PublisherType
+        {
+            get
+            {
+                return Properties.PublisherType;
+            }
+        }
+
         /// <summary> Indicates a charge represents credits, usage, a Marketplace purchase, a reservation fee, or a refund. </summary>
-        public string ChargeType { get; }
+        public string ChargeType
+        {
+            get
+            {
+                return Properties.ChargeType;
+            }
+        }
+
         /// <summary> Indicates how frequently this charge will occur. OneTime for purchases which only happen once, Monthly for fees which recur every month, and UsageBased for charges based on how much a service is used. </summary>
-        public string Frequency { get; }
+        public string Frequency
+        {
+            get
+            {
+                return Properties.Frequency;
+            }
+        }
+
         /// <summary> ExtendedCost or blended cost before tax in billed currency. </summary>
-        public decimal? CostInBillingCurrency { get; }
+        public decimal? CostInBillingCurrency
+        {
+            get
+            {
+                return Properties.CostInBillingCurrency;
+            }
+        }
+
         /// <summary> ExtendedCost or blended cost before tax in pricing currency to correlate with prices. </summary>
-        public decimal? CostInPricingCurrency { get; }
+        public decimal? CostInPricingCurrency
+        {
+            get
+            {
+                return Properties.CostInPricingCurrency;
+            }
+        }
+
         /// <summary> Exchange rate used in conversion from pricing currency to billing currency. </summary>
-        public string ExchangeRate { get; }
+        public string ExchangeRate
+        {
+            get
+            {
+                return Properties.ExchangeRate;
+            }
+        }
+
         /// <summary> Date on which exchange rate used in conversion from pricing currency to billing currency. </summary>
-        public DateTimeOffset? ExchangeRateOn { get; }
+        public DateTimeOffset? ExchangeRateOn
+        {
+            get
+            {
+                return Properties.ExchangeRateOn;
+            }
+        }
+
         /// <summary> Invoice ID as on the invoice where the specific transaction appears. </summary>
-        public string InvoiceId { get; }
+        public string InvoiceId
+        {
+            get
+            {
+                return Properties.InvoiceId;
+            }
+        }
+
         /// <summary> Reference to an original invoice there is a refund (negative cost). This is populated only when there is a refund. </summary>
-        public string PreviousInvoiceId { get; }
+        public string PreviousInvoiceId
+        {
+            get
+            {
+                return Properties.PreviousInvoiceId;
+            }
+        }
+
         /// <summary> Pricing Billing Currency. </summary>
-        public string PricingCurrencyCode { get; }
+        public string PricingCurrencyCode
+        {
+            get
+            {
+                return Properties.PricingCurrencyCode;
+            }
+        }
+
         /// <summary> Identifier for the product that has accrued charges by consumption or purchase . This is the concatenated key of productId and SkuId in partner center. </summary>
-        public string ProductIdentifier { get; }
+        public string ProductIdentifier
+        {
+            get
+            {
+                return Properties.ProductIdentifier;
+            }
+        }
+
         /// <summary> Resource Location Normalized. </summary>
-        public string ResourceLocationNormalized { get; }
+        public string ResourceLocationNormalized
+        {
+            get
+            {
+                return Properties.ResourceLocationNormalized;
+            }
+        }
+
         /// <summary> Start date for the rating period when the service usage was rated for charges. The prices for Azure services are determined for the rating period. </summary>
-        public DateTimeOffset? ServicePeriodStartOn { get; }
+        public DateTimeOffset? ServicePeriodStartOn
+        {
+            get
+            {
+                return Properties.ServicePeriodStartOn;
+            }
+        }
+
         /// <summary> End date for the period when the service usage was rated for charges. The prices for Azure services are determined based on the rating period. </summary>
-        public DateTimeOffset? ServicePeriodEndOn { get; }
+        public DateTimeOffset? ServicePeriodEndOn
+        {
+            get
+            {
+                return Properties.ServicePeriodEndOn;
+            }
+        }
+
         /// <summary> Identifier of the customer's AAD tenant. </summary>
-        public string CustomerTenantId { get; }
+        public string CustomerTenantId
+        {
+            get
+            {
+                return Properties.CustomerTenantId;
+            }
+        }
+
         /// <summary> Name of the customer's AAD tenant. </summary>
-        public string CustomerName { get; }
+        public string CustomerName
+        {
+            get
+            {
+                return Properties.CustomerName;
+            }
+        }
+
         /// <summary> Identifier for the partner's AAD tenant. </summary>
-        public string PartnerTenantId { get; }
+        public string PartnerTenantId
+        {
+            get
+            {
+                return Properties.PartnerTenantId;
+            }
+        }
+
         /// <summary> Name of the partner' AAD tenant. </summary>
-        public string PartnerName { get; }
+        public string PartnerName
+        {
+            get
+            {
+                return Properties.PartnerName;
+            }
+        }
+
         /// <summary> MPNId for the reseller associated with the subscription. </summary>
-        public string ResellerMpnId { get; }
+        public string ResellerMpnId
+        {
+            get
+            {
+                return Properties.ResellerMpnId;
+            }
+        }
+
         /// <summary> Reseller Name. </summary>
-        public string ResellerName { get; }
+        public string ResellerName
+        {
+            get
+            {
+                return Properties.ResellerName;
+            }
+        }
+
         /// <summary> Publisher Id. </summary>
-        public string PublisherId { get; }
+        public string PublisherId
+        {
+            get
+            {
+                return Properties.PublisherId;
+            }
+        }
+
         /// <summary> Market Price that's charged for the usage. </summary>
-        public decimal? MarketPrice { get; }
+        public decimal? MarketPrice
+        {
+            get
+            {
+                return Properties.MarketPrice;
+            }
+        }
+
         /// <summary> Exchange Rate from pricing currency to billing currency. </summary>
-        public decimal? ExchangeRatePricingToBilling { get; }
+        public decimal? ExchangeRatePricingToBilling
+        {
+            get
+            {
+                return Properties.ExchangeRatePricingToBilling;
+            }
+        }
+
         /// <summary> The amount of PayG cost before tax in billing currency. </summary>
-        public decimal? PaygCostInBillingCurrency { get; }
+        public decimal? PaygCostInBillingCurrency
+        {
+            get
+            {
+                return Properties.PaygCostInBillingCurrency;
+            }
+        }
+
         /// <summary> The amount of PayG cost before tax in US Dollar currency. </summary>
-        public decimal? PaygCostInUSD { get; }
+        public decimal? PaygCostInUSD
+        {
+            get
+            {
+                return Properties.PaygCostInUSD;
+            }
+        }
+
         /// <summary> Rate of discount applied if there is a partner earned credit (PEC) based on partner admin link access. </summary>
-        public decimal? PartnerEarnedCreditRate { get; }
+        public decimal? PartnerEarnedCreditRate
+        {
+            get
+            {
+                return Properties.PartnerEarnedCreditRate;
+            }
+        }
+
         /// <summary> Flag to indicate if partner earned credit has been applied or not. </summary>
-        public string PartnerEarnedCreditApplied { get; }
+        public string PartnerEarnedCreditApplied
+        {
+            get
+            {
+                return Properties.PartnerEarnedCreditApplied;
+            }
+        }
+
         /// <summary> Retail price for the resource. </summary>
-        public decimal? PayGPrice { get; }
+        public decimal? PayGPrice
+        {
+            get
+            {
+                return Properties.PayGPrice;
+            }
+        }
+
         /// <summary> Unique identifier for the applicable benefit. </summary>
-        public string BenefitId { get; }
+        public string BenefitId
+        {
+            get
+            {
+                return Properties.BenefitId;
+            }
+        }
+
         /// <summary> Name of the applicable benefit. </summary>
-        public string BenefitName { get; }
+        public string BenefitName
+        {
+            get
+            {
+                return Properties.BenefitName;
+            }
+        }
+
         /// <summary> Identifier for Product Category or Line Of Business, Ex - Azure, Microsoft 365, AWS e.t.c. </summary>
-        public string Provider { get; }
+        public string Provider
+        {
+            get
+            {
+                return Properties.Provider;
+            }
+        }
+
         /// <summary> Name for Cost Allocation Rule. </summary>
-        public string CostAllocationRuleName { get; }
+        public string CostAllocationRuleName
+        {
+            get
+            {
+                return Properties.CostAllocationRuleName;
+            }
+        }
     }
 }

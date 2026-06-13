@@ -97,7 +97,7 @@ using Microsoft.Extensions.Options;
 Then you can create an instance of DefaultAzureCredential and pass it to a new instance of your client:
 
 ```C# Snippet:TextAnalysisAuthoring_CreateWithDefaultAzureCredential
-Uri endpoint = new Uri("{endpoint}");;
+Uri endpoint = new Uri("{endpoint}");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 ```

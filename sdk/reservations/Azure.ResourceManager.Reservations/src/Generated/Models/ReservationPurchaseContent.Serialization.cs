@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationPurchaseContent : IUtf8JsonSerializable, IJsonModel<ReservationPurchaseContent>
+    /// <summary> The request for reservation purchase. </summary>
+    public partial class ReservationPurchaseContent : IJsonModel<ReservationPurchaseContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationPurchaseContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReservationPurchaseContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeReservationPurchaseContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerReservationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ReservationPurchaseContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReservationPurchaseContent IPersistableModel<ReservationPurchaseContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ReservationPurchaseContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="reservationPurchaseContent"> The <see cref="ReservationPurchaseContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ReservationPurchaseContent reservationPurchaseContent)
+        {
+            if (reservationPurchaseContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(reservationPurchaseContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReservationPurchaseContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +80,11 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -44,90 +95,20 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ReservedResourceType))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("reservedResourceType"u8);
-                writer.WriteStringValue(ReservedResourceType.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(BillingScopeId))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("billingScopeId"u8);
-                writer.WriteStringValue(BillingScopeId);
-            }
-            if (Optional.IsDefined(Term))
-            {
-                writer.WritePropertyName("term"u8);
-                writer.WriteStringValue(Term.Value.ToString());
-            }
-            if (Optional.IsDefined(BillingPlan))
-            {
-                writer.WritePropertyName("billingPlan"u8);
-                writer.WriteStringValue(BillingPlan.Value.ToString());
-            }
-            if (Optional.IsDefined(Quantity))
-            {
-                writer.WritePropertyName("quantity"u8);
-                writer.WriteNumberValue(Quantity.Value);
-            }
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (Optional.IsDefined(AppliedScopeType))
-            {
-                writer.WritePropertyName("appliedScopeType"u8);
-                writer.WriteStringValue(AppliedScopeType.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(AppliedScopes))
-            {
-                if (AppliedScopes != null)
-                {
-                    writer.WritePropertyName("appliedScopes"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in AppliedScopes)
-                    {
-                        writer.WriteStringValue(item);
-                    }
-                    writer.WriteEndArray();
-                }
-                else
-                {
-                    writer.WriteNull("appliedScopes");
-                }
-            }
-            if (Optional.IsDefined(AppliedScopeProperties))
-            {
-                writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties, options);
-            }
-            if (Optional.IsDefined(IsRenewEnabled))
-            {
-                writer.WritePropertyName("renew"u8);
-                writer.WriteBooleanValue(IsRenewEnabled.Value);
-            }
-            if (Optional.IsDefined(ReservedResourceProperties))
-            {
-                writer.WritePropertyName("reservedResourceProperties"u8);
-                writer.WriteObjectValue(ReservedResourceProperties, options);
-            }
-            if (Optional.IsDefined(ReviewOn))
-            {
-                writer.WritePropertyName("reviewDateTime"u8);
-                writer.WriteStringValue(ReviewOn.Value, "O");
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -136,237 +117,70 @@ namespace Azure.ResourceManager.Reservations.Models
             }
         }
 
-        ReservationPurchaseContent IJsonModel<ReservationPurchaseContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReservationPurchaseContent IJsonModel<ReservationPurchaseContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReservationPurchaseContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeReservationPurchaseContent(document.RootElement, options);
         }
 
-        internal static ReservationPurchaseContent DeserializeReservationPurchaseContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ReservationPurchaseContent DeserializeReservationPurchaseContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ReservationsSkuName sku = default;
             AzureLocation? location = default;
-            ReservedResourceType? reservedResourceType = default;
-            ResourceIdentifier billingScopeId = default;
-            ReservationTerm? term = default;
-            ReservationBillingPlan? billingPlan = default;
-            int? quantity = default;
-            string displayName = default;
-            AppliedScopeType? appliedScopeType = default;
-            IList<string> appliedScopes = default;
-            AppliedScopeProperties appliedScopeProperties = default;
-            bool? renew = default;
-            PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties = default;
-            DateTimeOffset? reviewDateTime = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            PurchaseRequestProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"u8))
+                if (prop.NameEquals("sku"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sku = ReservationsSkuName.DeserializeReservationsSkuName(property.Value, options);
+                    sku = ReservationsSkuName.DeserializeReservationsSkuName(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("reservedResourceType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            reservedResourceType = new ReservedResourceType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("billingScopeId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            billingScopeId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("term"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            term = new ReservationTerm(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("billingPlan"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            billingPlan = new ReservationBillingPlan(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("quantity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            quantity = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("appliedScopeType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            appliedScopeType = new AppliedScopeType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("appliedScopes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                appliedScopes = null;
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            appliedScopes = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("appliedScopeProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            appliedScopeProperties = AppliedScopeProperties.DeserializeAppliedScopeProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("renew"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            renew = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("reservedResourceProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            reservedResourceProperties = PurchaseRequestPropertiesReservedResourceProperties.DeserializePurchaseRequestPropertiesReservedResourceProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("reviewDateTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            reviewDateTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                    }
+                    properties = PurchaseRequestProperties.DeserializePurchaseRequestProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ReservationPurchaseContent(
-                sku,
-                location,
-                reservedResourceType,
-                billingScopeId,
-                term,
-                billingPlan,
-                quantity,
-                displayName,
-                appliedScopeType,
-                appliedScopes ?? new ChangeTrackingList<string>(),
-                appliedScopeProperties,
-                renew,
-                reservedResourceProperties,
-                reviewDateTime,
-                serializedAdditionalRawData);
+            return new ReservationPurchaseContent(sku, location, properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ReservationPurchaseContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerReservationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ReservationPurchaseContent IPersistableModel<ReservationPurchaseContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeReservationPurchaseContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ReservationPurchaseContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

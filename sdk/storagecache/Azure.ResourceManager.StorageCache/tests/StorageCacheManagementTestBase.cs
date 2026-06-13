@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
         protected AzureLocation DefaultLocation => AzureLocation.CanadaCentral;
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
-       protected ResourceGroupResource DefaultResourceGroup { get; private set; }
+        protected ResourceGroupResource DefaultResourceGroup { get; private set; }
         protected Stack<Action> CleanupActions { get; } = new Stack<Action>();
         protected string amlFSSubnetResourceId;
         protected ResourceGroupResource amlFSResourceGroup;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             DefaultResourceGroup = await this.DefaultSubscription.GetResourceGroupAsync("rg-amajaistoragecache");
             amlFSResourceGroup = DefaultResourceGroup;
-            amlFSStorageAccountId = "/subscriptions/" + DefaultSubscription.Id.SubscriptionId +"/resourceGroups/"+ DefaultResourceGroup.Id.Name +"/providers/Microsoft.Storage/storageAccounts/" + "sdktestingstorageaccount";
+            amlFSStorageAccountId = "/subscriptions/" + DefaultSubscription.Id.SubscriptionId + "/resourceGroups/" + DefaultResourceGroup.Id.Name + "/providers/Microsoft.Storage/storageAccounts/" + "sdktestingstorageaccount";
             amlFSSubnetResourceId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + "vnet1" + "/subnets/fsSubnet";
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
             ResourceIdentifier storageCacheResourceId = AmlFileSystemResource.CreateResourceIdentifier(
                 this.DefaultSubscription.Id.SubscriptionId,
                 resourceGroupName: resourceGroupName,
-                amlFileSystemName: amlFSName);
+                 amlFSName);
             var amlFS = this.Client.GetAmlFileSystemResource(storageCacheResourceId);
             var importJobs = amlFS.GetStorageCacheImportJobs().GetAllAsync();
             await foreach (var job in importJobs)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
         {
             AmlFileSystemCollection amlFSCollectionVar = this.amlFSResourceGroup.GetAmlFileSystems();
             string amlFSName = name ?? Recording.GenerateAssetName("testamlFS");
-            string subnetId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + "vnet1" +"/subnets/fsSubnet";
+            string subnetId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + "vnet1" + "/subnets/fsSubnet";
             string amlFSHsmContainer = amlFSStorageAccountId + "/blobServices/default/containers/importcontainer";
             string amlFSHsmLoggingContainer = amlFSStorageAccountId + "/blobServices/default/containers/loggingcontainer";
             AmlFileSystemData dataVar = new AmlFileSystemData(this.DefaultLocation)
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
             };
             ArmOperation<AmlFileSystemResource> lro = await amlFSCollectionVar.CreateOrUpdateAsync(
                 waitUntil: WaitUntil.Completed,
-                amlFileSystemName: amlFSName,
+                 amlFSName,
                 data: dataVar);
             this.CleanupActions.Push(async () => await lro.Value.DeleteAsync(WaitUntil.Completed));
             if (verifyResult)
@@ -302,6 +302,52 @@ namespace Azure.ResourceManager.StorageCache.Tests
             Assert.AreEqual(actual.Data.ConflictResolutionMode, expected.ConflictResolutionMode);
             Assert.AreEqual(actual.Data.MaximumErrors, expected.MaximumErrors);
             Assert.AreEqual(actual.Data.AdminStatus, expected.AdminStatus);
+        }
+
+        protected async Task<AmlFileSystemExpansionJobResource> CreateOrUpdateExpansionJob(AmlFileSystemResource amlFS, string name, AmlFileSystemExpansionJobData dataVar, bool verifyResult = false, bool deleteOnCleanup = false)
+        {
+            AmlFileSystemExpansionJobCollection expansionJobCollectionVar = amlFS.GetAmlFileSystemExpansionJobs();
+
+            string expansionJobName = name ?? Recording.GenerateAssetName("testexpansionjob");
+
+            // Check if the job already exists before creating
+            Console.WriteLine("Checking if an expansion job with the same name already exists...");
+            NullableResponse<AmlFileSystemExpansionJobResource> existingJob = await expansionJobCollectionVar.GetIfExistsAsync(expansionJobName);
+            if (existingJob.HasValue)
+            {
+                Console.WriteLine("Expansion job with the same name already exists. Returning the existing job.");
+                return existingJob.Value;
+            }
+
+            ArmOperation<AmlFileSystemExpansionJobResource> lro = await expansionJobCollectionVar.CreateOrUpdateAsync(
+                waitUntil: WaitUntil.Completed,
+                expansionJobName: expansionJobName,
+                data: dataVar);
+            if (deleteOnCleanup)
+            {
+                this.CleanupActions.Push(async () => await lro.Value.DeleteAsync(WaitUntil.Completed));
+            }
+            if (verifyResult)
+            {
+                this.VerifyExpansionJob(lro.Value, dataVar);
+            }
+            return lro.Value;
+        }
+
+        protected void VerifyExpansionJob(AmlFileSystemExpansionJobResource actual, AmlFileSystemExpansionJobData expected)
+        {
+            Assert.AreEqual(actual.Data.NewStorageCapacityTiB, expected.NewStorageCapacityTiB);
+        }
+
+        protected async Task<AmlFileSystemExpansionJobResource> WaitForExpansionJobCompletion(AmlFileSystemResource amlFS, string expansionJobName)
+        {
+            AmlFileSystemExpansionJobResource job = await amlFS.GetAmlFileSystemExpansionJobs().GetAsync(expansionJobName);
+            while (job.Data.State == AmlFileSystemExpansionJobStatusType.InProgress || job.Data.State == AmlFileSystemExpansionJobStatusType.RollingBack)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(30));
+                job = await amlFS.GetAmlFileSystemExpansionJobs().GetAsync(expansionJobName);
+            }
+            return job;
         }
 
         protected async Task<GenericResource> CreateVirtualNetwork()

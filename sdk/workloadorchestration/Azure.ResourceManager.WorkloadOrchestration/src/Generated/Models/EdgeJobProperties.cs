@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Models
 {
     /// <summary> Properties of a Job resource, including type, status, parameters, steps, and error details. </summary>
     public partial class EdgeJobProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeJobProperties"/>. </summary>
         /// <param name="jobType"> The type of job. </param>
@@ -60,18 +33,14 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="startOn"> Start time of the job (ISO8601). </param>
         /// <param name="endOn"> End time of the job (ISO8601). </param>
         /// <param name="status"> Status of the job. </param>
-        /// <param name="jobParameter">
-        /// Parameters for the job.
-        /// Please note <see cref="EdgeJobContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeployJobContent"/>.
-        /// </param>
+        /// <param name="jobParameter"> Parameters for the job. </param>
         /// <param name="correlationId"> Correlation ID for tracking. </param>
         /// <param name="steps"> Steps and substatuses for the job. </param>
         /// <param name="triggeredBy"> The OID or identity that triggered the job. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="errorDetails"> Error Details if any failure is there. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeJobProperties(EdgeJobType jobType, DateTimeOffset? startOn, DateTimeOffset? endOn, EdgeJobStatus status, EdgeJobContent jobParameter, string correlationId, IReadOnlyList<EdgeJobStep> steps, string triggeredBy, WorkloadOrchestrationProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeJobProperties(EdgeJobType jobType, DateTimeOffset? startOn, DateTimeOffset? endOn, EdgeJobStatus status, EdgeJobContent jobParameter, string correlationId, IReadOnlyList<EdgeJobStep> steps, string triggeredBy, WorkloadOrchestrationProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobType = jobType;
             StartOn = startOn;
@@ -83,36 +52,36 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             TriggeredBy = triggeredBy;
             ProvisioningState = provisioningState;
             ErrorDetails = errorDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EdgeJobProperties"/> for deserialization. </summary>
-        internal EdgeJobProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of job. </summary>
         public EdgeJobType JobType { get; }
+
         /// <summary> Start time of the job (ISO8601). </summary>
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> End time of the job (ISO8601). </summary>
         public DateTimeOffset? EndOn { get; }
+
         /// <summary> Status of the job. </summary>
         public EdgeJobStatus Status { get; }
-        /// <summary>
-        /// Parameters for the job.
-        /// Please note <see cref="EdgeJobContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeployJobContent"/>.
-        /// </summary>
+
+        /// <summary> Parameters for the job. </summary>
         public EdgeJobContent JobParameter { get; }
+
         /// <summary> Correlation ID for tracking. </summary>
         public string CorrelationId { get; }
+
         /// <summary> Steps and substatuses for the job. </summary>
         public IReadOnlyList<EdgeJobStep> Steps { get; }
+
         /// <summary> The OID or identity that triggered the job. </summary>
         public string TriggeredBy { get; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public WorkloadOrchestrationProvisioningState? ProvisioningState { get; }
+
         /// <summary> Error Details if any failure is there. </summary>
         public ResponseError ErrorDetails { get; }
     }

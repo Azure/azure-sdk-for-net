@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -65,7 +65,8 @@ namespace Azure.ResourceManager.Network.Tests
             // Put Vnet
             var virtualNetworkCollection = resourceGroup.GetVirtualNetworks();
             var putVnetResponseOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnet);
-            Response<VirtualNetworkResource> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();;
+            Response<VirtualNetworkResource> putVnetResponse = await putVnetResponseOperation.WaitForCompletionAsync();
+            ;
             Assert.AreEqual("Succeeded", putVnetResponse.Value.Data.ProvisioningState.ToString());
 
             // Get Vnet
@@ -81,7 +82,8 @@ namespace Azure.ResourceManager.Network.Tests
             vnet.Subnets[0].AddressPrefix = "10.1.1.0/24";
             vnet.Subnets[1].AddressPrefix = "10.1.2.0/24";
             var remoteVirtualNetworkOperation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, remoteVirtualNetworkName, vnet);
-            Response<VirtualNetworkResource> remoteVirtualNetwork = await remoteVirtualNetworkOperation.WaitForCompletionAsync();;
+            Response<VirtualNetworkResource> remoteVirtualNetwork = await remoteVirtualNetworkOperation.WaitForCompletionAsync();
+            ;
 
             // Get Peerings in the vnet
             var virtualNetworkPeeringCollection = (await resourceGroup.GetVirtualNetworks().GetAsync(vnetName)).Value.GetVirtualNetworkPeerings();
@@ -102,7 +104,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put peering in the vnet
             var putPeeringOperation = await virtualNetworkPeeringCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetPeeringName, peering);
-            Response<VirtualNetworkPeeringResource> putPeering = await putPeeringOperation.WaitForCompletionAsync();;
+            Response<VirtualNetworkPeeringResource> putPeering = await putPeeringOperation.WaitForCompletionAsync();
+            ;
             Assert.NotNull(putPeering.Value.Data.ETag);
             Assert.AreEqual(vnetPeeringName, putPeering.Value.Data.Name);
             Assert.AreEqual(remoteVirtualNetwork.Value.Id, putPeering.Value.Data.RemoteVirtualNetwork.Id);

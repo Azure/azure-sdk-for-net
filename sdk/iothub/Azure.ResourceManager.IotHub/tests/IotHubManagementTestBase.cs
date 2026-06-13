@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.IotHub.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.IotHub.Tests
 {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotHub.Tests
             return lro.Value;
         }
 
-        protected async Task<IotHubDescriptionResource> CreateIotHub(ResourceGroupResource resourceGroup,string iotHubName)
+        protected async Task<IotHubDescriptionResource> CreateIotHub(ResourceGroupResource resourceGroup, string iotHubName)
         {
             var sku = new IotHubSkuInfo("S1")
             {

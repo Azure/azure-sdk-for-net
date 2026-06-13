@@ -25,6 +25,63 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BarSettingsResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBarSettingsResourceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BarSettingsResourceData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BarSettingsResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BarSettingsResourceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BarSettingsResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BarSettingsResourceData IPersistableModel<BarSettingsResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (BarSettingsResourceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BarSettingsResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="barSettingsResourceData"> The <see cref="BarSettingsResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BarSettingsResourceData barSettingsResourceData)
+        {
+            if (barSettingsResourceData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(barSettingsResourceData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BarSettingsResourceData"/> from. </param>
+        internal static BarSettingsResourceData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeBarSettingsResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BarSettingsResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -77,6 +134,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             writer.WritePropertyName("discriminatorProperty"u8);
             writer.WriteObjectValue(DiscriminatorProperty, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -108,7 +180,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BarSettingsProperties properties = default;
             IList<string> stringArray = default;
             BarQuotaProperties @property = default;
@@ -116,6 +187,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             BarNestedQuotaProperties flattenedNestedProperty = default;
             OptionalFlattenPropertyType optionalFlattenProperty = default;
             LimitJsonObject discriminatorProperty = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -219,74 +291,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 properties,
                 stringArray ?? new ChangeTrackingList<string>(),
                 @property,
                 anotherProperty,
                 flattenedNestedProperty,
                 optionalFlattenProperty,
-                discriminatorProperty);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BarSettingsResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BarSettingsResourceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BarSettingsResourceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BarSettingsResourceData IPersistableModel<BarSettingsResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (BarSettingsResourceData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<BarSettingsResourceData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
-                    {
-                        return DeserializeBarSettingsResourceData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BarSettingsResourceData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<BarSettingsResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="barSettingsResourceData"> The <see cref="BarSettingsResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(BarSettingsResourceData barSettingsResourceData)
-        {
-            if (barSettingsResourceData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(barSettingsResourceData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="BarSettingsResourceData"/> from. </param>
-        internal static BarSettingsResourceData FromResponse(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeBarSettingsResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                discriminatorProperty,
+                additionalBinaryDataProperties);
         }
     }
 }

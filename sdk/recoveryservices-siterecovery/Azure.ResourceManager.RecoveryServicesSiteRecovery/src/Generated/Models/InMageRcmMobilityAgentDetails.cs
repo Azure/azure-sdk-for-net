@@ -7,48 +7,22 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcm mobility agent details. </summary>
     public partial class InMageRcmMobilityAgentDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmMobilityAgentDetails"/>. </summary>
         internal InMageRcmMobilityAgentDetails()
         {
             ReasonsBlockingUpgrade = new ChangeTrackingList<AgentUpgradeBlockedReason>();
+            ReasonsBlockingReinstall = new ChangeTrackingList<AgentReinstallBlockedReason>();
+            ReasonsBlockingReinstallDetails = new ChangeTrackingList<InMageRcmAgentReinstallBlockingErrorDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmMobilityAgentDetails"/>. </summary>
@@ -62,8 +36,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="lastHeartbeatReceivedOn"> The time of the last heartbeat received from the agent. </param>
         /// <param name="reasonsBlockingUpgrade"> The whether update is possible or not. </param>
         /// <param name="isUpgradeable"> A value indicating whether agent is upgradeable or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InMageRcmMobilityAgentDetails(string version, string latestVersion, string latestAgentReleaseDate, string driverVersion, string latestUpgradableVersionWithoutReboot, DateTimeOffset? agentVersionExpireOn, DateTimeOffset? driverVersionExpireOn, DateTimeOffset? lastHeartbeatReceivedOn, IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade, string isUpgradeable, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="agentReinstallState"> The agent auto reinstall state. </param>
+        /// <param name="lastAgentReinstallType"> The last agent reinstall type. </param>
+        /// <param name="agentReinstallJobId"> The agent reinstall job Id. </param>
+        /// <param name="agentReinstallAttemptToVersion"> The last agent reinstall type. </param>
+        /// <param name="osFamilyName"> The OS family name. </param>
+        /// <param name="distroName"> The distro name. </param>
+        /// <param name="distroNameForWhichAgentIsInstalled"> Distro name for which agent is installed. </param>
+        /// <param name="isAgentUpgradeable"> A value indicating whether replication agent upgradeable. </param>
+        /// <param name="isAgentReinstallRequired"> A value indicating whether replication agent reinstallation is required. </param>
+        /// <param name="isLastReinstallSuccessful"> A value indicating whether replication agent reinstallation is required. </param>
+        /// <param name="reasonsBlockingReinstall"> whether reinstall is possible or not. </param>
+        /// <param name="reasonsBlockingReinstallDetails"> whether reinstall is possible or not. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmMobilityAgentDetails(string version, string latestVersion, string latestAgentReleaseDate, string driverVersion, string latestUpgradableVersionWithoutReboot, DateTimeOffset? agentVersionExpireOn, DateTimeOffset? driverVersionExpireOn, DateTimeOffset? lastHeartbeatReceivedOn, IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade, string isUpgradeable, MobilityAgentReinstallType? agentReinstallState, string lastAgentReinstallType, string agentReinstallJobId, string agentReinstallAttemptToVersion, string osFamilyName, string distroName, string distroNameForWhichAgentIsInstalled, bool? isAgentUpgradeable, bool? isAgentReinstallRequired, bool? isLastReinstallSuccessful, IReadOnlyList<AgentReinstallBlockedReason> reasonsBlockingReinstall, IReadOnlyList<InMageRcmAgentReinstallBlockingErrorDetails> reasonsBlockingReinstallDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             LatestVersion = latestVersion;
@@ -75,28 +61,85 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LastHeartbeatReceivedOn = lastHeartbeatReceivedOn;
             ReasonsBlockingUpgrade = reasonsBlockingUpgrade;
             IsUpgradeable = isUpgradeable;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            AgentReinstallState = agentReinstallState;
+            LastAgentReinstallType = lastAgentReinstallType;
+            AgentReinstallJobId = agentReinstallJobId;
+            AgentReinstallAttemptToVersion = agentReinstallAttemptToVersion;
+            OsFamilyName = osFamilyName;
+            DistroName = distroName;
+            DistroNameForWhichAgentIsInstalled = distroNameForWhichAgentIsInstalled;
+            IsAgentUpgradeable = isAgentUpgradeable;
+            IsAgentReinstallRequired = isAgentReinstallRequired;
+            IsLastReinstallSuccessful = isLastReinstallSuccessful;
+            ReasonsBlockingReinstall = reasonsBlockingReinstall;
+            ReasonsBlockingReinstallDetails = reasonsBlockingReinstallDetails;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The agent version. </summary>
         public string Version { get; }
+
         /// <summary> The latest agent version available. </summary>
         public string LatestVersion { get; }
+
         /// <summary> The latest agent version release date. </summary>
         public string LatestAgentReleaseDate { get; }
+
         /// <summary> The driver version. </summary>
         public string DriverVersion { get; }
+
         /// <summary> The latest upgradeable version available without reboot. </summary>
         public string LatestUpgradableVersionWithoutReboot { get; }
+
         /// <summary> The agent version expiry date. </summary>
         public DateTimeOffset? AgentVersionExpireOn { get; }
+
         /// <summary> The driver version expiry date. </summary>
         public DateTimeOffset? DriverVersionExpireOn { get; }
+
         /// <summary> The time of the last heartbeat received from the agent. </summary>
         public DateTimeOffset? LastHeartbeatReceivedOn { get; }
+
         /// <summary> The whether update is possible or not. </summary>
         public IReadOnlyList<AgentUpgradeBlockedReason> ReasonsBlockingUpgrade { get; }
+
         /// <summary> A value indicating whether agent is upgradeable or not. </summary>
         public string IsUpgradeable { get; }
+
+        /// <summary> The agent auto reinstall state. </summary>
+        public MobilityAgentReinstallType? AgentReinstallState { get; }
+
+        /// <summary> The last agent reinstall type. </summary>
+        public string LastAgentReinstallType { get; }
+
+        /// <summary> The agent reinstall job Id. </summary>
+        public string AgentReinstallJobId { get; }
+
+        /// <summary> The last agent reinstall type. </summary>
+        public string AgentReinstallAttemptToVersion { get; }
+
+        /// <summary> The OS family name. </summary>
+        public string OsFamilyName { get; }
+
+        /// <summary> The distro name. </summary>
+        public string DistroName { get; }
+
+        /// <summary> Distro name for which agent is installed. </summary>
+        public string DistroNameForWhichAgentIsInstalled { get; }
+
+        /// <summary> A value indicating whether replication agent upgradeable. </summary>
+        public bool? IsAgentUpgradeable { get; }
+
+        /// <summary> A value indicating whether replication agent reinstallation is required. </summary>
+        public bool? IsAgentReinstallRequired { get; }
+
+        /// <summary> A value indicating whether replication agent reinstallation is required. </summary>
+        public bool? IsLastReinstallSuccessful { get; }
+
+        /// <summary> whether reinstall is possible or not. </summary>
+        public IReadOnlyList<AgentReinstallBlockedReason> ReasonsBlockingReinstall { get; }
+
+        /// <summary> whether reinstall is possible or not. </summary>
+        public IReadOnlyList<InMageRcmAgentReinstallBlockingErrorDetails> ReasonsBlockingReinstallDetails { get; }
     }
 }

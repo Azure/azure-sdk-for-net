@@ -9,6 +9,7 @@
       "$id": "1",
       "kind": "client",
       "name": "PathClient",
+      "isExactName": false,
       "namespace": "Parameters.Path",
       "doc": "Test for path parameters cases.",
       "methods": [
@@ -16,11 +17,13 @@
           "$id": "2",
           "kind": "basic",
           "name": "normal",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "3",
             "name": "normal",
+            "isExactName": false,
             "resourceName": "Path",
             "accessibility": "public",
             "parameters": [
@@ -45,7 +48,32 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "Parameters.Path.normal.name"
+                "crossLanguageDefinitionId": "Parameters.Path.normal.name",
+                "methodParameterSegments": [
+                  {
+                    "$id": "6",
+                    "kind": "method",
+                    "name": "name",
+                    "serializedName": "name",
+                    "type": {
+                      "$id": "7",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Path",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Parameters.Path.normal.name",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -54,7 +82,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -64,29 +93,12 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Parameters.Path.normal",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Parameters.Path"
           },
           "parameters": [
             {
-              "$id": "6",
-              "kind": "method",
-              "name": "name",
-              "serializedName": "name",
-              "type": {
-                "$id": "7",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Path",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "Parameters.Path.normal.name",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "6"
             }
           ],
           "response": {},
@@ -99,11 +111,13 @@
           "$id": "8",
           "kind": "basic",
           "name": "optional",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "9",
             "name": "optional",
+            "isExactName": false,
             "resourceName": "Path",
             "accessibility": "public",
             "parameters": [
@@ -128,7 +142,32 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "Parameters.Path.optional.name"
+                "crossLanguageDefinitionId": "Parameters.Path.optional.name",
+                "methodParameterSegments": [
+                  {
+                    "$id": "12",
+                    "kind": "method",
+                    "name": "name",
+                    "serializedName": "name",
+                    "type": {
+                      "$id": "13",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Path",
+                    "isApiVersion": false,
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Parameters.Path.optional.name",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -137,7 +176,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -147,29 +187,12 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Parameters.Path.optional",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Parameters.Path"
           },
           "parameters": [
             {
-              "$id": "12",
-              "kind": "method",
-              "name": "name",
-              "serializedName": "name",
-              "type": {
-                "$id": "13",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Path",
-              "isApiVersion": false,
-              "optional": true,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "Parameters.Path.optional.name",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "12"
             }
           ],
           "response": {},
@@ -208,12 +231,15 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Parameters.Path.endpoint"
+          "crossLanguageDefinitionId": "Parameters.Path.endpoint",
+          "isExactName": false
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Parameters.Path",
-      "apiVersions": []
+      "apiVersions": [],
+      "isMultiServiceClient": false
     }
   ]
 }

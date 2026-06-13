@@ -11,10 +11,10 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
 {
     public class StorageMoverCollectionTests : StorageMoverManagementTestBase
     {
-       public StorageMoverCollectionTests(bool isAsync)
-            : base(isAsync) //, RecordedTestMode.Record)
-            {
-            }
+        public StorageMoverCollectionTests(bool isAsync)
+             : base(isAsync) //, RecordedTestMode.Record)
+        {
+        }
 
         private ResourceGroupResource _resourceGroup;
 

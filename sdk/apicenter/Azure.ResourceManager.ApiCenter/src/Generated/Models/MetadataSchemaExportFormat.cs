@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ApiCenter.Models
     public readonly partial struct MetadataSchemaExportFormat : IEquatable<MetadataSchemaExportFormat>
     {
         private readonly string _value;
+        /// <summary> The inlined content of a schema document. </summary>
+        private const string InlineValue = "inline";
+        /// <summary> The link to a schema document. The URL is valid for 5 minutes. </summary>
+        private const string LinkValue = "link";
 
         /// <summary> Initializes a new instance of <see cref="MetadataSchemaExportFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MetadataSchemaExportFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InlineValue = "inline";
-        private const string LinkValue = "link";
+            _value = value;
+        }
 
         /// <summary> The inlined content of a schema document. </summary>
         public static MetadataSchemaExportFormat Inline { get; } = new MetadataSchemaExportFormat(InlineValue);
+
         /// <summary> The link to a schema document. The URL is valid for 5 minutes. </summary>
         public static MetadataSchemaExportFormat Link { get; } = new MetadataSchemaExportFormat(LinkValue);
+
         /// <summary> Determines if two <see cref="MetadataSchemaExportFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MetadataSchemaExportFormat left, MetadataSchemaExportFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MetadataSchemaExportFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MetadataSchemaExportFormat left, MetadataSchemaExportFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MetadataSchemaExportFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MetadataSchemaExportFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MetadataSchemaExportFormat(string value) => new MetadataSchemaExportFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MetadataSchemaExportFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MetadataSchemaExportFormat?(string value) => value == null ? null : new MetadataSchemaExportFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MetadataSchemaExportFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MetadataSchemaExportFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

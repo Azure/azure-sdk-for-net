@@ -1,5 +1,33 @@
 # Release History
 
+## 1.12.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.11.1 (2026-06-03)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.57.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
+## 1.11.0 (2025-12-01)
+
+### Features Added
+
+- Added Netezza V2 linked service and dataset definitions.
+- Added Jira V2 connector support in Azure Data Factory.
+- Added enable/disable Interactive Query management APIs.
+- Added `clusterResourceGroupAuthType` to the HDInsight OnDemand linked service definition.
+- Expanded Snowflake V2 options to cover additional data types.
+- Added `partitionOption` property for the Salesforce V2 connector.
+
 ## 1.10.0 (2025-09-03)
 
 ### Features Added

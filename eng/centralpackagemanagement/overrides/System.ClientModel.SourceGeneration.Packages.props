@@ -1,0 +1,6 @@
+<Project>
+  <!-- Source Generation for System.ClientModel requires a specific set of analysis rules -->
+  <ItemGroup Condition="$(IsTestProject) == 'true' and $(MSBuildProjectName.StartsWith('System.ClientModel.SourceGeneration.Tests'))">
+    <PackageVersion Update="Microsoft.CodeAnalysis.CSharp" Version ="4.12.0" />
+  </ItemGroup>
+</Project>

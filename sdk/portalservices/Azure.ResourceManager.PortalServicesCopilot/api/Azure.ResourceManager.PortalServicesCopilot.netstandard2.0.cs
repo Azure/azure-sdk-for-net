@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
     public static partial class ArmPortalServicesCopilotModelFactory
     {
         public static Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData PortalServicesCopilotSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch PortalServicesCopilotSettingPatch(bool? accessControlEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties PortalServicesCopilotSettingsProperties(bool accessControlEnabled = false, Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState? provisioningState = default(Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState?)) { throw null; }
     }
     public partial class PortalServicesCopilotSettingPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch>
@@ -106,9 +107,7 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
         public static Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState Failed { get { throw null; } }
         public static Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState left, Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState (string value) { throw null; }

@@ -1,0 +1,75 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
+using Azure.Core;
+
+// NOTE: The following customization is intentionally retained for backward compatibility.
+namespace Azure.ResourceManager.AppService
+{
+    [CodeGenSerialization(nameof(KeyVaultId), DeserializationValueHook = nameof(DeserializeKeyVaultId))]
+    [CodeGenSerialization(nameof(ThumbprintString), DeserializationValueHook = nameof(DeserializeThumbprintString))]
+    public partial class AppCertificateData
+    {
+        /// <summary>
+        /// Certificate thumbprint.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
+        public BinaryData Thumbprint => BinaryData.FromString(ThumbprintString);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DeserializeKeyVaultId(JsonProperty property, ref ResourceIdentifier keyVaultId)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null || property.Value.GetString().Length == 0)
+            {
+                return;
+            }
+            keyVaultId = new ResourceIdentifier(property.Value.GetString());
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void DeserializeThumbprintString(JsonProperty property, ref string thumbprintString)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null || property.Value.GetString().Length == 0)
+            {
+                return;
+            }
+            thumbprintString = property.Value.GetString();
+        }
+
+        /// <summary> Certificate password. </summary>
+        [WirePath("properties.password")]
+        public string Password { get; set; }    // This property is settable.
+    }
+}

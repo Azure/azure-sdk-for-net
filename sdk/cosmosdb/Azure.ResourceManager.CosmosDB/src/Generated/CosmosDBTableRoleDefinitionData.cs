@@ -13,86 +13,114 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary>
-    /// A class representing the CosmosDBTableRoleDefinition data model.
-    /// Parameters to create and update an Azure Cosmos DB Table Role Definition.
-    /// </summary>
+    /// <summary> Parameters to create and update an Azure Cosmos DB Table Role Definition. </summary>
     public partial class CosmosDBTableRoleDefinitionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBTableRoleDefinitionData"/>. </summary>
         public CosmosDBTableRoleDefinitionData()
         {
-            AssignableScopes = new ChangeTrackingList<string>();
-            Permissions = new ChangeTrackingList<CosmosDBTableRolePermission>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBTableRoleDefinitionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="pathId"> The path id for the Role Definition. </param>
-        /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
-        /// <param name="roleDefinitionType"> Indicates whether the Role Definition was built-in or user created. </param>
-        /// <param name="assignableScopes"> A set of fully qualified Scopes at or below which Table Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </param>
-        /// <param name="permissions"> The set of operations allowed through this Role Definition. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBTableRoleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string pathId, string roleName, CosmosDBSqlRoleDefinitionType? roleDefinitionType, IList<string> assignableScopes, IList<CosmosDBTableRolePermission> permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties to create and update an Azure Cosmos DB Table Role Definition. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBTableRoleDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TableRoleDefinitionResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            PathId = pathId;
-            RoleName = roleName;
-            RoleDefinitionType = roleDefinitionType;
-            AssignableScopes = assignableScopes;
-            Permissions = permissions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties to create and update an Azure Cosmos DB Table Role Definition. </summary>
+        [WirePath("properties")]
+        internal TableRoleDefinitionResourceProperties Properties { get; set; }
 
         /// <summary> The path id for the Role Definition. </summary>
         [WirePath("properties.id")]
-        public string PathId { get; set; }
+        public string PathId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PathId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TableRoleDefinitionResourceProperties();
+                }
+                Properties.PathId = value;
+            }
+        }
+
         /// <summary> A user-friendly name for the Role Definition. Must be unique for the database account. </summary>
         [WirePath("properties.roleName")]
-        public string RoleName { get; set; }
+        public string RoleName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoleName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TableRoleDefinitionResourceProperties();
+                }
+                Properties.RoleName = value;
+            }
+        }
+
         /// <summary> Indicates whether the Role Definition was built-in or user created. </summary>
         [WirePath("properties.type")]
-        public CosmosDBSqlRoleDefinitionType? RoleDefinitionType { get; set; }
+        public CosmosDBSqlRoleDefinitionType? RoleDefinitionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoleDefinitionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TableRoleDefinitionResourceProperties();
+                }
+                Properties.RoleDefinitionType = value;
+            }
+        }
+
         /// <summary> A set of fully qualified Scopes at or below which Table Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </summary>
         [WirePath("properties.assignableScopes")]
-        public IList<string> AssignableScopes { get; }
+        public IList<string> AssignableScopes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TableRoleDefinitionResourceProperties();
+                }
+                return Properties.AssignableScopes;
+            }
+        }
+
         /// <summary> The set of operations allowed through this Role Definition. </summary>
         [WirePath("properties.permissions")]
-        public IList<CosmosDBTableRolePermission> Permissions { get; }
+        public IList<CosmosDBSqlRolePermission> Permissions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TableRoleDefinitionResourceProperties();
+                }
+                return Properties.Permissions;
+            }
+        }
     }
 }

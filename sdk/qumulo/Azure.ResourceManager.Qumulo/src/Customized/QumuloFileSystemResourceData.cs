@@ -5,9 +5,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Qumulo.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Qumulo
 {
@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="initialCapacity"> Storage capacity in TB. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="marketplaceDetails"/>, <paramref name="userDetails"/>, <paramref name="delegatedSubnetId"/> or <paramref name="adminPassword"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public QumuloFileSystemResourceData(AzureLocation location, MarketplaceDetails marketplaceDetails, StorageSku storageSku, QumuloUserDetails userDetails, string delegatedSubnetId, string adminPassword, int initialCapacity) : this(location)
+        public QumuloFileSystemResourceData(Azure.Core.AzureLocation location, MarketplaceDetails marketplaceDetails, StorageSku storageSku, QumuloUserDetails userDetails, string delegatedSubnetId, string adminPassword, int initialCapacity) : this(location)
         {
             MarketplaceDetails = marketplaceDetails;
             StorageSku = storageSku;
-            UserDetails = userDetails;
+            UserDetailsEmail = userDetails.Email;
             DelegatedSubnetId = delegatedSubnetId;
             AdminPassword = adminPassword;
             InitialCapacity = initialCapacity;

@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
@@ -64,7 +64,8 @@ internal partial class AzureTokenAuthenticationPolicy : PipelinePolicy
 
     private bool IsTokenFresh()
     {
-        if (!_currentToken.HasValue) return false;
+        if (!_currentToken.HasValue)
+            return false;
         DateTimeOffset refreshAt = _currentToken.Value.RefreshOn ?? (_currentToken.Value.ExpiresOn - _refreshOffset);
         return DateTimeOffset.UtcNow < refreshAt;
     }

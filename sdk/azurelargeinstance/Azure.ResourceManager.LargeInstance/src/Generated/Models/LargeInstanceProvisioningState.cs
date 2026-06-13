@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.LargeInstance;
 
 namespace Azure.ResourceManager.LargeInstance.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.LargeInstance.Models
     public readonly partial struct LargeInstanceProvisioningState : IEquatable<LargeInstanceProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Accepted means Azure Large Instance resource provisioning has been accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> Creating means Azure Large Instance resource is being created. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Updating means an existing Azure Large Instance resource is being updated. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Failed means Azure Large Instance resource is in failed state. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Succeeded means Azure Large Instance resource creation succeeded during last create/update. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Deleting means Azure Large Instance resource is in the process of being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Migrating means Azure Large Instance resource is being migrated from one subscription or resource group to another. </summary>
+        private const string MigratingValue = "Migrating";
+        /// <summary> Cancelled Azure Large Instance resource operation has been cancelled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="LargeInstanceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LargeInstanceProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AcceptedValue = "Accepted";
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-        private const string DeletingValue = "Deleting";
-        private const string MigratingValue = "Migrating";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> Accepted means Azure Large Instance resource provisioning has been accepted. </summary>
         public static LargeInstanceProvisioningState Accepted { get; } = new LargeInstanceProvisioningState(AcceptedValue);
+
         /// <summary> Creating means Azure Large Instance resource is being created. </summary>
         public static LargeInstanceProvisioningState Creating { get; } = new LargeInstanceProvisioningState(CreatingValue);
+
         /// <summary> Updating means an existing Azure Large Instance resource is being updated. </summary>
         public static LargeInstanceProvisioningState Updating { get; } = new LargeInstanceProvisioningState(UpdatingValue);
+
         /// <summary> Failed means Azure Large Instance resource is in failed state. </summary>
         public static LargeInstanceProvisioningState Failed { get; } = new LargeInstanceProvisioningState(FailedValue);
+
         /// <summary> Succeeded means Azure Large Instance resource creation succeeded during last create/update. </summary>
         public static LargeInstanceProvisioningState Succeeded { get; } = new LargeInstanceProvisioningState(SucceededValue);
+
         /// <summary> Deleting means Azure Large Instance resource is in the process of being deleted. </summary>
         public static LargeInstanceProvisioningState Deleting { get; } = new LargeInstanceProvisioningState(DeletingValue);
+
         /// <summary> Migrating means Azure Large Instance resource is being migrated from one subscription or resource group to another. </summary>
         public static LargeInstanceProvisioningState Migrating { get; } = new LargeInstanceProvisioningState(MigratingValue);
+
         /// <summary> Cancelled Azure Large Instance resource operation has been cancelled. </summary>
         public static LargeInstanceProvisioningState Canceled { get; } = new LargeInstanceProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="LargeInstanceProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LargeInstanceProvisioningState left, LargeInstanceProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LargeInstanceProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LargeInstanceProvisioningState left, LargeInstanceProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LargeInstanceProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LargeInstanceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LargeInstanceProvisioningState(string value) => new LargeInstanceProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LargeInstanceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LargeInstanceProvisioningState?(string value) => value == null ? null : new LargeInstanceProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LargeInstanceProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LargeInstanceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

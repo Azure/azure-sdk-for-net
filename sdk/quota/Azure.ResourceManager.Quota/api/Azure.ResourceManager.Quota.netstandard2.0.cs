@@ -27,7 +27,10 @@ namespace Azure.ResourceManager.Quota
     {
         public CurrentQuotaLimitBaseData() { }
         public Azure.ResourceManager.Quota.Models.QuotaProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.CurrentQuotaLimitBaseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.CurrentQuotaLimitBaseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.CurrentQuotaLimitBaseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.CurrentQuotaLimitBaseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.CurrentQuotaLimitBaseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -70,7 +73,10 @@ namespace Azure.ResourceManager.Quota
     {
         internal CurrentUsagesBaseData() { }
         public Azure.ResourceManager.Quota.Models.QuotaUsagesProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.CurrentUsagesBaseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.CurrentUsagesBaseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.CurrentUsagesBaseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.CurrentUsagesBaseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.CurrentUsagesBaseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -113,7 +119,10 @@ namespace Azure.ResourceManager.Quota
     {
         public GroupQuotaEntityData() { }
         public Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.GroupQuotaEntityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotaEntityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotaEntityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.GroupQuotaEntityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.GroupQuotaEntityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -148,6 +157,8 @@ namespace Azure.ResourceManager.Quota
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.GroupQuotaSubscriptionRequestStatusResource>> GetGroupQuotaSubscriptionRequestStatusAsync(string requestId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Quota.GroupQuotaSubscriptionRequestStatusCollection GetGroupQuotaSubscriptionRequestStatuses() { throw null; }
         public virtual Azure.ResourceManager.Quota.GroupQuotaSubscriptionCollection GetGroupQuotaSubscriptions() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Quota.Models.GroupQuotaResourceUsages> GetGroupQuotaUsages(string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Quota.Models.GroupQuotaResourceUsages> GetGroupQuotaUsagesAsync(string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Quota.Models.GroupQuotaResourceUsages> List(string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Quota.Models.GroupQuotaResourceUsages> ListAsync(string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.Quota.GroupQuotaEntityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotaEntityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -172,7 +183,10 @@ namespace Azure.ResourceManager.Quota
     {
         public GroupQuotaLimitListData() { }
         public Azure.ResourceManager.Quota.Models.GroupQuotaLimitListProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.GroupQuotaLimitListData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotaLimitListData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotaLimitListData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.GroupQuotaLimitListData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.GroupQuotaLimitListData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -210,7 +224,10 @@ namespace Azure.ResourceManager.Quota
     {
         public GroupQuotaRequestStatusData() { }
         public Azure.ResourceManager.Quota.Models.GroupQuotaRequestStatusProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.GroupQuotaRequestStatusData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotaRequestStatusData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotaRequestStatusData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.GroupQuotaRequestStatusData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.GroupQuotaRequestStatusData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -248,7 +265,10 @@ namespace Azure.ResourceManager.Quota
     {
         public GroupQuotasEnforcementStatusData() { }
         public Azure.ResourceManager.Quota.Models.GroupQuotasEnforcementStatusProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -275,7 +295,9 @@ namespace Azure.ResourceManager.Quota
     public partial class GroupQuotaSubscriptionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Quota.GroupQuotaSubscriptionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.GroupQuotaSubscriptionResource>, System.Collections.IEnumerable
     {
         protected GroupQuotaSubscriptionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Quota.GroupQuotaSubscriptionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, System.Guid subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Quota.GroupQuotaSubscriptionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Quota.GroupQuotaSubscriptionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, System.Guid subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Quota.GroupQuotaSubscriptionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -293,7 +315,10 @@ namespace Azure.ResourceManager.Quota
     {
         public GroupQuotaSubscriptionData() { }
         public Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.GroupQuotaSubscriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotaSubscriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotaSubscriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.GroupQuotaSubscriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.GroupQuotaSubscriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -319,7 +344,10 @@ namespace Azure.ResourceManager.Quota
     {
         public GroupQuotaSubscriptionRequestStatusData() { }
         public Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionRequestStatusProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.GroupQuotaSubscriptionRequestStatusData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotaSubscriptionRequestStatusData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.GroupQuotaSubscriptionRequestStatusData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.GroupQuotaSubscriptionRequestStatusData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.GroupQuotaSubscriptionRequestStatusData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -379,7 +407,10 @@ namespace Azure.ResourceManager.Quota
         public Azure.ResourceManager.Quota.Models.QuotaRequestStatus? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Quota.Models.QuotaAllocationRequestBase RequestedResource { get { throw null; } set { } }
         public System.DateTimeOffset? RequestSubmittedOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.QuotaAllocationRequestStatusData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.QuotaAllocationRequestStatusData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.QuotaAllocationRequestStatusData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.QuotaAllocationRequestStatusData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.QuotaAllocationRequestStatusData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -403,6 +434,8 @@ namespace Azure.ResourceManager.Quota
     }
     public static partial class QuotaExtensions
     {
+        public static Azure.Pageable<Azure.ResourceManager.Quota.Models.QuotaOperationResult> GetAll(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Quota.Models.QuotaOperationResult> GetAllAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Quota.CurrentQuotaLimitBaseResource> GetCurrentQuotaLimitBase(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.CurrentQuotaLimitBaseResource>> GetCurrentQuotaLimitBaseAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Quota.CurrentQuotaLimitBaseResource GetCurrentQuotaLimitBaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -420,19 +453,30 @@ namespace Azure.ResourceManager.Quota
         public static Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource GetGroupQuotasEnforcementStatusResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Quota.GroupQuotaSubscriptionRequestStatusResource GetGroupQuotaSubscriptionRequestStatusResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Quota.GroupQuotaSubscriptionResource GetGroupQuotaSubscriptionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Quota.QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, string allocationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Quota.QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, string allocationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Quota.QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string groupQuotaName, string resourceProviderName) { throw null; }
         public static Azure.ResourceManager.Quota.QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string resourceProviderName) { throw null; }
         public static Azure.ResourceManager.Quota.QuotaAllocationRequestStatusResource GetQuotaAllocationRequestStatusResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public static Azure.Pageable<Azure.ResourceManager.Quota.Models.QuotaOperationResult> GetQuotaOperations(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public static Azure.AsyncPageable<Azure.ResourceManager.Quota.Models.QuotaOperationResult> GetQuotaOperationsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Quota.QuotaRequestDetailResource> GetQuotaRequestDetail(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Quota.QuotaRequestDetailResource GetQuotaRequestDetailResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Quota.QuotaRequestDetailCollection GetQuotaRequestDetails(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, System.Guid subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, System.Guid subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource GetSubscriptionQuotaAllocationsListResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Use ArmClient.GetSubscriptionQuotaAllocationsLists(ResourceIdentifier scope) instead.", false)]
         public static Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists(this Azure.ResourceManager.ManagementGroups.ManagementGroupResource managementGroupResource) { throw null; }
     }
     public partial class QuotaRequestDetailCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Quota.QuotaRequestDetailResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.QuotaRequestDetailResource>, System.Collections.IEnumerable
@@ -458,7 +502,10 @@ namespace Azure.ResourceManager.Quota
         public Azure.ResourceManager.Quota.Models.QuotaRequestState? ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? RequestSubmitOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Quota.Models.QuotaSubRequestDetail> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.QuotaRequestDetailData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.QuotaRequestDetailData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.QuotaRequestDetailData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.QuotaRequestDetailData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.QuotaRequestDetailData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -483,18 +530,33 @@ namespace Azure.ResourceManager.Quota
     public partial class SubscriptionQuotaAllocationsListCollection : Azure.ResourceManager.ArmCollection
     {
         protected SubscriptionQuotaAllocationsListCollection() { }
+        public virtual Azure.Response<bool> Exists(System.Guid subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Guid subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource> Get(System.Guid subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource> Get(string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource> Get(string subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource>> GetAsync(System.Guid subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource>> GetAsync(string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource>> GetAsync(string subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource> GetIfExists(System.Guid subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource> GetIfExists(string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource> GetIfExists(string subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource>> GetIfExistsAsync(System.Guid subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource>> GetIfExistsAsync(string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource>> GetIfExistsAsync(string subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SubscriptionQuotaAllocationsListData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListData>
     {
         public SubscriptionQuotaAllocationsListData() { }
         public Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsListProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -538,12 +600,18 @@ namespace Azure.ResourceManager.Quota.Mocking
         public virtual Azure.ResourceManager.Quota.GroupQuotasEnforcementStatusResource GetGroupQuotasEnforcementStatusResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Quota.GroupQuotaSubscriptionRequestStatusResource GetGroupQuotaSubscriptionRequestStatusResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Quota.GroupQuotaSubscriptionResource GetGroupQuotaSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Quota.QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(Azure.Core.ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, string allocationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(Azure.Core.ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, string allocationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Quota.QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses(Azure.Core.ResourceIdentifier scope, string groupQuotaName, string resourceProviderName) { throw null; }
         public virtual Azure.ResourceManager.Quota.QuotaAllocationRequestStatusResource GetQuotaAllocationRequestStatusResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Quota.QuotaRequestDetailResource> GetQuotaRequestDetail(Azure.Core.ResourceIdentifier scope, string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(Azure.Core.ResourceIdentifier scope, string id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Quota.QuotaRequestDetailResource GetQuotaRequestDetailResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Quota.QuotaRequestDetailCollection GetQuotaRequestDetails(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(Azure.Core.ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(Azure.Core.ResourceIdentifier scope, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource GetSubscriptionQuotaAllocationsListResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists(Azure.Core.ResourceIdentifier scope) { throw null; }
     }
     public partial class MockableQuotaManagementGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -554,14 +622,21 @@ namespace Azure.ResourceManager.Quota.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Quota.QuotaAllocationRequestStatusResource> GetQuotaAllocationRequestStatus(string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.QuotaAllocationRequestStatusResource>> GetQuotaAllocationRequestStatusAsync(string subscriptionId, string groupQuotaName, string resourceProviderName, string allocationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Quota.QuotaAllocationRequestStatusCollection GetQuotaAllocationRequestStatuses(string subscriptionId, string groupQuotaName, string resourceProviderName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(System.Guid subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(string subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(System.Guid subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(string subscriptionId, string groupQuotaName, string resourceProviderName, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release. Use ArmClient.GetSubscriptionQuotaAllocationsLists(ResourceIdentifier scope) instead.", false)]
         public virtual Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListCollection GetSubscriptionQuotaAllocationsLists() { throw null; }
     }
     public partial class MockableQuotaTenantResource : Azure.ResourceManager.ArmResource
     {
         protected MockableQuotaTenantResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Quota.Models.QuotaOperationResult> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Quota.Models.QuotaOperationResult> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public virtual Azure.Pageable<Azure.ResourceManager.Quota.Models.QuotaOperationResult> GetQuotaOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", false)]
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Quota.Models.QuotaOperationResult> GetQuotaOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
@@ -571,20 +646,17 @@ namespace Azure.ResourceManager.Quota.Models
     {
         public static Azure.ResourceManager.Quota.CurrentQuotaLimitBaseData CurrentQuotaLimitBaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.QuotaProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.CurrentUsagesBaseData CurrentUsagesBaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.QuotaUsagesProperties properties = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Quota.Models.GroupQuotaDetails GroupQuotaDetails(string resourceName, long? limit, string comment, string unit, long? availableLimit = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = null, string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaDetails GroupQuotaDetails(string resourceName = null, long? limit = default(long?), string comment = null, string unit = null, string value = null, string localizedValue = null, long? availableLimit = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase GroupQuotaEntityBase(string displayName = null, Azure.ResourceManager.Quota.Models.GroupType? groupType = default(Azure.ResourceManager.Quota.Models.GroupType?), Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase GroupQuotaEntityBase(string displayName, Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState) { throw null; }
         public static Azure.ResourceManager.Quota.GroupQuotaEntityData GroupQuotaEntityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaEntityPatch GroupQuotaEntityPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotasEntityPatchProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.GroupQuotaLimit GroupQuotaLimit(Azure.ResourceManager.Quota.Models.GroupQuotaLimitProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.GroupQuotaLimitListData GroupQuotaLimitListData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotaLimitListProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaLimitListProperties GroupQuotaLimitListProperties(Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.GroupQuotaLimit> value = null, string nextLink = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Quota.Models.GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName, long? limit, string comment, string unit, long? availableLimit = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = null, string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName = null, long? limit = default(long?), string comment = null, string unit = null, string value = null, string localizedValue = null, long? availableLimit = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Quota.Models.GroupQuotaRequestBase GroupQuotaRequestBase(long? limit = default(long?), string region = null, string comments = null, string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.Quota.GroupQuotaRequestStatusData GroupQuotaRequestStatusData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotaRequestStatusProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaRequestStatusProperties GroupQuotaRequestStatusProperties(Azure.ResourceManager.Quota.Models.GroupQuotaRequestBase requestedResource = null, System.DateTimeOffset? requestSubmittedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?), string faultCode = null) { throw null; }
@@ -594,7 +666,6 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.Models.GroupQuotasEntityBasePatch GroupQuotasEntityBasePatch(string displayName = null, Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?)) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotasEntityPatchProperties GroupQuotasEntityPatchProperties(string displayName = null, Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?)) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties GroupQuotasEntityProperties(string displayName = null, Azure.ResourceManager.Quota.Models.GroupType? groupType = default(Azure.ResourceManager.Quota.Models.GroupType?), Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties GroupQuotasEntityProperties(string displayName, Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState) { throw null; }
         public static Azure.ResourceManager.Quota.GroupQuotaSubscriptionData GroupQuotaSubscriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionProperties GroupQuotaSubscriptionProperties(string subscriptionId = null, Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?)) { throw null; }
@@ -603,6 +674,8 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.Models.GroupQuotaUsagesBase GroupQuotaUsagesBase(string value = null, string localizedValue = null, long? limit = default(long?), long? usages = default(long?), string unit = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.QuotaAllocationRequestBase QuotaAllocationRequestBase(long? limit = default(long?), string value = null, string localizedValue = null, string region = null) { throw null; }
         public static Azure.ResourceManager.Quota.QuotaAllocationRequestStatusData QuotaAllocationRequestStatusData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.QuotaAllocationRequestBase requestedResource = null, System.DateTimeOffset? requestSubmittedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?), string faultCode = null) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject QuotaLimitJsonObject(string limitObjectType = null) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.QuotaLimitObject QuotaLimitObject(int value = 0, Azure.ResourceManager.Quota.Models.QuotaLimitType? limitType = default(Azure.ResourceManager.Quota.Models.QuotaLimitType?)) { throw null; }
         public static Azure.ResourceManager.Quota.Models.QuotaOperationDisplay QuotaOperationDisplay(string provider = null, string resource = null, string operation = null, string description = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.QuotaOperationResult QuotaOperationResult(string name = null, Azure.ResourceManager.Quota.Models.QuotaOperationDisplay display = null, string origin = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.QuotaProperties QuotaProperties(Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject limit = null, string unit = null, Azure.ResourceManager.Quota.Models.QuotaRequestResourceName name = null, string resourceTypeName = null, System.TimeSpan? quotaPeriod = default(System.TimeSpan?), bool? isQuotaApplicable = default(bool?), System.BinaryData properties = null) { throw null; }
@@ -613,6 +686,7 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.Models.QuotaUsagesProperties QuotaUsagesProperties(Azure.ResourceManager.Quota.Models.QuotaUsagesObject usages = null, string unit = null, Azure.ResourceManager.Quota.Models.QuotaRequestResourceName name = null, string resourceTypeName = null, System.TimeSpan? quotaPeriod = default(System.TimeSpan?), bool? isQuotaApplicable = default(bool?), System.BinaryData properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.ServiceErrorDetail ServiceErrorDetail(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota SubscriptionAllocatedQuota(string subscriptionId = null, long? quotaAllocated = default(long?)) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocations SubscriptionQuotaAllocations(Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.SubscriptionQuotaAllocationsListData SubscriptionQuotaAllocationsListData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsListProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsListProperties SubscriptionQuotaAllocationsListProperties(Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocations> value = null, string nextLink = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsProperties SubscriptionQuotaAllocationsProperties(string resourceName = null, long? limit = default(long?), long? shareableQuota = default(long?), string value = null, string localizedValue = null) { throw null; }
@@ -628,12 +702,11 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.Models.EnforcementState Enabled { get { throw null; } }
         public static Azure.ResourceManager.Quota.Models.EnforcementState NotAvailable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Quota.Models.EnforcementState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Quota.Models.EnforcementState left, Azure.ResourceManager.Quota.Models.EnforcementState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Quota.Models.EnforcementState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Quota.Models.EnforcementState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Quota.Models.EnforcementState left, Azure.ResourceManager.Quota.Models.EnforcementState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -648,7 +721,10 @@ namespace Azure.ResourceManager.Quota.Models
         public string ResourceName { get { throw null; } set { } }
         public string Unit { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotaDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotaDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -661,7 +737,10 @@ namespace Azure.ResourceManager.Quota.Models
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Quota.Models.GroupType? GroupType { get { throw null; } }
         public Azure.ResourceManager.Quota.Models.QuotaRequestStatus? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -672,7 +751,10 @@ namespace Azure.ResourceManager.Quota.Models
     {
         public GroupQuotaEntityPatch() { }
         public Azure.ResourceManager.Quota.Models.GroupQuotasEntityPatchProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotaEntityPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotaEntityPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaEntityPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -683,7 +765,10 @@ namespace Azure.ResourceManager.Quota.Models
     {
         public GroupQuotaLimit() { }
         public Azure.ResourceManager.Quota.Models.GroupQuotaLimitProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaLimit JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaLimit PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotaLimit System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaLimit>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaLimit>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotaLimit System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaLimit>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -696,7 +781,10 @@ namespace Azure.ResourceManager.Quota.Models
         public string NextLink { get { throw null; } }
         public Azure.ResourceManager.Quota.Models.QuotaRequestStatus? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Quota.Models.GroupQuotaLimit> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaLimitListProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaLimitListProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotaLimitListProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaLimitListProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaLimitListProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotaLimitListProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaLimitListProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -706,7 +794,10 @@ namespace Azure.ResourceManager.Quota.Models
     public partial class GroupQuotaLimitProperties : Azure.ResourceManager.Quota.Models.GroupQuotaDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaLimitProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaLimitProperties>
     {
         public GroupQuotaLimitProperties() { }
+        protected override Azure.ResourceManager.Quota.Models.GroupQuotaDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Quota.Models.GroupQuotaDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotaLimitProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaLimitProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaLimitProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotaLimitProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaLimitProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -721,7 +812,10 @@ namespace Azure.ResourceManager.Quota.Models
         public string LocalizedValue { get { throw null; } }
         public string Region { get { throw null; } set { } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaRequestBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaRequestBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotaRequestBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaRequestBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaRequestBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotaRequestBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaRequestBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -735,7 +829,10 @@ namespace Azure.ResourceManager.Quota.Models
         public Azure.ResourceManager.Quota.Models.QuotaRequestStatus? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Quota.Models.GroupQuotaRequestBase RequestedResource { get { throw null; } set { } }
         public System.DateTimeOffset? RequestSubmittedOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaRequestStatusProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaRequestStatusProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotaRequestStatusProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaRequestStatusProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaRequestStatusProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotaRequestStatusProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaRequestStatusProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -746,7 +843,10 @@ namespace Azure.ResourceManager.Quota.Models
     {
         internal GroupQuotaResourceUsages() { }
         public Azure.ResourceManager.Quota.Models.GroupQuotaUsagesBase Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotaResourceUsages System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaResourceUsages>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaResourceUsages>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotaResourceUsages System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaResourceUsages>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -760,7 +860,10 @@ namespace Azure.ResourceManager.Quota.Models
         public Azure.ResourceManager.Quota.Models.EnforcementState? EnforcementEnabled { get { throw null; } set { } }
         public string FaultCode { get { throw null; } }
         public Azure.ResourceManager.Quota.Models.QuotaRequestStatus? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotasEnforcementStatusProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotasEnforcementStatusProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotasEnforcementStatusProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotasEnforcementStatusProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotasEnforcementStatusProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotasEnforcementStatusProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotasEnforcementStatusProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -772,7 +875,10 @@ namespace Azure.ResourceManager.Quota.Models
         public GroupQuotasEntityBasePatch() { }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Quota.Models.QuotaRequestStatus? ProvisioningState { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotasEntityBasePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotasEntityBasePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotasEntityBasePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotasEntityBasePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotasEntityBasePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotasEntityBasePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotasEntityBasePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -782,7 +888,10 @@ namespace Azure.ResourceManager.Quota.Models
     public partial class GroupQuotasEntityPatchProperties : Azure.ResourceManager.Quota.Models.GroupQuotasEntityBasePatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotasEntityPatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotasEntityPatchProperties>
     {
         public GroupQuotasEntityPatchProperties() { }
+        protected override Azure.ResourceManager.Quota.Models.GroupQuotasEntityBasePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Quota.Models.GroupQuotasEntityBasePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotasEntityPatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotasEntityPatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotasEntityPatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotasEntityPatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotasEntityPatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -792,7 +901,10 @@ namespace Azure.ResourceManager.Quota.Models
     public partial class GroupQuotasEntityProperties : Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties>
     {
         public GroupQuotasEntityProperties() { }
+        protected override Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Quota.Models.GroupQuotaEntityBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotasEntityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -804,7 +916,10 @@ namespace Azure.ResourceManager.Quota.Models
         public GroupQuotaSubscriptionProperties() { }
         public Azure.ResourceManager.Quota.Models.QuotaRequestStatus? ProvisioningState { get { throw null; } }
         public string SubscriptionId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -817,7 +932,10 @@ namespace Azure.ResourceManager.Quota.Models
         public Azure.ResourceManager.Quota.Models.QuotaRequestStatus? ProvisioningState { get { throw null; } }
         public System.DateTimeOffset? RequestSubmitOn { get { throw null; } set { } }
         public string SubscriptionId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionRequestStatusProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionRequestStatusProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionRequestStatusProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionRequestStatusProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionRequestStatusProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionRequestStatusProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionRequestStatusProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -832,7 +950,10 @@ namespace Azure.ResourceManager.Quota.Models
         public string Unit { get { throw null; } }
         public long? Usages { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaUsagesBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.GroupQuotaUsagesBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.GroupQuotaUsagesBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaUsagesBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.GroupQuotaUsagesBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.GroupQuotaUsagesBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.GroupQuotaUsagesBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -848,12 +969,11 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.Models.GroupType AllocationGroup { get { throw null; } }
         public static Azure.ResourceManager.Quota.Models.GroupType EnforcedGroup { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Quota.Models.GroupType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Quota.Models.GroupType left, Azure.ResourceManager.Quota.Models.GroupType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Quota.Models.GroupType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Quota.Models.GroupType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Quota.Models.GroupType left, Azure.ResourceManager.Quota.Models.GroupType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -864,7 +984,10 @@ namespace Azure.ResourceManager.Quota.Models
         public string LocalizedValue { get { throw null; } }
         public string Region { get { throw null; } set { } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaAllocationRequestBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaAllocationRequestBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.QuotaAllocationRequestBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaAllocationRequestBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaAllocationRequestBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.QuotaAllocationRequestBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaAllocationRequestBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -874,7 +997,10 @@ namespace Azure.ResourceManager.Quota.Models
     public abstract partial class QuotaLimitJsonObject : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject>
     {
         protected QuotaLimitJsonObject() { }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -886,7 +1012,10 @@ namespace Azure.ResourceManager.Quota.Models
         public QuotaLimitObject(int value) { }
         public Azure.ResourceManager.Quota.Models.QuotaLimitType? LimitType { get { throw null; } set { } }
         public int Value { get { throw null; } set { } }
+        protected override Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.QuotaLimitObject System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaLimitObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaLimitObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.QuotaLimitObject System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaLimitObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -902,12 +1031,11 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.Models.QuotaLimitType Independent { get { throw null; } }
         public static Azure.ResourceManager.Quota.Models.QuotaLimitType Shared { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Quota.Models.QuotaLimitType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Quota.Models.QuotaLimitType left, Azure.ResourceManager.Quota.Models.QuotaLimitType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Quota.Models.QuotaLimitType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Quota.Models.QuotaLimitType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Quota.Models.QuotaLimitType left, Azure.ResourceManager.Quota.Models.QuotaLimitType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -918,7 +1046,10 @@ namespace Azure.ResourceManager.Quota.Models
         public string Operation { get { throw null; } }
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaOperationDisplay JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaOperationDisplay PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.QuotaOperationDisplay System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaOperationDisplay>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaOperationDisplay>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.QuotaOperationDisplay System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaOperationDisplay>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -931,7 +1062,10 @@ namespace Azure.ResourceManager.Quota.Models
         public Azure.ResourceManager.Quota.Models.QuotaOperationDisplay Display { get { throw null; } }
         public string Name { get { throw null; } }
         public string Origin { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaOperationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaOperationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.QuotaOperationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.QuotaOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -948,7 +1082,10 @@ namespace Azure.ResourceManager.Quota.Models
         public System.TimeSpan? QuotaPeriod { get { throw null; } }
         public string ResourceTypeName { get { throw null; } set { } }
         public string Unit { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.QuotaProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.QuotaProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -960,7 +1097,10 @@ namespace Azure.ResourceManager.Quota.Models
         public QuotaRequestResourceName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaRequestResourceName JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaRequestResourceName PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.QuotaRequestResourceName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaRequestResourceName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaRequestResourceName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.QuotaRequestResourceName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaRequestResourceName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -979,12 +1119,11 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.Models.QuotaRequestState Invalid { get { throw null; } }
         public static Azure.ResourceManager.Quota.Models.QuotaRequestState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Quota.Models.QuotaRequestState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Quota.Models.QuotaRequestState left, Azure.ResourceManager.Quota.Models.QuotaRequestState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Quota.Models.QuotaRequestState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Quota.Models.QuotaRequestState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Quota.Models.QuotaRequestState left, Azure.ResourceManager.Quota.Models.QuotaRequestState right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1003,12 +1142,11 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.Models.QuotaRequestStatus Invalid { get { throw null; } }
         public static Azure.ResourceManager.Quota.Models.QuotaRequestStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Quota.Models.QuotaRequestStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Quota.Models.QuotaRequestStatus left, Azure.ResourceManager.Quota.Models.QuotaRequestStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Quota.Models.QuotaRequestStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Quota.Models.QuotaRequestStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Quota.Models.QuotaRequestStatus left, Azure.ResourceManager.Quota.Models.QuotaRequestStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1022,7 +1160,10 @@ namespace Azure.ResourceManager.Quota.Models
         public string ResourceTypeName { get { throw null; } }
         public System.Guid? SubRequestId { get { throw null; } }
         public string Unit { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaSubRequestDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaSubRequestDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.QuotaSubRequestDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaSubRequestDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaSubRequestDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.QuotaSubRequestDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaSubRequestDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1034,7 +1175,10 @@ namespace Azure.ResourceManager.Quota.Models
         internal QuotaUsagesObject() { }
         public Azure.ResourceManager.Quota.Models.QuotaUsagesType? UsagesType { get { throw null; } }
         public int Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaUsagesObject JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaUsagesObject PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.QuotaUsagesObject System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaUsagesObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaUsagesObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.QuotaUsagesObject System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaUsagesObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1051,7 +1195,10 @@ namespace Azure.ResourceManager.Quota.Models
         public string ResourceTypeName { get { throw null; } }
         public string Unit { get { throw null; } }
         public Azure.ResourceManager.Quota.Models.QuotaUsagesObject Usages { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaUsagesProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaUsagesProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.QuotaUsagesProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaUsagesProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaUsagesProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.QuotaUsagesProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaUsagesProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1067,12 +1214,11 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.Models.QuotaUsagesType Combined { get { throw null; } }
         public static Azure.ResourceManager.Quota.Models.QuotaUsagesType Individual { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Quota.Models.QuotaUsagesType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.Quota.Models.QuotaUsagesType left, Azure.ResourceManager.Quota.Models.QuotaUsagesType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Quota.Models.QuotaUsagesType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Quota.Models.QuotaUsagesType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Quota.Models.QuotaUsagesType left, Azure.ResourceManager.Quota.Models.QuotaUsagesType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -1081,7 +1227,10 @@ namespace Azure.ResourceManager.Quota.Models
         internal ServiceErrorDetail() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.ServiceErrorDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.ServiceErrorDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.ServiceErrorDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.ServiceErrorDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.ServiceErrorDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.ServiceErrorDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.ServiceErrorDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1093,7 +1242,10 @@ namespace Azure.ResourceManager.Quota.Models
         internal SubscriptionAllocatedQuota() { }
         public long? QuotaAllocated { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1104,7 +1256,10 @@ namespace Azure.ResourceManager.Quota.Models
     {
         public SubscriptionQuotaAllocations() { }
         public Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocations JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocations PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocations System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocations>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocations>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocations System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocations>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1117,7 +1272,10 @@ namespace Azure.ResourceManager.Quota.Models
         public string NextLink { get { throw null; } }
         public Azure.ResourceManager.Quota.Models.QuotaRequestStatus? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocations> Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsListProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsListProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsListProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsListProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsListProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsListProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsListProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1127,7 +1285,10 @@ namespace Azure.ResourceManager.Quota.Models
     public partial class SubscriptionQuotaAllocationsProperties : Azure.ResourceManager.Quota.Models.SubscriptionQuotaDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsProperties>
     {
         public SubscriptionQuotaAllocationsProperties() { }
+        protected override Azure.ResourceManager.Quota.Models.SubscriptionQuotaDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.Quota.Models.SubscriptionQuotaDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1142,7 +1303,10 @@ namespace Azure.ResourceManager.Quota.Models
         public string ResourceName { get { throw null; } set { } }
         public long? ShareableQuota { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.SubscriptionQuotaDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.SubscriptionQuotaDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.ResourceManager.Quota.Models.SubscriptionQuotaDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.SubscriptionQuotaDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.SubscriptionQuotaDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Quota.Models.SubscriptionQuotaDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.SubscriptionQuotaDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

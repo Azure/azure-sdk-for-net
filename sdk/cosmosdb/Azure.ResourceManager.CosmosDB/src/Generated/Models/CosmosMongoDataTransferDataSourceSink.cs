@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -24,31 +25,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
             DatabaseName = databaseName;
             CollectionName = collectionName;
-            Component = DataTransferComponent.CosmosDBMongo;
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosMongoDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="remoteAccountName"></param>
         /// <param name="databaseName"></param>
         /// <param name="collectionName"></param>
-        internal CosmosMongoDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> serializedAdditionalRawData, string remoteAccountName, string databaseName, string collectionName) : base(component, serializedAdditionalRawData, remoteAccountName)
+        internal CosmosMongoDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> additionalBinaryDataProperties, string remoteAccountName, string databaseName, string collectionName) : base(component, additionalBinaryDataProperties, remoteAccountName)
         {
             DatabaseName = databaseName;
             CollectionName = collectionName;
-            Component = component;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosMongoDataTransferDataSourceSink"/> for deserialization. </summary>
-        internal CosmosMongoDataTransferDataSourceSink()
-        {
-        }
-
-        /// <summary> Gets or sets the database name. </summary>
+        /// <summary> Gets or sets the DatabaseName. </summary>
         [WirePath("databaseName")]
         public string DatabaseName { get; set; }
-        /// <summary> Gets or sets the collection name. </summary>
+
+        /// <summary> Gets or sets the CollectionName. </summary>
         [WirePath("collectionName")]
         public string CollectionName { get; set; }
     }

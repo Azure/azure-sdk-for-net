@@ -6,9 +6,9 @@
 using System;
 using Azure.Core;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
-    /// <summary> Description of the IoT hub. </summary>
     public partial class IotHubDefinitionDescription
     {
         /// <summary> Initializes a new instance of <see cref="IotHubDefinitionDescription"/>. </summary>

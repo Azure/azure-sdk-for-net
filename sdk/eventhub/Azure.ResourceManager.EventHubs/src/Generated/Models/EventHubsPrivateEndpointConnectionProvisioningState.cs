@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.EventHubs.Models
     public readonly partial struct EventHubsPrivateEndpointConnectionProvisioningState : IEquatable<EventHubsPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateEndpointConnectionProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EventHubsPrivateEndpointConnectionProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.EventHubs.Models
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
 
-        /// <summary> Creating. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EventHubsPrivateEndpointConnectionProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Creating. </summary>
         public static EventHubsPrivateEndpointConnectionProvisioningState Creating { get; } = new EventHubsPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static EventHubsPrivateEndpointConnectionProvisioningState Updating { get; } = new EventHubsPrivateEndpointConnectionProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static EventHubsPrivateEndpointConnectionProvisioningState Deleting { get; } = new EventHubsPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static EventHubsPrivateEndpointConnectionProvisioningState Succeeded { get; } = new EventHubsPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static EventHubsPrivateEndpointConnectionProvisioningState Canceled { get; } = new EventHubsPrivateEndpointConnectionProvisioningState(CanceledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static EventHubsPrivateEndpointConnectionProvisioningState Failed { get; } = new EventHubsPrivateEndpointConnectionProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="EventHubsPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventHubsPrivateEndpointConnectionProvisioningState left, EventHubsPrivateEndpointConnectionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventHubsPrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventHubsPrivateEndpointConnectionProvisioningState left, EventHubsPrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubsPrivateEndpointConnectionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventHubsPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventHubsPrivateEndpointConnectionProvisioningState(string value) => new EventHubsPrivateEndpointConnectionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventHubsPrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventHubsPrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new EventHubsPrivateEndpointConnectionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventHubsPrivateEndpointConnectionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventHubsPrivateEndpointConnectionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

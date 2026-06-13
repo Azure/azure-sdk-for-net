@@ -39,9 +39,9 @@ namespace Azure.Search.Documents
                 // play if somebody puts a bound on the Channel in the future.
                 if (!writer.TryWrite(item))
                 {
-                    #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                     writer.WriteAsync(item, cancellationToken).AsTask().GetAwaiter().GetResult();
-                    #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
                 }
             }
         }

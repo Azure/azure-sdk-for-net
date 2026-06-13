@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct ServiceAccountQuotaUsageStatus : IEquatable<ServiceAccountQuotaUsageStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServiceAccountQuotaUsageStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServiceAccountQuotaUsageStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string IncludedValue = "Included";
         private const string BlockedValue = "Blocked";
         private const string InOverageValue = "InOverage";
         private const string UnknownValue = "Unknown";
 
-        /// <summary> Included. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountQuotaUsageStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServiceAccountQuotaUsageStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Included. </summary>
         public static ServiceAccountQuotaUsageStatus Included { get; } = new ServiceAccountQuotaUsageStatus(IncludedValue);
-        /// <summary> Blocked. </summary>
+
+        /// <summary> Gets the Blocked. </summary>
         public static ServiceAccountQuotaUsageStatus Blocked { get; } = new ServiceAccountQuotaUsageStatus(BlockedValue);
-        /// <summary> InOverage. </summary>
+
+        /// <summary> Gets the InOverage. </summary>
         public static ServiceAccountQuotaUsageStatus InOverage { get; } = new ServiceAccountQuotaUsageStatus(InOverageValue);
-        /// <summary> Unknown. </summary>
+
+        /// <summary> Gets the Unknown. </summary>
         public static ServiceAccountQuotaUsageStatus Unknown { get; } = new ServiceAccountQuotaUsageStatus(UnknownValue);
+
         /// <summary> Determines if two <see cref="ServiceAccountQuotaUsageStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceAccountQuotaUsageStatus left, ServiceAccountQuotaUsageStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceAccountQuotaUsageStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceAccountQuotaUsageStatus left, ServiceAccountQuotaUsageStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceAccountQuotaUsageStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceAccountQuotaUsageStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceAccountQuotaUsageStatus(string value) => new ServiceAccountQuotaUsageStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceAccountQuotaUsageStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceAccountQuotaUsageStatus?(string value) => value == null ? null : new ServiceAccountQuotaUsageStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceAccountQuotaUsageStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceAccountQuotaUsageStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

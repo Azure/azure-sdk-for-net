@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageCache
 {
     /// <summary>
     /// A class representing a collection of <see cref="AutoExportJobResource"/> and their operations.
     /// Each <see cref="AutoExportJobResource"/> in the collection will belong to the same instance of <see cref="AmlFileSystemResource"/>.
-    /// To get an <see cref="AutoExportJobCollection"/> instance call the GetAutoExportJobs method from an instance of <see cref="AmlFileSystemResource"/>.
+    /// To get a <see cref="AutoExportJobCollection"/> instance call the GetAutoExportJobs method from an instance of <see cref="AmlFileSystemResource"/>.
     /// </summary>
     public partial class AutoExportJobCollection : ArmCollection, IEnumerable<AutoExportJobResource>, IAsyncEnumerable<AutoExportJobResource>
     {
-        private readonly ClientDiagnostics _autoExportJobautoExportJobsClientDiagnostics;
-        private readonly AutoExportJobsRestOperations _autoExportJobautoExportJobsRestClient;
+        private readonly ClientDiagnostics _autoExportJobsClientDiagnostics;
+        private readonly AutoExportJobs _autoExportJobsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AutoExportJobCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AutoExportJobCollection for mocking. </summary>
         protected AutoExportJobCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AutoExportJobCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoExportJobCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AutoExportJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _autoExportJobautoExportJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", AutoExportJobResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AutoExportJobResource.ResourceType, out string autoExportJobautoExportJobsApiVersion);
-            _autoExportJobautoExportJobsRestClient = new AutoExportJobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, autoExportJobautoExportJobsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(AutoExportJobResource.ResourceType, out string autoExportJobApiVersion);
+            _autoExportJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StorageCache", AutoExportJobResource.ResourceType.Namespace, Diagnostics);
+            _autoExportJobsRestClient = new AutoExportJobs(_autoExportJobsClientDiagnostics, Pipeline, Endpoint, autoExportJobApiVersion ?? "2026-01-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != AmlFileSystemResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AmlFileSystemResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, AmlFileSystemResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Create or update an auto export job.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>autoExportJobs_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoExportJobs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="autoExportJobName"> Name for the auto export job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="data"> Object containing the user-selectable properties of the auto export job. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoExportJobName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<AutoExportJobResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string autoExportJobName, AutoExportJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autoExportJobName, nameof(autoExportJobName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _autoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _autoExportJobautoExportJobsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageCacheArmOperation<AutoExportJobResource>(new AutoExportJobOperationSource(Client), _autoExportJobautoExportJobsClientDiagnostics, Pipeline, _autoExportJobautoExportJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autoExportJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, AutoExportJobData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                StorageCacheArmOperation<AutoExportJobResource> operation = new StorageCacheArmOperation<AutoExportJobResource>(
+                    new AutoExportJobResourceOperationSource(Client),
+                    _autoExportJobsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.StorageCache
         /// Create or update an auto export job.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>autoExportJobs_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoExportJobs_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="autoExportJobName"> Name for the auto export job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="data"> Object containing the user-selectable properties of the auto export job. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoExportJobName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<AutoExportJobResource> CreateOrUpdate(WaitUntil waitUntil, string autoExportJobName, AutoExportJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autoExportJobName, nameof(autoExportJobName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _autoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _autoExportJobautoExportJobsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, data, cancellationToken);
-                var operation = new StorageCacheArmOperation<AutoExportJobResource>(new AutoExportJobOperationSource(Client), _autoExportJobautoExportJobsClientDiagnostics, Pipeline, _autoExportJobautoExportJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autoExportJobsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, AutoExportJobData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                StorageCacheArmOperation<AutoExportJobResource> operation = new StorageCacheArmOperation<AutoExportJobResource>(
+                    new AutoExportJobResourceOperationSource(Client),
+                    _autoExportJobsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.StorageCache
         /// Returns an auto export job.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoExportJobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="autoExportJobName"> Name for the auto export job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoExportJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AutoExportJobResource>> GetAsync(string autoExportJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autoExportJobName, nameof(autoExportJobName));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.Get");
+            using DiagnosticScope scope = _autoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.Get");
             scope.Start();
             try
             {
-                var response = await _autoExportJobautoExportJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AutoExportJobData> response = Response.FromValue(AutoExportJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutoExportJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.StorageCache
         /// Returns an auto export job.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoExportJobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="autoExportJobName"> Name for the auto export job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoExportJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AutoExportJobResource> Get(string autoExportJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autoExportJobName, nameof(autoExportJobName));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.Get");
+            using DiagnosticScope scope = _autoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.Get");
             scope.Start();
             try
             {
-                var response = _autoExportJobautoExportJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AutoExportJobData> response = Response.FromValue(AutoExportJobData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutoExportJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.StorageCache
         /// Returns all the auto export jobs the user has access to under an AML File System.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>autoExportJobs_ListByAmlFileSystem</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoExportJobs_ListByAmlFilesystem. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutoExportJobResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutoExportJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutoExportJobResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _autoExportJobautoExportJobsRestClient.CreateListByAmlFileSystemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autoExportJobautoExportJobsRestClient.CreateListByAmlFileSystemNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutoExportJobResource(Client, AutoExportJobData.DeserializeAutoExportJobData(e)), _autoExportJobautoExportJobsClientDiagnostics, Pipeline, "AutoExportJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AutoExportJobData, AutoExportJobResource>(new AutoExportJobsGetByAmlFilesystemAsyncCollectionResultOfT(
+                _autoExportJobsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AutoExportJobCollection.GetAll"), data => new AutoExportJobResource(Client, data));
         }
 
         /// <summary>
         /// Returns all the auto export jobs the user has access to under an AML File System.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>autoExportJobs_ListByAmlFileSystem</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoExportJobs_ListByAmlFilesystem. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> A collection of <see cref="AutoExportJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutoExportJobResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _autoExportJobautoExportJobsRestClient.CreateListByAmlFileSystemRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _autoExportJobautoExportJobsRestClient.CreateListByAmlFileSystemNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutoExportJobResource(Client, AutoExportJobData.DeserializeAutoExportJobData(e)), _autoExportJobautoExportJobsClientDiagnostics, Pipeline, "AutoExportJobCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AutoExportJobData, AutoExportJobResource>(new AutoExportJobsGetByAmlFilesystemCollectionResultOfT(
+                _autoExportJobsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "AutoExportJobCollection.GetAll"), data => new AutoExportJobResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoExportJobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="autoExportJobName"> Name for the auto export job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoExportJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string autoExportJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autoExportJobName, nameof(autoExportJobName));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.Exists");
+            using DiagnosticScope scope = _autoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _autoExportJobautoExportJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AutoExportJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutoExportJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutoExportJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.StorageCache
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoExportJobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="autoExportJobName"> Name for the auto export job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoExportJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string autoExportJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autoExportJobName, nameof(autoExportJobName));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.Exists");
+            using DiagnosticScope scope = _autoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = _autoExportJobautoExportJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AutoExportJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutoExportJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutoExportJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.StorageCache
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoExportJobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="autoExportJobName"> Name for the auto export job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoExportJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<AutoExportJobResource>> GetIfExistsAsync(string autoExportJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autoExportJobName, nameof(autoExportJobName));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.GetIfExists");
+            using DiagnosticScope scope = _autoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _autoExportJobautoExportJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AutoExportJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutoExportJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutoExportJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AutoExportJobResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutoExportJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.StorageCache
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFilesystemName}/autoExportJobs/{autoExportJobName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>autoExportJobs_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AutoExportJobs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AutoExportJobResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="autoExportJobName"> Name for the auto export job. Allows alphanumerics, underscores, and hyphens. Start and end with alphanumeric. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="autoExportJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="autoExportJobName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<AutoExportJobResource> GetIfExists(string autoExportJobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(autoExportJobName, nameof(autoExportJobName));
 
-            using var scope = _autoExportJobautoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.GetIfExists");
+            using DiagnosticScope scope = _autoExportJobsClientDiagnostics.CreateScope("AutoExportJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _autoExportJobautoExportJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _autoExportJobsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, autoExportJobName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AutoExportJobData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AutoExportJobData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AutoExportJobData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AutoExportJobResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AutoExportJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.StorageCache
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<AutoExportJobResource> IAsyncEnumerable<AutoExportJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

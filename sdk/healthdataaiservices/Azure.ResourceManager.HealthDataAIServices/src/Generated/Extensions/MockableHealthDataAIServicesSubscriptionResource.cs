@@ -38,7 +38,23 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
 
         private DeidServices DeidServicesRestClient => _deidServicesRestClient ??= new DeidServices(DeidServicesClientDiagnostics, Pipeline, Endpoint, "2024-09-20");
 
-        /// <summary> List DeidService resources by subscription ID. </summary>
+        /// <summary>
+        /// List DeidService resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HealthDataAIServices/deidServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeidServices_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeidServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeidServiceResource> GetDeidServicesAsync(CancellationToken cancellationToken = default)
@@ -47,10 +63,26 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetBySubscriptionAsyncCollectionResultOfT(DeidServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeidServiceResource(Client, data));
+            return new AsyncPageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetBySubscriptionAsyncCollectionResultOfT(DeidServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHealthDataAIServicesSubscriptionResource.GetDeidServices"), data => new DeidServiceResource(Client, data));
         }
 
-        /// <summary> List DeidService resources by subscription ID. </summary>
+        /// <summary>
+        /// List DeidService resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.HealthDataAIServices/deidServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeidServices_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeidServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeidServiceResource> GetDeidServices(CancellationToken cancellationToken = default)
@@ -59,7 +91,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetBySubscriptionCollectionResultOfT(DeidServicesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DeidServiceResource(Client, data));
+            return new PageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetBySubscriptionCollectionResultOfT(DeidServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableHealthDataAIServicesSubscriptionResource.GetDeidServices"), data => new DeidServiceResource(Client, data));
         }
     }
 }

@@ -29,7 +29,8 @@
             "$ref": "1"
           },
           "doc": "The version 2022-12-01-preview.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "_Specs_.Azure.Core.Scalar",
@@ -37,14 +38,15 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
     {
       "$id": "4",
       "kind": "constant",
-      "name": "getContentType",
+      "name": "GetResponseContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -55,12 +57,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "6",
       "kind": "constant",
-      "name": "GetResponseContentType",
+      "name": "GetResponseContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -71,12 +74,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "8",
       "kind": "constant",
-      "name": "GetResponseContentType1",
+      "name": "GetResponseContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -87,12 +91,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "10",
       "kind": "constant",
-      "name": "GetResponseContentType2",
+      "name": "GetResponseContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -103,12 +108,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "12",
       "kind": "constant",
-      "name": "GetResponseContentType3",
+      "name": "GetResponseContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -119,12 +125,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "14",
       "kind": "constant",
-      "name": "postContentType",
+      "name": "GetResponseContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -135,12 +142,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "16",
       "kind": "constant",
-      "name": "GetResponseContentType4",
+      "name": "GetResponseContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -151,7 +159,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -163,6 +172,12 @@
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationModel",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "AzureLocationModel"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "19",
@@ -194,7 +209,8 @@
               "name": "location"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -204,6 +220,7 @@
       "$id": "22",
       "kind": "client",
       "name": "ScalarClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.Core.Scalar",
       "methods": [],
       "parameters": [
@@ -235,9 +252,11 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.endpoint",
+          "isExactName": false
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar",
       "apiVersions": [
@@ -248,12 +267,14 @@
           "$id": "26",
           "kind": "client",
           "name": "AzureLocationScalar",
+          "isExactName": false,
           "namespace": "_Specs_.Azure.Core.Scalar",
           "methods": [
             {
               "$id": "27",
               "kind": "basic",
               "name": "get",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2022-12-01-preview"
@@ -262,6 +283,7 @@
               "operation": {
                 "$id": "28",
                 "name": "get",
+                "isExactName": false,
                 "resourceName": "AzureLocationScalar",
                 "doc": "get azureLocation value",
                 "accessibility": "public",
@@ -280,7 +302,28 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.get.accept"
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "30",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "4"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -289,12 +332,12 @@
                       200
                     ],
                     "bodyType": {
-                      "$id": "30",
+                      "$id": "31",
                       "kind": "string",
                       "name": "azureLocation",
                       "crossLanguageDefinitionId": "Azure.Core.azureLocation",
                       "baseType": {
-                        "$id": "31",
+                        "$id": "32",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -314,7 +357,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "GET",
@@ -324,30 +372,17 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.get",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Scalar"
               },
               "parameters": [
                 {
-                  "$id": "32",
-                  "kind": "method",
-                  "name": "accept",
-                  "serializedName": "Accept",
-                  "type": {
-                    "$ref": "4"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.get.accept",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "30"
                 }
               ],
               "response": {
                 "type": {
-                  "$ref": "30"
+                  "$ref": "31"
                 }
               },
               "isOverride": false,
@@ -359,6 +394,7 @@
               "$id": "33",
               "kind": "basic",
               "name": "put",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2022-12-01-preview"
@@ -367,6 +403,7 @@
               "operation": {
                 "$id": "34",
                 "name": "put",
+                "isExactName": false,
                 "resourceName": "AzureLocationScalar",
                 "doc": "put azureLocation value",
                 "accessibility": "public",
@@ -385,21 +422,42 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.put.contentType"
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.put.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "36",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "8"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.put.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "36",
+                    "$id": "37",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
                     "doc": "_",
                     "type": {
-                      "$id": "37",
+                      "$id": "38",
                       "kind": "string",
                       "name": "azureLocation",
                       "crossLanguageDefinitionId": "Azure.Core.azureLocation",
                       "baseType": {
-                        "$id": "38",
+                        "$id": "39",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -416,7 +474,45 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.put.body"
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.put.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "40",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "doc": "_",
+                        "type": {
+                          "$id": "41",
+                          "kind": "string",
+                          "name": "azureLocation",
+                          "crossLanguageDefinitionId": "Azure.Core.azureLocation",
+                          "baseType": {
+                            "$id": "42",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.put.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "body"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -425,7 +521,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "PUT",
@@ -438,54 +535,15 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.put",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Scalar"
               },
               "parameters": [
                 {
-                  "$id": "39",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "type": {
-                    "$ref": "10"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.put.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "36"
                 },
                 {
-                  "$id": "40",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "doc": "_",
-                  "type": {
-                    "$id": "41",
-                    "kind": "string",
-                    "name": "azureLocation",
-                    "crossLanguageDefinitionId": "Azure.Core.azureLocation",
-                    "baseType": {
-                      "$id": "42",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "decorators": []
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.put.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "40"
                 }
               ],
               "response": {},
@@ -498,6 +556,7 @@
               "$id": "43",
               "kind": "basic",
               "name": "post",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2022-12-01-preview"
@@ -506,6 +565,7 @@
               "operation": {
                 "$id": "44",
                 "name": "post",
+                "isExactName": false,
                 "resourceName": "AzureLocationScalar",
                 "doc": "post a model which has azureLocation property",
                 "accessibility": "public",
@@ -524,15 +584,36 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.contentType"
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "46",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "type": {
+                          "$ref": "12"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "46",
+                    "$id": "47",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
                     "type": {
-                      "$ref": "14"
+                      "$ref": "16"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -540,10 +621,31 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.accept"
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "48",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "16"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "47",
+                    "$id": "49",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -560,7 +662,34 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.body"
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "50",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "doc": "_",
+                        "type": {
+                          "$ref": "18"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "body"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -575,7 +704,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "POST",
@@ -588,60 +722,18 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Scalar"
               },
               "parameters": [
                 {
-                  "$id": "48",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "type": {
-                    "$ref": "16"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "46"
                 },
                 {
-                  "$id": "49",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "doc": "_",
-                  "type": {
-                    "$ref": "18"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "50"
                 },
                 {
-                  "$id": "50",
-                  "kind": "method",
-                  "name": "accept",
-                  "serializedName": "Accept",
-                  "type": {
-                    "$ref": "14"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.post.accept",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "48"
                 }
               ],
               "response": {
@@ -658,6 +750,7 @@
               "$id": "51",
               "kind": "basic",
               "name": "header",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2022-12-01-preview"
@@ -666,6 +759,7 @@
               "operation": {
                 "$id": "52",
                 "name": "header",
+                "isExactName": false,
                 "resourceName": "AzureLocationScalar",
                 "doc": "azureLocation value header",
                 "accessibility": "public",
@@ -696,7 +790,40 @@
                     "scope": "Method",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.header.region"
+                    "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.header.region",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "56",
+                        "kind": "method",
+                        "name": "region",
+                        "serializedName": "region",
+                        "doc": "_",
+                        "type": {
+                          "$id": "57",
+                          "kind": "string",
+                          "name": "azureLocation",
+                          "crossLanguageDefinitionId": "Azure.Core.azureLocation",
+                          "baseType": {
+                            "$id": "58",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.header.region",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -705,7 +832,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -715,37 +843,12 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.header",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Scalar"
               },
               "parameters": [
                 {
-                  "$id": "56",
-                  "kind": "method",
-                  "name": "region",
-                  "serializedName": "region",
-                  "doc": "_",
-                  "type": {
-                    "$id": "57",
-                    "kind": "string",
-                    "name": "azureLocation",
-                    "crossLanguageDefinitionId": "Azure.Core.azureLocation",
-                    "baseType": {
-                      "$id": "58",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "decorators": []
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.header.region",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "56"
                 }
               ],
               "response": {},
@@ -758,6 +861,7 @@
               "$id": "59",
               "kind": "basic",
               "name": "query",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "2022-12-01-preview"
@@ -766,6 +870,7 @@
               "operation": {
                 "$id": "60",
                 "name": "query",
+                "isExactName": false,
                 "resourceName": "AzureLocationScalar",
                 "doc": "azureLocation value query",
                 "accessibility": "public",
@@ -796,7 +901,40 @@
                     "scope": "Method",
                     "decorators": [],
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.query.region",
-                    "readOnly": false
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$id": "64",
+                        "kind": "method",
+                        "name": "region",
+                        "serializedName": "region",
+                        "doc": "_",
+                        "type": {
+                          "$id": "65",
+                          "kind": "string",
+                          "name": "azureLocation",
+                          "crossLanguageDefinitionId": "Azure.Core.azureLocation",
+                          "baseType": {
+                            "$id": "66",
+                            "kind": "string",
+                            "name": "string",
+                            "crossLanguageDefinitionId": "TypeSpec.string",
+                            "decorators": []
+                          },
+                          "decorators": []
+                        },
+                        "location": "Query",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.query.region",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   }
                 ],
                 "responses": [
@@ -805,7 +943,8 @@
                       204
                     ],
                     "headers": [],
-                    "isErrorResponse": false
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
                   }
                 ],
                 "httpMethod": "POST",
@@ -815,37 +954,12 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.query",
-                "decorators": []
+                "decorators": [],
+                "namespace": "_Specs_.Azure.Core.Scalar"
               },
               "parameters": [
                 {
-                  "$id": "64",
-                  "kind": "method",
-                  "name": "region",
-                  "serializedName": "region",
-                  "doc": "_",
-                  "type": {
-                    "$id": "65",
-                    "kind": "string",
-                    "name": "azureLocation",
-                    "crossLanguageDefinitionId": "Azure.Core.azureLocation",
-                    "baseType": {
-                      "$id": "66",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "decorators": []
-                  },
-                  "location": "Query",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.query.region",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "64"
                 }
               ],
               "response": {},
@@ -884,9 +998,11 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar.endpoint",
+              "isExactName": false
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Scalar.AzureLocationScalar",
           "apiVersions": [
@@ -894,9 +1010,11 @@
           ],
           "parent": {
             "$ref": "22"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

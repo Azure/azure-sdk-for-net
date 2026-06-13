@@ -3,13 +3,16 @@
 
 #nullable disable
 
+using System.Threading;
 using Azure.Core;
 using Azure.ResourceManager.Reservations.Models;
-using Azure.ResourceManager.Resources;
-using System.Threading;
 
 namespace Azure.ResourceManager.Reservations.Mocking
 {
+    // Justification: GA exposed direct GetQuotaRequestDetail and GetCatalog overloads on the
+    // mockable subscription extension resource, including shorter and options-bag catalog overloads.
+    // The TypeSpec generator emits collection or long-parameter methods, so these forwarders preserve
+    // the GA convenience surface and mocking target.
     public partial class MockableReservationsSubscriptionResource : ArmResource
     {
         /// <summary>
@@ -33,17 +36,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ReservationCatalog> GetCatalogAsync(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
-        {
-            SubscriptionResourceGetCatalogOptions options = new SubscriptionResourceGetCatalogOptions
-            {
-                ReservedResourceType = reservedResourceType,
-                Location = location,
-                PublisherId = publisherId,
-                OfferId = offerId,
-                PlanId = planId
-            };
-            return GetCatalogAsync(options, cancellationToken);
-        }
+            => GetCatalogAsync(reservedResourceType, location, publisherId, offerId, planId, filter: default, skip: default, take: default, cancellationToken);
 
         /// <summary>
         /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
@@ -66,16 +59,50 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ReservationCatalog> GetCatalog(string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
+            => GetCatalog(reservedResourceType, location, publisherId, offerId, planId, filter: default, skip: default, take: default, cancellationToken);
+
+        /// <summary>
+        /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetCatalog</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options to apply to the catalog request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ReservationCatalog> GetCatalogAsync(SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
         {
-            SubscriptionResourceGetCatalogOptions options = new SubscriptionResourceGetCatalogOptions
-            {
-                ReservedResourceType = reservedResourceType,
-                Location = location,
-                PublisherId = publisherId,
-                OfferId = offerId,
-                PlanId = planId
-            };
-            return GetCatalog(options, cancellationToken);
+            options ??= new SubscriptionResourceGetCatalogOptions();
+            return GetCatalogAsync(options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/catalogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetCatalog</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options to apply to the catalog request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ReservationCatalog> GetCatalog(SubscriptionResourceGetCatalogOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new SubscriptionResourceGetCatalogOptions();
+            return GetCatalog(options.ReservedResourceType, options.Location, options.PublisherId, options.OfferId, options.PlanId, options.Filter, options.Skip, options.Take, cancellationToken);
         }
     }
 }

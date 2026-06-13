@@ -26,12 +26,12 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="zones"> The availability zones. </param>
         /// <param name="properties"> The cluster create parameters. </param>
         /// <param name="identity"> The identity of the cluster, if configured. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The cluster name. </param>
         /// <param name="clusterCreateRequestValidationParametersType"> The resource type. </param>
         /// <param name="tenantId"> The tenant id. </param>
         /// <param name="fetchAaddsResource"> This indicates whether fetch Aadds resource or not. </param>
-        internal HDInsightClusterCreationValidateContent(AzureLocation? location, IDictionary<string, string> tags, IList<string> zones, HDInsightClusterCreateOrUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string clusterCreateRequestValidationParametersType, Guid? tenantId, bool? fetchAaddsResource) : base(location, tags, zones, properties, identity, serializedAdditionalRawData)
+        internal HDInsightClusterCreationValidateContent(AzureLocation? location, IDictionary<string, string> tags, IList<string> zones, HDInsightClusterCreateOrUpdateProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string clusterCreateRequestValidationParametersType, Guid? tenantId, bool? fetchAaddsResource) : base(location, tags, zones, properties, identity, additionalBinaryDataProperties)
         {
             Name = name;
             ClusterCreateRequestValidationParametersType = clusterCreateRequestValidationParametersType;
@@ -41,10 +41,13 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <summary> The cluster name. </summary>
         public string Name { get; set; }
+
         /// <summary> The resource type. </summary>
         public string ClusterCreateRequestValidationParametersType { get; set; }
+
         /// <summary> The tenant id. </summary>
         public Guid? TenantId { get; set; }
+
         /// <summary> This indicates whether fetch Aadds resource or not. </summary>
         public bool? FetchAaddsResource { get; set; }
     }

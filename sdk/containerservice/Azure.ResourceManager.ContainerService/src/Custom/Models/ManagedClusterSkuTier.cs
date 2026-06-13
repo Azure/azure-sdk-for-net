@@ -6,9 +6,9 @@
 using System;
 using System.ComponentModel;
 
+// NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> If not specified, the default is 'Free'. See [uptime SLA](https://docs.microsoft.com/azure/aks/uptime-sla) for more details. </summary>
     public readonly partial struct ManagedClusterSkuTier : IEquatable<ManagedClusterSkuTier>
     {
         private const string PaidValue = "Paid";

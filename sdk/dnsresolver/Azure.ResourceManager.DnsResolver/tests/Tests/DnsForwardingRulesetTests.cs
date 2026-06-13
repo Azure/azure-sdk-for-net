@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System.Threading.Tasks;
-using NUnit.Framework;
-using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources.Models;
-using Azure.Core;
-using Azure.ResourceManager.DnsResolver.Models;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.ResourceManager.DnsResolver.Models;
+using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DnsResolver.Tests
 {
@@ -33,23 +33,16 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             //_subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{SubnetName}";
 
             (var vnetId, var subnetId) = await CreateVirtualNetworkAsync();
-            var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
-            {
-                Id = new ResourceIdentifier(vnetId)
-            });
-
-            dnsResolverData.VirtualNetwork = new WritableSubResource()
-            {
-                Id = new ResourceIdentifier(vnetId)
-            };
+            var dnsResolverData = ArmDnsResolverModelFactory.DnsResolverData(
+                location: this.DefaultLocation,
+                virtualNetwork: new WritableSubResource { Id = new ResourceIdentifier(vnetId) });
 
             _dnsResolver = (await resourceGroup.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
             _dnsForwardingRulesetCollection = resourceGroup.GetDnsForwardingRulesets();
 
-            var outboundEndpointData = new DnsResolverOutboundEndpointData(this.DefaultLocation, new WritableSubResource
-            {
-                Id = new ResourceIdentifier(subnetId),
-            });
+            var outboundEndpointData = ArmDnsResolverModelFactory.DnsResolverOutboundEndpointData(
+                location: this.DefaultLocation,
+                subnet: new WritableSubResource { Id = new ResourceIdentifier(subnetId) });
 
             var outboundEndpoint = await _dnsResolver.GetDnsResolverOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
 

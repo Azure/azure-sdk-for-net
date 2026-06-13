@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationCalculateRefundRequestProperties : IUtf8JsonSerializable, IJsonModel<ReservationCalculateRefundRequestProperties>
+    /// <summary> Properties needed for calculate refund including the scope and the reservation to be returned. </summary>
+    public partial class ReservationCalculateRefundRequestProperties : IJsonModel<ReservationCalculateRefundRequestProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationCalculateRefundRequestProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReservationCalculateRefundRequestProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationCalculateRefundRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeReservationCalculateRefundRequestProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReservationCalculateRefundRequestProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationCalculateRefundRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerReservationsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ReservationCalculateRefundRequestProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ReservationCalculateRefundRequestProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReservationCalculateRefundRequestProperties IPersistableModel<ReservationCalculateRefundRequestProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ReservationCalculateRefundRequestProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReservationCalculateRefundRequestProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationCalculateRefundRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationCalculateRefundRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReservationCalculateRefundRequestProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
@@ -44,15 +84,15 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WritePropertyName("reservationToReturn"u8);
                 writer.WriteObjectValue(ReservationToReturn, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,84 +101,56 @@ namespace Azure.ResourceManager.Reservations.Models
             }
         }
 
-        ReservationCalculateRefundRequestProperties IJsonModel<ReservationCalculateRefundRequestProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReservationCalculateRefundRequestProperties IJsonModel<ReservationCalculateRefundRequestProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReservationCalculateRefundRequestProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationCalculateRefundRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReservationCalculateRefundRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReservationCalculateRefundRequestProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeReservationCalculateRefundRequestProperties(document.RootElement, options);
         }
 
-        internal static ReservationCalculateRefundRequestProperties DeserializeReservationCalculateRefundRequestProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ReservationCalculateRefundRequestProperties DeserializeReservationCalculateRefundRequestProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string scope = default;
             ReservationToReturn reservationToReturn = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("scope"u8))
+                if (prop.NameEquals("scope"u8))
                 {
-                    scope = property.Value.GetString();
+                    scope = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reservationToReturn"u8))
+                if (prop.NameEquals("reservationToReturn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    reservationToReturn = ReservationToReturn.DeserializeReservationToReturn(property.Value, options);
+                    reservationToReturn = ReservationToReturn.DeserializeReservationToReturn(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ReservationCalculateRefundRequestProperties(scope, reservationToReturn, serializedAdditionalRawData);
+            return new ReservationCalculateRefundRequestProperties(scope, reservationToReturn, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ReservationCalculateRefundRequestProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationCalculateRefundRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerReservationsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ReservationCalculateRefundRequestProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ReservationCalculateRefundRequestProperties IPersistableModel<ReservationCalculateRefundRequestProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReservationCalculateRefundRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeReservationCalculateRefundRequestProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ReservationCalculateRefundRequestProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ReservationCalculateRefundRequestProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

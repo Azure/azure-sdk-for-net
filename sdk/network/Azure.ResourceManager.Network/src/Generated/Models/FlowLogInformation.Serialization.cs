@@ -57,6 +57,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enabledFilteringCriteria"u8);
                 writer.WriteStringValue(EnabledFilteringCriteria);
             }
+            if (Optional.IsDefined(RecordTypes))
+            {
+                writer.WritePropertyName("recordTypes"u8);
+                writer.WriteStringValue(RecordTypes);
+            }
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
             if (Optional.IsDefined(RetentionPolicy))
@@ -112,6 +117,7 @@ namespace Azure.ResourceManager.Network.Models
             ManagedServiceIdentity identity = default;
             ResourceIdentifier storageId = default;
             string enabledFilteringCriteria = default;
+            string recordTypes = default;
             bool enabled = default;
             RetentionPolicyParameters retentionPolicy = default;
             FlowLogProperties format = default;
@@ -161,6 +167,11 @@ namespace Azure.ResourceManager.Network.Models
                             enabledFilteringCriteria = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("recordTypes"u8))
+                        {
+                            recordTypes = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("enabled"u8))
                         {
                             enabled = property0.Value.GetBoolean();
@@ -199,6 +210,7 @@ namespace Azure.ResourceManager.Network.Models
                 identity,
                 storageId,
                 enabledFilteringCriteria,
+                recordTypes,
                 enabled,
                 retentionPolicy,
                 format,
@@ -300,6 +312,29 @@ namespace Azure.ResourceManager.Network.Models
                     else
                     {
                         builder.AppendLine($"'{EnabledFilteringCriteria}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecordTypes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    recordTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RecordTypes))
+                {
+                    builder.Append("    recordTypes: ");
+                    if (RecordTypes.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RecordTypes}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RecordTypes}'");
                     }
                 }
             }

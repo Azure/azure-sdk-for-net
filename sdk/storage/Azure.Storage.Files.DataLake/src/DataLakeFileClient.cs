@@ -16,6 +16,7 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Common;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake
@@ -62,7 +63,7 @@ namespace Azure.Storage.Files.DataLake
         /// file.
         /// </param>
         public DataLakeFileClient(Uri fileUri)
-            : this(fileUri, (HttpPipelinePolicy)null, null, storageSharedKeyCredential:null)
+            : this(fileUri, (HttpPipelinePolicy)null, null, storageSharedKeyCredential: null)
         {
         }
 
@@ -80,7 +81,7 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeFileClient(Uri fileUri, DataLakeClientOptions options)
-            : this(fileUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential:null)
+            : this(fileUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential: null)
         {
         }
 
@@ -1700,6 +1701,109 @@ namespace Azure.Storage.Files.DataLake
         }
         #endregion Set Permissions
 
+        #region Get System Properties
+        /// <summary>
+        /// The <see cref="GetSystemProperties"/> operation returns all system defined properties for a path.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
+        /// Get Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="PathGetSystemPropertiesOptions"/> to include
+        /// when getting the path's system properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathSystemProperties}"/> describing the
+        /// path's system properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public override Response<PathSystemProperties> GetSystemProperties(
+            PathGetSystemPropertiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(GetSystemProperties)}");
+
+            try
+            {
+                scope.Start();
+
+                return base.GetSystemProperties(
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetSystemPropertiesAsync"/> operation returns all system defined properties for a path.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/getproperties">
+        /// Get Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional <see cref="PathGetSystemPropertiesOptions"/> to include
+        /// when getting the path's system properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathSystemProperties}"/> describing the
+        /// path's system properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public override async Task<Response<PathSystemProperties>> GetSystemPropertiesAsync(
+            PathGetSystemPropertiesOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileClient)}.{nameof(GetSystemProperties)}");
+
+            try
+            {
+                scope.Start();
+
+                return await base.GetSystemPropertiesAsync(
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        #endregion Get System Properties
+
         #region Get Properties
         /// <summary>
         /// The <see cref="GetProperties"/> operation returns all
@@ -2390,13 +2494,39 @@ namespace Azure.Storage.Files.DataLake
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
                 // compute hash BEFORE attaching progress handler
-                ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                    content,
-                    validationOptions,
-                    async,
-                    cancellationToken).ConfigureAwait(false);
+                ContentHasher.GetHashResult hashResult = null;
+                long contentLength = (content?.Length - content?.Position) ?? 0;
+                long? structuredContentLength = default;
+                string structuredBodyType = null;
+                if (content != null &&
+                    validationOptions != null &&
+                    validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64)
+                {
+                    // report progress in terms of caller bytes, not encoded bytes
+                    structuredContentLength = contentLength;
+                    structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
+                    content = content.WithNoDispose().WithProgress(progressHandler);
+                    content = validationOptions.PrecalculatedChecksum.IsEmpty
+                        ? new StructuredMessageEncodingStream(
+                            content,
+                            Constants.StructuredMessage.DefaultSegmentContentLength,
+                            StructuredMessage.Flags.StorageCrc64)
+                        : new StructuredMessagePrecalculatedCrcWrapperStream(
+                            content,
+                            validationOptions.PrecalculatedChecksum.Span);
+                    contentLength = content.Length - content.Position;
+                }
+                else
+                {
+                    // compute hash BEFORE attaching progress handler
+                    hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                        content,
+                        validationOptions,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+                    content = content?.WithNoDispose().WithProgress(progressHandler);
+                }
 
-                content = content?.WithNoDispose().WithProgress(progressHandler);
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(DataLakeFileClient),
                     message:
@@ -2431,6 +2561,8 @@ namespace Azure.Storage.Files.DataLake
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            structuredBodyType: structuredBodyType,
+                            structuredContentLength: structuredContentLength,
                             leaseId: leaseId,
                             leaseAction: leaseAction,
                             leaseDuration: leaseDurationLong,
@@ -2450,6 +2582,8 @@ namespace Azure.Storage.Files.DataLake
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            structuredBodyType: structuredBodyType,
+                            structuredContentLength: structuredContentLength,
                             leaseId: leaseId,
                             leaseAction: leaseAction,
                             leaseDuration: leaseDurationLong,

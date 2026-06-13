@@ -4,10 +4,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
@@ -62,10 +62,12 @@ namespace Azure.ResourceManager.Network.Tests
             var networkWatcherCollection = resourceGroup.GetNetworkWatchers();
             var networkWatcherResponse = await networkWatcherCollection.GetAsync("NetworkWatcher_westus2");
             var getNextHop1Operation = await networkWatcherResponse.Value.GetNextHopAsync(WaitUntil.Completed, nhProperties1);
-            Response<NextHopResult> getNextHop1 = await getNextHop1Operation.WaitForCompletionAsync();;
+            Response<NextHopResult> getNextHop1 = await getNextHop1Operation.WaitForCompletionAsync();
+            ;
 
             var getNextHop2Operation = await networkWatcherResponse.Value.GetNextHopAsync(WaitUntil.Completed, nhProperties2);
-            Response<NextHopResult> getNextHop2 = await getNextHop2Operation.WaitForCompletionAsync();;
+            Response<NextHopResult> getNextHop2 = await getNextHop2Operation.WaitForCompletionAsync();
+            ;
 
             Response<RouteTableResource> routeTable = await resourceGroup.GetRouteTables().GetAsync(resourceGroupName + "RT");
 

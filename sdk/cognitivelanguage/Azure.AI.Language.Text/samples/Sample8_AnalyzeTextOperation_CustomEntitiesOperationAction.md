@@ -54,19 +54,19 @@ var analyzeTextOperationActions = new AnalyzeTextOperationAction[]
     new CustomEntitiesOperationAction
     {
         Name = "CustomEntitiesOperationActionSample", // Optional string for humans to identify action by name.
-        ActionContent = customEntitiesActionContent
+        Parameters = customEntitiesActionContent
     },
 };
 
-Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperation(multiLanguageTextInput, analyzeTextOperationActions);
+Response<AnalyzeTextJobState> response = client.AnalyzeTextOperation(multiLanguageTextInput, analyzeTextOperationActions);
 
-AnalyzeTextOperationState analyzeTextJobState = response.Value;
+AnalyzeTextJobState analyzeTextJobState = response.Value;
 
-foreach (AnalyzeTextOperationResult analyzeTextLROResult in analyzeTextJobState.Actions.Items)
+foreach (AnalyzeTextOperationResult analyzeTextOperationResult in analyzeTextJobState.Tasks.Items)
 {
-    if (analyzeTextLROResult is CustomEntityRecognitionOperationResult)
+    if (analyzeTextOperationResult is CustomEntityRecognitionOperationResult)
     {
-        CustomEntityRecognitionOperationResult customClassificationResult = (CustomEntityRecognitionOperationResult)analyzeTextLROResult;
+        CustomEntityRecognitionOperationResult customClassificationResult = (CustomEntityRecognitionOperationResult)analyzeTextOperationResult;
 
         // View the classifications recognized in the input documents.
         foreach (CustomEntityActionResult entitiesDocument in customClassificationResult.Results.Documents)

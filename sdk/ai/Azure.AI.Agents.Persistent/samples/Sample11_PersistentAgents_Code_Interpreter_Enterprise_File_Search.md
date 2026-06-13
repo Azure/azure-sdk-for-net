@@ -25,7 +25,7 @@ PersistentAgent agent = client.Administration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_CreateAgent
-List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
+List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
 // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
@@ -86,7 +86,7 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What does the attachment say?",
-    attachments: [ attachment ]
+    attachments: [attachment]
 );
 
 ThreadRun run = await client.Runs.CreateRunAsync(
@@ -167,7 +167,7 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     threadId: thread.Id,
     role: MessageRole.User,
     content: "What does the attachment say?",
-    attachments: [ attachment ]
+    attachments: [attachment]
 );
 
 ThreadRun run = await client.Runs.CreateRunAsync(

@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosCassandraDataTransferDataSourceSink : IUtf8JsonSerializable, IJsonModel<CosmosCassandraDataTransferDataSourceSink>
+    /// <summary> A CosmosDB Cassandra API data source/sink. </summary>
+    public partial class CosmosCassandraDataTransferDataSourceSink : BaseCosmosDataTransferDataSourceSink, IJsonModel<CosmosCassandraDataTransferDataSourceSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosCassandraDataTransferDataSourceSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CosmosCassandraDataTransferDataSourceSink"/> for deserialization. </summary>
+        internal CosmosCassandraDataTransferDataSourceSink()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataTransferDataSourceSink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosCassandraDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCosmosCassandraDataTransferDataSourceSink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CosmosCassandraDataTransferDataSourceSink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosCassandraDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CosmosCassandraDataTransferDataSourceSink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CosmosCassandraDataTransferDataSourceSink>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosCassandraDataTransferDataSourceSink IPersistableModel<CosmosCassandraDataTransferDataSourceSink>.Create(BinaryData data, ModelReaderWriterOptions options) => (CosmosCassandraDataTransferDataSourceSink)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CosmosCassandraDataTransferDataSourceSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CosmosCassandraDataTransferDataSourceSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosCassandraDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosCassandraDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosCassandraDataTransferDataSourceSink)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("keyspaceName"u8);
             writer.WriteStringValue(KeyspaceName);
@@ -42,190 +86,64 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStringValue(TableName);
         }
 
-        CosmosCassandraDataTransferDataSourceSink IJsonModel<CosmosCassandraDataTransferDataSourceSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosCassandraDataTransferDataSourceSink IJsonModel<CosmosCassandraDataTransferDataSourceSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CosmosCassandraDataTransferDataSourceSink)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataTransferDataSourceSink JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosCassandraDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosCassandraDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosCassandraDataTransferDataSourceSink)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCosmosCassandraDataTransferDataSourceSink(document.RootElement, options);
         }
 
-        internal static CosmosCassandraDataTransferDataSourceSink DeserializeCosmosCassandraDataTransferDataSourceSink(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CosmosCassandraDataTransferDataSourceSink DeserializeCosmosCassandraDataTransferDataSourceSink(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            DataTransferComponent component = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string remoteAccountName = default;
             string keyspaceName = default;
             string tableName = default;
-            string remoteAccountName = default;
-            DataTransferComponent component = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("keyspaceName"u8))
+                if (prop.NameEquals("component"u8))
                 {
-                    keyspaceName = property.Value.GetString();
+                    component = new DataTransferComponent(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tableName"u8))
+                if (prop.NameEquals("remoteAccountName"u8))
                 {
-                    tableName = property.Value.GetString();
+                    remoteAccountName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("remoteAccountName"u8))
+                if (prop.NameEquals("keyspaceName"u8))
                 {
-                    remoteAccountName = property.Value.GetString();
+                    keyspaceName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("component"u8))
+                if (prop.NameEquals("tableName"u8))
                 {
-                    component = new DataTransferComponent(property.Value.GetString());
+                    tableName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CosmosCassandraDataTransferDataSourceSink(component, serializedAdditionalRawData, remoteAccountName, keyspaceName, tableName);
+            return new CosmosCassandraDataTransferDataSourceSink(component, additionalBinaryDataProperties, remoteAccountName, keyspaceName, tableName);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyspaceName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  keyspaceName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(KeyspaceName))
-                {
-                    builder.Append("  keyspaceName: ");
-                    if (KeyspaceName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{KeyspaceName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{KeyspaceName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tableName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TableName))
-                {
-                    builder.Append("  tableName: ");
-                    if (TableName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TableName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TableName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemoteAccountName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  remoteAccountName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RemoteAccountName))
-                {
-                    builder.Append("  remoteAccountName: ");
-                    if (RemoteAccountName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RemoteAccountName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RemoteAccountName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Component), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  component: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  component: ");
-                builder.AppendLine($"'{Component.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CosmosCassandraDataTransferDataSourceSink>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosCassandraDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CosmosCassandraDataTransferDataSourceSink)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CosmosCassandraDataTransferDataSourceSink IPersistableModel<CosmosCassandraDataTransferDataSourceSink>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosCassandraDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCosmosCassandraDataTransferDataSourceSink(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CosmosCassandraDataTransferDataSourceSink)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CosmosCassandraDataTransferDataSourceSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

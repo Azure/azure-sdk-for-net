@@ -109,7 +109,7 @@ var app = builder.Build();
 Note that in the examples above, `UseAzureMonitor` is added to the `IServiceCollection` in the `Program.cs` file. You can also add it in the `ConfigureServices` method of your `Startup.cs` file.
 
 > **Note**
-  > Multiple calls to `AddOpenTelemetry.UseAzureMonitor()` will **NOT** result in multiple providers. Only a single `TracerProvider`, `MeterProvider` and `LoggerProvider` will be created in the target `IServiceCollection`. To establish multiple providers use the `Sdk.CreateTracerProviderBuilder()` and/or `Sdk.CreateMeterProviderBuilder()` and/or `LoggerFactory.CreateLogger` methods with the [Azure Monitor Exporter](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter) instead of using Azure Monitor Distro.
+  > Multiple calls to `AddOpenTelemetry.UseAzureMonitor()` will **NOT** result in multiple providers and will throw `System.NotSupportedException`. Only a single `TracerProvider`, `MeterProvider` and `LoggerProvider` can be created in the target `IServiceCollection`. To establish multiple providers use the `Sdk.CreateTracerProviderBuilder()` and/or `Sdk.CreateMeterProviderBuilder()` and/or `LoggerFactory.CreateLogger` methods with the [Azure Monitor Exporter](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter) instead of using Azure Monitor Distro.
 
 ### Authenticate the client
 
@@ -130,16 +130,45 @@ Note that the `Credential` property is optional. If it is not set, Azure Monitor
 
 ### Advanced configuration
 
-#### Customizing Sampling Percentage
+#### Customizing Sampling Behavior
 
-When using the Azure Monitor Distro, the sampling percentage for telemetry data is set to 100% (1.0F) by default. For example, let's say you want to set the sampling percentage to 50%. You can achieve this by modifying the code as follows:
+The Azure Monitor Distro uses **rate-limited sampling** by default, collecting up to **5.0 traces per second**. This provides cost-effective telemetry collection for most applications while maintaining observability.
 
+To customize the sampling behavior:
+
+**Option 1: Set the rate limited sampler to use a configured traces per second**
 ``` C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor(options =>
 {
-    options.SamplingRatio = 0.5F;
+    options.TracesPerSecond = 10.0; // Collect up to 10 traces per second
 });
 ```
+
+**Option 2: Switch to percentage-based sampling**
+``` C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor(options =>
+{
+    options.SamplingRatio = 0.5F; // Sample 50% of traces
+    options.TracesPerSecond = null; // Disable rate-limited sampling
+});
+```
+
+**Option 3: Use environment variables**
+For rate-limited sampling:
+
+```
+OTEL_TRACES_SAMPLER=microsoft.rate_limited
+OTEL_TRACES_SAMPLER_ARG=10
+```
+
+For percentage-based sampling:
+
+```
+OTEL_TRACES_SAMPLER=microsoft.fixed_percentage
+OTEL_TRACES_SAMPLER_ARG=0.5
+```
+
+**Note**: When both `TracesPerSecond` and `SamplingRatio` are configured, `TracesPerSecond` takes precedence.
 
 #### Adding Custom ActivitySource to Traces
 

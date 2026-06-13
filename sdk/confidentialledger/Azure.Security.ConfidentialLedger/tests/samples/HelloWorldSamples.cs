@@ -260,13 +260,13 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             #region Snippet:NewUser
 
 #if SNIPPET
-            string newUserAadObjectId = "<some AAD user or service princpal object Id>";
+            string newUserAadObjectId = "<some AAD user or service principal object Id>";
 #else
             string newUserAadObjectId = Guid.NewGuid().ToString();
 #endif
-            ledgerClient.CreateOrUpdateUser(
+            ledgerClient.CreateOrUpdateLedgerUser(
                 newUserAadObjectId,
-                RequestContent.Create(new { assignedRole = "Reader" }));
+                RequestContent.Create(new { assignedRoles = new[] { "Reader" } }));
 
             #endregion
 

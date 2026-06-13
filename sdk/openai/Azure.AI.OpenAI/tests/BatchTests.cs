@@ -1,11 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.AI.OpenAI.Files;
-using OpenAI.Batch;
-using OpenAI.Chat;
-using OpenAI.Files;
-using OpenAI.TestFramework;
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
@@ -14,6 +9,11 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.AI.OpenAI.Files;
+using OpenAI.Batch;
+using OpenAI.Chat;
+using OpenAI.Files;
+using OpenAI.TestFramework;
 
 namespace Azure.AI.OpenAI.Tests;
 

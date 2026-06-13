@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Monitor.Query.Logs
+namespace Microsoft.TypeSpec.Generator.Customizations
 {
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct), AllowMultiple = true)]
     internal partial class CodeGenSuppressAttribute : Attribute

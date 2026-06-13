@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class ClusterMetricsConfigurationTests : NetworkCloudManagementTestBase
     {
-        public ClusterMetricsConfigurationTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public ClusterMetricsConfigurationTests(bool isAsync) : base(isAsync) {}
+        public ClusterMetricsConfigurationTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public ClusterMetricsConfigurationTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]
@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 15
             )
             {
-                EnabledMetrics = {},
+                EnabledMetrics = { },
                 Tags =
                 {
                     ["key1"] = "myvalue1",
                 },
             };
-            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, metricsConfigurationName, createData);
+            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, metricsConfigurationName, createData, matchConditions: null);
             Assert.AreEqual(metricsConfigurationName, createResult.Value.Data.Name);
 
             // Get
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "myvalue2",
                 },
             };
-            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> updateResult = await clusterMetricsConfiguration.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudClusterMetricsConfigurationResource> updateResult = await clusterMetricsConfiguration.UpdateAsync(WaitUntil.Completed, patch, matchConditions: null);
 
             // List by cluster
             var listByCluster = new List<NetworkCloudClusterMetricsConfigurationResource>();

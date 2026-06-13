@@ -4,13 +4,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Tests
 
         [Test]
         [RecordedTest]
-        public async Task GetAll ()
+        public async Task GetAll()
         {
             await CreateIpGroup(_iPGroupName);
             var iPGroupList = await _resourceGroup.GetIPGroups().GetAllAsync().ToEnumerableAsync();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network.Tests
         [RecordedTest]
         public async Task Delete()
         {
-            var ipGroup  = await CreateIpGroup(_iPGroupName);
+            var ipGroup = await CreateIpGroup(_iPGroupName);
             await ipGroup.Value.DeleteAsync(WaitUntil.Completed);
             var ipGroupList = await _resourceGroup.GetIPGroups().GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(ipGroupList);

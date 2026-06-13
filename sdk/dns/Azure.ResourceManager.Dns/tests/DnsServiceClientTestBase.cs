@@ -1,17 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
-using NUnit.Framework;
-using System.Linq;
-using System.Collections.Generic;
 using Castle.DynamicProxy;
-using Azure.Core;
-using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Dns.Tests
 {

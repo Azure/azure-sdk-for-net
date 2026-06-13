@@ -7,24 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Describes operator to be matched
-    /// Serialized Name: UrlPathOperator
-    /// </summary>
+    /// <summary> Describes operator to be matched. </summary>
     public readonly partial struct UriPathOperator : IEquatable<UriPathOperator>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="UriPathOperator"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UriPathOperator(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AnyValue = "Any";
         private const string EqualValue = "Equal";
         private const string ContainsValue = "Contains";
@@ -37,78 +27,79 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string WildcardValue = "Wildcard";
         private const string RegExValue = "RegEx";
 
-        /// <summary>
-        /// Any
-        /// Serialized Name: UrlPathOperator.Any
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="UriPathOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public UriPathOperator(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Any. </summary>
         public static UriPathOperator Any { get; } = new UriPathOperator(AnyValue);
-        /// <summary>
-        /// Equal
-        /// Serialized Name: UrlPathOperator.Equal
-        /// </summary>
+
+        /// <summary> Gets the Equal. </summary>
         public static UriPathOperator Equal { get; } = new UriPathOperator(EqualValue);
-        /// <summary>
-        /// Contains
-        /// Serialized Name: UrlPathOperator.Contains
-        /// </summary>
+
+        /// <summary> Gets the Contains. </summary>
         public static UriPathOperator Contains { get; } = new UriPathOperator(ContainsValue);
-        /// <summary>
-        /// BeginsWith
-        /// Serialized Name: UrlPathOperator.BeginsWith
-        /// </summary>
+
+        /// <summary> Gets the BeginsWith. </summary>
         public static UriPathOperator BeginsWith { get; } = new UriPathOperator(BeginsWithValue);
-        /// <summary>
-        /// EndsWith
-        /// Serialized Name: UrlPathOperator.EndsWith
-        /// </summary>
+
+        /// <summary> Gets the EndsWith. </summary>
         public static UriPathOperator EndsWith { get; } = new UriPathOperator(EndsWithValue);
-        /// <summary>
-        /// LessThan
-        /// Serialized Name: UrlPathOperator.LessThan
-        /// </summary>
+
+        /// <summary> Gets the LessThan. </summary>
         public static UriPathOperator LessThan { get; } = new UriPathOperator(LessThanValue);
-        /// <summary>
-        /// LessThanOrEqual
-        /// Serialized Name: UrlPathOperator.LessThanOrEqual
-        /// </summary>
+
+        /// <summary> Gets the LessThanOrEqual. </summary>
         public static UriPathOperator LessThanOrEqual { get; } = new UriPathOperator(LessThanOrEqualValue);
-        /// <summary>
-        /// GreaterThan
-        /// Serialized Name: UrlPathOperator.GreaterThan
-        /// </summary>
+
+        /// <summary> Gets the GreaterThan. </summary>
         public static UriPathOperator GreaterThan { get; } = new UriPathOperator(GreaterThanValue);
-        /// <summary>
-        /// GreaterThanOrEqual
-        /// Serialized Name: UrlPathOperator.GreaterThanOrEqual
-        /// </summary>
+
+        /// <summary> Gets the GreaterThanOrEqual. </summary>
         public static UriPathOperator GreaterThanOrEqual { get; } = new UriPathOperator(GreaterThanOrEqualValue);
-        /// <summary>
-        /// Wildcard
-        /// Serialized Name: UrlPathOperator.Wildcard
-        /// </summary>
+
+        /// <summary> Gets the Wildcard. </summary>
         public static UriPathOperator Wildcard { get; } = new UriPathOperator(WildcardValue);
-        /// <summary>
-        /// RegEx
-        /// Serialized Name: UrlPathOperator.RegEx
-        /// </summary>
+
+        /// <summary> Gets the RegEx. </summary>
         public static UriPathOperator RegEx { get; } = new UriPathOperator(RegExValue);
+
         /// <summary> Determines if two <see cref="UriPathOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UriPathOperator left, UriPathOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UriPathOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UriPathOperator left, UriPathOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UriPathOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UriPathOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UriPathOperator(string value) => new UriPathOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UriPathOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UriPathOperator?(string value) => value == null ? null : new UriPathOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UriPathOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UriPathOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

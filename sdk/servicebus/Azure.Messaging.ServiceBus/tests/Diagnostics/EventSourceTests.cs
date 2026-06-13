@@ -180,7 +180,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 sender => sender.ScheduleMessagesAsync(
                     It.IsAny<IReadOnlyCollection<ServiceBusMessage>>(),
                     It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult((IReadOnlyList<long>) new List<long> { 1 }));
+                .Returns(Task.FromResult((IReadOnlyList<long>)new List<long> { 1 }));
 
             var scheduleTime = DateTimeOffset.UtcNow.AddMinutes(1);
             await sender.ScheduleMessageAsync(ServiceBusTestUtilities.GetMessage(), scheduleTime);
@@ -884,7 +884,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Times.Once);
         }
 
-         [Test]
+        [Test]
         public async Task DeleteMessagesLogsEvents()
         {
             var mockLogger = new Mock<ServiceBusEventSource>();
@@ -1124,7 +1124,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
             var mockTransportReceiver = new Mock<TransportReceiver>();
             mockTransportReceiver.Setup(r => r.SessionId).Returns("sessionId");
             var mockConnection = GetMockConnection(mockTransportReceiver);
-            var receiver = new ServiceBusSessionReceiver(mockConnection.Object, "queueName",  new ServiceBusSessionReceiverOptions(), cancellationToken: CancellationToken.None)
+            var receiver = new ServiceBusSessionReceiver(mockConnection.Object, "queueName", new ServiceBusSessionReceiverOptions(), cancellationToken: CancellationToken.None)
             {
                 Logger = mockLogger.Object
             };
@@ -1338,7 +1338,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     1,
                     It.IsAny<TimeSpan?>(),
                     It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult((IReadOnlyList<ServiceBusReceivedMessage>) new List<ServiceBusReceivedMessage>() { new ServiceBusReceivedMessage() }));
+                .Returns(Task.FromResult((IReadOnlyList<ServiceBusReceivedMessage>)new List<ServiceBusReceivedMessage>() { new ServiceBusReceivedMessage() }));
             var processor = new ServiceBusProcessor(mockConnection.Object, "queueName", false, new ServiceBusProcessorOptions
             {
                 MaxAutoLockRenewalDuration = TimeSpan.Zero,
@@ -1435,7 +1435,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 .Callback<string, ServiceBusRetryPolicy, ServiceBusReceiveMode, uint, string, string, bool, bool, CancellationToken>(
                     (_, _, _, count, _, _, _, _, _) =>
                     {
-                        prefetchCount = (int) count;
+                        prefetchCount = (int)count;
                     })
                 .Returns(mockTransportReceiver.Object);
 

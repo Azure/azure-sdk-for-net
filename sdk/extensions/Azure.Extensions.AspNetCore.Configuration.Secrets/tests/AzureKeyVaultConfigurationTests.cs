@@ -109,9 +109,9 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 provider.Load();
 
                 var childKeys = provider.GetChildKeys(Enumerable.Empty<string>(), null).ToArray();
-                Assert.AreEqual(new[] { "Secret1", "Secret2" }, childKeys);
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
-                Assert.AreEqual("Value2", provider.Get("Secret2"));
+                Assert.That(childKeys, Is.EqualTo(new[] { "Secret1", "Secret2" }));
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
+                Assert.That(provider.Get("Secret2"), Is.EqualTo("Value2"));
             }
         }
 
@@ -141,14 +141,14 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new EndsWithOneKeyVaultSecretManager() }))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new EndsWithOneKeyVaultSecretManager() }))
             {
                 provider.Load();
 
                 // Assert
                 var childKeys = provider.GetChildKeys(Enumerable.Empty<string>(), null).ToArray();
-                Assert.AreEqual(new[] { "Secret1" }, childKeys);
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
+                Assert.That(childKeys, Is.EqualTo(new[] { "Secret1" }));
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
             }
         }
 
@@ -175,8 +175,8 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 
                 // Assert
                 var childKeys = provider.GetChildKeys(Enumerable.Empty<string>(), null).ToArray();
-                Assert.AreEqual(new[] { "Secret1" }, childKeys);
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
+                Assert.That(childKeys, Is.EqualTo(new[] { "Secret1" }));
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
                 Assert.Throws<InvalidOperationException>(() => provider.Get("Secret2"));
                 Assert.Throws<InvalidOperationException>(() => provider.Get("Secret3"));
             }
@@ -200,7 +200,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             {
                 provider.Load();
 
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
 
                 SetPages(client,
                     new[]
@@ -210,7 +210,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 );
 
                 provider.Load();
-                Assert.AreEqual("Value2", provider.Get("Secret1"));
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value2"));
             }
         }
 
@@ -233,13 +233,14 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             {
                 ChangeToken.OnChange(
                     () => provider.GetReloadToken(),
-                    () => {
+                    () =>
+                    {
                         numOfTokensFired++;
                     });
 
                 provider.Load();
 
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
 
                 await provider.Wait();
 
@@ -254,8 +255,8 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 
                 await provider.Wait();
 
-                Assert.AreEqual("Value2", provider.Get("Secret1"));
-                Assert.AreEqual(1, numOfTokensFired);
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value2"));
+                Assert.That(numOfTokensFired, Is.EqualTo(1));
             }
         }
 
@@ -278,13 +279,14 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             {
                 ChangeToken.OnChange(
                     () => provider.GetReloadToken(),
-                    () => {
+                    () =>
+                    {
                         numOfTokensFired++;
                     });
 
                 provider.Load();
 
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
 
                 await provider.Wait();
 
@@ -292,8 +294,8 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 
                 await provider.Wait();
 
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
-                Assert.AreEqual(0, numOfTokensFired);
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
+                Assert.That(numOfTokensFired, Is.EqualTo(0));
             }
         }
 
@@ -316,13 +318,14 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             {
                 ChangeToken.OnChange(
                     () => provider.GetReloadToken(),
-                    () => {
+                    () =>
+                    {
                         numOfTokensFired++;
                     });
 
                 provider.Load();
 
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
 
                 await provider.Wait();
 
@@ -338,7 +341,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 await provider.Wait();
 
                 Assert.Throws<InvalidOperationException>(() => provider.Get("Secret2"));
-                Assert.AreEqual(1, numOfTokensFired);
+                Assert.That(numOfTokensFired, Is.EqualTo(1));
             }
         }
 
@@ -361,13 +364,14 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             {
                 ChangeToken.OnChange(
                     () => provider.GetReloadToken(),
-                    () => {
+                    () =>
+                    {
                         numOfTokensFired++;
                     });
 
                 provider.Load();
 
-                Assert.AreEqual("Value2", provider.Get("Secret2"));
+                Assert.That(provider.Get("Secret2"), Is.EqualTo("Value2"));
 
                 await provider.Wait();
 
@@ -384,7 +388,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 await provider.Wait();
 
                 Assert.Throws<InvalidOperationException>(() => provider.Get("Secret2"));
-                Assert.AreEqual(1, numOfTokensFired);
+                Assert.That(numOfTokensFired, Is.EqualTo(1));
             }
         }
 
@@ -406,13 +410,14 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             {
                 ChangeToken.OnChange(
                     () => provider.GetReloadToken(),
-                    () => {
+                    () =>
+                    {
                         numOfTokensFired++;
                     });
 
                 provider.Load();
 
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
 
                 await provider.Wait();
 
@@ -431,9 +436,9 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 
                 await provider.Wait();
 
-                Assert.AreEqual("Value1", provider.Get("Secret1"));
-                Assert.AreEqual("Value2", provider.Get("Secret2"));
-                Assert.AreEqual(1, numOfTokensFired);
+                Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
+                Assert.That(provider.Get("Secret2"), Is.EqualTo("Value2"));
+                Assert.That(numOfTokensFired, Is.EqualTo(1));
             }
         }
 
@@ -449,12 +454,12 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
             {
                 provider.Load();
 
                 // Assert
-                Assert.AreEqual("Value1", provider.Get("Section:Secret1"));
+                Assert.That(provider.Get("Section:Secret1"), Is.EqualTo("Value1"));
             }
         }
         [Test]
@@ -469,12 +474,12 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() }))
             {
                 provider.Load();
 
                 // Assert
-                Assert.AreEqual("Value1", provider.Get("section:secret1"));
+                Assert.That(provider.Get("section:secret1"), Is.EqualTo("Value1"));
             }
         }
 
@@ -494,12 +499,12 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManagerMultiDash() }))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManagerMultiDash() }))
             {
                 provider.Load();
 
                 // Assert
-                Assert.AreEqual("Value1", provider.Get("Section:Secret1"));
+                Assert.That(provider.Get("Section:Secret1"), Is.EqualTo("Value1"));
             }
         }
 
@@ -523,12 +528,12 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManagerMultiDash() }))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManagerMultiDash() }))
             {
                 provider.Load();
 
                 // Assert
-                Assert.AreEqual("Value2", provider.Get("Section:Secret1"));
+                Assert.That(provider.Get("Section:Secret1"), Is.EqualTo("Value2"));
             }
         }
 
@@ -545,14 +550,14 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new JsonKeyVaultSecretManager() }))
+            using (var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new JsonKeyVaultSecretManager() }))
             {
                 provider.Load();
 
                 // Assert
-                Assert.AreEqual("innerValue1", provider.Get("innerKey1"));
-                Assert.AreEqual("innerValue2", provider.Get("innerKey2"));
-                Assert.AreEqual("innerValue3", provider.Get("innerKey3"));
+                Assert.That(provider.Get("innerKey1"), Is.EqualTo("innerValue1"));
+                Assert.That(provider.Get("innerKey2"), Is.EqualTo("innerValue2"));
+                Assert.That(provider.Get("innerKey3"), Is.EqualTo("innerValue3"));
             }
         }
 
@@ -581,13 +586,13 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() });
+            var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() });
             provider.Load();
             await tcs.Task;
 
             // Assert
-            Assert.AreEqual("Value1", provider.Get("Secret1"));
-            Assert.AreEqual("Value2", provider.Get("Secret2"));
+            Assert.That(provider.Get("Secret1"), Is.EqualTo("Value1"));
+            Assert.That(provider.Get("Secret2"), Is.EqualTo("Value2"));
         }
 
         [Test]
@@ -617,16 +622,16 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             );
 
             // Act
-            var provider = new AzureKeyVaultConfigurationProvider(client.Object,  new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() });
+            var provider = new AzureKeyVaultConfigurationProvider(client.Object, new AzureKeyVaultConfigurationOptions() { Manager = new KeyVaultSecretManager() });
             provider.Load();
 
             // Assert
             for (int i = 0; i < expectedCount; i++)
             {
-                Assert.AreEqual(i.ToString(), provider.Get("Secret" + i));
+                Assert.That(provider.Get("Secret" + i), Is.EqualTo(i.ToString()));
             }
 
-            Assert.LessOrEqual(maxParallel, 32);
+            Assert.That(maxParallel, Is.LessThanOrEqualTo(32));
         }
 
         [Test]
@@ -638,13 +643,13 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
         [Test]
         public void ConstructorThrowsForZeroRefreshPeriodValue()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(),  new AzureKeyVaultConfigurationOptions() { ReloadInterval = TimeSpan.Zero }));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(), new AzureKeyVaultConfigurationOptions() { ReloadInterval = TimeSpan.Zero }));
         }
 
         [Test]
         public void ConstructorThrowsForNegativeRefreshPeriodValue()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(),  new AzureKeyVaultConfigurationOptions() { ReloadInterval = TimeSpan.FromMilliseconds(-1) }));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new AzureKeyVaultConfigurationProvider(Mock.Of<SecretClient>(), new AzureKeyVaultConfigurationOptions() { ReloadInterval = TimeSpan.FromMilliseconds(-1) }));
         }
 
         [Test]
@@ -662,6 +667,105 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             }
         }
 
+        [Test]
+        public async Task DisposeCompletesPollingTaskCleanly()
+        {
+            var client = new Mock<SecretClient>();
+            SetPages(client, new[] { CreateSecret("Secret1", "Value1") });
+
+            using var provider = new WaitSignalingProvider(client.Object, new KeyVaultSecretManager());
+            provider.Load();
+
+            // Wait until the polling loop has entered WaitForReload before disposing
+            await provider.WaitForReloadStarted.TimeoutAfter(TimeSpan.FromSeconds(10));
+
+            // Dispose should cancel the polling loop cleanly
+            provider.Dispose();
+
+            // The polling task should complete cleanly (RanToCompletion, not Faulted)
+            await provider.PollingTask.TimeoutAfter(TimeSpan.FromSeconds(5));
+
+            Assert.That(provider.PollingTask.Status, Is.EqualTo(TaskStatus.RanToCompletion),
+                "Polling task should complete without faulting after disposal");
+        }
+
+#pragma warning disable SCME0002
+        [Test]
+        public void AddKeyVaultSecretsThrowsOnNullBuilder()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+                AzureKeyVaultConfigurationExtensions.AddKeyVaultSecrets(null, "section"));
+        }
+
+        [Test]
+        public void AddKeyVaultSecretsThrowsOnNullSectionName()
+        {
+            var builder = new ConfigurationBuilder();
+            Assert.Throws<ArgumentNullException>(() =>
+                builder.AddKeyVaultSecrets(null));
+        }
+
+        [Test]
+        public void AddKeyVaultSecretsThrowsOnEmptySectionName()
+        {
+            var builder = new ConfigurationBuilder();
+            Assert.Throws<ArgumentException>(() =>
+                builder.AddKeyVaultSecrets(string.Empty));
+        }
+
+        [Test]
+        public void AddKeyVaultSecretsAddsConfigurationSource()
+        {
+            var builder = new ConfigurationBuilder();
+            builder.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["KeyVault:VaultUri"] = "https://myvault.vault.azure.net/",
+                ["KeyVault:Credential:CredentialSource"] = "AzureCliCredential",
+            });
+
+            int sourceCountBefore = builder.Sources.Count;
+            builder.AddKeyVaultSecrets("KeyVault");
+
+            Assert.That(builder.Sources.Count, Is.EqualTo(sourceCountBefore + 1));
+            Assert.That(builder.Sources[builder.Sources.Count - 1], Is.InstanceOf<AzureKeyVaultConfigurationSource>());
+        }
+
+        [Test]
+        public void AddKeyVaultSecretsInvokesConfigureCallback()
+        {
+            var builder = new ConfigurationBuilder();
+            builder.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["KeyVault:VaultUri"] = "https://myvault.vault.azure.net/",
+                ["KeyVault:Credential:CredentialSource"] = "AzureCliCredential",
+            });
+
+            bool callbackInvoked = false;
+            builder.AddKeyVaultSecrets("KeyVault", settings =>
+            {
+                callbackInvoked = true;
+                Assert.That(settings, Is.Not.Null);
+            });
+
+            Assert.That(callbackInvoked, Is.True);
+        }
+
+        [Test]
+        public void AddKeyVaultSecretsWithCallbackAddsConfigurationSource()
+        {
+            var builder = new ConfigurationBuilder();
+            builder.AddInMemoryCollection(new Dictionary<string, string>
+            {
+                ["KeyVault:VaultUri"] = "https://myvault.vault.azure.net/",
+                ["KeyVault:Credential:CredentialSource"] = "AzureCliCredential",
+            });
+
+            builder.AddKeyVaultSecrets("KeyVault", settings => { });
+
+            Assert.That(builder.Sources[builder.Sources.Count - 1], Is.InstanceOf<AzureKeyVaultConfigurationSource>());
+        }
+#pragma warning restore SCME0002
+
         private class EndsWithOneKeyVaultSecretManager : KeyVaultSecretManager
         {
             public override bool Load(SecretProperties secret)
@@ -676,7 +780,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             private TaskCompletionSource<object> _signalTaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             public ReloadControlKeyVaultProvider(SecretClient client, KeyVaultSecretManager manager, TimeSpan? reloadPollDelay = null)
-                : base(client, new AzureKeyVaultConfigurationOptions() { Manager =  manager, ReloadInterval = reloadPollDelay})
+                : base(client, new AzureKeyVaultConfigurationOptions() { Manager = manager, ReloadInterval = reloadPollDelay })
             {
             }
 
@@ -716,7 +820,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             }
         }
 
-        private class JsonKeyVaultSecretManager: KeyVaultSecretManager
+        private class JsonKeyVaultSecretManager : KeyVaultSecretManager
         {
             public override Dictionary<string, string> GetData(IEnumerable<KeyVaultSecret> secrets)
             {
@@ -732,6 +836,24 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 }
 
                 return data;
+            }
+        }
+
+        private class WaitSignalingProvider : AzureKeyVaultConfigurationProvider
+        {
+            private readonly TaskCompletionSource<object> _waitStartedTcs = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            public Task WaitForReloadStarted => _waitStartedTcs.Task;
+
+            public WaitSignalingProvider(SecretClient client, KeyVaultSecretManager manager)
+                : base(client, new AzureKeyVaultConfigurationOptions() { Manager = manager, ReloadInterval = TimeSpan.FromMinutes(5) })
+            {
+            }
+
+            internal override Task WaitForReload()
+            {
+                _waitStartedTcs.TrySetResult(null);
+                return base.WaitForReload();
             }
         }
     }

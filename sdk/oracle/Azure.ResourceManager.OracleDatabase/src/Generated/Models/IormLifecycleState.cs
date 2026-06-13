@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OracleDatabase;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.OracleDatabase.Models
     public readonly partial struct IormLifecycleState : IEquatable<IormLifecycleState>
     {
         private readonly string _value;
+        /// <summary> Indicates that resource in Provisioning state. </summary>
+        private const string BootStrappingValue = "BootStrapping";
+        /// <summary> Indicates that resource in Enabled state. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Indicates that resource in Disabled state. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Indicates that resource in Updating state. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Indicates that resource in Failed state. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="IormLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IormLifecycleState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BootStrappingValue = "BootStrapping";
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
-        private const string UpdatingValue = "Updating";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Indicates that resource in Provisioning state. </summary>
         public static IormLifecycleState BootStrapping { get; } = new IormLifecycleState(BootStrappingValue);
+
         /// <summary> Indicates that resource in Enabled state. </summary>
         public static IormLifecycleState Enabled { get; } = new IormLifecycleState(EnabledValue);
+
         /// <summary> Indicates that resource in Disabled state. </summary>
         public static IormLifecycleState Disabled { get; } = new IormLifecycleState(DisabledValue);
+
         /// <summary> Indicates that resource in Updating state. </summary>
         public static IormLifecycleState Updating { get; } = new IormLifecycleState(UpdatingValue);
+
         /// <summary> Indicates that resource in Failed state. </summary>
         public static IormLifecycleState Failed { get; } = new IormLifecycleState(FailedValue);
+
         /// <summary> Determines if two <see cref="IormLifecycleState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IormLifecycleState left, IormLifecycleState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IormLifecycleState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IormLifecycleState left, IormLifecycleState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IormLifecycleState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IormLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IormLifecycleState(string value) => new IormLifecycleState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IormLifecycleState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IormLifecycleState?(string value) => value == null ? null : new IormLifecycleState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IormLifecycleState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IormLifecycleState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

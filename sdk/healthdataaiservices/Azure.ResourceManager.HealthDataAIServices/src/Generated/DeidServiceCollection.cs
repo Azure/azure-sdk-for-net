@@ -21,15 +21,13 @@ namespace Azure.ResourceManager.HealthDataAIServices
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeidServiceResource"/> and their operations.
-    /// Each <see cref="DeidServiceResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="DeidServiceCollection"/> instance call the GetDeidServices method from an instance of the parent resource.
+    /// Each <see cref="DeidServiceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DeidServiceCollection"/> instance call the GetDeidServices method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DeidServiceCollection : ArmCollection, IEnumerable<DeidServiceResource>, IAsyncEnumerable<DeidServiceResource>
     {
         private readonly ClientDiagnostics _deidServicesClientDiagnostics;
         private readonly DeidServices _deidServicesRestClient;
-        private readonly ClientDiagnostics _privateLinksClientDiagnostics;
-        private readonly PrivateLinks _privateLinksRestClient;
 
         /// <summary> Initializes a new instance of DeidServiceCollection for mocking. </summary>
         protected DeidServiceCollection()
@@ -44,8 +42,6 @@ namespace Azure.ResourceManager.HealthDataAIServices
             TryGetApiVersion(DeidServiceResource.ResourceType, out string deidServiceApiVersion);
             _deidServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", DeidServiceResource.ResourceType.Namespace, Diagnostics);
             _deidServicesRestClient = new DeidServices(_deidServicesClientDiagnostics, Pipeline, Endpoint, deidServiceApiVersion ?? "2024-09-20");
-            _privateLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", DeidServiceResource.ResourceType.Namespace, Diagnostics);
-            _privateLinksRestClient = new PrivateLinks(_privateLinksClientDiagnostics, Pipeline, Endpoint, deidServiceApiVersion ?? "2024-09-20");
             ValidateResourceId(id);
         }
 
@@ -55,7 +51,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
             }
         }
 
@@ -68,7 +64,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Create. </description>
+        /// <description> DeidServices_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -98,7 +94,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 HttpMessage message = _deidServicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, DeidServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
-                    new DeidServiceOperationSource(Client),
+                    new DeidServiceResourceOperationSource(Client),
                     _deidServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -126,7 +122,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Create. </description>
+        /// <description> DeidServices_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -156,7 +152,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 HttpMessage message = _deidServicesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, deidServiceName, DeidServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
-                    new DeidServiceOperationSource(Client),
+                    new DeidServiceResourceOperationSource(Client),
                     _deidServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -184,7 +180,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> DeidServices_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -233,7 +229,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> DeidServices_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -273,7 +269,23 @@ namespace Azure.ResourceManager.HealthDataAIServices
             }
         }
 
-        /// <summary> List DeidService resources by resource group. </summary>
+        /// <summary>
+        /// List DeidService resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeidServices_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeidServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeidServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -282,10 +294,26 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupAsyncCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeidServiceResource(Client, data));
+            return new AsyncPageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupAsyncCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeidServiceCollection.GetAll"), data => new DeidServiceResource(Client, data));
         }
 
-        /// <summary> List DeidService resources by resource group. </summary>
+        /// <summary>
+        /// List DeidService resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DeidServices_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeidServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeidServiceResource> GetAll(CancellationToken cancellationToken = default)
@@ -294,11 +322,11 @@ namespace Azure.ResourceManager.HealthDataAIServices
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeidServiceResource(Client, data));
+            return new PageableWrapper<DeidServiceData, DeidServiceResource>(new DeidServicesGetByResourceGroupCollectionResultOfT(_deidServicesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeidServiceCollection.GetAll"), data => new DeidServiceResource(Client, data));
         }
 
         /// <summary>
-        /// Get a DeidService
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -306,7 +334,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> DeidServices_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -355,7 +383,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         }
 
         /// <summary>
-        /// Get a DeidService
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -363,7 +391,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> DeidServices_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -412,7 +440,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         }
 
         /// <summary>
-        /// Get a DeidService
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -420,7 +448,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> DeidServices_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -473,7 +501,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         }
 
         /// <summary>
-        /// Get a DeidService
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -481,7 +509,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> DeidServices_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

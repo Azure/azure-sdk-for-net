@@ -48,8 +48,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
             var response = await callConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
 
-            Assert.NotNull(response);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyCallConnectionProperties(response);
         }
 
@@ -60,8 +60,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
             var response = callConnection.GetCallConnectionProperties();
 
-            Assert.NotNull(response);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyCallConnectionProperties(response);
         }
         [Test]
@@ -70,8 +70,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -80,8 +80,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.GetCallConnectionProperties());
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(204);
 
             var response = await callConnection.HangUpAsync(false).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(204);
 
             var response = callConnection.HangUp(false);
-            Assert.AreEqual((int)HttpStatusCode.NoContent, response.Status);
+            Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NoContent));
         }
 
         [Test]
@@ -108,8 +108,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.HangUpAsync(false).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -118,8 +118,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.HangUp(false));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
@@ -128,7 +128,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             verifyOperationContext(response);
         }
 
@@ -137,7 +137,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
             var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             verifyOperationContext(response);
         }
 
@@ -146,7 +146,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         {
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
             var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             verifyOperationContext(response);
         }
 
@@ -156,7 +156,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             var response = await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier)).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             verifyOperationContext(response);
         }
 
@@ -168,7 +168,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             options.Transferee = new CommunicationUserIdentifier("transfereeid");
 
             var response = await callConnection.TransferCallToParticipantAsync(options).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             verifyOperationContext(response);
         }
 
@@ -178,7 +178,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             var response = callConnection.TransferCallToParticipant(callInvite.Target);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             verifyOperationContext(response);
         }
 
@@ -188,7 +188,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier));
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             verifyOperationContext(response);
         }
 
@@ -200,7 +200,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             options.Transferee = new CommunicationUserIdentifier("transfereeid");
 
             var response = callConnection.TransferCallToParticipant(options);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             verifyOperationContext(response);
         }
 
@@ -210,8 +210,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier)).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_TransferCallToParticipant))]
@@ -220,8 +220,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as CommunicationUserIdentifier)));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipant))]
@@ -231,7 +231,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callInvite = new CallInvite((CommunicationUserIdentifier)participantToAdd);
 
             var response = await callConnection.AddParticipantAsync(new AddParticipantOptions(callInvite)).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             verifyAddParticipantsResult(response);
         }
 
@@ -242,8 +242,164 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callInvite = new CallInvite((CommunicationUserIdentifier)participantToAdd);
 
             var response = callConnection.AddParticipant(new AddParticipantOptions(callInvite));
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
             verifyAddParticipantsResult(response);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsApp))]
+        public async Task AddParticipantAsync_MicrosoftTeamsAppIdentifier_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+
+            var response = await callConnection.AddParticipantAsync(new AddParticipantOptions(callInvite)).ConfigureAwait(false);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            verifyAddParticipantsResult(response);
+
+            // Verify the target is correctly typed as MicrosoftTeamsAppIdentifier
+            Assert.That(callInvite.Target, Is.InstanceOf<MicrosoftTeamsAppIdentifier>());
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.That(teamsApp, Is.Not.Null);
+            Assert.That(teamsApp!.AppId, Is.EqualTo("testAppId"));
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsApp))]
+        public void AddParticipant_MicrosoftTeamsAppIdentifier_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+
+            var response = callConnection.AddParticipant(new AddParticipantOptions(callInvite));
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            verifyAddParticipantsResult(response);
+
+            // Verify the target is correctly typed as MicrosoftTeamsAppIdentifier
+            Assert.That(callInvite.Target, Is.InstanceOf<MicrosoftTeamsAppIdentifier>());
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.That(teamsApp, Is.Not.Null);
+            Assert.That(teamsApp!.AppId, Is.EqualTo("testAppId"));
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsAppWithCloud))]
+        public async Task AddParticipantAsync_MicrosoftTeamsAppIdentifier_DifferentClouds_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+
+            var response = await callConnection.AddParticipantAsync(new AddParticipantOptions(callInvite)).ConfigureAwait(false);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            verifyAddParticipantsResult(response);
+
+            // Verify the target maintains the correct cloud environment
+            Assert.That(callInvite.Target, Is.InstanceOf<MicrosoftTeamsAppIdentifier>());
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.That(teamsApp, Is.Not.Null);
+            Assert.That(teamsApp!.AppId, Is.EqualTo("testAppId"));
+            Assert.That(teamsApp.Cloud == CommunicationCloudEnvironment.Public ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Dod ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Gcch, Is.True);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsAppWithCloud))]
+        public void AddParticipant_MicrosoftTeamsAppIdentifier_DifferentClouds_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+
+            var response = callConnection.AddParticipant(new AddParticipantOptions(callInvite));
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            verifyAddParticipantsResult(response);
+
+            // Verify the target maintains the correct cloud environment
+            Assert.That(callInvite.Target, Is.InstanceOf<MicrosoftTeamsAppIdentifier>());
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.That(teamsApp, Is.Not.Null);
+            Assert.That(teamsApp!.AppId, Is.EqualTo("testAppId"));
+            Assert.That(teamsApp.Cloud == CommunicationCloudEnvironment.Public ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Dod ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Gcch, Is.True);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsApp))]
+        public async Task AddParticipantAsync_MicrosoftTeamsAppIdentifier_WithAllOptions_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+
+            var options = new AddParticipantOptions(callInvite)
+            {
+                OperationContext = "custom-context",
+                InvitationTimeoutInSeconds = 60,
+                OperationCallbackUri = new Uri("https://example.com/callback")
+            };
+
+            var response = await callConnection.AddParticipantAsync(options).ConfigureAwait(false);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            verifyAddParticipantsResult(response);
+
+            // Verify all optional properties can be set
+            Assert.That(options.OperationContext, Is.EqualTo("custom-context"));
+            Assert.That(options.InvitationTimeoutInSeconds, Is.EqualTo(60));
+            Assert.That(options.OperationCallbackUri, Is.Not.Null);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsApp))]
+        public void AddParticipant_MicrosoftTeamsAppIdentifier_WithAllOptions_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+
+            var options = new AddParticipantOptions(callInvite)
+            {
+                OperationContext = "custom-context",
+                InvitationTimeoutInSeconds = 60,
+                OperationCallbackUri = new Uri("https://example.com/callback")
+            };
+
+            var response = callConnection.AddParticipant(options);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            verifyAddParticipantsResult(response);
+
+            // Verify all optional properties can be set
+            Assert.That(options.OperationContext, Is.EqualTo("custom-context"));
+            Assert.That(options.InvitationTimeoutInSeconds, Is.EqualTo(60));
+            Assert.That(options.OperationCallbackUri, Is.Not.Null);
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsApp))]
+        public void AddParticipantAsync_MicrosoftTeamsAppIdentifier_404NotFound(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.AddParticipantAsync(new AddParticipantOptions(callInvite)).ConfigureAwait(false));
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
+        }
+
+        [TestCaseSource(nameof(TestData_AddParticipant_MicrosoftTeamsApp))]
+        public void AddParticipant_MicrosoftTeamsAppIdentifier_404NotFound(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.AddParticipant(new AddParticipantOptions(callInvite)));
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
+        }
+
+        [Test]
+        public void AddParticipantAsync_NullMicrosoftTeamsAppCallInvite_ThrowsArgumentNullException()
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+            CallInvite? nullCallInvite = null;
+
+            ArgumentNullException? ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await callConnection.AddParticipantAsync(new AddParticipantOptions(nullCallInvite!)).ConfigureAwait(false));
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex!.Message.Contains("Value cannot be null"), Is.True);
+        }
+
+        [Test]
+        public void AddParticipant_NullMicrosoftTeamsAppCallInvite_ThrowsArgumentNullException()
+        {
+            var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
+            CallInvite? nullCallInvite = null;
+
+            ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(() => callConnection.AddParticipant(new AddParticipantOptions(nullCallInvite!)));
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex!.Message.Contains("Value cannot be null"), Is.True);
         }
 
         [Test]
@@ -252,8 +408,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(202, AddParticipantPayload);
 
             ArgumentNullException? ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await callConnection.AddParticipantAsync(new AddParticipantOptions(null)).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains("Value cannot be null."));
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Message.Contains("Value cannot be null."), Is.True);
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipant))]
@@ -263,8 +419,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callInvite = new CallInvite((CommunicationUserIdentifier)participantToAdd);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.AddParticipantAsync(new AddParticipantOptions(callInvite)).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipant))]
@@ -274,8 +430,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callInvite = new CallInvite((CommunicationUserIdentifier)participantToAdd);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.AddParticipant(new AddParticipantOptions(callInvite)));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_GetParticipant))]
@@ -285,7 +441,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var participantIdentifier = new CommunicationUserIdentifier(participantMri);
 
             var response = await callConnection.GetParticipantAsync(participantIdentifier).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyGetParticipantResult(response);
         }
 
@@ -296,7 +452,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var participantIdentifier = new CommunicationUserIdentifier(participantMri);
 
             var response = callConnection.GetParticipant(participantIdentifier);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyGetParticipantResult(response);
         }
 
@@ -307,8 +463,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var participantIdentifier = new CommunicationUserIdentifier(participantMri);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.GetParticipantAsync(participantIdentifier).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_GetParticipant))]
@@ -318,8 +474,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var participantIdentifier = new CommunicationUserIdentifier(participantMri);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.GetParticipant(participantIdentifier));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -328,7 +484,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(200, GetParticipantsPayload);
 
             var response = await callConnection.GetParticipantsAsync().ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyGetParticipantsResult(response.Value);
         }
 
@@ -338,7 +494,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(200, GetParticipantsPayload);
 
             var response = callConnection.GetParticipants();
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
             verifyGetParticipantsResult(response.Value);
         }
 
@@ -348,8 +504,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.GetParticipantsAsync().ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -358,8 +514,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.GetParticipants());
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipant))]
@@ -368,8 +524,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             var response = await callConnection.RemoveParticipantAsync(participantToRemove).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            Assert.That(response.Value.OperationContext, Is.EqualTo(OperationContext));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipant))]
@@ -378,8 +534,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(202, OperationContextPayload);
 
             var response = callConnection.RemoveParticipant(participantToRemove);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            Assert.That(response.Value.OperationContext, Is.EqualTo(OperationContext));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipant))]
@@ -388,8 +544,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.RemoveParticipantAsync(participantToRemove).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [TestCaseSource(nameof(TestData_AddOrRemoveParticipant))]
@@ -398,8 +554,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(404);
 
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.RemoveParticipant(participantToRemove));
-            Assert.NotNull(ex);
-            Assert.AreEqual(ex?.Status, 404);
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
         }
 
         [Test]
@@ -409,8 +565,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(200, null, connectionId);
 
             var response = callConnection.GetCallMedia();
-            Assert.IsNotNull(response);
-            Assert.AreEqual(connectionId, response.CallConnectionId);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.CallConnectionId, Is.EqualTo(connectionId));
         }
 
         [TestCaseSource(nameof(TestData_MuteParticipant))]
@@ -419,7 +575,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(200, OperationContextPayload);
 
             var response = callConnection.MuteParticipant(participant);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
         }
 
         [TestCaseSource(nameof(TestData_MuteParticipant))]
@@ -431,8 +587,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 OperationContext = OperationContext
             };
             var response = callConnection.MuteParticipant(options);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
-            Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
+            Assert.That(response.Value.OperationContext, Is.EqualTo(OperationContext));
         }
 
         [TestCaseSource(nameof(TestData_MuteParticipant))]
@@ -441,7 +597,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(200, OperationContextPayload);
 
             var response = await callConnection.MuteParticipantAsync(participant);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
         }
 
         [Test]
@@ -462,8 +618,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             };
 
             var response = await callConnection.MuteParticipantAsync(options);
-            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
-            Assert.AreEqual(OperationContext, response.Value.OperationContext);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.OK));
+            Assert.That(response.Value.OperationContext, Is.EqualTo(OperationContext));
         }
 
         [TestCaseSource(nameof(TestData_MuteParticipant))]
@@ -485,8 +641,198 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var invitationId = "invitationId";
 
             var response = await callConnection.CancelAddParticipantOperationAsync(invitationId).ConfigureAwait(false);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
-            Assert.AreEqual(invitationId, response.Value.InvitationId);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            Assert.That(response.Value.InvitationId, Is.EqualTo(invitationId));
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public async Task TransferCallToParticipantAsync_MicrosoftTeamsAppIdentifier_simpleMethod_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            verifyOperationContext(response);
+
+            // Verify the target is correctly typed as MicrosoftTeamsAppIdentifier
+            Assert.That(callInvite.Target, Is.InstanceOf<MicrosoftTeamsAppIdentifier>());
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.That(teamsApp, Is.Not.Null);
+            Assert.That(teamsApp!.AppId, Is.EqualTo("testAppId"));
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public void TransferCallToParticipant_MicrosoftTeamsAppIdentifier_simpleMethod_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = callConnection.TransferCallToParticipant(callInvite.Target);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            verifyOperationContext(response);
+
+            // Verify the target is correctly typed as MicrosoftTeamsAppIdentifier
+            Assert.That(callInvite.Target, Is.InstanceOf<MicrosoftTeamsAppIdentifier>());
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.That(teamsApp, Is.Not.Null);
+            Assert.That(teamsApp!.AppId, Is.EqualTo("testAppId"));
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public async Task TransferCallToParticipantAsync_MicrosoftTeamsAppIdentifier_WithOptions_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var options = new TransferToParticipantOptions(callInvite.Target as MicrosoftTeamsAppIdentifier);
+
+            var response = await callConnection.TransferCallToParticipantAsync(options).ConfigureAwait(false);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            verifyOperationContext(response);
+
+            // Verify the options were created correctly
+            Assert.That(options.Target, Is.InstanceOf<MicrosoftTeamsAppIdentifier>());
+            Assert.That(options.CustomCallingContext, Is.Not.Null);
+            Assert.That(options.CustomCallingContext.SipHeaders, Is.Empty);
+            Assert.That(options.CustomCallingContext.VoipHeaders, Is.Not.Null);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public void TransferCallToParticipant_MicrosoftTeamsAppIdentifier_WithOptions_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var options = new TransferToParticipantOptions(callInvite.Target as MicrosoftTeamsAppIdentifier);
+
+            var response = callConnection.TransferCallToParticipant(options);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            verifyOperationContext(response);
+
+            // Verify the options were created correctly
+            Assert.That(options.Target, Is.InstanceOf<MicrosoftTeamsAppIdentifier>());
+            Assert.That(options.CustomCallingContext, Is.Not.Null);
+            Assert.That(options.CustomCallingContext.SipHeaders, Is.Empty);
+            Assert.That(options.CustomCallingContext.VoipHeaders, Is.Not.Null);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsAppWithCloud))]
+        public async Task TransferCallToParticipantAsync_MicrosoftTeamsAppIdentifier_DifferentClouds_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = await callConnection.TransferCallToParticipantAsync(callInvite.Target).ConfigureAwait(false);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            verifyOperationContext(response);
+
+            // Verify the target maintains the correct cloud environment
+            Assert.That(callInvite.Target, Is.InstanceOf<MicrosoftTeamsAppIdentifier>());
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.That(teamsApp, Is.Not.Null);
+            Assert.That(teamsApp!.AppId, Is.EqualTo("testAppId"));
+            Assert.That(teamsApp.Cloud == CommunicationCloudEnvironment.Public ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Dod ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Gcch, Is.True);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsAppWithCloud))]
+        public void TransferCallToParticipant_MicrosoftTeamsAppIdentifier_DifferentClouds_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+
+            var response = callConnection.TransferCallToParticipant(callInvite.Target);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            verifyOperationContext(response);
+
+            // Verify the target maintains the correct cloud environment
+            Assert.That(callInvite.Target, Is.InstanceOf<MicrosoftTeamsAppIdentifier>());
+            var teamsApp = callInvite.Target as MicrosoftTeamsAppIdentifier;
+            Assert.That(teamsApp, Is.Not.Null);
+            Assert.That(teamsApp!.AppId, Is.EqualTo("testAppId"));
+            Assert.That(teamsApp.Cloud == CommunicationCloudEnvironment.Public ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Dod ||
+                         teamsApp.Cloud == CommunicationCloudEnvironment.Gcch, Is.True);
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public async Task TransferCallToParticipantAsync_MicrosoftTeamsAppIdentifier_WithTransferee_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var options = new TransferToParticipantOptions(callInvite.Target as MicrosoftTeamsAppIdentifier);
+            options.Transferee = new CommunicationUserIdentifier("transfereeId");
+            options.OperationContext = "custom-context";
+            options.OperationCallbackUri = new Uri("https://example.com/callback");
+            options.SourceCallerIdNumber = new PhoneNumberIdentifier("+14255551234");
+
+            var response = await callConnection.TransferCallToParticipantAsync(options).ConfigureAwait(false);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            verifyOperationContext(response);
+
+            // Verify all optional properties can be set
+            Assert.That(options.Transferee, Is.Not.Null);
+            Assert.That(options.OperationCallbackUri, Is.Not.Null);
+            Assert.That(options.SourceCallerIdNumber, Is.Not.Null);
+            Assert.That(options.OperationContext, Is.EqualTo("custom-context"));
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public void TransferCallToParticipant_MicrosoftTeamsAppIdentifier_WithTransferee_202Accepted(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            var options = new TransferToParticipantOptions(callInvite.Target as MicrosoftTeamsAppIdentifier);
+            options.Transferee = new CommunicationUserIdentifier("transfereeId");
+            options.OperationContext = "custom-context";
+            options.OperationCallbackUri = new Uri("https://example.com/callback");
+            options.SourceCallerIdNumber = new PhoneNumberIdentifier("+14255551234");
+
+            var response = callConnection.TransferCallToParticipant(options);
+            Assert.That(response.GetRawResponse().Status, Is.EqualTo((int)HttpStatusCode.Accepted));
+            verifyOperationContext(response);
+
+            // Verify all optional properties can be set
+            Assert.That(options.Transferee, Is.Not.Null);
+            Assert.That(options.OperationCallbackUri, Is.Not.Null);
+            Assert.That(options.SourceCallerIdNumber, Is.Not.Null);
+            Assert.That(options.OperationContext, Is.EqualTo("custom-context"));
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public void TransferCallToParticipantAsync_MicrosoftTeamsAppIdentifier_404NotFound(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(callInvite.Target as MicrosoftTeamsAppIdentifier)).ConfigureAwait(false));
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
+        }
+
+        [TestCaseSource(nameof(TestData_TransferCallToParticipant_MicrosoftTeamsApp))]
+        public void TransferCallToParticipant_MicrosoftTeamsAppIdentifier_404NotFound(CallInvite callInvite)
+        {
+            var callConnection = CreateMockCallConnection(404);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCallToParticipant(new TransferToParticipantOptions(callInvite.Target as MicrosoftTeamsAppIdentifier)));
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex?.Status, Is.EqualTo(404));
+        }
+
+        [Test]
+        public void TransferCallToParticipantAsync_NullMicrosoftTeamsAppIdentifier_ThrowsArgumentNullException()
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            MicrosoftTeamsAppIdentifier? nullTeamsAppIdentifier = null;
+
+            ArgumentNullException? ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await callConnection.TransferCallToParticipantAsync(nullTeamsAppIdentifier!).ConfigureAwait(false));
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex!.ParamName, Is.EqualTo("targetParticipant"));
+        }
+
+        [Test]
+        public void TransferCallToParticipant_NullMicrosoftTeamsAppIdentifier_ThrowsArgumentNullException()
+        {
+            var callConnection = CreateMockCallConnection(202, OperationContextPayload);
+            MicrosoftTeamsAppIdentifier? nullTeamsAppIdentifier = null;
+
+            ArgumentNullException? ex = Assert.Throws<ArgumentNullException>(() => callConnection.TransferCallToParticipant(nullTeamsAppIdentifier!));
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex!.ParamName, Is.EqualTo("targetParticipant"));
         }
 
         private CallConnection CreateMockCallConnection(int responseCode, string? responseContent = null, string callConnectionId = "9ec7da16-30be-4e74-a941-285cfc4bffc5")
@@ -532,6 +878,38 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             };
         }
 
+        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_MicrosoftTeamsApp()
+        {
+            var callInvite = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId"));
+            callInvite.CustomCallingContext.AddVoip("key1", "value1");
+            return new[]
+            {
+                new object?[]
+                {
+                    callInvite
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_TransferCallToParticipant_MicrosoftTeamsAppWithCloud()
+        {
+            var callInvitePublic = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId", CommunicationCloudEnvironment.Public));
+            callInvitePublic.CustomCallingContext.AddVoip("key1", "value1");
+
+            var callInviteDod = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId", CommunicationCloudEnvironment.Dod));
+            callInviteDod.CustomCallingContext.AddVoip("key2", "value2");
+
+            var callInviteGcch = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId", CommunicationCloudEnvironment.Gcch));
+            callInviteGcch.CustomCallingContext.AddVoip("key3", "value3");
+
+            return new[]
+            {
+                new object?[] { callInvitePublic },
+                new object?[] { callInviteDod },
+                new object?[] { callInviteGcch },
+            };
+        }
+
         private static IEnumerable<object?[]> TestData_GetParticipant()
         {
             return new[]
@@ -554,6 +932,38 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             };
         }
 
+        private static IEnumerable<object?[]> TestData_AddParticipant_MicrosoftTeamsApp()
+        {
+            var callInvite = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId"));
+            callInvite.CustomCallingContext.AddVoip("key1", "value1");
+            return new[]
+            {
+                new object?[]
+                {
+                    callInvite
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_AddParticipant_MicrosoftTeamsAppWithCloud()
+        {
+            var callInvitePublic = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId", CommunicationCloudEnvironment.Public));
+            callInvitePublic.CustomCallingContext.AddVoip("key1", "value1");
+
+            var callInviteDod = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId", CommunicationCloudEnvironment.Dod));
+            callInviteDod.CustomCallingContext.AddVoip("key2", "value2");
+
+            var callInviteGcch = new CallInvite(new MicrosoftTeamsAppIdentifier("testAppId", CommunicationCloudEnvironment.Gcch));
+            callInviteGcch.CustomCallingContext.AddVoip("key3", "value3");
+
+            return new[]
+            {
+                new object?[] { callInvitePublic },
+                new object?[] { callInviteDod },
+                new object?[] { callInviteGcch },
+            };
+        }
+
         private static IEnumerable<object?[]> TestData_MuteParticipant()
         {
             return new[]
@@ -567,33 +977,33 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
         private void verifyOperationContext(TransferCallToParticipantResult result)
         {
-            Assert.AreEqual(OperationContext, result.OperationContext);
+            Assert.That(result.OperationContext, Is.EqualTo(OperationContext));
         }
 
         private void verifyAddParticipantsResult(AddParticipantResult result)
         {
             var identifier = (CommunicationUserIdentifier)result.Participant.Identifier;
-            Assert.AreEqual(ParticipantUserId, identifier.Id);
-            Assert.IsFalse(result.Participant.IsMuted);
-            Assert.AreEqual(OperationContext, result.OperationContext);
+            Assert.That(identifier.Id, Is.EqualTo(ParticipantUserId));
+            Assert.That(result.Participant.IsMuted, Is.False);
+            Assert.That(result.OperationContext, Is.EqualTo(OperationContext));
         }
 
         private void verifyGetParticipantResult(CallParticipant participant)
         {
             var identifier = (CommunicationUserIdentifier)participant.Identifier;
-            Assert.AreEqual(ParticipantUserId, identifier.Id);
-            Assert.IsFalse(participant.IsMuted);
+            Assert.That(identifier.Id, Is.EqualTo(ParticipantUserId));
+            Assert.That(participant.IsMuted, Is.False);
         }
 
         private void verifyGetParticipantsResult(IReadOnlyList<CallParticipant> participants)
         {
-            Assert.AreEqual(2, participants.Count);
+            Assert.That(participants.Count, Is.EqualTo(2));
             var identifier = (CommunicationUserIdentifier)participants[0].Identifier;
-            Assert.AreEqual(ParticipantUserId, identifier.Id);
-            Assert.IsFalse(participants[0].IsMuted);
+            Assert.That(identifier.Id, Is.EqualTo(ParticipantUserId));
+            Assert.That(participants[0].IsMuted, Is.False);
             var identifier2 = (PhoneNumberIdentifier)participants[1].Identifier;
-            Assert.AreEqual(PhoneNumber, identifier2.PhoneNumber);
-            Assert.IsTrue(participants[1].IsMuted);
+            Assert.That(identifier2.PhoneNumber, Is.EqualTo(PhoneNumber));
+            Assert.That(participants[1].IsMuted, Is.True);
         }
     }
 }

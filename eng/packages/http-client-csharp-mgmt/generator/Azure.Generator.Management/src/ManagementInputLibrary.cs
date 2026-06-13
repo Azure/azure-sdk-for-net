@@ -1,27 +1,66 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Models;
-using Microsoft.TypeSpec.Generator.Input;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text.Json;
+using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Primitives;
+using Microsoft.TypeSpec.Generator.Input;
 
 namespace Azure.Generator.Management
 {
     /// <inheritdoc/>
     public class ManagementInputLibrary : InputLibrary
     {
-        private const string ResourceMetadataDecoratorName = "Azure.ClientGenerator.Core.@resourceSchema";
-        private const string NonResourceMethodMetadata = "Azure.ClientGenerator.Core.@nonResourceMethodSchema";
+        private const string ArmProviderSchemaDecoratorName = "Azure.ClientGenerator.Core.@armProviderSchema";
         private const string FlattenPropertyDecoratorName = "Azure.ResourceManager.@flattenProperty";
+        private const string ClientOptionDecoratorName = "Azure.ClientGenerator.Core.@clientOption";
+        private const string HasClientNameOverrideDecoratorName = "Azure.ResourceManager.@hasClientNameOverride";
+        private const string DisableSafeFlattenKey = "disable-safe-flatten";
+        private const string CSharpScope = "csharp";
 
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
-        private HashSet<InputModelType>? _resourceModels;
+        private HashSet<string>? _resourceModelIds;
+        private HashSet<InputModelType>? _safeFlattenDisabledModels;
+        private HashSet<InputModelType>? _clientNameOverriddenModels;
+        private HashSet<InputServiceMethod>? _clientNameOverriddenMethods;
+        private ArmProviderSchema? _providerSchema;
+        private IReadOnlyDictionary<string, InputModelType>? _modelsByCrossLanguageDefinitionId;
 
-        private IReadOnlyDictionary<InputModelType, string>? _resourceUpdateModelToResourceNameMap;
+        private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)>? _resourceUpdateModelToResourceNameMap;
+
+        internal IReadOnlyDictionary<string, InputModelType> ModelsByCrossLanguageDefinitionId => _modelsByCrossLanguageDefinitionId ??= BuildModelsByCrossLanguageDefinitionId();
+
+        private IReadOnlyDictionary<string, InputModelType> BuildModelsByCrossLanguageDefinitionId()
+        {
+            var result = new Dictionary<string, InputModelType>();
+            foreach (var model in InputNamespace.Models)
+            {
+                if (string.IsNullOrEmpty(model.CrossLanguageDefinitionId))
+                {
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        "general-warning",
+                        $"Model '{model.Name}' has empty or null cross-language definition ID. This model will be skipped in the cache.",
+                        targetCrossLanguageDefinitionId: model.Name);
+                    continue;
+                }
+
+                if (result.ContainsKey(model.CrossLanguageDefinitionId))
+                {
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        "general-warning",
+                        $"Duplicate cross-language definition ID found: '{model.CrossLanguageDefinitionId}' for model '{model.Name}'. This model will be skipped in the cache.",
+                        targetCrossLanguageDefinitionId: model.CrossLanguageDefinitionId);
+                    continue;
+                }
+
+                result[model.CrossLanguageDefinitionId] = model;
+            }
+            return result;
+        }
 
         private IReadOnlyDictionary<InputModelType, IList<InputModelProperty>>? _flattenPropertyMap;
         internal IReadOnlyDictionary<InputModelType, IList<InputModelProperty>> FlattenPropertyMap => _flattenPropertyMap ??= BuildFlattenPropertyMap();
@@ -52,6 +91,158 @@ namespace Azure.Generator.Management
             return result;
         }
 
+        /// <summary>
+        /// Set of input models for which safe-flatten should be disabled. Populated from
+        /// <c>@@clientOption(Model, "disable-safe-flatten", true, "csharp")</c> decorators.
+        /// </summary>
+        internal HashSet<InputModelType> SafeFlattenDisabledModels => _safeFlattenDisabledModels ??= BuildSafeFlattenDisabledModels();
+
+        private HashSet<InputModelType> BuildSafeFlattenDisabledModels()
+        {
+            var result = new HashSet<InputModelType>();
+            foreach (var model in InputNamespace.Models)
+            {
+                if (HasDisableSafeFlattenDecorator(model.Decorators))
+                {
+                    result.Add(model);
+                }
+            }
+            return result;
+        }
+
+        private static bool HasDisableSafeFlattenDecorator(IReadOnlyList<InputDecoratorInfo> decorators)
+        {
+            foreach (var decorator in decorators)
+            {
+                if (decorator.Name != ClientOptionDecoratorName || decorator.Arguments == null)
+                {
+                    continue;
+                }
+
+                // @@clientOption(target, name, value, scope?) — TCGC propagates the named arguments as BinaryData JSON values.
+                // Note: the second positional parameter is called "name" in the TCGC decorator definition,
+                // even though our docs and conceptual model refer to these as "keys".
+                if (!decorator.Arguments.TryGetValue("name", out var nameData) || nameData == null)
+                {
+                    continue;
+                }
+
+                string? optionName;
+                try
+                {
+                    optionName = nameData.ToObjectFromJson<string>();
+                }
+                catch
+                {
+                    continue;
+                }
+                if (optionName != DisableSafeFlattenKey)
+                {
+                    continue;
+                }
+
+                // Honor language scope. @@clientOption is language-scoped (the existing
+                // emitter readers use TCGC's getClientOptions which filters by scope), but
+                // because we read the raw decorator off the input model here we must filter
+                // explicitly. A missing scope is treated as "all languages" (TCGC default)
+                // and is still honored for the C# generator.
+                if (decorator.Arguments.TryGetValue("scope", out var scopeData) && scopeData != null)
+                {
+                    string? scope;
+                    try
+                    {
+                        scope = scopeData.ToObjectFromJson<string>();
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                    if (scope != null && scope != CSharpScope)
+                    {
+                        continue;
+                    }
+                }
+
+                // Only accept a JSON boolean true. Any other value (string "true", 1, false, etc.) is ignored.
+                if (decorator.Arguments.TryGetValue("value", out var valueData) && valueData != null)
+                {
+                    try
+                    {
+                        if (valueData.ToObjectFromJson<bool>())
+                        {
+                            return true;
+                        }
+                    }
+                    catch
+                    {
+                        // not a boolean — ignore
+                    }
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Set of input models for which the user has supplied a <c>@@clientName</c> override
+        /// (csharp scope or unscoped). The mgmt emitter stamps a synthetic
+        /// <c>Azure.ResourceManager.@hasClientNameOverride</c> decorator on these models so the
+        /// generator can detect them without re-running TCGC scope resolution.
+        /// </summary>
+        internal HashSet<InputModelType> ClientNameOverriddenModels => _clientNameOverriddenModels ??= BuildClientNameOverriddenModels();
+
+        private HashSet<InputModelType> BuildClientNameOverriddenModels()
+        {
+            var result = new HashSet<InputModelType>();
+            foreach (var model in InputNamespace.Models)
+            {
+                if (HasClientNameOverrideMarker(model.Decorators))
+                {
+                    result.Add(model);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Set of service methods whose underlying TypeSpec operation carries a user-supplied
+        /// <c>@@clientName</c> override (csharp scope or unscoped). The marker is stamped onto
+        /// the underlying <see cref="InputOperation"/>'s decorators by the mgmt emitter, because
+        /// <see cref="InputServiceMethod"/> itself has no <c>Decorators</c> property.
+        /// </summary>
+        internal HashSet<InputServiceMethod> ClientNameOverriddenMethods => _clientNameOverriddenMethods ??= BuildClientNameOverriddenMethods();
+
+        private HashSet<InputServiceMethod> BuildClientNameOverriddenMethods()
+        {
+            var result = new HashSet<InputServiceMethod>();
+            foreach (var client in InputNamespace.Clients)
+            {
+                foreach (var method in client.Methods)
+                {
+                    if (HasClientNameOverrideMarker(method.Operation.Decorators))
+                    {
+                        result.Add(method);
+                    }
+                }
+            }
+            return result;
+        }
+
+        private static bool HasClientNameOverrideMarker(IReadOnlyList<InputDecoratorInfo>? decorators)
+        {
+            if (decorators is null)
+            {
+                return false;
+            }
+            foreach (var decorator in decorators)
+            {
+                if (string.Equals(decorator.Name, HasClientNameOverrideDecoratorName, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         /// <inheritdoc/>
         public ManagementInputLibrary(string configPath) : base(configPath)
         {
@@ -60,7 +251,8 @@ namespace Azure.Generator.Management
         private static readonly HashSet<string> _methodsToOmit = new()
         {
             // operations_list has been covered in Azure.ResourceManager already, we don't need to generate it in the client
-            "Azure.ResourceManager.Operations.list"
+            "Azure.ResourceManager.Operations.list",
+            "Azure.ResourceManager.Legacy.Operations.list"
         };
 
         private InputNamespace? _inputNamespace;
@@ -81,27 +273,43 @@ namespace Azure.Generator.Management
             return base.InputNamespace;
         }
 
-        private HashSet<InputModelType> ResourceModels => _resourceModels ??= [.. InputNamespace.Models.Where(m => m.Decorators.Any(d => d.Name.Equals(ResourceMetadataDecoratorName)))];
+        // Resource-model checks must use the model's semantic identity rather than InputModelType object identity.
+        // Some generator paths can see equivalent InputModelType instances for the same TypeSpec model, and those
+        // instances would not match a HashSet<InputModelType> built from ArmProviderSchema.Resources.
+        private HashSet<string> ResourceModelIds => _resourceModelIds ??= BuildResourceModelIds();
 
-        private IReadOnlyList<ResourceMetadata>? _resourceMetadatas;
-        internal IReadOnlyList<ResourceMetadata> ResourceMetadatas => _resourceMetadatas ??= DeserializeResourceMetadata();
+        private HashSet<string> BuildResourceModelIds()
+        {
+            // Get resource models from ArmProviderSchema
+            var resourceModelIds = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var resource in ArmProviderSchema.Resources)
+            {
+                var resourceModelId = resource.ResourceModel?.CrossLanguageDefinitionId;
+                if (!string.IsNullOrEmpty(resourceModelId))
+                {
+                    resourceModelIds.Add(resourceModelId);
+                }
+            }
 
-        private IReadOnlyList<NonResourceMethod>? _nonResourceMethods;
-        internal IReadOnlyList<NonResourceMethod> NonResourceMethods => _nonResourceMethods
-            ??= DeserializeNonResourceMethods();
+            return resourceModelIds;
+        }
+
+        internal IReadOnlyList<ArmResourceMetadata> ResourceMetadatas => ArmProviderSchema.Resources;
+
+        internal IReadOnlyList<NonResourceMethod> NonResourceMethods => ArmProviderSchema.NonResourceMethods;
 
         private IReadOnlyDictionary<string, InputServiceMethod> InputMethodsByCrossLanguageDefinitionId => _inputServiceMethodsByCrossLanguageDefinitionId ??= InputNamespace.Clients.SelectMany(c => c.Methods).ToDictionary(m => m.CrossLanguageDefinitionId, m => m);
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> InputMethodClientMap => _intMethodClientMap ??= ConstructMethodClientMap();
 
-        private IReadOnlyDictionary<InputModelType, string> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
+        private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
 
-        // If there're multiple API versions in the input namespace, use the last one as the default.
-        internal string DefaultApiVersion => InputNamespace.ApiVersions.Last();
+        /// <summary> Gets the ARM provider schema containing all resource metadata and non-resource methods. </summary>
+        public ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
 
-        private IReadOnlyDictionary<InputModelType, string> BuildResourceUpdateModelToResourceNameMap()
+        private IReadOnlyDictionary<string, (string ResourceName, bool IsAlsoUsedInCreate)> BuildResourceUpdateModelToResourceNameMap()
         {
-            Dictionary<InputModelType, string> map = new();
+            Dictionary<string, (string ResourceName, int Count, bool IsAlsoUsedInCreate)> tempMap = new(StringComparer.Ordinal);
 
             foreach (var metadata in ResourceMetadatas)
             {
@@ -110,17 +318,62 @@ namespace Azure.Generator.Management
                 {
                     foreach (var parameter in patchMethod.Parameters)
                     {
-                        if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && updateModel != metadata.ResourceModel)
+                        if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && !HasSameModelIdentity(updateModel, metadata.ResourceModel))
                         {
-                            map[updateModel] = metadata.ResourceModel.Name;
+                            // Use the semantic model key because the PATCH operation body and the model visitor
+                            // can receive distinct InputModelType instances for the same TypeSpec declaration.
+                            var updateModelKey = GetModelIdentityKey(updateModel);
+                            bool isAlsoUsedInCreate = IsModelUsedInCreateOperation(metadata, updateModel);
+                            if (tempMap.TryGetValue(updateModelKey, out var existing))
+                            {
+                                var resourceCount = string.Equals(existing.ResourceName, metadata.ResourceName, StringComparison.Ordinal)
+                                    ? existing.Count
+                                    : existing.Count + 1;
+                                tempMap[updateModelKey] = (existing.ResourceName, resourceCount, existing.IsAlsoUsedInCreate || isAlsoUsedInCreate);
+                            }
+                            else
+                            {
+                                // Use ARM metadata.ResourceName rather than the raw model name. Some services
+                                // customize resource model names, while the previous SDK patch type was based on
+                                // the resource name that owns the PATCH operation.
+                                tempMap[updateModelKey] = (metadata.ResourceName, 1, isAlsoUsedInCreate);
+                            }
                             break;
                         }
                     }
                 }
             }
 
-            return map;
+            // Only keep update models that are used by exactly one resource (count == 1). The same
+            // resource can have multiple PATCH methods/API versions using the same model.
+            return tempMap
+                .Where(kvp => kvp.Value.Count == 1)
+                .ToDictionary(kvp => kvp.Key, kvp => (kvp.Value.ResourceName, kvp.Value.IsAlsoUsedInCreate));
         }
+
+        private static bool IsModelUsedInCreateOperation(ArmResourceMetadata metadata, InputModelType model)
+        {
+            var createMethod = metadata.Methods.Where(m => m.Kind == ResourceOperationKind.Create).FirstOrDefault()?.InputMethod;
+            if (createMethod is { Operation.HttpMethod: "PUT" })
+            {
+                foreach (var parameter in createMethod.Parameters)
+                {
+                    if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType createModel && HasSameModelIdentity(createModel, model))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private static bool HasSameModelIdentity(InputModelType left, InputModelType right)
+            => string.Equals(GetModelIdentityKey(left), GetModelIdentityKey(right), StringComparison.Ordinal);
+
+        private static string GetModelIdentityKey(InputModelType model)
+            => !string.IsNullOrEmpty(model.Namespace)
+                ? $"{model.Namespace}.{model.Name}"
+                : model.CrossLanguageDefinitionId;
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> ConstructMethodClientMap()
         {
@@ -135,75 +388,78 @@ namespace Azure.Generator.Management
             return map;
         }
 
+        private ArmProviderSchema BuildArmProviderSchema()
+        {
+            var rootClient = InputNamespace.RootClients.FirstOrDefault();
+            if (rootClient == null)
+            {
+                // Fallback to empty schema if no root client is available
+                return new ArmProviderSchema(Array.Empty<ArmResourceMetadata>(), Array.Empty<NonResourceMethod>());
+            }
+
+            var armProviderDecorators = rootClient.Decorators
+                .Where(d => d.Name == ArmProviderSchemaDecoratorName)
+                .ToList();
+
+            if (armProviderDecorators.Count == 0)
+            {
+                // Fallback to empty schema if decorator not found
+                return new ArmProviderSchema(Array.Empty<ArmResourceMetadata>(), Array.Empty<NonResourceMethod>());
+            }
+
+            var resourcesByIdPattern = new Dictionary<string, ArmResourceMetadata>(StringComparer.OrdinalIgnoreCase);
+            var nonResourceMethodsById = new Dictionary<string, NonResourceMethod>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var decorator in armProviderDecorators)
+            {
+                if (decorator.Arguments == null)
+                {
+                    continue;
+                }
+
+                // Filter out methods that should be omitted during deserialization
+                var schema = ArmProviderSchema.Deserialize(
+                    decorator.Arguments,
+                    this,
+                    methodFilter: m => !_methodsToOmit.Contains(m.InputMethod.CrossLanguageDefinitionId));
+
+                foreach (var resource in schema.Resources)
+                {
+                    resourcesByIdPattern.TryAdd(resource.ResourceIdPattern, resource);
+                }
+
+                foreach (var nonResourceMethod in schema.NonResourceMethods)
+                {
+                    nonResourceMethodsById.TryAdd(nonResourceMethod.InputMethod.CrossLanguageDefinitionId, nonResourceMethod);
+                }
+            }
+
+            return new ArmProviderSchema(resourcesByIdPattern.Values.ToList(), nonResourceMethodsById.Values.ToList());
+        }
+
         internal InputServiceMethod? GetMethodByCrossLanguageDefinitionId(string crossLanguageDefinitionId)
             => InputMethodsByCrossLanguageDefinitionId.TryGetValue(crossLanguageDefinitionId, out var method) ? method : null;
 
         internal InputClient? GetClientByMethod(InputServiceMethod method)
             => InputMethodClientMap.TryGetValue(method, out var client) ? client : null;
 
-        internal bool IsResourceModel(InputModelType model) => ResourceModels.Contains(model);
+        /// <summary> Determines whether the specified model is a resource model. </summary>
+        /// <param name="model"> The input model type to check. </param>
+        /// <returns> <c>true</c> if the model is a resource model; otherwise, <c>false</c>. </returns>
+        public bool IsResourceModel(InputModelType model)
+            => ResourceModelIds.Contains(model.CrossLanguageDefinitionId);
 
-        private IReadOnlyList<ResourceMetadata> DeserializeResourceMetadata()
+        internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName, out bool isAlsoUsedInCreate)
         {
-            var resourceMetadata = new List<ResourceMetadata>();
-            var resourceChildren = new Dictionary<string, List<string>>();
-            // we build the resource metadata instances first to ensure that we already have everything before we figure out the children
-            foreach (var model in InputNamespace.Models)
+            if (ResourceUpdateModelToResourceNameMap.TryGetValue(GetModelIdentityKey(model), out var entry))
             {
-                var decorator = model.Decorators.FirstOrDefault(d => d.Name == ResourceMetadataDecoratorName);
-                if (decorator?.Arguments != null)
-                {
-                    var children = new List<string>();
-                    var metadata = ResourceMetadata.DeserializeResourceMetadata(decorator.Arguments, model, children);
-                    resourceMetadata.Add(metadata);
-                    resourceChildren.Add(metadata.ResourceIdPattern, children);
-                }
+                resourceName = entry.ResourceName;
+                isAlsoUsedInCreate = entry.IsAlsoUsedInCreate;
+                return true;
             }
-            // we go a second pass to fulfill the children list
-            foreach (var resource in resourceMetadata)
-            {
-                // finds my parent
-                if (resource.ParentResourceId is not null)
-                {
-                    // add the resource id to the parent's children list
-                    resourceChildren[resource.ParentResourceId].Add(resource.ResourceIdPattern);
-                }
-            }
-            return resourceMetadata;
-        }
-
-        private IReadOnlyList<NonResourceMethod> DeserializeNonResourceMethods()
-        {
-            var rootClient = InputNamespace.RootClients.First();
-            var decorator = rootClient.Decorators.FirstOrDefault(d => d.Name == NonResourceMethodMetadata);
-            var args = decorator?.Arguments;
-            if (args is null)
-            {
-                return [];
-            }
-
-            var nonResourceMethodMetadata = new List<NonResourceMethod>();
-            // deserialize the decorator arguments
-            if (args.TryGetValue("nonResourceMethods", out var nonResourceMethods))
-            {
-                using var document = JsonDocument.Parse(nonResourceMethods);
-                foreach (var item in document.RootElement.EnumerateArray())
-                {
-                    var nonResourceMethod = NonResourceMethod.DeserializeNonResourceMethod(item);
-                    if (_methodsToOmit.Contains(nonResourceMethod.InputMethod.CrossLanguageDefinitionId))
-                    {
-                        continue; // skip methods that we don't want to generate
-                    }
-                    nonResourceMethodMetadata.Add(nonResourceMethod);
-                }
-            }
-
-            return nonResourceMethodMetadata;
-        }
-
-        internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName)
-        {
-            return ResourceUpdateModelToResourceNameMap.TryGetValue(model, out resourceName);
+            resourceName = null;
+            isAlsoUsedInCreate = false;
+            return false;
         }
     }
 }

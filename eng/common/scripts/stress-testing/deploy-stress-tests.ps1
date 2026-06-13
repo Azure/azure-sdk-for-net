@@ -42,5 +42,30 @@ param(
 
 . $PSScriptRoot/stress-test-deployment-lib.ps1
 
+# If there are local changes to values.yaml it's almost certain that the user
+# is an admin and has provisioned a new stress cluster but not published a
+# new addons chart with the new infra config values. In these cases we should
+# just fail, as deploying without the local addons override causes misleading
+# errors in the cluster with pods not able to mount storage accounts using the
+# old values.yaml reference from the published stress-test-addons helm chart.
+if (!$LocalAddonsPath) {
+    try {
+        $repoRoot = git -C $PSScriptRoot rev-parse --show-toplevel 2>$null
+    } catch {
+        $repoRoot = $null
+    }
+
+    if ($repoRoot -and (Split-Path $repoRoot -Leaf) -eq "azure-sdk-tools") {
+        $valuesFile = Join-Path $repoRoot "tools/stress-cluster/cluster/kubernetes/stress-test-addons/values.yaml"
+        if (Test-Path $valuesFile) {
+            $valuesStatus = git -C $repoRoot status --porcelain -- $valuesFile
+            if ($valuesStatus) {
+                $localAddonsDir = Split-Path $valuesFile -Parent
+                throw "Detected changes to '$valuesFile' without -LocalAddonsPath. Re-run with '-LocalAddonsPath $localAddonsDir' to apply local addon values."
+            }
+        }
+    }
+}
+
 CheckDependencies
 DeployStressTests @PSBoundParameters

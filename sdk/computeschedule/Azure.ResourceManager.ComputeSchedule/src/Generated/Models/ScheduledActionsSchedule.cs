@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Specify the schedule in which the scheduled action is supposed to follow. </summary>
     public partial class ScheduledActionsSchedule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsSchedule"/>. </summary>
         /// <param name="scheduledTime"> The time the scheduled action is supposed to run on. </param>
@@ -75,8 +47,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="requestedDaysOfTheMonth"> The days of the month the scheduled action is supposed to run on. If empty, it means it will run on every day of the month. </param>
         /// <param name="executionParameters"> The execution parameters the scheduled action is supposed to follow. </param>
         /// <param name="deadlineType"> The type of deadline the scheduled action is supposed to follow for the schedule. If no value is passed, it will default to InitiateAt. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionsSchedule(TimeSpan scheduledTime, string timeZone, IList<ScheduledActionsScheduleWeekDay> requestedWeekDays, IList<ScheduledActionsScheduleMonth> requestedMonths, IList<int> requestedDaysOfTheMonth, ScheduledActionExecutionParameterDetail executionParameters, ScheduledActionDeadlineType? deadlineType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduledActionsSchedule(TimeSpan scheduledTime, string timeZone, IList<ScheduledActionsScheduleWeekDay> requestedWeekDays, IList<ScheduledActionsScheduleMonth> requestedMonths, IList<int> requestedDaysOfTheMonth, ScheduledActionExecutionParameterDetail executionParameters, ScheduledActionDeadlineType? deadlineType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduledTime = scheduledTime;
             TimeZone = timeZone;
@@ -85,26 +57,27 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             RequestedDaysOfTheMonth = requestedDaysOfTheMonth;
             ExecutionParameters = executionParameters;
             DeadlineType = deadlineType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionsSchedule"/> for deserialization. </summary>
-        internal ScheduledActionsSchedule()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The time the scheduled action is supposed to run on. </summary>
         public TimeSpan ScheduledTime { get; set; }
+
         /// <summary> The timezone the scheduled time is specified on. </summary>
         public string TimeZone { get; set; }
+
         /// <summary> The week days the scheduled action is supposed to run on. </summary>
         public IList<ScheduledActionsScheduleWeekDay> RequestedWeekDays { get; }
+
         /// <summary> The months the scheduled action is supposed to run on. </summary>
         public IList<ScheduledActionsScheduleMonth> RequestedMonths { get; }
+
         /// <summary> The days of the month the scheduled action is supposed to run on. If empty, it means it will run on every day of the month. </summary>
         public IList<int> RequestedDaysOfTheMonth { get; }
+
         /// <summary> The execution parameters the scheduled action is supposed to follow. </summary>
         public ScheduledActionExecutionParameterDetail ExecutionParameters { get; set; }
+
         /// <summary> The type of deadline the scheduled action is supposed to follow for the schedule. If no value is passed, it will default to InitiateAt. </summary>
         public ScheduledActionDeadlineType? DeadlineType { get; set; }
     }

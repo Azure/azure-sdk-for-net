@@ -1,0 +1,57 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable enable
+
+using Azure.Provisioning.Primitives;
+
+namespace Azure.Provisioning.Dns;
+
+/// <summary>
+/// A DS record. For more information about the DS record format, see RFC 4034:
+/// https://www.rfc-editor.org/rfc/rfc4034.
+/// </summary>
+public partial class DnsDSRecordInfo : ProvisionableConstruct
+{
+    /// <summary> The key tag value is used to determine which DNSKEY Resource Record is used for signature verification. </summary>
+    public BicepValue<int> KeyTag
+    {
+        get { Initialize(); return _keyTag!; }
+        set { Initialize(); _keyTag!.Assign(value); }
+    }
+    private BicepValue<int>? _keyTag;
+
+    /// <summary> The security algorithm type represents the standard security algorithm number of the DNSKEY Resource Record. See: https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml. </summary>
+    public BicepValue<int> Algorithm
+    {
+        get { Initialize(); return _algorithm!; }
+        set { Initialize(); _algorithm!.Assign(value); }
+    }
+    private BicepValue<int>? _algorithm;
+
+    /// <summary> The digest entity. </summary>
+    public DSRecordDigest Digest
+    {
+        get { Initialize(); return _digest!; }
+        set { Initialize(); AssignOrReplace(ref _digest, value); }
+    }
+    private DSRecordDigest? _digest;
+
+    /// <summary>
+    /// Creates a new DnsDSRecordInfo.
+    /// </summary>
+    public DnsDSRecordInfo()
+    {
+    }
+
+    /// <summary>
+    /// Define all the provisionable properties of DnsDSRecordInfo.
+    /// </summary>
+    protected override void DefineProvisionableProperties()
+    {
+        base.DefineProvisionableProperties();
+        _keyTag = DefineProperty<int>("KeyTag", ["keyTag"]);
+        _algorithm = DefineProperty<int>("Algorithm", ["algorithm"]);
+        _digest = DefineModelProperty<DSRecordDigest>("Digest", ["digest"]);
+    }
+}

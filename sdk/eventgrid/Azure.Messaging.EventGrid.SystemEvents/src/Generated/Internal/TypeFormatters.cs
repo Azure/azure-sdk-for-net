@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Xml;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -36,7 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         public static string ToString(TimeSpan value, string format) => format switch
         {
-            "P" => System.Xml.XmlConvert.ToString(value),
+            "P" => XmlConvert.ToString(value),
             _ => value.ToString(format, CultureInfo.InvariantCulture)
         };
 
@@ -129,7 +130,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         public static TimeSpan ParseTimeSpan(string value, string format) => format switch
         {
-            "P" => System.Xml.XmlConvert.ToTimeSpan(value),
+            "P" => XmlConvert.ToTimeSpan(value),
             _ => TimeSpan.ParseExact(value, format, CultureInfo.InvariantCulture)
         };
 
@@ -165,12 +166,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 byte[] b0 when formatSpecifier != null => ToString(b0, formatSpecifier),
                 IEnumerable<string> s0 => string.Join(",", s0),
                 DateTimeOffset dateTime when formatSpecifier != null => ToString(dateTime, formatSpecifier),
-                TimeSpan timeSpan when format == SerializationFormat.Duration_Seconds => Convert.ToInt32(timeSpan.TotalSeconds).ToString(CultureInfo.InvariantCulture),
-                TimeSpan timeSpan0 when format == SerializationFormat.Duration_Seconds_Float || format == SerializationFormat.Duration_Seconds_Double => timeSpan0.TotalSeconds.ToString(CultureInfo.InvariantCulture),
-                TimeSpan timeSpan1 when format == SerializationFormat.Duration_Milliseconds => Convert.ToInt32(timeSpan1.TotalMilliseconds).ToString(CultureInfo.InvariantCulture),
-                TimeSpan timeSpan2 when format == SerializationFormat.Duration_Milliseconds_Float || format == SerializationFormat.Duration_Milliseconds_Double => timeSpan2.TotalMilliseconds.ToString(CultureInfo.InvariantCulture),
-                TimeSpan timeSpan3 when formatSpecifier != null => ToString(timeSpan3, formatSpecifier),
-                TimeSpan timeSpan4 => System.Xml.XmlConvert.ToString(timeSpan4),
+                TimeSpan timeSpan when format == SerializationFormat.Duration_Seconds => Convert.ToInt32(Math.Round(timeSpan.TotalSeconds)).ToString(CultureInfo.InvariantCulture),
+                TimeSpan timeSpan0 when format == SerializationFormat.Duration_Seconds_Int64 => Convert.ToInt64(Math.Round(timeSpan0.TotalSeconds)).ToString(CultureInfo.InvariantCulture),
+                TimeSpan timeSpan1 when format == SerializationFormat.Duration_Seconds_Float || format == SerializationFormat.Duration_Seconds_Double => timeSpan1.TotalSeconds.ToString(CultureInfo.InvariantCulture),
+                TimeSpan timeSpan2 when format == SerializationFormat.Duration_Milliseconds => Convert.ToInt32(Math.Round(timeSpan2.TotalMilliseconds)).ToString(CultureInfo.InvariantCulture),
+                TimeSpan timeSpan3 when format == SerializationFormat.Duration_Milliseconds_Int64 => Convert.ToInt64(Math.Round(timeSpan3.TotalMilliseconds)).ToString(CultureInfo.InvariantCulture),
+                TimeSpan timeSpan4 when format == SerializationFormat.Duration_Milliseconds_Float || format == SerializationFormat.Duration_Milliseconds_Double => timeSpan4.TotalMilliseconds.ToString(CultureInfo.InvariantCulture),
+                TimeSpan timeSpan5 when formatSpecifier != null => ToString(timeSpan5, formatSpecifier),
+                TimeSpan timeSpan6 => XmlConvert.ToString(timeSpan6),
                 Guid guid => guid.ToString(),
                 BinaryData binaryData => ConvertToString(binaryData.ToArray(), format),
                 _ => value.ToString()

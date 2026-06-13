@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class BareMetalMachineRunReadCommandsContent : IUtf8JsonSerializable, IJsonModel<BareMetalMachineRunReadCommandsContent>
+    /// <summary> BareMetalMachineRunReadCommandsParameters represents the body of request containing list of read-only commands to run on the bare metal machine. </summary>
+    public partial class BareMetalMachineRunReadCommandsContent : IJsonModel<BareMetalMachineRunReadCommandsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BareMetalMachineRunReadCommandsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineRunReadCommandsContent"/> for deserialization. </summary>
+        internal BareMetalMachineRunReadCommandsContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BareMetalMachineRunReadCommandsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunReadCommandsContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBareMetalMachineRunReadCommandsContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BareMetalMachineRunReadCommandsContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunReadCommandsContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BareMetalMachineRunReadCommandsContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BareMetalMachineRunReadCommandsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BareMetalMachineRunReadCommandsContent IPersistableModel<BareMetalMachineRunReadCommandsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BareMetalMachineRunReadCommandsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="bareMetalMachineRunReadCommandsContent"> The <see cref="BareMetalMachineRunReadCommandsContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BareMetalMachineRunReadCommandsContent bareMetalMachineRunReadCommandsContent)
+        {
+            if (bareMetalMachineRunReadCommandsContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(bareMetalMachineRunReadCommandsContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BareMetalMachineRunReadCommandsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,30 +85,29 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunReadCommandsContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunReadCommandsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BareMetalMachineRunReadCommandsContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("commands"u8);
             writer.WriteStartArray();
-            foreach (var item in Commands)
+            foreach (BareMetalMachineCommandSpecification item in Commands)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("limitTimeSeconds"u8);
             writer.WriteNumberValue(LimitTimeSeconds);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -60,85 +116,57 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        BareMetalMachineRunReadCommandsContent IJsonModel<BareMetalMachineRunReadCommandsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BareMetalMachineRunReadCommandsContent IJsonModel<BareMetalMachineRunReadCommandsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BareMetalMachineRunReadCommandsContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunReadCommandsContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunReadCommandsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BareMetalMachineRunReadCommandsContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBareMetalMachineRunReadCommandsContent(document.RootElement, options);
         }
 
-        internal static BareMetalMachineRunReadCommandsContent DeserializeBareMetalMachineRunReadCommandsContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BareMetalMachineRunReadCommandsContent DeserializeBareMetalMachineRunReadCommandsContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<BareMetalMachineCommandSpecification> commands = default;
             long limitTimeSeconds = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("commands"u8))
+                if (prop.NameEquals("commands"u8))
                 {
                     List<BareMetalMachineCommandSpecification> array = new List<BareMetalMachineCommandSpecification>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(BareMetalMachineCommandSpecification.DeserializeBareMetalMachineCommandSpecification(item, options));
                     }
                     commands = array;
                     continue;
                 }
-                if (property.NameEquals("limitTimeSeconds"u8))
+                if (prop.NameEquals("limitTimeSeconds"u8))
                 {
-                    limitTimeSeconds = property.Value.GetInt64();
+                    limitTimeSeconds = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new BareMetalMachineRunReadCommandsContent(commands, limitTimeSeconds, serializedAdditionalRawData);
+            return new BareMetalMachineRunReadCommandsContent(commands, limitTimeSeconds, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<BareMetalMachineRunReadCommandsContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunReadCommandsContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(BareMetalMachineRunReadCommandsContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BareMetalMachineRunReadCommandsContent IPersistableModel<BareMetalMachineRunReadCommandsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BareMetalMachineRunReadCommandsContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBareMetalMachineRunReadCommandsContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BareMetalMachineRunReadCommandsContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BareMetalMachineRunReadCommandsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

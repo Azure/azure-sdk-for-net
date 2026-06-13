@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the AseV3NetworkingConfiguration data model.
     /// Full view of networking configuration for an ASE.
+    /// Serialized Name: AseV3NetworkingConfiguration
     /// </summary>
     public partial class AseV3NetworkingConfigurationData : ResourceData
     {
@@ -65,18 +66,34 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="windowsOutboundIPAddresses"></param>
-        /// <param name="linuxOutboundIPAddresses"></param>
-        /// <param name="externalInboundIPAddresses"></param>
-        /// <param name="internalInboundIPAddresses"></param>
-        /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
-        /// <param name="isFtpEnabled"> Property to enable and disable FTP on ASEV3. </param>
-        /// <param name="isRemoteDebugEnabled"> Property to enable and disable Remote Debug on ASEV3. </param>
-        /// <param name="inboundIPAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: AseV3NetworkingConfiguration.kind
+        /// </param>
+        /// <param name="windowsOutboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.windowsOutboundIpAddresses. </param>
+        /// <param name="linuxOutboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.linuxOutboundIpAddresses. </param>
+        /// <param name="externalInboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.externalInboundIpAddresses. </param>
+        /// <param name="internalInboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.internalInboundIpAddresses. </param>
+        /// <param name="allowNewPrivateEndpointConnections">
+        /// Property to enable and disable new private endpoint connection creation on ASE
+        /// Serialized Name: AseV3NetworkingConfiguration.properties.allowNewPrivateEndpointConnections
+        /// </param>
+        /// <param name="isFtpEnabled">
+        /// Property to enable and disable FTP on ASEV3
+        /// Serialized Name: AseV3NetworkingConfiguration.properties.ftpEnabled
+        /// </param>
+        /// <param name="isRemoteDebugEnabled">
+        /// Property to enable and disable Remote Debug on ASEV3
+        /// Serialized Name: AseV3NetworkingConfiguration.properties.remoteDebugEnabled
+        /// </param>
+        /// <param name="inboundIPAddressOverride">
+        /// Customer provided Inbound IP Address. Only able to be set on Ase create.
+        /// Serialized Name: AseV3NetworkingConfiguration.properties.inboundIpAddressOverride
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<IPAddress> windowsOutboundIPAddresses, IReadOnlyList<IPAddress> linuxOutboundIPAddresses, IReadOnlyList<IPAddress> externalInboundIPAddresses, IReadOnlyList<IPAddress> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections, bool? isFtpEnabled, bool? isRemoteDebugEnabled, string inboundIPAddressOverride, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AseV3NetworkingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IReadOnlyList<IPAddress> windowsOutboundIPAddresses, IReadOnlyList<IPAddress> linuxOutboundIPAddresses, IReadOnlyList<IPAddress> externalInboundIPAddresses, IReadOnlyList<IPAddress> internalInboundIPAddresses, bool? allowNewPrivateEndpointConnections, bool? isFtpEnabled, bool? isRemoteDebugEnabled, string inboundIPAddressOverride, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Kind = kind;
             WindowsOutboundIPAddresses = windowsOutboundIPAddresses;
             LinuxOutboundIPAddresses = linuxOutboundIPAddresses;
             ExternalInboundIPAddresses = externalInboundIPAddresses;
@@ -85,36 +102,50 @@ namespace Azure.ResourceManager.AppService
             IsFtpEnabled = isFtpEnabled;
             IsRemoteDebugEnabled = isRemoteDebugEnabled;
             InboundIPAddressOverride = inboundIPAddressOverride;
-            Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the windows outbound ip addresses. </summary>
-        [WirePath("properties.windowsOutboundIpAddresses")]
-        public IReadOnlyList<IPAddress> WindowsOutboundIPAddresses { get; }
-        /// <summary> Gets the linux outbound ip addresses. </summary>
-        [WirePath("properties.linuxOutboundIpAddresses")]
-        public IReadOnlyList<IPAddress> LinuxOutboundIPAddresses { get; }
-        /// <summary> Gets the external inbound ip addresses. </summary>
-        [WirePath("properties.externalInboundIpAddresses")]
-        public IReadOnlyList<IPAddress> ExternalInboundIPAddresses { get; }
-        /// <summary> Gets the internal inbound ip addresses. </summary>
-        [WirePath("properties.internalInboundIpAddresses")]
-        public IReadOnlyList<IPAddress> InternalInboundIPAddresses { get; }
-        /// <summary> Property to enable and disable new private endpoint connection creation on ASE. </summary>
-        [WirePath("properties.allowNewPrivateEndpointConnections")]
-        public bool? AllowNewPrivateEndpointConnections { get; set; }
-        /// <summary> Property to enable and disable FTP on ASEV3. </summary>
-        [WirePath("properties.ftpEnabled")]
-        public bool? IsFtpEnabled { get; set; }
-        /// <summary> Property to enable and disable Remote Debug on ASEV3. </summary>
-        [WirePath("properties.remoteDebugEnabled")]
-        public bool? IsRemoteDebugEnabled { get; set; }
-        /// <summary> Customer provided Inbound IP Address. Only able to be set on Ase create. </summary>
-        [WirePath("properties.inboundIpAddressOverride")]
-        public string InboundIPAddressOverride { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: AseV3NetworkingConfiguration.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+        /// <summary> Serialized Name: AseV3NetworkingConfiguration.properties.windowsOutboundIpAddresses. </summary>
+        [WirePath("properties.windowsOutboundIpAddresses")]
+        public IReadOnlyList<IPAddress> WindowsOutboundIPAddresses { get; }
+        /// <summary> Serialized Name: AseV3NetworkingConfiguration.properties.linuxOutboundIpAddresses. </summary>
+        [WirePath("properties.linuxOutboundIpAddresses")]
+        public IReadOnlyList<IPAddress> LinuxOutboundIPAddresses { get; }
+        /// <summary> Serialized Name: AseV3NetworkingConfiguration.properties.externalInboundIpAddresses. </summary>
+        [WirePath("properties.externalInboundIpAddresses")]
+        public IReadOnlyList<IPAddress> ExternalInboundIPAddresses { get; }
+        /// <summary> Serialized Name: AseV3NetworkingConfiguration.properties.internalInboundIpAddresses. </summary>
+        [WirePath("properties.internalInboundIpAddresses")]
+        public IReadOnlyList<IPAddress> InternalInboundIPAddresses { get; }
+        /// <summary>
+        /// Property to enable and disable new private endpoint connection creation on ASE
+        /// Serialized Name: AseV3NetworkingConfiguration.properties.allowNewPrivateEndpointConnections
+        /// </summary>
+        [WirePath("properties.allowNewPrivateEndpointConnections")]
+        public bool? AllowNewPrivateEndpointConnections { get; set; }
+        /// <summary>
+        /// Property to enable and disable FTP on ASEV3
+        /// Serialized Name: AseV3NetworkingConfiguration.properties.ftpEnabled
+        /// </summary>
+        [WirePath("properties.ftpEnabled")]
+        public bool? IsFtpEnabled { get; set; }
+        /// <summary>
+        /// Property to enable and disable Remote Debug on ASEV3
+        /// Serialized Name: AseV3NetworkingConfiguration.properties.remoteDebugEnabled
+        /// </summary>
+        [WirePath("properties.remoteDebugEnabled")]
+        public bool? IsRemoteDebugEnabled { get; set; }
+        /// <summary>
+        /// Customer provided Inbound IP Address. Only able to be set on Ase create.
+        /// Serialized Name: AseV3NetworkingConfiguration.properties.inboundIpAddressOverride
+        /// </summary>
+        [WirePath("properties.inboundIpAddressOverride")]
+        public string InboundIPAddressOverride { get; set; }
     }
 }

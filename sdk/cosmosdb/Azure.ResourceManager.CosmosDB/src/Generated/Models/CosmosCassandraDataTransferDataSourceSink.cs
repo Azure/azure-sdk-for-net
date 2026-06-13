@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -24,31 +25,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
             KeyspaceName = keyspaceName;
             TableName = tableName;
-            Component = DataTransferComponent.CosmosDBCassandra;
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosCassandraDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="remoteAccountName"></param>
         /// <param name="keyspaceName"></param>
         /// <param name="tableName"></param>
-        internal CosmosCassandraDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> serializedAdditionalRawData, string remoteAccountName, string keyspaceName, string tableName) : base(component, serializedAdditionalRawData, remoteAccountName)
+        internal CosmosCassandraDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> additionalBinaryDataProperties, string remoteAccountName, string keyspaceName, string tableName) : base(component, additionalBinaryDataProperties, remoteAccountName)
         {
             KeyspaceName = keyspaceName;
             TableName = tableName;
-            Component = component;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosCassandraDataTransferDataSourceSink"/> for deserialization. </summary>
-        internal CosmosCassandraDataTransferDataSourceSink()
-        {
-        }
-
-        /// <summary> Gets or sets the keyspace name. </summary>
+        /// <summary> Gets or sets the KeyspaceName. </summary>
         [WirePath("keyspaceName")]
         public string KeyspaceName { get; set; }
-        /// <summary> Gets or sets the table name. </summary>
+
+        /// <summary> Gets or sets the TableName. </summary>
         [WirePath("tableName")]
         public string TableName { get; set; }
     }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Kubernetes
         {
             if (id.ResourceType != ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> ConnectedClusters_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> ConnectedClusters_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -189,11 +189,32 @@ namespace Azure.ResourceManager.Kubernetes
             }
         }
 
-        /// <summary> API to update certain properties of the connected cluster resource. </summary>
+        /// <summary>
+        /// API to update certain properties of the connected cluster resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_UpdateAsync. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Parameters supplied to update Connected Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ConnectedClusterResource>> UpdateAsync(ConnectedClusterPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConnectedClusterResource>> UpdateAsync(WaitUntil waitUntil, ConnectedClusterPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -205,14 +226,20 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConnectedClusterPatch.ToRequestContent(patch), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConnectedClusterData> response = Response.FromValue(ConnectedClusterData.FromResponse(result), result);
-                if (response.Value == null)
+                HttpMessage message = _connectedClusterRestClient.CreateUpdateAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConnectedClusterPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                KubernetesArmOperation<ConnectedClusterResource> operation = new KubernetesArmOperation<ConnectedClusterResource>(
+                    new ConnectedClusterResourceOperationSource(Client),
+                    _connectedClusterClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
-                return Response.FromValue(new ConnectedClusterResource(Client, response.Value), response.GetRawResponse());
+                return operation;
             }
             catch (Exception e)
             {
@@ -221,11 +248,32 @@ namespace Azure.ResourceManager.Kubernetes
             }
         }
 
-        /// <summary> API to update certain properties of the connected cluster resource. </summary>
+        /// <summary>
+        /// API to update certain properties of the connected cluster resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kubernetes/connectedClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ConnectedClusters_UpdateAsync. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> Parameters supplied to update Connected Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ConnectedClusterResource> Update(ConnectedClusterPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConnectedClusterResource> Update(WaitUntil waitUntil, ConnectedClusterPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -237,14 +285,20 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedClusterRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConnectedClusterPatch.ToRequestContent(patch), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConnectedClusterData> response = Response.FromValue(ConnectedClusterData.FromResponse(result), result);
-                if (response.Value == null)
+                HttpMessage message = _connectedClusterRestClient.CreateUpdateAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ConnectedClusterPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                KubernetesArmOperation<ConnectedClusterResource> operation = new KubernetesArmOperation<ConnectedClusterResource>(
+                    new ConnectedClusterResourceOperationSource(Client),
+                    _connectedClusterClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    operation.WaitForCompletion(cancellationToken);
                 }
-                return Response.FromValue(new ConnectedClusterResource(Client, response.Value), response.GetRawResponse());
+                return operation;
             }
             catch (Exception e)
             {
@@ -262,7 +316,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> ConnectedClusters_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -311,7 +365,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> ConnectedClusters_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -360,7 +414,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetClusterUserCredential. </description>
+        /// <description> ConnectedClusters_ListClusterUserCredential. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -372,12 +426,12 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="properties"> ListClusterUserCredential properties. </param>
+        /// <param name="content"> ListClusterUserCredential properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<Response<CredentialResults>> GetClusterUserCredentialAsync(ListClusterUserCredentialProperties properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ClusterUserCredentialsResult>> GetClusterUserCredentialAsync(GetClusterUserCredentialContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterResource.GetClusterUserCredential");
             scope.Start();
@@ -387,9 +441,9 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedClusterRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ListClusterUserCredentialProperties.ToRequestContent(properties), context);
+                HttpMessage message = _connectedClusterRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GetClusterUserCredentialContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CredentialResults> response = Response.FromValue(CredentialResults.FromResponse(result), result);
+                Response<ClusterUserCredentialsResult> response = Response.FromValue(ClusterUserCredentialsResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -412,7 +466,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> GetClusterUserCredential. </description>
+        /// <description> ConnectedClusters_ListClusterUserCredential. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -424,12 +478,12 @@ namespace Azure.ResourceManager.Kubernetes
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="properties"> ListClusterUserCredential properties. </param>
+        /// <param name="content"> ListClusterUserCredential properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual Response<CredentialResults> GetClusterUserCredential(ListClusterUserCredentialProperties properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<ClusterUserCredentialsResult> GetClusterUserCredential(GetClusterUserCredentialContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _connectedClusterClientDiagnostics.CreateScope("ConnectedClusterResource.GetClusterUserCredential");
             scope.Start();
@@ -439,9 +493,9 @@ namespace Azure.ResourceManager.Kubernetes
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _connectedClusterRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ListClusterUserCredentialProperties.ToRequestContent(properties), context);
+                HttpMessage message = _connectedClusterRestClient.CreateGetClusterUserCredentialRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GetClusterUserCredentialContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CredentialResults> response = Response.FromValue(CredentialResults.FromResponse(result), result);
+                Response<ClusterUserCredentialsResult> response = Response.FromValue(ClusterUserCredentialsResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -492,7 +546,7 @@ namespace Azure.ResourceManager.Kubernetes
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ConnectedClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -540,7 +594,7 @@ namespace Azure.ResourceManager.Kubernetes
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ConnectedClusterResource> result = Update(patch, cancellationToken);
+                    ArmOperation<ConnectedClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -583,7 +637,7 @@ namespace Azure.ResourceManager.Kubernetes
                     ConnectedClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ConnectedClusterPatch patch = new ConnectedClusterPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ConnectedClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -626,7 +680,7 @@ namespace Azure.ResourceManager.Kubernetes
                     ConnectedClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ConnectedClusterPatch patch = new ConnectedClusterPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ConnectedClusterResource> result = Update(patch, cancellationToken);
+                    ArmOperation<ConnectedClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -672,7 +726,7 @@ namespace Azure.ResourceManager.Kubernetes
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ConnectedClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -718,7 +772,7 @@ namespace Azure.ResourceManager.Kubernetes
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ConnectedClusterResource> result = Update(patch, cancellationToken);
+                    ArmOperation<ConnectedClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

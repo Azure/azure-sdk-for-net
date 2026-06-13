@@ -1,0 +1,25 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <IsClientLibrary>true</IsClientLibrary>
+    <IsTestProject>false</IsTestProject>
+    <IsGeneratorLibraryGenerationTest>true</IsGeneratorLibraryGenerationTest>
+  </PropertyGroup>
+  <!--
+    Add any shared properties you want for the projects under this package directory that need to be set before the auto imported Directory.Build.props
+  -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+  <PropertyGroup>
+    <Nullable>disable</Nullable>
+    <NoWarn>$(NoWarn);SA1517;SA1633</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Provisioning" />
+  </ItemGroup>
+
+  <!-- Polyfill for ExperimentalAttribute on netstandard2.0.
+       Real SDK projects get this via $(AzureCoreSharedSources) in their Directory.Build.props.
+       Test projects don't inherit from the SDK tree, so we include it directly. -->
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ExperimentalAttribute.cs" LinkBase="Shared" />
+  </ItemGroup>
+</Project>

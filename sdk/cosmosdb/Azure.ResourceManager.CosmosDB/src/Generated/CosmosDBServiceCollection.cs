@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.CosmosDB
     /// </summary>
     public partial class CosmosDBServiceCollection : ArmCollection, IEnumerable<CosmosDBServiceResource>, IAsyncEnumerable<CosmosDBServiceResource>
     {
-        private readonly ClientDiagnostics _cosmosDBServiceServiceClientDiagnostics;
-        private readonly ServiceRestOperations _cosmosDBServiceServiceRestClient;
+        private readonly ClientDiagnostics _serviceClientDiagnostics;
+        private readonly Service _serviceRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBServiceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of CosmosDBServiceCollection for mocking. </summary>
         protected CosmosDBServiceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CosmosDBServiceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBServiceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal CosmosDBServiceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cosmosDBServiceServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBServiceResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CosmosDBServiceResource.ResourceType, out string cosmosDBServiceServiceApiVersion);
-            _cosmosDBServiceServiceRestClient = new ServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBServiceServiceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(CosmosDBServiceResource.ResourceType, out string cosmosDBServiceApiVersion);
+            _serviceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBServiceResource.ResourceType.Namespace, Diagnostics);
+            _serviceRestClient = new Service(_serviceClientDiagnostics, Pipeline, Endpoint, cosmosDBServiceApiVersion ?? "2026-04-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != CosmosDBAccountResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBAccountResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, CosmosDBAccountResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates a service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="serviceName"> Cosmos DB service name. </param>
         /// <param name="content"> The Service resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<CosmosDBServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceName, CosmosDBServiceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _cosmosDBServiceServiceClientDiagnostics.CreateScope("CosmosDBServiceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _serviceClientDiagnostics.CreateScope("CosmosDBServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cosmosDBServiceServiceRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<CosmosDBServiceResource>(new CosmosDBServiceOperationSource(Client), _cosmosDBServiceServiceClientDiagnostics, Pipeline, _cosmosDBServiceServiceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceName, CosmosDBServiceCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                CosmosDBArmOperation<CosmosDBServiceResource> operation = new CosmosDBArmOperation<CosmosDBServiceResource>(
+                    new CosmosDBServiceResourceOperationSource(Client),
+                    _serviceClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// Creates a service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceResources_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="serviceName"> Cosmos DB service name. </param>
         /// <param name="content"> The Service resource parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<CosmosDBServiceResource> CreateOrUpdate(WaitUntil waitUntil, string serviceName, CosmosDBServiceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _cosmosDBServiceServiceClientDiagnostics.CreateScope("CosmosDBServiceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _serviceClientDiagnostics.CreateScope("CosmosDBServiceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cosmosDBServiceServiceRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<CosmosDBServiceResource>(new CosmosDBServiceOperationSource(Client), _cosmosDBServiceServiceClientDiagnostics, Pipeline, _cosmosDBServiceServiceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceName, CosmosDBServiceCreateOrUpdateContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                CosmosDBArmOperation<CosmosDBServiceResource> operation = new CosmosDBArmOperation<CosmosDBServiceResource>(
+                    new CosmosDBServiceResourceOperationSource(Client),
+                    _serviceClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.CosmosDB
         /// Gets the status of service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Cosmos DB service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<CosmosDBServiceResource>> GetAsync(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _cosmosDBServiceServiceClientDiagnostics.CreateScope("CosmosDBServiceCollection.Get");
+            using DiagnosticScope scope = _serviceClientDiagnostics.CreateScope("CosmosDBServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cosmosDBServiceServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CosmosDBServiceData> response = Response.FromValue(CosmosDBServiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.CosmosDB
         /// Gets the status of service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Cosmos DB service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<CosmosDBServiceResource> Get(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _cosmosDBServiceServiceClientDiagnostics.CreateScope("CosmosDBServiceCollection.Get");
+            using DiagnosticScope scope = _serviceClientDiagnostics.CreateScope("CosmosDBServiceCollection.Get");
             scope.Start();
             try
             {
-                var response = _cosmosDBServiceServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CosmosDBServiceData> response = Response.FromValue(CosmosDBServiceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,49 +273,50 @@ namespace Azure.ResourceManager.CosmosDB
         /// Gets the status of service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceResources_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBServiceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBServiceServiceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBServiceResource(Client, CosmosDBServiceData.DeserializeCosmosDBServiceData(e)), _cosmosDBServiceServiceClientDiagnostics, Pipeline, "CosmosDBServiceCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<CosmosDBServiceData, CosmosDBServiceResource>(new ServiceGetAllAsyncCollectionResultOfT(
+                _serviceRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBServiceCollection.GetAll"), data => new CosmosDBServiceResource(Client, data));
         }
 
         /// <summary>
         /// Gets the status of service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceResources_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,44 +324,67 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBServiceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBServiceServiceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBServiceResource(Client, CosmosDBServiceData.DeserializeCosmosDBServiceData(e)), _cosmosDBServiceServiceClientDiagnostics, Pipeline, "CosmosDBServiceCollection.GetAll", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<CosmosDBServiceData, CosmosDBServiceResource>(new ServiceGetAllCollectionResultOfT(
+                _serviceRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "CosmosDBServiceCollection.GetAll"), data => new CosmosDBServiceResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Cosmos DB service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _cosmosDBServiceServiceClientDiagnostics.CreateScope("CosmosDBServiceCollection.Exists");
+            using DiagnosticScope scope = _serviceClientDiagnostics.CreateScope("CosmosDBServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _cosmosDBServiceServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CosmosDBServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -345,36 +398,50 @@ namespace Azure.ResourceManager.CosmosDB
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Cosmos DB service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _cosmosDBServiceServiceClientDiagnostics.CreateScope("CosmosDBServiceCollection.Exists");
+            using DiagnosticScope scope = _serviceClientDiagnostics.CreateScope("CosmosDBServiceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _cosmosDBServiceServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CosmosDBServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -388,38 +455,54 @@ namespace Azure.ResourceManager.CosmosDB
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Cosmos DB service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<CosmosDBServiceResource>> GetIfExistsAsync(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _cosmosDBServiceServiceClientDiagnostics.CreateScope("CosmosDBServiceCollection.GetIfExists");
+            using DiagnosticScope scope = _serviceClientDiagnostics.CreateScope("CosmosDBServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cosmosDBServiceServiceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<CosmosDBServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CosmosDBServiceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -433,38 +516,54 @@ namespace Azure.ResourceManager.CosmosDB
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/services/{serviceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Service_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBServiceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Cosmos DB service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<CosmosDBServiceResource> GetIfExists(string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
-            using var scope = _cosmosDBServiceServiceClientDiagnostics.CreateScope("CosmosDBServiceCollection.GetIfExists");
+            using DiagnosticScope scope = _serviceClientDiagnostics.CreateScope("CosmosDBServiceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cosmosDBServiceServiceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, serviceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<CosmosDBServiceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(CosmosDBServiceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((CosmosDBServiceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<CosmosDBServiceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new CosmosDBServiceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -484,6 +583,7 @@ namespace Azure.ResourceManager.CosmosDB
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<CosmosDBServiceResource> IAsyncEnumerable<CosmosDBServiceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

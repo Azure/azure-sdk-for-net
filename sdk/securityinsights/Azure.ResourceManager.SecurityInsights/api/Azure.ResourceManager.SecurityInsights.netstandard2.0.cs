@@ -1948,12 +1948,10 @@ namespace Azure.ResourceManager.SecurityInsights
         public SecurityInsightsWatchlistItemData() { }
         public Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo CreatedBy { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData EntityMapping { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> EntityMappingDictionary { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public bool? IsDeleted { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public System.BinaryData ItemsKeyValue { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> ItemsKeyValueDictionary { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } set { } }
@@ -2592,9 +2590,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.AnomalySecurityMLAnalyticsSettingsStatus Flighting { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AnomalySecurityMLAnalyticsSettingsStatus Production { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AnomalySecurityMLAnalyticsSettingsStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AnomalySecurityMLAnalyticsSettingsStatus left, Azure.ResourceManager.SecurityInsights.Models.AnomalySecurityMLAnalyticsSettingsStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AnomalySecurityMLAnalyticsSettingsStatus (string value) { throw null; }
@@ -2633,9 +2629,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.AntispamMailDirection Outbound { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AntispamMailDirection Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AntispamMailDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AntispamMailDirection left, Azure.ResourceManager.SecurityInsights.Models.AntispamMailDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AntispamMailDirection (string value) { throw null; }
@@ -2722,7 +2716,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.RestApiPollerDataConnector RestApiPollerDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string connectorDefinitionName = null, Azure.ResourceManager.SecurityInsights.Models.CcpAuthConfig auth = null, Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestConfig request = null, Azure.ResourceManager.SecurityInsights.Models.DcrConfiguration dcrConfig = null, bool? isActive = default(bool?), string dataType = null, Azure.ResourceManager.SecurityInsights.Models.CcpResponseConfig response = null, Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingConfig paging = null, System.Collections.Generic.IDictionary<string, string> addOnAttributes = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SapSolutionUsageStatistic SapSolutionUsageStatistic(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), long? activeSystemIdCount = default(long?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.ScheduledAlertRuleTemplate ScheduledAlertRuleTemplate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? alertRulesCreatedByTemplateCount = default(int?), System.DateTimeOffset? createdDateUTC = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdatedDateUTC = default(System.DateTimeOffset?), string description = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> requiredDataConnectors = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus? status = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus?), string query = null, System.TimeSpan? queryFrequency = default(System.TimeSpan?), System.TimeSpan? queryPeriod = default(System.TimeSpan?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTriggerOperator? triggerOperator = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTriggerOperator?), int? triggerThreshold = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Collections.Generic.IEnumerable<string> subTechniques = null, string version = null, Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? eventGroupingAggregationKind = default(Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind?), System.Collections.Generic.IDictionary<string, string> customDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMapping> entityMappings = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetailsOverride alertDetailsOverride = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping> sentinelEntitiesMappings = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.Models.ScheduledAlertRuleTemplate ScheduledAlertRuleTemplate(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, int? alertRulesCreatedByTemplateCount, System.DateTimeOffset? createdDateUTC, System.DateTimeOffset? lastUpdatedDateUTC, string description, string displayName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> requiredDataConnectors, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus? status, string query, System.TimeSpan? queryFrequency, System.TimeSpan? queryPeriod, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTriggerOperator? triggerOperator, int? triggerThreshold, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics, System.Collections.Generic.IEnumerable<string> techniques, string version, Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? eventGroupingAggregationKind, System.Collections.Generic.IDictionary<string, string> customDetails, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMapping> entityMappings, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetailsOverride alertDetailsOverride) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityAlertTimelineItem SecurityAlertTimelineItem(Azure.Core.ResourceIdentifier azureResourceId = null, string productName = null, string description = null, string displayName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity), System.DateTimeOffset endOn = default(System.DateTimeOffset), System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset generatedOn = default(System.DateTimeOffset), string alertType = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKillChainIntent? intent = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKillChainIntent?), System.Collections.Generic.IEnumerable<string> techniques = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAadDataConnector SecurityInsightsAadDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? alertsState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?)) { throw null; }
@@ -2732,7 +2725,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertConfidenceReason SecurityInsightsAlertConfidenceReason(string reason = null, string reasonType = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleActionCreateOrUpdateContent SecurityInsightsAlertRuleActionCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier logicAppResourceId = null, System.Uri triggerUri = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionData SecurityInsightsAlertRuleActionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier logicAppResourceId = null, string workflowId = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionData SecurityInsightsAlertRuleActionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier logicAppResourceId = null, string workflowId = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleData SecurityInsightsAlertRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateData SecurityInsightsAlertRuleTemplateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null) { throw null; }
@@ -2742,9 +2734,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAzureResourceEntity SecurityInsightsAzureResourceEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, string resourceId = null, string subscriptionId = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsBillingStatisticData SecurityInsightsBillingStatisticData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData SecurityInsightsBookmarkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo createdBy = null, string displayName = null, System.Collections.Generic.IEnumerable<string> labels = null, string notes = null, string query = null, string queryResult = null, System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo updatedBy = null, System.DateTimeOffset? eventOn = default(System.DateTimeOffset?), System.DateTimeOffset? queryStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? queryEndOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsBookmarkIncidentInfo incidentInfo = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.BookmarkEntityMappings> entityMappings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkData SecurityInsightsBookmarkData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.DateTimeOffset? createdOn, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo createdBy, string displayName, System.Collections.Generic.IEnumerable<string> labels, string notes, string query, string queryResult, System.DateTimeOffset? updatedOn, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo updatedBy, System.DateTimeOffset? eventOn, System.DateTimeOffset? queryStartOn, System.DateTimeOffset? queryEndOn, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsBookmarkIncidentInfo incidentInfo, Azure.ETag? etag) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsClientInfo SecurityInsightsClientInfo(string email = null, string name = null, System.Guid? objectId = default(System.Guid?), string userPrincipalName = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsCloudApplicationEntity SecurityInsightsCloudApplicationEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, int? appId = default(int?), string appName = null, string instanceName = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorData SecurityInsightsDataConnectorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
@@ -2761,9 +2751,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileMetadata SecurityInsightsFileMetadata(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileFormat? fileFormat = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileFormat?), string fileName = null, int? fileSize = default(int?), System.Uri fileContentUri = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileDeleteStatus? deleteStatus = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileDeleteStatus?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileValidationError SecurityInsightsFileValidationError(int? recordIndex = default(int?), System.Collections.Generic.IEnumerable<string> errorMessages = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFusionAlertRule SecurityInsightsFusionAlertRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string alertRuleTemplateName = null, string description = null, string displayName = null, bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.FusionSourceSettings> sourceSettings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.FusionScenarioExclusionPattern> scenarioExclusionPatterns = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Collections.Generic.IEnumerable<string> subTechniques = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFusionAlertRule SecurityInsightsFusionAlertRule(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag, string alertRuleTemplateName, string description, string displayName, bool? isEnabled, System.DateTimeOffset? lastModifiedOn, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics, System.Collections.Generic.IEnumerable<string> techniques) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFusionAlertRuleTemplate SecurityInsightsFusionAlertRuleTemplate(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, int? alertRulesCreatedByTemplateCount, System.DateTimeOffset? createdOn, System.DateTimeOffset? lastUpdatedOn, string description, string displayName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> requiredDataConnectors, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus? status, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics, System.Collections.Generic.IEnumerable<string> techniques) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFusionAlertRuleTemplate SecurityInsightsFusionAlertRuleTemplate(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, int? alertRulesCreatedByTemplateCount = default(int?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), string description = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.AlertRuleTemplateDataSource> requiredDataConnectors = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus? status = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Collections.Generic.IEnumerable<string> subTechniques = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.FusionTemplateSourceSetting> sourceSettings = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsGroupEntity SecurityInsightsGroupEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, string distinguishedName = null, System.Guid? objectGuid = default(System.Guid?), string sid = null) { throw null; }
@@ -2772,23 +2760,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsHuntData SecurityInsightsHuntData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string description = null, Azure.ResourceManager.SecurityInsights.Models.HuntStatus? status = default(Azure.ResourceManager.SecurityInsights.Models.HuntStatus?), Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus? hypothesisStatus = default(Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> attackTactics = null, System.Collections.Generic.IEnumerable<string> attackTechniques = null, System.Collections.Generic.IEnumerable<string> labels = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntOwner owner = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsHuntingBookmark SecurityInsightsHuntingBookmark(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo createdBy = null, string displayName = null, System.DateTimeOffset? eventOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> labels = null, string notes = null, string query = null, string queryResult = null, System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo updatedBy = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsBookmarkIncidentInfo incidentInfo = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsHuntRelationData SecurityInsightsHuntRelationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier relatedResourceId = null, string relatedResourceName = null, string relationType = null, string relatedResourceKind = null, System.Collections.Generic.IEnumerable<string> labels = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentAdditionalInfo SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, System.Collections.Generic.IEnumerable<string> alertProductNames, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentAdditionalInfo SecurityInsightsIncidentAdditionalInfo(int? alertsCount = default(int?), int? bookmarksCount = default(int?), int? commentsCount = default(int?), System.Collections.Generic.IEnumerable<string> alertProductNames = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Uri providerIncidentUri = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentData SecurityInsightsIncidentCommentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string message = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsClientInfo author = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentData SecurityInsightsIncidentCommentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string message = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsClientInfo author = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentData SecurityInsightsIncidentData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentAdditionalInfo additionalInfo, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassification? classification, string classificationComment, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassificationReason? classificationReason, System.DateTimeOffset? createdOn, string description, System.DateTimeOffset? firstActivityOn, System.Uri incidentUri, int? incidentNumber, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentLabel> labels, System.DateTimeOffset? lastActivityOn, System.DateTimeOffset? lastModifiedOn, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentOwnerInfo owner, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> relatedAnalyticRuleIds, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentSeverity? severity, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentStatus? status, string title, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentData SecurityInsightsIncidentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string description = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentSeverity?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentStatus? status = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentStatus?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassification? classification = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassification?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassificationReason? classificationReason = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassificationReason?), string classificationComment = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentOwnerInfo owner = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentLabel> labels = null, System.DateTimeOffset? firstActivityOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastActivityOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), int? incidentNumber = default(int?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentAdditionalInfo additionalInfo = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> relatedAnalyticRuleIds = null, System.Uri incidentUri = null, string providerName = null, string providerIncidentId = null, Azure.ResourceManager.SecurityInsights.Models.TeamInformation teamInformation = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentEntitiesMetadata SecurityInsightsIncidentEntitiesMetadata(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityKind entityKind = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityKind), int count = 0) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentEntitiesMetadata SecurityInsightsIncidentEntitiesMetadata(int count = 0, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityKind entityKind = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityKind)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentEntitiesResult SecurityInsightsIncidentEntitiesResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntity> entities = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentEntitiesMetadata> metaData = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentLabel SecurityInsightsIncidentLabel(string labelName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentLabelType? labelType = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentLabelType?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationData SecurityInsightsIncidentRelationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier relatedResourceId = null, string relatedResourceName = null, Azure.Core.ResourceType? relatedResourceType = default(Azure.Core.ResourceType?), string relatedResourceKind = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentTaskData SecurityInsightsIncidentTaskData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string title = null, string description = null, Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus status = default(Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsClientInfo createdBy = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsClientInfo lastModifiedBy = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIotDeviceEntity SecurityInsightsIotDeviceEntity(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData, string friendlyName, string deviceId, string deviceName, string source, System.Guid? iotSecurityAgentId, string deviceType, string vendor, string edgeId, string macAddress, string model, string serialNumber, string firmwareVersion, string operatingSystem, string iotHubEntityId, string hostEntityId, string ipAddressEntityId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsThreatIntelligence> threatIntelligence, System.Collections.Generic.IEnumerable<string> protocols) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIotDeviceEntity SecurityInsightsIotDeviceEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, string deviceId = null, string deviceName = null, string source = null, System.Guid? iotSecurityAgentId = default(System.Guid?), string deviceType = null, string vendor = null, string edgeId = null, string macAddress = null, string model = null, string serialNumber = null, string firmwareVersion = null, string operatingSystem = null, string iotHubEntityId = null, string hostEntityId = null, string ipAddressEntityId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsThreatIntelligence> threatIntelligence = null, System.Collections.Generic.IEnumerable<string> protocols = null, System.Collections.Generic.IEnumerable<string> owners = null, System.Collections.Generic.IEnumerable<string> nicEntityIds = null, string site = null, string zone = null, string sensor = null, string deviceSubType = null, Azure.ResourceManager.SecurityInsights.Models.DeviceImportance? importance = default(Azure.ResourceManager.SecurityInsights.Models.DeviceImportance?), string purdueLayer = null, bool? isAuthorized = default(bool?), bool? isProgramming = default(bool?), bool? isScanner = default(bool?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIPEntity SecurityInsightsIPEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, System.Net.IPAddress address = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIPEntityGeoLocation location = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsThreatIntelligence> threatIntelligence = null) { throw null; }
@@ -2809,7 +2792,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryKeyEntity SecurityInsightsRegistryKeyEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryHive? hive = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryHive?), string key = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryValueEntity SecurityInsightsRegistryValueEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, string keyEntityId = null, string valueData = null, string valueName = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryValueKind? valueType = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryValueKind?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsScheduledAlertRule SecurityInsightsScheduledAlertRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string query = null, System.TimeSpan? queryFrequency = default(System.TimeSpan?), System.TimeSpan? queryPeriod = default(System.TimeSpan?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTriggerOperator? triggerOperator = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTriggerOperator?), int? triggerThreshold = default(int?), Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? eventGroupingAggregationKind = default(Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind?), System.Collections.Generic.IDictionary<string, string> customDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMapping> entityMappings = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetailsOverride alertDetailsOverride = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SentinelEntityMapping> sentinelEntitiesMappings = null, string alertRuleTemplateName = null, string templateVersion = null, string description = null, string displayName = null, bool? isEnabled = default(bool?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.TimeSpan? suppressionDuration = default(System.TimeSpan?), bool? isSuppressionEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics = null, System.Collections.Generic.IEnumerable<string> techniques = null, System.Collections.Generic.IEnumerable<string> subTechniques = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentConfiguration incidentConfiguration = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsScheduledAlertRule SecurityInsightsScheduledAlertRule(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ETag? etag, string query, System.TimeSpan? queryFrequency, System.TimeSpan? queryPeriod, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity? severity, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTriggerOperator? triggerOperator, int? triggerThreshold, Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind? eventGroupingAggregationKind, System.Collections.Generic.IDictionary<string, string> customDetails, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMapping> entityMappings, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetailsOverride alertDetailsOverride, string alertRuleTemplateName, string templateVersion, string description, string displayName, bool? isEnabled, System.DateTimeOffset? lastModifiedOn, System.TimeSpan? suppressionDuration, bool? isSuppressionEnabled, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic> tactics, System.Collections.Generic.IEnumerable<string> techniques, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentConfiguration incidentConfiguration) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateData SecurityInsightsSentinelOnboardingStateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isCustomerManagedKeySet = default(bool?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSettingAnomaliesKind SecurityInsightsSettingAnomaliesKind(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), bool? isEnabled = default(bool?)) { throw null; }
@@ -2822,13 +2804,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsThreatIntelligenceIndicatorData SecurityInsightsThreatIntelligenceIndicatorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, System.Collections.Generic.IEnumerable<string> threatIntelligenceTags = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), string source = null, string displayName = null, string description = null, System.Collections.Generic.IEnumerable<string> indicatorTypes = null, string pattern = null, string patternType = null, string patternVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceKillChainPhase> killChainPhases = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceParsedPattern> parsedPattern = null, string externalId = null, string createdByRef = null, bool? isDefanged = default(bool?), System.DateTimeOffset? externalLastUpdatedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceExternalReference> externalReferences = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceGranularMarkingEntity> granularMarkings = null, System.Collections.Generic.IEnumerable<string> labels = null, bool? isRevoked = default(bool?), int? confidence = default(int?), System.Collections.Generic.IEnumerable<string> objectMarkingRefs = null, string language = null, System.Collections.Generic.IEnumerable<string> threatTypes = null, System.DateTimeOffset? validFrom = default(System.DateTimeOffset?), System.DateTimeOffset? validUntil = default(System.DateTimeOffset?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string modified = null, System.Collections.Generic.IDictionary<string, System.BinaryData> extensions = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsTIDataConnector SecurityInsightsTIDataConnector(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), System.Guid? tenantId = default(System.Guid?), System.DateTimeOffset? tipLookbackOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState? indicatorsState = default(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUriEntity SecurityInsightsUriEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, string uriString = null) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUriEntity SecurityInsightsUriEntity(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> additionalData = null, string friendlyName = null, System.Uri uri = null) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo SecurityInsightsUserInfo(string email = null, string name = null, System.Guid? objectId = default(System.Guid?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistData SecurityInsightsWatchlistData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? watchlistId = default(System.Guid?), string displayName = null, string provider = null, Azure.ResourceManager.SecurityInsights.Models.Source? source = default(Azure.ResourceManager.SecurityInsights.Models.Source?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo createdBy = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo updatedBy = null, string description = null, string watchlistType = null, string watchlistAlias = null, bool? isDeleted = default(bool?), System.Collections.Generic.IEnumerable<string> labels = null, System.TimeSpan? defaultDuration = default(System.TimeSpan?), System.Guid? tenantId = default(System.Guid?), int? numberOfLinesToSkip = default(int?), string rawContent = null, string itemsSearchKey = null, string contentType = null, string uploadStatus = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistData SecurityInsightsWatchlistData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? watchlistId = default(System.Guid?), string displayName = null, string provider = null, string sourceString = null, Azure.ResourceManager.SecurityInsights.Models.WatchlistSourceType? sourceType = default(Azure.ResourceManager.SecurityInsights.Models.WatchlistSourceType?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo createdBy = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo updatedBy = null, string description = null, string watchlistType = null, string watchlistAlias = null, bool? isDeleted = default(bool?), System.Collections.Generic.IEnumerable<string> labels = null, System.TimeSpan? defaultDuration = default(System.TimeSpan?), System.Guid? tenantId = default(System.Guid?), int? numberOfLinesToSkip = default(int?), string rawContent = null, string itemsSearchKey = null, string contentType = null, string uploadStatus = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData SecurityInsightsWatchlistItemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string watchlistItemType = null, string watchlistItemId = null, System.Guid? tenantId = default(System.Guid?), bool? isDeleted = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo createdBy = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo updatedBy = null, System.BinaryData itemsKeyValue = null, System.BinaryData entityMapping = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemData SecurityInsightsWatchlistItemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string watchlistItemType = null, string watchlistItemId = null, System.Guid? tenantId = default(System.Guid?), bool? isDeleted = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo createdBy = null, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsUserInfo updatedBy = null, System.Collections.Generic.IDictionary<string, System.BinaryData> itemsKeyValueDictionary = null, System.Collections.Generic.IDictionary<string, System.BinaryData> entityMappingDictionary = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData SecurityMLAnalyticsSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
@@ -2911,9 +2890,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator And { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator Or { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator left, Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AutomationRuleBooleanConditionSupportedOperator (string value) { throw null; }
@@ -2942,9 +2919,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayChangedConditionSupportedArrayType Labels { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayChangedConditionSupportedArrayType Tactics { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayChangedConditionSupportedArrayType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayChangedConditionSupportedArrayType left, Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayChangedConditionSupportedArrayType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayChangedConditionSupportedArrayType (string value) { throw null; }
@@ -2959,9 +2934,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public AutomationRulePropertyArrayChangedConditionSupportedChangeType(string value) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayChangedConditionSupportedChangeType Added { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayChangedConditionSupportedChangeType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayChangedConditionSupportedChangeType left, Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayChangedConditionSupportedChangeType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayChangedConditionSupportedChangeType (string value) { throw null; }
@@ -2988,9 +2961,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public AutomationRulePropertyArrayConditionSupportedArrayConditionType(string value) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayConditionType AnyItem { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayConditionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayConditionType left, Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayConditionType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayConditionType (string value) { throw null; }
@@ -3006,9 +2977,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType CustomDetails { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType CustomDetailValues { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType left, Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyArrayConditionSupportedArrayType (string value) { throw null; }
@@ -3037,9 +3006,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyChangedConditionSupportedChangedType ChangedFrom { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyChangedConditionSupportedChangedType ChangedTo { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyChangedConditionSupportedChangedType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyChangedConditionSupportedChangedType left, Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyChangedConditionSupportedChangedType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyChangedConditionSupportedChangedType (string value) { throw null; }
@@ -3056,9 +3023,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyChangedConditionSupportedPropertyType IncidentSeverity { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyChangedConditionSupportedPropertyType IncidentStatus { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyChangedConditionSupportedPropertyType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyChangedConditionSupportedPropertyType left, Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyChangedConditionSupportedPropertyType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyChangedConditionSupportedPropertyType (string value) { throw null; }
@@ -3080,9 +3045,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedOperator NotStartsWith { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedOperator StartsWith { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedOperator left, Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedOperator (string value) { throw null; }
@@ -3154,9 +3117,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty RegistryValueData { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty Uri { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty left, Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.AutomationRulePropertyConditionSupportedProperty (string value) { throw null; }
@@ -3552,9 +3513,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.ConnectAuthKind Basic { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.ConnectAuthKind OAuth2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.ConnectAuthKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ConnectAuthKind left, Azure.ResourceManager.SecurityInsights.Models.ConnectAuthKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ConnectAuthKind (string value) { throw null; }
@@ -3580,9 +3539,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public ConnectorAvailabilityStatus(int value) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailabilityStatus _1 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailabilityStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailabilityStatus left, Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailabilityStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ConnectorAvailabilityStatus (int value) { throw null; }
@@ -3621,9 +3578,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public ConnectorConnectivityType(string value) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.ConnectorConnectivityType IsConnectedQuery { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.ConnectorConnectivityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ConnectorConnectivityType left, Azure.ResourceManager.SecurityInsights.Models.ConnectorConnectivityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ConnectorConnectivityType (string value) { throw null; }
@@ -3742,9 +3697,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.ConnectorHttpMethodVerb Post { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.ConnectorHttpMethodVerb Put { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.ConnectorHttpMethodVerb other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ConnectorHttpMethodVerb left, Azure.ResourceManager.SecurityInsights.Models.ConnectorHttpMethodVerb right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ConnectorHttpMethodVerb (string value) { throw null; }
@@ -3788,9 +3741,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.ConnectorProviderName MicrosoftOperationalInsightsWorkspacesDatasources { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.ConnectorProviderName MicrosoftOperationalInsightsWorkspacesSharedKeys { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.ConnectorProviderName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ConnectorProviderName left, Azure.ResourceManager.SecurityInsights.Models.ConnectorProviderName right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ConnectorProviderName (string value) { throw null; }
@@ -3850,9 +3801,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.ConnectorSettingType InfoMessage { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.ConnectorSettingType InstructionStepsGroup { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.ConnectorSettingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ConnectorSettingType left, Azure.ResourceManager.SecurityInsights.Models.ConnectorSettingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ConnectorSettingType (string value) { throw null; }
@@ -3928,9 +3877,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.DataConnectorAuthorizationState Invalid { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.DataConnectorAuthorizationState Valid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.DataConnectorAuthorizationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.DataConnectorAuthorizationState left, Azure.ResourceManager.SecurityInsights.Models.DataConnectorAuthorizationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.DataConnectorAuthorizationState (string value) { throw null; }
@@ -3979,9 +3926,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.DataConnectorLicenseState Unknown { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.DataConnectorLicenseState Valid { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.DataConnectorLicenseState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.DataConnectorLicenseState left, Azure.ResourceManager.SecurityInsights.Models.DataConnectorLicenseState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.DataConnectorLicenseState (string value) { throw null; }
@@ -4045,9 +3990,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.DeviceImportance Normal { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.DeviceImportance Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.DeviceImportance other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.DeviceImportance left, Azure.ResourceManager.SecurityInsights.Models.DeviceImportance right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.DeviceImportance (string value) { throw null; }
@@ -4214,9 +4157,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public EnrichmentType(string value) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.EnrichmentType Main { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.EnrichmentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.EnrichmentType left, Azure.ResourceManager.SecurityInsights.Models.EnrichmentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.EnrichmentType (string value) { throw null; }
@@ -4343,9 +4284,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public EntityItemQueryKind(string value) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.EntityItemQueryKind Insight { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.EntityItemQueryKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.EntityItemQueryKind left, Azure.ResourceManager.SecurityInsights.Models.EntityItemQueryKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.EntityItemQueryKind (string value) { throw null; }
@@ -4374,9 +4313,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.EntityProvider ActiveDirectory { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.EntityProvider AzureActiveDirectory { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.EntityProvider other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.EntityProvider left, Azure.ResourceManager.SecurityInsights.Models.EntityProvider right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.EntityProvider (string value) { throw null; }
@@ -4427,9 +4364,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind Activity { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind Expansion { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind left, Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.EntityQueryKind (string value) { throw null; }
@@ -4444,9 +4379,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public EntityTemplateQueryKind(string value) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.EntityTemplateQueryKind Activity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.EntityTemplateQueryKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.EntityTemplateQueryKind left, Azure.ResourceManager.SecurityInsights.Models.EntityTemplateQueryKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.EntityTemplateQueryKind (string value) { throw null; }
@@ -4488,9 +4421,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.EntityTimelineKind Bookmark { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.EntityTimelineKind SecurityAlert { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.EntityTimelineKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.EntityTimelineKind left, Azure.ResourceManager.SecurityInsights.Models.EntityTimelineKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.EntityTimelineKind (string value) { throw null; }
@@ -4506,9 +4437,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind AlertPerResult { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind SingleAlert { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind left, Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.EventGroupingAggregationKind (string value) { throw null; }
@@ -4732,9 +4661,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.HuntStatus Closed { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.HuntStatus New { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.HuntStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.HuntStatus left, Azure.ResourceManager.SecurityInsights.Models.HuntStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.HuntStatus (string value) { throw null; }
@@ -4751,9 +4678,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus Unknown { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus Validated { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus left, Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.HypothesisStatus (string value) { throw null; }
@@ -4769,9 +4694,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus Completed { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus New { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus left, Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.IncidentTaskStatus (string value) { throw null; }
@@ -4800,9 +4723,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.IngestionMode IngestOnlyIfAllAreValid { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.IngestionMode Unspecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.IngestionMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.IngestionMode left, Azure.ResourceManager.SecurityInsights.Models.IngestionMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.IngestionMode (string value) { throw null; }
@@ -4924,9 +4845,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.InsightsColumnOutputType Number { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.InsightsColumnOutputType String { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.InsightsColumnOutputType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.InsightsColumnOutputType left, Azure.ResourceManager.SecurityInsights.Models.InsightsColumnOutputType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.InsightsColumnOutputType (string value) { throw null; }
@@ -5210,9 +5129,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.MicrosoftSecurityProductName MicrosoftDefenderAdvancedThreatProtection { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.MicrosoftSecurityProductName Office365AdvancedThreatProtection { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.MicrosoftSecurityProductName other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.MicrosoftSecurityProductName left, Azure.ResourceManager.SecurityInsights.Models.MicrosoftSecurityProductName right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.MicrosoftSecurityProductName (string value) { throw null; }
@@ -5315,9 +5232,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.MtpProvider MicrosoftDefenderForCloudApps { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.MtpProvider MicrosoftDefenderForIdentity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.MtpProvider other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.MtpProvider left, Azure.ResourceManager.SecurityInsights.Models.MtpProvider right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.MtpProvider (string value) { throw null; }
@@ -5546,9 +5461,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.PermissionProviderScope Subscription { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.PermissionProviderScope Workspace { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.PermissionProviderScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.PermissionProviderScope left, Azure.ResourceManager.SecurityInsights.Models.PermissionProviderScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.PermissionProviderScope (string value) { throw null; }
@@ -5565,9 +5478,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.PollingFrequency OnceAMinute { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.PollingFrequency OnceAnHour { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.PollingFrequency other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.PollingFrequency left, Azure.ResourceManager.SecurityInsights.Models.PollingFrequency right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.PollingFrequency (string value) { throw null; }
@@ -5595,9 +5506,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.ProviderPermissionsScope Subscription { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.ProviderPermissionsScope Workspace { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.ProviderPermissionsScope other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ProviderPermissionsScope left, Azure.ResourceManager.SecurityInsights.Models.ProviderPermissionsScope right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ProviderPermissionsScope (string value) { throw null; }
@@ -5626,9 +5535,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.PublicationStatus InProgress { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.PublicationStatus Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.PublicationStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.PublicationStatus left, Azure.ResourceManager.SecurityInsights.Models.PublicationStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.PublicationStatus (string value) { throw null; }
@@ -5659,9 +5566,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.RecommendationState Dismissed { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.RecommendationState InProgress { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.RecommendationState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.RecommendationState left, Azure.ResourceManager.SecurityInsights.Models.RecommendationState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.RecommendationState (string value) { throw null; }
@@ -5732,9 +5637,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessKind OAuth { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessKind PAT { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessKind left, Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.RepositoryAccessKind (string value) { throw null; }
@@ -5842,9 +5745,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingKind PersistentLinkHeader { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingKind PersistentToken { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingKind left, Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingKind (string value) { throw null; }
@@ -6010,9 +5911,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertConfidenceLevel Low { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertConfidenceLevel Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertConfidenceLevel other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertConfidenceLevel left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertConfidenceLevel right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertConfidenceLevel (string value) { throw null; }
@@ -6042,9 +5941,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertConfidenceScoreStatus NotApplicable { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertConfidenceScoreStatus NotFinal { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertConfidenceScoreStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertConfidenceScoreStatus left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertConfidenceScoreStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertConfidenceScoreStatus (string value) { throw null; }
@@ -6060,9 +5957,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetail DisplayName { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetail Severity { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetail other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetail left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetail right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertDetail (string value) { throw null; }
@@ -6101,9 +5996,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertProperty SubTechniques { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertProperty Techniques { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertProperty other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertProperty left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertProperty right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertProperty (string value) { throw null; }
@@ -6172,9 +6065,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMappingType SubmissionMail { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMappingType Uri { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMappingType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMappingType left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMappingType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleEntityMappingType (string value) { throw null; }
@@ -6191,9 +6082,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus Installed { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus NotAvailable { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertRuleTemplateStatus (string value) { throw null; }
@@ -6230,9 +6119,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity Low { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity Medium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertSeverity (string value) { throw null; }
@@ -6251,9 +6138,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertStatus Resolved { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertStatus Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertStatus left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAlertStatus (string value) { throw null; }
@@ -6310,9 +6195,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic Reconnaissance { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic ResourceDevelopment { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsAttackTactic (string value) { throw null; }
@@ -6433,9 +6316,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState Disabled { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsDataTypeConnectionState (string value) { throw null; }
@@ -6497,9 +6378,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityKind SubmissionMail { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityKind Uri { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityKind left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityKind (string value) { throw null; }
@@ -6546,9 +6425,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityType SubmissionMail { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityType URL { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityType left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityType (string value) { throw null; }
@@ -6588,9 +6465,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileDeleteStatus NotDeleted { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileDeleteStatus Unspecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileDeleteStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileDeleteStatus left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileDeleteStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileDeleteStatus (string value) { throw null; }
@@ -6623,9 +6498,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileFormat Json { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileFormat Unspecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileFormat left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileFormat right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileFormat (string value) { throw null; }
@@ -6644,9 +6517,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileHashAlgorithm Sha256AC { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileHashAlgorithm Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileHashAlgorithm other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileHashAlgorithm left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileHashAlgorithm right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileHashAlgorithm (string value) { throw null; }
@@ -6677,9 +6548,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileImportContentType StixIndicator { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileImportContentType Unspecified { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileImportContentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileImportContentType left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileImportContentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileImportContentType (string value) { throw null; }
@@ -6700,9 +6569,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileImportState Unspecified { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileImportState WaitingForUpload { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileImportState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileImportState left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileImportState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsFileImportState (string value) { throw null; }
@@ -6821,9 +6688,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsGroupingMatchingMethod AnyAlert { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsGroupingMatchingMethod Selected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsGroupingMatchingMethod other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsGroupingMatchingMethod left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsGroupingMatchingMethod right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsGroupingMatchingMethod (string value) { throw null; }
@@ -6942,9 +6807,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassification TruePositive { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassification Undetermined { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassification other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassification left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassification right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassification (string value) { throw null; }
@@ -6962,9 +6825,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassificationReason SuspiciousActivity { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassificationReason SuspiciousButExpected { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassificationReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassificationReason left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassificationReason right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentClassificationReason (string value) { throw null; }
@@ -7028,9 +6889,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentLabelType AutoAssigned { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentLabelType User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentLabelType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentLabelType left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentLabelType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentLabelType (string value) { throw null; }
@@ -7062,9 +6921,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentOwnerType Unknown { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentOwnerType User { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentOwnerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentOwnerType left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentOwnerType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentOwnerType (string value) { throw null; }
@@ -7082,9 +6939,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentSeverity Low { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentSeverity Medium { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentSeverity other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentSeverity left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentSeverity right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentSeverity (string value) { throw null; }
@@ -7101,9 +6956,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentStatus Closed { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentStatus New { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentStatus left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsIncidentStatus (string value) { throw null; }
@@ -7203,9 +7056,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKillChainIntent Probing { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKillChainIntent Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKillChainIntent other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKillChainIntent left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKillChainIntent right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKillChainIntent (string value) { throw null; }
@@ -7236,9 +7087,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind Workbook { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind WorkbookTemplate { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsKind (string value) { throw null; }
@@ -7411,9 +7260,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsMetadataFlag False { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsMetadataFlag True { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsMetadataFlag other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsMetadataFlag left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsMetadataFlag right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsMetadataFlag (string value) { throw null; }
@@ -7429,9 +7276,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsMetadataPackageKind Solution { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsMetadataPackageKind Standalone { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsMetadataPackageKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsMetadataPackageKind left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsMetadataPackageKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsMetadataPackageKind (string value) { throw null; }
@@ -7631,9 +7476,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryHive HkeyPerformanceText { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryHive HkeyUsers { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryHive other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryHive left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryHive right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryHive (string value) { throw null; }
@@ -7685,9 +7528,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryValueKind String { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryValueKind Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryValueKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryValueKind left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryValueKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsRegistryValueKind (string value) { throw null; }
@@ -7749,9 +7590,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSourceKind Solution { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSourceKind SourceRepository { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSourceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSourceKind left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSourceKind right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSourceKind (string value) { throw null; }
@@ -7790,9 +7629,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSupportTier Microsoft { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSupportTier Partner { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSupportTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSupportTier left, Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSupportTier right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsSupportTier (string value) { throw null; }
@@ -7885,7 +7722,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public SecurityInsightsUriEntity() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalData { get { throw null; } }
         public string FriendlyName { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property has been replaced by UriString", false)]
         public System.Uri Uri { get { throw null; } }
         public string UriString { get { throw null; } }
@@ -7959,9 +7795,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.Source LocalFile { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.Source RemoteStorage { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.Source other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.Source left, Azure.ResourceManager.SecurityInsights.Models.Source right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.Source (string value) { throw null; }
@@ -7981,9 +7815,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SourceControlContentType Playbook { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SourceControlContentType Workbook { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SourceControlContentType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SourceControlContentType left, Azure.ResourceManager.SecurityInsights.Models.SourceControlContentType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SourceControlContentType (string value) { throw null; }
@@ -8015,9 +7847,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus Success { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus Unauthorized { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus left, Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentFetchStatus (string value) { throw null; }
@@ -8047,9 +7877,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult Failed { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult Success { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult left, Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentResult (string value) { throw null; }
@@ -8067,9 +7895,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState InProgress { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState Queued { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState left, Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SourceControlDeploymentState (string value) { throw null; }
@@ -8112,9 +7938,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SourceControlOperationWarningCode SourceControlWarningDeleteServicePrincipal { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SourceControlOperationWarningCode SourceControlWarningDeleteWorkflowAndSecretFromGitHub { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SourceControlOperationWarningCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SourceControlOperationWarningCode left, Azure.ResourceManager.SecurityInsights.Models.SourceControlOperationWarningCode right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SourceControlOperationWarningCode (string value) { throw null; }
@@ -8158,9 +7982,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SourceControlRepoType AzureDevOps { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SourceControlRepoType Github { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SourceControlRepoType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SourceControlRepoType left, Azure.ResourceManager.SecurityInsights.Models.SourceControlRepoType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SourceControlRepoType (string value) { throw null; }
@@ -8202,9 +8024,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion V1 { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion V2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion left, Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.SourceControlVersion (string value) { throw null; }
@@ -8608,9 +8428,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQueryConnective And { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQueryConnective Or { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQueryConnective other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQueryConnective left, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQueryConnective right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQueryConnective (string value) { throw null; }
@@ -8650,9 +8468,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQueryOperator StringNotStartsWith { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQueryOperator StringStartsWith { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQueryOperator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQueryOperator left, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQueryOperator right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQueryOperator (string value) { throw null; }
@@ -8680,9 +8496,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQuerySortingDirection ASC { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQuerySortingDirection Desc { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQuerySortingDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQuerySortingDirection left, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQuerySortingDirection right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceQuerySortingDirection (string value) { throw null; }
@@ -8721,9 +8535,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceSortingOrder Descending { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceSortingOrder Unsorted { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceSortingOrder other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceSortingOrder left, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceSortingOrder right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceSortingOrder (string value) { throw null; }
@@ -8779,9 +8591,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public ThreatIntelligenceType(string value) { throw null; }
         public static Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceType Main { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceType left, Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.ThreatIntelligenceType (string value) { throw null; }
@@ -8813,9 +8623,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.TriggeredAnalyticsRuleRunProvisioningState InProgress { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.TriggeredAnalyticsRuleRunProvisioningState Succeeded { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.TriggeredAnalyticsRuleRunProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.TriggeredAnalyticsRuleRunProvisioningState left, Azure.ResourceManager.SecurityInsights.Models.TriggeredAnalyticsRuleRunProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.TriggeredAnalyticsRuleRunProvisioningState (string value) { throw null; }
@@ -8831,9 +8639,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.TriggersOn Alerts { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.TriggersOn Incidents { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.TriggersOn other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.TriggersOn left, Azure.ResourceManager.SecurityInsights.Models.TriggersOn right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.TriggersOn (string value) { throw null; }
@@ -8849,9 +8655,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.TriggersWhen Created { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.TriggersWhen Updated { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.TriggersWhen other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.TriggersWhen left, Azure.ResourceManager.SecurityInsights.Models.TriggersWhen right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.TriggersWhen (string value) { throw null; }
@@ -8869,9 +8673,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.UebaDataSource SecurityEvent { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.UebaDataSource SigninLogs { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.UebaDataSource other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.UebaDataSource left, Azure.ResourceManager.SecurityInsights.Models.UebaDataSource right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.UebaDataSource (string value) { throw null; }
@@ -8898,9 +8700,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.WatchlistSourceType LocalFile { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.WatchlistSourceType RemoteStorage { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.WatchlistSourceType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.WatchlistSourceType left, Azure.ResourceManager.SecurityInsights.Models.WatchlistSourceType right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.WatchlistSourceType (string value) { throw null; }
@@ -8954,9 +8754,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode Disabled { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode Enabled { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode left, Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode right) { throw null; }
         public static implicit operator Azure.ResourceManager.SecurityInsights.Models.WorkspaceManagerConfigurationMode (string value) { throw null; }

@@ -2,11 +2,15 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Visitors;
+using Azure.Generator.Management.Providers;
 using Azure.ResourceManager;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.ComponentModel.Composition;
+using System.Threading.Tasks;
 
 namespace Azure.Generator.Management
 {
@@ -42,6 +46,29 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         public override ManagementTypeFactory TypeFactory { get; }
 
+        /// <inheritdoc/>
+        public override TypeProviderWriter GetWriter(TypeProvider provider)
+        {
+            if (provider is ModelFactoryProvider modelFactory)
+            {
+                // Run model-factory repairs at write time, after all visitors have finalized model constructor
+                // shape/order. This keeps both current factory bodies and EBV overloads aligned with the final constructors.
+                ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+                ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+            }
+            else
+            {
+                ModelFactoryBackwardCompatHelper.FixConstructorCalls(provider.Methods);
+            }
+
+            foreach (var serialization in provider.SerializationProviders)
+            {
+                ModelFactoryBackwardCompatHelper.FixConstructorCalls(serialization.Methods);
+            }
+
+            return base.GetWriter(provider);
+        }
+
         /// <summary>
         /// Customize the generation output for Azure client SDK.
         /// </summary>
@@ -53,13 +80,14 @@ namespace Azure.Generator.Management
             // renaming should come first
             AddVisitor(new NameVisitor());
             AddVisitor(new SerializationVisitor());
-            AddVisitor(new FlattenPropertyVisitor());
             AddVisitor(new RestClientVisitor());
             AddVisitor(new ResourceVisitor());
             AddVisitor(new InheritableSystemObjectModelVisitor());
+            AddVisitor(new FlattenPropertyVisitor());
             AddVisitor(new TypeFilterVisitor());
             AddVisitor(new PaginationVisitor());
             AddVisitor(new ModelFactoryVisitor());
+            AddVisitor(new ManagedIdentityV3Visitor());
             if (IsWirePathEnabled())
             {
                 AddVisitor(new WirePathVisitor());
@@ -67,6 +95,7 @@ namespace Azure.Generator.Management
         }
 
         private const string EnableWirePathFeatureFlag = "enable-wire-path-attribute";
+        private const string SkipApiVersionOverrideFlag = "skip-api-version-override";
 
         private bool IsWirePathEnabled()
         {
@@ -77,5 +106,22 @@ namespace Azure.Generator.Management
             }
             return false;
         }
+
+        // TODO: This is a temporary workaround until the api-version override issue is properly resolved in Azure.Core.
+        // Once Azure.Core handles api-version correctly during LRO polling, this flag and related logic should be removed.
+        internal bool IsSkipApiVersionOverrideEnabled()
+        {
+            if (Configuration.AdditionalConfigurationOptions.TryGetValue(SkipApiVersionOverrideFlag, out var value)
+                && bool.TryParse(value.ToString(), out var flag))
+            {
+                return flag;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Management plane SDKs do not need ConfigurationSchema.json generation.
+        /// </summary>
+        public override Task WriteAdditionalFiles(string outputPath) => Task.CompletedTask;
     }
 }

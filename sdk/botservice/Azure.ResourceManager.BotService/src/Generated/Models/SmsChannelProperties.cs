@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The parameters to provide for the Sms channel. </summary>
     public partial class SmsChannelProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SmsChannelProperties"/>. </summary>
         /// <param name="phone"> The Sms phone. </param>
@@ -66,30 +38,29 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="authToken"> The Sms auth token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SmsChannelProperties(string phone, string accountSID, string authToken, bool? isValidated, bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SmsChannelProperties(string phone, string accountSID, string authToken, bool? isValidated, bool isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Phone = phone;
             AccountSID = accountSID;
             AuthToken = authToken;
             IsValidated = isValidated;
             IsEnabled = isEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SmsChannelProperties"/> for deserialization. </summary>
-        internal SmsChannelProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Sms phone. </summary>
         public string Phone { get; set; }
+
         /// <summary> The Sms account SID. Value only returned through POST to the action Channel List API, otherwise empty. </summary>
         public string AccountSID { get; set; }
+
         /// <summary> The Sms auth token. Value only returned through POST to the action Channel List API, otherwise empty. </summary>
         public string AuthToken { get; set; }
+
         /// <summary> Whether this channel is validated for the bot. </summary>
         public bool? IsValidated { get; set; }
+
         /// <summary> Whether this channel is enabled for the bot. </summary>
         public bool IsEnabled { get; set; }
     }

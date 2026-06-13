@@ -64,7 +64,12 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
   }
   Write-Host "The service of package: $service"
   # Generate the release tag for use in link substitution
-  $tag = "$($PackageInfo.Name)_$($PackageInfo.Version)"
+  if ($Language -eq 'java' -and $PackageInfo.Group) {
+    $groupId = $PackageInfo.Group
+    $tag = "$($groupId)+$($PackageInfo.Name)_$($PackageInfo.Version)"
+  } else {
+    $tag = "$($PackageInfo.Name)_$($PackageInfo.Version)"
+  }
   Write-Host "The tag of package: $tag"
   $date = Get-Date -Format "MM/dd/yyyy"
 

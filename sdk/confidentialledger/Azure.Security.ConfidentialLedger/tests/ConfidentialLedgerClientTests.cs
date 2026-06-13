@@ -62,6 +62,13 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [Test]
+        public void VerifyConnectionDefaultsToTrue()
+        {
+            var options = new ConfidentialLedgerClientOptions();
+            Assert.IsTrue(options.VerifyConnection, "VerifyConnection should default to true to ensure TLS verification is enabled by default.");
+        }
+
+        [Test]
         public void CustomCertUri()
         {
             Uri customUri = new Uri("http://my-custom-uri.com");

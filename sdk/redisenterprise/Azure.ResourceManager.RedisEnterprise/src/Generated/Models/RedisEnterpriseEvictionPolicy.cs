@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct RedisEnterpriseEvictionPolicy : IEquatable<RedisEnterpriseEvictionPolicy>
     {
         private readonly string _value;
+        /// <summary> AllKeysLFU. </summary>
+        private const string AllKeysLfuValue = "AllKeysLFU";
+        /// <summary> AllKeysLRU. </summary>
+        private const string AllKeysLruValue = "AllKeysLRU";
+        /// <summary> AllKeysRandom. </summary>
+        private const string AllKeysRandomValue = "AllKeysRandom";
+        /// <summary> VolatileLRU. </summary>
+        private const string VolatileLfuValue = "VolatileLRU";
+        /// <summary> VolatileLFU. </summary>
+        private const string VolatileLruValue = "VolatileLFU";
+        /// <summary> VolatileTTL. </summary>
+        private const string VolatileTtlValue = "VolatileTTL";
+        /// <summary> VolatileRandom. </summary>
+        private const string VolatileRandomValue = "VolatileRandom";
+        /// <summary> NoEviction. </summary>
+        private const string NoEvictionValue = "NoEviction";
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseEvictionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisEnterpriseEvictionPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllKeysLfuValue = "AllKeysLFU";
-        private const string AllKeysLruValue = "AllKeysLRU";
-        private const string AllKeysRandomValue = "AllKeysRandom";
-        private const string VolatileLruValue = "VolatileLRU";
-        private const string VolatileLfuValue = "VolatileLFU";
-        private const string VolatileTtlValue = "VolatileTTL";
-        private const string VolatileRandomValue = "VolatileRandom";
-        private const string NoEvictionValue = "NoEviction";
+            _value = value;
+        }
 
         /// <summary> AllKeysLFU. </summary>
         public static RedisEnterpriseEvictionPolicy AllKeysLfu { get; } = new RedisEnterpriseEvictionPolicy(AllKeysLfuValue);
+
         /// <summary> AllKeysLRU. </summary>
         public static RedisEnterpriseEvictionPolicy AllKeysLru { get; } = new RedisEnterpriseEvictionPolicy(AllKeysLruValue);
+
         /// <summary> AllKeysRandom. </summary>
         public static RedisEnterpriseEvictionPolicy AllKeysRandom { get; } = new RedisEnterpriseEvictionPolicy(AllKeysRandomValue);
+
         /// <summary> VolatileLRU. </summary>
-        public static RedisEnterpriseEvictionPolicy VolatileLru { get; } = new RedisEnterpriseEvictionPolicy(VolatileLruValue);
-        /// <summary> VolatileLFU. </summary>
         public static RedisEnterpriseEvictionPolicy VolatileLfu { get; } = new RedisEnterpriseEvictionPolicy(VolatileLfuValue);
+
+        /// <summary> VolatileLFU. </summary>
+        public static RedisEnterpriseEvictionPolicy VolatileLru { get; } = new RedisEnterpriseEvictionPolicy(VolatileLruValue);
+
         /// <summary> VolatileTTL. </summary>
         public static RedisEnterpriseEvictionPolicy VolatileTtl { get; } = new RedisEnterpriseEvictionPolicy(VolatileTtlValue);
+
         /// <summary> VolatileRandom. </summary>
         public static RedisEnterpriseEvictionPolicy VolatileRandom { get; } = new RedisEnterpriseEvictionPolicy(VolatileRandomValue);
+
         /// <summary> NoEviction. </summary>
         public static RedisEnterpriseEvictionPolicy NoEviction { get; } = new RedisEnterpriseEvictionPolicy(NoEvictionValue);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseEvictionPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisEnterpriseEvictionPolicy left, RedisEnterpriseEvictionPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisEnterpriseEvictionPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisEnterpriseEvictionPolicy left, RedisEnterpriseEvictionPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterpriseEvictionPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseEvictionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisEnterpriseEvictionPolicy(string value) => new RedisEnterpriseEvictionPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisEnterpriseEvictionPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisEnterpriseEvictionPolicy?(string value) => value == null ? null : new RedisEnterpriseEvictionPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisEnterpriseEvictionPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisEnterpriseEvictionPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -37,7 +37,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
             ReadOnlyMemory<byte> firstSegment = new byte[] { 1, 2, 3 };
             ReadOnlyMemory<byte> secondSegment = new byte[] { 4, 5, 6 };
 
-            var message = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegments(new[]{ firstSegment, secondSegment }));
+            var message = new AmqpMessageBody(MessageBody.FromReadOnlyMemorySegments(new[] { firstSegment, secondSegment }));
 
             message.TryGetData(out var body);
             var firstSegmentBeforeConversion = body.ElementAt(0);
@@ -62,8 +62,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Amqp
         [Test]
         public void ManagesMultipleAmqpDataSegmentsByCopyingEagerly()
         {
-            byte[] firstSegment = new byte[] {1, 2, 3};
-            byte[]  secondSegment = new byte[] { 4, 5, 6 };
+            byte[] firstSegment = new byte[] { 1, 2, 3 };
+            byte[] secondSegment = new byte[] { 4, 5, 6 };
 
             var message = new AmqpMessageBody(MessageBody.FromDataSegments(new[]
             {

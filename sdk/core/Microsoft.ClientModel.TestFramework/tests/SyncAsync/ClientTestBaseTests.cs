@@ -1,290 +1,198 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Castle.DynamicProxy;
-using Microsoft.ClientModel.TestFramework.Mocks;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
 using System;
 using System.ClientModel;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
-namespace Microsoft.ClientModel.TestFramework.Tests.SyncAsync;
+namespace Microsoft.ClientModel.TestFramework.Tests;
 
-[TestFixture]
-public class ClientTestBaseTests
+public class ClientTestBaseTests : ClientTestBase
 {
-    #region Constructor
-
-    [Test]
-    public void ConstructorSetsIsAsyncTrue()
+    public ClientTestBaseTests(bool isAsync) : base(isAsync)
     {
-        var testBase = new TestClientTestBase(true);
-
-        Assert.That(testBase.IsAsync, Is.True);
     }
 
     [Test]
-    public void ConstructorSetsIsAsyncFalse()
+    public void AllowsUsingSyncMethodsWithoutAsyncAlternative()
     {
-        var testBase = new TestClientTestBase(false);
+        TestClient client = CreateProxyFromClient(new TestClient());
+        var result = client.Method2();
 
-        Assert.That(testBase.IsAsync, Is.False);
-    }
-
-    #endregion
-
-    #region Properties
-
-    [Test]
-    public void TestTimeoutInSecondsDefaultsToTen()
-    {
-        var testBase = new TestClientTestBase(true);
-
-        Assert.That(testBase.TestTimeoutInSeconds, Is.EqualTo(10));
+        Assert.That(result, Is.EqualTo("Hello"));
     }
 
     [Test]
-    public void TestTimeoutInSecondsCanBeSet()
+    public async Task CallsCorrectMethodBasedOnCtorArgument()
     {
-        var testBase = new TestClientTestBase(true)
+        TestClient client = CreateProxyFromClient(new TestClient());
+        var result = await client.MethodAsync(123);
+
+        Assert.That(result, Is.EqualTo(IsAsync ? "Async 123 False" : "Sync 123 False"));
+    }
+
+    [Test]
+    public async Task CallsCorrectGenericParameterMethodBasedOnCtorArgument()
+    {
+        TestClient client = CreateProxyFromClient(new TestClient());
+        var result = await client.MethodGenericAsync(123);
+
+        Assert.That(result, Is.EqualTo(IsAsync ? "Async 123 False" : "Sync 123 False"));
+    }
+
+    [Test]
+    public async Task WorksWithCancellationToken()
+    {
+        TestClient client = CreateProxyFromClient(new TestClient());
+        var result = await client.MethodAsync(123, new CancellationTokenSource().Token);
+
+        Assert.That(result, Is.EqualTo(IsAsync ? "Async 123 True" : "Sync 123 True"));
+    }
+
+    [Test]
+    public void ThrowsForInvalidClientTypes()
+    {
+        InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => CreateProxyFromClient(new InvalidTestClient()));
+        Assert.That(exception.Message, Is.EqualTo("Client type contains public non-virtual async method MethodAsync"));
+    }
+
+    [Test]
+    public void ThrowsForSyncCallsInAsyncContext()
+    {
+        if (IsAsync)
         {
-            TestTimeoutInSeconds = 30
-        };
-
-        Assert.That(testBase.TestTimeoutInSeconds, Is.EqualTo(30));
-    }
-
-    #endregion
-
-    #region GlobalTimeoutTearDown
-
-    [Test]
-    public void GlobalTimeoutTearDownSkipsWhenDebuggerAttached()
-    {
-        var testBase = new TestClientTestBase(true)
-        {
-            TestTimeoutInSeconds = 0, // Should timeout immediately if not skipped
-            IsDebuggerAttachedOverride = true
-        };
-
-        Assert.DoesNotThrow(() => testBase.GlobalTimeoutTearDown());
-    }
-
-    [Test]
-    public void GlobalTimeoutTearDownThrowsOnTimeout()
-    {
-        var testBase = new TestClientTestBase(true)
-        {
-            TestTimeoutInSeconds = 0,
-            IsDebuggerAttachedOverride = false,
-            TestStartTimeOverride = DateTime.UtcNow.AddSeconds(-1)
-        };
-
-        var ex = Assert.Throws<TestTimeoutException>(() => testBase.GlobalTimeoutTearDown());
-        Assert.That(ex.Message, Contains.Substring("exceeded global time limit"));
-    }
-
-    [Test]
-    public void GlobalTimeoutTearDownDoesNotThrowWithinTimeLimit()
-    {
-        var testBase = new TestClientTestBase(true)
-        {
-            TestTimeoutInSeconds = 10,
-            IsDebuggerAttachedOverride = false,
-            TestStartTimeOverride = DateTime.UtcNow
-        };
-
-        Assert.DoesNotThrow(() => testBase.GlobalTimeoutTearDown());
-    }
-
-    #endregion
-
-    #region CreateProxyFromClient
-
-    [Test]
-    public void CreateProxyFromClientReturnsProxy()
-    {
-        var testBase = new TestClientTestBase(true);
-        var client = new TestClient("test");
-        var proxy = testBase.CreateProxyFromClient(client);
-
-        Assert.That(proxy, Is.Not.Null);
-        Assert.That(proxy, Is.InstanceOf<IProxiedClient>());
-    }
-
-    [Test]
-    public void CreateProxyFromClientReturnsExistingProxy()
-    {
-        var testBase = new TestClientTestBase(true);
-        var client = new TestClient("test");
-
-        var proxy1 = testBase.CreateProxyFromClient(client);
-        var proxy2 = testBase.CreateProxyFromClient(proxy1);
-
-        Assert.That(proxy1, Is.SameAs(proxy2));
-    }
-
-    [Test]
-    public void CreateProxyFromClientWithPreInterceptors()
-    {
-        var testBase = new TestClientTestBase(true);
-        var client = new TestClient("test");
-        var interceptors = new[] { new TestInterceptor() };
-
-        var proxy = testBase.CreateProxyFromClient(typeof(TestClient), client, interceptors);
-
-        Assert.That(proxy, Is.Not.Null);
-        Assert.That(proxy, Is.InstanceOf<IProxiedClient>());
-    }
-
-    [Test]
-    public void CreateProxyFromClientThrowsOnInvalidClient()
-    {
-        var testBase = new TestClientTestBase(true);
-        var client = new InvalidTestClient();
-
-        var ex = Assert.Throws<InvalidOperationException>(() =>
-            testBase.CallCreateProxyFromClientInternal(client.GetType(), client, null));
-
-        Assert.That(ex.Message, Contains.Substring("public non-virtual async method"));
-    }
-
-    #endregion
-
-    #region GetOriginal
-
-    [Test]
-    public void GetOriginalReturnsOriginalFromProxy()
-    {
-        var testBase = new TestClientTestBase(true);
-        var client = new TestClient("test");
-        var proxy = testBase.CreateProxyFromClient(client);
-
-        var original = testBase.CallGetOriginal(proxy);
-
-        Assert.That(original, Is.SameAs(client));
-    }
-
-    [Test]
-    public void GetOriginalThrowsOnNull()
-    {
-        var testBase = new TestClientTestBase(true);
-
-        Assert.Throws<ArgumentNullException>(() => testBase.CallGetOriginal<TestClient>(null));
-    }
-
-    [Test]
-    public void GetOriginalThrowsOnNonProxy()
-    {
-        var testBase = new TestClientTestBase(true);
-        var client = new TestClient("test");
-
-        var ex = Assert.Throws<InvalidOperationException>(() => testBase.CallGetOriginal(client));
-        Assert.That(ex.Message, Contains.Substring("is not an instrumented type"));
-    }
-
-    #endregion
-
-    #region Helper Classes
-
-    public class TestClient
-    {
-        public string Value { get; }
-
-        public TestClient() : this("default") { }
-
-        public TestClient(string value)
-        {
-            Value = value;
-        }
-
-        public virtual string GetData() => Value;
-        public virtual Task<string> GetDataAsync() => Task.FromResult(Value);
-    }
-
-    private class TestClientWithPrivateConstructor
-    {
-        private TestClientWithPrivateConstructor() { }
-    }
-
-    public class InvalidTestClient
-    {
-        // Non-virtual async method should cause validation error
-        public Task<string> GetDataAsync() => Task.FromResult("data");
-    }
-
-    public class TestOperationResult : OperationResult
-    {
-        public TestOperationResult() : this(new MockPipelineResponse(200)) { }
-
-        public TestOperationResult(PipelineResponse response) : base(response)
-        {
-        }
-
-        public override ContinuationToken RehydrationToken { get => throw new NotImplementedException(); protected set => throw new NotImplementedException(); }
-
-        public override ClientResult UpdateStatus(RequestOptions options = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override ValueTask<ClientResult> UpdateStatusAsync(System.ClientModel.Primitives.RequestOptions options)
-        {
-            return new ValueTask<ClientResult>(ClientResult.FromOptionalValue<object>(null, new MockPipelineResponse(200)));
+            TestClient client = CreateProxyFromClient(new TestClient());
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => client.Method(123));
+            Assert.That(exception.Message, Is.EqualTo("Async method call expected for Method"));
         }
     }
 
-    private class TestInterceptor : IInterceptor
+    [Test]
+    public void ThrowsWhenSyncMethodIsNotAvailable()
     {
-        public void Intercept(IInvocation invocation)
+        if (!IsAsync)
         {
-            invocation.Proceed();
+            TestClient client = CreateProxyFromClient(new TestClient());
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => client.NoAlternativeAsync(123));
+            Assert.That(exception.Message, Is.EqualTo("Unable to find a method with name NoAlternative and System.Int32,System.Threading.CancellationToken parameters." +
+                            " Make sure both methods have the same signature including the cancellationToken parameter"));
         }
     }
 
-    private class TestClientTestBase : ClientTestBase
+    /// <summary>
+    /// Validate the interceptor is ignored when we're using SyncOnly.
+    /// </summary>
+    [Test]
+    [SyncOnly]
+    public void SyncOnlyDoesNotIntercept()
     {
-        public bool IsDebuggerAttachedOverride { get; set; }
-        public DateTime? TestStartTimeOverride { get; set; }
+        TestClient client = CreateProxyFromClient(new TestClient());
+        client.Method(42);
+    }
 
-        public TestClientTestBase(bool isAsync) : base(isAsync) { }
+    /// <summary>
+    /// Ensure we can resolve sync/async methods that only vary based on
+    /// generic type parameters.
+    /// </summary>
+    [Test]
+    public async Task CustomUserSchemaPatternResolves()
+    {
+        TestClient client = CreateProxyFromClient(new TestClient());
+        string responseDataPrefix = IsAsync ? "async" : "sync";
+        const string arg = "genericArg";
 
-        public override void GlobalTimeoutTearDown()
+        // Static schema
+        ClientResult<string> staticData = await client.GetDataAsync<string>();
+        Assert.That(staticData.GetRawResponse().ReasonPhrase, Is.EqualTo($"{responseDataPrefix} - static"));
+
+        // Static schema with generic arg
+        ClientResult<string> staticGenericData = await client.GetDataAsync<string>(arg);
+        Assert.That(staticGenericData.GetRawResponse().ReasonPhrase, Is.EqualTo($"{responseDataPrefix} - static {arg}"));
+
+        // Dynamic schema
+        ClientResult<object> dynamicData = await client.GetDataAsync();
+        Assert.That(dynamicData.GetRawResponse().ReasonPhrase, Is.EqualTo($"{responseDataPrefix} - dynamic"));
+    }
+
+    /// <summary>
+    /// Ensure failures in sync/async methods that only vary based on
+    /// generic type parameters are thrown correctly.
+    /// </summary>
+    [Test]
+    public async Task CustomUserSchemaPatternThrows()
+    {
+        TestClient client = CreateProxyFromClient(new TestClient());
+        string exceptionPrefix = IsAsync ? "async" : "sync";
+
+        // Static schema
+        try
+        { await client.GetFailureAsync<string>(); }
+        catch (InvalidOperationException ex)
         {
-            if (IsDebuggerAttachedOverride)
-            {
-                return;
-            }
-
-            var duration = DateTime.UtcNow - (TestStartTimeOverride ?? TestStartTime);
-            if (duration > TimeSpan.FromSeconds(TestTimeoutInSeconds))
-            {
-                throw new TestTimeoutException($"Test exceeded global time limit of {TestTimeoutInSeconds} seconds. Duration: {duration}");
-            }
+            Assert.That(ex.Message, Is.EqualTo($"{exceptionPrefix} - static"));
         }
 
-        public DateTime GetTestStartTime() => TestStartTime;
-
-        public object CallCreateProxyFromClientInternal(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)
+        // Dynamic schema
+        try
+        { await client.GetFailureAsync(); }
+        catch (InvalidOperationException ex)
         {
-            return CreateProxyFromClient(clientType, client, preInterceptors);
-        }
-
-        public T CallGetOriginal<T>(T proxied)
-        {
-            return GetOriginal(proxied);
+            Assert.That(ex.Message, Is.EqualTo($"{exceptionPrefix} - dynamic"));
         }
     }
 
-    private class TestTimeoutException : Exception
+    [Test]
+    public async Task GetClientCallsAreAutoInstrumented()
     {
-        public TestTimeoutException(string message) : base(message) { }
+        TestClient client = CreateProxyFromClient(new TestClient());
+
+        TestClient subClient = client.GetAnotherTestClient();
+        var result = await subClient.MethodAsync(123);
+
+        Assert.That(result, Is.EqualTo(IsAsync ? "Async 123 False" : "Sync 123 False"));
     }
 
-    #endregion
+    [Test]
+    public async Task SubClientPropertyWithoutClientSuffixIsAutoInstrumented()
+    {
+        TestClient client = CreateProxyFromClient(new TestClient());
+
+        AnotherType subClient = client.SubClientProperty;
+        var result = await subClient.MethodAsync(123);
+
+        Assert.That(result, Is.EqualTo(IsAsync ? "Async 123 False" : "Sync 123 False"));
+    }
+
+    [Test]
+    public async Task SubClientWithoutClientSuffixIsAutoInstrumented()
+    {
+        TestClient client = CreateProxyFromClient(new TestClient());
+
+        AnotherType subClient = client.GetAnotherType();
+        var result = await subClient.MethodAsync(123);
+
+        Assert.That(result, Is.EqualTo(IsAsync ? "Async 123 False" : "Sync 123 False"));
+    }
+
+    [Test]
+    public void NonPublicSubClientPropertyCallsAreNotAutoInstrumented()
+    {
+        TestClient client = CreateProxyFromClient(new TestClient());
+
+        InternalType subClient = client.GetInternalType();
+        // should not throw
+        var result = subClient.Method(123);
+        Assert.That(result, Is.EqualTo("Sync 123 False"));
+    }
+
+    [Test]
+    public void CanGetUninstrumentedClient()
+    {
+        var testClient = new TestClient();
+        TestClient client = CreateProxyFromClient(testClient);
+
+        Assert.That(GetOriginal(client), Is.SameAs(testClient));
+    }
 }

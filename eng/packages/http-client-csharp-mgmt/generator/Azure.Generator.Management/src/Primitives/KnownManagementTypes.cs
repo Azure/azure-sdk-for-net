@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
@@ -25,7 +26,7 @@ namespace Azure.Generator.Management.Primitives
         public const string ArmResourceId = "Azure.ResourceManager.CommonTypes.Resource";
         public const string ResourceUpdateModelId = "Azure.ResourceManager.Foundations.ResourceUpdateModel";
 
-        public delegate MethodBodyStatement SerializationExpression(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
+        public delegate MethodBodyStatement SerializationExpression(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format);
         public delegate ValueExpression DeserializationExpression(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format);
 
         private static readonly IReadOnlyDictionary<string, CSharpType> _idToInheritableSystemTypeMap = new Dictionary<string, CSharpType>()
@@ -41,11 +42,15 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.ExtendedLocation"] = typeof(ExtendedLocation),
             ["Azure.ResourceManager.CommonTypes.ExtendedLocationType"] = typeof(ExtendedLocationType),
             ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentity"] = typeof(ManagedServiceIdentity),
+            ["Azure.ResourceManager.Legacy.ManagedServiceIdentityV4"] = typeof(ManagedServiceIdentity),
             ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentityType"] = typeof(ManagedServiceIdentityType),
             ["Azure.ResourceManager.CommonTypes.OperationStatusResult"] = typeof(OperationStatusResult),
+            ["Azure.ResourceManager.CommonTypes.Plan"] = typeof(ArmPlan),
             ["Azure.ResourceManager.CommonTypes.SystemData"] = typeof(SystemData),
             ["Azure.ResourceManager.CommonTypes.UserAssignedIdentity"] = typeof(UserAssignedIdentity),
             ["Azure.ResourceManager.Models.SubResource"] = typeof(SubResource),
+            ["Azure.ResourceManager.Models.WritableSubResource"] = typeof(WritableSubResource),
+            ["Azure.ResourceManager.CommonTypes.ErrorDetail"] = typeof(ResponseError),
         };
 
         private static readonly Dictionary<string, CSharpType> _idToPrimitiveTypeMap = new Dictionary<string, CSharpType>()
@@ -53,23 +58,65 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.Core.armResourceType"] = typeof(ResourceType),
         };
 
+        private static readonly IReadOnlyDictionary<string, Type> _azureResourceManagerFrameworkTypes = new KeyValuePair<string, Type>[]
+        {
+            CreateFrameworkTypeMapping(typeof(ArmClient)),
+            CreateFrameworkTypeMapping(typeof(ArmClientOptions)),
+            CreateFrameworkTypeMapping(typeof(ArmCollection)),
+            CreateFrameworkTypeMapping(typeof(ArmResource)),
+            CreateFrameworkTypeMapping(typeof(ResourceData), "Azure.ResourceManager.Resources.Models.ResourceData"),
+            CreateFrameworkTypeMapping(typeof(TrackedResourceData), "Azure.ResourceManager.Resources.Models.TrackedResourceData"),
+        }.ToDictionary(mapping => mapping.Key, mapping => mapping.Value);
+
+        private static readonly IReadOnlyDictionary<string, Type> _fullyQualifiedNameToFrameworkTypeMap =
+            CreateFrameworkTypeMap();
+
+        private static IReadOnlyDictionary<string, Type> CreateFrameworkTypeMap()
+        {
+            var result = new Dictionary<string, Type>(_azureResourceManagerFrameworkTypes);
+            foreach (var frameworkType in _idToSystemTypeMap.Values.Select(type => type.FrameworkType)
+                .Concat(_idToPrimitiveTypeMap.Values.Select(type => type.FrameworkType))
+                .Distinct())
+            {
+                result[frameworkType.FullName!] = frameworkType;
+            }
+
+            return result;
+        }
+
+        private static KeyValuePair<string, Type> CreateFrameworkTypeMapping(Type frameworkType, string? fullyQualifiedName = null)
+            => new(fullyQualifiedName ?? frameworkType.FullName!, frameworkType);
+
         public static bool TryGetPrimitiveType(string crossLanguageDefinitionId, [MaybeNullWhen(false)] out CSharpType primitiveType)
             => _idToPrimitiveTypeMap.TryGetValue(crossLanguageDefinitionId, out primitiveType);
 
-        private static MethodBodyStatement SerializeTypeWithImplicitOperatorToString(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
-            => writer.WriteStringValue(value);
+        private static MethodBodyStatement SerializeTypeWithImplicitOperatorToString(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
+        {
+            value = value.NullableStructValue(valueType);
+            return writer.WriteStringValue(value);
+        }
+
+        private static MethodBodyStatement SerializeTypeWithToString(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
+        {
+            value = value.NullableStructValue(valueType);
+            return writer.WriteStringValue(value.InvokeToString());
+        }
 
         private static ValueExpression DeserializeNewInstanceStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format)
             => New.Instance(valueType, element.GetString());
 
-        private static readonly IReadOnlyDictionary<Type, SerializationExpression> _typeToSerializationExpression = new Dictionary<Type, SerializationExpression>
+        private static readonly IReadOnlyDictionary<CSharpType, SerializationExpression> _typeToSerializationExpression = new Dictionary<CSharpType, SerializationExpression>
         {
             [typeof(ResourceType)] = SerializeTypeWithImplicitOperatorToString,
+            [typeof(ExtendedLocationType)] = SerializeTypeWithToString,
+            [typeof(ManagedServiceIdentityType)] = SerializeTypeWithToString,
         };
 
-        private static readonly IReadOnlyDictionary<Type, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<Type, DeserializationExpression>
+        private static readonly IReadOnlyDictionary<CSharpType, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<CSharpType, DeserializationExpression>
         {
             [typeof(ResourceType)] = DeserializeNewInstanceStringLikeType,
+            [typeof(ExtendedLocationType)] = DeserializeNewInstanceStringLikeType,
+            [typeof(ManagedServiceIdentityType)] = DeserializeNewInstanceStringLikeType,
         };
 
         private static readonly HashSet<CSharpType> _knownTypes = _idToInheritableSystemTypeMap.Values.Concat(_idToSystemTypeMap.Values).ToHashSet(new CSharpFullNameComparer());
@@ -80,9 +127,11 @@ namespace Azure.Generator.Management.Primitives
 
         public static bool TryGetSystemType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToSystemTypeMap.TryGetValue(id, out type);
 
-        // The comparison could be CSharpType from Azure.ResourceManager, which is a framework type
-        // and CSharpType from InheritableSystemObjectModelProvider, which is not a framework type, they should still be equal if namespace and name match
-        // Then, the default Equals of CSharpType doesn't apply here
+        public static bool TryGetFrameworkType(string fullyQualifiedTypeName, [MaybeNullWhen(false)] out Type frameworkType)
+            => _fullyQualifiedNameToFrameworkTypeMap.TryGetValue(fullyQualifiedTypeName, out frameworkType);
+
+        // Known management types can be represented as framework or generated CSharpType instances;
+        // compare namespace and name so both representations are treated as the same type.
         private class CSharpFullNameComparer : IEqualityComparer<CSharpType>
         {
             public bool Equals(CSharpType? x, CSharpType? y)
@@ -107,10 +156,10 @@ namespace Azure.Generator.Management.Primitives
             }
         }
 
-        public static bool TryGetJsonSerializationExpression(Type type, [MaybeNullWhen(false)] out SerializationExpression expression)
-            => _typeToSerializationExpression.TryGetValue(type, out expression);
+        public static bool TryGetJsonSerializationExpression(CSharpType type, [MaybeNullWhen(false)] out SerializationExpression expression)
+            => _typeToSerializationExpression.TryGetValue(type.WithNullable(false), out expression);
 
-        public static bool TryGetJsonDeserializationExpression(Type type, [MaybeNullWhen(false)] out DeserializationExpression expression)
-            => _typeToDeserializationExpression.TryGetValue(type, out expression);
+        public static bool TryGetJsonDeserializationExpression(CSharpType type, [MaybeNullWhen(false)] out DeserializationExpression expression)
+            => _typeToDeserializationExpression.TryGetValue(type.WithNullable(false), out expression);
     }
 }

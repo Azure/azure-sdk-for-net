@@ -14,6 +14,9 @@ Install the Azure Identity client library for .NET with NuGet:
 dotnet add package Azure.Identity
 ```
 
+> [!NOTE]
+> Starting with `Azure.Core` 1.53.0, all credential types (including `DefaultAzureCredential`) are bundled directly in `Azure.Core`. If your project already targets `Azure.Core` 1.53.0+ or does so through a transitive dependency, you should omit the `Azure.Identity` package reference entirely. See the [Migration Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/MigrationGuide.md) for upgrade and compatibility details.
+
 ### Prerequisites
 
 * An [Azure subscription][azure_sub].
@@ -32,6 +35,8 @@ A credential is a class that contains or can obtain the data needed for a servic
 The Azure Identity library focuses on OAuth authentication with Microsoft Entra ID. It offers numerous credentials capable of acquiring a Microsoft Entra token to authenticate service requests. Each credential in this library is an implementation of the `TokenCredential` abstract class in [Azure.Core][azure_core_library], and any of them can be used to construct service clients capable of authenticating with a `TokenCredential`.
 
 See [Credential classes](#credential-classes) for a complete listing of available credential types.
+
+For details on the assembly consolidation introduced in version 1.53.0 and how to handle [`CS0433`](https://learn.microsoft.com/dotnet/csharp/language-reference/compiler-messages/cs0433) conflicts when mixing package versions, see the [Migration Guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/MigrationGuide.md).
 
 ### DefaultAzureCredential
 
@@ -107,6 +112,45 @@ While `DefaultAzureCredential` is generally the quickest way to authenticate app
 
 As of version 1.8.0, `ManagedIdentityCredential` supports [token caching](#token-caching).
 
+## Identity binding mode (WorkloadIdentityCredential)
+
+`WorkloadIdentityCredential` supports an opt-in identity binding mode to work around [Entra ID's limit on federated identity credentials (FICs)](https://learn.microsoft.com/entra/workload-id/workload-identity-federation-considerations#federated-identity-credential-considerations) per managed identity. When enabled via the `IsAzureProxyEnabled` option, the credential redirects token requests to an AKS-provided proxy that handles the FIC exchange centrally, allowing multiple pods to share the same identity without hitting FIC limits.
+
+**Note:** This feature is only available when using `WorkloadIdentityCredential` directly. It is not supported by `DefaultAzureCredential` or `ManagedIdentityCredential`.
+
+### Usage
+
+```C# Snippet:WorkloadIdentityCredentialWithIdentityBinding
+var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
+{
+    IsAzureProxyEnabled = true  // Enable identity binding mode
+});
+```
+
+When enabled, the credential reads these environment variables (typically configured by AKS):
+
+* `AZURE_KUBERNETES_TOKEN_PROXY` - Base HTTPS URL for the proxy endpoint
+* `AZURE_KUBERNETES_CA_FILE` - Path to PEM bundle with proxy CA certificates
+* `AZURE_KUBERNETES_CA_DATA` - PEM-encoded CA bundle (mutually exclusive with `AZURE_KUBERNETES_CA_FILE `)
+* `AZURE_KUBERNETES_SNI_NAME` - TLS Server Name Indication (optional)
+
+The credential validates the configuration at construction time and throws `InvalidOperationException` if the configuration is invalid or incomplete.
+
+### Migration from ManagedIdentityCredential
+
+If you're currently using `ManagedIdentityCredential` for workload identity in AKS and need to use identity binding mode, migrate to `WorkloadIdentityCredential`:
+
+```C# Snippet:MigrationToWorkloadIdentityCredential
+// Before (no identity binding support):
+// var credential = new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
+
+// After (with identity binding support):
+var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
+{
+    IsAzureProxyEnabled = true
+});
+```
+
 ## Sovereign cloud configuration
 
 By default, credentials authenticate to the Microsoft Entra endpoint for the Azure Public Cloud. To access resources in other clouds, such as Azure US Government or a private cloud, use one of the following solutions:
@@ -142,7 +186,7 @@ Not all credentials require this configuration. Credentials that authenticate th
 |-|-|-|
 |[`EnvironmentCredential`][ref_EnvironmentCredential]|Authenticates a service principal or user via credential information specified in [environment variables](#environment-variables).||
 |[`ManagedIdentityCredential`][ref_ManagedIdentityCredential]|Authenticates the managed identity of an Azure resource.|[user-assigned managed identity][uami_doc]<br>[system-assigned managed identity][sami_doc]|
-|[`WorkloadIdentityCredential`][ref_WorkloadIdentityCredential]|Supports [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/aks/workload-identity-overview) on Kubernetes.||
+|[`WorkloadIdentityCredential`][ref_WorkloadIdentityCredential]|Supports [Microsoft Entra Workload ID](https://learn.microsoft.com/azure/aks/workload-identity-overview) on Kubernetes. Supports [identity binding mode](#identity-binding-mode-workloadidentitycredential) to work around FIC limits in AKS.||
 
 ### Authenticate service principals
 
@@ -192,7 +236,7 @@ Not all credentials require this configuration. Credentials that authenticate th
 |-|-
 |`AZURE_CLIENT_ID`|ID of a Microsoft Entra application
 |`AZURE_TENANT_ID`|ID of the application's Microsoft Entra tenant
-|`AZURE_CLIENT_CERTIFICATE_PATH`|path to a PFX or PEM-encoded certificate file including private key
+|`AZURE_CLIENT_CERTIFICATE_PATH`|Path to the client certificate, including the private key. The path must be to either a "pfx"- or "pem"-encoded certificate on disk, or a certificate in the platform certificate store by thumbprint.<br>For example:<ul><li>`c:\data\certificate.pfx`</li><li>`/etc/app/cert.pem`</li><li>`cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870`</li></ul>
 |`AZURE_CLIENT_CERTIFICATE_PASSWORD`|(optional) the password protecting the certificate file (currently only supported for PFX (PKCS12) certificates)
 |`AZURE_CLIENT_SEND_CERTIFICATE_CHAIN`|(optional) send certificate chain in x5c header to support subject name / issuer based authentication
 

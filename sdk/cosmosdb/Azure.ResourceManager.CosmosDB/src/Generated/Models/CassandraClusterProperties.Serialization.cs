@@ -8,17 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraClusterProperties : IUtf8JsonSerializable, IJsonModel<CassandraClusterProperties>
+    /// <summary> Properties of a managed Cassandra cluster. </summary>
+    public partial class CassandraClusterProperties : IJsonModel<CassandraClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CassandraClusterProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CassandraClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCassandraClusterProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CassandraClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CassandraClusterProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CassandraClusterProperties IPersistableModel<CassandraClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CassandraClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CassandraClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +70,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CassandraClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -90,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("clientCertificates"u8);
                 writer.WriteStartArray();
-                foreach (var item in ClientCertificates)
+                foreach (CassandraCertificate item in ClientCertificates)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -100,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("externalGossipCertificates"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExternalGossipCertificates)
+                foreach (CassandraCertificate item in ExternalGossipCertificates)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -110,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("gossipCertificates"u8);
                 writer.WriteStartArray();
-                foreach (var item in GossipCertificates)
+                foreach (CassandraCertificate item in GossipCertificates)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -120,7 +159,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("externalSeedNodes"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExternalSeedNodes)
+                foreach (CassandraDataCenterSeedNode item in ExternalSeedNodes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -130,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("seedNodes"u8);
                 writer.WriteStartArray();
-                foreach (var item in SeedNodes)
+                foreach (CassandraDataCenterSeedNode item in SeedNodes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,8 +179,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("externalDataCenters"u8);
                 writer.WriteStartArray();
-                foreach (var item in ExternalDataCenters)
+                foreach (string item in ExternalDataCenters)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -175,8 +219,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Extensions)
+                foreach (string item in Extensions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -185,7 +234,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("backupSchedules"u8);
                 writer.WriteStartArray();
-                foreach (var item in BackupSchedules)
+                foreach (CassandraClusterBackupSchedule item in BackupSchedules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -206,15 +255,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -223,22 +272,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        CassandraClusterProperties IJsonModel<CassandraClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CassandraClusterProperties IJsonModel<CassandraClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CassandraClusterProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CassandraClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCassandraClusterProperties(document.RootElement, options);
         }
 
-        internal static CassandraClusterProperties DeserializeCassandraClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CassandraClusterProperties DeserializeCassandraClusterProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -251,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CassandraAuthenticationMethod? authenticationMethod = default;
             string initialCassandraAdminPassword = default;
             CassandraDataCenterSeedNode prometheusEndpoint = default;
-            bool? repairEnabled = default;
+            bool? isRepairEnabled = default;
             CassandraAutoReplicateForm? autoReplicate = default;
             IList<CassandraCertificate> clientCertificates = default;
             IList<CassandraCertificate> externalGossipCertificates = default;
@@ -260,8 +314,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             IReadOnlyList<CassandraDataCenterSeedNode> seedNodes = default;
             IList<string> externalDataCenters = default;
             int? hoursBetweenBackups = default;
-            bool? deallocated = default;
-            bool? cassandraAuditLoggingEnabled = default;
+            bool? isDeallocated = default;
+            bool? isCassandraAuditLoggingEnabled = default;
             CassandraClusterType? clusterType = default;
             CassandraError provisionError = default;
             IList<string> extensions = default;
@@ -269,274 +323,286 @@ namespace Azure.ResourceManager.CosmosDB.Models
             ScheduledEventStrategy? scheduledEventStrategy = default;
             ServiceConnectionType? azureConnectionMethod = default;
             ResourceIdentifier privateLinkResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new CassandraProvisioningState(property.Value.GetString());
+                    provisioningState = new CassandraProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("restoreFromBackupId"u8))
+                if (prop.NameEquals("restoreFromBackupId"u8))
                 {
-                    restoreFromBackupId = property.Value.GetString();
+                    restoreFromBackupId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("delegatedManagementSubnetId"u8))
+                if (prop.NameEquals("delegatedManagementSubnetId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    delegatedManagementSubnetId = new ResourceIdentifier(property.Value.GetString());
+                    delegatedManagementSubnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cassandraVersion"u8))
+                if (prop.NameEquals("cassandraVersion"u8))
                 {
-                    cassandraVersion = property.Value.GetString();
+                    cassandraVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clusterNameOverride"u8))
+                if (prop.NameEquals("clusterNameOverride"u8))
                 {
-                    clusterNameOverride = property.Value.GetString();
+                    clusterNameOverride = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authenticationMethod"u8))
+                if (prop.NameEquals("authenticationMethod"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    authenticationMethod = new CassandraAuthenticationMethod(property.Value.GetString());
+                    authenticationMethod = new CassandraAuthenticationMethod(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("initialCassandraAdminPassword"u8))
+                if (prop.NameEquals("initialCassandraAdminPassword"u8))
                 {
-                    initialCassandraAdminPassword = property.Value.GetString();
+                    initialCassandraAdminPassword = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("prometheusEndpoint"u8))
+                if (prop.NameEquals("prometheusEndpoint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    prometheusEndpoint = CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(property.Value, options);
+                    prometheusEndpoint = CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("repairEnabled"u8))
+                if (prop.NameEquals("repairEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    repairEnabled = property.Value.GetBoolean();
+                    isRepairEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("autoReplicate"u8))
+                if (prop.NameEquals("autoReplicate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    autoReplicate = new CassandraAutoReplicateForm(property.Value.GetString());
+                    autoReplicate = new CassandraAutoReplicateForm(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("clientCertificates"u8))
+                if (prop.NameEquals("clientCertificates"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CassandraCertificate> array = new List<CassandraCertificate>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(CassandraCertificate.DeserializeCassandraCertificate(item, options));
                     }
                     clientCertificates = array;
                     continue;
                 }
-                if (property.NameEquals("externalGossipCertificates"u8))
+                if (prop.NameEquals("externalGossipCertificates"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CassandraCertificate> array = new List<CassandraCertificate>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(CassandraCertificate.DeserializeCassandraCertificate(item, options));
                     }
                     externalGossipCertificates = array;
                     continue;
                 }
-                if (property.NameEquals("gossipCertificates"u8))
+                if (prop.NameEquals("gossipCertificates"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CassandraCertificate> array = new List<CassandraCertificate>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(CassandraCertificate.DeserializeCassandraCertificate(item, options));
                     }
                     gossipCertificates = array;
                     continue;
                 }
-                if (property.NameEquals("externalSeedNodes"u8))
+                if (prop.NameEquals("externalSeedNodes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CassandraDataCenterSeedNode> array = new List<CassandraDataCenterSeedNode>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(item, options));
                     }
                     externalSeedNodes = array;
                     continue;
                 }
-                if (property.NameEquals("seedNodes"u8))
+                if (prop.NameEquals("seedNodes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CassandraDataCenterSeedNode> array = new List<CassandraDataCenterSeedNode>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(item, options));
                     }
                     seedNodes = array;
                     continue;
                 }
-                if (property.NameEquals("externalDataCenters"u8))
+                if (prop.NameEquals("externalDataCenters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     externalDataCenters = array;
                     continue;
                 }
-                if (property.NameEquals("hoursBetweenBackups"u8))
+                if (prop.NameEquals("hoursBetweenBackups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hoursBetweenBackups = property.Value.GetInt32();
+                    hoursBetweenBackups = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("deallocated"u8))
+                if (prop.NameEquals("deallocated"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    deallocated = property.Value.GetBoolean();
+                    isDeallocated = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cassandraAuditLoggingEnabled"u8))
+                if (prop.NameEquals("cassandraAuditLoggingEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cassandraAuditLoggingEnabled = property.Value.GetBoolean();
+                    isCassandraAuditLoggingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("clusterType"u8))
+                if (prop.NameEquals("clusterType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    clusterType = new CassandraClusterType(property.Value.GetString());
+                    clusterType = new CassandraClusterType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisionError"u8))
+                if (prop.NameEquals("provisionError"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisionError = CassandraError.DeserializeCassandraError(property.Value, options);
+                    provisionError = CassandraError.DeserializeCassandraError(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("extensions"u8))
+                if (prop.NameEquals("extensions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     extensions = array;
                     continue;
                 }
-                if (property.NameEquals("backupSchedules"u8))
+                if (prop.NameEquals("backupSchedules"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CassandraClusterBackupSchedule> array = new List<CassandraClusterBackupSchedule>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(CassandraClusterBackupSchedule.DeserializeCassandraClusterBackupSchedule(item, options));
                     }
                     backupSchedules = array;
                     continue;
                 }
-                if (property.NameEquals("scheduledEventStrategy"u8))
+                if (prop.NameEquals("scheduledEventStrategy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scheduledEventStrategy = new ScheduledEventStrategy(property.Value.GetString());
+                    scheduledEventStrategy = new ScheduledEventStrategy(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("azureConnectionMethod"u8))
+                if (prop.NameEquals("azureConnectionMethod"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    azureConnectionMethod = new ServiceConnectionType(property.Value.GetString());
+                    azureConnectionMethod = new ServiceConnectionType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("privateLinkResourceId"u8))
+                if (prop.NameEquals("privateLinkResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    privateLinkResourceId = new ResourceIdentifier(property.Value.GetString());
+                    privateLinkResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CassandraClusterProperties(
                 provisioningState,
                 restoreFromBackupId,
@@ -546,7 +612,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 authenticationMethod,
                 initialCassandraAdminPassword,
                 prometheusEndpoint,
-                repairEnabled,
+                isRepairEnabled,
                 autoReplicate,
                 clientCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
                 externalGossipCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
@@ -555,8 +621,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 seedNodes ?? new ChangeTrackingList<CassandraDataCenterSeedNode>(),
                 externalDataCenters ?? new ChangeTrackingList<string>(),
                 hoursBetweenBackups,
-                deallocated,
-                cassandraAuditLoggingEnabled,
+                isDeallocated,
+                isCassandraAuditLoggingEnabled,
                 clusterType,
                 provisionError,
                 extensions ?? new ChangeTrackingList<string>(),
@@ -564,573 +630,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 scheduledEventStrategy,
                 azureConnectionMethod,
                 privateLinkResourceId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("  provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreFromBackupId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  restoreFromBackupId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RestoreFromBackupId))
-                {
-                    builder.Append("  restoreFromBackupId: ");
-                    if (RestoreFromBackupId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RestoreFromBackupId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RestoreFromBackupId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DelegatedManagementSubnetId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  delegatedManagementSubnetId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DelegatedManagementSubnetId))
-                {
-                    builder.Append("  delegatedManagementSubnetId: ");
-                    builder.AppendLine($"'{DelegatedManagementSubnetId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CassandraVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cassandraVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CassandraVersion))
-                {
-                    builder.Append("  cassandraVersion: ");
-                    if (CassandraVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CassandraVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CassandraVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterNameOverride), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  clusterNameOverride: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClusterNameOverride))
-                {
-                    builder.Append("  clusterNameOverride: ");
-                    if (ClusterNameOverride.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClusterNameOverride}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClusterNameOverride}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationMethod), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  authenticationMethod: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AuthenticationMethod))
-                {
-                    builder.Append("  authenticationMethod: ");
-                    builder.AppendLine($"'{AuthenticationMethod.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InitialCassandraAdminPassword), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  initialCassandraAdminPassword: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(InitialCassandraAdminPassword))
-                {
-                    builder.Append("  initialCassandraAdminPassword: ");
-                    if (InitialCassandraAdminPassword.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{InitialCassandraAdminPassword}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{InitialCassandraAdminPassword}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PrometheusEndpointIPAddress", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  prometheusEndpoint: ");
-                builder.AppendLine("{");
-                builder.Append("    ipAddress: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(PrometheusEndpoint))
-                {
-                    builder.Append("  prometheusEndpoint: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, PrometheusEndpoint, options, 2, false, "  prometheusEndpoint: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRepairEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  repairEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsRepairEnabled))
-                {
-                    builder.Append("  repairEnabled: ");
-                    var boolValue = IsRepairEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoReplicate), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  autoReplicate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AutoReplicate))
-                {
-                    builder.Append("  autoReplicate: ");
-                    builder.AppendLine($"'{AutoReplicate.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientCertificates), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  clientCertificates: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ClientCertificates))
-                {
-                    if (ClientCertificates.Any())
-                    {
-                        builder.Append("  clientCertificates: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ClientCertificates)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  clientCertificates: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExternalGossipCertificates), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  externalGossipCertificates: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ExternalGossipCertificates))
-                {
-                    if (ExternalGossipCertificates.Any())
-                    {
-                        builder.Append("  externalGossipCertificates: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ExternalGossipCertificates)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  externalGossipCertificates: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GossipCertificates), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  gossipCertificates: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(GossipCertificates))
-                {
-                    if (GossipCertificates.Any())
-                    {
-                        builder.Append("  gossipCertificates: ");
-                        builder.AppendLine("[");
-                        foreach (var item in GossipCertificates)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  gossipCertificates: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExternalSeedNodes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  externalSeedNodes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ExternalSeedNodes))
-                {
-                    if (ExternalSeedNodes.Any())
-                    {
-                        builder.Append("  externalSeedNodes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ExternalSeedNodes)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  externalSeedNodes: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SeedNodes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  seedNodes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(SeedNodes))
-                {
-                    if (SeedNodes.Any())
-                    {
-                        builder.Append("  seedNodes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in SeedNodes)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  seedNodes: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExternalDataCenters), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  externalDataCenters: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ExternalDataCenters))
-                {
-                    if (ExternalDataCenters.Any())
-                    {
-                        builder.Append("  externalDataCenters: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ExternalDataCenters)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HoursBetweenBackups), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  hoursBetweenBackups: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HoursBetweenBackups))
-                {
-                    builder.Append("  hoursBetweenBackups: ");
-                    builder.AppendLine($"{HoursBetweenBackups.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDeallocated), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  deallocated: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsDeallocated))
-                {
-                    builder.Append("  deallocated: ");
-                    var boolValue = IsDeallocated.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsCassandraAuditLoggingEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cassandraAuditLoggingEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsCassandraAuditLoggingEnabled))
-                {
-                    builder.Append("  cassandraAuditLoggingEnabled: ");
-                    var boolValue = IsCassandraAuditLoggingEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  clusterType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClusterType))
-                {
-                    builder.Append("  clusterType: ");
-                    builder.AppendLine($"'{ClusterType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisionError), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  provisionError: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisionError))
-                {
-                    builder.Append("  provisionError: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ProvisionError, options, 2, false, "  provisionError: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Extensions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  extensions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Extensions))
-                {
-                    if (Extensions.Any())
-                    {
-                        builder.Append("  extensions: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Extensions)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupSchedules), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  backupSchedules: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(BackupSchedules))
-                {
-                    if (BackupSchedules.Any())
-                    {
-                        builder.Append("  backupSchedules: ");
-                        builder.AppendLine("[");
-                        foreach (var item in BackupSchedules)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  backupSchedules: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScheduledEventStrategy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scheduledEventStrategy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ScheduledEventStrategy))
-                {
-                    builder.Append("  scheduledEventStrategy: ");
-                    builder.AppendLine($"'{ScheduledEventStrategy.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureConnectionMethod), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  azureConnectionMethod: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AzureConnectionMethod))
-                {
-                    builder.Append("  azureConnectionMethod: ");
-                    builder.AppendLine($"'{AzureConnectionMethod.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  privateLinkResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrivateLinkResourceId))
-                {
-                    builder.Append("  privateLinkResourceId: ");
-                    builder.AppendLine($"'{PrivateLinkResourceId.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CassandraClusterProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CassandraClusterProperties IPersistableModel<CassandraClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCassandraClusterProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CassandraClusterProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CassandraClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

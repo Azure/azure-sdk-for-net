@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricIPPrefixCollection : ArmCollection, IEnumerable<NetworkFabricIPPrefixResource>, IAsyncEnumerable<NetworkFabricIPPrefixResource>
     {
-        private readonly ClientDiagnostics _networkFabricIPPrefixIPPrefixesClientDiagnostics;
-        private readonly IpPrefixesRestOperations _networkFabricIPPrefixIPPrefixesRestClient;
+        private readonly ClientDiagnostics _ipPrefixesClientDiagnostics;
+        private readonly IpPrefixes _ipPrefixesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkFabricIPPrefixCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkFabricIPPrefixCollection for mocking. </summary>
         protected NetworkFabricIPPrefixCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkFabricIPPrefixCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricIPPrefixCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFabricIPPrefixCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkFabricIPPrefixIPPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricIPPrefixResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetworkFabricIPPrefixResource.ResourceType, out string networkFabricIPPrefixIPPrefixesApiVersion);
-            _networkFabricIPPrefixIPPrefixesRestClient = new IpPrefixesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricIPPrefixIPPrefixesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(NetworkFabricIPPrefixResource.ResourceType, out string networkFabricIPPrefixApiVersion);
+            _ipPrefixesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkFabricIPPrefixResource.ResourceType.Namespace, Diagnostics);
+            _ipPrefixesRestClient = new IpPrefixes(_ipPrefixesClientDiagnostics, Pipeline, Endpoint, networkFabricIPPrefixApiVersion ?? "2025-07-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Implements IP Prefix PUT method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpPrefixes_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpPrefixes_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<NetworkFabricIPPrefixResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipPrefixName, NetworkFabricIPPrefixData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _ipPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _networkFabricIPPrefixIPPrefixesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource>(new NetworkFabricIPPrefixOperationSource(Client), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, _networkFabricIPPrefixIPPrefixesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipPrefixesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, NetworkFabricIPPrefixData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource>(
+                    new NetworkFabricIPPrefixResourceOperationSource(Client),
+                    _ipPrefixesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Implements IP Prefix PUT method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpPrefixes_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpPrefixes_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<NetworkFabricIPPrefixResource> CreateOrUpdate(WaitUntil waitUntil, string ipPrefixName, NetworkFabricIPPrefixData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _ipPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _networkFabricIPPrefixIPPrefixesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, data, cancellationToken);
-                var operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource>(new NetworkFabricIPPrefixOperationSource(Client), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, _networkFabricIPPrefixIPPrefixesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipPrefixesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, NetworkFabricIPPrefixData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource> operation = new ManagedNetworkFabricArmOperation<NetworkFabricIPPrefixResource>(
+                    new NetworkFabricIPPrefixResourceOperationSource(Client),
+                    _ipPrefixesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Implements IP Prefix GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpPrefixes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpPrefixes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NetworkFabricIPPrefixResource>> GetAsync(string ipPrefixName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
 
-            using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.Get");
+            using DiagnosticScope scope = _ipPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.Get");
             scope.Start();
             try
             {
-                var response = await _networkFabricIPPrefixIPPrefixesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkFabricIPPrefixData> response = Response.FromValue(NetworkFabricIPPrefixData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricIPPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Implements IP Prefix GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpPrefixes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpPrefixes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NetworkFabricIPPrefixResource> Get(string ipPrefixName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
 
-            using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.Get");
+            using DiagnosticScope scope = _ipPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.Get");
             scope.Start();
             try
             {
-                var response = _networkFabricIPPrefixIPPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkFabricIPPrefixData> response = Response.FromValue(NetworkFabricIPPrefixData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricIPPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Implements IpPrefixes list by resource group GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpPrefixes_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpPrefixes_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricIPPrefixResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricIPPrefixIPPrefixesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricIPPrefixIPPrefixesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPPrefixResource(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(e)), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, "NetworkFabricIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<NetworkFabricIPPrefixData, NetworkFabricIPPrefixResource>(new IpPrefixesGetByResourceGroupAsyncCollectionResultOfT(_ipPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPPrefixCollection.GetAll"), data => new NetworkFabricIPPrefixResource(Client, data));
         }
 
         /// <summary>
         /// Implements IpPrefixes list by resource group GET method.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpPrefixes_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpPrefixes_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> A collection of <see cref="NetworkFabricIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricIPPrefixResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricIPPrefixIPPrefixesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkFabricIPPrefixIPPrefixesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFabricIPPrefixResource(Client, NetworkFabricIPPrefixData.DeserializeNetworkFabricIPPrefixData(e)), _networkFabricIPPrefixIPPrefixesClientDiagnostics, Pipeline, "NetworkFabricIPPrefixCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<NetworkFabricIPPrefixData, NetworkFabricIPPrefixResource>(new IpPrefixesGetByResourceGroupCollectionResultOfT(_ipPrefixesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NetworkFabricIPPrefixCollection.GetAll"), data => new NetworkFabricIPPrefixResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpPrefixes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpPrefixes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ipPrefixName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
 
-            using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.Exists");
+            using DiagnosticScope scope = _ipPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _networkFabricIPPrefixIPPrefixesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkFabricIPPrefixData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricIPPrefixData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricIPPrefixData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +386,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpPrefixes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpPrefixes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string ipPrefixName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
 
-            using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.Exists");
+            using DiagnosticScope scope = _ipPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.Exists");
             scope.Start();
             try
             {
-                var response = _networkFabricIPPrefixIPPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkFabricIPPrefixData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricIPPrefixData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricIPPrefixData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +443,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpPrefixes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpPrefixes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NetworkFabricIPPrefixResource>> GetIfExistsAsync(string ipPrefixName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
 
-            using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.GetIfExists");
+            using DiagnosticScope scope = _ipPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _networkFabricIPPrefixIPPrefixesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NetworkFabricIPPrefixData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricIPPrefixData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricIPPrefixData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkFabricIPPrefixResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricIPPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +504,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpPrefixes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> IpPrefixes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NetworkFabricIPPrefixResource> GetIfExists(string ipPrefixName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
 
-            using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.GetIfExists");
+            using DiagnosticScope scope = _ipPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _networkFabricIPPrefixIPPrefixesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipPrefixName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _ipPrefixesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ipPrefixName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NetworkFabricIPPrefixData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NetworkFabricIPPrefixData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NetworkFabricIPPrefixData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NetworkFabricIPPrefixResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkFabricIPPrefixResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<NetworkFabricIPPrefixResource> IAsyncEnumerable<NetworkFabricIPPrefixResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

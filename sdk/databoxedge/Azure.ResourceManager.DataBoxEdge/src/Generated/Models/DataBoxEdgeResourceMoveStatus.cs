@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public readonly partial struct DataBoxEdgeResourceMoveStatus : IEquatable<DataBoxEdgeResourceMoveStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeResourceMoveStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataBoxEdgeResourceMoveStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoneValue = "None";
         private const string ResourceMoveInProgressValue = "ResourceMoveInProgress";
         private const string ResourceMoveFailedValue = "ResourceMoveFailed";
 
-        /// <summary> None. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeResourceMoveStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataBoxEdgeResourceMoveStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the None. </summary>
         public static DataBoxEdgeResourceMoveStatus None { get; } = new DataBoxEdgeResourceMoveStatus(NoneValue);
-        /// <summary> ResourceMoveInProgress. </summary>
+
+        /// <summary> Gets the ResourceMoveInProgress. </summary>
         public static DataBoxEdgeResourceMoveStatus ResourceMoveInProgress { get; } = new DataBoxEdgeResourceMoveStatus(ResourceMoveInProgressValue);
-        /// <summary> ResourceMoveFailed. </summary>
+
+        /// <summary> Gets the ResourceMoveFailed. </summary>
         public static DataBoxEdgeResourceMoveStatus ResourceMoveFailed { get; } = new DataBoxEdgeResourceMoveStatus(ResourceMoveFailedValue);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeResourceMoveStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataBoxEdgeResourceMoveStatus left, DataBoxEdgeResourceMoveStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataBoxEdgeResourceMoveStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataBoxEdgeResourceMoveStatus left, DataBoxEdgeResourceMoveStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxEdgeResourceMoveStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeResourceMoveStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataBoxEdgeResourceMoveStatus(string value) => new DataBoxEdgeResourceMoveStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataBoxEdgeResourceMoveStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataBoxEdgeResourceMoveStatus?(string value) => value == null ? null : new DataBoxEdgeResourceMoveStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataBoxEdgeResourceMoveStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataBoxEdgeResourceMoveStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

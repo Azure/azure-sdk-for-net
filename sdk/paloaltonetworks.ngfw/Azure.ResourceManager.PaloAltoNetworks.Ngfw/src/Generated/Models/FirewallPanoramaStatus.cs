@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Panorama connectivity information. </summary>
     public partial class FirewallPanoramaStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FirewallPanoramaStatus"/>. </summary>
         internal FirewallPanoramaStatus()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of <see cref="FirewallPanoramaStatus"/>. </summary>
         /// <param name="panoramaServerStatus"> Primary Panorama connection status. </param>
         /// <param name="panoramaServer2Status"> Secondary Panorama connection status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallPanoramaStatus(FirewallPanoramaServerStatus? panoramaServerStatus, FirewallPanoramaServerStatus? panoramaServer2Status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPanoramaStatus(FirewallPanoramaServerStatus? panoramaServerStatus, FirewallPanoramaServerStatus? panoramaServer2Status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PanoramaServerStatus = panoramaServerStatus;
             PanoramaServer2Status = panoramaServer2Status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Primary Panorama connection status. </summary>
         public FirewallPanoramaServerStatus? PanoramaServerStatus { get; }
+
         /// <summary> Secondary Panorama connection status. </summary>
         public FirewallPanoramaServerStatus? PanoramaServer2Status { get; }
     }

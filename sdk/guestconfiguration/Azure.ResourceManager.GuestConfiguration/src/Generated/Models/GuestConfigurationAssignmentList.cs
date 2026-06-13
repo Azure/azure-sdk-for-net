@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     /// <summary> The response of the list guest configuration assignment operation. </summary>
     internal partial class GuestConfigurationAssignmentList
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentList"/>. </summary>
         internal GuestConfigurationAssignmentList()
@@ -53,14 +25,21 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentList"/>. </summary>
         /// <param name="value"> Result of the list guest configuration assignment operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationAssignmentList(IReadOnlyList<GuestConfigurationAssignmentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="nextLink"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GuestConfigurationAssignmentList(IList<GuestConfigurationAssignmentData> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            NextLink = nextLink;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Result of the list guest configuration assignment operation. </summary>
-        public IReadOnlyList<GuestConfigurationAssignmentData> Value { get; }
+        [WirePath("value")]
+        public IList<GuestConfigurationAssignmentData> Value { get; }
+
+        /// <summary> Gets the NextLink. </summary>
+        [WirePath("nextLink")]
+        public string NextLink { get; }
     }
 }

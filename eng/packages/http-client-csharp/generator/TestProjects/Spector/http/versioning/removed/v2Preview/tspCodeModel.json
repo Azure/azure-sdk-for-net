@@ -29,14 +29,16 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Versioning.Removed",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "4",
@@ -62,7 +64,8 @@
           "enumType": {
             "$ref": "4"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "7",
@@ -75,14 +78,16 @@
           "enumType": {
             "$ref": "4"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Versioning.Removed",
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "8",
@@ -109,7 +114,8 @@
             "$ref": "8"
           },
           "doc": "The version v1.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "11",
@@ -123,7 +129,8 @@
             "$ref": "8"
           },
           "doc": "The V2 Preview version.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Versioning.Removed",
@@ -131,14 +138,15 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
     {
       "$id": "12",
       "kind": "constant",
-      "name": "v1ContentType",
+      "name": "V1ContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -149,12 +157,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "14",
       "kind": "constant",
-      "name": "v1ContentType1",
+      "name": "V1ContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -165,12 +174,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "16",
       "kind": "constant",
-      "name": "v2ContentType",
+      "name": "V1ContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -181,12 +191,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "18",
       "kind": "constant",
-      "name": "v2ContentType1",
+      "name": "V1ContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -197,12 +208,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "20",
       "kind": "constant",
-      "name": "modelV3ContentType",
+      "name": "V1ContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -213,12 +225,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "22",
       "kind": "constant",
-      "name": "modelV3ContentType1",
+      "name": "V1ContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -229,12 +242,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "24",
       "kind": "constant",
-      "name": "v1InInterfaceContentType",
+      "name": "V1ContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -245,12 +259,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "26",
       "kind": "constant",
-      "name": "v1InInterfaceContentType1",
+      "name": "V1ContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -261,7 +276,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -273,6 +289,12 @@
       "crossLanguageDefinitionId": "Versioning.Removed.ModelV1",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelV1"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "29",
@@ -297,7 +319,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "31",
@@ -318,7 +341,8 @@
               "name": "enumProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "32",
@@ -346,7 +370,8 @@
               }
             ],
             "namespace": "Versioning.Removed",
-            "decorators": []
+            "decorators": [],
+            "isExactName": false
           },
           "optional": false,
           "readOnly": false,
@@ -359,7 +384,8 @@
               "name": "unionProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -371,6 +397,12 @@
       "crossLanguageDefinitionId": "Versioning.Removed.ModelV2",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelV2"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "37",
@@ -395,7 +427,8 @@
               "name": "prop"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "39",
@@ -420,7 +453,8 @@
               "name": "removedProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "41",
@@ -441,7 +475,8 @@
               "name": "enumProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "42",
@@ -483,7 +518,8 @@
               }
             ],
             "namespace": "Versioning.Removed",
-            "decorators": []
+            "decorators": [],
+            "isExactName": false
           },
           "optional": false,
           "readOnly": false,
@@ -496,7 +532,8 @@
               "name": "unionProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -508,6 +545,12 @@
       "crossLanguageDefinitionId": "Versioning.Removed.ModelV3",
       "usage": "Input,Output,Json",
       "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ModelV3"
+        }
+      },
+      "isExactName": false,
       "properties": [
         {
           "$id": "49",
@@ -532,7 +575,8 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -542,6 +586,7 @@
       "$id": "51",
       "kind": "client",
       "name": "RemovedClient",
+      "isExactName": false,
       "namespace": "Versioning.Removed",
       "doc": "Test for the `@removed` decorator.",
       "methods": [
@@ -549,6 +594,7 @@
           "$id": "52",
           "kind": "basic",
           "name": "v1",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1",
@@ -558,6 +604,7 @@
           "operation": {
             "$id": "53",
             "name": "v1",
+            "isExactName": false,
             "resourceName": "Removed",
             "doc": "This operation should not be generated with latest version's signature.",
             "accessibility": "public",
@@ -577,10 +624,32 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Versioning.Removed.v1.contentType"
+                "crossLanguageDefinitionId": "Versioning.Removed.v1.contentType",
+                "methodParameterSegments": [
+                  {
+                    "$id": "55",
+                    "kind": "method",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "12"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Versioning.Removed.v1.contentType",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "55",
+                "$id": "56",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -593,10 +662,31 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Versioning.Removed.v1.accept"
+                "crossLanguageDefinitionId": "Versioning.Removed.v1.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "57",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "14"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Versioning.Removed.v1.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "56",
+                "$id": "58",
                 "kind": "body",
                 "name": "body",
                 "serializedName": "body",
@@ -612,7 +702,33 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "Versioning.Removed.v1.body"
+                "crossLanguageDefinitionId": "Versioning.Removed.v1.body",
+                "methodParameterSegments": [
+                  {
+                    "$id": "59",
+                    "kind": "method",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "28"
+                    },
+                    "location": "Body",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Versioning.Removed.v1.body",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "body"
+                  }
+                }
               }
             ],
             "responses": [
@@ -627,7 +743,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "POST",
@@ -640,60 +761,18 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.Removed.v1",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.Removed"
           },
           "parameters": [
             {
-              "$id": "57",
-              "kind": "method",
-              "name": "body",
-              "serializedName": "body",
-              "type": {
-                "$ref": "28"
-              },
-              "location": "Body",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "Versioning.Removed.v1.body",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "59"
             },
             {
-              "$id": "58",
-              "kind": "method",
-              "name": "contentType",
-              "serializedName": "Content-Type",
-              "doc": "Body parameter's content type. Known values are application/json",
-              "type": {
-                "$ref": "12"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "Versioning.Removed.v1.contentType",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "55"
             },
             {
-              "$id": "59",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "14"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "Versioning.Removed.v1.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "57"
             }
           ],
           "response": {
@@ -710,6 +789,7 @@
           "$id": "60",
           "kind": "basic",
           "name": "v2",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1",
@@ -718,6 +798,7 @@
           "operation": {
             "$id": "61",
             "name": "v2",
+            "isExactName": false,
             "resourceName": "Removed",
             "accessibility": "public",
             "parameters": [
@@ -739,10 +820,35 @@
                 "scope": "Method",
                 "decorators": [],
                 "crossLanguageDefinitionId": "Versioning.Removed.v2.param",
-                "readOnly": false
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$id": "64",
+                    "kind": "method",
+                    "name": "param",
+                    "serializedName": "param",
+                    "type": {
+                      "$id": "65",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Query",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Versioning.Removed.v2.param",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "64",
+                "$id": "66",
                 "kind": "header",
                 "name": "contentType",
                 "serializedName": "Content-Type",
@@ -756,10 +862,32 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Versioning.Removed.v2.contentType"
+                "crossLanguageDefinitionId": "Versioning.Removed.v2.contentType",
+                "methodParameterSegments": [
+                  {
+                    "$id": "67",
+                    "kind": "method",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "16"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Versioning.Removed.v2.contentType",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "65",
+                "$id": "68",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -772,10 +900,31 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Versioning.Removed.v2.accept"
+                "crossLanguageDefinitionId": "Versioning.Removed.v2.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "69",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "18"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Versioning.Removed.v2.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "66",
+                "$id": "70",
                 "kind": "body",
                 "name": "body",
                 "serializedName": "body",
@@ -791,7 +940,33 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "Versioning.Removed.v2.body"
+                "crossLanguageDefinitionId": "Versioning.Removed.v2.body",
+                "methodParameterSegments": [
+                  {
+                    "$id": "71",
+                    "kind": "method",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "36"
+                    },
+                    "location": "Body",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Versioning.Removed.v2.body",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "body"
+                  }
+                }
               }
             ],
             "responses": [
@@ -806,7 +981,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "POST",
@@ -819,81 +999,21 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.Removed.v2",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.Removed"
           },
           "parameters": [
             {
-              "$id": "67",
-              "kind": "method",
-              "name": "body",
-              "serializedName": "body",
-              "type": {
-                "$ref": "36"
-              },
-              "location": "Body",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "Versioning.Removed.v2.body",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "71"
             },
             {
-              "$id": "68",
-              "kind": "method",
-              "name": "param",
-              "serializedName": "param",
-              "type": {
-                "$id": "69",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Query",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "Versioning.Removed.v2.param",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "64"
             },
             {
-              "$id": "70",
-              "kind": "method",
-              "name": "contentType",
-              "serializedName": "Content-Type",
-              "doc": "Body parameter's content type. Known values are application/json",
-              "type": {
-                "$ref": "16"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "Versioning.Removed.v2.contentType",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "67"
             },
             {
-              "$id": "71",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "18"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "Versioning.Removed.v2.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "69"
             }
           ],
           "response": {
@@ -910,6 +1030,7 @@
           "$id": "72",
           "kind": "basic",
           "name": "modelV3",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1",
@@ -919,6 +1040,7 @@
           "operation": {
             "$id": "73",
             "name": "modelV3",
+            "isExactName": false,
             "resourceName": "Removed",
             "doc": "This operation will pass different paths and different request bodies based on different versions.",
             "accessibility": "public",
@@ -938,10 +1060,32 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Versioning.Removed.modelV3.contentType"
+                "crossLanguageDefinitionId": "Versioning.Removed.modelV3.contentType",
+                "methodParameterSegments": [
+                  {
+                    "$id": "75",
+                    "kind": "method",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "20"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Versioning.Removed.modelV3.contentType",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "75",
+                "$id": "76",
                 "kind": "header",
                 "name": "accept",
                 "serializedName": "Accept",
@@ -954,10 +1098,31 @@
                 "scope": "Constant",
                 "readOnly": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Versioning.Removed.modelV3.accept"
+                "crossLanguageDefinitionId": "Versioning.Removed.modelV3.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "77",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "22"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "Versioning.Removed.modelV3.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               },
               {
-                "$id": "76",
+                "$id": "78",
                 "kind": "body",
                 "name": "body",
                 "serializedName": "body",
@@ -973,7 +1138,33 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "Versioning.Removed.modelV3.body"
+                "crossLanguageDefinitionId": "Versioning.Removed.modelV3.body",
+                "methodParameterSegments": [
+                  {
+                    "$id": "79",
+                    "kind": "method",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$ref": "48"
+                    },
+                    "location": "Body",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Versioning.Removed.modelV3.body",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "body"
+                  }
+                }
               }
             ],
             "responses": [
@@ -988,7 +1179,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "POST",
@@ -1001,60 +1197,18 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Versioning.Removed.modelV3",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Versioning.Removed"
           },
           "parameters": [
             {
-              "$id": "77",
-              "kind": "method",
-              "name": "body",
-              "serializedName": "body",
-              "type": {
-                "$ref": "48"
-              },
-              "location": "Body",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "Versioning.Removed.modelV3.body",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "79"
             },
             {
-              "$id": "78",
-              "kind": "method",
-              "name": "contentType",
-              "serializedName": "Content-Type",
-              "doc": "Body parameter's content type. Known values are application/json",
-              "type": {
-                "$ref": "20"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "Versioning.Removed.modelV3.contentType",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "75"
             },
             {
-              "$id": "79",
-              "kind": "method",
-              "name": "accept",
-              "serializedName": "Accept",
-              "type": {
-                "$ref": "22"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Constant",
-              "crossLanguageDefinitionId": "Versioning.Removed.modelV3.accept",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "77"
             }
           ],
           "response": {
@@ -1088,7 +1242,8 @@
           "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.Removed.endpoint"
+          "crossLanguageDefinitionId": "Versioning.Removed.endpoint",
+          "isExactName": false
         },
         {
           "$id": "82",
@@ -1115,9 +1270,11 @@
           "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.Removed.version"
+          "crossLanguageDefinitionId": "Versioning.Removed.version",
+          "isExactName": false
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.Removed",
       "apiVersions": [
@@ -1129,6 +1286,7 @@
           "$id": "84",
           "kind": "client",
           "name": "InterfaceV1",
+          "isExactName": false,
           "namespace": "Versioning.Removed",
           "doc": "This operation group should not be generated with latest version.",
           "methods": [
@@ -1136,6 +1294,7 @@
               "$id": "85",
               "kind": "basic",
               "name": "v1InInterface",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [
                 "v1",
@@ -1144,6 +1303,7 @@
               "operation": {
                 "$id": "86",
                 "name": "v1InInterface",
+                "isExactName": false,
                 "resourceName": "InterfaceV1",
                 "accessibility": "public",
                 "parameters": [
@@ -1162,10 +1322,32 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.contentType"
+                    "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "88",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "24"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "88",
+                    "$id": "89",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -1178,10 +1360,31 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.accept"
+                    "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "90",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "26"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
                   },
                   {
-                    "$id": "89",
+                    "$id": "91",
                     "kind": "body",
                     "name": "body",
                     "serializedName": "body",
@@ -1197,7 +1400,33 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.body"
+                    "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.body",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "92",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "28"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "body"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -1212,7 +1441,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "POST",
@@ -1225,60 +1459,18 @@
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
                 "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface",
-                "decorators": []
+                "decorators": [],
+                "namespace": "Versioning.Removed"
               },
               "parameters": [
                 {
-                  "$id": "90",
-                  "kind": "method",
-                  "name": "body",
-                  "serializedName": "body",
-                  "type": {
-                    "$ref": "28"
-                  },
-                  "location": "Body",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.body",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "92"
                 },
                 {
-                  "$id": "91",
-                  "kind": "method",
-                  "name": "contentType",
-                  "serializedName": "Content-Type",
-                  "doc": "Body parameter's content type. Known values are application/json",
-                  "type": {
-                    "$ref": "24"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.contentType",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "88"
                 },
                 {
-                  "$id": "92",
-                  "kind": "method",
-                  "name": "accept",
-                  "serializedName": "Accept",
-                  "type": {
-                    "$ref": "26"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.v1InInterface.accept",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
+                  "$ref": "90"
                 }
               ],
               "response": {
@@ -1312,7 +1504,8 @@
               "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Removed.endpoint"
+              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.endpoint",
+              "isExactName": false
             },
             {
               "$id": "95",
@@ -1339,9 +1532,11 @@
               "serverUrlTemplate": "{endpoint}/versioning/removed/api-version:{version}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Versioning.Removed.version"
+              "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1.version",
+              "isExactName": false
             }
           ],
+          "initializedBy": 0,
           "decorators": [],
           "crossLanguageDefinitionId": "Versioning.Removed.InterfaceV1",
           "apiVersions": [
@@ -1350,9 +1545,11 @@
           ],
           "parent": {
             "$ref": "51"
-          }
+          },
+          "isMultiServiceClient": false
         }
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

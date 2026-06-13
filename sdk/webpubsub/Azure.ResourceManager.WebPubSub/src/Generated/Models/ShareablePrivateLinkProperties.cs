@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.WebPubSub;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Describes the properties of a resource type that has been onboarded to private link service. </summary>
     public partial class ShareablePrivateLinkProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ShareablePrivateLinkProperties"/>. </summary>
         public ShareablePrivateLinkProperties()
@@ -53,24 +25,26 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of <see cref="ShareablePrivateLinkProperties"/>. </summary>
         /// <param name="description"> The description of the resource type that has been onboarded to private link service. </param>
         /// <param name="groupId"> The resource provider group id for the resource that has been onboarded to private link service. </param>
-        /// <param name="shareablePrivateLinkPropertiesType"> The resource provider type for the resource that has been onboarded to private link service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ShareablePrivateLinkProperties(string description, string groupId, string shareablePrivateLinkPropertiesType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="type"> The resource provider type for the resource that has been onboarded to private link service. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ShareablePrivateLinkProperties(string description, string groupId, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             GroupId = groupId;
-            ShareablePrivateLinkPropertiesType = shareablePrivateLinkPropertiesType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The description of the resource type that has been onboarded to private link service. </summary>
         [WirePath("description")]
         public string Description { get; set; }
+
         /// <summary> The resource provider group id for the resource that has been onboarded to private link service. </summary>
         [WirePath("groupId")]
         public string GroupId { get; set; }
+
         /// <summary> The resource provider type for the resource that has been onboarded to private link service. </summary>
         [WirePath("type")]
-        public string ShareablePrivateLinkPropertiesType { get; set; }
+        public string Type { get; set; }
     }
 }

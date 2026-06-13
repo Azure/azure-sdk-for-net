@@ -50,5 +50,7 @@ namespace Azure.Storage.Files.Shares
         public byte[] ContentMD5 => _response.Headers.TryGetValue("Content-MD5", out byte[] value) ? value : null;
         /// <summary> The number of bytes present in the response body. </summary>
         public long? ContentLength => _response.Headers.TryGetValue("Content-Length", out long? value) ? value : null;
+        /// <summary> Indicates the structured message body was accepted and mirrors back the message schema version and properties. </summary>
+        public string StructuredBodyType => _response.Headers.TryGetValue("x-ms-structured-body", out string value) ? value : null;
     }
 }

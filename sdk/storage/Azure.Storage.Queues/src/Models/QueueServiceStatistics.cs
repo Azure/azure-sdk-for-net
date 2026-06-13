@@ -15,6 +15,6 @@ namespace Azure.Storage.Queues.Models
         /// GeoReplication
         /// </summary>
         [CodeGenMember("GeoReplication")]
-        public QueueGeoReplication GeoReplication { get; internal set;  }
+        public QueueGeoReplication GeoReplication { get; internal set; }
     }
 }

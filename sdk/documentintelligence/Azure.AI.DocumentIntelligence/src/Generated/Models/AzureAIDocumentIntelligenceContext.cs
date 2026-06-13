@@ -11,7 +11,7 @@ namespace Azure.AI.DocumentIntelligence
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AddressValue))]
     [ModelReaderWriterBuildable(typeof(AnalyzeBatchDocumentsOptions))]
@@ -68,6 +68,10 @@ namespace Azure.AI.DocumentIntelligence
     [ModelReaderWriterBuildable(typeof(DocumentTypeDetails))]
     [ModelReaderWriterBuildable(typeof(DocumentWord))]
     [ModelReaderWriterBuildable(typeof(ModelCopyAuthorization))]
+    [ModelReaderWriterBuildable(typeof(PagedAnalyzeBatchOperation))]
+    [ModelReaderWriterBuildable(typeof(PagedDocumentClassifierDetails))]
+    [ModelReaderWriterBuildable(typeof(PagedDocumentIntelligenceOperationDetails))]
+    [ModelReaderWriterBuildable(typeof(PagedDocumentModelDetails))]
     [ModelReaderWriterBuildable(typeof(UnknownDocumentIntelligenceOperationDetails))]
     public partial class AzureAIDocumentIntelligenceContext : ModelReaderWriterContext
     {

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -56,6 +57,11 @@ namespace Azure.Data.AppConfiguration
         /// A dictionary of tags that can help identify what a configuration setting may be applicable for.
         /// </summary>
         Tags = 0x0080,
+
+        /// <summary>
+        /// The description of the configuration setting.
+        /// </summary>
+        Description = 0x0100,
 
         /// <summary>
         /// Allows for all the properties of a ConfigurationSetting to be retrieved.

@@ -8,7 +8,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The add participants succeeded event.
     /// </summary>
-    public class AddParticipantSucceeded: CallAutomationEventBase
+    public class AddParticipantSucceeded : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of AddParticipantSucceededEventInternal. </summary>
         internal AddParticipantSucceeded()

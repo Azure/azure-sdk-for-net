@@ -10,5 +10,5 @@ namespace Azure.Data.Tables.Models
     /// <summary> The Table Statistics for the service. </summary>
     [CodeGenModel("TableServiceStats")]
     public partial class TableServiceStatistics
-    {  }
+    { }
 }

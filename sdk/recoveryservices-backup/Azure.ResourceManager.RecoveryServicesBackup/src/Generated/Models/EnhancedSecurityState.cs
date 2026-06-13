@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct EnhancedSecurityState : IEquatable<EnhancedSecurityState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="EnhancedSecurityState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EnhancedSecurityState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnhancedSecurityState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public EnhancedSecurityState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static EnhancedSecurityState Invalid { get; } = new EnhancedSecurityState(InvalidValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static EnhancedSecurityState Enabled { get; } = new EnhancedSecurityState(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static EnhancedSecurityState Disabled { get; } = new EnhancedSecurityState(DisabledValue);
+
         /// <summary> Determines if two <see cref="EnhancedSecurityState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EnhancedSecurityState left, EnhancedSecurityState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EnhancedSecurityState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EnhancedSecurityState left, EnhancedSecurityState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EnhancedSecurityState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EnhancedSecurityState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EnhancedSecurityState(string value) => new EnhancedSecurityState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EnhancedSecurityState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EnhancedSecurityState?(string value) => value == null ? null : new EnhancedSecurityState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EnhancedSecurityState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EnhancedSecurityState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

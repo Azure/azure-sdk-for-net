@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DatabaseWatcher
 {
+    /// <summary></summary>
     public partial class DatabaseWatcherAlertRuleResource : IJsonModel<DatabaseWatcherAlertRuleData>
     {
-        private static DatabaseWatcherAlertRuleData s_dataDeserializationInstance;
-        private static DatabaseWatcherAlertRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DatabaseWatcherAlertRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DatabaseWatcherAlertRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DatabaseWatcherAlertRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DatabaseWatcherAlertRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseWatcherAlertRuleData>)Data).Write(writer, options);
 
-        DatabaseWatcherAlertRuleData IJsonModel<DatabaseWatcherAlertRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseWatcherAlertRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DatabaseWatcherAlertRuleData IJsonModel<DatabaseWatcherAlertRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DatabaseWatcherAlertRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseWatcherAlertRuleData>(Data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DatabaseWatcherAlertRuleData IPersistableModel<DatabaseWatcherAlertRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseWatcherAlertRuleData>(data, options, AzureResourceManagerDatabaseWatcherContext.Default);
 
-        string IPersistableModel<DatabaseWatcherAlertRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DatabaseWatcherAlertRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DatabaseWatcherAlertRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

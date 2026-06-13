@@ -1,15 +1,41 @@
 # Release History
 
-## 4.9.0-beta.1 (Unreleased)
+## 4.10.0-beta.2 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+### Bugs Fixed
+
+### Other Changes
+
+## 4.10.0-beta.1 (2026-06-04)
+
+### Features Added
+
+- Added an experimental PlatformManaged property on CertificatePolicy for Azure Key Vault internal usage. Any calls using this property will fail and it is not recommended to be used at this point. [#59537](https://github.com/Azure/azure-sdk-for-net/pull/59537)
+
+### Other Changes
+
+- Upgraded to API service version `2026-03-01-preview`
+
+## 4.9.0 (2026-05-26)
+
+### Features Added
+
+- Includes all changes from 4.9.0-beta.1.
+
+## 4.9.0-beta.1 (2026-04-01)
+
+### Features Added
+
 - Added `UniformResourceIdentifiers` and `IpAddresses` collection properties in `SubjectAlternativeNames`.
 - Added the `OutContentType` option to `DownloadCertificateOptions` and as a parameter for `CertificateClient.DownloadCertificate` and `CertificateClient.DownloadCertificateAsync` methods to specify the format in which the certificate will be returned.
 
 ### Bugs Fixed
+
+- Fixed challenge-based authentication to correctly parse tenant ID from DSTSv2 authority URIs.
 
 ### Other Changes
 
@@ -29,7 +55,7 @@ Thank you to our developer community members who helped to make the Key Vault cl
 
 ### Other Changes
 
-- The default service version is now "7.6". 
+- The default service version is now "7.6".
 
 ## 4.8.0-beta.1 (2025-04-08)
 

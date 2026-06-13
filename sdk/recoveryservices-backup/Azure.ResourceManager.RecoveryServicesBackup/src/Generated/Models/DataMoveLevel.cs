@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct DataMoveLevel : IEquatable<DataMoveLevel>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DataMoveLevel"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DataMoveLevel(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string VaultValue = "Vault";
         private const string ContainerValue = "Container";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMoveLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DataMoveLevel(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static DataMoveLevel Invalid { get; } = new DataMoveLevel(InvalidValue);
-        /// <summary> Vault. </summary>
+
+        /// <summary> Gets the Vault. </summary>
         public static DataMoveLevel Vault { get; } = new DataMoveLevel(VaultValue);
-        /// <summary> Container. </summary>
+
+        /// <summary> Gets the Container. </summary>
         public static DataMoveLevel Container { get; } = new DataMoveLevel(ContainerValue);
+
         /// <summary> Determines if two <see cref="DataMoveLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMoveLevel left, DataMoveLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMoveLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMoveLevel left, DataMoveLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMoveLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMoveLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMoveLevel(string value) => new DataMoveLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMoveLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMoveLevel?(string value) => value == null ? null : new DataMoveLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMoveLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMoveLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

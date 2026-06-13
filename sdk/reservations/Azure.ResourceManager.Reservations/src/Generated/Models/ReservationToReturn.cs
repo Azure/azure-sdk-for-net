@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Reservation to return. </summary>
     public partial class ReservationToReturn
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationToReturn"/>. </summary>
         public ReservationToReturn()
@@ -54,16 +25,17 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <summary> Initializes a new instance of <see cref="ReservationToReturn"/>. </summary>
         /// <param name="reservationId"> Fully qualified identifier of the reservation being returned. </param>
         /// <param name="quantity"> Quantity to be returned. Must be greater than zero. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationToReturn(ResourceIdentifier reservationId, int? quantity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationToReturn(ResourceIdentifier reservationId, int? quantity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReservationId = reservationId;
             Quantity = quantity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Fully qualified identifier of the reservation being returned. </summary>
         public ResourceIdentifier ReservationId { get; set; }
+
         /// <summary> Quantity to be returned. Must be greater than zero. </summary>
         public int? Quantity { get; set; }
     }

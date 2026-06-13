@@ -13,8 +13,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 {
     public class RackSkusTests : NetworkCloudManagementTestBase
     {
-        public RackSkusTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public RackSkusTests(bool isAsync) : base(isAsync) {}
+        public RackSkusTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public RackSkusTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [RecordedTest]

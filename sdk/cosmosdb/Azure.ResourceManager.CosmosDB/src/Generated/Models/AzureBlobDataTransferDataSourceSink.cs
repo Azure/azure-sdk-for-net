@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -16,36 +17,30 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="AzureBlobDataTransferDataSourceSink"/>. </summary>
         /// <param name="containerName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
-        public AzureBlobDataTransferDataSourceSink(string containerName)
+        public AzureBlobDataTransferDataSourceSink(string containerName) : base(DataTransferComponent.AzureBlobStorage)
         {
             Argument.AssertNotNull(containerName, nameof(containerName));
 
             ContainerName = containerName;
-            Component = DataTransferComponent.AzureBlobStorage;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="containerName"></param>
         /// <param name="endpointUri"></param>
-        internal AzureBlobDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> serializedAdditionalRawData, string containerName, Uri endpointUri) : base(component, serializedAdditionalRawData)
+        internal AzureBlobDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> additionalBinaryDataProperties, string containerName, string endpointUri) : base(component, additionalBinaryDataProperties)
         {
             ContainerName = containerName;
             EndpointUri = endpointUri;
-            Component = component;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureBlobDataTransferDataSourceSink"/> for deserialization. </summary>
-        internal AzureBlobDataTransferDataSourceSink()
-        {
-        }
-
-        /// <summary> Gets or sets the container name. </summary>
+        /// <summary> Gets or sets the ContainerName. </summary>
         [WirePath("containerName")]
         public string ContainerName { get; set; }
-        /// <summary> Gets or sets the endpoint uri. </summary>
+
+        /// <summary> Gets or sets the EndpointUri. </summary>
         [WirePath("endpointUrl")]
-        public Uri EndpointUri { get; set; }
+        public string EndpointUri { get; set; }
     }
 }

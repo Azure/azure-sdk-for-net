@@ -14,25 +14,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class RangeBasedItemLevelRestoreCriteria : ItemLevelRestoreCriteria
     {
         /// <summary> Initializes a new instance of <see cref="RangeBasedItemLevelRestoreCriteria"/>. </summary>
-        public RangeBasedItemLevelRestoreCriteria()
+        public RangeBasedItemLevelRestoreCriteria() : base("RangeBasedItemLevelRestoreCriteria")
         {
-            ObjectType = "RangeBasedItemLevelRestoreCriteria";
         }
 
         /// <summary> Initializes a new instance of <see cref="RangeBasedItemLevelRestoreCriteria"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="minMatchingValue"> minimum value for range prefix match. </param>
         /// <param name="maxMatchingValue"> maximum value for range prefix match. </param>
-        internal RangeBasedItemLevelRestoreCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string minMatchingValue, string maxMatchingValue) : base(objectType, serializedAdditionalRawData)
+        internal RangeBasedItemLevelRestoreCriteria(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string minMatchingValue, string maxMatchingValue) : base(objectType, additionalBinaryDataProperties)
         {
             MinMatchingValue = minMatchingValue;
             MaxMatchingValue = maxMatchingValue;
-            ObjectType = objectType ?? "RangeBasedItemLevelRestoreCriteria";
         }
 
         /// <summary> minimum value for range prefix match. </summary>
         public string MinMatchingValue { get; set; }
+
         /// <summary> maximum value for range prefix match. </summary>
         public string MaxMatchingValue { get; set; }
     }

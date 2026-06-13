@@ -29,7 +29,8 @@
             "$ref": "1"
           },
           "doc": "Version 1.0",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Server.Path.Multiple",
@@ -37,7 +38,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [],
@@ -47,12 +49,14 @@
       "$id": "4",
       "kind": "client",
       "name": "MultipleClient",
+      "isExactName": false,
       "namespace": "Server.Path.Multiple",
       "methods": [
         {
           "$id": "5",
           "kind": "basic",
           "name": "noOperationParams",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1.0"
@@ -60,6 +64,7 @@
           "operation": {
             "$id": "6",
             "name": "noOperationParams",
+            "isExactName": false,
             "resourceName": "Multiple",
             "accessibility": "public",
             "parameters": [],
@@ -69,7 +74,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -79,7 +85,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Path.Multiple.noOperationParams",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Path.Multiple"
           },
           "parameters": [],
           "response": {},
@@ -92,6 +99,7 @@
           "$id": "7",
           "kind": "basic",
           "name": "withOperationPathParam",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1.0"
@@ -99,6 +107,7 @@
           "operation": {
             "$id": "8",
             "name": "withOperationPathParam",
+            "isExactName": false,
             "resourceName": "Multiple",
             "accessibility": "public",
             "parameters": [
@@ -123,7 +132,32 @@
                 "scope": "Method",
                 "decorators": [],
                 "readOnly": false,
-                "crossLanguageDefinitionId": "Server.Path.Multiple.withOperationPathParam.keyword"
+                "crossLanguageDefinitionId": "Server.Path.Multiple.withOperationPathParam.keyword",
+                "methodParameterSegments": [
+                  {
+                    "$id": "11",
+                    "kind": "method",
+                    "name": "keyword",
+                    "serializedName": "keyword",
+                    "type": {
+                      "$id": "12",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Path",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Server.Path.Multiple.withOperationPathParam.keyword",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -132,7 +166,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -142,29 +177,12 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Server.Path.Multiple.withOperationPathParam",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Server.Path.Multiple"
           },
           "parameters": [
             {
-              "$id": "11",
-              "kind": "method",
-              "name": "keyword",
-              "serializedName": "keyword",
-              "type": {
-                "$id": "12",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Path",
-              "isApiVersion": false,
-              "optional": false,
-              "scope": "Method",
-              "crossLanguageDefinitionId": "Server.Path.Multiple.withOperationPathParam.keyword",
-              "readOnly": false,
-              "access": "public",
-              "decorators": []
+              "$ref": "11"
             }
           ],
           "response": {},
@@ -194,7 +212,8 @@
           "serverUrlTemplate": "{endpoint}/server/path/multiple/{apiVersion}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Server.Path.Multiple.endpoint"
+          "crossLanguageDefinitionId": "Server.Path.Multiple.endpoint",
+          "isExactName": false
         },
         {
           "$id": "15",
@@ -221,14 +240,17 @@
           "serverUrlTemplate": "{endpoint}/server/path/multiple/{apiVersion}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Server.Path.Multiple.apiVersion"
+          "crossLanguageDefinitionId": "Server.Path.Multiple.apiVersion",
+          "isExactName": false
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Server.Path.Multiple",
       "apiVersions": [
         "v1.0"
-      ]
+      ],
+      "isMultiServiceClient": false
     }
   ]
 }

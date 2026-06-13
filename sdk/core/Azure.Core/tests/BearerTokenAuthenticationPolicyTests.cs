@@ -1026,6 +1026,176 @@ namespace Azure.Core.Tests
             yield return new object[] { "multiple challenges", """PoP realm="", authorization_uri="https://login.microsoftonline.com/common/oauth2/authorize", client_id="00000003-0000-0000-c000-000000000000", nonce="ey==", Bearer realm="", authorization_uri="https://login.microsoftonline.com/common/oauth2/authorize", client_id="00000003-0000-0000-c000-000000000000", error_description="Continuous access evaluation resulted in challenge with result: InteractionRequired and code: TokenIssuedBeforeRevocationTimestamp", error="insufficient_claims", claims="eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwgInZhbHVlIjoiMTcyNjI1ODEyMiJ9fX0=" """, 200, """{"access_token":{"nbf":{"essential":true, "value":"1726258122"}}}""", "eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwgInZhbHVlIjoiMTcyNjI1ODEyMiJ9fX0=" };
         }
 
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_CrossHostRedirect_DoesNotReAttachAuthorization()
+        {
+            var callCount = 0;
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                Interlocked.Increment(ref callCount);
+                return new AccessToken("token", DateTimeOffset.UtcNow.AddHours(2));
+            }, IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+
+            // MockTransport stores the Request by reference, so the Authorization header that
+            // RedirectPolicy strips before the second hop also disappears from Requests[0].
+            // Capture each request's Authorization header as it is sent.
+            var observedAuth = new List<string>();
+            var responses = new Queue<MockResponse>(new[]
+            {
+                new MockResponse(302).WithHeader("Location", "https://attacker.example/path"),
+                new MockResponse(200),
+            });
+            var transport = CreateMockTransport(req =>
+            {
+                observedAuth.Add(req.Headers.TryGetValue("Authorization", out string value) ? value : null);
+                return responses.Dequeue();
+            });
+
+            var pipeline = new HttpPipeline(transport, new HttpPipelinePolicy[] { RedirectPolicy.Shared, policy });
+
+            await SendRequestAsync(pipeline, message =>
+            {
+                message.Request.Method = RequestMethod.Get;
+                message.Request.Uri.Reset(new Uri("https://example.com/"));
+                RedirectPolicy.SetAllowAutoRedirect(message, true);
+            });
+
+            Assert.AreEqual(2, transport.Requests.Count);
+            Assert.AreEqual("https://attacker.example/path", transport.Requests[1].Uri.ToString());
+
+            Assert.AreEqual("Bearer token", observedAuth[0],
+                "Authorization header must be attached on the original-host request.");
+            Assert.IsNull(observedAuth[1],
+                "Authorization header must not be re-attached after a cross-host redirect.");
+
+            Assert.AreEqual(1, callCount,
+                "Credential must not be re-called when the redirect target host differs from the authorized host.");
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_SameHostRedirect_PreservesAuthorization()
+        {
+            var callCount = 0;
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                Interlocked.Increment(ref callCount);
+                return new AccessToken("token", DateTimeOffset.UtcNow.AddHours(2));
+            }, IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+
+            var observedAuth = new List<string>();
+            var responses = new Queue<MockResponse>(new[]
+            {
+                new MockResponse(302).WithHeader("Location", "/redirected"),
+                new MockResponse(200),
+            });
+            var transport = CreateMockTransport(req =>
+            {
+                observedAuth.Add(req.Headers.TryGetValue("Authorization", out string value) ? value : null);
+                return responses.Dequeue();
+            });
+
+            var pipeline = new HttpPipeline(transport, new HttpPipelinePolicy[] { RedirectPolicy.Shared, policy });
+
+            await SendRequestAsync(pipeline, message =>
+            {
+                message.Request.Method = RequestMethod.Get;
+                message.Request.Uri.Reset(new Uri("https://example.com/original"));
+                RedirectPolicy.SetAllowAutoRedirect(message, true);
+            });
+
+            Assert.AreEqual(2, transport.Requests.Count);
+            Assert.AreEqual("https://example.com/redirected", transport.Requests[1].Uri.ToString());
+
+            Assert.AreEqual("Bearer token", observedAuth[0]);
+            Assert.AreEqual("Bearer token", observedAuth[1],
+                "Authorization header must be re-attached on same-host redirects.");
+
+            Assert.AreEqual(1, callCount, "Credential should be served from cache on same-host redirect.");
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_CaeChallengeOnOriginalHost_IsStillHandled()
+        {
+            var callCount = 0;
+            string lastClaims = null;
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                Interlocked.Increment(ref callCount);
+                lastClaims = r.Claims;
+                return new AccessToken(callCount.ToString(), DateTimeOffset.UtcNow.AddHours(2));
+            }, IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+            var transport = CreateMockTransport(
+                new MockResponse(401).WithHeader(
+                    "WWW-Authenticate",
+                    """Bearer realm="", authorization_uri="https://login.microsoftonline.com/common/oauth2/authorize", error="insufficient_claims", claims="eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk1In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjEwMDEyIn19fQ==" """),
+                new MockResponse(200));
+
+            var response = await SendGetRequest(transport, policy, uri: new Uri("https://example.com/Original"));
+
+            Assert.AreEqual(200, response.Status);
+            Assert.AreEqual(2, transport.Requests.Count);
+            Assert.AreEqual(2, callCount, "CAE handler should call the credential a second time with claims.");
+            Assert.IsNotNull(lastClaims, "Second credential call should carry decoded CAE claims.");
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_CaeChallengeFromRedirectTargetHost_IsSuppressed()
+        {
+            var callCount = 0;
+            string lastClaims = null;
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                Interlocked.Increment(ref callCount);
+                lastClaims = r.Claims;
+                return new AccessToken("token", DateTimeOffset.UtcNow.AddHours(2));
+            }, IsAsync);
+
+            var policy = new BearerTokenAuthenticationPolicy(credential, "scope");
+
+            var observedAuth = new List<string>();
+            var responses = new Queue<MockResponse>(new[]
+            {
+                new MockResponse(302).WithHeader("Location", "https://attacker.example/path"),
+                new MockResponse(401).WithHeader(
+                    "WWW-Authenticate",
+                    """Bearer realm="", authorization_uri="https://login.microsoftonline.com/common/oauth2/authorize", error="insufficient_claims", claims="eyJhY2Nlc3NfdG9rZW4iOnsibmJmIjp7ImVzc2VudGlhbCI6dHJ1ZSwidmFsdWUiOiIxNzI2MDc3NTk1In0sInhtc19jYWVlcnJvciI6eyJ2YWx1ZSI6IjEwMDEyIn19fQ==" """),
+            });
+            var transport = CreateMockTransport(req =>
+            {
+                observedAuth.Add(req.Headers.TryGetValue("Authorization", out string value) ? value : null);
+                return responses.Dequeue();
+            });
+
+            var pipeline = new HttpPipeline(transport, new HttpPipelinePolicy[] { RedirectPolicy.Shared, policy });
+
+            var message = await SendMessageRequestAsync(pipeline, msg =>
+            {
+                msg.Request.Method = RequestMethod.Get;
+                msg.Request.Uri.Reset(new Uri("https://example.com/"));
+                RedirectPolicy.SetAllowAutoRedirect(msg, true);
+            });
+
+            Assert.AreEqual(401, message.Response.Status,
+                "The 401 from a redirect-target host must surface to the caller without an authenticated retry.");
+            Assert.AreEqual(2, transport.Requests.Count,
+                "The CAE handler must not retry against a redirect-target host.");
+
+            Assert.AreEqual("Bearer token", observedAuth[0]);
+            Assert.IsNull(observedAuth[1],
+                "Authorization header must not be sent to a redirect-target host.");
+
+            Assert.AreEqual(1, callCount,
+                "Credential must not be re-called in response to a challenge from a redirect-target host.");
+            Assert.IsNull(lastClaims,
+                "Credential must not be called with CAE claims derived from a redirect-target host's challenge.");
+        }
+
         private class ChallengeBasedAuthenticationTestPolicy : BearerTokenAuthenticationPolicy
         {
             public string TenantId { get; private set; }
