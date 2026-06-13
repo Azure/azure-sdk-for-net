@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
@@ -231,8 +232,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <param name="origin">Origin of telemetry (Exporter vs Storage).</param>
         /// <param name="isAadEnabled">If AAD auth is enabled.</param>
         /// <param name="telemetrySchemaTypeCounter">Telemetry counter for tracking metrics.</param>
+        /// <param name="networkSdkStatsManager">Optional Network SDKStats manager for per-envelope tracking on 206 partial success responses.</param>
         /// <returns>TransmissionResult describing actions taken.</returns>
-        internal static TransmissionResult ProcessTransmissionResult(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, ConnectionVars connectionVars, TelemetryItemOrigin origin, bool isAadEnabled, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter = null)
+        internal static TransmissionResult ProcessTransmissionResult(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, ConnectionVars connectionVars, TelemetryItemOrigin origin, bool isAadEnabled, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter = null, NetworkSdkStatsManager? networkSdkStatsManager = null)
         {
             var result = CreateTransmissionResult();
 
@@ -268,7 +270,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (result.StatusCode == ResponseStatusCodes.PartialSuccess)
             {
-                HandlePartialSuccess(httpMessage, blobProvider, blob, origin, ref result, telemetrySchemaTypeCounter);
+                HandlePartialSuccess(httpMessage, blobProvider, blob, origin, ref result, telemetrySchemaTypeCounter, networkSdkStatsManager);
             }
             else if (IsRetriableStatus(result.StatusCode))
             {
@@ -357,7 +359,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        private static void HandlePartialSuccess(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, TelemetryItemOrigin origin, ref TransmissionResult result, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter)
+        private static void HandlePartialSuccess(HttpMessage httpMessage, PersistentBlobProvider? blobProvider, PersistentBlob? blob, TelemetryItemOrigin origin, ref TransmissionResult result, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, NetworkSdkStatsManager? networkSdkStatsManager)
         {
             if (!TryGetTrackResponse(httpMessage, out TrackResponse? trackResponse))
             {
@@ -365,6 +367,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             result.ItemsAccepted = trackResponse.ItemsAccepted;
+
+            // ASccepted envelopes within a 206 response are
+            // counted toward Request_Success_Count.
+            if (networkSdkStatsManager != null && trackResponse.ItemsAccepted is int acceptedCount && acceptedCount > 0)
+            {
+                networkSdkStatsManager.TrackPartialSuccessAccepted(httpMessage.Request.Uri.Host, acceptedCount);
+            }
 
             var (partialContent, successCounter, retryCounter, droppedCounter) = ProcessPartialSuccessWithCounting(trackResponse, httpMessage.Request.Content, telemetrySchemaTypeCounter);
 

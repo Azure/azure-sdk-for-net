@@ -8,6 +8,7 @@ using System.Timers;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using OpenTelemetry;
 using OpenTelemetry.PersistentStorage.Abstractions;
 
@@ -21,15 +22,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly TransmissionStateManager _transmissionStateManager;
         private readonly System.Timers.Timer _transmitFromStorageTimer;
         private readonly bool _isAadEnabled;
+        private readonly NetworkSdkStatsManager? _networkSdkStatsManager;
         private bool _disposed;
 
-        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled)
+        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled, NetworkSdkStatsManager? networkSdkStatsManager = null)
         {
             _applicationInsightsRestClient = applicationInsightsRestClient;
             _connectionVars = connectionVars;
             _isAadEnabled = isAadEnabled;
             _blobProvider = blobProvider;
             _transmissionStateManager = transmissionStateManager;
+            _networkSdkStatsManager = networkSdkStatsManager;
             _transmitFromStorageTimer = new System.Timers.Timer();
             _transmitFromStorageTimer.Elapsed += TransmitFromStorage;
             _transmitFromStorageTimer.AutoReset = true;
@@ -78,10 +81,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         }
 
                         using var httpMessage = _applicationInsightsRestClient.InternalTrackAsync(data, CancellationToken.None).Result;
+
                         var result = HttpPipelineHelper.IsSuccess(httpMessage, telemetrySchemaTypeCounter);
 
                         if (result == ExportResult.Success)
                         {
+                            _networkSdkStatsManager?.TrackSuccess(httpMessage.Request.Uri.Host);
+
                             _transmissionStateManager.ResetConsecutiveErrors();
                             _transmissionStateManager.CloseTransmission();
 
@@ -98,7 +104,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         else
                         {
                             _transmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
-                            HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetrySchemaTypeCounter);
+                            HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetrySchemaTypeCounter, _networkSdkStatsManager);
                             break;
                         }
                     }

@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
@@ -37,6 +38,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         private readonly IPlatform _platform;
 
         internal MeterProvider? _statsbeatMeterProvider;
+
+        internal MeterProvider? _networkSdkStatsMeterProvider;
+
+        /// <summary>
+        /// Records short-interval Network SDKStats (request success / failure / retry /
+        /// throttle / exception counts and request duration). Shares the SDK Stats
+        /// ingestion endpoint but uses a 15-minute export interval.
+        /// </summary>
+        internal NetworkSdkStatsManager? NetworkSdkStatsManager { get; }
 
         internal static Regex s_endpoint_pattern => new("^https?://(?:www\\.)?([^/.-]+)");
 
@@ -74,6 +84,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.GeneralStatsbeatInterval)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
+
+            // Short-interval (15 min) Network SDKStats use the same ingestion
+            // endpoint as long-interval stats but a separate MeterProvider so they can be
+            // flushed independently on the short cadence required by the SDKStats spec.
+            try
+            {
+                NetworkSdkStatsManager = new NetworkSdkStatsManager(connectionStringVars, platform);
+
+                _networkSdkStatsMeterProvider = Sdk.CreateMeterProviderBuilder()
+                    .AddMeter(StatsbeatConstants.NetworkSdkStatsMeterName)
+                    .AddReader(new PeriodicExportingMetricReader(
+                        new AzureMonitorMetricExporter(new AzureMonitorExporterOptions
+                        {
+                            DisableOfflineStorage = true,
+                            ConnectionString = _statsbeat_ConnectionString,
+                            EnableStatsbeat = false, // avoid recursive Statsbeat.
+                        }),
+                        StatsbeatConstants.NetworkStatsbeatInterval)
+                        { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                    .Build();
+            }
+            catch
+            {
+                // Network SDK stats are internal telemetry; do not surface initialization errors.
+            }
 
             // Wait 1 minute before sending the startup SDK stats attach signal to ensure we don't collect data from very short-lived apps that could spam the stats.
             // If the version information is not yet available, wait up to five minutes - it really should be done in one minute or less
@@ -246,6 +281,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         public void Dispose()
         {
             _statsbeatMeterProvider?.Dispose();
+            _networkSdkStatsMeterProvider?.Dispose();
         }
     }
 }
