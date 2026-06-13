@@ -1,20 +1,23 @@
 # Release History
 
-## 1.17.0-beta.1 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.16.1 (2026-06-09)
+## 1.17.0 (2026-06-09)
 
 ### Features Added
 
 - Make `Azure.ResourceManager.NetApp` AOT-compatible.
+- Added `FileAccessLogs` property to `CacheProperties`.
+
+### Breaking Changes
+
+- Removed `EntraIdConfig` property from `NetAppAccountData`. Use `Properties.AccountProperties.EntraId` or related EntraID properties instead.
+- Removed `LdapConfiguration` property from `NetAppAccountData`. LDAP configuration is now managed through `ActiveDirectories` collection.
+- Removed `NetAppActiveDirectoryConfigCollection` type from public API surface.
+
+### Other Changes
+
+- Updated API version from 2026-01-01 to 2026-04-01.
+- Updated TypeSpec to match latest Azure REST API specs.
 
 ## 1.16.0 (2026-05-01)
 
