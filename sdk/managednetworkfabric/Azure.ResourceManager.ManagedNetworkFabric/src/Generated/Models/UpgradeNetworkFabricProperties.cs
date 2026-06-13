@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="UpgradeNetworkFabricProperties"/>. </summary>
         /// <param name="version"> Specify the version. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="action"> Action to be performed while upgrading the fabric. </param>
-        internal UpgradeNetworkFabricProperties(string version, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkFabricUpgradeAction? action) : base(version, serializedAdditionalRawData)
+        internal UpgradeNetworkFabricProperties(string version, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkFabricUpgradeAction? action) : base(version, additionalBinaryDataProperties)
         {
             Action = action;
         }

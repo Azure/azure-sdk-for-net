@@ -160,6 +160,15 @@ interface Foos {
     void,
     ArmResponse<FooProvisioningState>
   >;
+
+  /** Get raw metadata (Record<unknown>) for a Foo resource. */
+  @get
+  @action("getMetadata")
+  getMetadata is ArmResourceActionSync<
+    Foo,
+    void,
+    ArmResponse<Record<unknown>>
+  >;
 }
 
 model FooActionRequest {

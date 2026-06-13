@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="../Azure.SdkAnalyzers/src/Azure.SdkAnalyzers.csproj" />
+  <Project Path="src/Azure.SdkAnalyzers.CodeFixes.csproj" />
+  <Project Path="tests/Azure.SdkAnalyzers.CodeFixes.Tests/Azure.SdkAnalyzers.CodeFixes.Tests.csproj" />
+</Solution>
