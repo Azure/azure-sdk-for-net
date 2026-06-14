@@ -2,12 +2,6 @@
 
 ## 1.4.0-beta.5 (2026-06-13)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
 
 - Upgraded dependent Azure.Core to 1.59.0.

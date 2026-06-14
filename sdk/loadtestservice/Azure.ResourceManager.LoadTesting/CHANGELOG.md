@@ -6,10 +6,6 @@
 
 - Upgraded API version to `2024-12-01-preview`.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
 
 - Upgraded dependent Azure.Core to 1.59.0.
