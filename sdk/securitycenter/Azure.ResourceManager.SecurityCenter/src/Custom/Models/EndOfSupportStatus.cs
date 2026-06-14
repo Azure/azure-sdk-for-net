@@ -1,0 +1,53 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+#pragma warning disable CS0169 // Compatibility extensible enums preserve generated backing fields.
+#pragma warning disable CS1591 // Hidden obsolete compatibility shims do not need public docs.
+
+using System;
+using System.ClientModel.Primitives;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.SecurityCenter;
+using Azure.ResourceManager.SecurityCenter.Mocking;
+using Azure.ResourceManager.SecurityCenter.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
+
+namespace Azure.ResourceManager.SecurityCenter.Models
+{
+    // The previous GA SDK generated this from softwareInventories preview swagger. That legacy
+    // swagger is not part of the current TypeSpec generation, so this hidden obsolete shim is
+    // retained only for ApiCompat.
+    [Obsolete("This API is no longer supported by the service.", false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public readonly partial struct EndOfSupportStatus : System.IEquatable<EndOfSupportStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EndOfSupportStatus(string value) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        public static EndOfSupportStatus NoLongerSupported { get { throw new NotSupportedException("This API is no longer supported by the service."); } }
+        public static EndOfSupportStatus None { get { throw new NotSupportedException("This API is no longer supported by the service."); } }
+        public static EndOfSupportStatus UpcomingNoLongerSupported { get { throw new NotSupportedException("This API is no longer supported by the service."); } }
+        public static EndOfSupportStatus UpcomingVersionNoLongerSupported { get { throw new NotSupportedException("This API is no longer supported by the service."); } }
+        public static EndOfSupportStatus VersionNoLongerSupported { get { throw new NotSupportedException("This API is no longer supported by the service."); } }
+        public bool Equals(EndOfSupportStatus other) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        public override bool Equals(object obj) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        public override int GetHashCode() { throw new NotSupportedException("This API is no longer supported by the service."); }
+        public static bool operator ==(EndOfSupportStatus left, EndOfSupportStatus right) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        public static implicit operator EndOfSupportStatus(string value) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        public static bool operator !=(EndOfSupportStatus left, EndOfSupportStatus right) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        public override string ToString() { throw new NotSupportedException("This API is no longer supported by the service."); }
+    }
+}

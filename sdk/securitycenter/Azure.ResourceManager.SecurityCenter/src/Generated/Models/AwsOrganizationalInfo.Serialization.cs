@@ -8,86 +8,38 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    [PersistableModelProxy(typeof(UnknownAwsOrganizationalData))]
-    public partial class AwsOrganizationalInfo : IUtf8JsonSerializable, IJsonModel<AwsOrganizationalInfo>
+    /// <summary>
+    /// The AWS organization data
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AwsOrganizationalDataMaster"/> and <see cref="AwsOrganizationalDataMember"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownAwsOrganizationalInfo))]
+    public abstract partial class AwsOrganizationalInfo : IJsonModel<AwsOrganizationalInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AwsOrganizationalInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<AwsOrganizationalInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual AwsOrganizationalInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            string format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
             {
-                throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support writing '{format}' format.");
-            }
-
-            writer.WritePropertyName("organizationMembershipType"u8);
-            writer.WriteStringValue(OrganizationMembershipType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        return DeserializeAwsOrganizationalInfo(document.RootElement, options);
                     }
-#endif
-                }
+                default:
+                    throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
-        AwsOrganizationalInfo IJsonModel<AwsOrganizationalInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAwsOrganizationalInfo(document.RootElement, options);
-        }
-
-        internal static AwsOrganizationalInfo DeserializeAwsOrganizationalInfo(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            if (element.TryGetProperty("organizationMembershipType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Member": return AwsOrganizationalDataMember.DeserializeAwsOrganizationalDataMember(element, options);
-                    case "Organization": return AwsOrganizationalDataMaster.DeserializeAwsOrganizationalDataMaster(element, options);
-                }
-            }
-            return UnknownAwsOrganizationalData.DeserializeUnknownAwsOrganizationalData(element, options);
-        }
-
-        BinaryData IPersistableModel<AwsOrganizationalInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
-
+            string format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -97,22 +49,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        AwsOrganizationalInfo IPersistableModel<AwsOrganizationalInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AwsOrganizationalInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
+            string format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAwsOrganizationalInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support reading '{options.Format}' format.");
+                throw new FormatException($"The model {nameof(AwsOrganizationalInfo)} does not support reading '{format}' format.");
             }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAwsOrganizationalInfo(document.RootElement, options);
         }
 
-        string IPersistableModel<AwsOrganizationalInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AwsOrganizationalInfo DeserializeAwsOrganizationalInfo(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("organizationMembershipType"u8, out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "Organization":
+                        return AwsOrganizationalDataMaster.DeserializeAwsOrganizationalDataMaster(element, options);
+                    case "Member":
+                        return AwsOrganizationalDataMember.DeserializeAwsOrganizationalDataMember(element, options);
+                }
+            }
+            return UnknownAwsOrganizationalInfo.DeserializeUnknownAwsOrganizationalInfo(element, options);
+        }
     }
 }

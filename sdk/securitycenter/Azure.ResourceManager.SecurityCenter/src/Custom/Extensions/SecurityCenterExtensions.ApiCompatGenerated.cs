@@ -1,0 +1,89 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+#pragma warning disable CA1822 // Compatibility instance members intentionally preserve previous signatures.
+#pragma warning disable CS1591 // Hidden obsolete compatibility shims do not need public docs.
+
+using System;
+using System.ClientModel.Primitives;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
+using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.SecurityCenter;
+using Azure.ResourceManager.SecurityCenter.Mocking;
+using Azure.ResourceManager.SecurityCenter.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
+
+namespace Azure.ResourceManager.SecurityCenter
+{
+    public static partial class SecurityCenterExtensions
+    {
+        [ForwardsClientCalls]
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<ExternalSecuritySolution> GetExternalSecuritySolution(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [ForwardsClientCalls]
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Task<Response<ExternalSecuritySolution>> GetExternalSecuritySolutionAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [ForwardsClientCalls]
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicy(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [ForwardsClientCalls]
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Task<Response<JitNetworkAccessPolicyResource>> GetJitNetworkAccessPolicyAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [ForwardsClientCalls]
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<SecurityCenterPricingResource> GetSecurityCenterPricing(this SubscriptionResource subscriptionResource, string pricingName, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [ForwardsClientCalls]
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Task<Response<SecurityCenterPricingResource>> GetSecurityCenterPricingAsync(this SubscriptionResource subscriptionResource, string pricingName, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [ForwardsClientCalls]
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<SqlVulnerabilityAssessmentBaselineRuleResource> GetSqlVulnerabilityAssessmentBaselineRule(this ArmClient client, ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [ForwardsClientCalls]
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Task<Response<SqlVulnerabilityAssessmentBaselineRuleResource>> GetSqlVulnerabilityAssessmentBaselineRuleAsync(this ArmClient client, ResourceIdentifier scope, string ruleId, Guid workspaceId, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [ForwardsClientCalls]
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<SqlVulnerabilityAssessmentScanResource> GetSqlVulnerabilityAssessmentScan(this ArmClient client, ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [ForwardsClientCalls]
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Task<Response<SqlVulnerabilityAssessmentScanResource>> GetSqlVulnerabilityAssessmentScanAsync(this ArmClient client, ResourceIdentifier scope, string scanId, Guid workspaceId, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [ForwardsClientCalls]
+        [Obsolete("This method is obsolete and will be removed in a future release. Please use GetGovernanceRule.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(this SubscriptionResource subscriptionResource, string ruleId, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [ForwardsClientCalls]
+        [Obsolete("This method is obsolete and will be removed in a future release. Please use GetGovernanceRuleAsync.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Task<Response<SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(this SubscriptionResource subscriptionResource, string ruleId, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [ForwardsClientCalls]
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<SecurityTopologyResource> GetTopology(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+        [ForwardsClientCalls]
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Task<Response<SecurityTopologyResource>> GetTopologyAsync(this ResourceGroupResource resourceGroupResource, AzureLocation ascLocation, string topologyResourceName, CancellationToken cancellationToken = default(CancellationToken)) { throw new NotSupportedException("This API is no longer supported by the service."); }
+    }
+}

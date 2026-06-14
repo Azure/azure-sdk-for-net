@@ -13,43 +13,11 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the RegulatoryComplianceControl data model.
-    /// Regulatory compliance control details and state
-    /// </summary>
+    /// <summary> Regulatory compliance control details and state. </summary>
     public partial class RegulatoryComplianceControlData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceControlData"/>. </summary>
         public RegulatoryComplianceControlData()
@@ -57,35 +25,55 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceControlData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> The description of the regulatory compliance control. </param>
-        /// <param name="state"> Aggregative state based on the control's supported assessments states. </param>
-        /// <param name="passedAssessments"> The number of supported regulatory compliance assessments of the given control with a passed state. </param>
-        /// <param name="failedAssessments"> The number of supported regulatory compliance assessments of the given control with a failed state. </param>
-        /// <param name="skippedAssessments"> The number of supported regulatory compliance assessments of the given control with a skipped state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegulatoryComplianceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, RegulatoryComplianceState? state, int? passedAssessments, int? failedAssessments, int? skippedAssessments, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Regulatory compliance control data. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RegulatoryComplianceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RegulatoryComplianceControlProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            State = state;
-            PassedAssessments = passedAssessments;
-            FailedAssessments = failedAssessments;
-            SkippedAssessments = skippedAssessments;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Regulatory compliance control data. </summary>
+        internal RegulatoryComplianceControlProperties Properties { get; set; }
+
         /// <summary> The description of the regulatory compliance control. </summary>
-        public string Description { get; }
-        /// <summary> Aggregative state based on the control's supported assessments states. </summary>
-        public RegulatoryComplianceState? State { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
         /// <summary> The number of supported regulatory compliance assessments of the given control with a passed state. </summary>
-        public int? PassedAssessments { get; }
+        public int? PassedAssessments
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PassedAssessments;
+            }
+        }
+
         /// <summary> The number of supported regulatory compliance assessments of the given control with a failed state. </summary>
-        public int? FailedAssessments { get; }
+        public int? FailedAssessments
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FailedAssessments;
+            }
+        }
+
         /// <summary> The number of supported regulatory compliance assessments of the given control with a skipped state. </summary>
-        public int? SkippedAssessments { get; }
+        public int? SkippedAssessments
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SkippedAssessments;
+            }
+        }
     }
 }

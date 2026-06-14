@@ -1,7 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+
+#pragma warning disable CS0618
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Tests
 {
+    [Ignore("Legacy Adaptive Application Control API is no longer present in current TypeSpec or Swagger; kept only as ApiCompat shim.")]
     internal class AdaptiveApplicationControlGroupTests : SecurityCenterManagementTestBase
     {
         private AdaptiveApplicationControlGroupCollection _adaptiveApplicationControlGroupCollection => GetAdaptiveApplicationControlGroupCollection().Result;
@@ -65,3 +68,4 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
     }
 }
+#pragma warning restore CS0618

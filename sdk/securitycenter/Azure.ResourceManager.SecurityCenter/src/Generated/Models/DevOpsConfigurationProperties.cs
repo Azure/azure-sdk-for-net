@@ -7,56 +7,28 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> DevOps Configuration properties. </summary>
     public partial class DevOpsConfigurationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevOpsConfigurationProperties"/>. </summary>
         public DevOpsConfigurationProperties()
         {
             TopLevelInventoryList = new ChangeTrackingList<string>();
+            Capabilities = new ChangeTrackingList<DevOpsCapability>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevOpsConfigurationProperties"/>. </summary>
-        /// <param name="provisioningStatusMessage"> Gets or sets resource status message. </param>
-        /// <param name="provisioningStatusUpdateTimeUtc"> Gets or sets time when resource was last checked. </param>
+        /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
+        /// <param name="provisioningStatusUpdateTimeUtc"> Gets the time when resource was last checked. </param>
         /// <param name="provisioningState">
         /// The provisioning state of the resource.
-        ///
         /// Pending - Provisioning pending.
         /// Failed - Provisioning failed.
         /// Succeeded - Successful provisioning.
@@ -71,8 +43,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// List of top-level inventory to select when AutoDiscovery is disabled.
         /// This field is ignored when AutoDiscovery is enabled.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsConfigurationProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdateTimeUtc, DevOpsProvisioningState? provisioningState, DevOpsAuthorization authorization, DevOpsAutoDiscovery? autoDiscovery, IList<string> topLevelInventoryList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="capabilities"> List of capabilities assigned to the DevOps configuration during the discovery process. </param>
+        /// <param name="agentlessConfiguration"> Details about Agentless configuration. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevOpsConfigurationProperties(string provisioningStatusMessage, DateTimeOffset? provisioningStatusUpdateTimeUtc, DevOpsProvisioningState? provisioningState, Authorization authorization, AutoDiscovery? autoDiscovery, IList<string> topLevelInventoryList, IReadOnlyList<DevOpsCapability> capabilities, AgentlessConfiguration agentlessConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningStatusMessage = provisioningStatusMessage;
             ProvisioningStatusUpdateTimeUtc = provisioningStatusUpdateTimeUtc;
@@ -80,16 +54,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Authorization = authorization;
             AutoDiscovery = autoDiscovery;
             TopLevelInventoryList = topLevelInventoryList;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Capabilities = capabilities;
+            AgentlessConfiguration = agentlessConfiguration;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets resource status message. </summary>
+        /// <summary> Gets the resource status message. </summary>
         public string ProvisioningStatusMessage { get; }
-        /// <summary> Gets or sets time when resource was last checked. </summary>
+
+        /// <summary> Gets the time when resource was last checked. </summary>
         public DateTimeOffset? ProvisioningStatusUpdateTimeUtc { get; }
+
         /// <summary>
         /// The provisioning state of the resource.
-        ///
         /// Pending - Provisioning pending.
         /// Failed - Provisioning failed.
         /// Succeeded - Successful provisioning.
@@ -98,31 +75,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// DeletionSuccess - Deletion successful.
         /// DeletionFailure - Deletion failure.
         /// </summary>
-        public DevOpsProvisioningState? ProvisioningState { get; set; }
+        public DevOpsProvisioningState? ProvisioningState { get; }
+
         /// <summary> Authorization payload. </summary>
-        internal DevOpsAuthorization Authorization { get; set; }
-        /// <summary>
-        /// Gets or sets one-time OAuth code to exchange for refresh and access tokens.
-        ///
-        /// Only used during PUT/PATCH operations. The secret is cleared during GET.
-        /// </summary>
-        public string AuthorizationCode
-        {
-            get => Authorization is null ? default : Authorization.Code;
-            set
-            {
-                if (Authorization is null)
-                    Authorization = new DevOpsAuthorization();
-                Authorization.Code = value;
-            }
-        }
+        internal Authorization Authorization { get; set; }
 
         /// <summary> AutoDiscovery states. </summary>
-        public DevOpsAutoDiscovery? AutoDiscovery { get; set; }
+        public AutoDiscovery? AutoDiscovery { get; set; }
+
         /// <summary>
         /// List of top-level inventory to select when AutoDiscovery is disabled.
         /// This field is ignored when AutoDiscovery is enabled.
         /// </summary>
         public IList<string> TopLevelInventoryList { get; }
+
+        /// <summary> List of capabilities assigned to the DevOps configuration during the discovery process. </summary>
+        public IReadOnlyList<DevOpsCapability> Capabilities { get; }
+
+        /// <summary> Details about Agentless configuration. </summary>
+        public AgentlessConfiguration AgentlessConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets one-time OAuth code to exchange for refresh and access tokens.
+        /// Only used during PUT/PATCH operations. The secret is cleared during GET.
+        /// </summary>
+        public string AuthorizationCode
+        {
+            get
+            {
+                return Authorization is null ? default : Authorization.Code;
+            }
+            set
+            {
+                if (Authorization is null)
+                {
+                    Authorization = new Authorization();
+                }
+                Authorization.Code = value;
+            }
+        }
     }
 }

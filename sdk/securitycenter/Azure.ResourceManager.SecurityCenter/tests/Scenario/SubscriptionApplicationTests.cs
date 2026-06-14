@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         private async Task<SubscriptionSecurityApplicationResource> CreateSubscriptionApplicationResource(string applicationId)
         {
-            SecurityApplicationData data = new SecurityApplicationData()
+            SecurityConnectorApplicationData data = new SecurityConnectorApplicationData()
             {
                 DisplayName = "GCP Admin's application",
                 Description = "An application on critical GCP recommendations",

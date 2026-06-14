@@ -13,87 +13,101 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the IotSecuritySolutionAnalyticsModel data model.
-    /// Security analytics of your IoT Security solution
-    /// </summary>
+    /// <summary> Security analytics of your IoT Security solution. </summary>
     public partial class IotSecuritySolutionAnalyticsModelData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelData"/>. </summary>
         public IotSecuritySolutionAnalyticsModelData()
         {
-            DevicesMetrics = new ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>();
-            TopAlertedDevices = new ChangeTrackingList<IotSecurityAlertedDevice>();
-            MostPrevalentDeviceAlerts = new ChangeTrackingList<IotSecurityDeviceAlert>();
-            MostPrevalentDeviceRecommendations = new ChangeTrackingList<IotSecurityDeviceRecommendation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="metrics"> Security analytics of your IoT Security solution. </param>
-        /// <param name="unhealthyDeviceCount"> Number of unhealthy devices within your IoT Security solution. </param>
-        /// <param name="devicesMetrics"> List of device metrics by the aggregation date. </param>
-        /// <param name="topAlertedDevices"> List of the 3 devices with the most alerts. </param>
-        /// <param name="mostPrevalentDeviceAlerts"> List of the 3 most prevalent device alerts. </param>
-        /// <param name="mostPrevalentDeviceRecommendations"> List of the 3 most prevalent device recommendations. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotSecuritySolutionAnalyticsModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IotSeverityMetrics metrics, long? unhealthyDeviceCount, IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> devicesMetrics, IList<IotSecurityAlertedDevice> topAlertedDevices, IList<IotSecurityDeviceAlert> mostPrevalentDeviceAlerts, IList<IotSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Security Solution  Aggregated Alert data. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotSecuritySolutionAnalyticsModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IoTSecuritySolutionAnalyticsModelProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Metrics = metrics;
-            UnhealthyDeviceCount = unhealthyDeviceCount;
-            DevicesMetrics = devicesMetrics;
-            TopAlertedDevices = topAlertedDevices;
-            MostPrevalentDeviceAlerts = mostPrevalentDeviceAlerts;
-            MostPrevalentDeviceRecommendations = mostPrevalentDeviceRecommendations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Security Solution  Aggregated Alert data. </summary>
+        internal IoTSecuritySolutionAnalyticsModelProperties Properties { get; set; }
+
         /// <summary> Security analytics of your IoT Security solution. </summary>
-        public IotSeverityMetrics Metrics { get; }
+        public IotSeverityMetrics Metrics
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Metrics;
+            }
+        }
+
         /// <summary> Number of unhealthy devices within your IoT Security solution. </summary>
-        public long? UnhealthyDeviceCount { get; }
+        public long? UnhealthyDeviceCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UnhealthyDeviceCount;
+            }
+        }
+
         /// <summary> List of device metrics by the aggregation date. </summary>
-        public IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> DevicesMetrics { get; }
+        public IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> DevicesMetrics
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTSecuritySolutionAnalyticsModelProperties();
+                }
+                return Properties.DevicesMetrics;
+            }
+        }
+
         /// <summary> List of the 3 devices with the most alerts. </summary>
-        public IList<IotSecurityAlertedDevice> TopAlertedDevices { get; }
+        public IList<IotSecurityAlertedDevice> TopAlertedDevices
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTSecuritySolutionAnalyticsModelProperties();
+                }
+                return Properties.TopAlertedDevices;
+            }
+        }
+
         /// <summary> List of the 3 most prevalent device alerts. </summary>
-        public IList<IotSecurityDeviceAlert> MostPrevalentDeviceAlerts { get; }
+        public IList<IotSecurityDeviceAlert> MostPrevalentDeviceAlerts
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTSecuritySolutionAnalyticsModelProperties();
+                }
+                return Properties.MostPrevalentDeviceAlerts;
+            }
+        }
+
         /// <summary> List of the 3 most prevalent device recommendations. </summary>
-        public IList<IotSecurityDeviceRecommendation> MostPrevalentDeviceRecommendations { get; }
+        public IList<IotSecurityDeviceRecommendation> MostPrevalentDeviceRecommendations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IoTSecuritySolutionAnalyticsModelProperties();
+                }
+                return Properties.MostPrevalentDeviceRecommendations;
+            }
+        }
     }
 }

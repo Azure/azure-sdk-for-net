@@ -3,24 +3,40 @@
 
 #nullable disable
 
+#pragma warning disable CA1822 // Compatibility instance members intentionally preserve previous signatures.
+#pragma warning disable CS1591 // Hidden obsolete compatibility shims do not need public docs.
+
+using System;
+using System.ClientModel.Primitives;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.SecurityCenter;
+using Azure.ResourceManager.SecurityCenter.Mocking;
+using Azure.ResourceManager.SecurityCenter.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The Defender for Servers GCP offering configurations. </summary>
-    [CodeGenSuppress("IsEnabled")]
-    public partial class DefenderForServersGcpOffering : SecurityCenterCloudOffering
+    public partial class DefenderForServersGcpOffering
     {
-        /// <summary> Is arc auto provisioning enabled. </summary>
-        public bool? IsArcAutoProvisioningEnabled
-        {
-            get => ArcAutoProvisioning is null ? default : ArcAutoProvisioning.IsEnabled;
-            set
-            {
-                if (ArcAutoProvisioning is null)
-                    ArcAutoProvisioning = new DefenderForServersGcpOfferingArcAutoProvisioning();
-                ArcAutoProvisioning.IsEnabled = value;
-            }
-        }
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DefenderForServersGcpOfferingVulnerabilityAssessmentAutoProvisioning VulnerabilityAssessmentAutoProvisioning { get { throw new NotSupportedException("This API is no longer supported by the service."); } set { throw new NotSupportedException("This API is no longer supported by the service."); } }
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AvailableSubPlanType? AvailableSubPlanType { get { throw new NotSupportedException("This API is no longer supported by the service."); } set { throw new NotSupportedException("This API is no longer supported by the service."); } }
+        [Obsolete("This API is no longer supported by the service.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool? IsArcAutoProvisioningEnabled { get { throw new NotSupportedException("This API is no longer supported by the service."); } set { throw new NotSupportedException("This API is no longer supported by the service."); } }
     }
 }

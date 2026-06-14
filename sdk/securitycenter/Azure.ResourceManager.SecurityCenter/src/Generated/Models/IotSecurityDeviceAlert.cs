@@ -13,60 +13,28 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> Statistical information about the number of alerts per alert type during last set number of days. </summary>
     public partial class IotSecurityDeviceAlert
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
-        /// <summary> Initializes a new instance of <see cref="IotSecurityDeviceAlert"/>. </summary>
-        public IotSecurityDeviceAlert()
-        {
-        }
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotSecurityDeviceAlert"/>. </summary>
         /// <param name="alertDisplayName"> Display name of the alert. </param>
         /// <param name="reportedSeverity"> Assessed Alert severity. </param>
         /// <param name="alertsCount"> Number of alerts raised for this alert type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotSecurityDeviceAlert(string alertDisplayName, ReportedSeverity? reportedSeverity, long? alertsCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotSecurityDeviceAlert(string alertDisplayName, ReportedSeverity? reportedSeverity, long? alertsCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertDisplayName = alertDisplayName;
             ReportedSeverity = reportedSeverity;
             AlertsCount = alertsCount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Display name of the alert. </summary>
         public string AlertDisplayName { get; }
+
         /// <summary> Assessed Alert severity. </summary>
         public ReportedSeverity? ReportedSeverity { get; }
+
         /// <summary> Number of alerts raised for this alert type. </summary>
         public long? AlertsCount { get; }
     }

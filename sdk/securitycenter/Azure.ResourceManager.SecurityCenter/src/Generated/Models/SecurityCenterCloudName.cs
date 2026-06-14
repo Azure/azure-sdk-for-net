@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,50 +13,37 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct SecurityCenterCloudName : IEquatable<SecurityCenterCloudName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SecurityCenterCloudName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SecurityCenterCloudName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string AzureValue = "Azure";
-        private const string AwsValue = "AWS";
-        private const string GcpValue = "GCP";
-        private const string GithubValue = "Github";
-        private const string AzureDevOpsValue = "AzureDevOps";
-        private const string GitLabValue = "GitLab";
-
         /// <summary> Azure. </summary>
-        public static SecurityCenterCloudName Azure { get; } = new SecurityCenterCloudName(AzureValue);
+        private const string AzureValue = "Azure";
         /// <summary> AWS. </summary>
-        public static SecurityCenterCloudName Aws { get; } = new SecurityCenterCloudName(AwsValue);
+        private const string AWSValue = "AWS";
         /// <summary> GCP. </summary>
-        public static SecurityCenterCloudName Gcp { get; } = new SecurityCenterCloudName(GcpValue);
+        private const string GCPValue = "GCP";
         /// <summary> Github. </summary>
-        public static SecurityCenterCloudName Github { get; } = new SecurityCenterCloudName(GithubValue);
+        private const string GithubValue = "Github";
         /// <summary> AzureDevOps. </summary>
-        public static SecurityCenterCloudName AzureDevOps { get; } = new SecurityCenterCloudName(AzureDevOpsValue);
+        private const string AzureDevOpsValue = "AzureDevOps";
         /// <summary> GitLab. </summary>
-        public static SecurityCenterCloudName GitLab { get; } = new SecurityCenterCloudName(GitLabValue);
-        /// <summary> Determines if two <see cref="SecurityCenterCloudName"/> values are the same. </summary>
-        public static bool operator ==(SecurityCenterCloudName left, SecurityCenterCloudName right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="SecurityCenterCloudName"/> values are not the same. </summary>
-        public static bool operator !=(SecurityCenterCloudName left, SecurityCenterCloudName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityCenterCloudName"/>. </summary>
-        public static implicit operator SecurityCenterCloudName(string value) => new SecurityCenterCloudName(value);
+        private const string GitLabValue = "GitLab";
+        /// <summary> DockerHub. </summary>
+        private const string DockerHubValue = "DockerHub";
+        /// <summary> JFrog. </summary>
+        private const string JFrogValue = "JFrog";
 
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SecurityCenterCloudName other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(SecurityCenterCloudName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        /// <summary> AWS. </summary>
+        public static SecurityCenterCloudName AWS { get; } = new SecurityCenterCloudName(AWSValue);
 
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        /// <summary> GCP. </summary>
+        public static SecurityCenterCloudName GCP { get; } = new SecurityCenterCloudName(GCPValue);
+
+        /// <summary> DockerHub. </summary>
+        public static SecurityCenterCloudName DockerHub { get; } = new SecurityCenterCloudName(DockerHubValue);
+
+        /// <summary> JFrog. </summary>
+        public static SecurityCenterCloudName JFrog { get; } = new SecurityCenterCloudName(JFrogValue);
+
+        /// <summary> Converts a string to a <see cref="SecurityCenterCloudName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityCenterCloudName?(string value) => value == null ? null : new SecurityCenterCloudName(value);
     }
 }

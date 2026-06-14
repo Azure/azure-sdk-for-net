@@ -1,7 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+
+#pragma warning disable CS0618
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Tests
 {
+    [Ignore("Software Inventory is still in Swagger but missing from current TypeSpec; skip until the spec gap is resolved.")]
     internal class SoftwareTests : SecurityCenterManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
@@ -41,3 +44,4 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
     }
 }
+#pragma warning restore CS0618

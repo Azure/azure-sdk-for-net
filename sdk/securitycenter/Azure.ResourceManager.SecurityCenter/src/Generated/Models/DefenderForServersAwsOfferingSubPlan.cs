@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> configuration for the servers offering subPlan. </summary>
     internal partial class DefenderForServersAwsOfferingSubPlan
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingSubPlan"/>. </summary>
         public DefenderForServersAwsOfferingSubPlan()
@@ -51,15 +22,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersAwsOfferingSubPlan"/>. </summary>
-        /// <param name="availableSubPlanType"> The available sub plans. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderForServersAwsOfferingSubPlan(AvailableSubPlanType? availableSubPlanType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="type"> The available sub plans. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DefenderForServersAwsOfferingSubPlan(SubPlan? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AvailableSubPlanType = availableSubPlanType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The available sub plans. </summary>
-        public AvailableSubPlanType? AvailableSubPlanType { get; set; }
+        public SubPlan? Type { get; set; }
     }
 }

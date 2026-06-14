@@ -12,62 +12,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// The security offering details
-    /// Please note <see cref="SecurityCenterCloudOffering"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CspmMonitorAwsOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="CspmMonitorGitLabOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="DefenderForDatabasesAwsOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForDevOpsAzureDevOpsOffering"/>, <see cref="DefenderForDevOpsGithubOffering"/>, <see cref="DefenderForDevOpsGitLabOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderForServersGcpOffering"/> and <see cref="InformationProtectionAwsOffering"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CspmMonitorAwsOffering"/>, <see cref="DefenderForContainersAwsOffering"/>, <see cref="DefenderForServersAwsOffering"/>, <see cref="DefenderFoDatabasesAwsOffering"/>, <see cref="CspmMonitorGcpOffering"/>, <see cref="DefenderForServersGcpOffering"/>, <see cref="DefenderForDatabasesGcpOffering"/>, <see cref="DefenderForContainersGcpOffering"/>, <see cref="CspmMonitorGithubOffering"/>, <see cref="CspmMonitorAzureDevOpsOffering"/>, <see cref="DefenderCspmAwsOffering"/>, <see cref="DefenderCspmGcpOffering"/>, <see cref="CspmMonitorGitLabOffering"/>, <see cref="CspmMonitorDockerHubOffering"/>, <see cref="DefenderForContainersDockerHubOffering"/>, <see cref="DefenderCspmDockerHubOffering"/>, <see cref="CspmMonitorJFrogOffering"/>, <see cref="DefenderForContainersJFrogOffering"/>, and <see cref="DefenderCspmJFrogOffering"/>.
     /// </summary>
     public abstract partial class SecurityCenterCloudOffering
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenterCloudOffering"/>. </summary>
-        protected SecurityCenterCloudOffering()
+        /// <param name="offeringType"> The type of the security offering. </param>
+        private protected SecurityCenterCloudOffering(OfferingType offeringType)
         {
+            OfferingType = offeringType;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenterCloudOffering"/>. </summary>
         /// <param name="offeringType"> The type of the security offering. </param>
         /// <param name="description"> The offering description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityCenterCloudOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityCenterCloudOffering(OfferingType offeringType, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OfferingType = offeringType;
             Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of the security offering. </summary>
         internal OfferingType OfferingType { get; set; }
-        /// <summary> The offering description. </summary>
-        public string Description { get; }
     }
 }

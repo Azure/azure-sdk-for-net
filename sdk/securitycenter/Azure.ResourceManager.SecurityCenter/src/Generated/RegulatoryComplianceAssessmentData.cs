@@ -13,43 +13,11 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary>
-    /// A class representing the RegulatoryComplianceAssessment data model.
-    /// Regulatory compliance assessment details and state
-    /// </summary>
+    /// <summary> Regulatory compliance assessment details and state. </summary>
     public partial class RegulatoryComplianceAssessmentData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceAssessmentData"/>. </summary>
         public RegulatoryComplianceAssessmentData()
@@ -57,47 +25,82 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceAssessmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> The description of the regulatory compliance assessment. </param>
-        /// <param name="assessmentType"> The expected type of assessment contained in the AssessmentDetailsLink. </param>
-        /// <param name="assessmentDetailsLink"> Link to more detailed assessment results data. The response type will be according to the assessmentType field. </param>
-        /// <param name="state"> Aggregative state based on the assessment's scanned resources states. </param>
-        /// <param name="passedResources"> The given assessment's related resources count with passed state. </param>
-        /// <param name="failedResources"> The given assessment's related resources count with failed state. </param>
-        /// <param name="skippedResources"> The given assessment's related resources count with skipped state. </param>
-        /// <param name="unsupportedResources"> The given assessment's related resources count with unsupported state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegulatoryComplianceAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string assessmentType, string assessmentDetailsLink, RegulatoryComplianceState? state, int? passedResources, int? failedResources, int? skippedResources, int? unsupportedResources, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Regulatory compliance assessment data. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RegulatoryComplianceAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RegulatoryComplianceAssessmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            AssessmentType = assessmentType;
-            AssessmentDetailsLink = assessmentDetailsLink;
-            State = state;
-            PassedResources = passedResources;
-            FailedResources = failedResources;
-            SkippedResources = skippedResources;
-            UnsupportedResources = unsupportedResources;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Regulatory compliance assessment data. </summary>
+        internal RegulatoryComplianceAssessmentProperties Properties { get; set; }
+
         /// <summary> The description of the regulatory compliance assessment. </summary>
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+        }
+
         /// <summary> The expected type of assessment contained in the AssessmentDetailsLink. </summary>
-        public string AssessmentType { get; }
+        public string AssessmentType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssessmentType;
+            }
+        }
+
         /// <summary> Link to more detailed assessment results data. The response type will be according to the assessmentType field. </summary>
-        public string AssessmentDetailsLink { get; }
-        /// <summary> Aggregative state based on the assessment's scanned resources states. </summary>
-        public RegulatoryComplianceState? State { get; set; }
+        public string AssessmentDetailsLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssessmentDetailsLink;
+            }
+        }
+
         /// <summary> The given assessment's related resources count with passed state. </summary>
-        public int? PassedResources { get; }
+        public int? PassedResources
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PassedResources;
+            }
+        }
+
         /// <summary> The given assessment's related resources count with failed state. </summary>
-        public int? FailedResources { get; }
+        public int? FailedResources
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FailedResources;
+            }
+        }
+
         /// <summary> The given assessment's related resources count with skipped state. </summary>
-        public int? SkippedResources { get; }
+        public int? SkippedResources
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SkippedResources;
+            }
+        }
+
         /// <summary> The given assessment's related resources count with unsupported state. </summary>
-        public int? UnsupportedResources { get; }
+        public int? UnsupportedResources
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UnsupportedResources;
+            }
+        }
     }
 }

@@ -1,7 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+
+#pragma warning disable CS0618
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -14,6 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.SecurityCenter.Tests
 {
+    [Ignore("Legacy Custom Entity Store Assignment API is no longer present in current TypeSpec or Swagger; kept only as ApiCompat shim.")]
     internal class CustomEntityStoreAssignmentTests : SecurityCenterManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
@@ -51,3 +54,4 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
         }
     }
 }
+#pragma warning restore CS0618
