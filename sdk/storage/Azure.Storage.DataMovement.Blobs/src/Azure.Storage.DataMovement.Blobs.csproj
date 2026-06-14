@@ -38,7 +38,6 @@
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared\Storage" />
-    <Compile Include="$(AzureStorageSharedSources)StorageExtensions.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)UriExtensions.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)PooledMemoryStream.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)StreamExtensions.cs" LinkBase="Shared" />
@@ -58,5 +57,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageBlobsSharedSources)BlobErrors.cs" LinkBase="Shared\Blobs" />
+    <Compile Include="$(AzureStorageBlobsSharedSources)BlobHelpers.cs" LinkBase="Shared\Blobs" />
   </ItemGroup>
 </Project>
