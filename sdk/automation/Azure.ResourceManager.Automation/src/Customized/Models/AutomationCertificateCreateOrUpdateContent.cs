@@ -3,11 +3,37 @@
 
 using System;
 using System.ComponentModel;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
+    // Compatibility shim preserving GA flattened setters and the obsolete BinaryData thumbprint property.
+    [CodeGenSuppress("Description")]
+    [CodeGenSuppress("ThumbprintString")]
+    [CodeGenSuppress("IsExportable")]
     public partial class AutomationCertificateCreateOrUpdateContent
     {
+        /// <summary> Gets or sets the description of the certificate. </summary>
+        public string Description
+        {
+            get => Properties.Description;
+            set => Properties.Description = value;
+        }
+
+        /// <summary> Gets or sets the thumbprint of the certificate. </summary>
+        public string ThumbprintString
+        {
+            get => Properties.ThumbprintString;
+            set => Properties.ThumbprintString = value;
+        }
+
+        /// <summary> Gets or sets the is exportable flag of the certificate. </summary>
+        public bool? IsExportable
+        {
+            get => Properties.IsExportable;
+            set => Properties.IsExportable = value;
+        }
+
         /// <summary>
         /// Gets or sets the thumbprint of the certificate.
         /// <para>

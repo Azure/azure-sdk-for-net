@@ -7,121 +7,233 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary>
-    /// A class representing the AutomationModule data model.
-    /// Definition of the module type.
-    /// </summary>
+    /// <summary> Definition of the module type. </summary>
     public partial class AutomationModuleData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationModuleData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public AutomationModuleData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationModuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Gets or sets the etag of the resource. </param>
-        /// <param name="isGlobal"> Gets or sets the isGlobal flag of the module. </param>
-        /// <param name="version"> Gets or sets the version of the module. </param>
-        /// <param name="sizeInBytes"> Gets or sets the size in bytes of the module. </param>
-        /// <param name="activityCount"> Gets or sets the activity count of the module. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state of the module. </param>
-        /// <param name="contentLink"> Gets or sets the contentLink of the module. </param>
-        /// <param name="error"> Gets or sets the error info of the module. </param>
-        /// <param name="createdOn"> Gets or sets the creation time. </param>
-        /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
-        /// <param name="description"> Gets or sets the description. </param>
-        /// <param name="isComposite"> Gets or sets type of module, if its composite or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationModuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, bool? isGlobal, string version, long? sizeInBytes, int? activityCount, ModuleProvisioningState? provisioningState, AutomationContentLink contentLink, AutomationModuleErrorInfo error, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, bool? isComposite, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Gets or sets the module properties. </param>
+        /// <param name="eTag"> Gets or sets the etag of the resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationModuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ModuleProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            IsGlobal = isGlobal;
-            Version = version;
-            SizeInBytes = sizeInBytes;
-            ActivityCount = activityCount;
-            ProvisioningState = provisioningState;
-            ContentLink = contentLink;
-            Error = error;
-            CreatedOn = createdOn;
-            LastModifiedOn = lastModifiedOn;
-            Description = description;
-            IsComposite = isComposite;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutomationModuleData"/> for deserialization. </summary>
-        internal AutomationModuleData()
-        {
-        }
+        /// <summary> Gets or sets the module properties. </summary>
+        internal ModuleProperties Properties { get; set; }
 
         /// <summary> Gets or sets the etag of the resource. </summary>
         public ETag? ETag { get; set; }
+
         /// <summary> Gets or sets the isGlobal flag of the module. </summary>
-        public bool? IsGlobal { get; set; }
+        public bool? IsGlobal
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsGlobal;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ModuleProperties();
+                }
+                Properties.IsGlobal = value;
+            }
+        }
+
         /// <summary> Gets or sets the version of the module. </summary>
-        public string Version { get; set; }
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ModuleProperties();
+                }
+                Properties.Version = value;
+            }
+        }
+
         /// <summary> Gets or sets the size in bytes of the module. </summary>
-        public long? SizeInBytes { get; set; }
+        public long? SizeInBytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SizeInBytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ModuleProperties();
+                }
+                Properties.SizeInBytes = value;
+            }
+        }
+
         /// <summary> Gets or sets the activity count of the module. </summary>
-        public int? ActivityCount { get; set; }
+        public int? ActivityCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActivityCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ModuleProperties();
+                }
+                Properties.ActivityCount = value;
+            }
+        }
+
         /// <summary> Gets or sets the provisioning state of the module. </summary>
-        public ModuleProvisioningState? ProvisioningState { get; set; }
+        public ModuleProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ModuleProperties();
+                }
+                Properties.ProvisioningState = value;
+            }
+        }
+
         /// <summary> Gets or sets the contentLink of the module. </summary>
-        public AutomationContentLink ContentLink { get; set; }
+        public AutomationContentLink ContentLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContentLink;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ModuleProperties();
+                }
+                Properties.ContentLink = value;
+            }
+        }
+
         /// <summary> Gets or sets the error info of the module. </summary>
-        public AutomationModuleErrorInfo Error { get; set; }
+        public AutomationModuleErrorInfo Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ModuleProperties();
+                }
+                Properties.Error = value;
+            }
+        }
+
         /// <summary> Gets or sets the creation time. </summary>
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ModuleProperties();
+                }
+                Properties.CreatedOn = value;
+            }
+        }
+
         /// <summary> Gets or sets the last modified time. </summary>
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ModuleProperties();
+                }
+                Properties.LastModifiedOn = value;
+            }
+        }
+
         /// <summary> Gets or sets the description. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ModuleProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Gets or sets type of module, if its composite or not. </summary>
-        public bool? IsComposite { get; set; }
+        public bool? IsComposite
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsComposite;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ModuleProperties();
+                }
+                Properties.IsComposite = value;
+            }
+        }
     }
 }

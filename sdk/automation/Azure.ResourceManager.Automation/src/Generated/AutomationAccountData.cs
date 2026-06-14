@@ -7,126 +7,210 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary>
-    /// A class representing the AutomationAccount data model.
-    /// Definition of the automation account type.
-    /// </summary>
+    /// <summary> Definition of the automation account type. </summary>
     public partial class AutomationAccountData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationAccountData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public AutomationAccountData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<AutomationPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> Gets or sets the etag of the resource. </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <param name="sku"> Gets or sets the SKU of account. </param>
-        /// <param name="lastModifiedBy"> Gets or sets the last modified by. </param>
-        /// <param name="state"> Gets status of account. </param>
-        /// <param name="createdOn"> Gets the creation time. </param>
-        /// <param name="lastModifiedOn"> Gets the last modified time. </param>
-        /// <param name="description"> Gets or sets the description. </param>
-        /// <param name="encryption"> Encryption properties for the automation account. </param>
-        /// <param name="privateEndpointConnections"> List of Automation operations supported by the Automation resource provider. </param>
-        /// <param name="isPublicNetworkAccessAllowed"> Indicates whether traffic on the non-ARM endpoint (Webhook/Agent) is allowed from the public internet. </param>
-        /// <param name="isLocalAuthDisabled"> Indicates whether requests using non-AAD authentication are blocked. </param>
-        /// <param name="automationHybridServiceUri"> URL of automation hybrid service which is used for hybrid worker on-boarding. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, AutomationSku sku, string lastModifiedBy, AutomationAccountState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, AutomationEncryptionProperties encryption, IList<AutomationPrivateEndpointConnectionData> privateEndpointConnections, bool? isPublicNetworkAccessAllowed, bool? isLocalAuthDisabled, Uri automationHybridServiceUri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Gets or sets the automation account properties. </param>
+        /// <param name="eTag"> Gets or sets the etag of the resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AutomationAccountProperties properties, ETag? eTag, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
+            Properties = properties;
+            ETag = eTag;
             Identity = identity;
-            Sku = sku;
-            LastModifiedBy = lastModifiedBy;
-            State = state;
-            CreatedOn = createdOn;
-            LastModifiedOn = lastModifiedOn;
-            Description = description;
-            Encryption = encryption;
-            PrivateEndpointConnections = privateEndpointConnections;
-            IsPublicNetworkAccessAllowed = isPublicNetworkAccessAllowed;
-            IsLocalAuthDisabled = isLocalAuthDisabled;
-            AutomationHybridServiceUri = automationHybridServiceUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutomationAccountData"/> for deserialization. </summary>
-        internal AutomationAccountData()
-        {
-        }
+        /// <summary> Gets or sets the automation account properties. </summary>
+        internal AutomationAccountProperties Properties { get; set; }
 
         /// <summary> Gets or sets the etag of the resource. </summary>
         public ETag? ETag { get; set; }
-        /// <summary> Identity for the resource. </summary>
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Gets or sets the SKU of account. </summary>
-        public AutomationSku Sku { get; set; }
+        public AutomationSku Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationAccountProperties();
+                }
+                Properties.Sku = value;
+            }
+        }
+
         /// <summary> Gets or sets the last modified by. </summary>
-        public string LastModifiedBy { get; set; }
+        public string LastModifiedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedBy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationAccountProperties();
+                }
+                Properties.LastModifiedBy = value;
+            }
+        }
+
         /// <summary> Gets status of account. </summary>
-        public AutomationAccountState? State { get; }
+        public AutomationAccountState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
         /// <summary> Gets the creation time. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Gets the last modified time. </summary>
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+        }
+
         /// <summary> Gets or sets the description. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationAccountProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Encryption properties for the automation account. </summary>
-        public AutomationEncryptionProperties Encryption { get; set; }
+        public AutomationEncryptionProperties Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationAccountProperties();
+                }
+                Properties.Encryption = value;
+            }
+        }
+
         /// <summary> List of Automation operations supported by the Automation resource provider. </summary>
-        public IList<AutomationPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IList<AutomationPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationAccountProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
         /// <summary> Indicates whether traffic on the non-ARM endpoint (Webhook/Agent) is allowed from the public internet. </summary>
-        public bool? IsPublicNetworkAccessAllowed { get; set; }
+        public bool? IsPublicNetworkAccessAllowed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPublicNetworkAccessAllowed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationAccountProperties();
+                }
+                Properties.IsPublicNetworkAccessAllowed = value;
+            }
+        }
+
         /// <summary> Indicates whether requests using non-AAD authentication are blocked. </summary>
-        public bool? IsLocalAuthDisabled { get; set; }
+        public bool? IsLocalAuthDisabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsLocalAuthDisabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationAccountProperties();
+                }
+                Properties.IsLocalAuthDisabled = value;
+            }
+        }
+
         /// <summary> URL of automation hybrid service which is used for hybrid worker on-boarding. </summary>
-        public Uri AutomationHybridServiceUri { get; set; }
+        public Uri AutomationHybridServiceUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutomationHybridServiceUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AutomationAccountProperties();
+                }
+                Properties.AutomationHybridServiceUri = value;
+            }
+        }
     }
 }

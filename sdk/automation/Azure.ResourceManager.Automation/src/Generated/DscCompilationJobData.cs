@@ -13,128 +13,201 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary>
-    /// A class representing the DscCompilationJob data model.
-    /// Definition of the Dsc Compilation job.
-    /// </summary>
+    /// <summary> SDK-only compatibility definition for the previous Dsc Compilation job API. </summary>
     public partial class DscCompilationJobData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DscCompilationJobData"/>. </summary>
         public DscCompilationJobData()
         {
-            Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DscCompilationJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="configuration"> Gets or sets the configuration. </param>
-        /// <param name="startedBy"> Gets the compilation job started by. </param>
-        /// <param name="jobId"> Gets the id of the job. </param>
-        /// <param name="createdOn"> Gets the creation time of the job. </param>
-        /// <param name="provisioningState"> The current provisioning state of the job. </param>
-        /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
-        /// <param name="status"> Gets or sets the status of the job. </param>
-        /// <param name="statusDetails"> Gets or sets the status details of the job. </param>
-        /// <param name="startOn"> Gets the start time of the job. </param>
-        /// <param name="endOn"> Gets the end time of the job. </param>
-        /// <param name="exception"> Gets the exception of the job. </param>
-        /// <param name="lastModifiedOn"> Gets the last modified time of the job. </param>
-        /// <param name="lastStatusModifiedOn"> Gets the last status modified time of the job. </param>
-        /// <param name="parameters"> Gets or sets the parameters of the job. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DscCompilationJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DscConfigurationAssociationProperty configuration, string startedBy, Guid? jobId, DateTimeOffset? createdOn, JobProvisioningState? provisioningState, string runOn, AutomationJobStatus? status, string statusDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IDictionary<string, string> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DscCompilationJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DscCompilationJobProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Configuration = configuration;
-            StartedBy = startedBy;
-            JobId = jobId;
-            CreatedOn = createdOn;
-            ProvisioningState = provisioningState;
-            RunOn = runOn;
-            Status = status;
-            StatusDetails = statusDetails;
-            StartOn = startOn;
-            EndOn = endOn;
-            Exception = exception;
-            LastModifiedOn = lastModifiedOn;
-            LastStatusModifiedOn = lastStatusModifiedOn;
-            Parameters = parameters;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the configuration. </summary>
-        internal DscConfigurationAssociationProperty Configuration { get; set; }
-        /// <summary> Gets or sets the name of the Dsc configuration. </summary>
-        public string ConfigurationName
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal DscCompilationJobProperties Properties { get; set; }
+
+        /// <summary> Gets the compilation job started by. </summary>
+        public string StartedBy
         {
-            get => Configuration is null ? default : Configuration.ConfigurationName;
-            set
+            get
             {
-                if (Configuration is null)
-                    Configuration = new DscConfigurationAssociationProperty();
-                Configuration.ConfigurationName = value;
+                return Properties is null ? default : Properties.StartedBy;
             }
         }
 
-        /// <summary> Gets the compilation job started by. </summary>
-        public string StartedBy { get; }
         /// <summary> Gets the id of the job. </summary>
-        public Guid? JobId { get; }
+        public Guid? JobId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.JobId;
+            }
+        }
+
         /// <summary> Gets the creation time of the job. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The current provisioning state of the job. </summary>
-        public JobProvisioningState? ProvisioningState { get; set; }
+        public JobProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscCompilationJobProperties();
+                }
+                Properties.ProvisioningState = value;
+            }
+        }
+
         /// <summary> Gets or sets the runOn which specifies the group name where the job is to be executed. </summary>
-        public string RunOn { get; set; }
+        public string RunOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscCompilationJobProperties();
+                }
+                Properties.RunOn = value;
+            }
+        }
+
         /// <summary> Gets or sets the status of the job. </summary>
-        public AutomationJobStatus? Status { get; set; }
+        public AutomationJobStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscCompilationJobProperties();
+                }
+                Properties.Status = value;
+            }
+        }
+
         /// <summary> Gets or sets the status details of the job. </summary>
-        public string StatusDetails { get; set; }
+        public string StatusDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscCompilationJobProperties();
+                }
+                Properties.StatusDetails = value;
+            }
+        }
+
         /// <summary> Gets the start time of the job. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+        }
+
         /// <summary> Gets the end time of the job. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+        }
+
         /// <summary> Gets the exception of the job. </summary>
-        public string Exception { get; }
+        public string Exception
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Exception;
+            }
+        }
+
         /// <summary> Gets the last modified time of the job. </summary>
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+        }
+
         /// <summary> Gets the last status modified time of the job. </summary>
-        public DateTimeOffset? LastStatusModifiedOn { get; }
+        public DateTimeOffset? LastStatusModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastStatusModifiedOn;
+            }
+        }
+
         /// <summary> Gets or sets the parameters of the job. </summary>
-        public IDictionary<string, string> Parameters { get; }
+        public IDictionary<string, string> Parameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscCompilationJobProperties();
+                }
+                return Properties.Parameters;
+            }
+        }
+
+        /// <summary> Gets or sets the name of the Dsc configuration. </summary>
+        public string ConfigurationName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DscCompilationJobProperties();
+                }
+                Properties.ConfigurationName = value;
+            }
+        }
     }
 }

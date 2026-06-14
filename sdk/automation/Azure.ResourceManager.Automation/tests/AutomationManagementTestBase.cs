@@ -19,13 +19,20 @@ namespace Azure.ResourceManager.Automation.Tests
         protected AutomationManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
-            JsonPathSanitizers.Add("$..uri");
+            ConfigureRecording();
         }
 
         protected AutomationManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            ConfigureRecording();
+        }
+
+        private void ConfigureRecording()
+        {
             JsonPathSanitizers.Add("$..uri");
+            IgnoredQueryParameters.Add("api-version");
+            LegacyExcludedHeaders.Add("Accept");
         }
 
         [SetUp]
