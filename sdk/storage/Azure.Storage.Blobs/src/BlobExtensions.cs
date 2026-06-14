@@ -232,68 +232,41 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToAccountInfo
-        internal static AccountInfo ToAccountInfo(this ResponseWithHeaders<ServiceGetAccountInfoHeaders> response)
+
+        internal enum AccountInfoHeaderType
         {
-            if (response == null)
-            {
-                return null;
-            }
-            return new AccountInfo
-            {
-                SkuName = response.Headers.SkuName.GetValueOrDefault(),
-                AccountKind = response.Headers.AccountKind.GetValueOrDefault(),
-                IsHierarchicalNamespaceEnabled = response.Headers.IsHierarchicalNamespaceEnabled.GetValueOrDefault()
-            };
+            Service,
+            Blob,
+            Container
         }
 
-        internal static AccountInfo ToAccountInfo(this ResponseWithHeaders<BlobGetAccountInfoHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-            return new AccountInfo
-            {
-                SkuName = response.Headers.SkuName.GetValueOrDefault(),
-                AccountKind = response.Headers.AccountKind.GetValueOrDefault(),
-                IsHierarchicalNamespaceEnabled = response.Headers.IsHierarchicalNamespaceEnabled.GetValueOrDefault()
-            };
-        }
-
-        internal static AccountInfo ToAccountInfo(this ResponseWithHeaders<ContainerGetAccountInfoHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-            return new AccountInfo
-            {
-                SkuName = response.Headers.SkuName.GetValueOrDefault(),
-                AccountKind = response.Headers.AccountKind.GetValueOrDefault(),
-                IsHierarchicalNamespaceEnabled = response.Headers.IsHierarchicalNamespaceEnabled.GetValueOrDefault()
-            };
-        }
-        #endregion
-
-        #region ToBlobContainerInfo
-        internal static BlobContainerInfo ToBlobContainerInfo(this ResponseWithHeaders<ContainerCreateHeaders> response)
+        internal static AccountInfo ToAccountInfo(this Response response, AccountInfoHeaderType headerType)
         {
             if (response == null)
             {
                 return null;
             }
 
-            return new BlobContainerInfo
+            switch (headerType)
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault()
-            };
+                case AccountInfoHeaderType.Service:
+                case AccountInfoHeaderType.Blob:
+                case AccountInfoHeaderType.Container:
+                    return new AccountInfo
+                    {
+                        SkuName = response.Headers.TryGetValue("x-ms-sku-name", out string skuName) ? skuName.ToSkuName() : default,
+                        AccountKind = response.Headers.TryGetValue("x-ms-account-kind", out string accountKind) ? accountKind.ToAccountKind() : default,
+                        IsHierarchicalNamespaceEnabled = response.Headers.TryGetValue("x-ms-is-hns-enabled", out bool? isHns) && isHns.GetValueOrDefault()
+                    };
+                default:
+                    throw new ArgumentException($"Unknown {nameof(AccountInfoHeaderType)}: {headerType}", nameof(headerType));
+            }
         }
         #endregion
 
         #region ToBlobContainerAccessPolicy
         internal static BlobContainerAccessPolicy ToBlobContainerAccessPolicy(
-            this ResponseWithHeaders<IReadOnlyList<BlobSignedIdentifier>, ContainerGetAccessPolicyHeaders> response)
+            this Response<BlobSignedIdentifiers> response)
         {
             if (response == null)
             {
@@ -302,236 +275,239 @@ namespace Azure.Storage.Blobs
 
             return new BlobContainerAccessPolicy
             {
-                BlobPublicAccess = response.Headers.BlobPublicAccess.GetValueOrDefault(),
+                BlobPublicAccess = response.GetRawResponse().Headers.TryGetValue("x-ms-blob-public-access", out string publicAccess) ? publicAccess.ToPublicAccessType() : default,
                 ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                SignedIdentifiers = response.Value.ToList()
+                LastModified = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                SignedIdentifiers = response.Value.Items.ToList()
             };
         }
         #endregion
 
         #region ToBlobContainerInfo
-        internal static BlobContainerInfo ToBlobContainerInfo(this ResponseWithHeaders<ContainerSetAccessPolicyHeaders> response)
+
+        internal enum BlobContainerInfoHeaderType
         {
-            if (response == null)
-            {
-                return null;
-            }
-            return new BlobContainerInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-            };
+            Create,
+            SetAccessPolicy,
+            SetMetadata
         }
 
-        internal static BlobContainerInfo ToBlobContainerInfo(this ResponseWithHeaders<ContainerSetMetadataHeaders> response)
+        internal static BlobContainerInfo ToBlobContainerInfo(this Response response, BlobContainerInfoHeaderType headerType)
         {
             if (response == null)
             {
                 return null;
             }
-            return new BlobContainerInfo
+
+            switch (headerType)
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-            };
+                case BlobContainerInfoHeaderType.Create:
+                case BlobContainerInfoHeaderType.SetAccessPolicy:
+                case BlobContainerInfoHeaderType.SetMetadata:
+                    return new BlobContainerInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                    };
+                default:
+                    throw new ArgumentException($"Unknown {nameof(BlobContainerInfoHeaderType)}: {headerType}", nameof(headerType));
+            }
         }
         #endregion
 
         #region ToBlobContentInfo
-        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<AppendBlobCreateHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
 
-            return new BlobContentInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ContentHash = response.Headers.ContentMD5,
-                VersionId = response.Headers.VersionId,
-                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                EncryptionScope = response.Headers.EncryptionScope,
-                //BlobSequenceNumber is not returned by Append Blobs.
-            };
+        internal enum BlobContentInfoHeaderType
+        {
+            AppendBlobCreate,
+            PageBlobCreate,
+            BlockBlobCommitBlockList,
+            BlockBlobPutBlobFromUrl,
+            BlockBlobUpload
         }
 
-        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<PageBlobCreateHeaders> response)
+        internal static BlobContentInfo ToBlobContentInfo(this Response response, BlobContentInfoHeaderType headerType)
         {
             if (response == null)
             {
                 return null;
             }
 
-            return new BlobContentInfo
+            switch (headerType)
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ContentHash = response.Headers.ContentMD5,
-                VersionId = response.Headers.VersionId,
-                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                EncryptionScope = response.Headers.EncryptionScope,
-                // Create Page Blob does not return BlobSequenceNumber.
-            };
+                case BlobContentInfoHeaderType.AppendBlobCreate:
+                case BlobContentInfoHeaderType.PageBlobCreate:
+                case BlobContentInfoHeaderType.BlockBlobCommitBlockList:
+                case BlobContentInfoHeaderType.BlockBlobPutBlobFromUrl:
+                case BlobContentInfoHeaderType.BlockBlobUpload:
+                    return new BlobContentInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                        ContentHash = response.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out byte[] contentMD5) ? contentMD5 : null,
+                        VersionId = response.Headers.TryGetValue(Constants.HeaderNames.VersionId, out string versionId) ? versionId : null,
+                        EncryptionKeySha256 = response.Headers.TryGetValue("x-ms-encryption-key-sha256", out string encryptionKeySha256) ? encryptionKeySha256 : null,
+                        EncryptionScope = response.Headers.TryGetValue("x-ms-encryption-scope", out string encryptionScope) ? encryptionScope : null,
+                    };
+                default:
+                    throw new ArgumentException($"Unknown {nameof(BlobContentInfoHeaderType)}: {headerType}", nameof(headerType));
+            }
         }
         #endregion
 
         #region ToBlobAppendInfo
-        internal static BlobAppendInfo ToBlobAppendInfo(this ResponseWithHeaders<AppendBlobAppendBlockHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
 
-            return new BlobAppendInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ContentHash = response.Headers.ContentMD5,
-                ContentCrc64 = response.Headers.XMsContentCrc64,
-                BlobAppendOffset = response.Headers.BlobAppendOffset,
-                BlobCommittedBlockCount = response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),
-                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
-                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                EncryptionScope = response.Headers.EncryptionScope
-            };
+        internal enum BlobAppendInfoHeaderType
+        {
+            AppendBlock,
+            AppendBlockFromUrl
         }
 
-        internal static BlobAppendInfo ToBlobAppendInfo(this ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders> response)
+        internal static BlobAppendInfo ToBlobAppendInfo(this Response response, BlobAppendInfoHeaderType headerType)
         {
             if (response == null)
             {
                 return null;
             }
 
-            return new BlobAppendInfo
+            switch (headerType)
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ContentHash = response.Headers.ContentMD5,
-                ContentCrc64 = response.Headers.XMsContentCrc64,
-                BlobAppendOffset = response.Headers.BlobAppendOffset,
-                BlobCommittedBlockCount = response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),
-                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
-                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                EncryptionScope = response.Headers.EncryptionScope
-            };
+                case BlobAppendInfoHeaderType.AppendBlock:
+                case BlobAppendInfoHeaderType.AppendBlockFromUrl:
+                    return new BlobAppendInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                        ContentHash = response.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out byte[] contentMD5) ? contentMD5 : null,
+                        ContentCrc64 = response.Headers.TryGetValue("x-ms-content-crc64", out byte[] crc64) ? crc64 : null,
+                        BlobAppendOffset = response.Headers.TryGetValue("x-ms-blob-append-offset", out string appendOffset) ? appendOffset : null,
+                        BlobCommittedBlockCount = response.Headers.TryGetValue("x-ms-blob-committed-block-count", out int? blockCount) ? blockCount.GetValueOrDefault() : default,
+                        IsServerEncrypted = response.Headers.TryGetValue("x-ms-request-server-encrypted", out bool? serverEncrypted) && serverEncrypted.GetValueOrDefault(),
+                        EncryptionKeySha256 = response.Headers.TryGetValue("x-ms-encryption-key-sha256", out string encryptionKeySha256) ? encryptionKeySha256 : null,
+                        EncryptionScope = response.Headers.TryGetValue("x-ms-encryption-scope", out string encryptionScope) ? encryptionScope : null
+                    };
+                default:
+                    throw new ArgumentException($"Unknown {nameof(BlobAppendInfoHeaderType)}: {headerType}", nameof(headerType));
+            }
         }
         #endregion
 
         #region ToBlobInfo
-        internal static BlobInfo ToBlobInfo(this ResponseWithHeaders<AppendBlobSealHeaders> response)
+
+        internal enum BlobInfoHeaderType
+        {
+            AppendBlobSeal,
+            SetMetadata,
+            SetHttpHeaders
+        }
+
+        internal static BlobInfo ToBlobInfo(this Response response, BlobInfoHeaderType headerType)
         {
             if (response == null)
             {
                 return null;
             }
 
-            return new BlobInfo
+            switch (headerType)
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                // BlobSequenceNumber does not apply to Append Blobs.
-                // Seal Append Blob does not return VersionId
-            };
+                case BlobInfoHeaderType.AppendBlobSeal:
+                case BlobInfoHeaderType.SetHttpHeaders:
+                    // AppendBlobSeal and SetHttpHeaders do not return BlobSequenceNumber or VersionId.
+                    return new BlobInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                    };
+                case BlobInfoHeaderType.SetMetadata:
+                    // SetMetadata returns VersionId but not BlobSequenceNumber.
+                    return new BlobInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string smdValue) ? new ETag(smdValue) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? smdLastModified) ? smdLastModified.GetValueOrDefault() : default,
+                        VersionId = response.Headers.TryGetValue(Constants.HeaderNames.VersionId, out string versionId) ? versionId : null
+                    };
+                default:
+                    throw new ArgumentException($"Unknown {nameof(BlobInfoHeaderType)}: {headerType}", nameof(headerType));
+            }
         }
         #endregion
 
         #region ToPageInfo
-        internal static PageInfo ToPageInfo(this ResponseWithHeaders<PageBlobUploadPagesHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
 
-            return new PageInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ContentHash = response.Headers.ContentMD5,
-                ContentCrc64 = response.Headers.XMsContentCrc64,
-                BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault(),
-                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                EncryptionScope = response.Headers.EncryptionScope
-            };
+        internal enum PageInfoHeaderType
+        {
+            UploadPages,
+            ClearPages,
+            UploadPagesFromUrl
         }
 
-        internal static PageInfo ToPageInfo(this ResponseWithHeaders<PageBlobClearPagesHeaders> response)
+        internal static PageInfo ToPageInfo(this Response response, PageInfoHeaderType headerType)
         {
             if (response == null)
             {
                 return null;
             }
 
-            return new PageInfo
+            switch (headerType)
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ContentHash = response.Headers.ContentMD5,
-                ContentCrc64 = response.Headers.XMsContentCrc64,
-                BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault(),
-                // Clear Page Blob does not return EncryptionKeySha256.
-                // Clear Page Blob does not return EncryptionScope.
-            };
-        }
-
-        internal static PageInfo ToPageInfo(this ResponseWithHeaders<PageBlobUploadPagesFromURLHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
+                case PageInfoHeaderType.UploadPages:
+                case PageInfoHeaderType.UploadPagesFromUrl:
+                    return new PageInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                        ContentHash = response.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out byte[] contentMD5) ? contentMD5 : null,
+                        ContentCrc64 = response.Headers.TryGetValue("x-ms-content-crc64", out byte[] crc64) ? crc64 : null,
+                        BlobSequenceNumber = response.Headers.TryGetValue("x-ms-blob-sequence-number", out long? seqNum) ? seqNum.GetValueOrDefault() : default,
+                        EncryptionKeySha256 = response.Headers.TryGetValue("x-ms-encryption-key-sha256", out string encryptionKeySha256) ? encryptionKeySha256 : null,
+                        EncryptionScope = response.Headers.TryGetValue("x-ms-encryption-scope", out string encryptionScope) ? encryptionScope : null
+                    };
+                case PageInfoHeaderType.ClearPages:
+                    // Clear Page Blob does not return EncryptionKeySha256 or EncryptionScope.
+                    return new PageInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string clearValue) ? new ETag(clearValue) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? clearLastModified) ? clearLastModified.GetValueOrDefault() : default,
+                        ContentHash = response.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out byte[] clearContentMD5) ? clearContentMD5 : null,
+                        ContentCrc64 = response.Headers.TryGetValue("x-ms-content-crc64", out byte[] clearCrc64) ? clearCrc64 : null,
+                        BlobSequenceNumber = response.Headers.TryGetValue("x-ms-blob-sequence-number", out long? clearSeqNum) ? clearSeqNum.GetValueOrDefault() : default,
+                    };
+                default:
+                    throw new ArgumentException($"Unknown {nameof(PageInfoHeaderType)}: {headerType}", nameof(headerType));
             }
-
-            return new PageInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ContentHash = response.Headers.ContentMD5,
-                ContentCrc64 = response.Headers.XMsContentCrc64,
-                BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault(),
-                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                EncryptionScope = response.Headers.EncryptionScope
-            };
         }
         #endregion
 
         #region ToPageRangesInfo
-        internal static PageRangesInfo ToPageRangesInfo(this ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
 
-            return new PageRangesInfo
-            {
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                BlobContentLength = response.Headers.BlobContentLength.GetValueOrDefault(),
-                PageRanges = response.Value.PageRange.Select(r => r.ToHttpRange()).ToList(),
-                ClearRanges = response.Value.ClearRange.Select(r => r.ToHttpRange()).ToList(),
-            };
+        internal enum PageRangesInfoHeaderType
+        {
+            GetPageRanges,
+            GetPageRangesDiff
         }
 
-        internal static PageRangesInfo ToPageRangesInfo(this ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response)
+        internal static PageRangesInfo ToPageRangesInfo(this Response<PageList> response, PageRangesInfoHeaderType headerType)
         {
             if (response == null)
             {
                 return null;
             }
 
-            return new PageRangesInfo
+            switch (headerType)
             {
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                BlobContentLength = response.Headers.BlobContentLength.GetValueOrDefault(),
-                PageRanges = response.Value.PageRange.Select(r => r.ToHttpRange()).ToList(),
-                ClearRanges = response.Value.ClearRange.Select(r => r.ToHttpRange()).ToList(),
-            };
+                case PageRangesInfoHeaderType.GetPageRanges:
+                case PageRangesInfoHeaderType.GetPageRangesDiff:
+                    return new PageRangesInfo
+                    {
+                        LastModified = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                        ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                        BlobContentLength = response.GetRawResponse().Headers.TryGetValue("x-ms-blob-content-length", out long? blobContentLength) ? blobContentLength.GetValueOrDefault() : default,
+                        PageRanges = response.Value.PageRange.Select(r => r.ToHttpRange()).ToList(),
+                        ClearRanges = response.Value.ClearRange.Select(r => r.ToHttpRange()).ToList(),
+                    };
+                default:
+                    throw new ArgumentException($"Unknown {nameof(PageRangesInfoHeaderType)}: {headerType}", nameof(headerType));
+            }
         }
 
         internal static HttpRange ToHttpRange(this PageRange pageRange)
@@ -547,132 +523,71 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToPageBlobInfo
-        internal static PageBlobInfo ToPageBlobInfo(this ResponseWithHeaders<PageBlobResizeHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
 
-            return new PageBlobInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault()
-            };
+        internal enum PageBlobInfoHeaderType
+        {
+            Resize,
+            UpdateSequenceNumber
         }
 
-        internal static PageBlobInfo ToPageBlobInfo(this ResponseWithHeaders<PageBlobUpdateSequenceNumberHeaders> response)
+        internal static PageBlobInfo ToPageBlobInfo(this Response response, PageBlobInfoHeaderType headerType)
         {
             if (response == null)
             {
                 return null;
             }
 
-            return new PageBlobInfo
+            switch (headerType)
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault()
-            };
+                case PageBlobInfoHeaderType.Resize:
+                case PageBlobInfoHeaderType.UpdateSequenceNumber:
+                    return new PageBlobInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                        BlobSequenceNumber = response.Headers.TryGetValue("x-ms-blob-sequence-number", out long? seqNum) ? seqNum.GetValueOrDefault() : default
+                    };
+                default:
+                    throw new ArgumentException($"Unknown {nameof(PageBlobInfoHeaderType)}: {headerType}", nameof(headerType));
+            }
         }
         #endregion
 
         #region ToBlockInfo
-        internal static BlockInfo ToBlockInfo(this ResponseWithHeaders<BlockBlobStageBlockHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
 
-            return new BlockInfo
-            {
-                ContentHash = response.Headers.ContentMD5,
-                ContentCrc64 = response.Headers.XMsContentCrc64,
-                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                EncryptionScope = response.Headers.EncryptionScope
-            };
+        internal enum BlockInfoHeaderType
+        {
+            StageBlock,
+            StageBlockFromUrl
         }
 
-        internal static BlockInfo ToBlockInfo(this ResponseWithHeaders<BlockBlobStageBlockFromURLHeaders> response)
+        internal static BlockInfo ToBlockInfo(this Response response, BlockInfoHeaderType headerType)
         {
             if (response == null)
             {
                 return null;
             }
 
-            return new BlockInfo
+            switch (headerType)
             {
-                ContentHash = response.Headers.ContentMD5,
-                ContentCrc64 = response.Headers.XMsContentCrc64,
-                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                EncryptionScope = response.Headers.EncryptionScope
-            };
+                case BlockInfoHeaderType.StageBlock:
+                case BlockInfoHeaderType.StageBlockFromUrl:
+                    return new BlockInfo
+                    {
+                        ContentHash = response.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out byte[] contentMD5) ? contentMD5 : null,
+                        ContentCrc64 = response.Headers.TryGetValue("x-ms-content-crc64", out byte[] crc64) ? crc64 : null,
+                        EncryptionKeySha256 = response.Headers.TryGetValue("x-ms-encryption-key-sha256", out string encryptionKeySha256) ? encryptionKeySha256 : null,
+                        EncryptionScope = response.Headers.TryGetValue("x-ms-encryption-scope", out string encryptionScope) ? encryptionScope : null
+                    };
+                default:
+                    throw new ArgumentException($"Unknown {nameof(BlockInfoHeaderType)}: {headerType}", nameof(headerType));
+            }
         }
         #endregion
 
-        #region ToBlobContentInfo
-        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<BlockBlobCommitBlockListHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            return new BlobContentInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ContentHash = response.Headers.ContentMD5,
-                VersionId = response.Headers.VersionId,
-                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                EncryptionScope = response.Headers.EncryptionScope,
-                // BlobSequenceNumber does not apply to Block Blobs.
-            };
-        }
-
-        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<BlockBlobPutBlobFromUrlHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            return new BlobContentInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ContentHash = response.Headers.ContentMD5,
-                VersionId = response.Headers.VersionId,
-                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                EncryptionScope = response.Headers.EncryptionScope,
-                // BlobSequenceNumber is not returned for Block Blobs.
-            };
-        }
-
-        internal static BlobContentInfo ToBlobContentInfo(this ResponseWithHeaders<BlockBlobUploadHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            return new BlobContentInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                ContentHash = response.Headers.ContentMD5,
-                VersionId = response.Headers.VersionId,
-                EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                EncryptionScope = response.Headers.EncryptionScope,
-                // BlobSequenceNumber is not returned for Block Blobs.
-            };
-        }
-        #endregion
-
+        // ToBlobContentInfo overloads for BlockBlob are consolidated into the main ToBlobContentInfo method above.
         #region ToBlockList
-        internal static BlockList ToBlockList(this ResponseWithHeaders<BlockList, BlockBlobGetBlockListHeaders> response)
+        internal static BlockList ToBlockList(this Response<BlockList> response)
         {
             if (response == null)
             {
@@ -681,10 +596,10 @@ namespace Azure.Storage.Blobs
 
             return new BlockList
             {
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                LastModified = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
                 ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                ContentType = response.Headers.ContentType,
-                BlobContentLength = response.Headers.BlobContentLength.GetValueOrDefault(),
+                ContentType = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ContentType, out string contentType) ? contentType : null,
+                BlobContentLength = response.GetRawResponse().Headers.TryGetValue("x-ms-blob-content-length", out long? blobContentLength) ? blobContentLength.GetValueOrDefault() : default,
                 CommittedBlocks = response.Value.CommittedBlocks,
                 UncommittedBlocks = response.Value.UncommittedBlocks
             };
@@ -692,7 +607,7 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToBlobSnapshotInfo
-        internal static BlobSnapshotInfo ToBlobSnapshotInfo(this ResponseWithHeaders<BlobCreateSnapshotHeaders> response)
+        internal static BlobSnapshotInfo ToBlobSnapshotInfo(this Response response)
         {
             if (response == null)
             {
@@ -701,243 +616,213 @@ namespace Azure.Storage.Blobs
 
             return new BlobSnapshotInfo
             {
-                Snapshot = response.Headers.Snapshot,
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                VersionId = response.Headers.VersionId,
-                IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault()
+                Snapshot = response.Headers.TryGetValue("x-ms-snapshot", out string snapshot) ? snapshot : null,
+                ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                VersionId = response.Headers.TryGetValue(Constants.HeaderNames.VersionId, out string versionId) ? versionId : null,
+                IsServerEncrypted = response.Headers.TryGetValue("x-ms-request-server-encrypted", out bool? serverEncrypted) && serverEncrypted.GetValueOrDefault()
             };
         }
         #endregion
 
-        #region ToBlobInfo
-        internal static BlobInfo ToBlobInfo(this ResponseWithHeaders<BlobSetMetadataHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            return new BlobInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                // Set Metadata does not return BlobSequenceNumber.
-                VersionId = response.Headers.VersionId
-            };
-        }
-
-        internal static BlobInfo ToBlobInfo(this ResponseWithHeaders<BlobSetHttpHeadersHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            return new BlobInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                // Set HTTP Headers does not return BlobSequenceNumber.
-                // Set HTTP Headers does not returnVersionId.
-            };
-        }
-        #endregion
-
+        // ToBlobInfo overloads for SetMetadata and SetHttpHeaders are consolidated into the main ToBlobInfo method above.
         #region ToBlobProperties
-        internal static BlobProperties ToBlobProperties(this ResponseWithHeaders<BlobGetPropertiesHeaders> response)
+        internal static BlobProperties ToBlobProperties(this Response response)
         {
             if (response == null)
             {
                 return null;
             }
 
+            var objectReplicationRules = response.Headers.TryGetValue(Constants.Blob.ObjectReplicationRulesHeaderPrefix, out IDictionary<string, string> objectReplicationRulesValue)
+                ? objectReplicationRulesValue
+                : null;
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy();
-            immutabilityPolicy.ExpiresOn = response.Headers.ImmutabilityPolicyExpiresOn;
-            immutabilityPolicy.PolicyMode = response.Headers.ImmutabilityPolicyMode;
+            immutabilityPolicy.ExpiresOn = response.Headers.TryGetValue("x-ms-immutability-policy-until-date", out DateTimeOffset? immutabilityExpiry) ? immutabilityExpiry : null;
+            immutabilityPolicy.PolicyMode = response.Headers.TryGetValue("x-ms-immutability-policy-mode", out string immutabilityMode) ? immutabilityMode.ToBlobImmutabilityPolicyMode() : null;
 
             return new BlobProperties(
-                lastModified: response.Headers.LastModified.GetValueOrDefault(),
-                createdOn: response.Headers.CreationTime.GetValueOrDefault(),
-                metadata: response.Headers.Metadata,
-                objectReplicationDestinationPolicyId: response.Headers.ObjectReplicationPolicyId,
+                lastModified: response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                createdOn: response.Headers.TryGetValue("x-ms-creation-time", out DateTimeOffset? creationTime) ? creationTime.GetValueOrDefault() : default,
+                metadata: response.Headers.TryGetValue(Constants.Blob.MetadataHeaderPrefix, out IDictionary<string, string> metadataValue) ? metadataValue : null,
+                objectReplicationDestinationPolicyId: response.Headers.TryGetValue("x-ms-or-policy-id", out string orPolicyId) ? orPolicyId : null,
                 objectReplicationSourceProperties:
-                    response.Headers.ObjectReplicationRules?.Count > 0
-                    ? BlobExtensions.ParseObjectReplicationIds(response.Headers.ObjectReplicationRules)
+                    objectReplicationRules?.Count > 0
+                    ? BlobExtensions.ParseObjectReplicationIds(objectReplicationRules)
                     : null,
-                blobType: response.Headers.BlobType.GetValueOrDefault(),
-                copyCompletedOn: response.Headers.CopyCompletionTime.GetValueOrDefault(),
-                copyStatusDescription: response.Headers.CopyStatusDescription,
-                copyId: response.Headers.CopyId,
-                copyProgress: response.Headers.CopyProgress,
-                copySource: response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
-                blobCopyStatus: response.Headers.CopyStatus,
-                isIncrementalCopy: response.Headers.IsIncrementalCopy.GetValueOrDefault(),
-                destinationSnapshot: response.Headers.DestinationSnapshot,
-                leaseDuration: response.Headers.LeaseDuration.GetValueOrDefault(),
-                leaseState: response.Headers.LeaseState.GetValueOrDefault(),
-                leaseStatus: response.Headers.LeaseStatus.GetValueOrDefault(),
-                contentLength: response.Headers.ContentLength.GetValueOrDefault(),
-                contentType: response.Headers.ContentType,
-                eTag: response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                contentHash: response.Headers.ContentMD5,
-                contentEncoding: response.Headers.ContentEncoding,
-                contentDisposition: response.Headers.ContentDisposition,
-                contentLanguage: response.Headers.ContentLanguage,
-                cacheControl: response.Headers.CacheControl,
-                blobSequenceNumber: response.Headers.BlobSequenceNumber.GetValueOrDefault(),
-                acceptRanges: response.Headers.AcceptRanges,
-                blobCommittedBlockCount: response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),
-                isServerEncrypted: response.Headers.IsServerEncrypted.GetValueOrDefault(),
-                encryptionKeySha256: response.Headers.EncryptionKeySha256,
-                encryptionScope: response.Headers.EncryptionScope,
-                accessTier: response.Headers.AccessTier,
-                accessTierInferred: response.Headers.AccessTierInferred.GetValueOrDefault(),
-                archiveStatus: response.Headers.ArchiveStatus,
-                accessTierChangedOn: response.Headers.AccessTierChangeTime.GetValueOrDefault(),
-                versionId: response.Headers.VersionId,
-                isLatestVersion: response.Headers.IsCurrentVersion.GetValueOrDefault(),
-                tagCount: response.Headers.TagCount.GetValueOrDefault(),
-                expiresOn: response.Headers.ExpiresOn.GetValueOrDefault(),
-                isSealed: response.Headers.IsSealed.GetValueOrDefault(),
-                rehydratePriority: response.Headers.RehydratePriority,
-                lastAccessed: response.Headers.LastAccessed.GetValueOrDefault(),
+                blobType: response.Headers.TryGetValue("x-ms-blob-type", out string blobType) ? blobType.ToBlobType() : default,
+                copyCompletedOn: response.Headers.TryGetValue("x-ms-copy-completion-time", out DateTimeOffset? copyCompletionTime) ? copyCompletionTime.GetValueOrDefault() : default,
+                copyStatusDescription: response.Headers.TryGetValue("x-ms-copy-status-description", out string copyStatusDescription) ? copyStatusDescription : null,
+                copyId: response.Headers.TryGetValue("x-ms-copy-id", out string copyId) ? copyId : null,
+                copyProgress: response.Headers.TryGetValue("x-ms-copy-progress", out string copyProgress) ? copyProgress : null,
+                copySource: response.Headers.TryGetValue("x-ms-copy-source", out string copySource) ? (copySource == null ? null : new Uri(copySource)) : null,
+                blobCopyStatus: response.Headers.TryGetValue("x-ms-copy-status", out string copyStatus) ? copyStatus.ToCopyStatus() : null,
+                isIncrementalCopy: response.Headers.TryGetValue("x-ms-incremental-copy", out bool? isIncrementalCopy) && isIncrementalCopy.GetValueOrDefault(),
+                destinationSnapshot: response.Headers.TryGetValue("x-ms-copy-destination-snapshot", out string destinationSnapshot) ? destinationSnapshot : null,
+                leaseDuration: response.Headers.TryGetValue("x-ms-lease-duration", out string leaseDuration) ? leaseDuration.ToLeaseDurationType() : default,
+                leaseState: response.Headers.TryGetValue("x-ms-lease-state", out string leaseState) ? leaseState.ToLeaseState() : default,
+                leaseStatus: response.Headers.TryGetValue("x-ms-lease-status", out string leaseStatus) ? leaseStatus.ToLeaseStatus() : default,
+                contentLength: response.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out long? contentLength) ? contentLength.GetValueOrDefault() : default,
+                contentType: response.Headers.TryGetValue(Constants.HeaderNames.ContentType, out string contentType) ? contentType : null,
+                eTag: response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string etagValue) ? new ETag(etagValue) : default,
+                contentHash: response.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out byte[] contentMD5) ? contentMD5 : null,
+                contentEncoding: response.Headers.TryGetValue(Constants.HeaderNames.ContentEncoding, out string contentEncoding) ? contentEncoding : null,
+                contentDisposition: response.Headers.TryGetValue("Content-Disposition", out string contentDisposition) ? contentDisposition : null,
+                contentLanguage: response.Headers.TryGetValue(Constants.HeaderNames.ContentLanguage, out string contentLanguage) ? contentLanguage : null,
+                cacheControl: response.Headers.TryGetValue("Cache-Control", out string cacheControl) ? cacheControl : null,
+                blobSequenceNumber: response.Headers.TryGetValue("x-ms-blob-sequence-number", out long? blobSequenceNumber) ? blobSequenceNumber.GetValueOrDefault() : default,
+                acceptRanges: response.Headers.TryGetValue("Accept-Ranges", out string acceptRanges) ? acceptRanges : null,
+                blobCommittedBlockCount: response.Headers.TryGetValue("x-ms-blob-committed-block-count", out int? blobCommittedBlockCount) ? blobCommittedBlockCount.GetValueOrDefault() : default,
+                isServerEncrypted: response.Headers.TryGetValue("x-ms-server-encrypted", out bool? isServerEncrypted) && isServerEncrypted.GetValueOrDefault(),
+                encryptionKeySha256: response.Headers.TryGetValue("x-ms-encryption-key-sha256", out string encryptionKeySha256) ? encryptionKeySha256 : null,
+                encryptionScope: response.Headers.TryGetValue("x-ms-encryption-scope", out string encryptionScope) ? encryptionScope : null,
+                accessTier: response.Headers.TryGetValue("x-ms-access-tier", out string accessTier) ? accessTier : null,
+                accessTierInferred: response.Headers.TryGetValue("x-ms-access-tier-inferred", out bool? accessTierInferred) && accessTierInferred.GetValueOrDefault(),
+                archiveStatus: response.Headers.TryGetValue("x-ms-archive-status", out string archiveStatus) ? archiveStatus : null,
+                accessTierChangedOn: response.Headers.TryGetValue("x-ms-access-tier-change-time", out DateTimeOffset? accessTierChangeTime) ? accessTierChangeTime.GetValueOrDefault() : default,
+                versionId: response.Headers.TryGetValue(Constants.HeaderNames.VersionId, out string versionId) ? versionId : null,
+                isLatestVersion: response.Headers.TryGetValue("x-ms-is-current-version", out bool? isCurrentVersion) && isCurrentVersion.GetValueOrDefault(),
+                tagCount: response.Headers.TryGetValue("x-ms-tag-count", out long? tagCount) ? tagCount.GetValueOrDefault() : default,
+                expiresOn: response.Headers.TryGetValue("x-ms-expiry-time", out DateTimeOffset? expiresOn) ? expiresOn.GetValueOrDefault() : default,
+                isSealed: response.Headers.TryGetValue("x-ms-blob-sealed", out bool? isSealed) && isSealed.GetValueOrDefault(),
+                rehydratePriority: response.Headers.TryGetValue("x-ms-rehydrate-priority", out string rehydratePriority) ? rehydratePriority : null,
+                lastAccessed: response.Headers.TryGetValue("x-ms-last-access-time", out DateTimeOffset? lastAccessed) ? lastAccessed.GetValueOrDefault() : default,
                 immutabilityPolicy: immutabilityPolicy,
-                hasLegalHold: response.Headers.LegalHold.GetValueOrDefault(),
-                smartAccessTier: response.Headers.SmartAccessTier);
+                hasLegalHold: response.Headers.TryGetValue("x-ms-legal-hold", out bool? legalHold) && legalHold.GetValueOrDefault(),
+                smartAccessTier: response.Headers.TryGetValue("x-ms-smart-access-tier", out string smartAccessTier) ? smartAccessTier : null);
         }
         #endregion
 
         #region ToBlobCopyInfo
-        internal static BlobCopyInfo ToBlobCopyInfo(this ResponseWithHeaders<BlobCopyFromURLHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
 
-            return new BlobCopyInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                VersionId = response.Headers.VersionId,
-                CopyId = response.Headers.CopyId,
-                CopyStatus = CopyStatusExtensions.ToCopyStatus(response.Headers.CopyStatus),
-                EncryptionScope = response.Headers.EncryptionScope
-            };
+        internal enum BlobCopyInfoHeaderType
+        {
+            CopyFromUrl,
+            StartCopyFromUrl,
+            PageBlobCopyIncremental
         }
 
-        internal static BlobCopyInfo ToBlobCopyInfo(this ResponseWithHeaders<BlobStartCopyFromURLHeaders> response)
+        internal static BlobCopyInfo ToBlobCopyInfo(this Response response, BlobCopyInfoHeaderType headerType)
         {
             if (response == null)
             {
                 return null;
             }
 
-            return new BlobCopyInfo
+            switch (headerType)
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                VersionId = response.Headers.VersionId,
-                CopyId = response.Headers.CopyId,
-                CopyStatus = response.Headers.CopyStatus.GetValueOrDefault()
-            };
-        }
-
-        internal static BlobCopyInfo ToBlobCopyInfo(this ResponseWithHeaders<PageBlobCopyIncrementalHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
+                case BlobCopyInfoHeaderType.CopyFromUrl:
+                    return new BlobCopyInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string copyFromUrlEtag) ? new ETag(copyFromUrlEtag) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? copyFromUrlLastModified) ? copyFromUrlLastModified.GetValueOrDefault() : default,
+                        VersionId = response.Headers.TryGetValue(Constants.HeaderNames.VersionId, out string copyFromUrlVersionId) ? copyFromUrlVersionId : null,
+                        CopyId = response.Headers.TryGetValue("x-ms-copy-id", out string copyFromUrlCopyId) ? copyFromUrlCopyId : null,
+                        CopyStatus = response.Headers.TryGetValue("x-ms-copy-status", out string copyFromUrlCopyStatus) ? CopyStatusExtensions.ToCopyStatus(copyFromUrlCopyStatus) : default,
+                        EncryptionScope = response.Headers.TryGetValue("x-ms-encryption-scope", out string copyFromUrlEncryptionScope) ? copyFromUrlEncryptionScope : null
+                    };
+                case BlobCopyInfoHeaderType.StartCopyFromUrl:
+                    return new BlobCopyInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string startCopyEtag) ? new ETag(startCopyEtag) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? startCopyLastModified) ? startCopyLastModified.GetValueOrDefault() : default,
+                        VersionId = response.Headers.TryGetValue(Constants.HeaderNames.VersionId, out string startCopyVersionId) ? startCopyVersionId : null,
+                        CopyId = response.Headers.TryGetValue("x-ms-copy-id", out string startCopyCopyId) ? startCopyCopyId : null,
+                        CopyStatus = response.Headers.TryGetValue("x-ms-copy-status", out string startCopyCopyStatus) ? startCopyCopyStatus.ToCopyStatus() : default
+                    };
+                case BlobCopyInfoHeaderType.PageBlobCopyIncremental:
+                    // Page Blob Copy Incremental does not return VersionId.
+                    return new BlobCopyInfo
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string incrEtag) ? new ETag(incrEtag) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? incrLastModified) ? incrLastModified.GetValueOrDefault() : default,
+                        CopyId = response.Headers.TryGetValue("x-ms-copy-id", out string incrCopyId) ? incrCopyId : null,
+                        CopyStatus = response.Headers.TryGetValue("x-ms-copy-status", out string incrCopyStatus) ? incrCopyStatus.ToCopyStatus() : default
+                    };
+                default:
+                    throw new ArgumentException($"Unknown {nameof(BlobCopyInfoHeaderType)}: {headerType}", nameof(headerType));
             }
-
-            return new BlobCopyInfo
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                // Page Blob Copy Incremental does not return VersionId.
-                CopyId = response.Headers.CopyId,
-                CopyStatus = response.Headers.CopyStatus.GetValueOrDefault()
-            };
         }
         #endregion
 
         #region ToBlobDownloadStreamingResult
-        internal static BlobDownloadStreamingResult ToBlobDownloadStreamingResult(this ResponseWithHeaders<Stream, BlobDownloadHeaders> response)
+        internal static BlobDownloadStreamingResult ToBlobDownloadStreamingResult(this Response<Stream> response)
         {
             if (response == null)
             {
                 return null;
             }
 
-            response.GetRawResponse().Headers.ExtractMultiHeaderDownloadProperties(out var metadata, out var objectReplicationRules);
+            var rawResponse = response.GetRawResponse();
+            rawResponse.Headers.ExtractMultiHeaderDownloadProperties(out var metadata, out var objectReplicationRules);
 
             BlobImmutabilityPolicy immutabilityPolicy = new BlobImmutabilityPolicy();
-            immutabilityPolicy.ExpiresOn = response.Headers.ImmutabilityPolicyExpiresOn;
-            immutabilityPolicy.PolicyMode = response.Headers.ImmutabilityPolicyMode;
+            immutabilityPolicy.ExpiresOn = rawResponse.Headers.TryGetValue("x-ms-immutability-policy-until-date", out DateTimeOffset? immutabilityExpiry) ? immutabilityExpiry : null;
+            immutabilityPolicy.PolicyMode = rawResponse.Headers.TryGetValue("x-ms-immutability-policy-mode", out string immutabilityMode) ? immutabilityMode.ToBlobImmutabilityPolicyMode() : null;
 
             return new BlobDownloadStreamingResult
             {
                 Content = response.Value,
                 Details = new BlobDownloadDetails
                 {
-                    BlobType = response.Headers.BlobType.GetValueOrDefault(),
-                    ContentLength = response.Headers.ContentLength.GetValueOrDefault(),
-                    ContentType = response.Headers.ContentType,
-                    ContentHash = response.Headers.ContentMD5,
-                    LastModified = response.Headers.LastModified.GetValueOrDefault(),
+                    BlobType = rawResponse.Headers.TryGetValue("x-ms-blob-type", out string blobType) ? blobType.ToBlobType() : default,
+                    ContentLength = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out long? contentLength) ? contentLength.GetValueOrDefault() : default,
+                    ContentType = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentType, out string contentType) ? contentType : null,
+                    ContentHash = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out byte[] contentMD5) ? contentMD5 : null,
+                    LastModified = rawResponse.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
                     Metadata = metadata,
-                    ContentRange = response.Headers.ContentRange,
-                    ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                    ContentEncoding = response.Headers.ContentEncoding,
-                    CacheControl = response.Headers.CacheControl,
-                    ContentDisposition = response.Headers.ContentDisposition,
-                    ContentLanguage = response.Headers.ContentLanguage,
-                    BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault(),
-                    CopyCompletedOn = response.Headers.CopyCompletionTime.GetValueOrDefault(),
-                    CopyStatusDescription = response.Headers.CopyStatusDescription,
-                    CopyId = response.Headers.CopyId,
-                    CopyProgress = response.Headers.CopyProgress,
-                    CopySource = response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
-                    CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
-                    LeaseDuration = response.Headers.LeaseDuration ?? LeaseDurationType.Infinite,
-                    LeaseStatus = response.Headers.LeaseStatus ?? LeaseStatus.Unlocked,
-                    LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
-                    AcceptRanges = response.Headers.AcceptRanges,
-                    BlobCommittedBlockCount = response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),
-                    IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
-                    EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                    EncryptionScope = response.Headers.EncryptionScope,
-                    BlobContentHash = response.Headers.BlobContentMD5,
-                    TagCount = response.Headers.TagCount.GetValueOrDefault(),
-                    VersionId = response.Headers.VersionId,
-                    IsSealed = response.Headers.IsSealed.GetValueOrDefault(),
+                    ContentRange = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentRange, out string contentRange) ? contentRange : null,
+                    ETag = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                    ContentEncoding = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentEncoding, out string contentEncoding) ? contentEncoding : null,
+                    CacheControl = rawResponse.Headers.TryGetValue("Cache-Control", out string cacheControl) ? cacheControl : null,
+                    ContentDisposition = rawResponse.Headers.TryGetValue("Content-Disposition", out string contentDisposition) ? contentDisposition : null,
+                    ContentLanguage = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentLanguage, out string contentLanguage) ? contentLanguage : null,
+                    BlobSequenceNumber = rawResponse.Headers.TryGetValue("x-ms-blob-sequence-number", out long? seqNum) ? seqNum.GetValueOrDefault() : default,
+                    CopyCompletedOn = rawResponse.Headers.TryGetValue("x-ms-copy-completion-time", out DateTimeOffset? copyCompletionTime) ? copyCompletionTime.GetValueOrDefault() : default,
+                    CopyStatusDescription = rawResponse.Headers.TryGetValue("x-ms-copy-status-description", out string copyStatusDescription) ? copyStatusDescription : null,
+                    CopyId = rawResponse.Headers.TryGetValue("x-ms-copy-id", out string copyId) ? copyId : null,
+                    CopyProgress = rawResponse.Headers.TryGetValue("x-ms-copy-progress", out string copyProgress) ? copyProgress : null,
+                    CopySource = rawResponse.Headers.TryGetValue("x-ms-copy-source", out string copySource) ? (copySource == null ? null : new Uri(copySource)) : null,
+                    CopyStatus = rawResponse.Headers.TryGetValue("x-ms-copy-status", out string copyStatus) ? copyStatus.ToCopyStatus() : default,
+                    LeaseDuration = rawResponse.Headers.TryGetValue("x-ms-lease-duration", out string leaseDuration) ? leaseDuration.ToLeaseDurationType() : LeaseDurationType.Infinite,
+                    LeaseStatus = rawResponse.Headers.TryGetValue("x-ms-lease-status", out string leaseStatus) ? leaseStatus.ToLeaseStatus() : LeaseStatus.Unlocked,
+                    LeaseState = rawResponse.Headers.TryGetValue("x-ms-lease-state", out string leaseState) ? leaseState.ToLeaseState() : default,
+                    AcceptRanges = rawResponse.Headers.TryGetValue("Accept-Ranges", out string acceptRanges) ? acceptRanges : null,
+                    BlobCommittedBlockCount = rawResponse.Headers.TryGetValue("x-ms-blob-committed-block-count", out int? blockCount) ? blockCount.GetValueOrDefault() : default,
+                    IsServerEncrypted = rawResponse.Headers.TryGetValue("x-ms-server-encrypted", out bool? serverEncrypted) && serverEncrypted.GetValueOrDefault(),
+                    EncryptionKeySha256 = rawResponse.Headers.TryGetValue("x-ms-encryption-key-sha256", out string encryptionKeySha256) ? encryptionKeySha256 : null,
+                    EncryptionScope = rawResponse.Headers.TryGetValue("x-ms-encryption-scope", out string encryptionScope) ? encryptionScope : null,
+                    BlobContentHash = rawResponse.Headers.TryGetValue("x-ms-blob-content-md5", out byte[] blobContentMD5) ? blobContentMD5 : null,
+                    TagCount = rawResponse.Headers.TryGetValue("x-ms-tag-count", out long? tagCount) ? tagCount.GetValueOrDefault() : default,
+                    VersionId = rawResponse.Headers.TryGetValue(Constants.HeaderNames.VersionId, out string versionId) ? versionId : null,
+                    IsSealed = rawResponse.Headers.TryGetValue("x-ms-blob-sealed", out bool? isSealed) && isSealed.GetValueOrDefault(),
                     ObjectReplicationSourceProperties
                         = objectReplicationRules?.Count > 0
                         ? ParseObjectReplicationIds(objectReplicationRules)
                         : null,
-                    ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
-                    LastAccessed = response.Headers.LastAccessed.GetValueOrDefault(),
+                    ObjectReplicationDestinationPolicyId = rawResponse.Headers.TryGetValue("x-ms-or-policy-id", out string orPolicyId) ? orPolicyId : null,
+                    LastAccessed = rawResponse.Headers.TryGetValue("x-ms-last-access-time", out DateTimeOffset? lastAccessed) ? lastAccessed.GetValueOrDefault() : default,
                     ImmutabilityPolicy = immutabilityPolicy,
-                    HasLegalHold = response.Headers.LegalHold.GetValueOrDefault(),
-                    CreatedOn = response.Headers.CreationTime.GetValueOrDefault()
+                    HasLegalHold = rawResponse.Headers.TryGetValue("x-ms-legal-hold", out bool? legalHold) && legalHold.GetValueOrDefault(),
+                    CreatedOn = rawResponse.Headers.TryGetValue("x-ms-creation-time", out DateTimeOffset? creationTime) ? creationTime.GetValueOrDefault() : default
                 }
             };
         }
         #endregion
 
         #region ToBlobDownloadInfo
-        internal static BlobDownloadInfo ToBlobDownloadInfo(ResponseWithHeaders<Stream, BlobQueryHeaders> response, Stream stream)
+        internal static BlobDownloadInfo ToBlobDownloadInfo(Response<Stream> response, Stream stream)
         {
             if (response == null)
             {
                 return null;
             }
 
-            var blobType = response.Headers.BlobType.GetValueOrDefault();
-            var contentLength = response.Headers.ContentLength.GetValueOrDefault();
-            var contentType = response.Headers.ContentType;
-            var contentHash = response.Headers.ContentMD5;
+            var rawResponse = response.GetRawResponse();
+            var blobType = rawResponse.Headers.TryGetValue("x-ms-blob-type", out string blobTypeStr) ? blobTypeStr.ToBlobType() : default;
+            var contentLength = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentLength, out long? contentLengthVal) ? contentLengthVal.GetValueOrDefault() : default;
+            var contentType = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentType, out string contentTypeStr) ? contentTypeStr : null;
+            var contentHash = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out byte[] contentMD5) ? contentMD5 : null;
             return new BlobDownloadInfo
             {
                 BlobType = blobType,
@@ -951,29 +836,29 @@ namespace Azure.Storage.Blobs
                     ContentLength = contentLength,
                     ContentType = contentType,
                     ContentHash = contentHash,
-                    LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                    Metadata = response.Headers.Metadata.ToMetadata(),
-                    ContentRange = response.Headers.ContentRange,
-                    ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                    ContentEncoding = response.Headers.ContentEncoding,
-                    CacheControl = response.Headers.CacheControl,
-                    ContentDisposition = response.Headers.ContentDisposition,
-                    ContentLanguage = response.Headers.ContentLanguage,
-                    BlobSequenceNumber = response.Headers.BlobSequenceNumber.GetValueOrDefault(),
-                    CopyCompletedOn = response.Headers.CopyCompletionTime.GetValueOrDefault(),
-                    CopyStatusDescription = response.Headers.CopyStatusDescription,
-                    CopyId = response.Headers.CopyId,
-                    CopyProgress = response.Headers.CopyProgress,
-                    CopySource = response.Headers.CopySource == null ? null : new Uri(response.Headers.CopySource),
-                    CopyStatus = response.Headers.CopyStatus.GetValueOrDefault(),
-                    LeaseDuration = response.Headers.LeaseDuration ?? LeaseDurationType.Infinite,
-                    LeaseState = response.Headers.LeaseState.GetValueOrDefault(),
-                    AcceptRanges = response.Headers.AcceptRanges,
-                    BlobCommittedBlockCount = response.Headers.BlobCommittedBlockCount.GetValueOrDefault(),
-                    IsServerEncrypted = response.Headers.IsServerEncrypted.GetValueOrDefault(),
-                    EncryptionKeySha256 = response.Headers.EncryptionKeySha256,
-                    EncryptionScope = response.Headers.EncryptionScope,
-                    BlobContentHash = response.Headers.BlobContentMD5
+                    LastModified = rawResponse.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                    Metadata = rawResponse.Headers.TryGetValue(Constants.HeaderNames.MetadataPrefix, out IDictionary<string, string> metadataValue) ? metadataValue.ToMetadata() : null,
+                    ContentRange = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentRange, out string contentRange) ? contentRange : null,
+                    ETag = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                    ContentEncoding = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentEncoding, out string contentEncoding) ? contentEncoding : null,
+                    CacheControl = rawResponse.Headers.TryGetValue("Cache-Control", out string cacheControl) ? cacheControl : null,
+                    ContentDisposition = rawResponse.Headers.TryGetValue("Content-Disposition", out string contentDisposition) ? contentDisposition : null,
+                    ContentLanguage = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentLanguage, out string contentLanguage) ? contentLanguage : null,
+                    BlobSequenceNumber = rawResponse.Headers.TryGetValue("x-ms-blob-sequence-number", out long? seqNum) ? seqNum.GetValueOrDefault() : default,
+                    CopyCompletedOn = rawResponse.Headers.TryGetValue("x-ms-copy-completion-time", out DateTimeOffset? copyCompletionTime) ? copyCompletionTime.GetValueOrDefault() : default,
+                    CopyStatusDescription = rawResponse.Headers.TryGetValue("x-ms-copy-status-description", out string copyStatusDescription) ? copyStatusDescription : null,
+                    CopyId = rawResponse.Headers.TryGetValue("x-ms-copy-id", out string copyId) ? copyId : null,
+                    CopyProgress = rawResponse.Headers.TryGetValue("x-ms-copy-progress", out string copyProgress) ? copyProgress : null,
+                    CopySource = rawResponse.Headers.TryGetValue("x-ms-copy-source", out string copySource) ? (copySource == null ? null : new Uri(copySource)) : null,
+                    CopyStatus = rawResponse.Headers.TryGetValue("x-ms-copy-status", out string copyStatus) ? copyStatus.ToCopyStatus() : default,
+                    LeaseDuration = rawResponse.Headers.TryGetValue("x-ms-lease-duration", out string leaseDuration) ? leaseDuration.ToLeaseDurationType() : LeaseDurationType.Infinite,
+                    LeaseState = rawResponse.Headers.TryGetValue("x-ms-lease-state", out string leaseState) ? leaseState.ToLeaseState() : default,
+                    AcceptRanges = rawResponse.Headers.TryGetValue("Accept-Ranges", out string acceptRanges) ? acceptRanges : null,
+                    BlobCommittedBlockCount = rawResponse.Headers.TryGetValue("x-ms-blob-committed-block-count", out int? blockCount) ? blockCount.GetValueOrDefault() : default,
+                    IsServerEncrypted = rawResponse.Headers.TryGetValue("x-ms-server-encrypted", out bool? serverEncrypted) && serverEncrypted.GetValueOrDefault(),
+                    EncryptionKeySha256 = rawResponse.Headers.TryGetValue("x-ms-encryption-key-sha256", out string encryptionKeySha256) ? encryptionKeySha256 : null,
+                    EncryptionScope = rawResponse.Headers.TryGetValue("x-ms-encryption-scope", out string encryptionScope) ? encryptionScope : null,
+                    BlobContentHash = rawResponse.Headers.TryGetValue("x-ms-blob-content-md5", out byte[] blobContentMD5) ? blobContentMD5 : null
                 }
             };
         }
@@ -998,132 +883,53 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToBlobLease
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobAcquireLeaseHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
 
-            return new BlobLease
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                LeaseId = response.Headers.LeaseId,
-                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
-            };
+        internal enum BlobLeaseHeaderType
+        {
+            BlobAcquire,
+            ContainerAcquire,
+            BlobRenew,
+            ContainerRenew,
+            BlobChange,
+            ContainerChange,
+            BlobBreak,
+            ContainerBreak
         }
 
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerAcquireLeaseHeaders> response)
+        internal static BlobLease ToBlobLease(this Response response, BlobLeaseHeaderType headerType)
         {
             if (response == null)
             {
                 return null;
             }
 
-            return new BlobLease
+            switch (headerType)
             {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                LeaseId = response.Headers.LeaseId,
-                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
-            };
-        }
-
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobRenewLeaseHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
+                case BlobLeaseHeaderType.BlobAcquire:
+                case BlobLeaseHeaderType.ContainerAcquire:
+                case BlobLeaseHeaderType.BlobRenew:
+                case BlobLeaseHeaderType.ContainerRenew:
+                case BlobLeaseHeaderType.BlobChange:
+                case BlobLeaseHeaderType.ContainerChange:
+                    return new BlobLease
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                        LeaseId = response.Headers.TryGetValue(Constants.HeaderNames.LeaseId, out string leaseId) ? leaseId : null,
+                        LeaseTime = response.Headers.ExtractLeaseTime()
+                    };
+                case BlobLeaseHeaderType.BlobBreak:
+                case BlobLeaseHeaderType.ContainerBreak:
+                    // LeaseId is not returned on a broken lease.
+                    return new BlobLease
+                    {
+                        ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string breakValue) ? new ETag(breakValue) : default,
+                        LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? breakLastModified) ? breakLastModified.GetValueOrDefault() : default,
+                        LeaseTime = response.Headers.ExtractLeaseTime()
+                    };
+                default:
+                    throw new ArgumentException($"Unknown {nameof(BlobLeaseHeaderType)}: {headerType}", nameof(headerType));
             }
-
-            return new BlobLease
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                LeaseId = response.Headers.LeaseId,
-                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
-            };
-        }
-
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerRenewLeaseHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            return new BlobLease
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                LeaseId = response.Headers.LeaseId,
-                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
-            };
-        }
-
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobChangeLeaseHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            return new BlobLease
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                LeaseId = response.Headers.LeaseId,
-                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
-            };
-        }
-
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerChangeLeaseHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            return new BlobLease
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                LeaseId = response.Headers.LeaseId,
-                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
-            };
-        }
-
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<BlobBreakLeaseHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            return new BlobLease
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                // LeaseId is not returned on a broken lease.
-                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
-            };
-        }
-
-        internal static BlobLease ToBlobLease(this ResponseWithHeaders<ContainerBreakLeaseHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            return new BlobLease
-            {
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                // LeaseId is not returned on a broken lease.
-                LeaseTime = response.GetRawResponse().Headers.ExtractLeaseTime()
-            };
         }
 
         internal static int? ExtractLeaseTime(this ResponseHeaders responseHeaders)
@@ -1140,7 +946,7 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToReleasedObjectInfo
-        internal static ReleasedObjectInfo ToReleasedObjectInfo(this ResponseWithHeaders<BlobReleaseLeaseHeaders> response)
+        internal static ReleasedObjectInfo ToReleasedObjectInfo(this Response response)
         {
             if (response == null)
             {
@@ -1148,20 +954,8 @@ namespace Azure.Storage.Blobs
             }
 
             return new ReleasedObjectInfo(
-                eTag: response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                lastModified: response.Headers.LastModified.GetValueOrDefault());
-        }
-
-        internal static ReleasedObjectInfo ToReleasedObjectInfo(this ResponseWithHeaders<ContainerReleaseLeaseHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            return new ReleasedObjectInfo(
-                eTag: response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                lastModified: response.Headers.LastModified.GetValueOrDefault());
+                eTag: response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                lastModified: response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default);
         }
         #endregion
 
@@ -1196,7 +990,7 @@ namespace Azure.Storage.Blobs
                     : new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
                 Tags = blobItemInternal.BlobTags.ToTagDictionary(),
                 ObjectReplicationSourceProperties = blobItemInternal.OrMetadata?.Count > 0
-                    ? ParseObjectReplicationMetadata(blobItemInternal.OrMetadata)
+                    ? ParseObjectReplicationMetadata((IReadOnlyDictionary<string, string>)blobItemInternal.OrMetadata)
                     : null,
                 HasVersionsOnly = blobItemInternal.HasVersionsOnly
             };
@@ -1234,7 +1028,7 @@ namespace Azure.Storage.Blobs
                 ContentType = blobPropertiesInternal.ContentType,
                 ContentEncoding = blobPropertiesInternal.ContentEncoding,
                 ContentLanguage = blobPropertiesInternal.ContentLanguage,
-                ContentHash = blobPropertiesInternal.ContentMD5,
+                ContentHash = blobPropertiesInternal.ContentMd5?.ToArray(),
                 ContentDisposition = blobPropertiesInternal.ContentDisposition,
                 CacheControl = blobPropertiesInternal.CacheControl,
                 BlobSequenceNumber = blobPropertiesInternal.BlobSequenceNumber,
@@ -1260,7 +1054,7 @@ namespace Azure.Storage.Blobs
                 IsSealed = blobPropertiesInternal.IsSealed,
                 RehydratePriority = blobPropertiesInternal.RehydratePriority,
                 LastAccessedOn = blobPropertiesInternal.LastAccessedOn,
-                ETag = new ETag(blobPropertiesInternal.Etag),
+                ETag = new ETag(blobPropertiesInternal.ETag),
                 CreatedOn = blobPropertiesInternal.CreationTime,
                 CopyCompletedOn = blobPropertiesInternal.CopyCompletionTime,
                 DeletedOn = blobPropertiesInternal.DeletedTime,
@@ -1296,7 +1090,7 @@ namespace Azure.Storage.Blobs
                 Name = containerItemInternal.Name,
                 IsDeleted = containerItemInternal.Deleted,
                 VersionId = containerItemInternal.Version,
-                Properties = BlobExtensions.ToBlobContainerProperties(containerItemInternal.Properties, containerItemInternal.Metadata)
+                Properties = BlobExtensions.ToBlobContainerProperties(containerItemInternal.Properties, (IReadOnlyDictionary<string, string>)containerItemInternal.Metadata)
             };
         }
         #endregion
@@ -1324,13 +1118,13 @@ namespace Azure.Storage.Blobs
                 PreventEncryptionScopeOverride = containerPropertiesInternal.PreventEncryptionScopeOverride,
                 DeletedOn = containerPropertiesInternal.DeletedTime,
                 RemainingRetentionDays = containerPropertiesInternal.RemainingRetentionDays,
-                ETag = new ETag(containerPropertiesInternal.Etag),
+                ETag = new ETag(containerPropertiesInternal.ETag),
                 Metadata = metadata.ToMetadata(),
                 HasImmutableStorageWithVersioning = containerPropertiesInternal.IsImmutableStorageWithVersioningEnabled.GetValueOrDefault(),
             };
         }
 
-        internal static BlobContainerProperties ToBlobContainerProperties(this ResponseWithHeaders<ContainerGetPropertiesHeaders> response)
+        internal static BlobContainerProperties ToBlobContainerProperties(this Response response)
         {
             if (response == null)
             {
@@ -1339,20 +1133,22 @@ namespace Azure.Storage.Blobs
 
             return new BlobContainerProperties
             {
-                LastModified = response.Headers.LastModified.GetValueOrDefault(),
-                LeaseStatus = response.Headers.LeaseStatus,
-                LeaseState = response.Headers.LeaseState,
-                LeaseDuration = response.Headers.LeaseDuration ?? LeaseDurationType.Infinite,
-                PublicAccess = response.Headers.BlobPublicAccess ?? PublicAccessType.None,
-                HasImmutabilityPolicy = response.Headers.HasImmutabilityPolicy,
-                HasLegalHold = response.Headers.HasLegalHold,
-                DefaultEncryptionScope = response.Headers.DefaultEncryptionScope,
-                PreventEncryptionScopeOverride = response.Headers.DenyEncryptionScopeOverride,
+                LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                LeaseStatus = response.Headers.TryGetValue("x-ms-lease-status", out string leaseStatus) ? leaseStatus.ToLeaseStatus() : null,
+                LeaseState = response.Headers.TryGetValue("x-ms-lease-state", out string leaseState) ? leaseState.ToLeaseState() : null,
+                LeaseDuration = response.Headers.TryGetValue("x-ms-lease-duration", out string leaseDuration) ? leaseDuration.ToLeaseDurationType() : LeaseDurationType.Infinite,
+                PublicAccess = response.Headers.TryGetValue("x-ms-blob-public-access", out string publicAccess) ? publicAccess.ToPublicAccessType() : PublicAccessType.None,
+                HasImmutabilityPolicy = response.Headers.TryGetValue("x-ms-has-immutability-policy", out bool? hasImmutabilityPolicy) ? hasImmutabilityPolicy : null,
+                HasLegalHold = response.Headers.TryGetValue("x-ms-has-legal-hold", out bool? hasLegalHold) ? hasLegalHold : null,
+                DefaultEncryptionScope = response.Headers.TryGetValue("x-ms-default-encryption-scope", out string defaultEncryptionScope) ? defaultEncryptionScope : null,
+                PreventEncryptionScopeOverride = response.Headers.TryGetValue("x-ms-deny-encryption-scope-override", out bool? denyEncryptionScopeOverride) ? denyEncryptionScopeOverride : null,
                 // Container Get Properties does not return DeletedOn.
                 // Container Get Properties does not return RemainingRetentionDays.
-                ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                Metadata = response.Headers.Metadata.ToMetadata(),
-                HasImmutableStorageWithVersioning = response.Headers.IsImmutableStorageWithVersioningEnabled.GetValueOrDefault()
+                ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                Metadata = response.Headers.TryGetValue(Constants.HeaderNames.MetadataPrefix, out IDictionary<string, string> metadataValue)
+                    ? metadataValue.ToMetadata()
+                    : null,
+                HasImmutableStorageWithVersioning = response.Headers.TryGetValue("x-ms-immutable-storage-with-versioning-enabled", out bool? immutableStorage) && immutableStorage.GetValueOrDefault()
             };
         }
 
@@ -1392,7 +1188,7 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToBlobImmutabilityPolicy
-        internal static BlobImmutabilityPolicy ToBlobImmutabilityPolicy(this ResponseWithHeaders<BlobSetImmutabilityPolicyHeaders> response)
+        internal static BlobImmutabilityPolicy ToBlobImmutabilityPolicy(this Response response)
         {
             if (response == null)
             {
@@ -1401,14 +1197,14 @@ namespace Azure.Storage.Blobs
 
             return new BlobImmutabilityPolicy
             {
-                ExpiresOn = response.Headers.ImmutabilityPolicyExpiry,
-                PolicyMode = response.Headers.ImmutabilityPolicyMode
+                ExpiresOn = response.Headers.TryGetValue("x-ms-immutability-policy-until-date", out DateTimeOffset? immutabilityExpiry) ? immutabilityExpiry : null,
+                PolicyMode = response.Headers.TryGetValue("x-ms-immutability-policy-mode", out string immutabilityMode) ? immutabilityMode.ToBlobImmutabilityPolicyMode() : null
             };
         }
         #endregion
 
         #region ToBlobLegalHoldInfo
-        internal static BlobLegalHoldResult ToBlobLegalHoldInfo(this ResponseWithHeaders<BlobSetLegalHoldHeaders> response)
+        internal static BlobLegalHoldResult ToBlobLegalHoldInfo(this Response response)
         {
             if (response == null)
             {
@@ -1417,7 +1213,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobLegalHoldResult
             {
-                HasLegalHold = response.Headers.LegalHold.GetValueOrDefault()
+                HasLegalHold = response.Headers.TryGetValue("x-ms-legal-hold", out bool? legalHold) && legalHold.GetValueOrDefault()
             };
         }
         #endregion
@@ -1434,24 +1230,16 @@ namespace Azure.Storage.Blobs
         #endregion
 
         #region ToPageBlobRanges
-        internal static PageRangeItem[] ToPageBlobRanges(this ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response)
+        internal static PageRangeItem[] ToPageBlobRanges(this Response<PageList> response)
         {
             if (response == null)
             {
                 return null;
             }
 
-            return ToPageBlobRanges(response.Value.PageRange, response.Value.ClearRange);
-        }
-
-        internal static PageRangeItem[] ToPageBlobRanges(this ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response)
-        {
-            if (response == null)
-            {
-                return null;
-            }
-
-            return ToPageBlobRanges(response.Value.PageRange, response.Value.ClearRange);
+            return ToPageBlobRanges(
+                (IReadOnlyList<PageRange>)response.Value.PageRange,
+                (IReadOnlyList<ClearRange>)response.Value.ClearRange);
         }
 
         internal static PageRangeItem[] ToPageBlobRanges(

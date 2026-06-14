@@ -6,11 +6,10 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The BlockLookupList. </summary>
     internal partial class BlockLookupList
     {
         /// <summary> Initializes a new instance of <see cref="BlockLookupList"/>. </summary>
@@ -22,9 +21,9 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlockLookupList"/>. </summary>
-        /// <param name="committed"></param>
-        /// <param name="uncommitted"></param>
-        /// <param name="latest"></param>
+        /// <param name="committed"> The committed blocks. </param>
+        /// <param name="uncommitted"> The uncommitted blocks. </param>
+        /// <param name="latest"> The latest blocks. </param>
         internal BlockLookupList(IList<string> committed, IList<string> uncommitted, IList<string> latest)
         {
             Committed = committed;

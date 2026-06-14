@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Storage.Blob": "2026-06-06"
+  }
+}

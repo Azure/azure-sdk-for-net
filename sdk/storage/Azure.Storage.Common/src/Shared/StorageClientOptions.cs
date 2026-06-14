@@ -116,7 +116,10 @@ namespace Azure.Storage
             StorageResponseClassifier classifier = new();
             var pipelineOptions = new HttpPipelineOptions(options)
             {
-                PerCallPolicies = { StorageServerTimeoutPolicy.Shared },
+                PerCallPolicies =
+                {
+                    StorageServerTimeoutPolicy.Shared, RangeHeaderPolicy.Shared, new StorageClassifierPolicy(classifier),
+                },
                 // needed *after* core applies the user agent; can't have that without going per-retry
                 PerRetryPolicies = { StorageTelemetryPolicy.Shared },
                 ResponseClassifier = classifier,

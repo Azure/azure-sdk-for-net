@@ -5,23 +5,24 @@
 
 #nullable disable
 
-using System;
-using Azure.Storage.Common;
-
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Azure Analytics Logging settings. </summary>
+    /// <summary> Azure Analytics logging settings. </summary>
     public partial class BlobAnalyticsLogging
     {
-        /// <summary> The version of Storage Analytics to configure. </summary>
+        /// <summary> The version of the logging properties. </summary>
         public string Version { get; set; }
-        /// <summary> Indicates whether all delete requests should be logged. </summary>
+
+        /// <summary> Whether delete operation is logged. </summary>
         public bool Delete { get; set; }
-        /// <summary> Indicates whether all read requests should be logged. </summary>
+
+        /// <summary> Whether read operation is logged. </summary>
         public bool Read { get; set; }
-        /// <summary> Indicates whether all write requests should be logged. </summary>
+
+        /// <summary> Whether write operation is logged. </summary>
         public bool Write { get; set; }
-        /// <summary> the retention policy which determines how long the associated data should persist. </summary>
+
+        /// <summary> The retention policy of the logs. </summary>
         public BlobRetentionPolicy RetentionPolicy { get; set; }
     }
 }

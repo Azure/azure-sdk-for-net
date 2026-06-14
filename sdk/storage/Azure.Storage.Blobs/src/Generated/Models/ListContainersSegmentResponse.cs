@@ -5,37 +5,31 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> An enumeration of containers. </summary>
+    /// <summary> The result of the List Containers API. </summary>
     internal partial class ListContainersSegmentResponse
     {
         /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResponse"/>. </summary>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="containerItems"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/> or <paramref name="containerItems"/> is null. </exception>
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="containerItems"> The list of containers. </param>
         internal ListContainersSegmentResponse(string serviceEndpoint, IEnumerable<ContainerItemInternal> containerItems)
         {
-            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
-            Argument.AssertNotNull(containerItems, nameof(containerItems));
-
             ServiceEndpoint = serviceEndpoint;
             ContainerItems = containerItems.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResponse"/>. </summary>
-        /// <param name="serviceEndpoint"></param>
-        /// <param name="prefix"></param>
-        /// <param name="marker"></param>
-        /// <param name="maxResults"></param>
-        /// <param name="containerItems"></param>
-        /// <param name="nextMarker"></param>
-        internal ListContainersSegmentResponse(string serviceEndpoint, string prefix, string marker, int? maxResults, IReadOnlyList<ContainerItemInternal> containerItems, string nextMarker)
+        /// <param name="serviceEndpoint"> The service endpoint. </param>
+        /// <param name="prefix"> The prefix of the containers. </param>
+        /// <param name="marker"> An opaque string value that identifies the portion of the result set returned with this operation. </param>
+        /// <param name="maxResults"> The maximum number of containers to be returned with this operation. </param>
+        /// <param name="containerItems"> The list of containers. </param>
+        /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </param>
+        internal ListContainersSegmentResponse(string serviceEndpoint, string prefix, string marker, int? maxResults, IList<ContainerItemInternal> containerItems, string nextMarker)
         {
             ServiceEndpoint = serviceEndpoint;
             Prefix = prefix;
@@ -45,17 +39,22 @@ namespace Azure.Storage.Blobs.Models
             NextMarker = nextMarker;
         }
 
-        /// <summary> Gets the service endpoint. </summary>
+        /// <summary> The service endpoint. </summary>
         public string ServiceEndpoint { get; }
-        /// <summary> Gets the prefix. </summary>
+
+        /// <summary> The prefix of the containers. </summary>
         public string Prefix { get; }
-        /// <summary> Gets the marker. </summary>
+
+        /// <summary> An opaque string value that identifies the portion of the result set returned with this operation. </summary>
         public string Marker { get; }
-        /// <summary> Gets the max results. </summary>
+
+        /// <summary> The maximum number of containers to be returned with this operation. </summary>
         public int? MaxResults { get; }
-        /// <summary> Gets the container items. </summary>
-        public IReadOnlyList<ContainerItemInternal> ContainerItems { get; }
-        /// <summary> Gets the next marker. </summary>
+
+        /// <summary> The list of containers. </summary>
+        public IList<ContainerItemInternal> ContainerItems { get; }
+
+        /// <summary> An opaque string value that identifies the portion of the result set to be returned with the next operation. Use this value in the next request to continue the listing operation. </summary>
         public string NextMarker { get; }
     }
 }
