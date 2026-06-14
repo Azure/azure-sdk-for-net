@@ -418,7 +418,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         {
             agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        List<string> hostedAgents = [..agentsClient.GetAgents().Select(x => x.Name).Where(x => x.StartsWith(HOSTED_AGENT))];
+        List<string> hostedAgents = [.. agentsClient.GetAgents().Select(x => x.Name).Where(x => x.StartsWith(HOSTED_AGENT))];
         foreach (string agentName in hostedAgents)
         {
             await agentsClient.DeleteAgentAsync(agentName, force: true);

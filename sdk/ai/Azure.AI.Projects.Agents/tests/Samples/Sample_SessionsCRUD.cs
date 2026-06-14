@@ -3,13 +3,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
 #pragma warning disable AAIP001
@@ -136,7 +136,7 @@ public class Sample_SessionsCRUD : SamplesBase
         Console.WriteLine($"Retrieved session with ID {session.AgentSessionId}");
         #endregion
         #region Snippet:Sample_List_SessionsCRUD_Sync
-        List<ProjectAgentSession> sessions = [..agentsClient.GetSessions(agentName: agentVersion.Name)];
+        List<ProjectAgentSession> sessions = [.. agentsClient.GetSessions(agentName: agentVersion.Name)];
         Console.WriteLine($"Found {sessions.Count} sessions.");
         foreach (ProjectAgentSession item in sessions)
         {

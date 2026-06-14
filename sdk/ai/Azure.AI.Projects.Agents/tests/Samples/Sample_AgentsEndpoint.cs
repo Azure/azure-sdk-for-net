@@ -72,7 +72,7 @@ public class Sample_AgentsEndpoint : SamplesBase
         AgentEndpointConfiguration config = new()
         {
             VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
-            Protocols = {AgentEndpointProtocol.Responses}
+            Protocols = { AgentEndpointProtocol.Responses }
         };
         AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
         PatchAgentOptions patchOptions = new()

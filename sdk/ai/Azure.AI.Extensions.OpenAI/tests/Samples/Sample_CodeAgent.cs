@@ -96,7 +96,7 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
         catch (ClientResultException e)
         {
             MatchCollection session = Regex.Matches(e.Message, "'[^']+'");
-            if (e.Status == 424 && e.Message.IndexOf("session_not_ready", StringComparison.OrdinalIgnoreCase) !=-1 && session.Count > 0)
+            if (e.Status == 424 && e.Message.IndexOf("session_not_ready", StringComparison.OrdinalIgnoreCase) != -1 && session.Count > 0)
             {
                 SessionLogEvent logEvent = await projectClient.AgentAdministrationClient.GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session[0].Value.Trim('\''));
                 Console.WriteLine(logEvent.Data);

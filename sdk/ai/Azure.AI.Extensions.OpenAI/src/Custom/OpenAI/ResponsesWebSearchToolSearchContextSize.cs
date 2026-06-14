@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 namespace Azure.AI.Extensions.OpenAI;
-    /// <summary></summary>
+
+/// <summary></summary>
 [CodeGenType("WebSearchToolSearchContextSize")]
 public enum ResponsesWebSearchToolSearchContextSize
 {

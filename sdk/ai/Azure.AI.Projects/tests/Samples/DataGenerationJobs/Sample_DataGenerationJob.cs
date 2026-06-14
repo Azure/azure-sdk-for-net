@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
-public class Sample_DataGenerationJob: SamplesBase
+public class Sample_DataGenerationJob : SamplesBase
 {
     [Test]
     [AsyncOnly]

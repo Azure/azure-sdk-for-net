@@ -617,7 +617,7 @@ public class AgentsTests : AgentsTestBase
                 definition: new MemoryStoreDefaultDefinition(TestEnvironment.MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME, TestEnvironment.MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME)
             );
         }
-        List<MemoryStore> records = await projectClient.MemoryStores.GetMemoryStoresAsync(limit: PAGE_SIZE, order: "asc").Where(x=>x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
+        List<MemoryStore> records = await projectClient.MemoryStores.GetMemoryStoresAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Go forward.
         List<MemoryStore> forward = await projectClient.MemoryStores.GetMemoryStoresAsync(order: "asc", after: records[0].Id, limit: PAGE_SIZE).Where(x => x.Name.StartsWith(MEMORY_STORE_NAME)).ToListAsync();
@@ -1102,7 +1102,7 @@ public class AgentsTests : AgentsTestBase
                 }
                 else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection || toolType == ToolType.MCPToolbox) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                 {
-                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox? "search-tool" : "api-specs"));
+                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo(toolType == ToolType.MCPToolbox ? "search-tool" : "api-specs"));
                     responseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
                     funcionCalled = true;
                     functionWasCalled = true;
