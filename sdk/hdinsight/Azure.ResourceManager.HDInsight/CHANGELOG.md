@@ -1,18 +1,11 @@
 # Release History
 
-## 1.2.0-beta.6 (Unreleased)
-
-### Features Added
-
-- Added `ModelFactory` methods for `HDInsightAutoScaleRecurrence`, `HDInsightAutoScaleSchedule`, `HDInsightAzureMonitorSelectedConfigurations`, `HDInsightClusterCreateOrUpdateContent`, `HDInsightClusterCreateOrUpdateProperties`, `HDInsightClusterCreationValidateContent`, `HDInsightClusterDefinition`, `HDInsightClusterGatewaySettings`, `HDInsightClusterRole`, `HDInsightClusterUpdateGatewaySettingsContent`, `HDInsightSecurityProfile`, and `KafkaRestProperties`.
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.2.0-beta.6 (2026-06-13)
 
 ### Other Changes
 
-- Migrated from AutoRest/Swagger to TypeSpec-based code generation
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.2.0-beta.5 (2025-10-15)
 
