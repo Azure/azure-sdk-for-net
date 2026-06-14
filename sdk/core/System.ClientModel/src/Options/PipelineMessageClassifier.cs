@@ -38,6 +38,22 @@ public abstract class PipelineMessageClassifier
         => new ResponseStatusClassifier(successStatusCodes);
 
     /// <summary>
+    /// Create an instance of a <see cref="PipelineMessageClassifier"/> that
+    /// classifies all status codes within the given inclusive range as success
+    /// codes.
+    /// </summary>
+    /// <param name="minInclusive">The minimum status code (inclusive) that the
+    /// returned classifier instance will classify as a success code.</param>
+    /// <param name="maxInclusive">The maximum status code (inclusive) that the
+    /// returned classifier instance will classify as a success code.</param>
+    /// <returns>A <see cref="PipelineMessageClassifier"/> instance that
+    /// classifies the status codes in the range
+    /// [<paramref name="minInclusive"/>, <paramref name="maxInclusive"/>] as
+    /// success codes.</returns>
+    public static PipelineMessageClassifier CreateRange(ushort minInclusive, ushort maxInclusive)
+        => new ResponseStatusClassifier(minInclusive, maxInclusive);
+
+    /// <summary>
     /// Attempt to evaluate whether the provided <see cref="PipelineMessage"/>
     /// contains a <see cref="PipelineMessage.Response"/> that the client should
     /// consider an error response.

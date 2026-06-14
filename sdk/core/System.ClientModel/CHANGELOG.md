@@ -65,6 +65,7 @@
 - Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing.
 - Added `IsReadOnly` property to `ClientPipelineOptions` and `ClientLoggingOptions` so callers can check whether options can still be modified without catching an exception.
 - Added `Clone()` method to `ClientPipelineOptions` and `ClientLoggingOptions` that creates a new mutable instance from an existing instance that may be read-only.
+- Added `PipelineMessageClassifier.CreateRange(ushort minInclusive, ushort maxInclusive)` factory method for creating classifiers based on status code ranges.
 - Added `ConfigurationSchema.json` to the NuGet package via the MSBuild `JsonSchemaSegment` feature, enabling automatic JSON IntelliSense and validation for `appsettings.json` when configuring System.ClientModel-based clients.
 - Updated BCL dependencies to 10.x.
 
