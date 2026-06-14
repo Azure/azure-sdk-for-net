@@ -162,6 +162,23 @@ namespace Azure.ResourceManager.ArtifactSigning
             }
         }
 
+        /// <summary> Indicates whether the resource is intended for a specific usage scenario. </summary>
+        public string ProgramType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProgramType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateProfileProperties();
+                }
+                Properties.ProgramType = value;
+            }
+        }
+
         /// <summary> Status of the current operation on certificate profile. </summary>
         public ArtifactSigningProvisioningState? ProvisioningState
         {
