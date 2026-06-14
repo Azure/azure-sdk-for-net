@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Monitor
 {
+    /// <summary></summary>
     public partial class PipelineGroupResource : IJsonModel<PipelineGroupData>
     {
-        private static PipelineGroupData s_dataDeserializationInstance;
-        private static PipelineGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PipelineGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PipelineGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PipelineGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PipelineGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PipelineGroupData>)Data).Write(writer, options);
 
-        PipelineGroupData IJsonModel<PipelineGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PipelineGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PipelineGroupData IJsonModel<PipelineGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PipelineGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PipelineGroupData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PipelineGroupData IPersistableModel<PipelineGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PipelineGroupData>(data, options, AzureResourceManagerMonitorContext.Default);
 
-        string IPersistableModel<PipelineGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PipelineGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PipelineGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

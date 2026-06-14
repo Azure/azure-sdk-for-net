@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Properties that need to be specified to create a new pipeline group instance. </summary>
     public partial class PipelineGroupProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PipelineGroupProperties"/>. </summary>
         /// <param name="receivers"> The receivers specified for a pipeline group instance. </param>
@@ -52,7 +24,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="exporters"> The exporters specified for a pipeline group instance. </param>
         /// <param name="service"> The service section for a given pipeline group instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="receivers"/>, <paramref name="processors"/>, <paramref name="exporters"/> or <paramref name="service"/> is null. </exception>
-        public PipelineGroupProperties(IEnumerable<PipelineGroupReceiver> receivers, IEnumerable<PipelineGroupProcessor> processors, IEnumerable<PipelineGroupExporter> exporters, PipelineGroupService service)
+        public PipelineGroupProperties(IEnumerable<Receiver> receivers, IEnumerable<Processor> processors, IEnumerable<Exporter> exporters, Service service)
         {
             Argument.AssertNotNull(receivers, nameof(receivers));
             Argument.AssertNotNull(processors, nameof(processors));
@@ -63,7 +35,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Processors = processors.ToList();
             Exporters = exporters.ToList();
             Service = service;
-            NetworkingConfigurations = new ChangeTrackingList<PipelineGroupNetworkingConfiguration>();
+            NetworkingConfigurations = new ChangeTrackingList<NetworkingConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PipelineGroupProperties"/>. </summary>
@@ -74,8 +46,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="service"> The service section for a given pipeline group instance. </param>
         /// <param name="networkingConfigurations"> Networking configurations for the pipeline group instance. </param>
         /// <param name="provisioningState"> The provisioning state of a pipeline group instance. Set to Succeeded if everything is healthy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineGroupProperties(int? replicas, IList<PipelineGroupReceiver> receivers, IList<PipelineGroupProcessor> processors, IList<PipelineGroupExporter> exporters, PipelineGroupService service, IList<PipelineGroupNetworkingConfiguration> networkingConfigurations, MonitorProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PipelineGroupProperties(int? replicas, IList<Receiver> receivers, IList<Processor> processors, IList<Exporter> exporters, Service service, IList<NetworkingConfiguration> networkingConfigurations, ProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Replicas = replicas;
             Receivers = receivers;
@@ -84,27 +56,28 @@ namespace Azure.ResourceManager.Monitor.Models
             Service = service;
             NetworkingConfigurations = networkingConfigurations;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PipelineGroupProperties"/> for deserialization. </summary>
-        internal PipelineGroupProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Defines the amount of replicas of the pipeline group instance. </summary>
         public int? Replicas { get; set; }
+
         /// <summary> The receivers specified for a pipeline group instance. </summary>
-        public IList<PipelineGroupReceiver> Receivers { get; }
+        public IList<Receiver> Receivers { get; }
+
         /// <summary> The processors specified for a pipeline group instance. </summary>
-        public IList<PipelineGroupProcessor> Processors { get; }
+        public IList<Processor> Processors { get; }
+
         /// <summary> The exporters specified for a pipeline group instance. </summary>
-        public IList<PipelineGroupExporter> Exporters { get; }
+        public IList<Exporter> Exporters { get; }
+
         /// <summary> The service section for a given pipeline group instance. </summary>
-        public PipelineGroupService Service { get; set; }
+        public Service Service { get; set; }
+
         /// <summary> Networking configurations for the pipeline group instance. </summary>
-        public IList<PipelineGroupNetworkingConfiguration> NetworkingConfigurations { get; }
+        public IList<NetworkingConfiguration> NetworkingConfigurations { get; }
+
         /// <summary> The provisioning state of a pipeline group instance. Set to Succeeded if everything is healthy. </summary>
-        public MonitorProvisioningState? ProvisioningState { get; }
+        public ProvisioningState? ProvisioningState { get; }
     }
 }
