@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
 
         private ClientDiagnostics RedisEnterpriseClusterClientDiagnostics => _redisEnterpriseClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RedisEnterpriseCluster RedisEnterpriseClusterRestClient => _redisEnterpriseClusterRestClient ??= new RedisEnterpriseCluster(RedisEnterpriseClusterClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private RedisEnterpriseCluster RedisEnterpriseClusterRestClient => _redisEnterpriseClusterRestClient ??= new RedisEnterpriseCluster(RedisEnterpriseClusterClientDiagnostics, Pipeline, Endpoint, "2026-02-01-preview");
 
         private ClientDiagnostics OperationsStatusClientDiagnostics => _operationsStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OperationsStatus OperationsStatusRestClient => _operationsStatusRestClient ??= new OperationsStatus(OperationsStatusClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private OperationsStatus OperationsStatusRestClient => _operationsStatusRestClient ??= new OperationsStatus(OperationsStatusClientDiagnostics, Pipeline, Endpoint, "2026-02-01-preview");
 
         /// <summary>
         /// Lists all Redis Enterprise clusters in the specified subscription.
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

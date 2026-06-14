@@ -87,6 +87,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             writer.WriteBooleanValue(IsSwitchDns);
             writer.WritePropertyName("skipDataMigration"u8);
             writer.WriteBooleanValue(IsSkipDataMigration);
+            if (Optional.IsDefined(ForceMigrate))
+            {
+                writer.WritePropertyName("forceMigrate"u8);
+                writer.WriteBooleanValue(ForceMigrate.Value);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -124,6 +129,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             ResourceIdentifier sourceResourceId = default;
             bool isSwitchDns = default;
             bool isSkipDataMigration = default;
+            bool? forceMigrate = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sourceType"u8))
@@ -187,6 +193,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     isSkipDataMigration = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("forceMigrate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    forceMigrate = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -202,7 +217,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 additionalBinaryDataProperties,
                 sourceResourceId,
                 isSwitchDns,
-                isSkipDataMigration);
+                isSkipDataMigration,
+                forceMigrate);
         }
     }
 }
