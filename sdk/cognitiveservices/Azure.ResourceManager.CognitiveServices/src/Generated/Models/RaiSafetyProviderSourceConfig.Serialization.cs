@@ -14,51 +14,51 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Gets or sets the source to which safety providers applies. </summary>
-    public partial class SafetyProviderConfig : RaiSafetyProviderConfig, IJsonModel<SafetyProviderConfig>
+    public partial class RaiSafetyProviderSourceConfig : RaiSafetyProviderConfig, IJsonModel<RaiSafetyProviderSourceConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RaiSafetyProviderConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SafetyProviderConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiSafetyProviderSourceConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSafetyProviderConfig(document.RootElement, options);
+                        return DeserializeRaiSafetyProviderSourceConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SafetyProviderConfig)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiSafetyProviderSourceConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SafetyProviderConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiSafetyProviderSourceConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SafetyProviderConfig)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RaiSafetyProviderSourceConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SafetyProviderConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RaiSafetyProviderSourceConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SafetyProviderConfig IPersistableModel<SafetyProviderConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (SafetyProviderConfig)PersistableModelCreateCore(data, options);
+        RaiSafetyProviderSourceConfig IPersistableModel<RaiSafetyProviderSourceConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => (RaiSafetyProviderSourceConfig)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SafetyProviderConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RaiSafetyProviderSourceConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SafetyProviderConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RaiSafetyProviderSourceConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SafetyProviderConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiSafetyProviderSourceConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SafetyProviderConfig)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiSafetyProviderSourceConfig)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Source))
@@ -84,24 +84,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SafetyProviderConfig IJsonModel<SafetyProviderConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SafetyProviderConfig)JsonModelCreateCore(ref reader, options);
+        RaiSafetyProviderSourceConfig IJsonModel<RaiSafetyProviderSourceConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RaiSafetyProviderSourceConfig)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RaiSafetyProviderConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SafetyProviderConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RaiSafetyProviderSourceConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SafetyProviderConfig)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RaiSafetyProviderSourceConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSafetyProviderConfig(document.RootElement, options);
+            return DeserializeRaiSafetyProviderSourceConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SafetyProviderConfig DeserializeSafetyProviderConfig(JsonElement element, ModelReaderWriterOptions options)
+        internal static RaiSafetyProviderSourceConfig DeserializeRaiSafetyProviderSourceConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SafetyProviderConfig(safetyProviderName, isBlocking, additionalBinaryDataProperties, source);
+            return new RaiSafetyProviderSourceConfig(safetyProviderName, isBlocking, additionalBinaryDataProperties, source);
         }
     }
 }
