@@ -3,7 +3,7 @@
 
 namespace Azure.Provisioning.Expressions;
 
-public class NullLiteralExpression() : LiteralExpression()
+public partial class NullLiteralExpression() : LiteralExpression()
 {
     internal override BicepWriter Write(BicepWriter writer) => writer.Append("null");
 }

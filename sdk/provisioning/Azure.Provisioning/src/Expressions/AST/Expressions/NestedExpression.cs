@@ -3,7 +3,7 @@
 
 namespace Azure.Provisioning.Expressions;
 
-public class NestedExpression(BicepExpression value, string nestedMember) : BicepExpression
+public partial class NestedExpression(BicepExpression value, string nestedMember) : BicepExpression
 {
     public BicepExpression Value { get; } = value;
     public string NestedMember { get; } = nestedMember;

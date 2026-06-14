@@ -3,7 +3,7 @@
 
 namespace Azure.Provisioning.Expressions;
 
-public class ConditionalExpression(BicepExpression condition, BicepExpression consequent, BicepExpression alternate) : BicepExpression
+public partial class ConditionalExpression(BicepExpression condition, BicepExpression consequent, BicepExpression alternate) : BicepExpression
 {
     public BicepExpression Condition { get; } = condition;
     public BicepExpression Consequent { get; } = consequent;

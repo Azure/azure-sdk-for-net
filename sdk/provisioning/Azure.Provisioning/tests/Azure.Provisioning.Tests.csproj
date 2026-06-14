@@ -10,6 +10,7 @@
     <ProjectReference Include="..\..\..\containerregistry\Azure.Provisioning.ContainerRegistry\src\Azure.Provisioning.ContainerRegistry.csproj" />
     <ProjectReference Include="..\..\..\operationalinsights\Azure.Provisioning.OperationalInsights\src\Azure.Provisioning.OperationalInsights.csproj" />
     <ProjectReference Include="..\..\..\storage\Azure.Provisioning.Storage\src\Azure.Provisioning.Storage.csproj" />
+    <ProjectReference Include="..\..\..\keyvault\Azure.Provisioning.KeyVault\src\Azure.Provisioning.KeyVault.csproj" />
     <ProjectReference Include="..\src\Azure.Provisioning.csproj" />
     <ProjectReference Include="..\..\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj" />
     <PackageReference Include="Azure.Storage.Blobs" />
@@ -18,5 +19,10 @@
   <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
     <Compile Include="..\..\..\..\common\ProvisioningTestShared\*.cs" LinkBase="Shared\ProvisioningTestShared" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Serialization\SchemaSpec\*.tsp" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Serialization\SchemaSpec\SOURCE.md" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
