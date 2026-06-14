@@ -7,76 +7,45 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A request to check whether the specified name for a resource is available. </summary>
     public partial class SqlNameAvailabilityContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlNameAvailabilityContent"/>. </summary>
         /// <param name="name"></param>
+        /// <param name="type"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public SqlNameAvailabilityContent(string name)
+        public SqlNameAvailabilityContent(string name, SqlNameAvailabilityResourceType @type)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ResourceType = SqlNameAvailabilityResourceType.MicrosoftSqlServers;
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlNameAvailabilityContent"/>. </summary>
         /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlNameAvailabilityContent(string name, SqlNameAvailabilityResourceType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="type"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlNameAvailabilityContent(string name, SqlNameAvailabilityResourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            ResourceType = resourceType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SqlNameAvailabilityContent"/> for deserialization. </summary>
-        internal SqlNameAvailabilityContent()
-        {
-        }
-
-        /// <summary> Gets the name. </summary>
+        /// <summary> Gets the Name. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Gets the resource type. </summary>
+
+        /// <summary> Gets the Type. </summary>
         [WirePath("type")]
-        public SqlNameAvailabilityResourceType ResourceType { get; }
+        public SqlNameAvailabilityResourceType Type { get; }
     }
 }

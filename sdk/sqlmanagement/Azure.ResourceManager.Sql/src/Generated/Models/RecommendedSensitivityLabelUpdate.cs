@@ -9,43 +9,15 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> A recommended sensitivity label update operation. </summary>
     public partial class RecommendedSensitivityLabelUpdate : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecommendedSensitivityLabelUpdate"/>. </summary>
         public RecommendedSensitivityLabelUpdate()
@@ -53,35 +25,60 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecommendedSensitivityLabelUpdate"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="op"></param>
-        /// <param name="schema"> Schema name of the column to update. </param>
-        /// <param name="table"> Table name of the column to update. </param>
-        /// <param name="column"> Column name to update. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendedSensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RecommendedSensitivityLabelUpdateKind? op, string schema, string table, string column, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RecommendedSensitivityLabelUpdate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RecommendedSensitivityLabelUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Op = op;
-            Schema = schema;
-            Table = table;
-            Column = column;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the op. </summary>
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal RecommendedSensitivityLabelUpdateProperties Properties { get; set; }
+
+        /// <summary> Gets the Op. </summary>
         [WirePath("properties.op")]
-        public RecommendedSensitivityLabelUpdateKind? Op { get; set; }
+        public RecommendedSensitivityLabelUpdateKind? Op
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Op;
+            }
+        }
+
         /// <summary> Schema name of the column to update. </summary>
         [WirePath("properties.schema")]
-        public string Schema { get; set; }
+        public string Schema
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Schema;
+            }
+        }
+
         /// <summary> Table name of the column to update. </summary>
         [WirePath("properties.table")]
-        public string Table { get; set; }
+        public string Table
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Table;
+            }
+        }
+
         /// <summary> Column name to update. </summary>
         [WirePath("properties.column")]
-        public string Column { get; set; }
+        public string Column
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Column;
+            }
+        }
     }
 }

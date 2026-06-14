@@ -6,45 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A Class representing a SqlServerAutomaticTuning along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerAutomaticTuningResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSqlServerAutomaticTuningResource method.
+    /// A class representing a SqlServerAutomaticTuning along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlServerAutomaticTuningResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="SqlServerResource"/> using the GetSqlServerAutomaticTuning method.
     /// </summary>
     public partial class SqlServerAutomaticTuningResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SqlServerAutomaticTuningResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="serverName"> The serverName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _sqlServerAutomaticTuningServerAutomaticTuningClientDiagnostics;
-        private readonly ServerAutomaticTuningRestOperations _sqlServerAutomaticTuningServerAutomaticTuningRestClient;
+        private readonly ClientDiagnostics _serverAutomaticTuningClientDiagnostics;
+        private readonly ServerAutomaticTuning _serverAutomaticTuningRestClient;
         private readonly SqlServerAutomaticTuningData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/automaticTuning";
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerAutomaticTuningResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SqlServerAutomaticTuningResource for mocking. </summary>
         protected SqlServerAutomaticTuningResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerAutomaticTuningResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerAutomaticTuningResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlServerAutomaticTuningResource(ArmClient client, SqlServerAutomaticTuningData data) : this(client, data.Id)
@@ -53,71 +43,92 @@ namespace Azure.ResourceManager.Sql
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SqlServerAutomaticTuningResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerAutomaticTuningResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SqlServerAutomaticTuningResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sqlServerAutomaticTuningServerAutomaticTuningClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string sqlServerAutomaticTuningServerAutomaticTuningApiVersion);
-            _sqlServerAutomaticTuningServerAutomaticTuningRestClient = new ServerAutomaticTuningRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerAutomaticTuningServerAutomaticTuningApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string sqlServerAutomaticTuningApiVersion);
+            _serverAutomaticTuningClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            _serverAutomaticTuningRestClient = new ServerAutomaticTuning(_serverAutomaticTuningClientDiagnostics, Pipeline, Endpoint, sqlServerAutomaticTuningApiVersion ?? "2025-01-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SqlServerAutomaticTuningData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Retrieves server automatic tuning options.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAutomaticTuning_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerAutomaticTunings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerAutomaticTuningResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SqlServerAutomaticTuningResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SqlServerAutomaticTuningResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerAutomaticTuningServerAutomaticTuningClientDiagnostics.CreateScope("SqlServerAutomaticTuningResource.Get");
+            using DiagnosticScope scope = _serverAutomaticTuningClientDiagnostics.CreateScope("SqlServerAutomaticTuningResource.Get");
             scope.Start();
             try
             {
-                var response = await _sqlServerAutomaticTuningServerAutomaticTuningRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverAutomaticTuningRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SqlServerAutomaticTuningData> response = Response.FromValue(SqlServerAutomaticTuningData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerAutomaticTuningResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.Sql
         /// Retrieves server automatic tuning options.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAutomaticTuning_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerAutomaticTunings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerAutomaticTuningResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SqlServerAutomaticTuningResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SqlServerAutomaticTuningResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerAutomaticTuningServerAutomaticTuningClientDiagnostics.CreateScope("SqlServerAutomaticTuningResource.Get");
+            using DiagnosticScope scope = _serverAutomaticTuningClientDiagnostics.CreateScope("SqlServerAutomaticTuningResource.Get");
             scope.Start();
             try
             {
-                var response = _sqlServerAutomaticTuningServerAutomaticTuningRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverAutomaticTuningRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SqlServerAutomaticTuningData> response = Response.FromValue(SqlServerAutomaticTuningData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerAutomaticTuningResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,20 +190,20 @@ namespace Azure.ResourceManager.Sql
         /// Update automatic tuning options on server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAutomaticTuning_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerAutomaticTunings_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerAutomaticTuningResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SqlServerAutomaticTuningResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,11 +214,21 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlServerAutomaticTuningServerAutomaticTuningClientDiagnostics.CreateScope("SqlServerAutomaticTuningResource.Update");
+            using DiagnosticScope scope = _serverAutomaticTuningClientDiagnostics.CreateScope("SqlServerAutomaticTuningResource.Update");
             scope.Start();
             try
             {
-                var response = await _sqlServerAutomaticTuningServerAutomaticTuningRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverAutomaticTuningRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SqlServerAutomaticTuningData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SqlServerAutomaticTuningData> response = Response.FromValue(SqlServerAutomaticTuningData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerAutomaticTuningResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -213,20 +242,20 @@ namespace Azure.ResourceManager.Sql
         /// Update automatic tuning options on server.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerAutomaticTuning_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServerAutomaticTunings_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlServerAutomaticTuningResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SqlServerAutomaticTuningResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,11 +266,21 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlServerAutomaticTuningServerAutomaticTuningClientDiagnostics.CreateScope("SqlServerAutomaticTuningResource.Update");
+            using DiagnosticScope scope = _serverAutomaticTuningClientDiagnostics.CreateScope("SqlServerAutomaticTuningResource.Update");
             scope.Start();
             try
             {
-                var response = _sqlServerAutomaticTuningServerAutomaticTuningRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serverAutomaticTuningRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, SqlServerAutomaticTuningData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SqlServerAutomaticTuningData> response = Response.FromValue(SqlServerAutomaticTuningData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SqlServerAutomaticTuningResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

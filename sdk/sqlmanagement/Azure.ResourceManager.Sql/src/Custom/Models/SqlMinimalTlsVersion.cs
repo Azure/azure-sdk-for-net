@@ -3,7 +3,7 @@
 
 #nullable disable
 
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -11,18 +11,18 @@ namespace Azure.ResourceManager.Sql.Models
     {
         /// <summary> None. </summary>
         [CodeGenMember("None")]
-        public static SqlMinimalTlsVersion TlsNone { get; } = new SqlMinimalTlsVersion(TlsNoneValue);
+        public static SqlMinimalTlsVersion TlsNone { get; } = new SqlMinimalTlsVersion(NoneValue);
         /// <summary> 1.0. </summary>
-        [CodeGenMember("One0")]
-        public static SqlMinimalTlsVersion Tls1_0 { get; } = new SqlMinimalTlsVersion(Tls1_0Value);
+        [CodeGenMember("_10")]
+        public static SqlMinimalTlsVersion Tls1_0 { get; } = new SqlMinimalTlsVersion(_10Value);
         /// <summary> 1.1. </summary>
-        [CodeGenMember("One1")]
-        public static SqlMinimalTlsVersion Tls1_1 { get; } = new SqlMinimalTlsVersion(Tls1_1Value);
+        [CodeGenMember("_11")]
+        public static SqlMinimalTlsVersion Tls1_1 { get; } = new SqlMinimalTlsVersion(_11Value);
         /// <summary> 1.2. </summary>
-        [CodeGenMember("One2")]
-        public static SqlMinimalTlsVersion Tls1_2 { get; } = new SqlMinimalTlsVersion(Tls1_2Value);
+        [CodeGenMember("_12")]
+        public static SqlMinimalTlsVersion Tls1_2 { get; } = new SqlMinimalTlsVersion(_12Value);
         /// <summary> 1.3. </summary>
-        [CodeGenMember("One3")]
-        public static SqlMinimalTlsVersion Tls1_3 { get; } = new SqlMinimalTlsVersion(Tls1_3Value);
+        [CodeGenMember("_13")]
+        public static SqlMinimalTlsVersion Tls1_3 { get; } = new SqlMinimalTlsVersion(_13Value);
     }
 }

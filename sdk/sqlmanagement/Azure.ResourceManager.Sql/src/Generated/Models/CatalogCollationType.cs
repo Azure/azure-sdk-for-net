@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct CatalogCollationType : IEquatable<CatalogCollationType>
     {
         private readonly string _value;
+        /// <summary> DATABASE_DEFAULT. </summary>
+        private const string DATABASEDEFAULTValue = "DATABASE_DEFAULT";
+        /// <summary> SQL_Latin1_General_CP1_CI_AS. </summary>
+        private const string SQLLatin1GeneralCP1CIASValue = "SQL_Latin1_General_CP1_CI_AS";
 
         /// <summary> Initializes a new instance of <see cref="CatalogCollationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CatalogCollationType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string DatabaseDefaultValue = "DATABASE_DEFAULT";
-        private const string SqlLatin1GeneralCp1CiAsValue = "SQL_Latin1_General_CP1_CI_AS";
-
         /// <summary> DATABASE_DEFAULT. </summary>
-        public static CatalogCollationType DatabaseDefault { get; } = new CatalogCollationType(DatabaseDefaultValue);
+        public static CatalogCollationType DATABASEDEFAULT { get; } = new CatalogCollationType(DATABASEDEFAULTValue);
+
         /// <summary> SQL_Latin1_General_CP1_CI_AS. </summary>
-        public static CatalogCollationType SqlLatin1GeneralCp1CiAs { get; } = new CatalogCollationType(SqlLatin1GeneralCp1CiAsValue);
+        public static CatalogCollationType SQLLatin1GeneralCP1CIAS { get; } = new CatalogCollationType(SQLLatin1GeneralCP1CIASValue);
+
         /// <summary> Determines if two <see cref="CatalogCollationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CatalogCollationType left, CatalogCollationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CatalogCollationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CatalogCollationType left, CatalogCollationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CatalogCollationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CatalogCollationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CatalogCollationType(string value) => new CatalogCollationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CatalogCollationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CatalogCollationType?(string value) => value == null ? null : new CatalogCollationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CatalogCollationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CatalogCollationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

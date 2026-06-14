@@ -9,90 +9,79 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the RestorableDroppedManagedDatabase data model.
-    /// A restorable dropped managed database resource.
-    /// </summary>
+    /// <summary> A restorable dropped managed database resource. </summary>
     public partial class RestorableDroppedManagedDatabaseData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RestorableDroppedManagedDatabaseData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public RestorableDroppedManagedDatabaseData(AzureLocation location) : base(location)
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        internal RestorableDroppedManagedDatabaseData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorableDroppedManagedDatabaseData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
-        /// <param name="deletedOn"> The deletion date of the database (ISO8601 format). </param>
-        /// <param name="earliestRestoreOn"> The earliest restore date of the database (ISO8601 format). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableDroppedManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string databaseName, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableDroppedManagedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RestorableDroppedManagedDatabaseProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            DatabaseName = databaseName;
-            CreatedOn = createdOn;
-            DeletedOn = deletedOn;
-            EarliestRestoreOn = earliestRestoreOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestorableDroppedManagedDatabaseData"/> for deserialization. </summary>
-        internal RestorableDroppedManagedDatabaseData()
-        {
-        }
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal RestorableDroppedManagedDatabaseProperties Properties { get; }
 
         /// <summary> The name of the database. </summary>
         [WirePath("properties.databaseName")]
-        public string DatabaseName { get; }
+        public string DatabaseName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseName;
+            }
+        }
+
         /// <summary> The creation date of the database (ISO8601 format). </summary>
         [WirePath("properties.creationDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The deletion date of the database (ISO8601 format). </summary>
         [WirePath("properties.deletionDate")]
-        public DateTimeOffset? DeletedOn { get; }
+        public DateTimeOffset? DeletedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeletedOn;
+            }
+        }
+
         /// <summary> The earliest restore date of the database (ISO8601 format). </summary>
         [WirePath("properties.earliestRestoreDate")]
-        public DateTimeOffset? EarliestRestoreOn { get; }
+        public DateTimeOffset? EarliestRestoreOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EarliestRestoreOn;
+            }
+        }
     }
 }

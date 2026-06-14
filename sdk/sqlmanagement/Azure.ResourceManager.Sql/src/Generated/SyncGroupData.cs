@@ -13,43 +13,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the SyncGroup data model.
-    /// An Azure SQL Database sync group.
-    /// </summary>
+    /// <summary> An Azure SQL Database sync group. </summary>
     public partial class SyncGroupData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SyncGroupData"/>. </summary>
         public SyncGroupData()
@@ -57,80 +25,218 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of <see cref="SyncGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="sku"> The name and capacity of the SKU. </param>
-        /// <param name="interval"> Sync interval of the sync group. </param>
-        /// <param name="lastSyncOn"> Last sync time of the sync group. </param>
-        /// <param name="conflictResolutionPolicy"> Conflict resolution policy of the sync group. </param>
-        /// <param name="syncDatabaseId"> ARM resource id of the sync database in the sync group. </param>
-        /// <param name="hubDatabaseUserName"> User name for the sync group hub database credential. </param>
-        /// <param name="hubDatabasePassword"> Password for the sync group hub database credential. </param>
-        /// <param name="syncState"> Sync state of the sync group. </param>
-        /// <param name="schema"> Sync schema of the sync group. </param>
-        /// <param name="isConflictLoggingEnabled"> If conflict logging is enabled. </param>
-        /// <param name="conflictLoggingRetentionInDays"> Conflict logging retention period. </param>
-        /// <param name="usePrivateLinkConnection"> If use private link connection is enabled. </param>
-        /// <param name="privateEndpointName"> Private endpoint name of the sync group if use private link connection is enabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlSku sku, int? interval, DateTimeOffset? lastSyncOn, SyncConflictResolutionPolicy? conflictResolutionPolicy, ResourceIdentifier syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? isConflictLoggingEnabled, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncGroupProperties properties, SqlSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Sku = sku;
-            Interval = interval;
-            LastSyncOn = lastSyncOn;
-            ConflictResolutionPolicy = conflictResolutionPolicy;
-            SyncDatabaseId = syncDatabaseId;
-            HubDatabaseUserName = hubDatabaseUserName;
-            HubDatabasePassword = hubDatabasePassword;
-            SyncState = syncState;
-            Schema = schema;
-            IsConflictLoggingEnabled = isConflictLoggingEnabled;
-            ConflictLoggingRetentionInDays = conflictLoggingRetentionInDays;
-            UsePrivateLinkConnection = usePrivateLinkConnection;
-            PrivateEndpointName = privateEndpointName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal SyncGroupProperties Properties { get; set; }
 
         /// <summary> The name and capacity of the SKU. </summary>
         [WirePath("sku")]
         public SqlSku Sku { get; set; }
+
         /// <summary> Sync interval of the sync group. </summary>
         [WirePath("properties.interval")]
-        public int? Interval { get; set; }
+        public int? Interval
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Interval;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncGroupProperties();
+                }
+                Properties.Interval = value;
+            }
+        }
+
         /// <summary> Last sync time of the sync group. </summary>
         [WirePath("properties.lastSyncTime")]
-        public DateTimeOffset? LastSyncOn { get; }
+        public DateTimeOffset? LastSyncOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastSyncOn;
+            }
+        }
+
         /// <summary> Conflict resolution policy of the sync group. </summary>
         [WirePath("properties.conflictResolutionPolicy")]
-        public SyncConflictResolutionPolicy? ConflictResolutionPolicy { get; set; }
+        public SyncConflictResolutionPolicy? ConflictResolutionPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConflictResolutionPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncGroupProperties();
+                }
+                Properties.ConflictResolutionPolicy = value;
+            }
+        }
+
         /// <summary> ARM resource id of the sync database in the sync group. </summary>
         [WirePath("properties.syncDatabaseId")]
-        public ResourceIdentifier SyncDatabaseId { get; set; }
+        public string SyncDatabaseId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SyncDatabaseId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncGroupProperties();
+                }
+                Properties.SyncDatabaseId = value;
+            }
+        }
+
         /// <summary> User name for the sync group hub database credential. </summary>
         [WirePath("properties.hubDatabaseUserName")]
-        public string HubDatabaseUserName { get; set; }
+        public string HubDatabaseUserName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HubDatabaseUserName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncGroupProperties();
+                }
+                Properties.HubDatabaseUserName = value;
+            }
+        }
+
         /// <summary> Password for the sync group hub database credential. </summary>
         [WirePath("properties.hubDatabasePassword")]
-        public string HubDatabasePassword { get; set; }
+        public string HubDatabasePassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HubDatabasePassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncGroupProperties();
+                }
+                Properties.HubDatabasePassword = value;
+            }
+        }
+
         /// <summary> Sync state of the sync group. </summary>
         [WirePath("properties.syncState")]
-        public SyncGroupState? SyncState { get; }
+        public SyncGroupState? SyncState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SyncState;
+            }
+        }
+
         /// <summary> Sync schema of the sync group. </summary>
         [WirePath("properties.schema")]
-        public SyncGroupSchema Schema { get; set; }
+        public SyncGroupSchema Schema
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Schema;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncGroupProperties();
+                }
+                Properties.Schema = value;
+            }
+        }
+
         /// <summary> If conflict logging is enabled. </summary>
         [WirePath("properties.enableConflictLogging")]
-        public bool? IsConflictLoggingEnabled { get; set; }
+        public bool? IsConflictLoggingEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsConflictLoggingEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncGroupProperties();
+                }
+                Properties.IsConflictLoggingEnabled = value;
+            }
+        }
+
         /// <summary> Conflict logging retention period. </summary>
         [WirePath("properties.conflictLoggingRetentionInDays")]
-        public int? ConflictLoggingRetentionInDays { get; set; }
+        public int? ConflictLoggingRetentionInDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConflictLoggingRetentionInDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncGroupProperties();
+                }
+                Properties.ConflictLoggingRetentionInDays = value;
+            }
+        }
+
         /// <summary> If use private link connection is enabled. </summary>
         [WirePath("properties.usePrivateLinkConnection")]
-        public bool? UsePrivateLinkConnection { get; set; }
+        public bool? UsePrivateLinkConnection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UsePrivateLinkConnection;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncGroupProperties();
+                }
+                Properties.UsePrivateLinkConnection = value;
+            }
+        }
+
         /// <summary> Private endpoint name of the sync group if use private link connection is enabled. </summary>
         [WirePath("properties.privateEndpointName")]
-        public string PrivateEndpointName { get; }
+        public string PrivateEndpointName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointName;
+            }
+        }
     }
 }

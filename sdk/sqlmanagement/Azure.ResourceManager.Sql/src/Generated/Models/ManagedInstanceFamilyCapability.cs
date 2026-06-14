@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The managed server family capability. </summary>
     public partial class ManagedInstanceFamilyCapability
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceFamilyCapability"/>. </summary>
         internal ManagedInstanceFamilyCapability()
@@ -55,42 +27,48 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceFamilyCapability"/>. </summary>
         /// <param name="name"> Family name. </param>
         /// <param name="sku"> SKU name. </param>
-        /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the family. </param>
+        /// <param name="zoneRedundant"> Whether or not zone redundancy is supported for the family. </param>
         /// <param name="supportedLicenseTypes"> List of supported license types. </param>
         /// <param name="supportedVcoresValues"> List of supported virtual cores values. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceFamilyCapability(string name, string sku, bool? isZoneRedundant, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, IReadOnlyList<ManagedInstanceVcoresCapability> supportedVcoresValues, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceFamilyCapability(string name, string sku, bool? zoneRedundant, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, IReadOnlyList<ManagedInstanceVcoresCapability> supportedVcoresValues, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Sku = sku;
-            IsZoneRedundant = isZoneRedundant;
+            ZoneRedundant = zoneRedundant;
             SupportedLicenseTypes = supportedLicenseTypes;
             SupportedVcoresValues = supportedVcoresValues;
             Status = status;
             Reason = reason;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Family name. </summary>
         [WirePath("name")]
         public string Name { get; }
+
         /// <summary> SKU name. </summary>
         [WirePath("sku")]
         public string Sku { get; }
+
         /// <summary> Whether or not zone redundancy is supported for the family. </summary>
         [WirePath("zoneRedundant")]
-        public bool? IsZoneRedundant { get; }
+        public bool? ZoneRedundant { get; }
+
         /// <summary> List of supported license types. </summary>
         [WirePath("supportedLicenseTypes")]
         public IReadOnlyList<LicenseTypeCapability> SupportedLicenseTypes { get; }
+
         /// <summary> List of supported virtual cores values. </summary>
         [WirePath("supportedVcoresValues")]
         public IReadOnlyList<ManagedInstanceVcoresCapability> SupportedVcoresValues { get; }
+
         /// <summary> The status of the capability. </summary>
         [WirePath("status")]
         public SqlCapabilityStatus? Status { get; }
+
         /// <summary> The reason for the capability not being available. </summary>
         [WirePath("reason")]
         public string Reason { get; }

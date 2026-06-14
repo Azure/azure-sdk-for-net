@@ -13,43 +13,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the SyncMember data model.
-    /// An Azure SQL Database sync member.
-    /// </summary>
+    /// <summary> An Azure SQL Database sync member. </summary>
     public partial class SyncMemberData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SyncMemberData"/>. </summary>
         public SyncMemberData()
@@ -57,75 +25,220 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of <see cref="SyncMemberData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="databaseType"> Database type of the sync member. </param>
-        /// <param name="syncAgentId"> ARM resource id of the sync agent in the sync member. </param>
-        /// <param name="sqlServerDatabaseId"> SQL Server database id of the sync member. </param>
-        /// <param name="syncMemberAzureDatabaseResourceId"> ARM resource id of the sync member logical database, for sync members in Azure. </param>
-        /// <param name="usePrivateLinkConnection"> Whether to use private link connection. </param>
-        /// <param name="privateEndpointName"> Private endpoint name of the sync member if use private link connection is enabled, for sync members in Azure. </param>
-        /// <param name="serverName"> Server name of the member database in the sync member. </param>
-        /// <param name="databaseName"> Database name of the member database in the sync member. </param>
-        /// <param name="userName"> User name of the member database in the sync member. </param>
-        /// <param name="password"> Password of the member database in the sync member. </param>
-        /// <param name="syncDirection"> Sync direction of the sync member. </param>
-        /// <param name="syncState"> Sync state of the sync member. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SyncMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, ResourceIdentifier syncAgentId, Guid? sqlServerDatabaseId, ResourceIdentifier syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SyncMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            DatabaseType = databaseType;
-            SyncAgentId = syncAgentId;
-            SqlServerDatabaseId = sqlServerDatabaseId;
-            SyncMemberAzureDatabaseResourceId = syncMemberAzureDatabaseResourceId;
-            UsePrivateLinkConnection = usePrivateLinkConnection;
-            PrivateEndpointName = privateEndpointName;
-            ServerName = serverName;
-            DatabaseName = databaseName;
-            UserName = userName;
-            Password = password;
-            SyncDirection = syncDirection;
-            SyncState = syncState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal SyncMemberProperties Properties { get; set; }
 
         /// <summary> Database type of the sync member. </summary>
         [WirePath("properties.databaseType")]
-        public SyncMemberDbType? DatabaseType { get; set; }
+        public SyncMemberDbType? DatabaseType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncMemberProperties();
+                }
+                Properties.DatabaseType = value;
+            }
+        }
+
         /// <summary> ARM resource id of the sync agent in the sync member. </summary>
         [WirePath("properties.syncAgentId")]
-        public ResourceIdentifier SyncAgentId { get; set; }
+        public string SyncAgentId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SyncAgentId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncMemberProperties();
+                }
+                Properties.SyncAgentId = value;
+            }
+        }
+
         /// <summary> SQL Server database id of the sync member. </summary>
         [WirePath("properties.sqlServerDatabaseId")]
-        public Guid? SqlServerDatabaseId { get; set; }
+        public Guid? SqlServerDatabaseId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SqlServerDatabaseId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncMemberProperties();
+                }
+                Properties.SqlServerDatabaseId = value;
+            }
+        }
+
         /// <summary> ARM resource id of the sync member logical database, for sync members in Azure. </summary>
         [WirePath("properties.syncMemberAzureDatabaseResourceId")]
-        public ResourceIdentifier SyncMemberAzureDatabaseResourceId { get; set; }
+        public string SyncMemberAzureDatabaseResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SyncMemberAzureDatabaseResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncMemberProperties();
+                }
+                Properties.SyncMemberAzureDatabaseResourceId = value;
+            }
+        }
+
         /// <summary> Whether to use private link connection. </summary>
         [WirePath("properties.usePrivateLinkConnection")]
-        public bool? UsePrivateLinkConnection { get; set; }
+        public bool? UsePrivateLinkConnection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UsePrivateLinkConnection;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncMemberProperties();
+                }
+                Properties.UsePrivateLinkConnection = value;
+            }
+        }
+
         /// <summary> Private endpoint name of the sync member if use private link connection is enabled, for sync members in Azure. </summary>
         [WirePath("properties.privateEndpointName")]
-        public string PrivateEndpointName { get; }
+        public string PrivateEndpointName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointName;
+            }
+        }
+
         /// <summary> Server name of the member database in the sync member. </summary>
         [WirePath("properties.serverName")]
-        public string ServerName { get; set; }
+        public string ServerName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncMemberProperties();
+                }
+                Properties.ServerName = value;
+            }
+        }
+
         /// <summary> Database name of the member database in the sync member. </summary>
         [WirePath("properties.databaseName")]
-        public string DatabaseName { get; set; }
+        public string DatabaseName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncMemberProperties();
+                }
+                Properties.DatabaseName = value;
+            }
+        }
+
         /// <summary> User name of the member database in the sync member. </summary>
         [WirePath("properties.userName")]
-        public string UserName { get; set; }
+        public string UserName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncMemberProperties();
+                }
+                Properties.UserName = value;
+            }
+        }
+
         /// <summary> Password of the member database in the sync member. </summary>
         [WirePath("properties.password")]
-        public string Password { get; set; }
+        public string Password
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Password;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncMemberProperties();
+                }
+                Properties.Password = value;
+            }
+        }
+
         /// <summary> Sync direction of the sync member. </summary>
         [WirePath("properties.syncDirection")]
-        public SyncDirection? SyncDirection { get; set; }
+        public SyncDirection? SyncDirection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SyncDirection;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SyncMemberProperties();
+                }
+                Properties.SyncDirection = value;
+            }
+        }
+
         /// <summary> Sync state of the sync member. </summary>
         [WirePath("properties.syncState")]
-        public SyncMemberState? SyncState { get; }
+        public SyncMemberState? SyncState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SyncState;
+            }
+        }
     }
 }

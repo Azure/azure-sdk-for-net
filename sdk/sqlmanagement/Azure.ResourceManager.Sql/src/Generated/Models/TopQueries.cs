@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The TopQueries. </summary>
     public partial class TopQueries
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TopQueries"/>. </summary>
         internal TopQueries()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="startTime"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endTime"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="queries"> List of top resource consuming queries with appropriate metric data. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TopQueries(int? numberOfQueries, string aggregationFunction, string observationMetric, QueryTimeGrainType? intervalType, string startTime, string endTime, IReadOnlyList<QueryStatisticsProperties> queries, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TopQueries(int? numberOfQueries, string aggregationFunction, string observationMetric, QueryTimeGrainType? intervalType, string startTime, string endTime, IReadOnlyList<QueryStatisticsProperties> queries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NumberOfQueries = numberOfQueries;
             AggregationFunction = aggregationFunction;
@@ -69,27 +41,33 @@ namespace Azure.ResourceManager.Sql.Models
             StartTime = startTime;
             EndTime = endTime;
             Queries = queries;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Requested number of top queries. </summary>
         [WirePath("numberOfQueries")]
         public int? NumberOfQueries { get; }
+
         /// <summary> Aggregation function used to calculate query metrics. </summary>
         [WirePath("aggregationFunction")]
         public string AggregationFunction { get; }
+
         /// <summary> Metric used to rank queries. </summary>
         [WirePath("observationMetric")]
         public string ObservationMetric { get; }
+
         /// <summary> Interval type (length). </summary>
         [WirePath("intervalType")]
         public QueryTimeGrainType? IntervalType { get; }
+
         /// <summary> The start time for the metric (ISO-8601 format). </summary>
         [WirePath("startTime")]
         public string StartTime { get; }
+
         /// <summary> The end time for the metric (ISO-8601 format). </summary>
         [WirePath("endTime")]
         public string EndTime { get; }
+
         /// <summary> List of top resource consuming queries with appropriate metric data. </summary>
         [WirePath("queries")]
         public IReadOnlyList<QueryStatisticsProperties> Queries { get; }

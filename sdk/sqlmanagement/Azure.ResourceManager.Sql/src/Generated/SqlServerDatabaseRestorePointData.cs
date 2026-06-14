@@ -13,84 +13,78 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the SqlServerDatabaseRestorePoint data model.
-    /// Database restore points.
-    /// </summary>
+    /// <summary> Database restore points. </summary>
     public partial class SqlServerDatabaseRestorePointData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlServerDatabaseRestorePointData"/>. </summary>
-        public SqlServerDatabaseRestorePointData()
+        internal SqlServerDatabaseRestorePointData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlServerDatabaseRestorePointData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="restorePointType"> The type of restore point. </param>
-        /// <param name="earliestRestoreOn"> The earliest time to which this database can be restored. </param>
-        /// <param name="restorePointCreatedOn"> The time the backup was taken. </param>
-        /// <param name="restorePointLabel"> The label of restore point for backup request by user. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerDatabaseRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, RestorePointType? restorePointType, DateTimeOffset? earliestRestoreOn, DateTimeOffset? restorePointCreatedOn, string restorePointLabel, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlServerDatabaseRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RestorePointProperties properties, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Location = location;
-            RestorePointType = restorePointType;
-            EarliestRestoreOn = earliestRestoreOn;
-            RestorePointCreatedOn = restorePointCreatedOn;
-            RestorePointLabel = restorePointLabel;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal RestorePointProperties Properties { get; }
 
         /// <summary> Resource location. </summary>
         [WirePath("location")]
-        public AzureLocation? Location { get; }
+        public string Location { get; }
+
         /// <summary> The type of restore point. </summary>
         [WirePath("properties.restorePointType")]
-        public RestorePointType? RestorePointType { get; }
+        public RestorePointType? RestorePointType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RestorePointType;
+            }
+        }
+
         /// <summary> The earliest time to which this database can be restored. </summary>
         [WirePath("properties.earliestRestoreDate")]
-        public DateTimeOffset? EarliestRestoreOn { get; }
+        public DateTimeOffset? EarliestRestoreOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EarliestRestoreOn;
+            }
+        }
+
         /// <summary> The time the backup was taken. </summary>
         [WirePath("properties.restorePointCreationDate")]
-        public DateTimeOffset? RestorePointCreatedOn { get; }
+        public DateTimeOffset? RestorePointCreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RestorePointCreatedOn;
+            }
+        }
+
         /// <summary> The label of restore point for backup request by user. </summary>
         [WirePath("properties.restorePointLabel")]
-        public string RestorePointLabel { get; }
+        public string RestorePointLabel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RestorePointLabel;
+            }
+        }
     }
 }

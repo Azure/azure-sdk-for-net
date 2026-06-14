@@ -13,79 +13,72 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the DatabaseColumn data model.
-    /// A database column resource.
-    /// </summary>
+    /// <summary> A database column resource. </summary>
     public partial class DatabaseColumnData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatabaseColumnData"/>. </summary>
-        public DatabaseColumnData()
+        internal DatabaseColumnData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabaseColumnData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="columnType"> The column data type. </param>
-        /// <param name="temporalType"> The table temporal type. </param>
-        /// <param name="isMemoryOptimized"> Whether or not the column belongs to a memory optimized table. </param>
-        /// <param name="isComputed"> Whether or not the column is computed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseColumnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlColumnDataType? columnType, TableTemporalType? temporalType, bool? isMemoryOptimized, bool? isComputed, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseColumnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DatabaseColumnProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ColumnType = columnType;
-            TemporalType = temporalType;
-            IsMemoryOptimized = isMemoryOptimized;
-            IsComputed = isComputed;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal DatabaseColumnProperties Properties { get; }
 
         /// <summary> The column data type. </summary>
         [WirePath("properties.columnType")]
-        public SqlColumnDataType? ColumnType { get; set; }
+        public SqlColumnDataType? ColumnType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ColumnType;
+            }
+        }
+
         /// <summary> The table temporal type. </summary>
         [WirePath("properties.temporalType")]
-        public TableTemporalType? TemporalType { get; set; }
+        public TableTemporalType? TemporalType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TemporalType;
+            }
+        }
+
         /// <summary> Whether or not the column belongs to a memory optimized table. </summary>
         [WirePath("properties.memoryOptimized")]
-        public bool? IsMemoryOptimized { get; set; }
+        public bool? MemoryOptimized
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MemoryOptimized;
+            }
+        }
+
         /// <summary> Whether or not the column is computed. </summary>
         [WirePath("properties.isComputed")]
-        public bool? IsComputed { get; set; }
+        public bool? IsComputed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsComputed;
+            }
+        }
     }
 }
