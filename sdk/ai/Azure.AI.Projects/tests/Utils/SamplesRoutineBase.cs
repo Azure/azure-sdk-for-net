@@ -33,15 +33,5 @@ public class SamplesRoutineBase : ProjectsClientTestBase
         {
             await projectClient.Routines.DeleteRoutineAsync(routineName);
         }
-        // Remove Agents.
-        List<string> hostedAgents = await projectClient.AgentAdministrationClient.GetAgentsAsync().Select((x) => x.Name).Where((x) => x.StartsWith(SAMPLE_AGEN_PREFIX)).ToListAsync();
-        foreach (string hostedAgent in hostedAgents)
-        {
-            try
-            {
-                projectClient.AgentAdministrationClient.DeleteAgent(hostedAgent, force: true);
-            }
-            catch { }
-        }
     }
 }

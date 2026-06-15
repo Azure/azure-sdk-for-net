@@ -15,21 +15,6 @@ namespace Azure.AI.Projects.Tests.Samples;
 
 public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
 {
-    #region Snippet:Sample_HostedAgentDefinition_RoutinesScheduleTrigger
-    private static HostedAgentDefinition GetAgentDefinition(string dockerImage)
-    {
-        HostedAgentDefinition agentDefinition = new(
-            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
-            cpu: "0.5",
-            memory: "1Gi"
-        )
-        {
-            ContainerConfiguration = new(dockerImage)
-        };
-        return agentDefinition;
-    }
-    #endregion
-
     [Test]
     [AsyncOnly]
     public async Task RoutinesScheduleTriggerAsync()
@@ -37,27 +22,19 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         #region Snippet:Sample_CreateClient_RoutinesScheduleTrigger
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
         string routineName = "sample-routine";
-        string agentName = "myHostedForRoutines";
+        string agentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
         string routineName = SAMPLE_ROUTINE_NAME_PREFIX;
-        string agentName = SAMPLE_AGEN_PREFIX;
+        string agentName = TestEnvironment.HOSTED_AGENT_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AIProjectRoutines routinesClient = projectClient.Routines;
         #endregion
-        #region Snippet:Sample_CreateHostedAgent_RoutinesScheduleTrigger_Async
-        HostedAgentDefinition agentDefinition = GetAgentDefinition(
-            dockerImage: dockerImage
-        );
-        ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
-        creationOptions.Metadata["enableVnextExperience"] = "true";
-        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
-            agentName: "myHostedForRoutines",
-            options: creationOptions);
+        #region Snippet:Sample_GetHostedAgent_RoutinesScheduleTrigger_Async
+        ProjectsAgentVersion agentVersion = (await projectClient.AgentAdministrationClient.GetAgentAsync(
+            agentName: agentName)).Value.GetLatestVersion();
         #endregion
         // Clean up any pre-existing routine with the same name.
         try
@@ -145,26 +122,18 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
     {
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
         string routineName = "sample-routine";
-        string agentName = "myHostedForRoutines";
+        string agentName = System.Environment.GetEnvironmentVariable("HOSTED_AGENT_NAME");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var dockerImage = TestEnvironment.AGENT_DOCKER_IMAGE;
         string routineName = SAMPLE_ROUTINE_NAME_PREFIX;
-        string agentName = SAMPLE_AGEN_PREFIX;
+        string agentName = TestEnvironment.HOSTED_AGENT_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
         AIProjectRoutines routinesClient = projectClient.Routines;
-        #region Snippet:Sample_CreateHostedAgent_RoutinesScheduleTrigger_Sync
-        HostedAgentDefinition agentDefinition = GetAgentDefinition(
-            dockerImage: dockerImage
-        );
-        ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
-        creationOptions.Metadata["enableVnextExperience"] = "true";
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
-            agentName: "myHostedForRoutines",
-            options: creationOptions);
+        #region Snippet:Sample_GetHostedAgent_RoutinesScheduleTrigger_Sync
+        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.GetAgent(
+            agentName: agentName).Value.GetLatestVersion();
         #endregion
         // Clean up any pre-existing routine with the same name.
         try
