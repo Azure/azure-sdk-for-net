@@ -1,4 +1,4 @@
-# Azure.ConfidentialLedger client library for .NET
+# Azure Confidential Ledger client library for .NET
 
 Azure.ConfidentialLedger is a managed service that helps developers get secret simply and securely.
 
