@@ -18,10 +18,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary> Available Guardrails Version. </summary>
-    public partial class GuardrailsAvailableVersionData : ResourceData, IJsonModel<GuardrailsAvailableVersionData>
+    public partial class ContainerServiceGuardrailsAvailableVersionData : ResourceData, IJsonModel<ContainerServiceGuardrailsAvailableVersionData>
     {
-        /// <summary> Initializes a new instance of <see cref="GuardrailsAvailableVersionData"/> for deserialization. </summary>
-        internal GuardrailsAvailableVersionData()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceGuardrailsAvailableVersionData"/> for deserialization. </summary>
+        internal ContainerServiceGuardrailsAvailableVersionData()
         {
         }
 
@@ -29,52 +29,52 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GuardrailsAvailableVersionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceGuardrailsAvailableVersionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGuardrailsAvailableVersionData(document.RootElement, options);
+                        return DeserializeContainerServiceGuardrailsAvailableVersionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GuardrailsAvailableVersionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceGuardrailsAvailableVersionData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GuardrailsAvailableVersionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceGuardrailsAvailableVersionData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GuardrailsAvailableVersionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceGuardrailsAvailableVersionData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GuardrailsAvailableVersionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerServiceGuardrailsAvailableVersionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GuardrailsAvailableVersionData IPersistableModel<GuardrailsAvailableVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (GuardrailsAvailableVersionData)PersistableModelCreateCore(data, options);
+        ContainerServiceGuardrailsAvailableVersionData IPersistableModel<ContainerServiceGuardrailsAvailableVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContainerServiceGuardrailsAvailableVersionData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GuardrailsAvailableVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerServiceGuardrailsAvailableVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GuardrailsAvailableVersionData"/> from. </param>
-        internal static GuardrailsAvailableVersionData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ContainerServiceGuardrailsAvailableVersionData"/> from. </param>
+        internal static ContainerServiceGuardrailsAvailableVersionData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeGuardrailsAvailableVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeContainerServiceGuardrailsAvailableVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GuardrailsAvailableVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerServiceGuardrailsAvailableVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GuardrailsAvailableVersionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceGuardrailsAvailableVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuardrailsAvailableVersionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceGuardrailsAvailableVersionData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
@@ -112,24 +112,24 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GuardrailsAvailableVersionData IJsonModel<GuardrailsAvailableVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GuardrailsAvailableVersionData)JsonModelCreateCore(ref reader, options);
+        ContainerServiceGuardrailsAvailableVersionData IJsonModel<ContainerServiceGuardrailsAvailableVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ContainerServiceGuardrailsAvailableVersionData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GuardrailsAvailableVersionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceGuardrailsAvailableVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuardrailsAvailableVersionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceGuardrailsAvailableVersionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGuardrailsAvailableVersionData(document.RootElement, options);
+            return DeserializeContainerServiceGuardrailsAvailableVersionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GuardrailsAvailableVersionData DeserializeGuardrailsAvailableVersionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerServiceGuardrailsAvailableVersionData DeserializeContainerServiceGuardrailsAvailableVersionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ContainerService
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GuardrailsAvailableVersionData(
+            return new ContainerServiceGuardrailsAvailableVersionData(
                 id,
                 name,
                 resourceType,

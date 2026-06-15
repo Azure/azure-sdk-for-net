@@ -19,18 +19,18 @@ namespace Azure.ResourceManager.ContainerService
     /// or more managed clusters.
     /// For more information, see https://aka.ms/aks/maintenance-windows.
     /// </summary>
-    public partial class MaintenanceWindowResourceData : TrackedResourceData
+    public partial class MaintenanceWindowData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        public MaintenanceWindowResourceData(AzureLocation location) : base(location)
+        public MaintenanceWindowData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties of a maintenance window. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceWindowResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MaintenanceWindowResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal MaintenanceWindowData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MaintenanceWindowResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

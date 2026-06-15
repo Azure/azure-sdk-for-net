@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary></summary>
-    public partial class MaintenanceWindowResource : IJsonModel<MaintenanceWindowResourceData>
+    public partial class MaintenanceWindowResource : IJsonModel<MaintenanceWindowData>
     {
-        private static IJsonModel<MaintenanceWindowResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<MaintenanceWindowData> s_dataDeserializationInstance;
 
-        private static IJsonModel<MaintenanceWindowResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MaintenanceWindowResourceData();
+        private static IJsonModel<MaintenanceWindowData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MaintenanceWindowData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MaintenanceWindowResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceWindowResourceData>)Data).Write(writer, options);
+        void IJsonModel<MaintenanceWindowData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MaintenanceWindowData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceWindowResourceData IJsonModel<MaintenanceWindowResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        MaintenanceWindowData IJsonModel<MaintenanceWindowData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MaintenanceWindowResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaintenanceWindowResourceData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
+        BinaryData IPersistableModel<MaintenanceWindowData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MaintenanceWindowData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceWindowResourceData IPersistableModel<MaintenanceWindowResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceWindowResourceData>(data, options, AzureResourceManagerContainerServiceContext.Default);
+        MaintenanceWindowData IPersistableModel<MaintenanceWindowData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MaintenanceWindowData>(data, options, AzureResourceManagerContainerServiceContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MaintenanceWindowResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<MaintenanceWindowData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -20,15 +20,15 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a MaintenanceWindowResource along with the instance operations that can be performed on it.
+    /// A class representing a MaintenanceWindow along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MaintenanceWindowResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMaintenanceWindowResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMaintenanceWindows method.
     /// </summary>
     public partial class MaintenanceWindowResource : ArmResource
     {
         private readonly ClientDiagnostics _maintenanceWindowsClientDiagnostics;
         private readonly MaintenanceWindows _maintenanceWindowsRestClient;
-        private readonly MaintenanceWindowResourceData _data;
+        private readonly MaintenanceWindowData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ContainerService/maintenanceWindows";
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> Initializes a new instance of <see cref="MaintenanceWindowResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MaintenanceWindowResource(ArmClient client, MaintenanceWindowResourceData data) : this(client, data.Id)
+        internal MaintenanceWindowResource(ArmClient client, MaintenanceWindowData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MaintenanceWindowResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string maintenanceWindowResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string maintenanceWindowApiVersion);
             _maintenanceWindowsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _maintenanceWindowsRestClient = new MaintenanceWindows(_maintenanceWindowsClientDiagnostics, Pipeline, Endpoint, maintenanceWindowResourceApiVersion ?? "2026-04-02-preview");
+            _maintenanceWindowsRestClient = new MaintenanceWindows(_maintenanceWindowsClientDiagnostics, Pipeline, Endpoint, maintenanceWindowApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerService
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MaintenanceWindowResourceData Data
+        public virtual MaintenanceWindowData Data
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceWindowResourceData> response = Response.FromValue(MaintenanceWindowResourceData.FromResponse(result), result);
+                Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceWindowResourceData> response = Response.FromValue(MaintenanceWindowResourceData.FromResponse(result), result);
+                Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _maintenanceWindowsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerServiceTagsObject.ToRequestContent(properties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MaintenanceWindowResourceData> response = Response.FromValue(MaintenanceWindowResourceData.FromResponse(result), result);
+                Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _maintenanceWindowsRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerServiceTagsObject.ToRequestContent(properties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MaintenanceWindowResourceData> response = Response.FromValue(MaintenanceWindowResourceData.FromResponse(result), result);
+                Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -416,12 +416,12 @@ namespace Azure.ResourceManager.ContainerService
                     };
                     HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<MaintenanceWindowResourceData> response = Response.FromValue(MaintenanceWindowResourceData.FromResponse(result), result);
+                    Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenanceWindowResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    MaintenanceWindowData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ContainerServiceTagsObject patch = new ContainerServiceTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -464,12 +464,12 @@ namespace Azure.ResourceManager.ContainerService
                     };
                     HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<MaintenanceWindowResourceData> response = Response.FromValue(MaintenanceWindowResourceData.FromResponse(result), result);
+                    Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenanceWindowResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    MaintenanceWindowData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ContainerServiceTagsObject patch = new ContainerServiceTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -511,12 +511,12 @@ namespace Azure.ResourceManager.ContainerService
                     };
                     HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<MaintenanceWindowResourceData> response = Response.FromValue(MaintenanceWindowResourceData.FromResponse(result), result);
+                    Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenanceWindowResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    MaintenanceWindowData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ContainerServiceTagsObject patch = new ContainerServiceTagsObject();
                     patch.Tags.ReplaceWith(tags);
                     Response<MaintenanceWindowResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -554,12 +554,12 @@ namespace Azure.ResourceManager.ContainerService
                     };
                     HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<MaintenanceWindowResourceData> response = Response.FromValue(MaintenanceWindowResourceData.FromResponse(result), result);
+                    Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenanceWindowResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    MaintenanceWindowData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ContainerServiceTagsObject patch = new ContainerServiceTagsObject();
                     patch.Tags.ReplaceWith(tags);
                     Response<MaintenanceWindowResource> result = Update(patch, cancellationToken: cancellationToken);
@@ -596,12 +596,12 @@ namespace Azure.ResourceManager.ContainerService
                     };
                     HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<MaintenanceWindowResourceData> response = Response.FromValue(MaintenanceWindowResourceData.FromResponse(result), result);
+                    Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenanceWindowResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    MaintenanceWindowData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ContainerServiceTagsObject patch = new ContainerServiceTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
@@ -642,12 +642,12 @@ namespace Azure.ResourceManager.ContainerService
                     };
                     HttpMessage message = _maintenanceWindowsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<MaintenanceWindowResourceData> response = Response.FromValue(MaintenanceWindowResourceData.FromResponse(result), result);
+                    Response<MaintenanceWindowData> response = Response.FromValue(MaintenanceWindowData.FromResponse(result), result);
                     return Response.FromValue(new MaintenanceWindowResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    MaintenanceWindowResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    MaintenanceWindowData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ContainerServiceTagsObject patch = new ContainerServiceTagsObject();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {

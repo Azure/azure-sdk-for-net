@@ -14,26 +14,26 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary> Available Guardrails Version. </summary>
-    public partial class GuardrailsAvailableVersionData : ResourceData
+    public partial class ContainerServiceGuardrailsAvailableVersionData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GuardrailsAvailableVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceGuardrailsAvailableVersionData"/>. </summary>
         /// <param name="properties"> Whether the version is default or not and support info. </param>
-        internal GuardrailsAvailableVersionData(GuardrailsAvailableVersionsProperties properties)
+        internal ContainerServiceGuardrailsAvailableVersionData(GuardrailsAvailableVersionsProperties properties)
         {
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GuardrailsAvailableVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceGuardrailsAvailableVersionData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Whether the version is default or not and support info. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuardrailsAvailableVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GuardrailsAvailableVersionsProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ContainerServiceGuardrailsAvailableVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GuardrailsAvailableVersionsProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

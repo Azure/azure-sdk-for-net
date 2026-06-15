@@ -93,21 +93,21 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GuardrailsAvailableVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ContainerServiceGuardrailsAvailableVersionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetGuardrailsAvailableVersionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceGuardrailsAvailableVersionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="GuardrailsAvailableVersionResource"/> object. </returns>
-        public static GuardrailsAvailableVersionResource GetGuardrailsAvailableVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerServiceGuardrailsAvailableVersionResource"/> object. </returns>
+        public static ContainerServiceGuardrailsAvailableVersionResource GetContainerServiceGuardrailsAvailableVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerServiceArmClient(client).GetGuardrailsAvailableVersionResource(id);
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceGuardrailsAvailableVersionResource(id);
         }
 
         /// <summary>
@@ -454,27 +454,27 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets a collection of MaintenanceWindowResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of MaintenanceWindows in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetMaintenanceWindowResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetMaintenanceWindows()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of MaintenanceWindowResources and their operations over a MaintenanceWindowResource. </returns>
-        public static MaintenanceWindowResourceCollection GetMaintenanceWindowResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of MaintenanceWindows and their operations over a MaintenanceWindowResource. </returns>
+        public static MaintenanceWindowCollection GetMaintenanceWindows(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetMaintenanceWindowResources();
+            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetMaintenanceWindows();
         }
 
         /// <summary>
         /// Gets the specified maintenance window.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetMaintenanceWindowResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetMaintenanceWindowAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -482,18 +482,18 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<MaintenanceWindowResource>> GetMaintenanceWindowResourceAsync(this ResourceGroupResource resourceGroupResource, string maintenanceWindowName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MaintenanceWindowResource>> GetMaintenanceWindowAsync(this ResourceGroupResource resourceGroupResource, string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetMaintenanceWindowResourceAsync(maintenanceWindowName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetMaintenanceWindowAsync(maintenanceWindowName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the specified maintenance window.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetMaintenanceWindowResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetMaintenanceWindow(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -501,11 +501,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<MaintenanceWindowResource> GetMaintenanceWindowResource(this ResourceGroupResource resourceGroupResource, string maintenanceWindowName, CancellationToken cancellationToken = default)
+        public static Response<MaintenanceWindowResource> GetMaintenanceWindow(this ResourceGroupResource resourceGroupResource, string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetMaintenanceWindowResource(maintenanceWindowName, cancellationToken);
+            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetMaintenanceWindow(maintenanceWindowName, cancellationToken);
         }
 
         /// <summary>
@@ -619,28 +619,28 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary>
-        /// Gets a collection of GuardrailsAvailableVersions in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of ContainerServiceGuardrailsAvailableVersions in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetGuardrailsAvailableVersions(AzureLocation)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceGuardrailsAvailableVersions(AzureLocation)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of GuardrailsAvailableVersions and their operations over a GuardrailsAvailableVersionResource. </returns>
-        public static GuardrailsAvailableVersionCollection GetGuardrailsAvailableVersions(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <returns> An object representing collection of ContainerServiceGuardrailsAvailableVersions and their operations over a ContainerServiceGuardrailsAvailableVersionResource. </returns>
+        public static ContainerServiceGuardrailsAvailableVersionCollection GetContainerServiceGuardrailsAvailableVersions(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetGuardrailsAvailableVersions(location);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceGuardrailsAvailableVersions(location);
         }
 
         /// <summary>
         /// Contains Guardrails version along with its support info and whether it is a default version.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetGuardrailsAvailableVersionAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceGuardrailsAvailableVersionAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -649,18 +649,18 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<GuardrailsAvailableVersionResource>> GetGuardrailsAvailableVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string version, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerServiceGuardrailsAvailableVersionResource>> GetContainerServiceGuardrailsAvailableVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetGuardrailsAvailableVersionAsync(location, version, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceGuardrailsAvailableVersionAsync(location, version, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Contains Guardrails version along with its support info and whether it is a default version.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetGuardrailsAvailableVersion(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceGuardrailsAvailableVersion(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -669,11 +669,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<GuardrailsAvailableVersionResource> GetGuardrailsAvailableVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string version, CancellationToken cancellationToken = default)
+        public static Response<ContainerServiceGuardrailsAvailableVersionResource> GetContainerServiceGuardrailsAvailableVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetGuardrailsAvailableVersion(location, version, cancellationToken);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceGuardrailsAvailableVersion(location, version, cancellationToken);
         }
 
         /// <summary>
@@ -832,36 +832,36 @@ namespace Azure.ResourceManager.ContainerService
         /// Lists maintenance windows in the specified subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetMaintenanceWindowResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetMaintenanceWindowsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="MaintenanceWindowResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MaintenanceWindowResource> GetMaintenanceWindowResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MaintenanceWindowResource> GetMaintenanceWindowsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetMaintenanceWindowResourcesAsync(cancellationToken);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetMaintenanceWindowsAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists maintenance windows in the specified subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetMaintenanceWindowResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetMaintenanceWindows(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="MaintenanceWindowResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MaintenanceWindowResource> GetMaintenanceWindowResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<MaintenanceWindowResource> GetMaintenanceWindows(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetMaintenanceWindowResources(cancellationToken);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetMaintenanceWindows(cancellationToken);
         }
 
         /// <summary>

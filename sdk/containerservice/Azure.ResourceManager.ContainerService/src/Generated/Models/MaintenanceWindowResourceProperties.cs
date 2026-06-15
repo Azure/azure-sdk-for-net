@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// '2026-12-22 22:00' to '2027-01-03 22:00' in UTC time.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceWindowResourceProperties(ResourceProvisioningState? provisioningState, ContainerServiceMaintenanceSchedule schedule, DateTimeOffset? startOn, string startTime, int durationHours, string utcOffset, IList<ContainerServiceDateSpan> notAllowedDates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceWindowResourceProperties(ContainerServiceProvisioningState? provisioningState, ContainerServiceMaintenanceSchedule schedule, DateTimeOffset? startOn, string startTime, int durationHours, string utcOffset, IList<ContainerServiceDateSpan> notAllowedDates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Schedule = schedule;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The provisioning state of the maintenance window. </summary>
         [WirePath("provisioningState")]
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public ContainerServiceProvisioningState? ProvisioningState { get; }
 
         /// <summary>
         /// Recurrence schedule for the maintenance window. One and only one of the schedule

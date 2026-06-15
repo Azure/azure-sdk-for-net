@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            ResourceProvisioningState? provisioningState = default;
+            ContainerServiceProvisioningState? provisioningState = default;
             ContainerServiceMaintenanceSchedule schedule = default;
             DateTimeOffset? startOn = default;
             string startTime = default;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(prop.Value.GetString());
+                    provisioningState = new ContainerServiceProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("schedule"u8))

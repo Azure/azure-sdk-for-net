@@ -20,32 +20,32 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ContainerService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GuardrailsAvailableVersionResource"/> and their operations.
-    /// Each <see cref="GuardrailsAvailableVersionResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="GuardrailsAvailableVersionCollection"/> instance call the GetGuardrailsAvailableVersions method from an instance of <see cref="SubscriptionResource"/>.
+    /// A class representing a collection of <see cref="ContainerServiceGuardrailsAvailableVersionResource"/> and their operations.
+    /// Each <see cref="ContainerServiceGuardrailsAvailableVersionResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ContainerServiceGuardrailsAvailableVersionCollection"/> instance call the GetContainerServiceGuardrailsAvailableVersions method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class GuardrailsAvailableVersionCollection : ArmCollection, IEnumerable<GuardrailsAvailableVersionResource>, IAsyncEnumerable<GuardrailsAvailableVersionResource>
+    public partial class ContainerServiceGuardrailsAvailableVersionCollection : ArmCollection, IEnumerable<ContainerServiceGuardrailsAvailableVersionResource>, IAsyncEnumerable<ContainerServiceGuardrailsAvailableVersionResource>
     {
         private readonly ClientDiagnostics _guardrailsAvailableVersionsClientDiagnostics;
         private readonly GuardrailsAvailableVersions _guardrailsAvailableVersionsRestClient;
         /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of GuardrailsAvailableVersionCollection for mocking. </summary>
-        protected GuardrailsAvailableVersionCollection()
+        /// <summary> Initializes a new instance of ContainerServiceGuardrailsAvailableVersionCollection for mocking. </summary>
+        protected ContainerServiceGuardrailsAvailableVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GuardrailsAvailableVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceGuardrailsAvailableVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="location"> The location for the resource. </param>
-        internal GuardrailsAvailableVersionCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
+        internal ContainerServiceGuardrailsAvailableVersionCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
-            TryGetApiVersion(GuardrailsAvailableVersionResource.ResourceType, out string guardrailsAvailableVersionApiVersion);
+            TryGetApiVersion(ContainerServiceGuardrailsAvailableVersionResource.ResourceType, out string containerServiceGuardrailsAvailableVersionApiVersion);
             _location = location;
-            _guardrailsAvailableVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", GuardrailsAvailableVersionResource.ResourceType.Namespace, Diagnostics);
-            _guardrailsAvailableVersionsRestClient = new GuardrailsAvailableVersions(_guardrailsAvailableVersionsClientDiagnostics, Pipeline, Endpoint, guardrailsAvailableVersionApiVersion ?? "2026-04-02-preview");
+            _guardrailsAvailableVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceGuardrailsAvailableVersionResource.ResourceType.Namespace, Diagnostics);
+            _guardrailsAvailableVersionsRestClient = new GuardrailsAvailableVersions(_guardrailsAvailableVersionsClientDiagnostics, Pipeline, Endpoint, containerServiceGuardrailsAvailableVersionApiVersion ?? "2026-04-02-preview");
             ValidateResourceId(id);
         }
 
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<GuardrailsAvailableVersionResource>> GetAsync(string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceGuardrailsAvailableVersionResource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _guardrailsAvailableVersionsClientDiagnostics.CreateScope("GuardrailsAvailableVersionCollection.Get");
+            using DiagnosticScope scope = _guardrailsAvailableVersionsClientDiagnostics.CreateScope("ContainerServiceGuardrailsAvailableVersionCollection.Get");
             scope.Start();
             try
             {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _guardrailsAvailableVersionsRestClient.CreateGetGuardrailsVersionsRequest(Guid.Parse(Id.SubscriptionId), _location, version, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<GuardrailsAvailableVersionData> response = Response.FromValue(GuardrailsAvailableVersionData.FromResponse(result), result);
+                Response<ContainerServiceGuardrailsAvailableVersionData> response = Response.FromValue(ContainerServiceGuardrailsAvailableVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new GuardrailsAvailableVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceGuardrailsAvailableVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<GuardrailsAvailableVersionResource> Get(string version, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceGuardrailsAvailableVersionResource> Get(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _guardrailsAvailableVersionsClientDiagnostics.CreateScope("GuardrailsAvailableVersionCollection.Get");
+            using DiagnosticScope scope = _guardrailsAvailableVersionsClientDiagnostics.CreateScope("ContainerServiceGuardrailsAvailableVersionCollection.Get");
             scope.Start();
             try
             {
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.ContainerService
                 };
                 HttpMessage message = _guardrailsAvailableVersionsRestClient.CreateGetGuardrailsVersionsRequest(Guid.Parse(Id.SubscriptionId), _location, version, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<GuardrailsAvailableVersionData> response = Response.FromValue(GuardrailsAvailableVersionData.FromResponse(result), result);
+                Response<ContainerServiceGuardrailsAvailableVersionData> response = Response.FromValue(ContainerServiceGuardrailsAvailableVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new GuardrailsAvailableVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceGuardrailsAvailableVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,14 +175,14 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuardrailsAvailableVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuardrailsAvailableVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerServiceGuardrailsAvailableVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerServiceGuardrailsAvailableVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GuardrailsAvailableVersionData, GuardrailsAvailableVersionResource>(new GuardrailsAvailableVersionsGetGuardrailsVersionsAsyncCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "GuardrailsAvailableVersionCollection.GetAll"), data => new GuardrailsAvailableVersionResource(Client, data));
+            return new AsyncPageableWrapper<ContainerServiceGuardrailsAvailableVersionData, ContainerServiceGuardrailsAvailableVersionResource>(new GuardrailsAvailableVersionsGetGuardrailsVersionsAsyncCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ContainerServiceGuardrailsAvailableVersionCollection.GetAll"), data => new ContainerServiceGuardrailsAvailableVersionResource(Client, data));
         }
 
         /// <summary>
@@ -203,14 +203,14 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuardrailsAvailableVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuardrailsAvailableVersionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerServiceGuardrailsAvailableVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerServiceGuardrailsAvailableVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GuardrailsAvailableVersionData, GuardrailsAvailableVersionResource>(new GuardrailsAvailableVersionsGetGuardrailsVersionsCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "GuardrailsAvailableVersionCollection.GetAll"), data => new GuardrailsAvailableVersionResource(Client, data));
+            return new PageableWrapper<ContainerServiceGuardrailsAvailableVersionData, ContainerServiceGuardrailsAvailableVersionResource>(new GuardrailsAvailableVersionsGetGuardrailsVersionsCollectionResultOfT(_guardrailsAvailableVersionsRestClient, Guid.Parse(Id.SubscriptionId), _location, context, "ContainerServiceGuardrailsAvailableVersionCollection.GetAll"), data => new ContainerServiceGuardrailsAvailableVersionResource(Client, data));
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _guardrailsAvailableVersionsClientDiagnostics.CreateScope("GuardrailsAvailableVersionCollection.Exists");
+            using DiagnosticScope scope = _guardrailsAvailableVersionsClientDiagnostics.CreateScope("ContainerServiceGuardrailsAvailableVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _guardrailsAvailableVersionsRestClient.CreateGetGuardrailsVersionsRequest(Guid.Parse(Id.SubscriptionId), _location, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<GuardrailsAvailableVersionData> response = default;
+                Response<ContainerServiceGuardrailsAvailableVersionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(GuardrailsAvailableVersionData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerServiceGuardrailsAvailableVersionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((GuardrailsAvailableVersionData)null, result);
+                        response = Response.FromValue((ContainerServiceGuardrailsAvailableVersionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _guardrailsAvailableVersionsClientDiagnostics.CreateScope("GuardrailsAvailableVersionCollection.Exists");
+            using DiagnosticScope scope = _guardrailsAvailableVersionsClientDiagnostics.CreateScope("ContainerServiceGuardrailsAvailableVersionCollection.Exists");
             scope.Start();
             try
             {
@@ -306,14 +306,14 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _guardrailsAvailableVersionsRestClient.CreateGetGuardrailsVersionsRequest(Guid.Parse(Id.SubscriptionId), _location, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<GuardrailsAvailableVersionData> response = default;
+                Response<ContainerServiceGuardrailsAvailableVersionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(GuardrailsAvailableVersionData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerServiceGuardrailsAvailableVersionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((GuardrailsAvailableVersionData)null, result);
+                        response = Response.FromValue((ContainerServiceGuardrailsAvailableVersionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -348,11 +348,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<GuardrailsAvailableVersionResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ContainerServiceGuardrailsAvailableVersionResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _guardrailsAvailableVersionsClientDiagnostics.CreateScope("GuardrailsAvailableVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _guardrailsAvailableVersionsClientDiagnostics.CreateScope("ContainerServiceGuardrailsAvailableVersionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -363,23 +363,23 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _guardrailsAvailableVersionsRestClient.CreateGetGuardrailsVersionsRequest(Guid.Parse(Id.SubscriptionId), _location, version, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<GuardrailsAvailableVersionData> response = default;
+                Response<ContainerServiceGuardrailsAvailableVersionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(GuardrailsAvailableVersionData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerServiceGuardrailsAvailableVersionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((GuardrailsAvailableVersionData)null, result);
+                        response = Response.FromValue((ContainerServiceGuardrailsAvailableVersionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<GuardrailsAvailableVersionResource>(response.GetRawResponse());
+                    return new NoValueResponse<ContainerServiceGuardrailsAvailableVersionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new GuardrailsAvailableVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceGuardrailsAvailableVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -409,11 +409,11 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<GuardrailsAvailableVersionResource> GetIfExists(string version, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ContainerServiceGuardrailsAvailableVersionResource> GetIfExists(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using DiagnosticScope scope = _guardrailsAvailableVersionsClientDiagnostics.CreateScope("GuardrailsAvailableVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _guardrailsAvailableVersionsClientDiagnostics.CreateScope("ContainerServiceGuardrailsAvailableVersionCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -424,23 +424,23 @@ namespace Azure.ResourceManager.ContainerService
                 HttpMessage message = _guardrailsAvailableVersionsRestClient.CreateGetGuardrailsVersionsRequest(Guid.Parse(Id.SubscriptionId), _location, version, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<GuardrailsAvailableVersionData> response = default;
+                Response<ContainerServiceGuardrailsAvailableVersionData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(GuardrailsAvailableVersionData.FromResponse(result), result);
+                        response = Response.FromValue(ContainerServiceGuardrailsAvailableVersionData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((GuardrailsAvailableVersionData)null, result);
+                        response = Response.FromValue((ContainerServiceGuardrailsAvailableVersionData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<GuardrailsAvailableVersionResource>(response.GetRawResponse());
+                    return new NoValueResponse<ContainerServiceGuardrailsAvailableVersionResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new GuardrailsAvailableVersionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ContainerServiceGuardrailsAvailableVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        IEnumerator<GuardrailsAvailableVersionResource> IEnumerable<GuardrailsAvailableVersionResource>.GetEnumerator()
+        IEnumerator<ContainerServiceGuardrailsAvailableVersionResource> IEnumerable<ContainerServiceGuardrailsAvailableVersionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<GuardrailsAvailableVersionResource> IAsyncEnumerable<GuardrailsAvailableVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ContainerServiceGuardrailsAvailableVersionResource> IAsyncEnumerable<ContainerServiceGuardrailsAvailableVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

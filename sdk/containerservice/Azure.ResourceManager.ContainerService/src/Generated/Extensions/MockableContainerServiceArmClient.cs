@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return new ManagedClusterUpgradeProfileResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="GuardrailsAvailableVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerServiceGuardrailsAvailableVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GuardrailsAvailableVersionResource"/> object. </returns>
-        public virtual GuardrailsAvailableVersionResource GetGuardrailsAvailableVersionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerServiceGuardrailsAvailableVersionResource"/> object. </returns>
+        public virtual ContainerServiceGuardrailsAvailableVersionResource GetContainerServiceGuardrailsAvailableVersionResource(ResourceIdentifier id)
         {
-            GuardrailsAvailableVersionResource.ValidateResourceId(id);
-            return new GuardrailsAvailableVersionResource(Client, id);
+            ContainerServiceGuardrailsAvailableVersionResource.ValidateResourceId(id);
+            return new ContainerServiceGuardrailsAvailableVersionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SafeguardsAvailableVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

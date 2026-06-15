@@ -15,7 +15,7 @@ using Azure.ResourceManager.ContainerService.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    internal partial class MaintenanceWindowsGetAllAsyncCollectionResultOfT : AsyncPageable<MaintenanceWindowResourceData>
+    internal partial class MaintenanceWindowsGetAllAsyncCollectionResultOfT : AsyncPageable<MaintenanceWindowData>
     {
         private readonly MaintenanceWindows _client;
         private readonly Guid _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of MaintenanceWindowsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<MaintenanceWindowResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<MaintenanceWindowData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 MaintenanceWindowResourceListResult result = MaintenanceWindowResourceListResult.FromResponse(response);
-                yield return Page<MaintenanceWindowResourceData>.FromValues((IReadOnlyList<MaintenanceWindowResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MaintenanceWindowData>.FromValues((IReadOnlyList<MaintenanceWindowData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

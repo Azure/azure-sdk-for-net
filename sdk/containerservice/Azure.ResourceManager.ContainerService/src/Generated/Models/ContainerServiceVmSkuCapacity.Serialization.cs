@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             long? minimum = default;
             long? maximum = default;
             long? @default = default;
-            ResourceSkuCapacityScaleType? scaleType = default;
+            ContainerServiceSkuCapacityScaleType? scaleType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    scaleType = new ResourceSkuCapacityScaleType(prop.Value.GetString());
+                    scaleType = new ContainerServiceSkuCapacityScaleType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

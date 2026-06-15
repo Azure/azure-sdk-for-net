@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.ContainerService.Mocking
 
         private VmSkusOperationGroup VmSkusOperationGroupRestClient => _vmSkusOperationGroupRestClient ??= new VmSkusOperationGroup(VmSkusOperationGroupClientDiagnostics, Pipeline, Endpoint, "2026-04-02-preview");
 
-        /// <summary> Gets a collection of GuardrailsAvailableVersions in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary> Gets a collection of ContainerServiceGuardrailsAvailableVersions in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of GuardrailsAvailableVersions and their operations over a GuardrailsAvailableVersionResource. </returns>
-        public virtual GuardrailsAvailableVersionCollection GetGuardrailsAvailableVersions(AzureLocation location)
+        /// <returns> An object representing collection of ContainerServiceGuardrailsAvailableVersions and their operations over a ContainerServiceGuardrailsAvailableVersionResource. </returns>
+        public virtual ContainerServiceGuardrailsAvailableVersionCollection GetContainerServiceGuardrailsAvailableVersions(AzureLocation location)
         {
-            return GetCachedClient(client => new GuardrailsAvailableVersionCollection(client, Id, location));
+            return GetCachedClient(client => new ContainerServiceGuardrailsAvailableVersionCollection(client, Id, location));
         }
 
         /// <summary>
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<GuardrailsAvailableVersionResource>> GetGuardrailsAvailableVersionAsync(AzureLocation location, string version, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerServiceGuardrailsAvailableVersionResource>> GetContainerServiceGuardrailsAvailableVersionAsync(AzureLocation location, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return await GetGuardrailsAvailableVersions(location).GetAsync(version, cancellationToken).ConfigureAwait(false);
+            return await GetContainerServiceGuardrailsAvailableVersions(location).GetAsync(version, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<GuardrailsAvailableVersionResource> GetGuardrailsAvailableVersion(AzureLocation location, string version, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerServiceGuardrailsAvailableVersionResource> GetContainerServiceGuardrailsAvailableVersion(AzureLocation location, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            return GetGuardrailsAvailableVersions(location).Get(version, cancellationToken);
+            return GetContainerServiceGuardrailsAvailableVersions(location).Get(version, cancellationToken);
         }
 
         /// <summary> Gets a collection of SafeguardsAvailableVersions in the <see cref="SubscriptionResource"/>. </summary>
@@ -361,13 +361,13 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MaintenanceWindowResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceWindowResource> GetMaintenanceWindowResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MaintenanceWindowResource> GetMaintenanceWindowsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MaintenanceWindowResourceData, MaintenanceWindowResource>(new MaintenanceWindowsGetBySubscriptionAsyncCollectionResultOfT(MaintenanceWindowsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetMaintenanceWindowResources"), data => new MaintenanceWindowResource(Client, data));
+            return new AsyncPageableWrapper<MaintenanceWindowData, MaintenanceWindowResource>(new MaintenanceWindowsGetBySubscriptionAsyncCollectionResultOfT(MaintenanceWindowsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetMaintenanceWindows"), data => new MaintenanceWindowResource(Client, data));
         }
 
         /// <summary>
@@ -389,13 +389,13 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MaintenanceWindowResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceWindowResource> GetMaintenanceWindowResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<MaintenanceWindowResource> GetMaintenanceWindows(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MaintenanceWindowResourceData, MaintenanceWindowResource>(new MaintenanceWindowsGetBySubscriptionCollectionResultOfT(MaintenanceWindowsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetMaintenanceWindowResources"), data => new MaintenanceWindowResource(Client, data));
+            return new PageableWrapper<MaintenanceWindowData, MaintenanceWindowResource>(new MaintenanceWindowsGetBySubscriptionCollectionResultOfT(MaintenanceWindowsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableContainerServiceSubscriptionResource.GetMaintenanceWindows"), data => new MaintenanceWindowResource(Client, data));
         }
 
         /// <summary>

@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             return GetContainerServiceManagedClusters().Get(resourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MaintenanceWindowResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of MaintenanceWindowResources and their operations over a MaintenanceWindowResource. </returns>
-        public virtual MaintenanceWindowResourceCollection GetMaintenanceWindowResources()
+        /// <summary> Gets a collection of MaintenanceWindows in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of MaintenanceWindows and their operations over a MaintenanceWindowResource. </returns>
+        public virtual MaintenanceWindowCollection GetMaintenanceWindows()
         {
-            return GetCachedClient(client => new MaintenanceWindowResourceCollection(client, Id));
+            return GetCachedClient(client => new MaintenanceWindowCollection(client, Id));
         }
 
         /// <summary>
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="maintenanceWindowName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MaintenanceWindowResource>> GetMaintenanceWindowResourceAsync(string maintenanceWindowName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MaintenanceWindowResource>> GetMaintenanceWindowAsync(string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(maintenanceWindowName, nameof(maintenanceWindowName));
 
-            return await GetMaintenanceWindowResources().GetAsync(maintenanceWindowName, cancellationToken).ConfigureAwait(false);
+            return await GetMaintenanceWindows().GetAsync(maintenanceWindowName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceWindowName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="maintenanceWindowName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MaintenanceWindowResource> GetMaintenanceWindowResource(string maintenanceWindowName, CancellationToken cancellationToken = default)
+        public virtual Response<MaintenanceWindowResource> GetMaintenanceWindow(string maintenanceWindowName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(maintenanceWindowName, nameof(maintenanceWindowName));
 
-            return GetMaintenanceWindowResources().Get(maintenanceWindowName, cancellationToken);
+            return GetMaintenanceWindows().Get(maintenanceWindowName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AgentPoolSnapshots in the <see cref="ResourceGroupResource"/>. </summary>

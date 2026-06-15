@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> operator represents a key's relationship to a set of values. Valid operators are In and NotIn. </summary>
-    public readonly partial struct Operator : IEquatable<Operator>
+    public readonly partial struct ManagedClusterLabelSelectorOperator : IEquatable<ManagedClusterLabelSelectorOperator>
     {
         private readonly string _value;
         /// <summary> The value of the key should be in the given list. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The value of the key should not exist. </summary>
         private const string DoesNotExistValue = "DoesNotExist";
 
-        /// <summary> Initializes a new instance of <see cref="Operator"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterLabelSelectorOperator"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Operator(string value)
+        public ManagedClusterLabelSelectorOperator(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The value of the key should be in the given list. </summary>
-        public static Operator In { get; } = new Operator(InValue);
+        public static ManagedClusterLabelSelectorOperator In { get; } = new ManagedClusterLabelSelectorOperator(InValue);
 
         /// <summary> The value of the key should not be in the given list. </summary>
-        public static Operator NotIn { get; } = new Operator(NotInValue);
+        public static ManagedClusterLabelSelectorOperator NotIn { get; } = new ManagedClusterLabelSelectorOperator(NotInValue);
 
         /// <summary> The value of the key should exist. </summary>
-        public static Operator Exists { get; } = new Operator(ExistsValue);
+        public static ManagedClusterLabelSelectorOperator Exists { get; } = new ManagedClusterLabelSelectorOperator(ExistsValue);
 
         /// <summary> The value of the key should not exist. </summary>
-        public static Operator DoesNotExist { get; } = new Operator(DoesNotExistValue);
+        public static ManagedClusterLabelSelectorOperator DoesNotExist { get; } = new ManagedClusterLabelSelectorOperator(DoesNotExistValue);
 
-        /// <summary> Determines if two <see cref="Operator"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ManagedClusterLabelSelectorOperator"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Operator left, Operator right) => left.Equals(right);
+        public static bool operator ==(ManagedClusterLabelSelectorOperator left, ManagedClusterLabelSelectorOperator right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Operator"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ManagedClusterLabelSelectorOperator"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Operator left, Operator right) => !left.Equals(right);
+        public static bool operator !=(ManagedClusterLabelSelectorOperator left, ManagedClusterLabelSelectorOperator right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Operator"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ManagedClusterLabelSelectorOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Operator(string value) => new Operator(value);
+        public static implicit operator ManagedClusterLabelSelectorOperator(string value) => new ManagedClusterLabelSelectorOperator(value);
 
-        /// <summary> Converts a string to a <see cref="Operator"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ManagedClusterLabelSelectorOperator"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Operator?(string value) => value == null ? null : new Operator(value);
+        public static implicit operator ManagedClusterLabelSelectorOperator?(string value) => value == null ? null : new ManagedClusterLabelSelectorOperator(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Operator other && Equals(other);
+        public override bool Equals(object obj) => obj is ManagedClusterLabelSelectorOperator other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Operator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ManagedClusterLabelSelectorOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

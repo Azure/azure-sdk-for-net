@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService
         MaintenanceWindowResource IOperationSource<MaintenanceWindowResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            MaintenanceWindowResourceData data = MaintenanceWindowResourceData.DeserializeMaintenanceWindowResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            MaintenanceWindowData data = MaintenanceWindowData.DeserializeMaintenanceWindowData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new MaintenanceWindowResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService
         async ValueTask<MaintenanceWindowResource> IOperationSource<MaintenanceWindowResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            MaintenanceWindowResourceData data = MaintenanceWindowResourceData.DeserializeMaintenanceWindowResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            MaintenanceWindowData data = MaintenanceWindowData.DeserializeMaintenanceWindowData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new MaintenanceWindowResource(_client, data);
         }
     }
