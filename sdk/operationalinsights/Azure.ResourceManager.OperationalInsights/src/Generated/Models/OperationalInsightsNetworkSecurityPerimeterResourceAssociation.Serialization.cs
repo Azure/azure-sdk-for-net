@@ -14,51 +14,51 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Information about resource association. </summary>
-    public partial class OperationalInsightsNspResourceAssociation : IJsonModel<OperationalInsightsNspResourceAssociation>
+    public partial class OperationalInsightsNetworkSecurityPerimeterResourceAssociation : IJsonModel<OperationalInsightsNetworkSecurityPerimeterResourceAssociation>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OperationalInsightsNspResourceAssociation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OperationalInsightsNetworkSecurityPerimeterResourceAssociation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNspResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNetworkSecurityPerimeterResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOperationalInsightsNspResourceAssociation(document.RootElement, options);
+                        return DeserializeOperationalInsightsNetworkSecurityPerimeterResourceAssociation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsNspResourceAssociation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsNetworkSecurityPerimeterResourceAssociation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNspResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNetworkSecurityPerimeterResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsNspResourceAssociation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsNetworkSecurityPerimeterResourceAssociation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OperationalInsightsNspResourceAssociation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OperationalInsightsNetworkSecurityPerimeterResourceAssociation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OperationalInsightsNspResourceAssociation IPersistableModel<OperationalInsightsNspResourceAssociation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OperationalInsightsNetworkSecurityPerimeterResourceAssociation IPersistableModel<OperationalInsightsNetworkSecurityPerimeterResourceAssociation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OperationalInsightsNspResourceAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OperationalInsightsNetworkSecurityPerimeterResourceAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OperationalInsightsNspResourceAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OperationalInsightsNetworkSecurityPerimeterResourceAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNspResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNetworkSecurityPerimeterResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsNspResourceAssociation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsNetworkSecurityPerimeterResourceAssociation)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Name))
             {
@@ -103,31 +103,31 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OperationalInsightsNspResourceAssociation IJsonModel<OperationalInsightsNspResourceAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OperationalInsightsNetworkSecurityPerimeterResourceAssociation IJsonModel<OperationalInsightsNetworkSecurityPerimeterResourceAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OperationalInsightsNspResourceAssociation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OperationalInsightsNetworkSecurityPerimeterResourceAssociation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNspResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNetworkSecurityPerimeterResourceAssociation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsNspResourceAssociation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsNetworkSecurityPerimeterResourceAssociation)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOperationalInsightsNspResourceAssociation(document.RootElement, options);
+            return DeserializeOperationalInsightsNetworkSecurityPerimeterResourceAssociation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OperationalInsightsNspResourceAssociation DeserializeOperationalInsightsNspResourceAssociation(JsonElement element, ModelReaderWriterOptions options)
+        internal static OperationalInsightsNetworkSecurityPerimeterResourceAssociation DeserializeOperationalInsightsNetworkSecurityPerimeterResourceAssociation(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            OperationalInsightsNspResourceAssociationAccessMode? accessMode = default;
+            OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode? accessMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    accessMode = new OperationalInsightsNspResourceAssociationAccessMode(prop.Value.GetString());
+                    accessMode = new OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OperationalInsightsNspResourceAssociation(name, accessMode, additionalBinaryDataProperties);
+            return new OperationalInsightsNetworkSecurityPerimeterResourceAssociation(name, accessMode, additionalBinaryDataProperties);
         }
     }
 }

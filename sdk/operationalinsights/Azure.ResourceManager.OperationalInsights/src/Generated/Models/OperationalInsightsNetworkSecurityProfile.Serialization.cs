@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 writer.WritePropertyName("accessRules"u8);
                 writer.WriteStartArray();
-                foreach (OperationalInsightsNspAccessRule item in AccessRules)
+                foreach (OperationalInsightsNetworkSecurityPerimeterAccessRule item in AccessRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             string name = default;
             int? accessRulesVersion = default;
-            IList<OperationalInsightsNspAccessRule> accessRules = default;
+            IList<OperationalInsightsNetworkSecurityPerimeterAccessRule> accessRules = default;
             int? diagnosticSettingsVersion = default;
             IList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    List<OperationalInsightsNspAccessRule> array = new List<OperationalInsightsNspAccessRule>();
+                    List<OperationalInsightsNetworkSecurityPerimeterAccessRule> array = new List<OperationalInsightsNetworkSecurityPerimeterAccessRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsNspAccessRule.DeserializeOperationalInsightsNspAccessRule(item, options));
+                        array.Add(OperationalInsightsNetworkSecurityPerimeterAccessRule.DeserializeOperationalInsightsNetworkSecurityPerimeterAccessRule(item, options));
                     }
                     accessRules = array;
                     continue;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsNetworkSecurityProfile(
                 name,
                 accessRulesVersion,
-                accessRules ?? new ChangeTrackingList<OperationalInsightsNspAccessRule>(),
+                accessRules ?? new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeterAccessRule>(),
                 diagnosticSettingsVersion,
                 enabledLogCategories ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);

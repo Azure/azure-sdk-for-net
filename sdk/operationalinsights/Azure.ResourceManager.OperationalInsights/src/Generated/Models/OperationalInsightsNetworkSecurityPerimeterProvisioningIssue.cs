@@ -12,21 +12,21 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Describes a provisioning issue for a network security perimeter configuration. </summary>
-    public partial class OperationalInsightsNspProvisioningIssue
+    public partial class OperationalInsightsNetworkSecurityPerimeterProvisioningIssue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspProvisioningIssue"/>. </summary>
-        internal OperationalInsightsNspProvisioningIssue()
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityPerimeterProvisioningIssue"/>. </summary>
+        internal OperationalInsightsNetworkSecurityPerimeterProvisioningIssue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspProvisioningIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityPerimeterProvisioningIssue"/>. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsNspProvisioningIssue(string name, OperationalInsightsNspProvisioningIssueProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsNetworkSecurityPerimeterProvisioningIssue(string name, OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Properties = properties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Gets the Properties. </summary>
         [WirePath("properties")]
-        public OperationalInsightsNspProvisioningIssueProperties Properties { get; }
+        public OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties Properties { get; }
     }
 }

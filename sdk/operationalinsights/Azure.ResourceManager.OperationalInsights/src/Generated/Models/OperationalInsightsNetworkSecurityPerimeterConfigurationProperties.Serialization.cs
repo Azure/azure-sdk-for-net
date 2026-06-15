@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 writer.WritePropertyName("provisioningIssues"u8);
                 writer.WriteStartArray();
-                foreach (OperationalInsightsNspProvisioningIssue item in ProvisioningIssues)
+                foreach (OperationalInsightsNetworkSecurityPerimeterProvisioningIssue item in ProvisioningIssues)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -147,9 +147,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 return null;
             }
             OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default;
-            IReadOnlyList<OperationalInsightsNspProvisioningIssue> provisioningIssues = default;
+            IReadOnlyList<OperationalInsightsNetworkSecurityPerimeterProvisioningIssue> provisioningIssues = default;
             OperationalInsightsNetworkSecurityPerimeter networkSecurityPerimeter = default;
-            OperationalInsightsNspResourceAssociation resourceAssociation = default;
+            OperationalInsightsNetworkSecurityPerimeterResourceAssociation resourceAssociation = default;
             OperationalInsightsNetworkSecurityProfile profile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    List<OperationalInsightsNspProvisioningIssue> array = new List<OperationalInsightsNspProvisioningIssue>();
+                    List<OperationalInsightsNetworkSecurityPerimeterProvisioningIssue> array = new List<OperationalInsightsNetworkSecurityPerimeterProvisioningIssue>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsNspProvisioningIssue.DeserializeOperationalInsightsNspProvisioningIssue(item, options));
+                        array.Add(OperationalInsightsNetworkSecurityPerimeterProvisioningIssue.DeserializeOperationalInsightsNetworkSecurityPerimeterProvisioningIssue(item, options));
                     }
                     provisioningIssues = array;
                     continue;
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    resourceAssociation = OperationalInsightsNspResourceAssociation.DeserializeOperationalInsightsNspResourceAssociation(prop.Value, options);
+                    resourceAssociation = OperationalInsightsNetworkSecurityPerimeterResourceAssociation.DeserializeOperationalInsightsNetworkSecurityPerimeterResourceAssociation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("profile"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
             return new OperationalInsightsNetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,
-                provisioningIssues ?? new ChangeTrackingList<OperationalInsightsNspProvisioningIssue>(),
+                provisioningIssues ?? new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeterProvisioningIssue>(),
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,

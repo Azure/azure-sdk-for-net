@@ -12,7 +12,7 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Type of issue. </summary>
-    public readonly partial struct OperationalInsightsNspIssueType : IEquatable<OperationalInsightsNspIssueType>
+    public readonly partial struct OperationalInsightsNetworkSecurityPerimeterIssueType : IEquatable<OperationalInsightsNetworkSecurityPerimeterIssueType>
     {
         private readonly string _value;
         /// <summary> Unknown issue type. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> An managed identity hasn't been associated with the resource. The resource will still be able to validate inbound traffic from the network security perimeter (NSP) or matching inbound access rules, but it won't be able to perform outbound access as a member of the NSP. </summary>
         private const string MissingIdentityConfigurationValue = "MissingIdentityConfiguration";
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspIssueType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityPerimeterIssueType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OperationalInsightsNspIssueType(string value)
+        public OperationalInsightsNetworkSecurityPerimeterIssueType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Unknown issue type. </summary>
-        public static OperationalInsightsNspIssueType Unknown { get; } = new OperationalInsightsNspIssueType(UnknownValue);
+        public static OperationalInsightsNetworkSecurityPerimeterIssueType Unknown { get; } = new OperationalInsightsNetworkSecurityPerimeterIssueType(UnknownValue);
 
         /// <summary> An error occurred while applying the network security perimeter (NSP) configuration. </summary>
-        public static OperationalInsightsNspIssueType ConfigurationPropagationFailure { get; } = new OperationalInsightsNspIssueType(ConfigurationPropagationFailureValue);
+        public static OperationalInsightsNetworkSecurityPerimeterIssueType ConfigurationPropagationFailure { get; } = new OperationalInsightsNetworkSecurityPerimeterIssueType(ConfigurationPropagationFailureValue);
 
         /// <summary> A network connectivity issue is happening on the resource which could be addressed either by adding new resources to the network security perimeter (NSP) or by modifying access rules. </summary>
-        public static OperationalInsightsNspIssueType MissingPerimeterConfiguration { get; } = new OperationalInsightsNspIssueType(MissingPerimeterConfigurationValue);
+        public static OperationalInsightsNetworkSecurityPerimeterIssueType MissingPerimeterConfiguration { get; } = new OperationalInsightsNetworkSecurityPerimeterIssueType(MissingPerimeterConfigurationValue);
 
         /// <summary> An managed identity hasn't been associated with the resource. The resource will still be able to validate inbound traffic from the network security perimeter (NSP) or matching inbound access rules, but it won't be able to perform outbound access as a member of the NSP. </summary>
-        public static OperationalInsightsNspIssueType MissingIdentityConfiguration { get; } = new OperationalInsightsNspIssueType(MissingIdentityConfigurationValue);
+        public static OperationalInsightsNetworkSecurityPerimeterIssueType MissingIdentityConfiguration { get; } = new OperationalInsightsNetworkSecurityPerimeterIssueType(MissingIdentityConfigurationValue);
 
-        /// <summary> Determines if two <see cref="OperationalInsightsNspIssueType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="OperationalInsightsNetworkSecurityPerimeterIssueType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(OperationalInsightsNspIssueType left, OperationalInsightsNspIssueType right) => left.Equals(right);
+        public static bool operator ==(OperationalInsightsNetworkSecurityPerimeterIssueType left, OperationalInsightsNetworkSecurityPerimeterIssueType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OperationalInsightsNspIssueType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="OperationalInsightsNetworkSecurityPerimeterIssueType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(OperationalInsightsNspIssueType left, OperationalInsightsNspIssueType right) => !left.Equals(right);
+        public static bool operator !=(OperationalInsightsNetworkSecurityPerimeterIssueType left, OperationalInsightsNetworkSecurityPerimeterIssueType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OperationalInsightsNspIssueType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="OperationalInsightsNetworkSecurityPerimeterIssueType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsNspIssueType(string value) => new OperationalInsightsNspIssueType(value);
+        public static implicit operator OperationalInsightsNetworkSecurityPerimeterIssueType(string value) => new OperationalInsightsNetworkSecurityPerimeterIssueType(value);
 
-        /// <summary> Converts a string to a <see cref="OperationalInsightsNspIssueType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="OperationalInsightsNetworkSecurityPerimeterIssueType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OperationalInsightsNspIssueType?(string value) => value == null ? null : new OperationalInsightsNspIssueType(value);
+        public static implicit operator OperationalInsightsNetworkSecurityPerimeterIssueType?(string value) => value == null ? null : new OperationalInsightsNetworkSecurityPerimeterIssueType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OperationalInsightsNspIssueType other && Equals(other);
+        public override bool Equals(object obj) => obj is OperationalInsightsNetworkSecurityPerimeterIssueType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(OperationalInsightsNspIssueType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(OperationalInsightsNetworkSecurityPerimeterIssueType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

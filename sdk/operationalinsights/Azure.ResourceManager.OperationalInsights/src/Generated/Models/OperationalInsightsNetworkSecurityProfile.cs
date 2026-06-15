@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityProfile"/>. </summary>
         internal OperationalInsightsNetworkSecurityProfile()
         {
-            AccessRules = new ChangeTrackingList<OperationalInsightsNspAccessRule>();
+            AccessRules = new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeterAccessRule>();
             EnabledLogCategories = new ChangeTrackingList<string>();
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsNetworkSecurityProfile(string name, int? accessRulesVersion, IList<OperationalInsightsNspAccessRule> accessRules, int? diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsNetworkSecurityProfile(string name, int? accessRulesVersion, IList<OperationalInsightsNetworkSecurityPerimeterAccessRule> accessRules, int? diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> List of Access Rules. </summary>
         [WirePath("accessRules")]
-        public IList<OperationalInsightsNspAccessRule> AccessRules { get; }
+        public IList<OperationalInsightsNetworkSecurityPerimeterAccessRule> AccessRules { get; }
 
         /// <summary> Current diagnostic settings version. </summary>
         [WirePath("diagnosticSettingsVersion")]

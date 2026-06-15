@@ -450,11 +450,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OperationalInsightsNetworkSecurityPerimeterConfiguration>> GetNSPAsync(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OperationalInsightsNetworkSecurityPerimeterConfiguration>> GetNetworkSecurityPerimeterConfigurationAsync(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
-            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetNSP");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetNetworkSecurityPerimeterConfiguration");
             scope.Start();
             try
             {
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _workspacesRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<OperationalInsightsNetworkSecurityPerimeterConfiguration> response = Response.FromValue(OperationalInsightsNetworkSecurityPerimeterConfiguration.FromResponse(result), result);
                 if (response.Value == null)
@@ -503,11 +503,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNSP(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfiguration(string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
-            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetNSP");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.GetNetworkSecurityPerimeterConfiguration");
             scope.Start();
             try
             {
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateGetNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _workspacesRestClient.CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<OperationalInsightsNetworkSecurityPerimeterConfiguration> response = Response.FromValue(OperationalInsightsNetworkSecurityPerimeterConfiguration.FromResponse(result), result);
                 if (response.Value == null)
@@ -554,19 +554,19 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationalInsightsNetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNSPAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspacesGetNSPAsyncCollectionResultOfT(
+            return new WorkspacesGetNetworkSecurityPerimeterConfigurationAsyncCollectionResultOfT(
                 _workspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "OperationalInsightsWorkspaceResource.GetNSP");
+                "OperationalInsightsWorkspaceResource.GetNetworkSecurityPerimeterConfiguration");
         }
 
         /// <summary>
@@ -592,19 +592,19 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationalInsightsNetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNSP(CancellationToken cancellationToken = default)
+        public virtual Pageable<OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfiguration(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspacesGetNSPCollectionResultOfT(
+            return new WorkspacesGetNetworkSecurityPerimeterConfigurationCollectionResultOfT(
                 _workspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "OperationalInsightsWorkspaceResource.GetNSP");
+                "OperationalInsightsWorkspaceResource.GetNetworkSecurityPerimeterConfiguration");
         }
 
         /// <summary>
@@ -633,11 +633,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> ReconcileNSPAsync(WaitUntil waitUntil, string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ReconcileNetworkSecurityPerimeterConfigurationAsync(WaitUntil waitUntil, string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
-            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.ReconcileNSP");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.ReconcileNetworkSecurityPerimeterConfiguration");
             scope.Start();
             try
             {
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _workspacesRestClient.CreateReconcileNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -687,11 +687,11 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkSecurityPerimeterConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation ReconcileNSP(WaitUntil waitUntil, string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ReconcileNetworkSecurityPerimeterConfiguration(WaitUntil waitUntil, string networkSecurityPerimeterConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(networkSecurityPerimeterConfigurationName, nameof(networkSecurityPerimeterConfigurationName));
 
-            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.ReconcileNSP");
+            using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("OperationalInsightsWorkspaceResource.ReconcileNetworkSecurityPerimeterConfiguration");
             scope.Start();
             try
             {
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workspacesRestClient.CreateReconcileNSPRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
+                HttpMessage message = _workspacesRestClient.CreateReconcileNetworkSecurityPerimeterConfigurationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, networkSecurityPerimeterConfigurationName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OperationalInsightsArmOperation operation = new OperationalInsightsArmOperation(_workspacesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

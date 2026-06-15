@@ -12,7 +12,9 @@ using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    // Backward-compat justification: the GA SDK exposed AdditionalProperties on workspace features; keep a minimal custom deserializer so unknown properties continue to populate that dictionary without duplicating generated write/create logic.
+    // Backward-compat justification: preserve the GA AdditionalProperties catch-all bag for unknown root-level JSON properties.
+    // The GA SDK also shipped [WirePath("AdditionalProperties")] on this member; keep that metadata for ApiCompat and tooling
+    // even though serialization does not treat it as a nested "AdditionalProperties" wire property.
     public partial class OperationalInsightsWorkspaceFeatures
     {
         /// <summary> Gets the AdditionalProperties. </summary>

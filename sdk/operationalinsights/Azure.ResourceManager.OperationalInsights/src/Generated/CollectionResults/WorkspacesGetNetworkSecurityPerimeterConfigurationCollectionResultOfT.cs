@@ -14,7 +14,7 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    internal partial class WorkspacesGetNSPCollectionResultOfT : Pageable<OperationalInsightsNetworkSecurityPerimeterConfiguration>
+    internal partial class WorkspacesGetNetworkSecurityPerimeterConfigurationCollectionResultOfT : Pageable<OperationalInsightsNetworkSecurityPerimeterConfiguration>
     {
         private readonly Workspaces _client;
         private readonly Guid _subscriptionId;
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of WorkspacesGetNSPCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of WorkspacesGetNetworkSecurityPerimeterConfigurationCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Workspaces client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public WorkspacesGetNSPCollectionResultOfT(Workspaces client, Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public WorkspacesGetNetworkSecurityPerimeterConfigurationCollectionResultOfT(Workspaces client, Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.OperationalInsights
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of WorkspacesGetNSPCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of WorkspacesGetNetworkSecurityPerimeterConfigurationCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of WorkspacesGetNSPCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of WorkspacesGetNetworkSecurityPerimeterConfigurationCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<OperationalInsightsNetworkSecurityPerimeterConfiguration>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetNSPRequest(nextLink, _subscriptionId, _resourceGroupName, _workspaceName, _context) : _client.CreateGetNSPRequest(_subscriptionId, _resourceGroupName, _workspaceName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetNetworkSecurityPerimeterConfigurationRequest(nextLink, _subscriptionId, _resourceGroupName, _workspaceName, _context) : _client.CreateGetNetworkSecurityPerimeterConfigurationRequest(_subscriptionId, _resourceGroupName, _workspaceName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

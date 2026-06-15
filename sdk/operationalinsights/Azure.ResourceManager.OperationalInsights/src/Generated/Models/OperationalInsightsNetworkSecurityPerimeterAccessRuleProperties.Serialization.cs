@@ -14,51 +14,51 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Properties of Access Rule. </summary>
-    public partial class OperationalInsightsNspAccessRuleProperties : IJsonModel<OperationalInsightsNspAccessRuleProperties>
+    public partial class OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties : IJsonModel<OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OperationalInsightsNspAccessRuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOperationalInsightsNspAccessRuleProperties(document.RootElement, options);
+                        return DeserializeOperationalInsightsNetworkSecurityPerimeterAccessRuleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsNspAccessRuleProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsNspAccessRuleProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OperationalInsightsNspAccessRuleProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OperationalInsightsNspAccessRuleProperties IPersistableModel<OperationalInsightsNspAccessRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties IPersistableModel<OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OperationalInsightsNspAccessRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OperationalInsightsNspAccessRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsNspAccessRuleProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Direction))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
-                foreach (OperationalInsightsNspAccessRuleSubscription item in Subscriptions)
+                foreach (OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription item in Subscriptions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -178,32 +178,32 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OperationalInsightsNspAccessRuleProperties IJsonModel<OperationalInsightsNspAccessRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties IJsonModel<OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OperationalInsightsNspAccessRuleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationalInsightsNspAccessRuleProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOperationalInsightsNspAccessRuleProperties(document.RootElement, options);
+            return DeserializeOperationalInsightsNetworkSecurityPerimeterAccessRuleProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OperationalInsightsNspAccessRuleProperties DeserializeOperationalInsightsNspAccessRuleProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties DeserializeOperationalInsightsNetworkSecurityPerimeterAccessRuleProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            OperationalInsightsNspAccessRuleDirection? direction = default;
+            OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection? direction = default;
             IList<string> addressPrefixes = default;
-            IList<OperationalInsightsNspAccessRuleSubscription> subscriptions = default;
+            IList<OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription> subscriptions = default;
             IList<OperationalInsightsNetworkSecurityPerimeter> networkSecurityPerimeters = default;
             IList<string> fullyQualifiedDomainNames = default;
             IList<string> emailAddresses = default;
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    direction = new OperationalInsightsNspAccessRuleDirection(prop.Value.GetString());
+                    direction = new OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("addressPrefixes"u8))
@@ -247,10 +247,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    List<OperationalInsightsNspAccessRuleSubscription> array = new List<OperationalInsightsNspAccessRuleSubscription>();
+                    List<OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription> array = new List<OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsNspAccessRuleSubscription.DeserializeOperationalInsightsNspAccessRuleSubscription(item, options));
+                        array.Add(OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription.DeserializeOperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription(item, options));
                     }
                     subscriptions = array;
                     continue;
@@ -337,10 +337,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OperationalInsightsNspAccessRuleProperties(
+            return new OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties(
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
-                subscriptions ?? new ChangeTrackingList<OperationalInsightsNspAccessRuleSubscription>(),
+                subscriptions ?? new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription>(),
                 networkSecurityPerimeters ?? new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeter>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
                 emailAddresses ?? new ChangeTrackingList<string>(),

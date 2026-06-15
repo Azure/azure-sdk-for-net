@@ -13,26 +13,26 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </summary>
-    public partial class OperationalInsightsNspProvisioningIssueProperties
+    public partial class OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspProvisioningIssueProperties"/>. </summary>
-        internal OperationalInsightsNspProvisioningIssueProperties()
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
+        internal OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties()
         {
             SuggestedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
-            SuggestedAccessRules = new ChangeTrackingList<OperationalInsightsNspAccessRule>();
+            SuggestedAccessRules = new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeterAccessRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspProvisioningIssueProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
         /// <param name="issueType"> Type of issue. </param>
         /// <param name="severity"> Severity of the issue. </param>
         /// <param name="description"> Description of the issue. </param>
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsNspProvisioningIssueProperties(OperationalInsightsNspIssueType? issueType, OperationalInsightsNspSeverity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<OperationalInsightsNspAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties(OperationalInsightsNetworkSecurityPerimeterIssueType? issueType, OperationalInsightsNetworkSecurityPerimeterSeverity? severity, string description, IReadOnlyList<ResourceIdentifier> suggestedResourceIds, IReadOnlyList<OperationalInsightsNetworkSecurityPerimeterAccessRule> suggestedAccessRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IssueType = issueType;
             Severity = severity;
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Type of issue. </summary>
         [WirePath("issueType")]
-        public OperationalInsightsNspIssueType? IssueType { get; }
+        public OperationalInsightsNetworkSecurityPerimeterIssueType? IssueType { get; }
 
         /// <summary> Severity of the issue. </summary>
         [WirePath("severity")]
-        public OperationalInsightsNspSeverity? Severity { get; }
+        public OperationalInsightsNetworkSecurityPerimeterSeverity? Severity { get; }
 
         /// <summary> Description of the issue. </summary>
         [WirePath("description")]
@@ -60,6 +60,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Access rules that can be added to the network security profile (NSP) to remediate the issue. </summary>
         [WirePath("suggestedAccessRules")]
-        public IReadOnlyList<OperationalInsightsNspAccessRule> SuggestedAccessRules { get; }
+        public IReadOnlyList<OperationalInsightsNetworkSecurityPerimeterAccessRule> SuggestedAccessRules { get; }
     }
 }

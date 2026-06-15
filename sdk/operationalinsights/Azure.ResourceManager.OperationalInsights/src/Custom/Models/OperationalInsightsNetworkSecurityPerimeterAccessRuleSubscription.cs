@@ -7,9 +7,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    // Backward-compat justification: preserve the GA SDK's OperationalInsights-prefixed NSP access rule subscription model name.
+    // Backward-compat justification: preserve the generated access rule subscription model with an OperationalInsights-prefixed name.
     [CodeGenType("AccessRulePropertiesSubscription")]
-    public partial class OperationalInsightsNspAccessRuleSubscription
+    public partial class OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription
     {
     }
 }

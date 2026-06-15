@@ -12,23 +12,23 @@ using Azure.ResourceManager.OperationalInsights;
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> Properties of Access Rule. </summary>
-    public partial class OperationalInsightsNspAccessRuleProperties
+    public partial class OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspAccessRuleProperties"/>. </summary>
-        internal OperationalInsightsNspAccessRuleProperties()
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties"/>. </summary>
+        internal OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
-            Subscriptions = new ChangeTrackingList<OperationalInsightsNspAccessRuleSubscription>();
+            Subscriptions = new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription>();
             NetworkSecurityPerimeters = new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeter>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
             PhoneNumbers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNspAccessRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties"/>. </summary>
         /// <param name="direction"></param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsNspAccessRuleProperties(OperationalInsightsNspAccessRuleDirection? direction, IList<string> addressPrefixes, IList<OperationalInsightsNspAccessRuleSubscription> subscriptions, IList<OperationalInsightsNetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties(OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection? direction, IList<string> addressPrefixes, IList<OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription> subscriptions, IList<OperationalInsightsNetworkSecurityPerimeter> networkSecurityPerimeters, IList<string> fullyQualifiedDomainNames, IList<string> emailAddresses, IList<string> phoneNumbers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Gets the Direction. </summary>
         [WirePath("direction")]
-        public OperationalInsightsNspAccessRuleDirection? Direction { get; }
+        public OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection? Direction { get; }
 
         /// <summary> Address prefixes in the CIDR format for inbound rules. </summary>
         [WirePath("addressPrefixes")]
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <summary> Subscriptions for inbound rules. </summary>
         [WirePath("subscriptions")]
-        public IList<OperationalInsightsNspAccessRuleSubscription> Subscriptions { get; }
+        public IList<OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription> Subscriptions { get; }
 
         /// <summary> Network security perimeters for inbound rules. </summary>
         [WirePath("networkSecurityPerimeters")]

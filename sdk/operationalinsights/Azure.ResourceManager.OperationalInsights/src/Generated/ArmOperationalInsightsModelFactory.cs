@@ -379,13 +379,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="resourceAssociation"></param>
         /// <param name="profile"></param>
         /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
-        public static OperationalInsightsNetworkSecurityPerimeterConfigurationProperties OperationalInsightsNetworkSecurityPerimeterConfigurationProperties(OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<OperationalInsightsNspProvisioningIssue> provisioningIssues = default, OperationalInsightsNetworkSecurityPerimeter networkSecurityPerimeter = default, OperationalInsightsNspResourceAssociation resourceAssociation = default, OperationalInsightsNetworkSecurityProfile profile = default)
+        public static OperationalInsightsNetworkSecurityPerimeterConfigurationProperties OperationalInsightsNetworkSecurityPerimeterConfigurationProperties(OperationalInsightsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<OperationalInsightsNetworkSecurityPerimeterProvisioningIssue> provisioningIssues = default, OperationalInsightsNetworkSecurityPerimeter networkSecurityPerimeter = default, OperationalInsightsNetworkSecurityPerimeterResourceAssociation resourceAssociation = default, OperationalInsightsNetworkSecurityProfile profile = default)
         {
-            provisioningIssues ??= new ChangeTrackingList<OperationalInsightsNspProvisioningIssue>();
+            provisioningIssues ??= new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeterProvisioningIssue>();
 
             return new OperationalInsightsNetworkSecurityPerimeterConfigurationProperties(
                 provisioningState,
-                (provisioningIssues ?? new ChangeTrackingList<OperationalInsightsNspProvisioningIssue>()).ToList(),
+                (provisioningIssues ?? new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeterProvisioningIssue>()).ToList(),
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,
@@ -394,10 +394,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.OperationalInsightsNspProvisioningIssue"/> instance for mocking. </returns>
-        public static OperationalInsightsNspProvisioningIssue OperationalInsightsNspProvisioningIssue(string name = default, OperationalInsightsNspProvisioningIssueProperties properties = default)
+        /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssue"/> instance for mocking. </returns>
+        public static OperationalInsightsNetworkSecurityPerimeterProvisioningIssue OperationalInsightsNetworkSecurityPerimeterProvisioningIssue(string name = default, OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties properties = default)
         {
-            return new OperationalInsightsNspProvisioningIssue(name, properties, default);
+            return new OperationalInsightsNetworkSecurityPerimeterProvisioningIssue(name, properties, default);
         }
 
         /// <param name="issueType"> Type of issue. </param>
@@ -405,27 +405,27 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="description"> Description of the issue. </param>
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsNspProvisioningIssueProperties"/> instance for mocking. </returns>
-        public static OperationalInsightsNspProvisioningIssueProperties OperationalInsightsNspProvisioningIssueProperties(OperationalInsightsNspIssueType? issueType = default, OperationalInsightsNspSeverity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<OperationalInsightsNspAccessRule> suggestedAccessRules = default)
+        /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties"/> instance for mocking. </returns>
+        public static OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties(OperationalInsightsNetworkSecurityPerimeterIssueType? issueType = default, OperationalInsightsNetworkSecurityPerimeterSeverity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<OperationalInsightsNetworkSecurityPerimeterAccessRule> suggestedAccessRules = default)
         {
             suggestedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            suggestedAccessRules ??= new ChangeTrackingList<OperationalInsightsNspAccessRule>();
+            suggestedAccessRules ??= new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeterAccessRule>();
 
-            return new OperationalInsightsNspProvisioningIssueProperties(
+            return new OperationalInsightsNetworkSecurityPerimeterProvisioningIssueProperties(
                 issueType,
                 severity,
                 description,
                 (suggestedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                (suggestedAccessRules ?? new ChangeTrackingList<OperationalInsightsNspAccessRule>()).ToList(),
+                (suggestedAccessRules ?? new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeterAccessRule>()).ToList(),
                 default);
         }
 
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.OperationalInsightsNspAccessRule"/> instance for mocking. </returns>
-        public static OperationalInsightsNspAccessRule OperationalInsightsNspAccessRule(string name = default, OperationalInsightsNspAccessRuleProperties properties = default)
+        /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterAccessRule"/> instance for mocking. </returns>
+        public static OperationalInsightsNetworkSecurityPerimeterAccessRule OperationalInsightsNetworkSecurityPerimeterAccessRule(string name = default, OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties properties = default)
         {
-            return new OperationalInsightsNspAccessRule(name, properties, default);
+            return new OperationalInsightsNetworkSecurityPerimeterAccessRule(name, properties, default);
         }
 
         /// <param name="direction"></param>
@@ -435,20 +435,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="fullyQualifiedDomainNames"> Fully qualified domain names (FQDN) for outbound rules. </param>
         /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
         /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsNspAccessRuleProperties"/> instance for mocking. </returns>
-        public static OperationalInsightsNspAccessRuleProperties OperationalInsightsNspAccessRuleProperties(OperationalInsightsNspAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<OperationalInsightsNspAccessRuleSubscription> subscriptions = default, IEnumerable<OperationalInsightsNetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
+        /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties"/> instance for mocking. </returns>
+        public static OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties(OperationalInsightsNetworkSecurityPerimeterAccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription> subscriptions = default, IEnumerable<OperationalInsightsNetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
         {
             addressPrefixes ??= new ChangeTrackingList<string>();
-            subscriptions ??= new ChangeTrackingList<OperationalInsightsNspAccessRuleSubscription>();
+            subscriptions ??= new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription>();
             networkSecurityPerimeters ??= new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeter>();
             fullyQualifiedDomainNames ??= new ChangeTrackingList<string>();
             emailAddresses ??= new ChangeTrackingList<string>();
             phoneNumbers ??= new ChangeTrackingList<string>();
 
-            return new OperationalInsightsNspAccessRuleProperties(
+            return new OperationalInsightsNetworkSecurityPerimeterAccessRuleProperties(
                 direction,
                 (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(),
-                (subscriptions ?? new ChangeTrackingList<OperationalInsightsNspAccessRuleSubscription>()).ToList(),
+                (subscriptions ?? new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription>()).ToList(),
                 (networkSecurityPerimeters ?? new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeter>()).ToList(),
                 (fullyQualifiedDomainNames ?? new ChangeTrackingList<string>()).ToList(),
                 (emailAddresses ?? new ChangeTrackingList<string>()).ToList(),
@@ -457,10 +457,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <param name="id"> The fully qualified Azure resource ID of the subscription e.g. ('/subscriptions/00000000-0000-0000-0000-000000000000'). </param>
-        /// <returns> A new <see cref="Models.OperationalInsightsNspAccessRuleSubscription"/> instance for mocking. </returns>
-        public static OperationalInsightsNspAccessRuleSubscription OperationalInsightsNspAccessRuleSubscription(ResourceIdentifier id = default)
+        /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription"/> instance for mocking. </returns>
+        public static OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription(ResourceIdentifier id = default)
         {
-            return new OperationalInsightsNspAccessRuleSubscription(id, default);
+            return new OperationalInsightsNetworkSecurityPerimeterAccessRuleSubscription(id, default);
         }
 
         /// <param name="id"> Fully qualified Azure resource ID of the NSP resource. </param>
@@ -474,10 +474,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"></param>
-        /// <returns> A new <see cref="Models.OperationalInsightsNspResourceAssociation"/> instance for mocking. </returns>
-        public static OperationalInsightsNspResourceAssociation OperationalInsightsNspResourceAssociation(string name = default, OperationalInsightsNspResourceAssociationAccessMode? accessMode = default)
+        /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityPerimeterResourceAssociation"/> instance for mocking. </returns>
+        public static OperationalInsightsNetworkSecurityPerimeterResourceAssociation OperationalInsightsNetworkSecurityPerimeterResourceAssociation(string name = default, OperationalInsightsNetworkSecurityPerimeterResourceAssociationAccessMode? accessMode = default)
         {
-            return new OperationalInsightsNspResourceAssociation(name, accessMode, default);
+            return new OperationalInsightsNetworkSecurityPerimeterResourceAssociation(name, accessMode, default);
         }
 
         /// <param name="name"> Name of the profile. </param>
@@ -486,15 +486,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
         /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
         /// <returns> A new <see cref="Models.OperationalInsightsNetworkSecurityProfile"/> instance for mocking. </returns>
-        public static OperationalInsightsNetworkSecurityProfile OperationalInsightsNetworkSecurityProfile(string name = default, int? accessRulesVersion = default, IEnumerable<OperationalInsightsNspAccessRule> accessRules = default, int? diagnosticSettingsVersion = default, IEnumerable<string> enabledLogCategories = default)
+        public static OperationalInsightsNetworkSecurityProfile OperationalInsightsNetworkSecurityProfile(string name = default, int? accessRulesVersion = default, IEnumerable<OperationalInsightsNetworkSecurityPerimeterAccessRule> accessRules = default, int? diagnosticSettingsVersion = default, IEnumerable<string> enabledLogCategories = default)
         {
-            accessRules ??= new ChangeTrackingList<OperationalInsightsNspAccessRule>();
+            accessRules ??= new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeterAccessRule>();
             enabledLogCategories ??= new ChangeTrackingList<string>();
 
             return new OperationalInsightsNetworkSecurityProfile(
                 name,
                 accessRulesVersion,
-                (accessRules ?? new ChangeTrackingList<OperationalInsightsNspAccessRule>()).ToList(),
+                (accessRules ?? new ChangeTrackingList<OperationalInsightsNetworkSecurityPerimeterAccessRule>()).ToList(),
                 diagnosticSettingsVersion,
                 (enabledLogCategories ?? new ChangeTrackingList<string>()).ToList(),
                 default);
@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="provisioningState"> Summary rule is in provisioning state. If set to 'updating' or 'deleting', indicates a resource lock due to an ongoing operation, preventing any update to the Summary rule until the operation is complete. </param>
         /// <param name="ruleDefinition"> Rule definition parameters. </param>
         /// <returns> A new <see cref="OperationalInsights.OperationalInsightsSummaryLogsData"/> instance for mocking. </returns>
-        public static OperationalInsightsSummaryLogsData OperationalInsightsSummaryLogsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OperationalInsightsNspRuleType? ruleType = default, string displayName = default, string description = default, bool? isActive = default, OperationalInsightsNspStatusCode? statusCode = default, OperationalInsightsNspProvisioningState? provisioningState = default, OperationalInsightsSummaryRule ruleDefinition = default)
+        public static OperationalInsightsSummaryLogsData OperationalInsightsSummaryLogsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OperationalInsightsNetworkSecurityPerimeterRuleType? ruleType = default, string displayName = default, string description = default, bool? isActive = default, OperationalInsightsNetworkSecurityPerimeterStatusCode? statusCode = default, OperationalInsightsNetworkSecurityPerimeterProvisioningState? provisioningState = default, OperationalInsightsSummaryRule ruleDefinition = default)
         {
             return new OperationalInsightsSummaryLogsData(
                 id,
