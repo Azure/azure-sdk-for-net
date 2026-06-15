@@ -7,25 +7,34 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    // Backward compatibility shim for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
-    // The new API version removed the public constructor that was present in v1.1.2.
-    // This preserves the old constructor signature.
     public partial class NetworkTapData
     {
+#pragma warning disable CS0618 // Preserve obsolete NetworkTap destination compatibility surface.
         /// <summary> Initializes a new instance of <see cref="NetworkTapData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="networkPacketBrokerId"> ARM resource ID of the Network Packet Broker. </param>
         /// <param name="destinations"> List of destinations to send the filter traffic. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public NetworkTapData(AzureLocation location, ResourceIdentifier networkPacketBrokerId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations) : base(location)
+        [Obsolete("This constructor is obsolete and will be removed in a future version. Use NetworkTapDestinationProperties for destinations instead.")]
+        public NetworkTapData(AzureLocation location, ResourceIdentifier networkPacketBrokerId, IEnumerable<NetworkTapPropertiesDestinationsItem> destinations) : this(location, networkPacketBrokerId, destinations?.Cast<NetworkTapDestinationProperties>())
         {
-            NetworkPacketBrokerId = networkPacketBrokerId;
-            Destinations = destinations?.ToList();
         }
+
+        // Backward compatibility shim for the TypeSpec migration. The current generated property
+        // is DestinationSettings and uses the shared NetworkTapDestinationProperties model directly.
+        /// <summary> List of destination properties to send the filter traffic. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Use DestinationSettings instead.")]
+        public IList<NetworkTapPropertiesDestinationsItem> Destinations
+        {
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use DestinationSettings instead.");
+        }
+#pragma warning restore CS0618
     }
 }

@@ -10,6 +10,20 @@ compatibility: "azure-sdk-mcp server, local azure-sdk-for-{language} clone, lang
 
 # Generate SDK Locally
 
+This skill generates, builds, and tests Azure SDKs locally from TypeSpec with automatic customization support, covering the end-to-end workflow for fixing generation issues, applying SDK-specific updates, and refreshing package metadata when needed.
+
+## Triggers
+
+USE FOR: generate, build, and test Azure SDKs locally from TypeSpec with automatic customization; update changelog; fix SDK build errors; fix breaking changes; resolve SDK generation errors; customize TypeSpec; rename SDK client or model; hide operation from SDK; fix analyzer errors; resolve customization drift; create subclient; update metadata; update version
+WHEN: "generate SDK locally", "build SDK", "run SDK tests", "update changelog", "fix SDK build errors", "fix breaking changes", "resolve SDK generation errors", "customize TypeSpec", "rename SDK client", "rename SDK model", "hide operation from SDK", "fix analyzer errors", "resolve customization drift", "create subclient", "update metadata", "update version"
+DO NOT USE FOR: publishing to package registries, CI pipeline configuration, API design review
+
+## Rules
+
+- Requires the `azure-sdk-mcp` server for the MCP workflow; without MCP, use `npm exec --prefix eng/common/tsp-client -- tsp-client` CLI.
+- Verify the target language repo and the correct TypeSpec configuration file before generation.
+- After generation or customization, run the check and test steps before updating metadata or finalizing changes.
+
 ## MCP Tools
 
 | Tool | Purpose |

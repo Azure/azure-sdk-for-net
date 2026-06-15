@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Reservations.Models
     public readonly partial struct ReservationTerm : IEquatable<ReservationTerm>
     {
         private readonly string _value;
+        /// <summary> P1Y. </summary>
+        private const string P1YValue = "P1Y";
+        /// <summary> P3Y. </summary>
+        private const string P3YValue = "P3Y";
+        /// <summary> P5Y. </summary>
+        private const string P5YValue = "P5Y";
 
         /// <summary> Initializes a new instance of <see cref="ReservationTerm"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReservationTerm(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string P1YValue = "P1Y";
-        private const string P3YValue = "P3Y";
-        private const string P5YValue = "P5Y";
+            _value = value;
+        }
 
         /// <summary> P1Y. </summary>
         public static ReservationTerm P1Y { get; } = new ReservationTerm(P1YValue);
+
         /// <summary> P3Y. </summary>
         public static ReservationTerm P3Y { get; } = new ReservationTerm(P3YValue);
+
         /// <summary> P5Y. </summary>
         public static ReservationTerm P5Y { get; } = new ReservationTerm(P5YValue);
+
         /// <summary> Determines if two <see cref="ReservationTerm"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReservationTerm left, ReservationTerm right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReservationTerm"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReservationTerm left, ReservationTerm right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReservationTerm"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReservationTerm"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReservationTerm(string value) => new ReservationTerm(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReservationTerm"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReservationTerm?(string value) => value == null ? null : new ReservationTerm(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReservationTerm other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReservationTerm other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

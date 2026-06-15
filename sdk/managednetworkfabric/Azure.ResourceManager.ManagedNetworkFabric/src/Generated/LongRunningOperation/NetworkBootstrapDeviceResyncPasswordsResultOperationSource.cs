@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NetworkBootstrapDeviceResyncPasswordsResultOperationSource : IOperationSource<NetworkBootstrapDeviceResyncPasswordsResult>
+    /// <summary></summary>
+    internal partial class NetworkBootstrapDeviceResyncPasswordsResultOperationSource : IOperationSource<NetworkBootstrapDeviceResyncPasswordsResult>
     {
-        NetworkBootstrapDeviceResyncPasswordsResult IOperationSource<NetworkBootstrapDeviceResyncPasswordsResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal NetworkBootstrapDeviceResyncPasswordsResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return NetworkBootstrapDeviceResyncPasswordsResult.DeserializeNetworkBootstrapDeviceResyncPasswordsResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        NetworkBootstrapDeviceResyncPasswordsResult IOperationSource<NetworkBootstrapDeviceResyncPasswordsResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return NetworkBootstrapDeviceResyncPasswordsResult.DeserializeNetworkBootstrapDeviceResyncPasswordsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NetworkBootstrapDeviceResyncPasswordsResult> IOperationSource<NetworkBootstrapDeviceResyncPasswordsResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return NetworkBootstrapDeviceResyncPasswordsResult.DeserializeNetworkBootstrapDeviceResyncPasswordsResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return NetworkBootstrapDeviceResyncPasswordsResult.DeserializeNetworkBootstrapDeviceResyncPasswordsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

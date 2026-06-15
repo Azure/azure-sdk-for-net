@@ -19,7 +19,7 @@ Phases:
 
 Migration notes for base phases:
 - Phase 2: migration often introduces generic C# names such as `Scope`, `GroupScope`, `Sensitivity`, `ManagedRuleSetException`; flag contextual naming issues and prefer `@@clientName(..., "csharp")` when defined in TypeSpec.
-- Phase 3: migration breaking changes are expected but still must be mitigated. `ApiCompatBaseline.txt` entries remain forbidden.
+- Phase 3: migration breaking changes are expected but still must be mitigated. ApiCompat baseline entries remain forbidden except targeted `WirePathAttribute` removal entries in the centralized baseline file.
 
 ## Phase 4: Migration Customization Review
 

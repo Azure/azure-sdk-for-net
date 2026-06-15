@@ -803,7 +803,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
                 using HttpMessage message = CreateDeleteRequest(collectionId, ingestionId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "IngestionClient.DeleteAsync", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "IngestionClient.Delete", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {

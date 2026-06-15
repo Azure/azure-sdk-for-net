@@ -6,45 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
-    /// A Class representing a NetworkDeviceSku along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkDeviceSkuResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNetworkDeviceSkuResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetNetworkDeviceSku method.
+    /// A class representing a NetworkDeviceSku along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkDeviceSkuResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetNetworkDeviceSkus method.
     /// </summary>
     public partial class NetworkDeviceSkuResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NetworkDeviceSkuResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="networkDeviceSkuName"> The networkDeviceSkuName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string networkDeviceSkuName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _networkDeviceSkuClientDiagnostics;
-        private readonly NetworkDeviceSkusRestOperations _networkDeviceSkuRestClient;
+        private readonly ClientDiagnostics _networkDeviceSkusClientDiagnostics;
+        private readonly NetworkDeviceSkus _networkDeviceSkusRestClient;
         private readonly NetworkDeviceSkuData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/networkDeviceSkus";
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkDeviceSkuResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NetworkDeviceSkuResource for mocking. </summary>
         protected NetworkDeviceSkuResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkDeviceSkuResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkDeviceSkuResource(ArmClient client, NetworkDeviceSkuData data) : this(client, data.Id)
@@ -53,71 +44,91 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NetworkDeviceSkuResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkDeviceSkuResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkDeviceSkuClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string networkDeviceSkuApiVersion);
-            _networkDeviceSkuRestClient = new NetworkDeviceSkusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkDeviceSkuApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _networkDeviceSkusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
+            _networkDeviceSkusRestClient = new NetworkDeviceSkus(_networkDeviceSkusClientDiagnostics, Pipeline, Endpoint, networkDeviceSkuApiVersion ?? "2025-07-15");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual NetworkDeviceSkuData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="networkDeviceSkuName"> The networkDeviceSkuName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string networkDeviceSkuName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get a Network Device SKU details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSkus_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDeviceSkus_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceSkuResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceSkuResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetworkDeviceSkuResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkDeviceSkuClientDiagnostics.CreateScope("NetworkDeviceSkuResource.Get");
+            using DiagnosticScope scope = _networkDeviceSkusClientDiagnostics.CreateScope("NetworkDeviceSkuResource.Get");
             scope.Start();
             try
             {
-                var response = await _networkDeviceSkuRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NetworkDeviceSkuData> response = Response.FromValue(NetworkDeviceSkuData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkDeviceSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// Get a Network Device SKU details.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ManagedNetworkFabric/networkDeviceSkus/{networkDeviceSkuName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkDeviceSkus_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NetworkDeviceSkus_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-15</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkDeviceSkuResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NetworkDeviceSkuResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkDeviceSkuResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkDeviceSkuClientDiagnostics.CreateScope("NetworkDeviceSkuResource.Get");
+            using DiagnosticScope scope = _networkDeviceSkusClientDiagnostics.CreateScope("NetworkDeviceSkuResource.Get");
             scope.Start();
             try
             {
-                var response = _networkDeviceSkuRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _networkDeviceSkusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NetworkDeviceSkuData> response = Response.FromValue(NetworkDeviceSkuData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NetworkDeviceSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
