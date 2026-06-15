@@ -1682,28 +1682,22 @@ To create Routine, we need to define the hosted agent to be called and an action
 Agent.
 
 ```C# Snippet:Sample_CreateRoutine_RoutinesScheduleTrigger_Async
-IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
-{
-    ["every_five_minutes"] = new ScheduleRoutineTrigger(
-        cronExpression: "*/5 * * * *",
-        timeZone: "UTC"
-    )
-};
-
 RoutineAction action = new InvokeAgentResponsesApiRoutineAction
 {
     AgentName = agentVersion.Name,
     Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
 };
-
+ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine used by the schedule-trigger sample.", enabled: true);
+routineOptions.Triggers.Add("every_five_minutes", new ScheduleRoutineTrigger(
+        cronExpression: "*/5 * * * *",
+        timeZone: "UTC"
+));
 ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
     routineName: routineName,
-    triggers: triggers,
-    action: action,
-    description: "Routine used by the schedule-trigger sample.",
-    enabled: true);
+    options: routineOptions
+);
 Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
-Console.WriteLine($"cron expression: {((ScheduleRoutineTrigger)triggers["every_five_minutes"]).CronExpression}; time zone: {((ScheduleRoutineTrigger)triggers["every_five_minutes"]).TimeZone}");
+Console.WriteLine($"cron expression: {((ScheduleRoutineTrigger)routineOptions.Triggers["every_five_minutes"]).CronExpression}; time zone: {((ScheduleRoutineTrigger)routineOptions.Triggers["every_five_minutes"]).TimeZone}");
 ```
 
 In this case we create schedule, when we call Agent every five minutes, we use responses API for invocation
@@ -1712,58 +1706,46 @@ and the phrase "Hello, Tell me a joke." as an input.
 Similarly, we can create the routine, which will start the run in a response to the external event.
 
 ```C# Snippet:Sample_CreateRoutine_RoutinesCRUD_Async
-IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
+RoutineAction action = new InvokeAgentResponsesApiRoutineAction
 {
-    ["manual"] = new CustomRoutineTrigger(
+    AgentName = agentVersion.Name
+};
+ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by the azure-ai-projects sample.", enabled: true);
+routineOptions.Triggers.Add("manual", new CustomRoutineTrigger(
         provider: "sample-provider",
         parameters: new Dictionary<string, BinaryData>
         {
             ["source"] = BinaryData.FromString("\"sample_routines_crud\"")
         })
-    {
-        EventName = "sample-event"
-    }
-};
-
-RoutineAction action = new InvokeAgentResponsesApiRoutineAction
 {
-    AgentName = agentVersion.Name
-};
-
+    EventName = "sample-event"
+});
 ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
     routineName: routineName,
-    triggers: triggers,
-    action: action,
-    description: "Routine created by the azure-ai-projects sample.",
-    enabled: true);
+    options: routineOptions
+);
 Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}");
 ```
 
 To create a single run at given time we need to define routine as follows:
 
 ```C# Snippet:Sample_CreateRoutine_RoutinesTimerTrigger_Async
-IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
-{
-    ["once"] = new TimerRoutineTrigger()
-    {
-        At = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(20),
-    },
-};
-
 RoutineAction action = new InvokeAgentResponsesApiRoutineAction
 {
     AgentName = agentVersion.Name,
     Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
 };
-
+ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine used by the timer-trigger sample.", enabled: true);
+routineOptions.Triggers.Add("once", new TimerRoutineTrigger()
+{
+    At = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(20),
+});
 ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
     routineName: routineName,
-    triggers: triggers,
-    action: action,
-    description: "Routine used by the timer-trigger sample.",
-    enabled: true);
+    options: routineOptions
+);
 Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
-Console.WriteLine($"Fire at: {((TimerRoutineTrigger)triggers["once"]).At.Value.ToString("o")}");
+Console.WriteLine($"Fire at: {((TimerRoutineTrigger)routineOptions.Triggers["once"]).At.Value.ToString("o")}");
 ```
 
 ## Tracing

@@ -26,32 +26,27 @@ public class RoutinesTests : ProjectsClientTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion agentVersion = await GetHostedAgent(projectClient);
-        IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
-        {
-            ["manual"] = new CustomRoutineTrigger(
-                provider: "sample-provider",
-                parameters: new Dictionary<string, BinaryData>
-                {
-                    ["source"] = BinaryData.FromString("\"sample_routines_crud\"")
-                })
-            {
-                EventName = "sample-event"
-            }
-        };
-
         RoutineAction action = new InvokeAgentResponsesApiRoutineAction
         {
             AgentName = agentVersion.Name
         };
         string routineName = $"{ROUTINE_NAME_PREFIX}-0";
+        ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by unit test.", enabled: true);
+        routineOptions.Triggers.Add("manual", new CustomRoutineTrigger(
+                provider: "sample-provider",
+                parameters: new Dictionary<string, BinaryData>
+                {
+                    ["source"] = BinaryData.FromString("\"sample_routines_crud\"")
+                })
+        {
+            EventName = "sample-event"
+        });
         ProjectsRoutine created = await projectClient.Routines.CreateOrUpdateRoutineAsync(
             routineName: routineName,
-            triggers: triggers,
-            action: action,
-            description: "Routine created by unit test.",
-            enabled: true);
+            options: routineOptions);
         Assert.That(created.Name, Is.EqualTo(routineName));
         Assert.That(created.Enabled, Is.True);
+        Assert.That(created.Description, Is.EqualTo("Routine created by unit test."));
 
         ProjectsRoutine disabled = await projectClient.Routines.DisableRoutineAsync(routineName);
         Assert.That(disabled.Name, Is.EqualTo(routineName));
@@ -85,30 +80,26 @@ public class RoutinesTests : ProjectsClientTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectsAgentVersion agentVersion = await GetHostedAgent(projectClient);
-        IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
-        {
-            ["manual"] = new CustomRoutineTrigger(
-                provider: "sample-provider",
-                parameters: new Dictionary<string, BinaryData>
-                {
-                    ["source"] = BinaryData.FromString("\"sample_routines_crud\"")
-                })
-            {
-                EventName = "sample-event"
-            }
-        };
         RoutineAction action = new InvokeAgentResponsesApiRoutineAction
         {
             AgentName = agentVersion.Name
         };
+        CustomRoutineTrigger trigger = new(
+            provider: "sample-provider",
+            parameters: new Dictionary<string, BinaryData>
+            {
+                ["source"] = BinaryData.FromString("\"sample_routines_crud\"")
+            })
+        {
+            EventName = "sample-event"
+        };
         for (int i=0; i< PAGE_SIZE + 1; i++)
         {
+            ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by unit test.", enabled: false);
+            routineOptions.Triggers.Add("manual", trigger);
             await projectClient.Routines.CreateOrUpdateRoutineAsync(
                 routineName: $"{ROUTINE_NAME_PREFIX}-{i}",
-                triggers: triggers,
-                action: action,
-                description: "Routine created by unit test.",
-                enabled: false);
+                options: routineOptions);
         }
         List<ProjectsRoutine> records = await projectClient.Routines.GetRoutinesAsync(limit: PAGE_SIZE, order: "asc").Where(x => x.Name.StartsWith(ROUTINE_NAME_PREFIX)).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
@@ -170,22 +161,17 @@ public class RoutinesTests : ProjectsClientTestBase
                 };
             }
         }
-        IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
-        {
-            ["test"] = trigger
-        };
         RoutineAction action = new InvokeAgentResponsesApiRoutineAction
         {
             AgentName = agentVersion.Name,
             Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
         };
         string routineName = $"{ROUTINE_NAME_PREFIX}-0";
+        ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by unit test.", enabled: true);
+        routineOptions.Triggers.Add("test", trigger);
         ProjectsRoutine created = await projectClient.Routines.CreateOrUpdateRoutineAsync(
             routineName: routineName,
-            triggers: triggers,
-            action: action,
-            description: "Routine created by unit test.",
-            enabled: true);
+            options: routineOptions);
         int minutesWait = 10;
         DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(minutesWait);
         RoutineRun completedRun = null;
@@ -228,12 +214,11 @@ public class RoutinesTests : ProjectsClientTestBase
             Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
         };
         string routineName = $"{ROUTINE_NAME_PREFIX}-0";
+        ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by unit test.", enabled: true);
+        routineOptions.Triggers.Add("test", trigger);
         ProjectsRoutine created = await projectClient.Routines.CreateOrUpdateRoutineAsync(
             routineName: routineName,
-            triggers: new Dictionary<string, RoutineTrigger> { { "test", trigger} },
-            action: action,
-            description: "Routine created by unit test.",
-            enabled: true);
+            options: routineOptions);
         int minutesWait = 20;
         DateTime deadline = DateTime.UtcNow + new TimeSpan(hours: 0, minutes: minutesWait, seconds: 0);
         List<RoutineRun> runs = [];

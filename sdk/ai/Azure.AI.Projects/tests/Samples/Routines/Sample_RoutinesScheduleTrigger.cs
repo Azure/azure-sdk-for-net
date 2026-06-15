@@ -41,28 +41,22 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         { await routinesClient.DeleteRoutineAsync(routineName); } catch { }
 
         #region Snippet:Sample_CreateRoutine_RoutinesScheduleTrigger_Async
-        IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
-        {
-            ["every_five_minutes"] = new ScheduleRoutineTrigger(
-                cronExpression: "*/5 * * * *",
-                timeZone: "UTC"
-            )
-        };
-
         RoutineAction action = new InvokeAgentResponsesApiRoutineAction
         {
             AgentName = agentVersion.Name,
             Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
         };
-
+        ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine used by the schedule-trigger sample.", enabled: true);
+        routineOptions.Triggers.Add("every_five_minutes", new ScheduleRoutineTrigger(
+                cronExpression: "*/5 * * * *",
+                timeZone: "UTC"
+        ));
         ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
             routineName: routineName,
-            triggers: triggers,
-            action: action,
-            description: "Routine used by the schedule-trigger sample.",
-            enabled: true);
+            options: routineOptions
+        );
         Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
-        Console.WriteLine($"cron expression: {((ScheduleRoutineTrigger)triggers["every_five_minutes"]).CronExpression}; time zone: {((ScheduleRoutineTrigger)triggers["every_five_minutes"]).TimeZone}");
+        Console.WriteLine($"cron expression: {((ScheduleRoutineTrigger)routineOptions.Triggers["every_five_minutes"]).CronExpression}; time zone: {((ScheduleRoutineTrigger)routineOptions.Triggers["every_five_minutes"]).TimeZone}");
         #endregion
 
         #region Snippet:Sample_WaitForTask_RoutinesScheduleTrigger_Async
@@ -140,28 +134,22 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         catch { }
 
         #region Snippet:Sample_CreateRoutine_RoutinesScheduleTrigger_Sync
-        IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
-        {
-            ["every_five_minutes"] = new ScheduleRoutineTrigger(
-                cronExpression: "*/5 * * * *",
-                timeZone: "UTC"
-            )
-        };
-
         RoutineAction action = new InvokeAgentResponsesApiRoutineAction
         {
             AgentName = agentVersion.Name,
             Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
         };
-
+        ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine used by the schedule-trigger sample.", enabled: true);
+        routineOptions.Triggers.Add("every_five_minutes", new ScheduleRoutineTrigger(
+                cronExpression: "*/5 * * * *",
+                timeZone: "UTC"
+        ));
         ProjectsRoutine created = routinesClient.CreateOrUpdateRoutine(
             routineName: routineName,
-            triggers: triggers,
-            action: action,
-            description: "Routine used by the schedule-trigger sample.",
-            enabled: true);
+            options: routineOptions
+        );
         Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
-        Console.WriteLine($"cron expression: {((ScheduleRoutineTrigger)triggers["every_five_minutes"]).CronExpression}; time zone: {((ScheduleRoutineTrigger)triggers["every_five_minutes"]).TimeZone}");
+        Console.WriteLine($"cron expression: {((ScheduleRoutineTrigger)routineOptions.Triggers["every_five_minutes"]).CronExpression}; time zone: {((ScheduleRoutineTrigger)routineOptions.Triggers["every_five_minutes"]).TimeZone}");
         #endregion
 
         #region Snippet:Sample_WaitForTask_RoutinesScheduleTrigger_Sync

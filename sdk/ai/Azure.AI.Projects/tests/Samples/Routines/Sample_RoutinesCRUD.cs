@@ -40,30 +40,24 @@ public class Sample_RoutinesCRUD : SamplesRoutineBase
         { await routinesClient.DeleteRoutineAsync(routineName); } catch { }
 
         #region Snippet:Sample_CreateRoutine_RoutinesCRUD_Async
-        IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
+        RoutineAction action = new InvokeAgentResponsesApiRoutineAction
         {
-            ["manual"] = new CustomRoutineTrigger(
+            AgentName = agentVersion.Name
+        };
+        ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by the azure-ai-projects sample.", enabled: true);
+        routineOptions.Triggers.Add("manual", new CustomRoutineTrigger(
                 provider: "sample-provider",
                 parameters: new Dictionary<string, BinaryData>
                 {
                     ["source"] = BinaryData.FromString("\"sample_routines_crud\"")
                 })
-            {
-                EventName = "sample-event"
-            }
-        };
-
-        RoutineAction action = new InvokeAgentResponsesApiRoutineAction
         {
-            AgentName = agentVersion.Name
-        };
-
+            EventName = "sample-event"
+        });
         ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
             routineName: routineName,
-            triggers: triggers,
-            action: action,
-            description: "Routine created by the azure-ai-projects sample.",
-            enabled: true);
+            options: routineOptions
+        );
         Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}");
         #endregion
 
@@ -117,30 +111,24 @@ public class Sample_RoutinesCRUD : SamplesRoutineBase
             agentName: agentName).Value.GetLatestVersion();
         #endregion
         #region Snippet:Sample_CreateRoutine_RoutinesCRUD_Sync
-        IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
+        RoutineAction action = new InvokeAgentResponsesApiRoutineAction
         {
-            ["manual"] = new CustomRoutineTrigger(
+            AgentName = agentVersion.Name
+        };
+        ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine created by the azure-ai-projects sample.", enabled: true);
+        routineOptions.Triggers.Add("manual", new CustomRoutineTrigger(
                 provider: "sample-provider",
                 parameters: new Dictionary<string, BinaryData>
                 {
                     ["source"] = BinaryData.FromString("\"sample_routines_crud\"")
                 })
-            {
-                EventName = "sample-event"
-            }
-        };
-
-        RoutineAction action = new InvokeAgentResponsesApiRoutineAction
         {
-            AgentName = agentVersion.Name
-        };
-
+            EventName = "sample-event"
+        });
         ProjectsRoutine created = routinesClient.CreateOrUpdateRoutine(
             routineName: routineName,
-            triggers: triggers,
-            action: action,
-            description: "Routine created by the azure-ai-projects sample.",
-            enabled: true);
+            options: routineOptions
+        );
         Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}");
         #endregion
 

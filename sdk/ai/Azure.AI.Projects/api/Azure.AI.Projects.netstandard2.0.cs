@@ -429,8 +429,8 @@ namespace Azure.AI.Projects
     {
         protected AIProjectRoutines() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.ProjectsRoutine> CreateOrUpdateRoutine(string routineName, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.RoutineTrigger> triggers, Azure.AI.Projects.RoutineAction action, string description = null, bool? enabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.ProjectsRoutine>> CreateOrUpdateRoutineAsync(string routineName, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.RoutineTrigger> triggers, Azure.AI.Projects.RoutineAction action, string description = null, bool? enabled = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.ProjectsRoutine> CreateOrUpdateRoutine(string routineName, Azure.AI.Projects.ProjectsRoutineOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.ProjectsRoutine>> CreateOrUpdateRoutineAsync(string routineName, Azure.AI.Projects.ProjectsRoutineOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult DeleteRoutine(string routineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteRoutineAsync(string routineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.ProjectsRoutine> DisableRoutine(string routineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1576,6 +1576,14 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.ProjectsRoutine System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ProjectsRoutine>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ProjectsRoutine>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ProjectsRoutine>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProjectsRoutineOptions
+    {
+        public ProjectsRoutineOptions(Azure.AI.Projects.RoutineAction action, string description = null, bool? enabled = default(bool?)) { }
+        public Azure.AI.Projects.RoutineAction Action { get { throw null; } }
+        public string Description { get { throw null; } }
+        public bool? Enabled { get { throw null; } }
+        public System.Collections.Generic.Dictionary<string, Azure.AI.Projects.RoutineTrigger> Triggers { get { throw null; } }
     }
     public abstract partial class ProjectsScheduleTask : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ProjectsScheduleTask>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ProjectsScheduleTask>
     {

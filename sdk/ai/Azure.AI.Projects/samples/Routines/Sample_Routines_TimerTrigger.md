@@ -35,54 +35,42 @@ ProjectsAgentVersion agentVersion = (await projectClient.AgentAdministrationClie
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateRoutine_RoutinesTimerTrigger_Sync
-IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
-{
-    ["once"] = new TimerRoutineTrigger()
-    {
-        At = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(20),
-    },
-};
-
 RoutineAction action = new InvokeAgentResponsesApiRoutineAction
 {
     AgentName = agentVersion.Name,
     Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
 };
-
+ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine used by the timer-trigger sample.", enabled: true);
+routineOptions.Triggers.Add("once", new TimerRoutineTrigger()
+{
+    At = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(20),
+});
 ProjectsRoutine created = routinesClient.CreateOrUpdateRoutine(
     routineName: routineName,
-    triggers: triggers,
-    action: action,
-    description: "Routine used by the timer-trigger sample.",
-    enabled: true);
+    options: routineOptions
+);
 Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
-Console.WriteLine($"Fire at: {((TimerRoutineTrigger)triggers["once"]).At.Value.ToString("o")}");
+Console.WriteLine($"Fire at: {((TimerRoutineTrigger)routineOptions.Triggers["once"]).At.Value.ToString("o")}");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateRoutine_RoutinesTimerTrigger_Async
-IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
-{
-    ["once"] = new TimerRoutineTrigger()
-    {
-        At = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(20),
-    },
-};
-
 RoutineAction action = new InvokeAgentResponsesApiRoutineAction
 {
     AgentName = agentVersion.Name,
     Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
 };
-
+ProjectsRoutineOptions routineOptions = new(action: action, description: "Routine used by the timer-trigger sample.", enabled: true);
+routineOptions.Triggers.Add("once", new TimerRoutineTrigger()
+{
+    At = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(20),
+});
 ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
     routineName: routineName,
-    triggers: triggers,
-    action: action,
-    description: "Routine used by the timer-trigger sample.",
-    enabled: true);
+    options: routineOptions
+);
 Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
-Console.WriteLine($"Fire at: {((TimerRoutineTrigger)triggers["once"]).At.Value.ToString("o")}");
+Console.WriteLine($"Fire at: {((TimerRoutineTrigger)routineOptions.Triggers["once"]).At.Value.ToString("o")}");
 ```
 
 4. List the jobs started by the routine and raise an error if job was not completed.
