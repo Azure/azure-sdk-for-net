@@ -12,6 +12,7 @@ namespace Azure.AI.Projects
     /// The FunctionAndCustomToolCallOutput.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionAndCustomToolCallOutputInputTextContent"/>, <see cref="FunctionAndCustomToolCallOutputInputImageContent"/>, and <see cref="FunctionAndCustomToolCallOutputInputFileContent"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     internal abstract partial class FunctionAndCustomToolCallOutput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

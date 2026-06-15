@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> The ContainerAutoParam. </summary>
+    [Experimental("AAIP001")]
     internal partial class ContainerAutoParam : FunctionShellToolParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="ContainerAutoParam"/>. </summary>

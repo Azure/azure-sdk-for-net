@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> The artifact profile category. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct FoundryModelArtifactProfileCategory : IEquatable<FoundryModelArtifactProfileCategory>
     {
         private readonly string _value;

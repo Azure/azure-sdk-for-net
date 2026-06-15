@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The refund properties of reservation. </summary>
     public partial class ReservationRefundResponseProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReservationRefundResponseProperties"/>. </summary>
         internal ReservationRefundResponseProperties()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="pricingRefundAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="policyResult"> Refund policy result. </param>
         /// <param name="billingInformation"> billing information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationRefundResponseProperties(Guid? sessionId, int? quantity, PurchasePrice billingRefundAmount, PurchasePrice pricingRefundAmount, RefundPolicyResult policyResult, ReservationRefundBillingInformation billingInformation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationRefundResponseProperties(Guid? sessionId, int? quantity, PurchasePrice billingRefundAmount, PurchasePrice pricingRefundAmount, RefundPolicyResult policyResult, ReservationRefundBillingInformation billingInformation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SessionId = sessionId;
             Quantity = quantity;
@@ -66,26 +37,34 @@ namespace Azure.ResourceManager.Reservations.Models
             PricingRefundAmount = pricingRefundAmount;
             PolicyResult = policyResult;
             BillingInformation = billingInformation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Refund session identifier. </summary>
         public Guid? SessionId { get; }
+
         /// <summary> Quantity to be returned. </summary>
         public int? Quantity { get; }
+
         /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice BillingRefundAmount { get; }
+
         /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice PricingRefundAmount { get; }
+
         /// <summary> Refund policy result. </summary>
         internal RefundPolicyResult PolicyResult { get; }
-        /// <summary> Refund policy result property. </summary>
-        public ReservationRefundPolicyResultProperty PolicyResultProperties
-        {
-            get => PolicyResult?.Properties;
-        }
 
         /// <summary> billing information. </summary>
         public ReservationRefundBillingInformation BillingInformation { get; }
+
+        /// <summary> Refund policy result property. </summary>
+        public ReservationRefundPolicyResultProperty PolicyResultProperties
+        {
+            get
+            {
+                return PolicyResult is null ? default : PolicyResult.Properties;
+            }
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// The FunctionShellCallEnvironment.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="LocalEnvironmentResource"/> and <see cref="ContainerReferenceResource"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     internal abstract partial class FunctionShellCallEnvironment
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A content filter result indicating severity level and whether content was filtered. </summary>
+    [Experimental("AAIP001")]
     internal partial class AzureContentFilterSeverityResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

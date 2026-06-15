@@ -12,6 +12,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> Code interpreter tool call. </summary>
+    [Experimental("AAIP001")]
     internal partial class InputItemCodeInterpreterToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemCodeInterpreterToolCall"/>. </summary>

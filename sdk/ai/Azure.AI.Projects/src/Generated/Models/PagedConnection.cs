@@ -10,6 +10,7 @@ using System.Linq;
 namespace Azure.AI.Projects
 {
     /// <summary> Paged collection of Connection items. </summary>
+    [Experimental("AAIP001")]
     internal partial class PagedConnection
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

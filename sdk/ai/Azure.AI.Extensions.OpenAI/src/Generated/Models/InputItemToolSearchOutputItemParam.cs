@@ -10,6 +10,7 @@ using System.Linq;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The InputItemToolSearchOutputItemParam. </summary>
+    [Experimental("AAIP001")]
     internal partial class InputItemToolSearchOutputItemParam : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemToolSearchOutputItemParam"/>. </summary>

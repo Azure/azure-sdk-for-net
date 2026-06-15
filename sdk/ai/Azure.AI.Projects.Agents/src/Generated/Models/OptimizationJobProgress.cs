@@ -16,31 +16,31 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OptimizationJobProgress"/>. </summary>
-        /// <param name="currentIteration"> 1-based current iteration index. </param>
+        /// <param name="candidatesCompleted"> Number of candidates whose evaluation has completed so far. </param>
         /// <param name="bestScore"> Best score observed so far across all candidates. </param>
         /// <param name="elapsedSeconds"> Wall-clock time elapsed in seconds since the job began executing. </param>
-        internal OptimizationJobProgress(int currentIteration, double bestScore, double elapsedSeconds)
+        internal OptimizationJobProgress(int candidatesCompleted, double bestScore, double elapsedSeconds)
         {
-            CurrentIteration = currentIteration;
+            CandidatesCompleted = candidatesCompleted;
             BestScore = bestScore;
             ElapsedSeconds = elapsedSeconds;
         }
 
         /// <summary> Initializes a new instance of <see cref="OptimizationJobProgress"/>. </summary>
-        /// <param name="currentIteration"> 1-based current iteration index. </param>
+        /// <param name="candidatesCompleted"> Number of candidates whose evaluation has completed so far. </param>
         /// <param name="bestScore"> Best score observed so far across all candidates. </param>
         /// <param name="elapsedSeconds"> Wall-clock time elapsed in seconds since the job began executing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationJobProgress(int currentIteration, double bestScore, double elapsedSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationJobProgress(int candidatesCompleted, double bestScore, double elapsedSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CurrentIteration = currentIteration;
+            CandidatesCompleted = candidatesCompleted;
             BestScore = bestScore;
             ElapsedSeconds = elapsedSeconds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> 1-based current iteration index. </summary>
-        public int CurrentIteration { get; }
+        /// <summary> Number of candidates whose evaluation has completed so far. </summary>
+        public int CandidatesCompleted { get; }
 
         /// <summary> Best score observed so far across all candidates. </summary>
         public double BestScore { get; }

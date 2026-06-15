@@ -10,6 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The CompactResponseMethodPublicBody. </summary>
+    [Experimental("AAIP001")]
     internal partial class CompactResponseMethodPublicBody
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

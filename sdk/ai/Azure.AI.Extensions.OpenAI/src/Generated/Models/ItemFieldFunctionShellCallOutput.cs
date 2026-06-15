@@ -10,6 +10,7 @@ using System.Linq;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Shell call output. </summary>
+    [Experimental("AAIP001")]
     internal partial class ItemFieldFunctionShellCallOutput : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldFunctionShellCallOutput"/>. </summary>

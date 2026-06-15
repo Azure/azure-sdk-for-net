@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> The discriminator values supported for manual routine dispatch payloads. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct RoutineDispatchPayloadType : IEquatable<RoutineDispatchPayloadType>
     {
         private readonly string _value;

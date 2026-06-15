@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Shell call exit outcome. </summary>
+    [Experimental("AAIP001")]
     internal partial class FunctionShellCallOutputExitOutcome : FunctionShellCallOutputOutcome
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputExitOutcome"/>. </summary>

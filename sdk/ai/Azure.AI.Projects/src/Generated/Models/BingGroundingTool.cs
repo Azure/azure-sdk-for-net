@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
+    [Experimental("AAIP001")]
     internal partial class BingGroundingTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="BingGroundingTool"/>. </summary>

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridCompute
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.HybridCompute
     /// </summary>
     public partial class HybridComputePrivateLinkScopeCollection : ArmCollection, IEnumerable<HybridComputePrivateLinkScopeResource>, IAsyncEnumerable<HybridComputePrivateLinkScopeResource>
     {
-        private readonly ClientDiagnostics _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics;
-        private readonly PrivateLinkScopesRestOperations _hybridComputePrivateLinkScopePrivateLinkScopesRestClient;
+        private readonly ClientDiagnostics _privateLinkScopesClientDiagnostics;
+        private readonly PrivateLinkScopes _privateLinkScopesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HybridComputePrivateLinkScopeCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HybridComputePrivateLinkScopeCollection for mocking. </summary>
         protected HybridComputePrivateLinkScopeCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HybridComputePrivateLinkScopeCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkScopeCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HybridComputePrivateLinkScopeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputePrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HybridComputePrivateLinkScopeResource.ResourceType, out string hybridComputePrivateLinkScopePrivateLinkScopesApiVersion);
-            _hybridComputePrivateLinkScopePrivateLinkScopesRestClient = new PrivateLinkScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputePrivateLinkScopePrivateLinkScopesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(HybridComputePrivateLinkScopeResource.ResourceType, out string hybridComputePrivateLinkScopeApiVersion);
+            _privateLinkScopesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputePrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
+            _privateLinkScopesRestClient = new PrivateLinkScopes(_privateLinkScopesClientDiagnostics, Pipeline, Endpoint, hybridComputePrivateLinkScopeApiVersion ?? "2025-09-16-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates (or updates) a Azure Arc PrivateLinkScope. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> HybridComputePrivateLinkScopes_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
         /// <param name="data"> Properties that need to be specified to create or update a Azure Arc for Servers and Clusters PrivateLinkScope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<HybridComputePrivateLinkScopeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scopeName, HybridComputePrivateLinkScopeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, HybridComputePrivateLinkScopeData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HybridComputePrivateLinkScopeData> response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                HybridComputeArmOperation<HybridComputePrivateLinkScopeResource> operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.HybridCompute
         /// Creates (or updates) a Azure Arc PrivateLinkScope. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> HybridComputePrivateLinkScopes_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,23 +131,31 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
         /// <param name="data"> Properties that need to be specified to create or update a Azure Arc for Servers and Clusters PrivateLinkScope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<HybridComputePrivateLinkScopeResource> CreateOrUpdate(WaitUntil waitUntil, string scopeName, HybridComputePrivateLinkScopeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data, cancellationToken);
-                var uri = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, HybridComputePrivateLinkScopeData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HybridComputePrivateLinkScopeData> response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                HybridComputeArmOperation<HybridComputePrivateLinkScopeResource> operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +169,42 @@ namespace Azure.ResourceManager.HybridCompute
         /// Returns a Azure Arc PrivateLinkScope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HybridComputePrivateLinkScopes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<HybridComputePrivateLinkScopeResource>> GetAsync(string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.Get");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HybridComputePrivateLinkScopeData> response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +218,42 @@ namespace Azure.ResourceManager.HybridCompute
         /// Returns a Azure Arc PrivateLinkScope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HybridComputePrivateLinkScopes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<HybridComputePrivateLinkScopeResource> Get(string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.Get");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.Get");
             scope.Start();
             try
             {
-                var response = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HybridComputePrivateLinkScopeData> response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,50 +267,44 @@ namespace Azure.ResourceManager.HybridCompute
         /// Gets a list of Azure Arc PrivateLinkScopes within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> HybridComputePrivateLinkScopes_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridComputePrivateLinkScopeResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HybridComputePrivateLinkScopeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HybridComputePrivateLinkScopeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridComputePrivateLinkScopeResource(Client, HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(e)), _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "HybridComputePrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new PrivateLinkScopesGetByResourceGroupAsyncCollectionResultOfT(_privateLinkScopesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HybridComputePrivateLinkScopeCollection.GetAll"), data => new HybridComputePrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
         /// Gets a list of Azure Arc PrivateLinkScopes within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> HybridComputePrivateLinkScopes_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,45 +312,61 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> A collection of <see cref="HybridComputePrivateLinkScopeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HybridComputePrivateLinkScopeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridComputePrivateLinkScopeResource(Client, HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(e)), _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "HybridComputePrivateLinkScopeCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HybridComputePrivateLinkScopeData, HybridComputePrivateLinkScopeResource>(new PrivateLinkScopesGetByResourceGroupCollectionResultOfT(_privateLinkScopesRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "HybridComputePrivateLinkScopeCollection.GetAll"), data => new HybridComputePrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HybridComputePrivateLinkScopes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.Exists");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HybridComputePrivateLinkScopeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HybridComputePrivateLinkScopeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,36 +380,50 @@ namespace Azure.ResourceManager.HybridCompute
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HybridComputePrivateLinkScopes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.Exists");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HybridComputePrivateLinkScopeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HybridComputePrivateLinkScopeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,38 +437,54 @@ namespace Azure.ResourceManager.HybridCompute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HybridComputePrivateLinkScopes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<HybridComputePrivateLinkScopeResource>> GetIfExistsAsync(string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<HybridComputePrivateLinkScopeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HybridComputePrivateLinkScopeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HybridComputePrivateLinkScopeResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -439,38 +498,54 @@ namespace Azure.ResourceManager.HybridCompute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/privateLinkScopes/{scopeName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkScopes_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HybridComputePrivateLinkScopes_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-07-31-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridComputePrivateLinkScopeResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-16-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scopeName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<HybridComputePrivateLinkScopeResource> GetIfExists(string scopeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
-            using var scope = _hybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkScopesClientDiagnostics.CreateScope("HybridComputePrivateLinkScopeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, scopeName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateLinkScopesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, scopeName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<HybridComputePrivateLinkScopeData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(HybridComputePrivateLinkScopeData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((HybridComputePrivateLinkScopeData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<HybridComputePrivateLinkScopeResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,6 +565,7 @@ namespace Azure.ResourceManager.HybridCompute
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<HybridComputePrivateLinkScopeResource> IAsyncEnumerable<HybridComputePrivateLinkScopeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

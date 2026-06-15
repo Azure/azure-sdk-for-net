@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct ApplyPatchOperationParamType : IEquatable<ApplyPatchOperationParamType>
     {
         private readonly string _value;

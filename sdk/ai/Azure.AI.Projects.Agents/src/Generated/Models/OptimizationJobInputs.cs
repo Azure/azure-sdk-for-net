@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -17,46 +18,48 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="OptimizationJobInputs"/>. </summary>
         /// <param name="agent"> The agent (and pinned version) being optimized. </param>
-        /// <param name="trainDatasetReference"> Reference to a registered training dataset (required). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agent"/> or <paramref name="trainDatasetReference"/> is null. </exception>
-        public OptimizationJobInputs(AgentIdentifier agent, DatasetRef trainDatasetReference)
+        /// <param name="trainDataset"> Training dataset — either inline items or a reference to a registered dataset. Required. </param>
+        /// <param name="evaluators"> Job-level evaluators referenced by name and optional version. Required; at least one must be provided. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agent"/>, <paramref name="trainDataset"/> or <paramref name="evaluators"/> is null. </exception>
+        public OptimizationJobInputs(OptimizationAgentIdentifier agent, OptimizationDatasetInput trainDataset, IEnumerable<OptimizationEvaluatorRef> evaluators)
         {
             Argument.AssertNotNull(agent, nameof(agent));
-            Argument.AssertNotNull(trainDatasetReference, nameof(trainDatasetReference));
+            Argument.AssertNotNull(trainDataset, nameof(trainDataset));
+            Argument.AssertNotNull(evaluators, nameof(evaluators));
 
             Agent = agent;
-            TrainDatasetReference = trainDatasetReference;
-            Evaluators = new ChangeTrackingList<string>();
+            TrainDataset = trainDataset;
+            Evaluators = evaluators.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="OptimizationJobInputs"/>. </summary>
         /// <param name="agent"> The agent (and pinned version) being optimized. </param>
-        /// <param name="trainDatasetReference"> Reference to a registered training dataset (required). </param>
-        /// <param name="validationDatasetReference"> Optional held-out validation dataset for measuring generalization of the final candidate. </param>
-        /// <param name="evaluators"> Job-level evaluators (referenced by name). Per-task criteria may override. Default: ['task_adherence']. </param>
+        /// <param name="trainDataset"> Training dataset — either inline items or a reference to a registered dataset. Required. </param>
+        /// <param name="validationDataset"> Optional held-out validation dataset for measuring generalization of the final candidate. </param>
+        /// <param name="evaluators"> Job-level evaluators referenced by name and optional version. Required; at least one must be provided. </param>
         /// <param name="options"> Tuning knobs and run-mode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OptimizationJobInputs(AgentIdentifier agent, DatasetRef trainDatasetReference, DatasetRef validationDatasetReference, IList<string> evaluators, OptimizationOptions options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OptimizationJobInputs(OptimizationAgentIdentifier agent, OptimizationDatasetInput trainDataset, OptimizationDatasetInput validationDataset, IList<OptimizationEvaluatorRef> evaluators, OptimizationOptions options, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Agent = agent;
-            TrainDatasetReference = trainDatasetReference;
-            ValidationDatasetReference = validationDatasetReference;
+            TrainDataset = trainDataset;
+            ValidationDataset = validationDataset;
             Evaluators = evaluators;
             Options = options;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The agent (and pinned version) being optimized. </summary>
-        public AgentIdentifier Agent { get; set; }
+        public OptimizationAgentIdentifier Agent { get; set; }
 
-        /// <summary> Reference to a registered training dataset (required). </summary>
-        public DatasetRef TrainDatasetReference { get; set; }
+        /// <summary> Training dataset — either inline items or a reference to a registered dataset. Required. </summary>
+        public OptimizationDatasetInput TrainDataset { get; set; }
 
         /// <summary> Optional held-out validation dataset for measuring generalization of the final candidate. </summary>
-        public DatasetRef ValidationDatasetReference { get; set; }
+        public OptimizationDatasetInput ValidationDataset { get; set; }
 
-        /// <summary> Job-level evaluators (referenced by name). Per-task criteria may override. Default: ['task_adherence']. </summary>
-        public IList<string> Evaluators { get; }
+        /// <summary> Job-level evaluators referenced by name and optional version. Required; at least one must be provided. </summary>
+        public IList<OptimizationEvaluatorRef> Evaluators { get; }
 
         /// <summary> Tuning knobs and run-mode. </summary>
         public OptimizationOptions Options { get; set; }

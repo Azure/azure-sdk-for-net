@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Local Environment. </summary>
+    [Experimental("AAIP001")]
     internal partial class LocalEnvironmentResource : FunctionShellCallEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="LocalEnvironmentResource"/>. </summary>

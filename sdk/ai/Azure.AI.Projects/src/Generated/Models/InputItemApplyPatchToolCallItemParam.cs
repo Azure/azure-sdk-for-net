@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> Apply patch tool call. </summary>
+    [Experimental("AAIP001")]
     internal partial class InputItemApplyPatchToolCallItemParam : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemApplyPatchToolCallItemParam"/>. </summary>

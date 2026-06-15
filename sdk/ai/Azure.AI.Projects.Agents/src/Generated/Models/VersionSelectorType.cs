@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct VersionSelectorType : IEquatable<VersionSelectorType>
     {
         private readonly string _value;

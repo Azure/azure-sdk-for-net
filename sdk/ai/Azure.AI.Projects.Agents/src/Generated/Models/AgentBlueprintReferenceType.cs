@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct AgentBlueprintReferenceType : IEquatable<AgentBlueprintReferenceType>
     {
         private readonly string _value;

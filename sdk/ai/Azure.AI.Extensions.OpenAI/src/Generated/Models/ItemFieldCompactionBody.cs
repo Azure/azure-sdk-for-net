@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Compaction item. </summary>
+    [Experimental("AAIP001")]
     internal partial class ItemFieldCompactionBody : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldCompactionBody"/>. </summary>

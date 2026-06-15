@@ -10,6 +10,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> Move. </summary>
+    [Experimental("AAIP001")]
     internal partial class MoveParam : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="MoveParam"/>. </summary>

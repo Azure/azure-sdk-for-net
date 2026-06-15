@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Content filter results for the Responses API. </summary>
+    [Experimental("AAIP001")]
     internal partial class AzureContentFilterResultsForResponses
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

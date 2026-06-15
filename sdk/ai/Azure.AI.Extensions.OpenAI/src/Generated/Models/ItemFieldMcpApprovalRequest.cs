@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> MCP approval request. </summary>
+    [Experimental("AAIP001")]
     internal partial class ItemFieldMcpApprovalRequest : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldMcpApprovalRequest"/>. </summary>

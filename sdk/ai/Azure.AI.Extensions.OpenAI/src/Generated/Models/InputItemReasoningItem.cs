@@ -10,6 +10,7 @@ using System.Linq;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Reasoning. </summary>
+    [Experimental("AAIP001")]
     internal partial class InputItemReasoningItem : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemReasoningItem"/>. </summary>

@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> Local shell call output. </summary>
+    [Experimental("AAIP001")]
     internal partial class InputItemLocalShellToolCallOutput : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemLocalShellToolCallOutput"/>. </summary>

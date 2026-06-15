@@ -10,6 +10,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Click. </summary>
+    [Experimental("AAIP001")]
     internal partial class ClickParam : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="ClickParam"/>. </summary>

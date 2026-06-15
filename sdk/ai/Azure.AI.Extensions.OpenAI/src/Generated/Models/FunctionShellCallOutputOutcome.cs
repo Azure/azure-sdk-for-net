@@ -12,6 +12,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// Shell call outcome
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellCallOutputTimeoutOutcome"/> and <see cref="FunctionShellCallOutputExitOutcome"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     internal abstract partial class FunctionShellCallOutputOutcome
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

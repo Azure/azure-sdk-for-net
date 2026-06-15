@@ -12,6 +12,7 @@ namespace Azure.AI.Projects.Agents
     /// Authentication type for OpenApi endpoint. Allowed types are:
     /// <list type="bullet"><item><description>Anonymous (no authentication required)</description></item><item><description>Project Connection (requires project_connection_id to endpoint, as setup in AI Foundry)</description></item><item><description>Managed_Identity (requires audience for identity based auth)</description></item></list>
     /// </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct OpenApiAuthType : IEquatable<OpenApiAuthType>
     {
         private readonly string _value;

@@ -10,6 +10,7 @@ using System.Linq;
 namespace Azure.AI.Projects
 {
     /// <summary> Shell action. </summary>
+    [Experimental("AAIP001")]
     internal partial class FunctionShellActionParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

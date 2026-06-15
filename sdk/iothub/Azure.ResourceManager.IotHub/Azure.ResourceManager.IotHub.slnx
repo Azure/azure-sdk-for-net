@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="src/Azure.ResourceManager.IotHub.csproj" />
+  <Project Path="tests/Azure.ResourceManager.IotHub.Tests.csproj" />
+</Solution>

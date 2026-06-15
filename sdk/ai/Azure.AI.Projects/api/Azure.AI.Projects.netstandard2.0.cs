@@ -600,7 +600,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.ResponseUsageOutputTokensDetails ResponseUsageOutputTokensDetails(long reasoningTokens = (long)0) { throw null; }
         public static Azure.AI.Projects.RoutineAction RoutineAction(string type = null) { throw null; }
         public static Azure.AI.Projects.RoutineDispatchPayload RoutineDispatchPayload(string type = null) { throw null; }
-        public static Azure.AI.Projects.RoutineRun RoutineRun(string id = null, System.BinaryData status = null, Azure.AI.Projects.RoutineRunPhase? phase = default(Azure.AI.Projects.RoutineRunPhase?), Azure.AI.Projects.RoutineTriggerType? triggerType = default(Azure.AI.Projects.RoutineTriggerType?), string triggerName = null, Azure.AI.Projects.RoutineAttemptSource? attemptSource = default(Azure.AI.Projects.RoutineAttemptSource?), Azure.AI.Projects.RoutineActionType? actionType = default(Azure.AI.Projects.RoutineActionType?), string agentId = null, string agentEndpointId = null, string conversationId = null, string sessionId = null, System.DateTimeOffset? triggeredAt = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledFireAt = default(System.DateTimeOffset?), System.DateTimeOffset? startedAt = default(System.DateTimeOffset?), System.DateTimeOffset? endedAt = default(System.DateTimeOffset?), string dispatchId = null, string actionCorrelationId = null, string responseId = null, string taskId = null, int? errorStatusCode = default(int?), string errorType = null, string errorMessage = null) { throw null; }
+        public static Azure.AI.Projects.RoutineRun RoutineRun(string id = null, System.BinaryData statusInternal = null, Azure.AI.Projects.RoutineRunPhase? phase = default(Azure.AI.Projects.RoutineRunPhase?), Azure.AI.Projects.RoutineTriggerType? triggerType = default(Azure.AI.Projects.RoutineTriggerType?), string triggerName = null, Azure.AI.Projects.RoutineAttemptSource? attemptSource = default(Azure.AI.Projects.RoutineAttemptSource?), Azure.AI.Projects.RoutineActionType? actionType = default(Azure.AI.Projects.RoutineActionType?), string agentId = null, string agentEndpointId = null, string conversationId = null, string sessionId = null, System.DateTimeOffset? triggeredAt = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledFireAt = default(System.DateTimeOffset?), System.DateTimeOffset? startedAt = default(System.DateTimeOffset?), System.DateTimeOffset? endedAt = default(System.DateTimeOffset?), string dispatchId = null, string actionCorrelationId = null, string responseId = null, string taskId = null, int? errorStatusCode = default(int?), string errorType = null, string errorMessage = null) { throw null; }
         public static Azure.AI.Projects.RoutineTrigger RoutineTrigger(string type = null) { throw null; }
         public static Azure.AI.Projects.RubricBasedEvaluatorDefinition RubricBasedEvaluatorDefinition(System.BinaryData initParameters = null, System.BinaryData dataSchema = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Evaluation.EvaluatorMetric> metrics = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.EvaluationsDimension> dimensions = null, float? passThreshold = default(float?)) { throw null; }
         public static Azure.AI.Projects.ScheduleRoutineTrigger ScheduleRoutineTrigger(string cronExpression = null, string timeZone = null) { throw null; }
@@ -1214,7 +1214,7 @@ namespace Azure.AI.Projects
         SkillsV1Preview = 7,
         DataGenerationJobsV1Preview = 8,
         ModelsV1Preview = 9,
-        AgentsOptimizationV1Preview = 10,
+        AgentsOptimizationV2Preview = 10,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GitHubIssueEvent : System.IEquatable<Azure.AI.Projects.GitHubIssueEvent>
@@ -1732,7 +1732,7 @@ namespace Azure.AI.Projects
         public System.DateTimeOffset? ScheduledFireAt { get { throw null; } }
         public string SessionId { get { throw null; } }
         public System.DateTimeOffset? StartedAt { get { throw null; } }
-        public System.BinaryData Status { get { throw null; } }
+        public string Status { get { throw null; } }
         public string TaskId { get { throw null; } }
         public System.DateTimeOffset? TriggeredAt { get { throw null; } }
         public string TriggerName { get { throw null; } }

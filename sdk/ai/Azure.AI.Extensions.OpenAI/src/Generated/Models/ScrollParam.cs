@@ -10,6 +10,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Scroll. </summary>
+    [Experimental("AAIP001")]
     internal partial class ScrollParam : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="ScrollParam"/>. </summary>

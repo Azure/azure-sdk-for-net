@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> Signals detected in the model artifact. </summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct FoundryModelArtifactProfileSignal : IEquatable<FoundryModelArtifactProfileSignal>
     {
         private readonly string _value;

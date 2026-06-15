@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Local shell call. </summary>
+    [Experimental("AAIP001")]
     internal partial class ItemFieldLocalShellToolCall : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldLocalShellToolCall"/>. </summary>

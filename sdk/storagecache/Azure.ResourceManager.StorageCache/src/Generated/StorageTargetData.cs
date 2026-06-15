@@ -13,123 +13,168 @@ using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
 {
-    /// <summary>
-    /// A class representing the StorageTarget data model.
-    /// Type of the Storage Target.
-    /// </summary>
+    /// <summary> Type of the Storage Target. </summary>
     public partial class StorageTargetData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageTargetData"/>. </summary>
         public StorageTargetData()
         {
-            Junctions = new ChangeTrackingList<NamespaceJunction>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTargetData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="junctions"> List of cache namespace junctions to target for namespace associations. </param>
-        /// <param name="targetType"> Type of the Storage Target. </param>
-        /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
-        /// <param name="state"> Storage target operational state. </param>
-        /// <param name="nfs3"> Properties when targetType is nfs3. </param>
-        /// <param name="clfs"> Properties when targetType is clfs. </param>
-        /// <param name="unknown"> Properties when targetType is unknown. </param>
-        /// <param name="blobNfs"> Properties when targetType is blobNfs. </param>
-        /// <param name="allocationPercentage"> The percentage of cache space allocated for this storage target. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> StorageTarget properties. </param>
         /// <param name="location"> Region name string. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<NamespaceJunction> junctions, StorageTargetType? targetType, StorageCacheProvisioningStateType? provisioningState, StorageTargetOperationalStateType? state, Nfs3Target nfs3, ClfsTarget clfs, UnknownTarget unknown, BlobNfsTarget blobNfs, int? allocationPercentage, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageTargetProperties properties, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Junctions = junctions;
-            TargetType = targetType;
-            ProvisioningState = provisioningState;
-            State = state;
-            Nfs3 = nfs3;
-            Clfs = clfs;
-            Unknown = unknown;
-            BlobNfs = blobNfs;
-            AllocationPercentage = allocationPercentage;
+            Properties = properties;
             Location = location;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> StorageTarget properties. </summary>
+        internal StorageTargetProperties Properties { get; set; }
+
+        /// <summary> Region name string. </summary>
+        public AzureLocation? Location { get; }
+
         /// <summary> List of cache namespace junctions to target for namespace associations. </summary>
-        public IList<NamespaceJunction> Junctions { get; }
-        /// <summary> Type of the Storage Target. </summary>
-        public StorageTargetType? TargetType { get; set; }
-        /// <summary> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </summary>
-        public StorageCacheProvisioningStateType? ProvisioningState { get; }
-        /// <summary> Storage target operational state. </summary>
-        public StorageTargetOperationalStateType? State { get; set; }
-        /// <summary> Properties when targetType is nfs3. </summary>
-        public Nfs3Target Nfs3 { get; set; }
-        /// <summary> Properties when targetType is clfs. </summary>
-        internal ClfsTarget Clfs { get; set; }
-        /// <summary> Resource ID of storage container. </summary>
-        public ResourceIdentifier ClfsTarget
+        public IList<NamespaceJunction> Junctions
         {
-            get => Clfs is null ? default : Clfs.Target;
-            set
+            get
             {
-                if (Clfs is null)
-                    Clfs = new ClfsTarget();
-                Clfs.Target = value;
+                if (Properties is null)
+                {
+                    Properties = new StorageTargetProperties();
+                }
+                return Properties.Junctions;
             }
         }
 
-        /// <summary> Properties when targetType is unknown. </summary>
-        internal UnknownTarget Unknown { get; set; }
+        /// <summary> Type of the Storage Target. </summary>
+        public StorageTargetType? TargetType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new StorageTargetProperties();
+                    }
+                    Properties.TargetType = value.Value;
+                }
+            }
+        }
+
+        /// <summary> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </summary>
+        public StorageCacheProvisioningStateType? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Storage target operational state. </summary>
+        public StorageTargetOperationalStateType? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageTargetProperties();
+                }
+                Properties.State = value;
+            }
+        }
+
+        /// <summary> Properties when targetType is nfs3. </summary>
+        public Nfs3Target Nfs3
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Nfs3;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageTargetProperties();
+                }
+                Properties.Nfs3 = value;
+            }
+        }
+
+        /// <summary> Properties when targetType is blobNfs. </summary>
+        public BlobNfsTarget BlobNfs
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BlobNfs;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageTargetProperties();
+                }
+                Properties.BlobNfs = value;
+            }
+        }
+
+        /// <summary> The percentage of cache space allocated for this storage target. </summary>
+        public int? AllocationPercentage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllocationPercentage;
+            }
+        }
+
+        /// <summary> Resource ID of storage container. </summary>
+        public ResourceIdentifier ClfsTarget
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClfsTarget;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageTargetProperties();
+                }
+                Properties.ClfsTarget = value;
+            }
+        }
+
         /// <summary> Dictionary of string-&gt;string pairs containing information about the Storage Target. </summary>
         public IDictionary<string, string> UnknownAttributes
         {
             get
             {
-                if (Unknown is null)
-                    Unknown = new UnknownTarget();
-                return Unknown.Attributes;
+                if (Properties is null)
+                {
+                    Properties = new StorageTargetProperties();
+                }
+                return Properties.UnknownAttributes;
             }
         }
-
-        /// <summary> Properties when targetType is blobNfs. </summary>
-        public BlobNfsTarget BlobNfs { get; set; }
-        /// <summary> The percentage of cache space allocated for this storage target. </summary>
-        public int? AllocationPercentage { get; }
-        /// <summary> Region name string. </summary>
-        public AzureLocation? Location { get; }
     }
 }

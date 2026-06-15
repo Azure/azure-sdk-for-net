@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> Summary text. </summary>
+    [Experimental("AAIP001")]
     internal partial class SummaryTextContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="SummaryTextContent"/>. </summary>

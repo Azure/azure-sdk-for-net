@@ -13,6 +13,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// text or structured JSON data. Learn more:
     /// <list type="bullet"><item><description>[Text inputs and outputs](/docs/guides/text)</description></item><item><description>[Structured Outputs](/docs/guides/structured-outputs)</description></item></list>
     /// </summary>
+    [Experimental("AAIP001")]
     internal partial class ResponseTextParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

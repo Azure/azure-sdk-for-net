@@ -10,6 +10,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> The FileSearchToolCallResults. </summary>
+    [Experimental("AAIP001")]
     internal partial class FileSearchToolCallResults
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

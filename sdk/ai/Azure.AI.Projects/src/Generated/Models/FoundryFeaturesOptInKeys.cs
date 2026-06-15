@@ -30,7 +30,7 @@ namespace Azure.AI.Projects
         DataGenerationJobsV1Preview,
         /// <summary> ModelsV1Preview. </summary>
         ModelsV1Preview,
-        /// <summary> AgentsOptimizationV1Preview. </summary>
-        AgentsOptimizationV1Preview
+        /// <summary> AgentsOptimizationV2Preview. </summary>
+        AgentsOptimizationV2Preview
     }
 }

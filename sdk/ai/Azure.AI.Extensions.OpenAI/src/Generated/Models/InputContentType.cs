@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct InputContentType : IEquatable<InputContentType>
     {
         private readonly string _value;

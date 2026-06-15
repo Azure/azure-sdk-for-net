@@ -93,19 +93,16 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             HybridComputeLicenseResource hybridComputeLicense = client.GetHybridComputeLicenseResource(hybridComputeLicenseResourceId);
 
             // invoke the operation
-            HybridComputeLicenseData data = new HybridComputeLicenseData(new AzureLocation("eastus2euap"))
+            HybridComputeLicensePatch patch = new HybridComputeLicensePatch()
             {
                 LicenseType = HybridComputeLicenseType.Esu,
-                LicenseDetails = new HybridComputeLicenseDetails
-                {
-                    State = HybridComputeLicenseState.Activated,
-                    Target = HybridComputeLicenseTarget.WindowsServer2012,
-                    Edition = HybridComputeLicenseEdition.DataCenter,
-                    LicenseCoreType = LicenseCoreType.PCore,
-                    Processors = 6,
-                },
+                State = HybridComputeLicenseState.Activated,
+                Target = HybridComputeLicenseTarget.WindowsServer2012,
+                Edition = HybridComputeLicenseEdition.DataCenter,
+                Type = LicenseCoreType.PCore,
+                Processors = 6,
             };
-            ArmOperation<HybridComputeLicenseResource> lro = await hybridComputeLicense.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<HybridComputeLicenseResource> lro = await hybridComputeLicense.UpdateAsync(WaitUntil.Completed, patch);
             HybridComputeLicenseResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

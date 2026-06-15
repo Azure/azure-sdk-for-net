@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Input image. </summary>
+    [Experimental("AAIP001")]
     internal partial class FunctionAndCustomToolCallOutputInputImageContent : InternalFunctionAndCustomToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="FunctionAndCustomToolCallOutputInputImageContent"/>. </summary>

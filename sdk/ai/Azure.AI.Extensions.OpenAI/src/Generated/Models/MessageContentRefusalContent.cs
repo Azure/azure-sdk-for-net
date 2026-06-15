@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Refusal. </summary>
+    [Experimental("AAIP001")]
     internal partial class MessageContentRefusalContent : InternalMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentRefusalContent"/>. </summary>

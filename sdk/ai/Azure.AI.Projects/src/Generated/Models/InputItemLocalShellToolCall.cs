@@ -10,6 +10,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> Local shell call. </summary>
+    [Experimental("AAIP001")]
     internal partial class InputItemLocalShellToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemLocalShellToolCall"/>. </summary>

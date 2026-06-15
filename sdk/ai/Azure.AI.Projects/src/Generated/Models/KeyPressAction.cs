@@ -11,6 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> KeyPress. </summary>
+    [Experimental("AAIP001")]
     internal partial class KeyPressAction : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="KeyPressAction"/>. </summary>

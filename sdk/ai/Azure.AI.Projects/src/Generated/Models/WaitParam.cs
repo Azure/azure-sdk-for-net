@@ -10,6 +10,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> Wait. </summary>
+    [Experimental("AAIP001")]
     internal partial class WaitParam : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="WaitParam"/>. </summary>

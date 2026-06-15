@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for a Bing custom search tool as used to configure an agent. </summary>
+    [Experimental("AAIP001")]
     internal partial class BingCustomSearchPreviewTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="BingCustomSearchPreviewTool"/>. </summary>

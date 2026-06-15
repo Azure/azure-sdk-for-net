@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Error details from the content filtering system. </summary>
+    [Experimental("AAIP001")]
     internal partial class AzureContentFilterError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

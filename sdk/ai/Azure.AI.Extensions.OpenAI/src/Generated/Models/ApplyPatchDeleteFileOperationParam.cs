@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Apply patch delete file operation. </summary>
+    [Experimental("AAIP001")]
     internal partial class ApplyPatchDeleteFileOperationParam : ApplyPatchOperationParam
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchDeleteFileOperationParam"/>. </summary>

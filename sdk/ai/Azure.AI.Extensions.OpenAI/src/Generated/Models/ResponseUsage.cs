@@ -12,6 +12,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// Represents token usage details including input tokens, output tokens,
     /// a breakdown of output tokens, and the total tokens used.
     /// </summary>
+    [Experimental("AAIP001")]
     internal partial class ResponseUsage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

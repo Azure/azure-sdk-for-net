@@ -11,6 +11,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Drag. </summary>
+    [Experimental("AAIP001")]
     internal partial class DragParam : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="DragParam"/>. </summary>

@@ -10,6 +10,7 @@ using System.Linq;
 namespace Azure.AI.Projects
 {
     /// <summary> The bing custom search tool parameters. </summary>
+    [Experimental("AAIP001")]
     internal partial class BingCustomSearchToolParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

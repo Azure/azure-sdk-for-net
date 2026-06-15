@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A content filter detection result that includes citation information for protected material. </summary>
+    [Experimental("AAIP001")]
     internal partial class AzureContentFilterDetectionWithCitationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

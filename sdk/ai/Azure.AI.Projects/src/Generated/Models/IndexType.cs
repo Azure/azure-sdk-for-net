@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     internal readonly partial struct IndexType : IEquatable<IndexType>
     {
         private readonly string _value;

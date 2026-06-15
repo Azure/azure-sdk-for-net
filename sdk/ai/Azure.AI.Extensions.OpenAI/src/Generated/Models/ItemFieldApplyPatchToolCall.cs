@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Apply patch tool call. </summary>
+    [Experimental("AAIP001")]
     internal partial class ItemFieldApplyPatchToolCall : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldApplyPatchToolCall"/>. </summary>

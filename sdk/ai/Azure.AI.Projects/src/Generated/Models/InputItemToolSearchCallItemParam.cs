@@ -9,6 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects
 {
     /// <summary> The InputItemToolSearchCallItemParam. </summary>
+    [Experimental("AAIP001")]
     internal partial class InputItemToolSearchCallItemParam : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemToolSearchCallItemParam"/>. </summary>
