@@ -63,5 +63,112 @@ namespace Azure.AI.Language.Documents.Tests
             Assert.IsNotNull(operation);
             Assert.IsNotNull(operation.GetRawResponse());
         }
+
+        [RecordedTest]
+        public async Task GetJobState()
+        {
+            MultiLanguageDocumentCollection documents = new MultiLanguageDocumentCollection();
+            documents.Documents.Add(
+                new MultiLanguageInput(
+                    "1",
+                    new AzureBlobDocumentLocation(TestEnvironment.SourceLocation),
+                    new AzureContainerFolderDocumentLocation(TestEnvironment.TargetLocation))
+                {
+                    Language = "en",
+                });
+
+            PiiEntityRecognitionAction piiAction = new PiiEntityRecognitionAction
+            {
+                Parameters = DocumentsServiceModelFactory.PiiActionContent(
+                    redactionPolicies: new[]
+                    {
+                        new EntityMaskRedactionPolicy
+                        {
+                            PolicyName = "defaultPolicy",
+                            IsDefault = true,
+                        },
+                    }),
+            };
+
+            AnalyzeDocumentsOperationInput request = new AnalyzeDocumentsOperationInput(
+                documents,
+                new AnalyzeDocumentsOperationAction[] { piiAction })
+            {
+                DisplayName = "Document Analysis.",
+            };
+
+            Operation operation = await Client.AnalyzeDocumentsSubmitOperationAsync(
+                WaitUntil.Started,
+                request);
+
+            Assert.IsNotNull(operation);
+            Assert.IsNotNull(operation.GetRawResponse());
+
+            Assert.IsTrue(
+                operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string operationLocation),
+                "Operation-Location header was not found.");
+
+            Guid jobId = Guid.Parse(new Uri(operationLocation).AbsolutePath.TrimEnd('/').Split('/').Last());
+
+            Response<AnalyzeDocumentsJobState> response = await Client.GetAnalyzeDocumentsJobStateAsync(jobId);
+
+            Assert.IsNotNull(response);
+            Assert.AreEqual(jobId, response.Value.JobId);
+            Assert.AreNotEqual(default(DocumentActionStatus), response.Value.Status);
+        }
+
+        [RecordedTest]
+        public async Task CancelJob()
+        {
+            MultiLanguageDocumentCollection documents = new MultiLanguageDocumentCollection();
+            documents.Documents.Add(
+                new MultiLanguageInput(
+                    "1",
+                    new AzureBlobDocumentLocation(TestEnvironment.SourceLocation),
+                    new AzureContainerFolderDocumentLocation(TestEnvironment.TargetLocation))
+                {
+                    Language = "en",
+                });
+
+            PiiEntityRecognitionAction piiAction = new PiiEntityRecognitionAction
+            {
+                Parameters = DocumentsServiceModelFactory.PiiActionContent(
+                    redactionPolicies: new[]
+                    {
+                        new EntityMaskRedactionPolicy
+                        {
+                            PolicyName = "defaultPolicy",
+                            IsDefault = true,
+                        },
+                    }),
+            };
+
+            AnalyzeDocumentsOperationInput request = new AnalyzeDocumentsOperationInput(
+                documents,
+                new AnalyzeDocumentsOperationAction[] { piiAction })
+            {
+                DisplayName = "Document Analysis.",
+            };
+
+            Operation submitOperation = await Client.AnalyzeDocumentsSubmitOperationAsync(
+                WaitUntil.Started,
+                request);
+
+            Assert.IsNotNull(submitOperation);
+            Assert.IsNotNull(submitOperation.GetRawResponse());
+
+            Assert.IsTrue(
+                submitOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string operationLocation),
+                "Operation-Location header was not found.");
+
+            Guid jobId = Guid.Parse(new Uri(operationLocation).AbsolutePath.TrimEnd('/').Split('/').Last());
+
+            Operation cancelOperation = await Client.AnalyzeDocumentsCancelOperationAsync(
+                WaitUntil.Started,
+                jobId);
+
+            Assert.IsNotNull(cancelOperation);
+            Assert.IsNotNull(cancelOperation.GetRawResponse());
+        }
     }
 }
