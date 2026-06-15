@@ -100,50 +100,84 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 "MockablePolicyInsightsSubscriptionPolicySetDefinitionResource.GetPolicyStateQueryResults");
         }
 
-        /// <summary> Summarizes policy states for the subscription level policy set definition. </summary>
+        /// <summary>
+        /// Summarizes policy states for the subscription level policy set definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyStatesOperationGroup_SummarizeForPolicySetDefinition. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyStateSummaryType"></param>
+        /// <param name="policyQuerySettings"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
         {
-            return new SinglePageAsyncPageable<PolicySummary>(async ct =>
+            RequestContext context = new RequestContext
             {
-                using DiagnosticScope scope0 = PolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsSubscriptionPolicySetDefinitionResource.SummarizePolicyStates");
-                scope0.Start();
-                try
-                {
-                    RequestContext context = new RequestContext { CancellationToken = ct };
-                    HttpMessage message = PolicyStatesRestClient.CreateSummarizeForPolicySetDefinitionPolicyStatesRequest(Id.SubscriptionId, policyStateSummaryType.ToString(), Id.Name, default, default, default, default, context);
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    SummarizeResults summary = SummarizeResults.FromResponse(result);
-                    return Page.FromValues(summary?.Value ?? Array.Empty<PolicySummary>(), null, result);
-                }
-                catch (Exception e)
-                {
-                    scope0.Failed(e);
-                    throw;
-                }
-            }, cancellationToken);
+                CancellationToken = cancellationToken
+            };
+            return new PolicyStatesSummarizeForPolicySetDefinitionPolicyStatesAsyncCollectionResultOfT(
+                PolicyStatesRestClient,
+                Id.SubscriptionId,
+                policyStateSummaryType.ToString(),
+                Id.Name,
+                default,
+                default,
+                default,
+                default,
+                context,
+                "MockablePolicyInsightsSubscriptionPolicySetDefinitionResource.SummarizePolicyStates");
         }
 
-        /// <summary> Summarizes policy states for the subscription level policy set definition. </summary>
+        /// <summary>
+        /// Summarizes policy states for the subscription level policy set definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PolicyStatesOperationGroup_SummarizeForPolicySetDefinition. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyStateSummaryType"></param>
+        /// <param name="policyQuerySettings"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicySummary> SummarizePolicyStates(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
         {
-            return new SinglePagePageable<PolicySummary>(ct =>
+            RequestContext context = new RequestContext
             {
-                using DiagnosticScope scope0 = PolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsSubscriptionPolicySetDefinitionResource.SummarizePolicyStates");
-                scope0.Start();
-                try
-                {
-                    RequestContext context = new RequestContext { CancellationToken = ct };
-                    HttpMessage message = PolicyStatesRestClient.CreateSummarizeForPolicySetDefinitionPolicyStatesRequest(Id.SubscriptionId, policyStateSummaryType.ToString(), Id.Name, default, default, default, default, context);
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    SummarizeResults summary = SummarizeResults.FromResponse(result);
-                    return Page.FromValues(summary?.Value ?? Array.Empty<PolicySummary>(), null, result);
-                }
-                catch (Exception e)
-                {
-                    scope0.Failed(e);
-                    throw;
-                }
-            }, cancellationToken);
+                CancellationToken = cancellationToken
+            };
+            return new PolicyStatesSummarizeForPolicySetDefinitionPolicyStatesCollectionResultOfT(
+                PolicyStatesRestClient,
+                Id.SubscriptionId,
+                policyStateSummaryType.ToString(),
+                Id.Name,
+                default,
+                default,
+                default,
+                default,
+                context,
+                "MockablePolicyInsightsSubscriptionPolicySetDefinitionResource.SummarizePolicyStates");
         }
     }
 }

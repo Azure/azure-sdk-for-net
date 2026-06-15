@@ -124,66 +124,90 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 context, diag);
         }
 
-        /// <summary> Summarizes policy states for the policy assignment (sub or RG scope). </summary>
+        /// <summary>
+        /// Summarizes policy states for the policy assignment (sub or RG scope).
+        /// Routes to <c>PolicyStatesOperationGroup_SummarizeForResourceGroupLevelPolicyAssignment</c> when <see cref="Core.ResourceIdentifier.ResourceGroupName"/> is set,
+        /// otherwise <c>PolicyStatesOperationGroup_SummarizeForSubscriptionLevelPolicyAssignment</c>.
+        /// </summary>
+        /// <param name="policyStateSummaryType"></param>
+        /// <param name="policyQuerySettings"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
         {
-            return new SinglePageAsyncPageable<PolicySummary>(async ct =>
+            RequestContext context = new RequestContext
             {
-                using DiagnosticScope scope0 = PolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsPolicyAssignmentResource.SummarizePolicyStates");
-                scope0.Start();
-                try
-                {
-                    RequestContext context = new RequestContext { CancellationToken = ct };
-                    HttpMessage message;
-                    if (Id.ResourceGroupName != null)
-                    {
-                        message = PolicyStatesRestClient.CreateSummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesRequest(Id.SubscriptionId, Id.ResourceGroupName, policyStateSummaryType.ToString(), Id.Name, default, default, default, default, context);
-                    }
-                    else
-                    {
-                        message = PolicyStatesRestClient.CreateSummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesRequest(Id.SubscriptionId, policyStateSummaryType.ToString(), Id.Name, default, default, default, default, context);
-                    }
-                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    SummarizeResults summary = SummarizeResults.FromResponse(result);
-                    return Page.FromValues(summary?.Value ?? Array.Empty<PolicySummary>(), null, result);
-                }
-                catch (Exception e)
-                {
-                    scope0.Failed(e);
-                    throw;
-                }
-            }, cancellationToken);
+                CancellationToken = cancellationToken
+            };
+            if (Id.ResourceGroupName != null)
+            {
+                return new PolicyStatesSummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesAsyncCollectionResultOfT(
+                    PolicyStatesRestClient,
+                    Id.SubscriptionId,
+                    Id.ResourceGroupName,
+                    policyStateSummaryType.ToString(),
+                    Id.Name,
+                    default,
+                    default,
+                    default,
+                    default,
+                    context,
+                    "MockablePolicyInsightsPolicyAssignmentResource.SummarizePolicyStates");
+            }
+            return new PolicyStatesSummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesAsyncCollectionResultOfT(
+                PolicyStatesRestClient,
+                Id.SubscriptionId,
+                policyStateSummaryType.ToString(),
+                Id.Name,
+                default,
+                default,
+                default,
+                default,
+                context,
+                "MockablePolicyInsightsPolicyAssignmentResource.SummarizePolicyStates");
         }
 
-        /// <summary> Summarizes policy states for the policy assignment (sub or RG scope). </summary>
+        /// <summary>
+        /// Summarizes policy states for the policy assignment (sub or RG scope).
+        /// Routes to <c>PolicyStatesOperationGroup_SummarizeForResourceGroupLevelPolicyAssignment</c> when <see cref="Core.ResourceIdentifier.ResourceGroupName"/> is set,
+        /// otherwise <c>PolicyStatesOperationGroup_SummarizeForSubscriptionLevelPolicyAssignment</c>.
+        /// </summary>
+        /// <param name="policyStateSummaryType"></param>
+        /// <param name="policyQuerySettings"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicySummary> SummarizePolicyStates(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
         {
-            return new SinglePagePageable<PolicySummary>(ct =>
+            RequestContext context = new RequestContext
             {
-                using DiagnosticScope scope0 = PolicyStatesClientDiagnostics.CreateScope("MockablePolicyInsightsPolicyAssignmentResource.SummarizePolicyStates");
-                scope0.Start();
-                try
-                {
-                    RequestContext context = new RequestContext { CancellationToken = ct };
-                    HttpMessage message;
-                    if (Id.ResourceGroupName != null)
-                    {
-                        message = PolicyStatesRestClient.CreateSummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesRequest(Id.SubscriptionId, Id.ResourceGroupName, policyStateSummaryType.ToString(), Id.Name, default, default, default, default, context);
-                    }
-                    else
-                    {
-                        message = PolicyStatesRestClient.CreateSummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesRequest(Id.SubscriptionId, policyStateSummaryType.ToString(), Id.Name, default, default, default, default, context);
-                    }
-                    Response result = Pipeline.ProcessMessage(message, context);
-                    SummarizeResults summary = SummarizeResults.FromResponse(result);
-                    return Page.FromValues(summary?.Value ?? Array.Empty<PolicySummary>(), null, result);
-                }
-                catch (Exception e)
-                {
-                    scope0.Failed(e);
-                    throw;
-                }
-            }, cancellationToken);
+                CancellationToken = cancellationToken
+            };
+            if (Id.ResourceGroupName != null)
+            {
+                return new PolicyStatesSummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesCollectionResultOfT(
+                    PolicyStatesRestClient,
+                    Id.SubscriptionId,
+                    Id.ResourceGroupName,
+                    policyStateSummaryType.ToString(),
+                    Id.Name,
+                    default,
+                    default,
+                    default,
+                    default,
+                    context,
+                    "MockablePolicyInsightsPolicyAssignmentResource.SummarizePolicyStates");
+            }
+            return new PolicyStatesSummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesCollectionResultOfT(
+                PolicyStatesRestClient,
+                Id.SubscriptionId,
+                policyStateSummaryType.ToString(),
+                Id.Name,
+                default,
+                default,
+                default,
+                default,
+                context,
+                "MockablePolicyInsightsPolicyAssignmentResource.SummarizePolicyStates");
         }
     }
 }
