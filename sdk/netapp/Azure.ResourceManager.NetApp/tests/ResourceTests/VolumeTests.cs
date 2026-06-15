@@ -233,6 +233,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
+        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
         public async Task DeletePooWithVolumePresent()
         {
@@ -412,6 +413,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsFalse(checkNameResult.IsAvailable);
         }
 
+        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
         public async Task CreateDPVolume()
         {

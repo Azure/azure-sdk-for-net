@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Sql.Tests
         }
 
         [Test]
+        [Ignore("Blocked by Azure.ResourceManager.Network MPG migration playback mismatch; see https://github.com/Azure/azure-sdk-for-net/issues/59918.")]
         [RecordedTest]
         public async Task ManagedInstanceEncryptionProtectorApiTests()
         {
