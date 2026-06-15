@@ -13,7 +13,6 @@
     <ApiCompatVersion>2.0.0</ApiCompatVersion>
     <PackageTags>Azure.AI.Extensions.OpenAI</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>$(NoWarn);AAIP001;</NoWarn>
     <LangVersion>latest</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
