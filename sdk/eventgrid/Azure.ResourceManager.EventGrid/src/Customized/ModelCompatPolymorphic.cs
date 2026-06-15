@@ -23,6 +23,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
+    // These replacements preserve GA polymorphic model shapes and unknown-variant handling after the Swagger -> TypeSpec migration.
     public abstract partial class AdvancedFilter : IJsonModel<AdvancedFilter>, IPersistableModel<AdvancedFilter>
     {
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

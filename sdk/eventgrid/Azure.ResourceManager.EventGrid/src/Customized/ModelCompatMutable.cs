@@ -21,6 +21,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
+    // These replacements preserve GA mutable model shapes that changed during the Swagger -> TypeSpec migration.
     public partial class EventTypeUnderTopic : ResourceData, IJsonModel<EventTypeUnderTopic>, IPersistableModel<EventTypeUnderTopic>
     {
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -10,6 +10,7 @@ using System;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
+    // These shims preserve GA member names that still need SDK-side forwarding after the Swagger -> TypeSpec migration.
     public partial class NamespaceTopicEventSubscriptionPatch
     {
         [WirePath("properties.expirationTimeUtc")]
