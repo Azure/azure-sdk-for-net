@@ -52,13 +52,15 @@ namespace Azure.Test.PerfStress
                 var baseOptionsType = t.GetConstructors().First().GetParameters()[0].ParameterType;
                 var tb = mb.DefineType(t.Name + "Options", TypeAttributes.Public, baseOptionsType);
 
-                // Select the VerbAttribute constructor whose first parameter is the verb name. We pass the
-                // verb name for that first parameter and the compiler-provided default value for every other
-                // parameter. This keeps working if CommandLineParser adds more optional constructor parameters
-                // in the future (e.g. the 'aliases' parameter added in 2.9.1).
+                // CustomAttributeBuilder requires a value for every constructor parameter, so select the
+                // VerbAttribute constructor with the fewest parameters whose first parameter is the verb name.
+                // We pass the verb name for that first parameter and the compiler-provided default value for any
+                // remaining parameter. Preferring the smallest constructor keeps this working if CommandLineParser
+                // changes its constructor signatures (e.g. the 'aliases' parameter added in 2.9.1), since the
+                // minimal constructor is the least likely to change.
                 var attrCtor = typeof(VerbAttribute).GetConstructors()
                     .Where(c => c.GetParameters() is var p && p.Length >= 1 && p[0].ParameterType == typeof(string))
-                    .OrderByDescending(c => c.GetParameters().Length)
+                    .OrderBy(c => c.GetParameters().Length)
                     .First();
                 var ctorParameters = attrCtor.GetParameters();
                 var verbName = GetVerbName(t.Name);
