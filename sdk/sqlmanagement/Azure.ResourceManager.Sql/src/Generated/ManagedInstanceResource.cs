@@ -444,11 +444,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="tdeCertificate"> The requested TDE certificate to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tdeCertificate"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateAsync(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateManagedInstanceTdeCertificateAsync(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tdeCertificate, nameof(tdeCertificate));
 
-            using DiagnosticScope scope = _managedInstanceTdeCertificatesClientDiagnostics.CreateScope("ManagedInstanceResource.Create");
+            using DiagnosticScope scope = _managedInstanceTdeCertificatesClientDiagnostics.CreateScope("ManagedInstanceResource.CreateManagedInstanceTdeCertificate");
             scope.Start();
             try
             {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstanceTdeCertificatesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TdeCertificate.ToRequestContent(tdeCertificate), context);
+                HttpMessage message = _managedInstanceTdeCertificatesRestClient.CreateCreateManagedInstanceTdeCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TdeCertificate.ToRequestContent(tdeCertificate), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SqlArmOperation operation = new SqlArmOperation(_managedInstanceTdeCertificatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -497,11 +497,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="tdeCertificate"> The requested TDE certificate to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tdeCertificate"/> is null. </exception>
-        public virtual ArmOperation Create(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CreateManagedInstanceTdeCertificate(WaitUntil waitUntil, TdeCertificate tdeCertificate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tdeCertificate, nameof(tdeCertificate));
 
-            using DiagnosticScope scope = _managedInstanceTdeCertificatesClientDiagnostics.CreateScope("ManagedInstanceResource.Create");
+            using DiagnosticScope scope = _managedInstanceTdeCertificatesClientDiagnostics.CreateScope("ManagedInstanceResource.CreateManagedInstanceTdeCertificate");
             scope.Start();
             try
             {
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedInstanceTdeCertificatesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TdeCertificate.ToRequestContent(tdeCertificate), context);
+                HttpMessage message = _managedInstanceTdeCertificatesRestClient.CreateCreateManagedInstanceTdeCertificateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, TdeCertificate.ToRequestContent(tdeCertificate), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SqlArmOperation operation = new SqlArmOperation(_managedInstanceTdeCertificatesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -2007,26 +2007,18 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a management operation on a managed instance. </summary>
         /// <param name="operationId"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedInstanceOperationResource>> GetManagedInstanceOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedInstanceOperationResource>> GetManagedInstanceOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
             return await GetManagedInstanceOperations().GetAsync(operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a management operation on a managed instance. </summary>
         /// <param name="operationId"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ManagedInstanceOperationResource> GetManagedInstanceOperation(string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedInstanceOperationResource> GetManagedInstanceOperation(Guid operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
             return GetManagedInstanceOperations().Get(operationId, cancellationToken);
         }
 

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="locationName"> The locationName. </param>
         /// <param name="serverTrustGroupName"> The serverTrustGroupName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string locationName, string serverTrustGroupName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation locationName, string serverTrustGroupName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}";
             return new ResourceIdentifier(resourceId);

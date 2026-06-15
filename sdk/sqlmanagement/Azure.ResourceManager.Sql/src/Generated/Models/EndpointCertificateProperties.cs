@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EndpointCertificateProperties"/>. </summary>
-        internal EndpointCertificateProperties()
+        public EndpointCertificateProperties()
         {
         }
 
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The certificate public blob. </summary>
         [WirePath("publicBlob")]
-        public string PublicBlob { get; }
+        public string PublicBlob { get; set; }
     }
 }

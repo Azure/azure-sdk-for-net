@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstancePrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
-        /// <param name="privateLinkServiceConnectionState"> Connection State of the Private Endpoint Connection. </param>
+        /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <param name="provisioningState"> State of the Private Endpoint Connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstancePrivateEndpointConnectionProperties(ManagedInstancePrivateEndpointProperty privateEndpoint, ManagedInstancePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedInstancePrivateEndpointConnectionProperties(ManagedInstancePrivateEndpointProperty privateEndpoint, ManagedInstancePrivateLinkServiceConnectionStateProperty connectionState, string provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
         [WirePath("privateLinkServiceConnectionState")]
-        public ManagedInstancePrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
+        public ManagedInstancePrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
 
         /// <summary> State of the Private Endpoint Connection. </summary>
         [WirePath("provisioningState")]

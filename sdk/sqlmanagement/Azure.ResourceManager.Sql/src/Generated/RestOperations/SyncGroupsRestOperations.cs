@@ -381,14 +381,14 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetSyncDatabaseIdsRequest(Guid subscriptionId, string locationName, RequestContext context)
+        internal HttpMessage CreateGetSyncDatabaseIdsRequest(Guid subscriptionId, AzureLocation locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/syncDatabaseIds", false);
             if (_apiVersion != null)
             {
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetSyncDatabaseIdsRequest(Uri nextPage, Guid subscriptionId, string locationName, RequestContext context)
+        internal HttpMessage CreateNextGetSyncDatabaseIdsRequest(Uri nextPage, Guid subscriptionId, AzureLocation locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

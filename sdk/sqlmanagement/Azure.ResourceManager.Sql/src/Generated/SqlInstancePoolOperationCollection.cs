@@ -73,12 +73,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="operationId"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SqlInstancePoolOperationResource>> GetAsync(string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlInstancePoolOperationResource>> GetAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
             using DiagnosticScope scope = _instancePoolOperationsClientDiagnostics.CreateScope("SqlInstancePoolOperationCollection.Get");
             scope.Start();
             try
@@ -122,12 +118,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="operationId"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SqlInstancePoolOperationResource> Get(string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<SqlInstancePoolOperationResource> Get(Guid operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
             using DiagnosticScope scope = _instancePoolOperationsClientDiagnostics.CreateScope("SqlInstancePoolOperationCollection.Get");
             scope.Start();
             try
@@ -239,12 +231,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="operationId"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
             using DiagnosticScope scope = _instancePoolOperationsClientDiagnostics.CreateScope("SqlInstancePoolOperationCollection.Exists");
             scope.Start();
             try
@@ -296,12 +284,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="operationId"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(Guid operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
             using DiagnosticScope scope = _instancePoolOperationsClientDiagnostics.CreateScope("SqlInstancePoolOperationCollection.Exists");
             scope.Start();
             try
@@ -353,12 +337,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="operationId"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<SqlInstancePoolOperationResource>> GetIfExistsAsync(string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SqlInstancePoolOperationResource>> GetIfExistsAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
             using DiagnosticScope scope = _instancePoolOperationsClientDiagnostics.CreateScope("SqlInstancePoolOperationCollection.GetIfExists");
             scope.Start();
             try
@@ -414,12 +394,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="operationId"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<SqlInstancePoolOperationResource> GetIfExists(string operationId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SqlInstancePoolOperationResource> GetIfExists(Guid operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
             using DiagnosticScope scope = _instancePoolOperationsClientDiagnostics.CreateScope("SqlInstancePoolOperationCollection.GetIfExists");
             scope.Start();
             try

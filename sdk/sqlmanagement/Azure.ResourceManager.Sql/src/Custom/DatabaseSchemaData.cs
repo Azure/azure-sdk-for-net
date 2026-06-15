@@ -10,9 +10,9 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    // Make the default ctor public to keep backwards compatibility.
     public partial class DatabaseSchemaData : ResourceData
     {
+        // Make the default ctor public to keep backwards compatibility.
         /// <summary> Initializes a new instance of <see cref="DatabaseSchemaData"/>. </summary>
         public DatabaseSchemaData()
         {

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql
         private readonly ServerTrustGroups _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _locationName;
+        private readonly AzureLocation _locationName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ServerTrustGroupsGetByLocationCollectionResultOfT(ServerTrustGroups client, Guid subscriptionId, string resourceGroupName, string locationName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ServerTrustGroupsGetByLocationCollectionResultOfT(ServerTrustGroups client, Guid subscriptionId, string resourceGroupName, AzureLocation locationName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

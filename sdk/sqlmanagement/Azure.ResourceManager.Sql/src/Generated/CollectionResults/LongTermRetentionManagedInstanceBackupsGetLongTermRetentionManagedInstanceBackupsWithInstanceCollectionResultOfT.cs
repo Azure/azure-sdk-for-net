@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql
         private readonly LongTermRetentionManagedInstanceBackups _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _locationName;
+        private readonly AzureLocation _locationName;
         private readonly string _managedInstanceName;
         private readonly bool? _onlyLatestPerDatabase;
         private readonly string _databaseState;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithInstanceCollectionResultOfT(LongTermRetentionManagedInstanceBackups client, Guid subscriptionId, string resourceGroupName, string locationName, string managedInstanceName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithInstanceCollectionResultOfT(LongTermRetentionManagedInstanceBackups client, Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

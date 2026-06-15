@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByDatabaseRequest(Guid subscriptionId, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateGetByDatabaseRequest(Guid subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByDatabaseRequest(Uri nextPage, Guid subscriptionId, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateNextGetByDatabaseRequest(Uri nextPage, Guid subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -148,14 +148,14 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateChangeAccessTierRequest(Guid subscriptionId, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateChangeAccessTierRequest(Guid subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -177,14 +177,14 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateCopyRequest(Guid subscriptionId, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCopyRequest(Guid subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -206,14 +206,14 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateLockTimeBasedImmutabilityRequest(Guid subscriptionId, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
+        internal HttpMessage CreateLockTimeBasedImmutabilityRequest(Guid subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -233,14 +233,14 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateRemoveLegalHoldImmutabilityRequest(Guid subscriptionId, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
+        internal HttpMessage CreateRemoveLegalHoldImmutabilityRequest(Guid subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateRemoveTimeBasedImmutabilityRequest(Guid subscriptionId, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
+        internal HttpMessage CreateRemoveTimeBasedImmutabilityRequest(Guid subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -287,14 +287,14 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateSetLegalHoldImmutabilityRequest(Guid subscriptionId, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
+        internal HttpMessage CreateSetLegalHoldImmutabilityRequest(Guid subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -314,14 +314,14 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
+        internal HttpMessage CreateGetByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateDeleteByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
+        internal HttpMessage CreateDeleteByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByResourceGroupDatabaseRequest(Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateGetByResourceGroupDatabaseRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByResourceGroupDatabaseRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateNextGetByResourceGroupDatabaseRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateChangeAccessTierByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateChangeAccessTierByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateCopyByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCopyByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateLockTimeBasedImmutabilityByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
+        internal HttpMessage CreateLockTimeBasedImmutabilityByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateRemoveLegalHoldImmutabilityByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
+        internal HttpMessage CreateRemoveLegalHoldImmutabilityByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateRemoveTimeBasedImmutabilityByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
+        internal HttpMessage CreateRemoveTimeBasedImmutabilityByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateSetLegalHoldImmutabilityByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
+        internal HttpMessage CreateSetLegalHoldImmutabilityByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateUpdateByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionDatabases/", false);
@@ -665,14 +665,14 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByLocationRequest(Guid subscriptionId, string locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateGetByLocationRequest(Guid subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionBackups", false);
             if (_apiVersion != null)
             {
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByLocationRequest(Uri nextPage, Guid subscriptionId, string locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateNextGetByLocationRequest(Uri nextPage, Guid subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -717,14 +717,14 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByServerRequest(Guid subscriptionId, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateGetByServerRequest(Guid subscriptionId, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionBackups", false);
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByServerRequest(Uri nextPage, Guid subscriptionId, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateNextGetByServerRequest(Uri nextPage, Guid subscriptionId, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetLongTermRetentionBackupsWithLocationRequest(Guid subscriptionId, string resourceGroupName, string locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateGetLongTermRetentionBackupsWithLocationRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionBackups", false);
             if (_apiVersion != null)
             {
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetLongTermRetentionBackupsWithLocationRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateNextGetLongTermRetentionBackupsWithLocationRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -825,7 +825,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetLongTermRetentionBackupsWithServerRequest(Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateGetLongTermRetentionBackupsWithServerRequest(Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/longTermRetentionServers/", false);
             uri.AppendPath(longTermRetentionServerName, true);
             uri.AppendPath("/longTermRetentionBackups", false);
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetLongTermRetentionBackupsWithServerRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
+        internal HttpMessage CreateNextGetLongTermRetentionBackupsWithServerRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase, string databaseState, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

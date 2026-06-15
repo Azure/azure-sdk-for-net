@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql
         private readonly LongTermRetentionManagedInstanceBackups _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _locationName;
+        private readonly AzureLocation _locationName;
         private readonly bool? _onlyLatestPerDatabase;
         private readonly string _databaseState;
         private readonly long? _skip;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithLocationCollectionResultOfT(LongTermRetentionManagedInstanceBackups client, Guid subscriptionId, string resourceGroupName, string locationName, bool? onlyLatestPerDatabase, string databaseState, long? skip, long? top, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LongTermRetentionManagedInstanceBackupsGetLongTermRetentionManagedInstanceBackupsWithLocationCollectionResultOfT(LongTermRetentionManagedInstanceBackups client, Guid subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, string databaseState, long? skip, long? top, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

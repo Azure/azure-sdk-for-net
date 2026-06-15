@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         private readonly ClientDiagnostics _longTermRetentionBackupsClientDiagnostics;
         private readonly LongTermRetentionBackups _longTermRetentionBackupsRestClient;
         /// <summary> The locationName. </summary>
-        private readonly string _locationName;
+        private readonly AzureLocation _locationName;
         /// <summary> The longTermRetentionServerName. </summary>
         private readonly string _longTermRetentionServerName;
         /// <summary> The longTermRetentionDatabaseName. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The locationName for the resource. </param>
         /// <param name="longTermRetentionServerName"> The longTermRetentionServerName for the resource. </param>
         /// <param name="longTermRetentionDatabaseName"> The longTermRetentionDatabaseName for the resource. </param>
-        internal SubscriptionLongTermRetentionBackupCollection(ArmClient client, ResourceIdentifier id, string locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName) : base(client, id)
+        internal SubscriptionLongTermRetentionBackupCollection(ArmClient client, ResourceIdentifier id, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName) : base(client, id)
         {
             TryGetApiVersion(SubscriptionLongTermRetentionBackupResource.ResourceType, out string subscriptionLongTermRetentionBackupApiVersion);
             _locationName = locationName;

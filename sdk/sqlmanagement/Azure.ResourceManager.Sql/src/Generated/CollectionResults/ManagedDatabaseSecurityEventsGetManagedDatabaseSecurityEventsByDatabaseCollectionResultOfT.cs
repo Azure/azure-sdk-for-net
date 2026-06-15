@@ -14,27 +14,33 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal partial class ManagedDatabaseSensitivityLabelsGetByDatabaseCollectionResultOfT : Pageable<SensitivityLabelData>
+    internal partial class ManagedDatabaseSecurityEventsGetManagedDatabaseSecurityEventsByDatabaseCollectionResultOfT : Pageable<SecurityEvent>
     {
-        private readonly ManagedDatabaseSensitivityLabels _client;
+        private readonly ManagedDatabaseSecurityEvents _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _managedInstanceName;
         private readonly string _databaseName;
         private readonly string _filter;
+        private readonly long? _skip;
+        private readonly long? _top;
+        private readonly string _skiptoken;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ManagedDatabaseSensitivityLabelsGetByDatabaseCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ManagedDatabaseSensitivityLabels client used to send requests. </param>
+        /// <summary> Initializes a new instance of ManagedDatabaseSecurityEventsGetManagedDatabaseSecurityEventsByDatabaseCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ManagedDatabaseSecurityEvents client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="skip"> The number of elements in the collection to skip. </param>
+        /// <param name="top"> The number of elements to return from the collection. </param>
+        /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ManagedDatabaseSensitivityLabelsGetByDatabaseCollectionResultOfT(ManagedDatabaseSensitivityLabels client, Guid subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ManagedDatabaseSecurityEventsGetManagedDatabaseSecurityEventsByDatabaseCollectionResultOfT(ManagedDatabaseSecurityEvents client, Guid subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string filter, long? skip, long? top, string skiptoken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -42,15 +48,18 @@ namespace Azure.ResourceManager.Sql
             _managedInstanceName = managedInstanceName;
             _databaseName = databaseName;
             _filter = filter;
+            _skip = skip;
+            _top = top;
+            _skiptoken = skiptoken;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ManagedDatabaseSensitivityLabelsGetByDatabaseCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ManagedDatabaseSecurityEventsGetManagedDatabaseSecurityEventsByDatabaseCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ManagedDatabaseSensitivityLabelsGetByDatabaseCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<SensitivityLabelData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ManagedDatabaseSecurityEventsGetManagedDatabaseSecurityEventsByDatabaseCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<SecurityEvent>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -60,8 +69,8 @@ namespace Azure.ResourceManager.Sql
                 {
                     yield break;
                 }
-                SensitivityLabelListResult result = SensitivityLabelListResult.FromResponse(response);
-                yield return Page<SensitivityLabelData>.FromValues((IReadOnlyList<SensitivityLabelData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                SecurityEventCollection result = SecurityEventCollection.FromResponse(response);
+                yield return Page<SecurityEvent>.FromValues((IReadOnlyList<SecurityEvent>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -75,7 +84,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByDatabaseRequest(nextLink, _subscriptionId, _resourceGroupName, _managedInstanceName, _databaseName, _filter, _context) : _client.CreateGetByDatabaseRequest(_subscriptionId, _resourceGroupName, _managedInstanceName, _databaseName, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetManagedDatabaseSecurityEventsByDatabaseRequest(nextLink, _subscriptionId, _resourceGroupName, _managedInstanceName, _databaseName, _filter, _skip, _top, _skiptoken, _context) : _client.CreateGetManagedDatabaseSecurityEventsByDatabaseRequest(_subscriptionId, _resourceGroupName, _managedInstanceName, _databaseName, _filter, _skip, _top, _skiptoken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

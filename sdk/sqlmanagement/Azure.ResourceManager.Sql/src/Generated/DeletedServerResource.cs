@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="locationName"> The locationName. </param>
         /// <param name="deletedServerName"> The deletedServerName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string deletedServerName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string deletedServerName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}";
             return new ResourceIdentifier(resourceId);

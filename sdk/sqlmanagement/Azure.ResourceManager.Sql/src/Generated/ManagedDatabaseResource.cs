@@ -768,13 +768,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatabaseColumnData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DatabaseColumnData> GetByDatabaseAsync(IEnumerable<string> schema = default, IEnumerable<string> table = default, IEnumerable<string> column = default, IEnumerable<string> orderBy = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DatabaseColumnData> GetManagedDatabaseColumnsByDatabaseAsync(IEnumerable<string> schema = default, IEnumerable<string> table = default, IEnumerable<string> column = default, IEnumerable<string> orderBy = default, string skiptoken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedDatabaseColumnsGetByDatabaseAsyncCollectionResultOfT(
+            return new ManagedDatabaseColumnsGetManagedDatabaseColumnsByDatabaseAsyncCollectionResultOfT(
                 _managedDatabaseColumnsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.Sql
                 orderBy,
                 skiptoken,
                 context,
-                "ManagedDatabaseResource.GetByDatabase");
+                "ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
         }
 
         /// <summary>
@@ -817,13 +817,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DatabaseColumnData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DatabaseColumnData> GetByDatabase(IEnumerable<string> schema = default, IEnumerable<string> table = default, IEnumerable<string> column = default, IEnumerable<string> orderBy = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DatabaseColumnData> GetManagedDatabaseColumnsByDatabase(IEnumerable<string> schema = default, IEnumerable<string> table = default, IEnumerable<string> column = default, IEnumerable<string> orderBy = default, string skiptoken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedDatabaseColumnsGetByDatabaseCollectionResultOfT(
+            return new ManagedDatabaseColumnsGetManagedDatabaseColumnsByDatabaseCollectionResultOfT(
                 _managedDatabaseColumnsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -835,7 +835,7 @@ namespace Azure.ResourceManager.Sql
                 orderBy,
                 skiptoken,
                 context,
-                "ManagedDatabaseResource.GetByDatabase");
+                "ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
         }
 
         /// <summary>
@@ -1139,13 +1139,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityEvent> GetByDatabaseAsync(string filter = default, long? skip = default, long? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabaseAsync(string filter = default, long? skip = default, long? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedDatabaseSecurityEventsGetByDatabaseAsyncCollectionResultOfT(
+            return new ManagedDatabaseSecurityEventsGetManagedDatabaseSecurityEventsByDatabaseAsyncCollectionResultOfT(
                 _managedDatabaseSecurityEventsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.Sql
                 top,
                 skiptoken,
                 context,
-                "ManagedDatabaseResource.GetByDatabase");
+                "ManagedDatabaseResource.GetManagedDatabaseSecurityEventsByDatabase");
         }
 
         /// <summary>
@@ -1186,13 +1186,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityEvent"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityEvent> GetByDatabase(string filter = default, long? skip = default, long? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SecurityEvent> GetManagedDatabaseSecurityEventsByDatabase(string filter = default, long? skip = default, long? top = default, string skiptoken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedDatabaseSecurityEventsGetByDatabaseCollectionResultOfT(
+            return new ManagedDatabaseSecurityEventsGetManagedDatabaseSecurityEventsByDatabaseCollectionResultOfT(
                 _managedDatabaseSecurityEventsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1203,7 +1203,7 @@ namespace Azure.ResourceManager.Sql
                 top,
                 skiptoken,
                 context,
-                "ManagedDatabaseResource.GetByDatabase");
+                "ManagedDatabaseResource.GetManagedDatabaseSecurityEventsByDatabase");
         }
 
         /// <summary>
@@ -1230,13 +1230,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SensitivityLabelData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SensitivityLabelData> GetByDatabaseAsync(string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SensitivityLabelData> GetManagedDatabaseSensitivityLabelsByDatabaseAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedDatabaseSensitivityLabelsGetByDatabaseAsyncCollectionResultOfT(
+            return new ManagedDatabaseSensitivityLabelsGetManagedDatabaseSensitivityLabelsByDatabaseAsyncCollectionResultOfT(
                 _managedDatabaseSensitivityLabelsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1244,7 +1244,7 @@ namespace Azure.ResourceManager.Sql
                 Id.Name,
                 filter,
                 context,
-                "ManagedDatabaseResource.GetByDatabase");
+                "ManagedDatabaseResource.GetManagedDatabaseSensitivityLabelsByDatabase");
         }
 
         /// <summary>
@@ -1271,13 +1271,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SensitivityLabelData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SensitivityLabelData> GetByDatabase(string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SensitivityLabelData> GetManagedDatabaseSensitivityLabelsByDatabase(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ManagedDatabaseSensitivityLabelsGetByDatabaseCollectionResultOfT(
+            return new ManagedDatabaseSensitivityLabelsGetManagedDatabaseSensitivityLabelsByDatabaseCollectionResultOfT(
                 _managedDatabaseSensitivityLabelsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.Sql
                 Id.Name,
                 filter,
                 context,
-                "ManagedDatabaseResource.GetByDatabase");
+                "ManagedDatabaseResource.GetManagedDatabaseSensitivityLabelsByDatabase");
         }
 
         /// <summary>
@@ -1312,11 +1312,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="sensitivityLabelUpdateList"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
-        public virtual async Task<Response> UpdateAsync(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateManagedDatabaseSensitivityLabelAsync(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
 
-            using DiagnosticScope scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.Update");
+            using DiagnosticScope scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
@@ -1324,7 +1324,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
+                HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateUpdateManagedDatabaseSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -1359,11 +1359,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="sensitivityLabelUpdateList"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
-        public virtual Response Update(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
+        public virtual Response UpdateManagedDatabaseSensitivityLabel(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
 
-            using DiagnosticScope scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.Update");
+            using DiagnosticScope scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
@@ -1371,7 +1371,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
+                HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateUpdateManagedDatabaseSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

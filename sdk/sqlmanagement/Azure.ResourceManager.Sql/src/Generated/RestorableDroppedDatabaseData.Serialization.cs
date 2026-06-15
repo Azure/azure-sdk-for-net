@@ -18,8 +18,13 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A restorable dropped database resource. </summary>
-    public partial class RestorableDroppedDatabaseData : ResourceData, IJsonModel<RestorableDroppedDatabaseData>
+    public partial class RestorableDroppedDatabaseData : TrackedResourceData, IJsonModel<RestorableDroppedDatabaseData>
     {
+        /// <summary> Initializes a new instance of <see cref="RestorableDroppedDatabaseData"/> for deserialization. </summary>
+        internal RestorableDroppedDatabaseData()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -96,27 +101,6 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -163,10 +147,10 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             RestorableDroppedDatabaseProperties properties = default;
             SqlSku sku = default;
-            string location = default;
-            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -202,29 +186,6 @@ namespace Azure.ResourceManager.Sql
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = RestorableDroppedDatabaseProperties.DeserializeRestorableDroppedDatabaseProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("sku"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = SqlSku.DeserializeSqlSku(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -246,6 +207,29 @@ namespace Azure.ResourceManager.Sql
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = RestorableDroppedDatabaseProperties.DeserializeRestorableDroppedDatabaseProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("sku"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = SqlSku.DeserializeSqlSku(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -256,10 +240,10 @@ namespace Azure.ResourceManager.Sql
                 name,
                 resourceType,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 properties,
                 sku,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }
     }

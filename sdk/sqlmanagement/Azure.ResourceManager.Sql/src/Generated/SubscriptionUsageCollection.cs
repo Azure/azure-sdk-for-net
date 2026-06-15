@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql
         private readonly ClientDiagnostics _subscriptionUsagesClientDiagnostics;
         private readonly SubscriptionUsages _subscriptionUsagesRestClient;
         /// <summary> The locationName. </summary>
-        private readonly string _locationName;
+        private readonly AzureLocation _locationName;
 
         /// <summary> Initializes a new instance of SubscriptionUsageCollection for mocking. </summary>
         protected SubscriptionUsageCollection()
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="locationName"> The locationName for the resource. </param>
-        internal SubscriptionUsageCollection(ArmClient client, ResourceIdentifier id, string locationName) : base(client, id)
+        internal SubscriptionUsageCollection(ArmClient client, ResourceIdentifier id, AzureLocation locationName) : base(client, id)
         {
             TryGetApiVersion(SubscriptionUsageResource.ResourceType, out string subscriptionUsageApiVersion);
             _locationName = locationName;

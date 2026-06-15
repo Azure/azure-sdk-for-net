@@ -412,9 +412,9 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DisableRecommendationAsync(RecommendedSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DisableRecommendationManagedDatabaseSensitivityLabelAsync(RecommendedSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.DisableRecommendation");
+            using DiagnosticScope scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.DisableRecommendationManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateDisableRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sensitivityLabelSource.ToSerialString(), context);
+                HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateDisableRecommendationManagedDatabaseSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sensitivityLabelSource.ToSerialString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -456,9 +456,9 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DisableRecommendation(RecommendedSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        public virtual Response DisableRecommendationManagedDatabaseSensitivityLabel(RecommendedSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.DisableRecommendation");
+            using DiagnosticScope scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.DisableRecommendationManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateDisableRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sensitivityLabelSource.ToSerialString(), context);
+                HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateDisableRecommendationManagedDatabaseSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sensitivityLabelSource.ToSerialString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -500,9 +500,9 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> EnableRecommendationAsync(RecommendedSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> EnableRecommendationManagedDatabaseSensitivityLabelAsync(RecommendedSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.EnableRecommendation");
+            using DiagnosticScope scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.EnableRecommendationManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateEnableRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sensitivityLabelSource.ToSerialString(), context);
+                HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateEnableRecommendationManagedDatabaseSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sensitivityLabelSource.ToSerialString(), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -544,9 +544,9 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response EnableRecommendation(RecommendedSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
+        public virtual Response EnableRecommendationManagedDatabaseSensitivityLabel(RecommendedSensitivityLabelSource sensitivityLabelSource, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.EnableRecommendation");
+            using DiagnosticScope scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.EnableRecommendationManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateEnableRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sensitivityLabelSource.ToSerialString(), context);
+                HttpMessage message = _managedDatabaseSensitivityLabelsRestClient.CreateEnableRecommendationManagedDatabaseSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, sensitivityLabelSource.ToSerialString(), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

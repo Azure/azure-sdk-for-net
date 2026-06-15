@@ -15,40 +15,43 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal partial class ElasticPoolOperationsGetByElasticPoolAsyncCollectionResultOfT : AsyncPageable<ElasticPoolOperationData>
+    internal partial class ManagedDatabaseSensitivityLabelsGetManagedDatabaseSensitivityLabelsByDatabaseAsyncCollectionResultOfT : AsyncPageable<SensitivityLabelData>
     {
-        private readonly ElasticPoolOperations _client;
+        private readonly ManagedDatabaseSensitivityLabels _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _serverName;
-        private readonly string _elasticPoolName;
+        private readonly string _managedInstanceName;
+        private readonly string _databaseName;
+        private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ElasticPoolOperationsGetByElasticPoolAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ElasticPoolOperations client used to send requests. </param>
+        /// <summary> Initializes a new instance of ManagedDatabaseSensitivityLabelsGetManagedDatabaseSensitivityLabelsByDatabaseAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ManagedDatabaseSensitivityLabels client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="serverName"> The name of the server. </param>
-        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ElasticPoolOperationsGetByElasticPoolAsyncCollectionResultOfT(ElasticPoolOperations client, Guid subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ManagedDatabaseSensitivityLabelsGetManagedDatabaseSensitivityLabelsByDatabaseAsyncCollectionResultOfT(ManagedDatabaseSensitivityLabels client, Guid subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _serverName = serverName;
-            _elasticPoolName = elasticPoolName;
+            _managedInstanceName = managedInstanceName;
+            _databaseName = databaseName;
+            _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ElasticPoolOperationsGetByElasticPoolAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ManagedDatabaseSensitivityLabelsGetManagedDatabaseSensitivityLabelsByDatabaseAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ElasticPoolOperationsGetByElasticPoolAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ElasticPoolOperationData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ManagedDatabaseSensitivityLabelsGetManagedDatabaseSensitivityLabelsByDatabaseAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<SensitivityLabelData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,8 +61,8 @@ namespace Azure.ResourceManager.Sql
                 {
                     yield break;
                 }
-                ElasticPoolOperationListResult result = ElasticPoolOperationListResult.FromResponse(response);
-                yield return Page<ElasticPoolOperationData>.FromValues((IReadOnlyList<ElasticPoolOperationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                SensitivityLabelListResult result = SensitivityLabelListResult.FromResponse(response);
+                yield return Page<SensitivityLabelData>.FromValues((IReadOnlyList<SensitivityLabelData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -73,7 +76,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByElasticPoolRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _elasticPoolName, _context) : _client.CreateGetByElasticPoolRequest(_subscriptionId, _resourceGroupName, _serverName, _elasticPoolName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetManagedDatabaseSensitivityLabelsByDatabaseRequest(nextLink, _subscriptionId, _resourceGroupName, _managedInstanceName, _databaseName, _filter, _context) : _client.CreateGetManagedDatabaseSensitivityLabelsByDatabaseRequest(_subscriptionId, _resourceGroupName, _managedInstanceName, _databaseName, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

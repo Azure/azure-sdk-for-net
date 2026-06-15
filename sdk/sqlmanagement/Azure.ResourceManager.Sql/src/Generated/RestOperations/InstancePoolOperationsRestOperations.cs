@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string instancePoolName, string operationId, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string instancePoolName, Guid operationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/instancePools/", false);
             uri.AppendPath(instancePoolName, true);
             uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
+            uri.AppendPath(operationId.ToString(), true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

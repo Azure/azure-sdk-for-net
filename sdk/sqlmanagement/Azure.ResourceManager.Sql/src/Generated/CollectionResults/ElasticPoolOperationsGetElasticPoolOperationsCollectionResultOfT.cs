@@ -14,40 +14,40 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal partial class UsagesGetByInstancePoolCollectionResultOfT : Pageable<InstancePoolUsage>
+    internal partial class ElasticPoolOperationsGetElasticPoolOperationsCollectionResultOfT : Pageable<ElasticPoolOperationData>
     {
-        private readonly Usages _client;
+        private readonly ElasticPoolOperations _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly string _instancePoolName;
-        private readonly bool? _expandChildren;
+        private readonly string _serverName;
+        private readonly string _elasticPoolName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of UsagesGetByInstancePoolCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The Usages client used to send requests. </param>
+        /// <summary> Initializes a new instance of ElasticPoolOperationsGetElasticPoolOperationsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ElasticPoolOperations client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
-        /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="elasticPoolName"> The name of the elastic pool. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public UsagesGetByInstancePoolCollectionResultOfT(Usages client, Guid subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ElasticPoolOperationsGetElasticPoolOperationsCollectionResultOfT(ElasticPoolOperations client, Guid subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _instancePoolName = instancePoolName;
-            _expandChildren = expandChildren;
+            _serverName = serverName;
+            _elasticPoolName = elasticPoolName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of UsagesGetByInstancePoolCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ElasticPoolOperationsGetElasticPoolOperationsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of UsagesGetByInstancePoolCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<InstancePoolUsage>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ElasticPoolOperationsGetElasticPoolOperationsCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ElasticPoolOperationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.Sql
                 {
                     yield break;
                 }
-                InstancePoolUsageListResult result = InstancePoolUsageListResult.FromResponse(response);
-                yield return Page<InstancePoolUsage>.FromValues((IReadOnlyList<InstancePoolUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                ElasticPoolOperationListResult result = ElasticPoolOperationListResult.FromResponse(response);
+                yield return Page<ElasticPoolOperationData>.FromValues((IReadOnlyList<ElasticPoolOperationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByInstancePoolRequest(nextLink, _subscriptionId, _resourceGroupName, _instancePoolName, _expandChildren, _context) : _client.CreateGetByInstancePoolRequest(_subscriptionId, _resourceGroupName, _instancePoolName, _expandChildren, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetElasticPoolOperationsRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _elasticPoolName, _context) : _client.CreateGetElasticPoolOperationsRequest(_subscriptionId, _resourceGroupName, _serverName, _elasticPoolName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -14,33 +14,25 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary> A restorable dropped database resource. </summary>
-    public partial class RestorableDroppedDatabaseData : ResourceData
+    public partial class RestorableDroppedDatabaseData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="RestorableDroppedDatabaseData"/>. </summary>
-        internal RestorableDroppedDatabaseData()
-        {
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
 
         /// <summary> Initializes a new instance of <see cref="RestorableDroppedDatabaseData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Resource properties. </param>
         /// <param name="sku"> The name and tier of the SKU. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RestorableDroppedDatabaseProperties properties, SqlSku sku, string location, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RestorableDroppedDatabaseProperties properties, SqlSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Sku = sku;
-            Location = location;
-            Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,14 +43,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The name and tier of the SKU. </summary>
         [WirePath("sku")]
         public SqlSku Sku { get; }
-
-        /// <summary> Resource location. </summary>
-        [WirePath("location")]
-        public string Location { get; }
-
-        /// <summary> Resource tags. </summary>
-        [WirePath("tags")]
-        public IDictionary<string, string> Tags { get; }
 
         /// <summary> The name of the database. </summary>
         [WirePath("properties.databaseName")]

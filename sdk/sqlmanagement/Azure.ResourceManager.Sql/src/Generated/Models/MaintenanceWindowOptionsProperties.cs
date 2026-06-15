@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceWindowOptionsProperties"/>. </summary>
-        internal MaintenanceWindowOptionsProperties()
+        public MaintenanceWindowOptionsProperties()
         {
             MaintenanceWindowCycles = new ChangeTrackingList<MaintenanceWindowTimeRange>();
         }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Whether maintenance windows are enabled for the database. </summary>
         [WirePath("isEnabled")]
-        public bool? IsEnabled { get; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> Available maintenance cycles e.g. {Saturday, 0, 48<i>60}, {Wednesday, 0, 24</i>60}. </summary>
         [WirePath("maintenanceWindowCycles")]
@@ -54,22 +54,22 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Minimum duration of maintenance window. </summary>
         [WirePath("minDurationInMinutes")]
-        public int? MinDurationInMinutes { get; }
+        public int? MinDurationInMinutes { get; set; }
 
         /// <summary> Default duration for maintenance window. </summary>
         [WirePath("defaultDurationInMinutes")]
-        public int? DefaultDurationInMinutes { get; }
+        public int? DefaultDurationInMinutes { get; set; }
 
         /// <summary> Minimum number of maintenance windows cycles to be set on the database. </summary>
         [WirePath("minCycles")]
-        public int? MinCycles { get; }
+        public int? MinCycles { get; set; }
 
         /// <summary> Time granularity in minutes for maintenance windows. </summary>
         [WirePath("timeGranularityInMinutes")]
-        public int? TimeGranularityInMinutes { get; }
+        public int? TimeGranularityInMinutes { get; set; }
 
         /// <summary> Whether we allow multiple maintenance windows per cycle. </summary>
         [WirePath("allowMultipleMaintenanceWindowsPerCycle")]
-        public bool? AllowMultipleMaintenanceWindowsPerCycle { get; }
+        public bool? AllowMultipleMaintenanceWindowsPerCycle { get; set; }
     }
 }

@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string locationName, string timeZoneId, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, AzureLocation locationName, string timeZoneId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/timeZones/", false);
             uri.AppendPath(timeZoneId, true);
             if (_apiVersion != null)
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByLocationRequest(Guid subscriptionId, string locationName, RequestContext context)
+        internal HttpMessage CreateGetByLocationRequest(Guid subscriptionId, AzureLocation locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
-            uri.AppendPath(locationName, true);
+            uri.AppendPath(locationName.ToString(), true);
             uri.AppendPath("/timeZones", false);
             if (_apiVersion != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByLocationRequest(Uri nextPage, Guid subscriptionId, string locationName, RequestContext context)
+        internal HttpMessage CreateNextGetByLocationRequest(Uri nextPage, Guid subscriptionId, AzureLocation locationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByElasticPoolRequest(Guid subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, RequestContext context)
+        internal HttpMessage CreateGetElasticPoolOperationsRequest(Guid subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByElasticPoolRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, RequestContext context)
+        internal HttpMessage CreateNextGetElasticPoolOperationsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateCancelRequest(Guid subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, Guid operationId, RequestContext context)
+        internal HttpMessage CreateCancelElasticPoolOperationRequest(Guid subscriptionId, string resourceGroupName, string serverName, string elasticPoolName, Guid operationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

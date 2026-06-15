@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LongTermRetentionBackupProperties"/>. </summary>
-        internal LongTermRetentionBackupProperties()
+        public LongTermRetentionBackupProperties()
         {
         }
 
@@ -85,23 +85,23 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The storage redundancy type of the backup. </summary>
         [WirePath("requestedBackupStorageRedundancy")]
-        public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; }
+        public SqlBackupStorageRedundancy? RequestedBackupStorageRedundancy { get; set; }
 
         /// <summary> The setting whether the LTR backup is immutable. </summary>
         [WirePath("isBackupImmutable")]
-        public bool? IsBackupImmutable { get; }
+        public bool? IsBackupImmutable { get; set; }
 
         /// <summary> The setting for whether or not time-based immutability is enabled for the LTR backup. When time-based immutability is enabled and locked, the backup cannot be deleted until BackupExpirationTime. </summary>
         [WirePath("timeBasedImmutability")]
-        public TimeBasedImmutability? TimeBasedImmutability { get; }
+        public TimeBasedImmutability? TimeBasedImmutability { get; set; }
 
         /// <summary> The time-based immutability mode. Only applicable if time-based immutability is enabled. </summary>
         [WirePath("timeBasedImmutabilityMode")]
-        public TimeBasedImmutabilityMode? TimeBasedImmutabilityMode { get; }
+        public TimeBasedImmutabilityMode? TimeBasedImmutabilityMode { get; set; }
 
         /// <summary> The setting for whether LegalHold is enabled or disabled on the LTR backup. When LegalHold is enabled, the backup cannot be deleted until the LegalHold is removed. </summary>
         [WirePath("legalHoldImmutability")]
-        public SetLegalHoldImmutability? LegalHoldImmutability { get; }
+        public SetLegalHoldImmutability? LegalHoldImmutability { get; set; }
 
         /// <summary> The BackupStorageAccessTier for the LTR backup. </summary>
         [WirePath("backupStorageAccessTier")]

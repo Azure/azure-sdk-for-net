@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="locationName"> The locationName. </param>
         /// <param name="timeZoneId"> The timeZoneId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string timeZoneId)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string timeZoneId)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/timeZones/{timeZoneId}";
             return new ResourceIdentifier(resourceId);

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceWindowOptionData"/>. </summary>
-        internal MaintenanceWindowOptionData()
+        public MaintenanceWindowOptionData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal MaintenanceWindowOptionsProperties Properties { get; }
+        internal MaintenanceWindowOptionsProperties Properties { get; set; }
 
         /// <summary> Whether maintenance windows are enabled for the database. </summary>
         [WirePath("properties.isEnabled")]
@@ -49,6 +49,14 @@ namespace Azure.ResourceManager.Sql
             {
                 return Properties is null ? default : Properties.IsEnabled;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MaintenanceWindowOptionsProperties();
+                }
+                Properties.IsEnabled = value;
+            }
         }
 
         /// <summary> Available maintenance cycles e.g. {Saturday, 0, 48<i>60}, {Wednesday, 0, 24</i>60}. </summary>
@@ -57,7 +65,11 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.MaintenanceWindowCycles;
+                if (Properties is null)
+                {
+                    Properties = new MaintenanceWindowOptionsProperties();
+                }
+                return Properties.MaintenanceWindowCycles;
             }
         }
 
@@ -69,6 +81,14 @@ namespace Azure.ResourceManager.Sql
             {
                 return Properties is null ? default : Properties.MinDurationInMinutes;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MaintenanceWindowOptionsProperties();
+                }
+                Properties.MinDurationInMinutes = value;
+            }
         }
 
         /// <summary> Default duration for maintenance window. </summary>
@@ -78,6 +98,14 @@ namespace Azure.ResourceManager.Sql
             get
             {
                 return Properties is null ? default : Properties.DefaultDurationInMinutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MaintenanceWindowOptionsProperties();
+                }
+                Properties.DefaultDurationInMinutes = value;
             }
         }
 
@@ -89,6 +117,14 @@ namespace Azure.ResourceManager.Sql
             {
                 return Properties is null ? default : Properties.MinCycles;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MaintenanceWindowOptionsProperties();
+                }
+                Properties.MinCycles = value;
+            }
         }
 
         /// <summary> Time granularity in minutes for maintenance windows. </summary>
@@ -99,6 +135,14 @@ namespace Azure.ResourceManager.Sql
             {
                 return Properties is null ? default : Properties.TimeGranularityInMinutes;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MaintenanceWindowOptionsProperties();
+                }
+                Properties.TimeGranularityInMinutes = value;
+            }
         }
 
         /// <summary> Whether we allow multiple maintenance windows per cycle. </summary>
@@ -108,6 +152,14 @@ namespace Azure.ResourceManager.Sql
             get
             {
                 return Properties is null ? default : Properties.AllowMultipleMaintenanceWindowsPerCycle;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MaintenanceWindowOptionsProperties();
+                }
+                Properties.AllowMultipleMaintenanceWindowsPerCycle = value;
             }
         }
     }

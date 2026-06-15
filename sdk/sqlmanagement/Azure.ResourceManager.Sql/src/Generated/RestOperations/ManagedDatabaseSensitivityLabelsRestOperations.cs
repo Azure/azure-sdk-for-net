@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateDisableRecommendationRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, string sensitivityLabelSource, RequestContext context)
+        internal HttpMessage CreateDisableRecommendationManagedDatabaseSensitivityLabelRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, string sensitivityLabelSource, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateEnableRecommendationRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, string sensitivityLabelSource, RequestContext context)
+        internal HttpMessage CreateEnableRecommendationManagedDatabaseSensitivityLabelRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, string sensitivityLabelSource, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateManagedDatabaseSensitivityLabelRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByDatabaseRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string filter, RequestContext context)
+        internal HttpMessage CreateGetManagedDatabaseSensitivityLabelsByDatabaseRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByDatabaseRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetManagedDatabaseSensitivityLabelsByDatabaseRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

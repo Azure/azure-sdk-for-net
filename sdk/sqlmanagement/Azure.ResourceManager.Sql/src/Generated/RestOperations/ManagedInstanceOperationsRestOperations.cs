@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string operationId, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, Guid operationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
+            uri.AppendPath(operationId.ToString(), true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateCancelRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, string operationId, RequestContext context)
+        internal HttpMessage CreateCancelRequest(Guid subscriptionId, string resourceGroupName, string managedInstanceName, Guid operationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
             uri.AppendPath(managedInstanceName, true);
             uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
+            uri.AppendPath(operationId.ToString(), true);
             uri.AppendPath("/cancel", false);
             if (_apiVersion != null)
             {

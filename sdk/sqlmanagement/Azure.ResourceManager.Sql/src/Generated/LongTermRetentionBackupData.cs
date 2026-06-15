@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LongTermRetentionBackupData"/>. </summary>
-        internal LongTermRetentionBackupData()
+        public LongTermRetentionBackupData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal LongTermRetentionBackupProperties Properties { get; }
+        internal LongTermRetentionBackupProperties Properties { get; set; }
 
         /// <summary> The server name that the backup database belong to. </summary>
         [WirePath("properties.serverName")]
@@ -119,6 +119,14 @@ namespace Azure.ResourceManager.Sql
             {
                 return Properties is null ? default : Properties.RequestedBackupStorageRedundancy;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LongTermRetentionBackupProperties();
+                }
+                Properties.RequestedBackupStorageRedundancy = value;
+            }
         }
 
         /// <summary> The setting whether the LTR backup is immutable. </summary>
@@ -128,6 +136,14 @@ namespace Azure.ResourceManager.Sql
             get
             {
                 return Properties is null ? default : Properties.IsBackupImmutable;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LongTermRetentionBackupProperties();
+                }
+                Properties.IsBackupImmutable = value;
             }
         }
 
@@ -139,6 +155,14 @@ namespace Azure.ResourceManager.Sql
             {
                 return Properties is null ? default : Properties.TimeBasedImmutability;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LongTermRetentionBackupProperties();
+                }
+                Properties.TimeBasedImmutability = value;
+            }
         }
 
         /// <summary> The time-based immutability mode. Only applicable if time-based immutability is enabled. </summary>
@@ -149,6 +173,14 @@ namespace Azure.ResourceManager.Sql
             {
                 return Properties is null ? default : Properties.TimeBasedImmutabilityMode;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LongTermRetentionBackupProperties();
+                }
+                Properties.TimeBasedImmutabilityMode = value;
+            }
         }
 
         /// <summary> The setting for whether LegalHold is enabled or disabled on the LTR backup. When LegalHold is enabled, the backup cannot be deleted until the LegalHold is removed. </summary>
@@ -158,6 +190,14 @@ namespace Azure.ResourceManager.Sql
             get
             {
                 return Properties is null ? default : Properties.LegalHoldImmutability;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LongTermRetentionBackupProperties();
+                }
+                Properties.LegalHoldImmutability = value;
             }
         }
 

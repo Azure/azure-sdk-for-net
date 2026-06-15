@@ -2425,7 +2425,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <returns> A new <see cref="Models.ManagedInstancePrivateEndpointConnectionProperties"/> instance for mocking. </returns>
         public static ManagedInstancePrivateEndpointConnectionProperties ManagedInstancePrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = default, ManagedInstancePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default, string provisioningState = default)
         {
-            return new ManagedInstancePrivateEndpointConnectionProperties(privateEndpointId is null ? default : new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
+            return new ManagedInstancePrivateEndpointConnectionProperties(privateEndpointId is null ? default : new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), default, provisioningState, default);
         }
 
         /// <param name="status"> The private link service connection status. </param>
@@ -3909,18 +3909,18 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="privateLinkServiceConnectionState"> Connection State of the Private Endpoint Connection. </param>
+        /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <param name="provisioningState"> State of the Private Endpoint Connection. </param>
         /// <param name="privateEndpointId"> Resource id of the private endpoint. </param>
         /// <returns> A new <see cref="Sql.ManagedInstancePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ManagedInstancePrivateEndpointConnectionData ManagedInstancePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedInstancePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default, string provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        public static ManagedInstancePrivateEndpointConnectionData ManagedInstancePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedInstancePrivateLinkServiceConnectionStateProperty connectionState = default, string provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new ManagedInstancePrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new ManagedInstancePrivateEndpointConnectionProperties(new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new ManagedInstancePrivateEndpointConnectionProperties(new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -4248,6 +4248,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="maxSizeBytes"> The max size of the database expressed in bytes. </param>
         /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
@@ -4256,10 +4258,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="backupStorageRedundancy"> The storage account type used to store backups for this database. </param>
         /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
         /// <param name="sku"> The name and tier of the SKU. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Sql.RestorableDroppedDatabaseData"/> instance for mocking. </returns>
-        public static RestorableDroppedDatabaseData RestorableDroppedDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string databaseName = default, long? maxSizeBytes = default, DateTimeOffset? createdOn = default, DateTimeOffset? deletedOn = default, DateTimeOffset? earliestRestoreOn = default, SqlBackupStorageRedundancy? backupStorageRedundancy = default, IDictionary<string, SqlDatabaseKey> keys = default, SqlSku sku = default, string location = default, IDictionary<string, string> tags = default)
+        public static RestorableDroppedDatabaseData RestorableDroppedDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string databaseName = default, long? maxSizeBytes = default, DateTimeOffset? createdOn = default, DateTimeOffset? deletedOn = default, DateTimeOffset? earliestRestoreOn = default, SqlBackupStorageRedundancy? backupStorageRedundancy = default, IDictionary<string, SqlDatabaseKey> keys = default, SqlSku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -4268,6 +4268,8 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 databaseName is null && maxSizeBytes is null && createdOn is null && deletedOn is null && earliestRestoreOn is null && backupStorageRedundancy is null && keys is null ? default : new RestorableDroppedDatabaseProperties(
                     databaseName,
                     maxSizeBytes,
@@ -4278,8 +4280,6 @@ namespace Azure.ResourceManager.Sql.Models
                     keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
                     default),
                 sku,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
 
@@ -7680,7 +7680,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && provisioningState is null ? default : new ManagedInstancePrivateEndpointConnectionProperties(new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), default, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new ManagedInstancePrivateEndpointConnectionProperties(new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -7963,6 +7963,8 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 databaseName is null && maxSizeBytes is null && createdOn is null && deletedOn is null && earliestRestoreOn is null && backupStorageRedundancy is null && keys is null ? default : new RestorableDroppedDatabaseProperties(
                     databaseName,
                     maxSizeBytes,
@@ -7973,8 +7975,6 @@ namespace Azure.ResourceManager.Sql.Models
                     keys ?? new ChangeTrackingDictionary<string, SqlDatabaseKey>(),
                     default),
                 sku,
-                default,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
 

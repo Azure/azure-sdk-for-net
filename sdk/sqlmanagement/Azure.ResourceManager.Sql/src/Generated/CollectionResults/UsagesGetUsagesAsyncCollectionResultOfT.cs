@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,51 +15,51 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal partial class ManagedInstancesGetByInstancePoolCollectionResultOfT : Pageable<ManagedInstanceData>
+    internal partial class UsagesGetUsagesAsyncCollectionResultOfT : AsyncPageable<InstancePoolUsage>
     {
-        private readonly ManagedInstances _client;
+        private readonly Usages _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _instancePoolName;
-        private readonly string _expand;
+        private readonly bool? _expandChildren;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ManagedInstancesGetByInstancePoolCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ManagedInstances client used to send requests. </param>
+        /// <summary> Initializes a new instance of UsagesGetUsagesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Usages client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="instancePoolName"> The name of the instance pool to be retrieved. </param>
-        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ManagedInstancesGetByInstancePoolCollectionResultOfT(ManagedInstances client, Guid subscriptionId, string resourceGroupName, string instancePoolName, string expand, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public UsagesGetUsagesAsyncCollectionResultOfT(Usages client, Guid subscriptionId, string resourceGroupName, string instancePoolName, bool? expandChildren, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _instancePoolName = instancePoolName;
-            _expand = expand;
+            _expandChildren = expandChildren;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ManagedInstancesGetByInstancePoolCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of UsagesGetUsagesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ManagedInstancesGetByInstancePoolCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ManagedInstanceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of UsagesGetUsagesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<InstancePoolUsage>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
-                ManagedInstanceListResult result = ManagedInstanceListResult.FromResponse(response);
-                yield return Page<ManagedInstanceData>.FromValues((IReadOnlyList<ManagedInstanceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                InstancePoolUsageListResult result = InstancePoolUsageListResult.FromResponse(response);
+                yield return Page<InstancePoolUsage>.FromValues((IReadOnlyList<InstancePoolUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -70,14 +71,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByInstancePoolRequest(nextLink, _subscriptionId, _resourceGroupName, _instancePoolName, _expand, _context) : _client.CreateGetByInstancePoolRequest(_subscriptionId, _resourceGroupName, _instancePoolName, _expand, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetUsagesRequest(nextLink, _subscriptionId, _resourceGroupName, _instancePoolName, _expandChildren, _context) : _client.CreateGetUsagesRequest(_subscriptionId, _resourceGroupName, _instancePoolName, _expandChildren, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

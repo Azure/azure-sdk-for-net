@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,7 +15,7 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal partial class ManagedDatabaseColumnsGetByDatabaseCollectionResultOfT : Pageable<DatabaseColumnData>
+    internal partial class ManagedDatabaseColumnsGetManagedDatabaseColumnsByDatabaseAsyncCollectionResultOfT : AsyncPageable<DatabaseColumnData>
     {
         private readonly ManagedDatabaseColumns _client;
         private readonly Guid _subscriptionId;
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Sql
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of ManagedDatabaseColumnsGetByDatabaseCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ManagedDatabaseColumnsGetManagedDatabaseColumnsByDatabaseAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ManagedDatabaseColumns client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public ManagedDatabaseColumnsGetByDatabaseCollectionResultOfT(ManagedDatabaseColumns client, Guid subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, IEnumerable<string> schema, IEnumerable<string> table, IEnumerable<string> column, IEnumerable<string> orderBy, string skiptoken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public ManagedDatabaseColumnsGetManagedDatabaseColumnsByDatabaseAsyncCollectionResultOfT(ManagedDatabaseColumns client, Guid subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, IEnumerable<string> schema, IEnumerable<string> table, IEnumerable<string> column, IEnumerable<string> orderBy, string skiptoken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -58,16 +59,16 @@ namespace Azure.ResourceManager.Sql
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of ManagedDatabaseColumnsGetByDatabaseCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ManagedDatabaseColumnsGetManagedDatabaseColumnsByDatabaseAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ManagedDatabaseColumnsGetByDatabaseCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DatabaseColumnData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ManagedDatabaseColumnsGetManagedDatabaseColumnsByDatabaseAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<DatabaseColumnData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -85,14 +86,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByDatabaseRequest(nextLink, _subscriptionId, _resourceGroupName, _managedInstanceName, _databaseName, _schema, _table, _column, _orderBy, _skiptoken, _context) : _client.CreateGetByDatabaseRequest(_subscriptionId, _resourceGroupName, _managedInstanceName, _databaseName, _schema, _table, _column, _orderBy, _skiptoken, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetManagedDatabaseColumnsByDatabaseRequest(nextLink, _subscriptionId, _resourceGroupName, _managedInstanceName, _databaseName, _schema, _table, _column, _orderBy, _skiptoken, _context) : _client.CreateGetManagedDatabaseColumnsByDatabaseRequest(_subscriptionId, _resourceGroupName, _managedInstanceName, _databaseName, _schema, _table, _column, _orderBy, _skiptoken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

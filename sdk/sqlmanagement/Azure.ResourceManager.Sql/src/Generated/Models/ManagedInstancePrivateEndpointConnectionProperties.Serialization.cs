@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("privateEndpoint"u8);
                 writer.WriteObjectValue(PrivateEndpoint, options);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                writer.WriteObjectValue(ConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             ManagedInstancePrivateEndpointProperty privateEndpoint = default;
-            ManagedInstancePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default;
+            ManagedInstancePrivateLinkServiceConnectionStateProperty connectionState = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = ManagedInstancePrivateLinkServiceConnectionStateProperty.DeserializeManagedInstancePrivateLinkServiceConnectionStateProperty(prop.Value, options);
+                    connectionState = ManagedInstancePrivateLinkServiceConnectionStateProperty.DeserializeManagedInstancePrivateLinkServiceConnectionStateProperty(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedInstancePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties);
+            return new ManagedInstancePrivateEndpointConnectionProperties(privateEndpoint, connectionState, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql
     {
         private readonly SyncGroups _client;
         private readonly Guid _subscriptionId;
-        private readonly string _locationName;
+        private readonly AzureLocation _locationName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SyncGroupsGetSyncDatabaseIdsCollectionResultOfT(SyncGroups client, Guid subscriptionId, string locationName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SyncGroupsGetSyncDatabaseIdsCollectionResultOfT(SyncGroups client, Guid subscriptionId, AzureLocation locationName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="locationName"> The locationName. </param>
         /// <param name="failoverGroupName"> The failoverGroupName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string locationName, string failoverGroupName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation locationName, string failoverGroupName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/instanceFailoverGroups/{failoverGroupName}";
             return new ResourceIdentifier(resourceId);

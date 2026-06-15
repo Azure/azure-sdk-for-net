@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="managedInstanceName"> The managedInstanceName. </param>
         /// <param name="databaseName"> The databaseName. </param>
         /// <param name="backupName"> The backupName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string locationName, string managedInstanceName, string databaseName, string backupName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionDatabases/{databaseName}/longTermRetentionManagedInstanceBackups/{backupName}";
             return new ResourceIdentifier(resourceId);

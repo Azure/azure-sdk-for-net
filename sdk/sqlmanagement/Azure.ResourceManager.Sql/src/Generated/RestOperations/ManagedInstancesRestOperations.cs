@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByInstancePoolRequest(Guid subscriptionId, string resourceGroupName, string instancePoolName, string expand, RequestContext context)
+        internal HttpMessage CreateGetManagedInstancesRequest(Guid subscriptionId, string resourceGroupName, string instancePoolName, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByInstancePoolRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string instancePoolName, string expand, RequestContext context)
+        internal HttpMessage CreateNextGetManagedInstancesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string instancePoolName, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

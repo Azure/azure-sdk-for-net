@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
-        public ManagedInstancePrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState
+        public ManagedInstancePrivateLinkServiceConnectionStateProperty ConnectionState
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
             set
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     Properties = new ManagedInstancePrivateEndpointConnectionProperties();
                 }
-                Properties.PrivateLinkServiceConnectionState = value;
+                Properties.ConnectionState = value;
             }
         }
 

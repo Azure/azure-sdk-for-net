@@ -437,9 +437,9 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="operationId"> The operation identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CancelAsync(Guid operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelElasticPoolOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _elasticPoolOperationsClientDiagnostics.CreateScope("ElasticPoolResource.Cancel");
+            using DiagnosticScope scope = _elasticPoolOperationsClientDiagnostics.CreateScope("ElasticPoolResource.CancelElasticPoolOperation");
             scope.Start();
             try
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticPoolOperationsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
+                HttpMessage message = _elasticPoolOperationsRestClient.CreateCancelElasticPoolOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -481,9 +481,9 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="operationId"> The operation identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Cancel(Guid operationId, CancellationToken cancellationToken = default)
+        public virtual Response CancelElasticPoolOperation(Guid operationId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _elasticPoolOperationsClientDiagnostics.CreateScope("ElasticPoolResource.Cancel");
+            using DiagnosticScope scope = _elasticPoolOperationsClientDiagnostics.CreateScope("ElasticPoolResource.CancelElasticPoolOperation");
             scope.Start();
             try
             {
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _elasticPoolOperationsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
+                HttpMessage message = _elasticPoolOperationsRestClient.CreateCancelElasticPoolOperationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, operationId, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
@@ -525,20 +525,20 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticPoolOperationData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ElasticPoolOperationData> GetByElasticPoolAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ElasticPoolOperationData> GetElasticPoolOperationsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticPoolOperationsGetByElasticPoolAsyncCollectionResultOfT(
+            return new ElasticPoolOperationsGetElasticPoolOperationsAsyncCollectionResultOfT(
                 _elasticPoolOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "ElasticPoolResource.GetByElasticPool");
+                "ElasticPoolResource.GetElasticPoolOperations");
         }
 
         /// <summary>
@@ -564,20 +564,20 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ElasticPoolOperationData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ElasticPoolOperationData> GetByElasticPool(CancellationToken cancellationToken = default)
+        public virtual Pageable<ElasticPoolOperationData> GetElasticPoolOperations(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ElasticPoolOperationsGetByElasticPoolCollectionResultOfT(
+            return new ElasticPoolOperationsGetElasticPoolOperationsCollectionResultOfT(
                 _elasticPoolOperationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
                 Id.Name,
                 context,
-                "ElasticPoolResource.GetByElasticPool");
+                "ElasticPoolResource.GetElasticPoolOperations");
         }
 
         /// <summary>

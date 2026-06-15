@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="locationName"> The locationName. </param>
         /// <param name="usageName"> The usageName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string usageName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string usageName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}";
             return new ResourceIdentifier(resourceId);

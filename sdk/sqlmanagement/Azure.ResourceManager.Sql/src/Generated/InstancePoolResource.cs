@@ -437,20 +437,20 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceResource> GetByInstancePoolAsync(string expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ManagedInstanceResource> GetManagedInstancesAsync(string expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedInstanceData, ManagedInstanceResource>(new ManagedInstancesGetByInstancePoolAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ManagedInstanceData, ManagedInstanceResource>(new ManagedInstancesGetManagedInstancesAsyncCollectionResultOfT(
                 _managedInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 expand,
                 context,
-                "InstancePoolResource.GetByInstancePool"), data => new ManagedInstanceResource(Client, data));
+                "InstancePoolResource.GetManagedInstances"), data => new ManagedInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -477,20 +477,20 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceResource> GetByInstancePool(string expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ManagedInstanceResource> GetManagedInstances(string expand = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedInstanceData, ManagedInstanceResource>(new ManagedInstancesGetByInstancePoolCollectionResultOfT(
+            return new PageableWrapper<ManagedInstanceData, ManagedInstanceResource>(new ManagedInstancesGetManagedInstancesCollectionResultOfT(
                 _managedInstancesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 expand,
                 context,
-                "InstancePoolResource.GetByInstancePool"), data => new ManagedInstanceResource(Client, data));
+                "InstancePoolResource.GetManagedInstances"), data => new ManagedInstanceResource(Client, data));
         }
 
         /// <summary>
@@ -517,20 +517,20 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InstancePoolUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<InstancePoolUsage> GetByInstancePoolAsync(bool? expandChildren = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<InstancePoolUsage> GetUsagesAsync(bool? expandChildren = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetByInstancePoolAsyncCollectionResultOfT(
+            return new UsagesGetUsagesAsyncCollectionResultOfT(
                 _usagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 expandChildren,
                 context,
-                "InstancePoolResource.GetByInstancePool");
+                "InstancePoolResource.GetUsages");
         }
 
         /// <summary>
@@ -557,20 +557,20 @@ namespace Azure.ResourceManager.Sql
         /// <param name="expandChildren"> Optional request parameter to include managed instance usages within the instance pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InstancePoolUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<InstancePoolUsage> GetByInstancePool(bool? expandChildren = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<InstancePoolUsage> GetUsages(bool? expandChildren = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetByInstancePoolCollectionResultOfT(
+            return new UsagesGetUsagesCollectionResultOfT(
                 _usagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 expandChildren,
                 context,
-                "InstancePoolResource.GetByInstancePool");
+                "InstancePoolResource.GetUsages");
         }
 
         /// <summary> Add a tag to the current resource. </summary>
@@ -857,26 +857,18 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a management operation on a instance pool. </summary>
         /// <param name="operationId"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlInstancePoolOperationResource>> GetSqlInstancePoolOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlInstancePoolOperationResource>> GetSqlInstancePoolOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
             return await GetSqlInstancePoolOperations().GetAsync(operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a management operation on a instance pool. </summary>
         /// <param name="operationId"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlInstancePoolOperationResource> GetSqlInstancePoolOperation(string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<SqlInstancePoolOperationResource> GetSqlInstancePoolOperation(Guid operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
             return GetSqlInstancePoolOperations().Get(operationId, cancellationToken);
         }
     }
