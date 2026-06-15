@@ -15,7 +15,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
-    public partial class MonitorPrivateEndpointConnectionListResult : IJsonModel<MonitorPrivateEndpointConnectionListResult>
+    internal partial class MonitorPrivateEndpointConnectionListResult : IJsonModel<MonitorPrivateEndpointConnectionListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

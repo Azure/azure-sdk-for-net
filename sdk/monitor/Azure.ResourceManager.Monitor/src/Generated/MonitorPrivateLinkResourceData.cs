@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkResourceData"/>. </summary>
-        internal MonitorPrivateLinkResourceData()
+        public MonitorPrivateLinkResourceData()
         {
         }
 
@@ -38,6 +38,41 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Resource properties. </summary>
-        public MonitorPrivateLinkResourceProperties Properties { get; }
+        internal MonitorPrivateLinkResourceProperties Properties { get; set; }
+
+        /// <summary> The private link resource group id. </summary>
+        public string GroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GroupId;
+            }
+        }
+
+        /// <summary> The private link resource required member names. </summary>
+        public IReadOnlyList<string> RequiredMembers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MonitorPrivateLinkResourceProperties();
+                }
+                return Properties.RequiredMembers;
+            }
+        }
+
+        /// <summary> The private link resource private link DNS zone name. </summary>
+        public IList<string> RequiredZoneNames
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MonitorPrivateLinkResourceProperties();
+                }
+                return Properties.RequiredZoneNames;
+            }
+        }
     }
 }

@@ -24,29 +24,19 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Resource properties. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <returns> A new <see cref="Monitor.MonitorPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static MonitorPrivateLinkResourceData MonitorPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorPrivateLinkResourceProperties properties = default)
+        public static MonitorPrivateLinkResourceData MonitorPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
         {
             return new MonitorPrivateLinkResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new MonitorPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
-        }
-
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.MonitorPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static MonitorPrivateLinkResourceProperties MonitorPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new MonitorPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="value"> The PrivateLinkResource items on this page. </param>
@@ -85,15 +75,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static MonitorPrivateLinkServiceConnectionState MonitorPrivateLinkServiceConnectionState(MonitorPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
         {
             return new MonitorPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
-        }
-
-        /// <param name="value"> Array of private endpoint connections. </param>
-        /// <returns> A new <see cref="Models.MonitorPrivateEndpointConnectionListResult"/> instance for mocking. </returns>
-        public static MonitorPrivateEndpointConnectionListResult MonitorPrivateEndpointConnectionListResult(IEnumerable<MonitorPrivateEndpointConnectionData> value = default)
-        {
-            value ??= new ChangeTrackingList<MonitorPrivateEndpointConnectionData>();
-
-            return new MonitorPrivateEndpointConnectionListResult((value ?? new ChangeTrackingList<MonitorPrivateEndpointConnectionData>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3736,27 +3717,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 resourceType,
                 systemData,
                 privateEndpointId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), default, provisioningState, default),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Monitor.MonitorPrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="Monitor.MonitorPrivateLinkResourceData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MonitorPrivateLinkResourceData MonitorPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            return new MonitorPrivateLinkResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new MonitorPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
         }
 

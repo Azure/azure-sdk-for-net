@@ -12,13 +12,13 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Properties of a private link resource. </summary>
-    public partial class MonitorPrivateLinkResourceProperties
+    internal partial class MonitorPrivateLinkResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkResourceProperties"/>. </summary>
-        internal MonitorPrivateLinkResourceProperties()
+        public MonitorPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Monitor.Models
         public string GroupId { get; }
 
         /// <summary> The private link resource required member names. </summary>
-        public IReadOnlyList<string> RequiredMembers { get; }
+        public IReadOnlyList<string> RequiredMembers { get; } = new ChangeTrackingList<string>();
 
         /// <summary> The private link resource private link DNS zone name. </summary>
-        public IList<string> RequiredZoneNames { get; }
+        public IList<string> RequiredZoneNames { get; } = new ChangeTrackingList<string>();
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Properties of a private link resource. </summary>
-    public partial class MonitorPrivateLinkResourceProperties : IJsonModel<MonitorPrivateLinkResourceProperties>
+    internal partial class MonitorPrivateLinkResourceProperties : IJsonModel<MonitorPrivateLinkResourceProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
