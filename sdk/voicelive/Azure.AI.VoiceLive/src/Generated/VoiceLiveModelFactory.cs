@@ -1711,6 +1711,29 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary>
+        /// Returned when an earlier assistant audio message item is truncated by the
+        /// client with a `conversation.item.truncate` event. This event is used to
+        /// synchronize the server's understanding of the audio with the client's playback.
+        /// This action will truncate the audio and remove the server-side text transcript
+        /// to ensure there is no text in the context that hasn't been heard by the user.
+        /// </summary>
+        /// <param name="itemId"> The ID of the assistant message item that was truncated. </param>
+        /// <param name="contentIndex"> The index of the content part that was truncated. </param>
+        /// <param name="audioEndMs"> The duration up to which the audio was truncated, in milliseconds. </param>
+        /// <param name="eventId"></param>
+        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/> instance for mocking. </returns>
+        public static SessionUpdateConversationItemTruncated SessionUpdateConversationItemTruncated(string itemId = default, int contentIndex = default, int audioEndMs = default, string eventId = default)
+        {
+            return new SessionUpdateConversationItemTruncated(
+                ServerEventType.ConversationItemTruncated,
+                eventId,
+                additionalBinaryDataProperties: null,
+                itemId,
+                contentIndex,
+                audioEndMs);
+        }
+
+        /// <summary>
         /// Returned when an item in the conversation is deleted by the client with a
         /// `conversation.item.delete` event. This event is used to synchronize the
         /// server's understanding of the conversation history with the client's view.
@@ -2784,29 +2807,6 @@ namespace Azure.AI.VoiceLive
         public static SessionUpdateConversationItemInputAudioTranscriptionCompleted SessionUpdateConversationItemInputAudioTranscriptionCompleted(string eventId, string itemId, int contentIndex, string transcript)
         {
             return SessionUpdateConversationItemInputAudioTranscriptionCompleted(eventId: eventId, itemId: itemId, contentIndex: contentIndex, transcript: transcript, logProbs: default, phrases: default);
-        }
-
-        /// <summary>
-        /// Returned when an earlier assistant audio message item is truncated by the
-        ///                         client with a `conversation.item.truncate` event. This event is used to
-        ///                         synchronize the server's understanding of the audio with the client's playback.
-        ///                         This action will truncate the audio and remove the server-side text transcript
-        ///                         to ensure there is no text in the context that hasn't been heard by the user.
-        /// </summary>
-        /// <param name="itemId"> The ID of the assistant message item that was truncated. </param>
-        /// <param name="contentIndex"> The index of the content part that was truncated. </param>
-        /// <param name="audioEndMs"> The duration up to which the audio was truncated, in milliseconds. </param>
-        /// <param name="eventId"></param>
-        /// <returns> A new <see cref="VoiceLive.SessionUpdateConversationItemTruncated"/> instance for mocking. </returns>
-        public static SessionUpdateConversationItemTruncated SessionUpdateConversationItemTruncated(string itemId = default, int contentIndex = 0, int audioEndMs = 0, string eventId = default)
-        {
-            return new SessionUpdateConversationItemTruncated(
-                ServerEventType.ConversationItemTruncated,
-                eventId,
-                additionalBinaryDataProperties: null,
-                itemId,
-                contentIndex,
-                audioEndMs);
         }
 
         /// <summary> Represents a word-level audio timestamp delta for a response. </summary>
