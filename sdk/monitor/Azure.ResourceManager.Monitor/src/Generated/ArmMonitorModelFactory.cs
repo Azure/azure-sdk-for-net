@@ -39,16 +39,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 default);
         }
 
-        /// <param name="value"> The PrivateLinkResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.MonitorPrivateLinkResourceListResult"/> instance for mocking. </returns>
-        public static MonitorPrivateLinkResourceListResult MonitorPrivateLinkResourceListResult(IEnumerable<MonitorPrivateLinkResourceData> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<MonitorPrivateLinkResourceData>();
-
-            return new MonitorPrivateLinkResourceListResult((value ?? new ChangeTrackingList<MonitorPrivateLinkResourceData>()).ToList(), nextLink, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

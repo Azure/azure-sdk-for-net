@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.Monitor
     /// Each <see cref="MonitorPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="MonitorPrivateLinkScopeResource"/>.
     /// To get a <see cref="MonitorPrivateLinkResourceCollection"/> instance call the GetMonitorPrivateLinkResources method from an instance of <see cref="MonitorPrivateLinkScopeResource"/>.
     /// </summary>
-    public partial class MonitorPrivateLinkResourceCollection : ArmCollection
+    public partial class MonitorPrivateLinkResourceCollection : ArmCollection, IEnumerable<MonitorPrivateLinkResource>, IAsyncEnumerable<MonitorPrivateLinkResource>
     {
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResources _privateLinkResourcesRestClient;
@@ -148,6 +150,74 @@ namespace Azure.ResourceManager.Monitor
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets the private link resources that need to be created for a Azure Monitor PrivateLinkScope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/privateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_ListByPrivateLinkScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MonitorPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MonitorPrivateLinkResourceData, MonitorPrivateLinkResource>(new PrivateLinkResourcesGetAllPrivateLinkResourcesAsyncCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "MonitorPrivateLinkResourceCollection.GetAll"), data => new MonitorPrivateLinkResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets the private link resources that need to be created for a Azure Monitor PrivateLinkScope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopes/{scopeName}/privateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_ListByPrivateLinkScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MonitorPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MonitorPrivateLinkResourceData, MonitorPrivateLinkResource>(new PrivateLinkResourcesGetAllPrivateLinkResourcesCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "MonitorPrivateLinkResourceCollection.GetAll"), data => new MonitorPrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -384,6 +454,22 @@ namespace Azure.ResourceManager.Monitor
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<MonitorPrivateLinkResource> IEnumerable<MonitorPrivateLinkResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<MonitorPrivateLinkResource> IAsyncEnumerable<MonitorPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

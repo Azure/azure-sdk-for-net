@@ -15,7 +15,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The response of a PrivateLinkResource list operation. </summary>
-    public partial class MonitorPrivateLinkResourceListResult : IJsonModel<MonitorPrivateLinkResourceListResult>
+    internal partial class MonitorPrivateLinkResourceListResult : IJsonModel<MonitorPrivateLinkResourceListResult>
     {
         /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkResourceListResult"/> for deserialization. </summary>
         internal MonitorPrivateLinkResourceListResult()
