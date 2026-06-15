@@ -190,6 +190,7 @@ namespace Azure.Generator.Mgmt.Tests
             var result = visitor.InvokeVisitType(modelProvider);
 
             Assert.That(result!.Type.Namespace, Is.EqualTo("Samples.Models"));
+            Assert.That(result.SerializationProviders.Select(s => s.Type.Namespace), Is.All.EqualTo("Samples.Models"));
         }
 
         [Test]
