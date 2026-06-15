@@ -21,5 +21,18 @@ namespace Azure.ResourceManager.EventGrid.Models
                 Properties.EventTypeInfo = value;
             }
         }
+
+        internal PartnerUpdateTopicInfo PartnerTopicInfo
+        {
+            get => Properties is null ? default : Properties.PartnerTopicInfo;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ChannelUpdateParametersProperties();
+                }
+                Properties.PartnerTopicInfo = value;
+            }
+        }
     }
 }

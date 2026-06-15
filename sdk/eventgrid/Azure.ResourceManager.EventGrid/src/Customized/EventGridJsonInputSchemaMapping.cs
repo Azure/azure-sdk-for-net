@@ -45,5 +45,43 @@ namespace Azure.ResourceManager.EventGrid.Models
                 Properties.EventTimeSourceField = value;
             }
         }
+
+        internal JsonField Id
+        {
+            get => Properties is null ? default : Properties.Id;
+            set
+            {
+                EnsureProperties();
+                Properties.Id = value;
+            }
+        }
+
+        internal JsonField Topic
+        {
+            get => Properties is null ? default : Properties.Topic;
+            set
+            {
+                EnsureProperties();
+                Properties.Topic = value;
+            }
+        }
+
+        internal JsonField EventTime
+        {
+            get => Properties is null ? default : Properties.EventTime;
+            set
+            {
+                EnsureProperties();
+                Properties.EventTime = value;
+            }
+        }
+
+        private void EnsureProperties()
+        {
+            if (Properties is null)
+            {
+                Properties = new JsonInputSchemaMappingProperties();
+            }
+        }
     }
 }
