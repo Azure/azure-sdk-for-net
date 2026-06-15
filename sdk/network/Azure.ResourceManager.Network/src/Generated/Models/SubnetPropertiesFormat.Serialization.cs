@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(PrivateEndpointNetworkPolicies))
+            if (Optional.IsDefined(PrivateEndpointNetworkPolicies) && PrivateEndpointNetworkPolicies != VirtualNetworkPrivateEndpointNetworkPolicy.Disabled)
             {
                 writer.WritePropertyName("privateEndpointNetworkPolicies"u8);
                 writer.WriteStringValue(PrivateEndpointNetworkPolicies.Value.ToString());
