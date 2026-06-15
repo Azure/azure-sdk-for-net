@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.OperationalInsights
             return message;
         }
 
-        internal HttpMessage CreateGetNetworkSecurityPerimeterConfigurationRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context)
+        internal HttpMessage CreateGetNetworkSecurityPerimeterConfigurationsRequest(Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.OperationalInsights
             return message;
         }
 
-        internal HttpMessage CreateNextGetNetworkSecurityPerimeterConfigurationRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context)
+        internal HttpMessage CreateNextGetNetworkSecurityPerimeterConfigurationsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string workspaceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

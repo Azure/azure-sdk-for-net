@@ -554,19 +554,19 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationalInsightsNetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspacesGetNetworkSecurityPerimeterConfigurationAsyncCollectionResultOfT(
+            return new WorkspacesGetNetworkSecurityPerimeterConfigurationsAsyncCollectionResultOfT(
                 _workspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "OperationalInsightsWorkspaceResource.GetNetworkSecurityPerimeterConfiguration");
+                "OperationalInsightsWorkspaceResource.GetNetworkSecurityPerimeterConfigurations");
         }
 
         /// <summary>
@@ -592,19 +592,19 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OperationalInsightsNetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfiguration(CancellationToken cancellationToken = default)
+        public virtual Pageable<OperationalInsightsNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurations(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new WorkspacesGetNetworkSecurityPerimeterConfigurationCollectionResultOfT(
+            return new WorkspacesGetNetworkSecurityPerimeterConfigurationsCollectionResultOfT(
                 _workspacesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "OperationalInsightsWorkspaceResource.GetNetworkSecurityPerimeterConfiguration");
+                "OperationalInsightsWorkspaceResource.GetNetworkSecurityPerimeterConfigurations");
         }
 
         /// <summary>
