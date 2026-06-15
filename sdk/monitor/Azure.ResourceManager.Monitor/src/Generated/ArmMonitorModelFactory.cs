@@ -1445,25 +1445,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 default);
         }
 
-        /// <param name="id"> The operation Id. </param>
-        /// <param name="name"> The operation name. </param>
-        /// <param name="startOn"> Start time of the job in standard ISO8601 format. </param>
-        /// <param name="endOn"> End time of the job in standard ISO8601 format. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="error"> The error detail of the operation if any. </param>
-        /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
-        public static OperationStatus OperationStatus(string id = default, string name = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string status = default, ResponseError error = default)
-        {
-            return new OperationStatus(
-                id,
-                name,
-                startOn,
-                endOn,
-                status,
-                error,
-                default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

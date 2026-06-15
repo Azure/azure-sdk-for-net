@@ -21,8 +21,6 @@ namespace Azure.ResourceManager.Monitor.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableMonitorResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _privateLinkScopeOperationStatusClientDiagnostics;
-        private PrivateLinkScopeOperationStatus _privateLinkScopeOperationStatusRestClient;
         private ClientDiagnostics _alertRuleIncidentsClientDiagnostics;
         private AlertRuleIncidents _alertRuleIncidentsRestClient;
 
@@ -38,111 +36,9 @@ namespace Azure.ResourceManager.Monitor.Mocking
         {
         }
 
-        private ClientDiagnostics PrivateLinkScopeOperationStatusClientDiagnostics => _privateLinkScopeOperationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private PrivateLinkScopeOperationStatus PrivateLinkScopeOperationStatusRestClient => _privateLinkScopeOperationStatusRestClient ??= new PrivateLinkScopeOperationStatus(PrivateLinkScopeOperationStatusClientDiagnostics, Pipeline, Endpoint, "2023-06-01-preview");
-
         private ClientDiagnostics AlertRuleIncidentsClientDiagnostics => _alertRuleIncidentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private AlertRuleIncidents AlertRuleIncidentsRestClient => _alertRuleIncidentsRestClient ??= new AlertRuleIncidents(AlertRuleIncidentsClientDiagnostics, Pipeline, Endpoint, "2016-03-01");
-
-        /// <summary>
-        /// Get the status of an azure asynchronous operation associated with a private link scope operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopeOperationStatuses/{asyncOperationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateLinkScopeOperationStatusOperationGroup_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="asyncOperationId"> The operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OperationStatus>> GetAsync(string asyncOperationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
-
-            using DiagnosticScope scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PrivateLinkScopeOperationStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, asyncOperationId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OperationStatus> response = Response.FromValue(OperationStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the status of an azure asynchronous operation associated with a private link scope operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/privateLinkScopeOperationStatuses/{asyncOperationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateLinkScopeOperationStatusOperationGroup_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2023-06-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="asyncOperationId"> The operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OperationStatus> Get(string asyncOperationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
-
-            using DiagnosticScope scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("MockableMonitorResourceGroupResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = PrivateLinkScopeOperationStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, asyncOperationId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<OperationStatus> response = Response.FromValue(OperationStatus.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
 
         /// <summary>
         /// Gets an incident associated to an alert rule

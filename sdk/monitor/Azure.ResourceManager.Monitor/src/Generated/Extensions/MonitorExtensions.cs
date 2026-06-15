@@ -635,42 +635,6 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Get the status of an azure asynchronous operation associated with a private link scope operation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="asyncOperationId"> The operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<OperationStatus>> GetAsync(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetAsync(asyncOperationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the status of an azure asynchronous operation associated with a private link scope operation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.Get(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="asyncOperationId"> The operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<OperationStatus> Get(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableMonitorResourceGroupResource(resourceGroupResource).Get(asyncOperationId, cancellationToken);
-        }
-
-        /// <summary>
         /// Gets an incident associated to an alert rule
         /// <item>
         /// <term> Mocking. </term>

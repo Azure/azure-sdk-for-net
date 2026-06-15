@@ -228,7 +228,6 @@ namespace Azure.ResourceManager.Monitor
     [ModelReaderWriterBuildable(typeof(NotificationContent))]
     [ModelReaderWriterBuildable(typeof(NotificationContext))]
     [ModelReaderWriterBuildable(typeof(NotificationStatus))]
-    [ModelReaderWriterBuildable(typeof(OperationStatus))]
     [ModelReaderWriterBuildable(typeof(OtelDataSourceResourceAttributeRouting))]
     [ModelReaderWriterBuildable(typeof(OtelLogsDataSource))]
     [ModelReaderWriterBuildable(typeof(OtelLogsDataSourceResourceAttributeRouting))]
