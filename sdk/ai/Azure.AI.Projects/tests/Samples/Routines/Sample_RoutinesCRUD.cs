@@ -92,7 +92,6 @@ public class Sample_RoutinesCRUD : SamplesRoutineBase
         #region Snippet:Sample_DeleteRoutine_RoutinesCRUD_Async
         await routinesClient.DeleteRoutineAsync(routineName);
         Console.WriteLine("Routine deleted");
-        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name);
         #endregion
     }
 
@@ -170,7 +169,6 @@ public class Sample_RoutinesCRUD : SamplesRoutineBase
         #region Snippet:Sample_DeleteRoutine_RoutinesCRUD_Sync
         routinesClient.DeleteRoutine(routineName);
         Console.WriteLine("Routine deleted");
-        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name);
         #endregion
     }
 

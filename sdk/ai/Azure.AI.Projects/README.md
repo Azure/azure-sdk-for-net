@@ -1674,9 +1674,9 @@ Console.WriteLine($"Retrieved toolbox: {toolBox.Name} ({toolBox.Id})");
 
 Routines client provides the mechanism to call the Hosted Agent asynchronously.
 The call can be scheduled in three different ways by using different trigger types.
-    - At specific date and time using `TimerRoutineTrigger`.
-    - In response to the external event using `CustomRoutineTrigger`.
-    - Or repeatedly according to schedule using `ScheduleRoutineTrigger`.
+  - At a specific date and time using `TimerRoutineTrigger`.
+  - In response to an external event using `CustomRoutineTrigger`.
+  - Repeatedly according to a schedule using `ScheduleRoutineTrigger`.
 
 To create Routine, we need to define the hosted agent to be called and an action, which will be called on the
 Agent.
@@ -1741,7 +1741,29 @@ Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}");
 
 To create a single run at given time we need to define routine as follows:
 
-```Snippet:Sample_CreateRoutine_RoutinesTimerTrigger_Sync
+```C# Snippet:Sample_CreateRoutine_RoutinesTimerTrigger_Async
+IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
+{
+    ["once"] = new TimerRoutineTrigger()
+    {
+        At = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(20),
+    },
+};
+
+RoutineAction action = new InvokeAgentResponsesApiRoutineAction
+{
+    AgentName = agentVersion.Name,
+    Input = BinaryData.FromObjectAsJson("Hello, Tell me a joke."),
+};
+
+ProjectsRoutine created = await routinesClient.CreateOrUpdateRoutineAsync(
+    routineName: routineName,
+    triggers: triggers,
+    action: action,
+    description: "Routine used by the timer-trigger sample.",
+    enabled: true);
+Console.WriteLine($"Created routine: {created.Name} enabled={created.Enabled}.");
+Console.WriteLine($"Fire at: {((TimerRoutineTrigger)triggers["once"]).At.Value.ToString("o")}");
 ```
 
 ## Tracing

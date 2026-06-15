@@ -1,9 +1,9 @@
-# Sample for Routines with schedule trigger in Azure.AI.Projects
+# Sample for Routines with timer trigger in Azure.AI.Projects
 
 This sample demonstrates how to create a job, which will be launched at specific time on the hosted Agent using Routines. In this scenario Routine will create a single run.
 
 ## Hosted agent deployment
-As a prerequisite to this sample, the hosted Agent needs to be deployed. Please follow the steps in the [Hosted agents sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample28_HostedAgent.md) and make sure that the Agent is able to generate responses. In the Microsoft foundry choose the "Build" tab and select "Agents" get the created Agent and select "Details" section and copy the Entra Agnet identity ID. Assign Agent a "Foundry User" RBAC role for Microsoft foundry, containing an Agent (one level above the project). In the Azure portal, select the Foundry and click on "Access control (IAM)" on the left panel and add the role for an Agent.
+As a prerequisite to this sample, the hosted Agent needs to be deployed. Please follow the steps in the [Hosted agents sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample28_HostedAgent.md) and make sure that the Agent is able to generate responses. In the Microsoft foundry choose the "Build" tab and select "Agents" get the created Agent and select "Details" section and copy the Entra Agent identity ID. Assign Agent a "Foundry User" RBAC role for Microsoft foundry, containing an Agent (one level above the project). In the Azure portal, select the Foundry and click on "Access control (IAM)" on the left panel and add the role for an Agent.
 
 ## Run a sample.
 
@@ -39,7 +39,7 @@ IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTri
 {
     ["once"] = new TimerRoutineTrigger()
     {
-        At = DateTime.Now + new TimeSpan(hours: 0, minutes: 0, seconds: 20),
+        At = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(20),
     },
 };
 
@@ -65,7 +65,7 @@ IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTri
 {
     ["once"] = new TimerRoutineTrigger()
     {
-        At = DateTime.Now + new TimeSpan(hours: 0, minutes: 0, seconds: 20),
+        At = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(20),
     },
 };
 
@@ -91,7 +91,7 @@ Synchronous sample:
 ```C# Snippet:Sample_WaitForTask_RoutinesTimerTrigger_Sync
 int minutesWait = 10;
 Console.WriteLine($"Waiting for run for {minutesWait} minutes...");
-DateTime deadline = DateTime.UtcNow + new TimeSpan(hours: 0, minutes: 10, seconds: 0);
+DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(minutesWait);
 RoutineRun completedRun = null;
 while (DateTime.UtcNow < deadline)
 {
@@ -113,7 +113,7 @@ while (DateTime.UtcNow < deadline)
 }
 if (completedRun == null)
 {
-    throw new InvalidOperationException($"The run did not completed within {minutesWait} minutes.");
+    throw new InvalidOperationException($"The run did not complete within {minutesWait} minutes.");
 }
 if (string.Equals(completedRun.Status, "killed", StringComparison.InvariantCultureIgnoreCase))
 {
@@ -129,7 +129,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_WaitForTask_RoutinesTimerTrigger_Async
 int minutesWait = 10;
 Console.WriteLine($"Waiting for run for {minutesWait} minutes...");
-DateTime deadline = DateTime.UtcNow + new TimeSpan(hours: 0, minutes: 10, seconds: 0);
+DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(minutesWait);
 RoutineRun completedRun = null;
 while (DateTime.UtcNow < deadline)
 {
@@ -151,7 +151,7 @@ while (DateTime.UtcNow < deadline)
 }
 if (completedRun == null)
 {
-    throw new InvalidOperationException($"The run did not completed within {minutesWait} minutes.");
+    throw new InvalidOperationException($"The run did not complete within {minutesWait} minutes.");
 }
 if (string.Equals(completedRun.Status, "killed", StringComparison.InvariantCultureIgnoreCase))
 {
@@ -182,18 +182,16 @@ Console.WriteLine($"The response Id is {completedRun.ResponseId}");
 ```
 
 
-6. Finally, delete the routine and Agent.
+6. Finally, delete the routine.
 
 Synchronous sample:
 ```C# Snippet:Sample_DeleteRoutine_RoutinesTimerTrigger_Sync
 routinesClient.DeleteRoutine(routineName);
 Console.WriteLine("Routine deleted");
-projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DeleteRoutine_RoutinesTimerTrigger_Async
 await routinesClient.DeleteRoutineAsync(routineName);
 Console.WriteLine("Routine deleted");
-await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
 ```

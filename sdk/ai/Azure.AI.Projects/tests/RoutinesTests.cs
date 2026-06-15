@@ -154,10 +154,21 @@ public class RoutinesTests : ProjectsClientTestBase
         }
         else
         {
-            trigger = new TimerRoutineTrigger()
+            if (Mode == RecordedTestMode.Playback)
             {
-                At = DateTime.Now + new TimeSpan(hours: 0, minutes: 0, seconds: 20),
-            };
+                // Take the actual time from the recording file.
+                trigger = new TimerRoutineTrigger()
+                {
+                    At = IsAsync ? DateTimeOffset.FromUnixTimeSeconds(1781550024) : DateTimeOffset.FromUnixTimeSeconds(1781549955)
+                };
+            }
+            else
+            {
+                trigger = new TimerRoutineTrigger()
+                {
+                    At = DateTime.UtcNow + TimeSpan.FromSeconds(20),
+                };
+            }
         }
         IDictionary<string, RoutineTrigger> triggers = new Dictionary<string, RoutineTrigger>
         {
@@ -176,7 +187,7 @@ public class RoutinesTests : ProjectsClientTestBase
             description: "Routine created by unit test.",
             enabled: true);
         int minutesWait = 10;
-        DateTime deadline = DateTime.UtcNow + new TimeSpan(hours: 0, minutes: 10, seconds: 0);
+        DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(minutesWait);
         RoutineRun completedRun = null;
         while (DateTime.UtcNow < deadline)
         {
@@ -195,7 +206,7 @@ public class RoutinesTests : ProjectsClientTestBase
                 break;
             }
         }
-        Assert.That(completedRun, Is.Not.Null, $"The run did not completed within {minutesWait} minutes.");
+        Assert.That(completedRun, Is.Not.Null, $"The run did not complete within {minutesWait} minutes.");
         Assert.That(completedRun.Status.ToLower(), Is.Not.EqualTo("killed"), "The run was forcefully stopped.");
         Assert.That(completedRun.Status.ToLower(), Is.Not.EqualTo("failed"), $"The run has failed with the error. Type: {completedRun.ErrorType} Message: {completedRun.ErrorMessage}.");
         Assert.That(completedRun.Status.ToLower(), Is.EqualTo("finished"));
@@ -241,7 +252,6 @@ public class RoutinesTests : ProjectsClientTestBase
         }
         Assert.That(runs, Has.Count.GreaterThan(PAGE_SIZE));
         // We cannot know, how many runs we have generated, so we set the new baseline here.
-        int runsGenerated = runs.Count;
         List<RoutineRun> records = await projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name, limit: PAGE_SIZE, order: "asc").ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Blocked by the ADO item 5337751
@@ -303,7 +313,7 @@ public class RoutinesTests : ProjectsClientTestBase
             return;
         Uri connectionString = new(TestEnvironment.FOUNDRY_PROJECT_ENDPOINT);
         AIProjectClient projectClient = new(connectionString, GetTestTokenProvider());
-        // Remove Routnes
+        // Remove Routines
         List<string> routines = await projectClient.Routines.GetRoutinesAsync().Where(x => x.Name.StartsWith(ROUTINE_NAME_PREFIX)).Select(x => x.Name).ToListAsync();
         foreach (string routineName in routines)
         {

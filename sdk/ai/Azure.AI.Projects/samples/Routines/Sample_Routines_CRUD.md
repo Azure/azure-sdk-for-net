@@ -3,7 +3,7 @@
 This sample demonstrates how to perform CRUD operations on Routines using the `AIProjectClient`. It creates a routine bound to a hosted agent, retrieves it, toggles its enabled state via `DisableRoutine` / `EnableRoutine`, lists routines, and finally deletes it. A `CustomRoutineTrigger` is used to keep the sample self-contained (no GitHub or schedule resources required).
 
 ## Hosted agent deployment
-As a prerequisite to this sample, the hosted Agent needs to be deployed. Please follow the steps in the [Hosted agents sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample28_HostedAgent.md) and make sure that the Agent is able to generate responses. In the Microsoft foundry choose the "Build" tab and select "Agents" get the created Agent and select "Details" section and copy the Entra Agnet identity ID. Assign Agent a "Foundry User" RBAC role for Microsoft foundry, containing an Agent (one level above the project). In the Azure portal, select the Foundry and click on "Access control (IAM)" on the left panel and add the role for an Agent.
+As a prerequisite to this sample, the hosted Agent needs to be deployed. Please follow the steps in the [Hosted agents sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample28_HostedAgent.md) and make sure that the Agent is able to generate responses. In the Microsoft foundry choose the "Build" tab and select "Agents" get the created Agent and select "Details" section and copy the Entra Agent identity ID. Assign Agent a "Foundry User" RBAC role for Microsoft foundry, containing an Agent (one level above the project). In the Azure portal, select the Foundry and click on "Access control (IAM)" on the left panel and add the role for an Agent.
 
 ## Run a sample.
 
@@ -151,18 +151,16 @@ await foreach (ProjectsRoutine routine in routinesClient.GetRoutinesAsync())
 }
 ```
 
-8. Finally, delete the routine and Agent.
+8. Finally, delete the routine.
 
 Synchronous sample:
 ```C# Snippet:Sample_DeleteRoutine_RoutinesCRUD_Sync
 routinesClient.DeleteRoutine(routineName);
 Console.WriteLine("Routine deleted");
-projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_DeleteRoutine_RoutinesCRUD_Async
 await routinesClient.DeleteRoutineAsync(routineName);
 Console.WriteLine("Routine deleted");
-await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name);
 ```

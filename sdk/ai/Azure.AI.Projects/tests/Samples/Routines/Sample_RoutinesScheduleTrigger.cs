@@ -68,7 +68,7 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         #region Snippet:Sample_WaitForTask_RoutinesScheduleTrigger_Async
         int minutesWait = 10;
         Console.WriteLine($"Waiting for run for {minutesWait} minutes...");
-        DateTime deadline = DateTime.UtcNow + new TimeSpan(hours: 0, minutes: 10, seconds: 0);
+        DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(minutesWait);
         RoutineRun completedRun = null;
         while (DateTime.UtcNow < deadline)
         {
@@ -90,7 +90,7 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         }
         if (completedRun == null)
         {
-            throw new InvalidOperationException($"The run did not completed within {minutesWait} minutes.");
+            throw new InvalidOperationException($"The run did not complete within {minutesWait} minutes.");
         }
         if (string.Equals(completedRun.Status, "killed", StringComparison.InvariantCultureIgnoreCase))
         {
@@ -112,7 +112,6 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         #region Snippet:Sample_DeleteRoutine_RoutinesScheduleTrigger_Async
         await routinesClient.DeleteRoutineAsync(routineName);
         Console.WriteLine("Routine deleted");
-        await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
         #endregion
     }
 
@@ -168,7 +167,7 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         #region Snippet:Sample_WaitForTask_RoutinesScheduleTrigger_Sync
         int minutesWait = 10;
         Console.WriteLine($"Waiting for run for {minutesWait} minutes...");
-        DateTime deadline = DateTime.UtcNow + new TimeSpan(hours: 0, minutes: 10, seconds: 0);
+        DateTime deadline = DateTime.UtcNow + TimeSpan.FromMinutes(minutesWait);
         RoutineRun completedRun = null;
         while (DateTime.UtcNow < deadline)
         {
@@ -190,7 +189,7 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         }
         if (completedRun == null)
         {
-            throw new InvalidOperationException($"The run did not completed within {minutesWait} minutes.");
+            throw new InvalidOperationException($"The run did not complete within {minutesWait} minutes.");
         }
         if (string.Equals(completedRun.Status, "killed", StringComparison.InvariantCultureIgnoreCase))
         {
@@ -212,7 +211,6 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
         #region Snippet:Sample_DeleteRoutine_RoutinesScheduleTrigger_Sync
         routinesClient.DeleteRoutine(routineName);
         Console.WriteLine("Routine deleted");
-        projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
         #endregion
     }
 
