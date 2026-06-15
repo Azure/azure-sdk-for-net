@@ -8,947 +8,265 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Authorization.Models;
 
 namespace Azure.ResourceManager.Authorization.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableAuthorizationArmClient : ArmResource
     {
+        private ClientDiagnostics _denyAssignmentsClientDiagnostics;
+        private DenyAssignments _denyAssignmentsRestClient;
+        private ClientDiagnostics _roleAssignmentsClientDiagnostics;
+        private RoleAssignments _roleAssignmentsRestClient;
+        private ClientDiagnostics _alertsClientDiagnostics;
+        private Alerts _alertsRestClient;
         private ClientDiagnostics _eligibleChildResourcesClientDiagnostics;
-        private EligibleChildResourcesRestOperations _eligibleChildResourcesRestClient;
+        private EligibleChildResources _eligibleChildResourcesRestClient;
+        private ClientDiagnostics _permissionsClientDiagnostics;
+        private Permissions _permissionsRestClient;
+        private ClientDiagnostics _alertOperationClientDiagnostics;
+        private AlertOperation _alertOperationRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAuthorizationArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAuthorizationArmClient for mocking. </summary>
         protected MockableAuthorizationArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAuthorizationArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAuthorizationArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAuthorizationArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableAuthorizationArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
+        private ClientDiagnostics DenyAssignmentsClientDiagnostics => _denyAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClientDiagnostics EligibleChildResourcesClientDiagnostics => _eligibleChildResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private EligibleChildResourcesRestOperations EligibleChildResourcesRestClient => _eligibleChildResourcesRestClient ??= new EligibleChildResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(DenyAssignmentsClientDiagnostics, Pipeline, Endpoint, "2024-07-01-preview");
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics RoleAssignmentsClientDiagnostics => _roleAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of DenyAssignmentResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of DenyAssignmentResources and their operations over a DenyAssignmentResource. </returns>
-        public virtual DenyAssignmentCollection GetDenyAssignments(ResourceIdentifier scope)
-        {
-            return new DenyAssignmentCollection(Client, scope);
-        }
+        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(RoleAssignmentsClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
 
-        /// <summary>
-        /// Get the specified deny assignment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DenyAssignments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DenyAssignmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DenyAssignmentResource>> GetDenyAssignmentAsync(ResourceIdentifier scope, string denyAssignmentId, CancellationToken cancellationToken = default)
-        {
-            return await GetDenyAssignments(scope).GetAsync(denyAssignmentId, cancellationToken).ConfigureAwait(false);
-        }
+        private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Get the specified deny assignment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DenyAssignments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DenyAssignmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DenyAssignmentResource> GetDenyAssignment(ResourceIdentifier scope, string denyAssignmentId, CancellationToken cancellationToken = default)
-        {
-            return GetDenyAssignments(scope).Get(denyAssignmentId, cancellationToken);
-        }
+        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Endpoint, "2022-08-01-preview");
 
-        /// <summary> Gets a collection of RoleAssignmentResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of RoleAssignmentResources and their operations over a RoleAssignmentResource. </returns>
-        public virtual RoleAssignmentCollection GetRoleAssignments(ResourceIdentifier scope)
-        {
-            return new RoleAssignmentCollection(Client, scope);
-        }
+        private ClientDiagnostics EligibleChildResourcesClientDiagnostics => _eligibleChildResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Get a role assignment by scope and name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleAssignmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
-        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RoleAssignmentResource>> GetRoleAssignmentAsync(ResourceIdentifier scope, string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
-        {
-            return await GetRoleAssignments(scope).GetAsync(roleAssignmentName, tenantId, cancellationToken).ConfigureAwait(false);
-        }
+        private EligibleChildResources EligibleChildResourcesRestClient => _eligibleChildResourcesRestClient ??= new EligibleChildResources(EligibleChildResourcesClientDiagnostics, Pipeline, Endpoint, "2024-09-01-preview");
 
-        /// <summary>
-        /// Get a role assignment by scope and name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleAssignmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
-        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RoleAssignmentResource> GetRoleAssignment(ResourceIdentifier scope, string roleAssignmentName, string tenantId = null, CancellationToken cancellationToken = default)
-        {
-            return GetRoleAssignments(scope).Get(roleAssignmentName, tenantId, cancellationToken);
-        }
+        private ClientDiagnostics PermissionsClientDiagnostics => _permissionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of AuthorizationRoleDefinitionResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of AuthorizationRoleDefinitionResources and their operations over a AuthorizationRoleDefinitionResource. </returns>
-        public virtual AuthorizationRoleDefinitionCollection GetAuthorizationRoleDefinitions(ResourceIdentifier scope)
-        {
-            return new AuthorizationRoleDefinitionCollection(Client, scope);
-        }
+        private Permissions PermissionsRestClient => _permissionsRestClient ??= new Permissions(PermissionsClientDiagnostics, Pipeline, Endpoint, "2022-05-01-preview");
 
-        /// <summary>
-        /// Get role definition by name (GUID).
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleDefinitions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AuthorizationRoleDefinitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AuthorizationRoleDefinitionResource>> GetAuthorizationRoleDefinitionAsync(ResourceIdentifier scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
-        {
-            return await GetAuthorizationRoleDefinitions(scope).GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
-        }
+        private ClientDiagnostics AlertOperationClientDiagnostics => _alertOperationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Get role definition by name (GUID).
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleDefinitions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AuthorizationRoleDefinitionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<AuthorizationRoleDefinitionResource> GetAuthorizationRoleDefinition(ResourceIdentifier scope, ResourceIdentifier roleDefinitionId, CancellationToken cancellationToken = default)
-        {
-            return GetAuthorizationRoleDefinitions(scope).Get(roleDefinitionId, cancellationToken);
-        }
+        private AlertOperation AlertOperationRestClient => _alertOperationRestClient ??= new AlertOperation(AlertOperationClientDiagnostics, Pipeline, Endpoint, "2022-08-01-preview");
 
-        /// <summary> Gets a collection of RoleAssignmentScheduleResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of RoleAssignmentScheduleResources and their operations over a RoleAssignmentScheduleResource. </returns>
-        public virtual RoleAssignmentScheduleCollection GetRoleAssignmentSchedules(ResourceIdentifier scope)
-        {
-            return new RoleAssignmentScheduleCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get the specified role assignment schedule for a resource scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignmentSchedules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RoleAssignmentScheduleResource>> GetRoleAssignmentScheduleAsync(ResourceIdentifier scope, string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
-        {
-            return await GetRoleAssignmentSchedules(scope).GetAsync(roleAssignmentScheduleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified role assignment schedule for a resource scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignmentSchedules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RoleAssignmentScheduleResource> GetRoleAssignmentSchedule(ResourceIdentifier scope, string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
-        {
-            return GetRoleAssignmentSchedules(scope).Get(roleAssignmentScheduleName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RoleAssignmentScheduleInstanceResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of RoleAssignmentScheduleInstanceResources and their operations over a RoleAssignmentScheduleInstanceResource. </returns>
-        public virtual RoleAssignmentScheduleInstanceCollection GetRoleAssignmentScheduleInstances(ResourceIdentifier scope)
-        {
-            return new RoleAssignmentScheduleInstanceCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Gets the specified role assignment schedule instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignmentScheduleInstances_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleAssignmentScheduleInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RoleAssignmentScheduleInstanceResource>> GetRoleAssignmentScheduleInstanceAsync(ResourceIdentifier scope, string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
-        {
-            return await GetRoleAssignmentScheduleInstances(scope).GetAsync(roleAssignmentScheduleInstanceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified role assignment schedule instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignmentScheduleInstances_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleAssignmentScheduleInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RoleAssignmentScheduleInstanceResource> GetRoleAssignmentScheduleInstance(ResourceIdentifier scope, string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
-        {
-            return GetRoleAssignmentScheduleInstances(scope).Get(roleAssignmentScheduleInstanceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RoleAssignmentScheduleRequestResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of RoleAssignmentScheduleRequestResources and their operations over a RoleAssignmentScheduleRequestResource. </returns>
-        public virtual RoleAssignmentScheduleRequestCollection GetRoleAssignmentScheduleRequests(ResourceIdentifier scope)
-        {
-            return new RoleAssignmentScheduleRequestCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get the specified role assignment schedule request.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignmentScheduleRequests_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RoleAssignmentScheduleRequestResource>> GetRoleAssignmentScheduleRequestAsync(ResourceIdentifier scope, string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
-        {
-            return await GetRoleAssignmentScheduleRequests(scope).GetAsync(roleAssignmentScheduleRequestName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified role assignment schedule request.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleRequests/{roleAssignmentScheduleRequestName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleAssignmentScheduleRequests_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RoleAssignmentScheduleRequestResource> GetRoleAssignmentScheduleRequest(ResourceIdentifier scope, string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
-        {
-            return GetRoleAssignmentScheduleRequests(scope).Get(roleAssignmentScheduleRequestName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RoleEligibilityScheduleResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of RoleEligibilityScheduleResources and their operations over a RoleEligibilityScheduleResource. </returns>
-        public virtual RoleEligibilityScheduleCollection GetRoleEligibilitySchedules(ResourceIdentifier scope)
-        {
-            return new RoleEligibilityScheduleCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get the specified role eligibility schedule for a resource scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules/{roleEligibilityScheduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilitySchedules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RoleEligibilityScheduleResource>> GetRoleEligibilityScheduleAsync(ResourceIdentifier scope, string roleEligibilityScheduleName, CancellationToken cancellationToken = default)
-        {
-            return await GetRoleEligibilitySchedules(scope).GetAsync(roleEligibilityScheduleName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified role eligibility schedule for a resource scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilitySchedules/{roleEligibilityScheduleName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilitySchedules_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RoleEligibilityScheduleResource> GetRoleEligibilitySchedule(ResourceIdentifier scope, string roleEligibilityScheduleName, CancellationToken cancellationToken = default)
-        {
-            return GetRoleEligibilitySchedules(scope).Get(roleEligibilityScheduleName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RoleEligibilityScheduleInstanceResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of RoleEligibilityScheduleInstanceResources and their operations over a RoleEligibilityScheduleInstanceResource. </returns>
-        public virtual RoleEligibilityScheduleInstanceCollection GetRoleEligibilityScheduleInstances(ResourceIdentifier scope)
-        {
-            return new RoleEligibilityScheduleInstanceCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Gets the specified role eligibility schedule instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleInstances_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RoleEligibilityScheduleInstanceResource>> GetRoleEligibilityScheduleInstanceAsync(ResourceIdentifier scope, string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
-        {
-            return await GetRoleEligibilityScheduleInstances(scope).GetAsync(roleEligibilityScheduleInstanceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified role eligibility schedule instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleInstances_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RoleEligibilityScheduleInstanceResource> GetRoleEligibilityScheduleInstance(ResourceIdentifier scope, string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
-        {
-            return GetRoleEligibilityScheduleInstances(scope).Get(roleEligibilityScheduleInstanceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RoleEligibilityScheduleRequestResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of RoleEligibilityScheduleRequestResources and their operations over a RoleEligibilityScheduleRequestResource. </returns>
-        public virtual RoleEligibilityScheduleRequestCollection GetRoleEligibilityScheduleRequests(ResourceIdentifier scope)
-        {
-            return new RoleEligibilityScheduleRequestCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get the specified role eligibility schedule request.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleRequests_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleRequestResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RoleEligibilityScheduleRequestResource>> GetRoleEligibilityScheduleRequestAsync(ResourceIdentifier scope, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
-        {
-            return await GetRoleEligibilityScheduleRequests(scope).GetAsync(roleEligibilityScheduleRequestName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified role eligibility schedule request.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleRequests/{roleEligibilityScheduleRequestName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleRequests_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleRequestResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RoleEligibilityScheduleRequestResource> GetRoleEligibilityScheduleRequest(ResourceIdentifier scope, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
-        {
-            return GetRoleEligibilityScheduleRequests(scope).Get(roleEligibilityScheduleRequestName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RoleManagementPolicyResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of RoleManagementPolicyResources and their operations over a RoleManagementPolicyResource. </returns>
-        public virtual RoleManagementPolicyCollection GetRoleManagementPolicies(ResourceIdentifier scope)
-        {
-            return new RoleManagementPolicyCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get the specified role management policy for a resource scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleManagementPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleManagementPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RoleManagementPolicyResource>> GetRoleManagementPolicyAsync(ResourceIdentifier scope, string roleManagementPolicyName, CancellationToken cancellationToken = default)
-        {
-            return await GetRoleManagementPolicies(scope).GetAsync(roleManagementPolicyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified role management policy for a resource scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleManagementPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleManagementPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RoleManagementPolicyResource> GetRoleManagementPolicy(ResourceIdentifier scope, string roleManagementPolicyName, CancellationToken cancellationToken = default)
-        {
-            return GetRoleManagementPolicies(scope).Get(roleManagementPolicyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of RoleManagementPolicyAssignmentResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of RoleManagementPolicyAssignmentResources and their operations over a RoleManagementPolicyAssignmentResource. </returns>
-        public virtual RoleManagementPolicyAssignmentCollection GetRoleManagementPolicyAssignments(ResourceIdentifier scope)
-        {
-            return new RoleManagementPolicyAssignmentCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get the specified role management policy assignment for a resource scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleManagementPolicyAssignments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleManagementPolicyAssignmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<RoleManagementPolicyAssignmentResource>> GetRoleManagementPolicyAssignmentAsync(ResourceIdentifier scope, string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
-        {
-            return await GetRoleManagementPolicyAssignments(scope).GetAsync(roleManagementPolicyAssignmentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the specified role management policy assignment for a resource scope
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleManagementPolicyAssignments_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleManagementPolicyAssignmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<RoleManagementPolicyAssignmentResource> GetRoleManagementPolicyAssignment(ResourceIdentifier scope, string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
-        {
-            return GetRoleManagementPolicyAssignments(scope).Get(roleManagementPolicyAssignmentName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the child resources of a resource on which user has eligible access
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/eligibleChildResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EligibleChildResources_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EligibleChildResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EligibleChildResource> GetEligibleChildResourcesAsync(ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EligibleChildResourcesRestClient.CreateGetRequest(scope, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EligibleChildResourcesRestClient.CreateGetNextPageRequest(nextLink, scope, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EligibleChildResource.DeserializeEligibleChildResource(e), EligibleChildResourcesClientDiagnostics, Pipeline, "MockableAuthorizationArmClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the child resources of a resource on which user has eligible access
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/eligibleChildResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EligibleChildResources_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="EligibleChildResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EligibleChildResource> GetEligibleChildResources(ResourceIdentifier scope, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EligibleChildResourcesRestClient.CreateGetRequest(scope, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EligibleChildResourcesRestClient.CreateGetNextPageRequest(nextLink, scope, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EligibleChildResource.DeserializeEligibleChildResource(e), EligibleChildResourcesClientDiagnostics, Pipeline, "MockableAuthorizationArmClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
-        }
-        /// <summary>
-        /// Gets an object representing a <see cref="DenyAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DenyAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="DenyAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="AttributeNamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DenyAssignmentResource"/> object. </returns>
-        public virtual DenyAssignmentResource GetDenyAssignmentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AttributeNamespaceResource"/> object. </returns>
+        public virtual AttributeNamespaceResource GetAttributeNamespaceResource(ResourceIdentifier id)
         {
-            DenyAssignmentResource.ValidateResourceId(id);
-            return new DenyAssignmentResource(Client, id);
+            AttributeNamespaceResource.ValidateResourceId(id);
+            return new AttributeNamespaceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="AuthorizationProviderOperationsMetadataResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthorizationProviderOperationsMetadataResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationProviderOperationsMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="AccessReviewHistoryDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthorizationProviderOperationsMetadataResource"/> object. </returns>
-        public virtual AuthorizationProviderOperationsMetadataResource GetAuthorizationProviderOperationsMetadataResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AccessReviewHistoryDefinitionResource"/> object. </returns>
+        public virtual AccessReviewHistoryDefinitionResource GetAccessReviewHistoryDefinitionResource(ResourceIdentifier id)
         {
-            AuthorizationProviderOperationsMetadataResource.ValidateResourceId(id);
-            return new AuthorizationProviderOperationsMetadataResource(Client, id);
+            AccessReviewHistoryDefinitionResource.ValidateResourceId(id);
+            return new AccessReviewHistoryDefinitionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ScopeAccessReviewHistoryDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleAssignmentResource"/> object. </returns>
-        public virtual RoleAssignmentResource GetRoleAssignmentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ScopeAccessReviewHistoryDefinitionResource"/> object. </returns>
+        public virtual ScopeAccessReviewHistoryDefinitionResource GetScopeAccessReviewHistoryDefinitionResource(ResourceIdentifier id)
         {
-            RoleAssignmentResource.ValidateResourceId(id);
-            return new RoleAssignmentResource(Client, id);
+            ScopeAccessReviewHistoryDefinitionResource.ValidateResourceId(id);
+            return new ScopeAccessReviewHistoryDefinitionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="AuthorizationRoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthorizationRoleDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationRoleDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="ScopeAccessReviewHistoryDefinitionCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ScopeAccessReviewHistoryDefinitionResource"/> objects. </returns>
+        public virtual ScopeAccessReviewHistoryDefinitionCollection GetScopeAccessReviewHistoryDefinitions(ResourceIdentifier scope)
+        {
+            return new ScopeAccessReviewHistoryDefinitionCollection(Client, scope);
+        }
+
+        /// <summary> Get access review history definition by definition Id. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="historyDefinitionId"> The id of the access review history definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="historyDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="historyDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScopeAccessReviewHistoryDefinitionResource> GetScopeAccessReviewHistoryDefinition(ResourceIdentifier scope, string historyDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(historyDefinitionId, nameof(historyDefinitionId));
+
+            return GetScopeAccessReviewHistoryDefinitions(scope).Get(historyDefinitionId, cancellationToken);
+        }
+
+        /// <summary> Get access review history definition by definition Id. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="historyDefinitionId"> The id of the access review history definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="historyDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="historyDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScopeAccessReviewHistoryDefinitionResource>> GetScopeAccessReviewHistoryDefinitionAsync(ResourceIdentifier scope, string historyDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(historyDefinitionId, nameof(historyDefinitionId));
+
+            return await GetScopeAccessReviewHistoryDefinitions(scope).GetAsync(historyDefinitionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AccessReviewScheduleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthorizationRoleDefinitionResource"/> object. </returns>
-        public virtual AuthorizationRoleDefinitionResource GetAuthorizationRoleDefinitionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AccessReviewScheduleDefinitionResource"/> object. </returns>
+        public virtual AccessReviewScheduleDefinitionResource GetAccessReviewScheduleDefinitionResource(ResourceIdentifier id)
         {
-            AuthorizationRoleDefinitionResource.ValidateResourceId(id);
-            return new AuthorizationRoleDefinitionResource(Client, id);
+            AccessReviewScheduleDefinitionResource.ValidateResourceId(id);
+            return new AccessReviewScheduleDefinitionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleAssignmentScheduleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleAssignmentScheduleResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ScopeAccessReviewScheduleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScopeAccessReviewScheduleDefinitionResource"/> object. </returns>
+        public virtual ScopeAccessReviewScheduleDefinitionResource GetScopeAccessReviewScheduleDefinitionResource(ResourceIdentifier id)
+        {
+            ScopeAccessReviewScheduleDefinitionResource.ValidateResourceId(id);
+            return new ScopeAccessReviewScheduleDefinitionResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ScopeAccessReviewScheduleDefinitionCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ScopeAccessReviewScheduleDefinitionResource"/> objects. </returns>
+        public virtual ScopeAccessReviewScheduleDefinitionCollection GetScopeAccessReviewScheduleDefinitions(ResourceIdentifier scope)
+        {
+            return new ScopeAccessReviewScheduleDefinitionCollection(Client, scope);
+        }
+
+        /// <summary> Get single access review definition. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scheduleDefinitionId"> The id of the access review schedule definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScopeAccessReviewScheduleDefinitionResource> GetScopeAccessReviewScheduleDefinition(ResourceIdentifier scope, string scheduleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduleDefinitionId, nameof(scheduleDefinitionId));
+
+            return GetScopeAccessReviewScheduleDefinitions(scope).Get(scheduleDefinitionId, cancellationToken);
+        }
+
+        /// <summary> Get single access review definition. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scheduleDefinitionId"> The id of the access review schedule definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScopeAccessReviewScheduleDefinitionResource>> GetScopeAccessReviewScheduleDefinitionAsync(ResourceIdentifier scope, string scheduleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduleDefinitionId, nameof(scheduleDefinitionId));
+
+            return await GetScopeAccessReviewScheduleDefinitions(scope).GetAsync(scheduleDefinitionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AccessReviewInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AccessReviewInstanceResource"/> object. </returns>
+        public virtual AccessReviewInstanceResource GetAccessReviewInstanceResource(ResourceIdentifier id)
+        {
+            AccessReviewInstanceResource.ValidateResourceId(id);
+            return new AccessReviewInstanceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ScopeAccessReviewInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScopeAccessReviewInstanceResource"/> object. </returns>
+        public virtual ScopeAccessReviewInstanceResource GetScopeAccessReviewInstanceResource(ResourceIdentifier id)
+        {
+            ScopeAccessReviewInstanceResource.ValidateResourceId(id);
+            return new ScopeAccessReviewInstanceResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="ScopeAccessReviewInstanceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="ScopeAccessReviewInstanceResource"/> objects. </returns>
+        public virtual ScopeAccessReviewInstanceCollection GetScopeAccessReviewInstances(ResourceIdentifier scope)
+        {
+            return new ScopeAccessReviewInstanceCollection(Client, scope);
+        }
+
+        /// <summary> Get access review instances. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="id"> The id of the access review instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScopeAccessReviewInstanceResource> GetScopeAccessReviewInstance(ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            return GetScopeAccessReviewInstances(scope).Get(id, cancellationToken);
+        }
+
+        /// <summary> Get access review instances. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="id"> The id of the access review instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScopeAccessReviewInstanceResource>> GetScopeAccessReviewInstanceAsync(ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            return await GetScopeAccessReviewInstances(scope).GetAsync(id, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AccessReviewInstancesAssignedForMyApprovalResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AccessReviewInstancesAssignedForMyApprovalResource"/> object. </returns>
+        public virtual AccessReviewInstancesAssignedForMyApprovalResource GetAccessReviewInstancesAssignedForMyApprovalResource(ResourceIdentifier id)
+        {
+            AccessReviewInstancesAssignedForMyApprovalResource.ValidateResourceId(id);
+            return new AccessReviewInstancesAssignedForMyApprovalResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ScopeAccessReviewDefaultSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScopeAccessReviewDefaultSettingResource"/> object. </returns>
+        public virtual ScopeAccessReviewDefaultSettingResource GetScopeAccessReviewDefaultSettingResource(ResourceIdentifier id)
+        {
+            ScopeAccessReviewDefaultSettingResource.ValidateResourceId(id);
+            return new ScopeAccessReviewDefaultSettingResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ScopeAccessReviewDefaultSettingResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="ScopeAccessReviewDefaultSettingResource"/> object. </returns>
+        public virtual ScopeAccessReviewDefaultSettingResource GetScopeAccessReviewDefaultSetting(ResourceIdentifier scope)
+        {
+            return new ScopeAccessReviewDefaultSettingResource(Client, scope.AppendProviderResource("Microsoft.Authorization", "accessReviewScheduleSettings", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="RoleAssignmentScheduleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RoleAssignmentScheduleResource"/> object. </returns>
         public virtual RoleAssignmentScheduleResource GetRoleAssignmentScheduleResource(ResourceIdentifier id)
@@ -957,10 +275,43 @@ namespace Azure.ResourceManager.Authorization.Mocking
             return new RoleAssignmentScheduleResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleAssignmentScheduleInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleAssignmentScheduleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentScheduleInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="RoleAssignmentScheduleCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="RoleAssignmentScheduleResource"/> objects. </returns>
+        public virtual RoleAssignmentScheduleCollection GetRoleAssignmentSchedules(ResourceIdentifier scope)
+        {
+            return new RoleAssignmentScheduleCollection(Client, scope);
+        }
+
+        /// <summary> Get the specified role assignment schedule for a resource scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RoleAssignmentScheduleResource> GetRoleAssignmentSchedule(ResourceIdentifier scope, string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleName, nameof(roleAssignmentScheduleName));
+
+            return GetRoleAssignmentSchedules(scope).Get(roleAssignmentScheduleName, cancellationToken);
+        }
+
+        /// <summary> Get the specified role assignment schedule for a resource scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RoleAssignmentScheduleResource>> GetRoleAssignmentScheduleAsync(ResourceIdentifier scope, string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleName, nameof(roleAssignmentScheduleName));
+
+            return await GetRoleAssignmentSchedules(scope).GetAsync(roleAssignmentScheduleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RoleAssignmentScheduleInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RoleAssignmentScheduleInstanceResource"/> object. </returns>
         public virtual RoleAssignmentScheduleInstanceResource GetRoleAssignmentScheduleInstanceResource(ResourceIdentifier id)
@@ -969,10 +320,43 @@ namespace Azure.ResourceManager.Authorization.Mocking
             return new RoleAssignmentScheduleInstanceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleAssignmentScheduleRequestResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleAssignmentScheduleRequestResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentScheduleRequestResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="RoleAssignmentScheduleInstanceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="RoleAssignmentScheduleInstanceResource"/> objects. </returns>
+        public virtual RoleAssignmentScheduleInstanceCollection GetRoleAssignmentScheduleInstances(ResourceIdentifier scope)
+        {
+            return new RoleAssignmentScheduleInstanceCollection(Client, scope);
+        }
+
+        /// <summary> Gets the specified role assignment schedule instance. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RoleAssignmentScheduleInstanceResource> GetRoleAssignmentScheduleInstance(ResourceIdentifier scope, string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleInstanceName, nameof(roleAssignmentScheduleInstanceName));
+
+            return GetRoleAssignmentScheduleInstances(scope).Get(roleAssignmentScheduleInstanceName, cancellationToken);
+        }
+
+        /// <summary> Gets the specified role assignment schedule instance. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RoleAssignmentScheduleInstanceResource>> GetRoleAssignmentScheduleInstanceAsync(ResourceIdentifier scope, string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleInstanceName, nameof(roleAssignmentScheduleInstanceName));
+
+            return await GetRoleAssignmentScheduleInstances(scope).GetAsync(roleAssignmentScheduleInstanceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RoleAssignmentScheduleRequestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RoleAssignmentScheduleRequestResource"/> object. </returns>
         public virtual RoleAssignmentScheduleRequestResource GetRoleAssignmentScheduleRequestResource(ResourceIdentifier id)
@@ -981,10 +365,43 @@ namespace Azure.ResourceManager.Authorization.Mocking
             return new RoleAssignmentScheduleRequestResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleEligibilityScheduleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleEligibilityScheduleResource.CreateResourceIdentifier" /> to create a <see cref="RoleEligibilityScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="RoleAssignmentScheduleRequestCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="RoleAssignmentScheduleRequestResource"/> objects. </returns>
+        public virtual RoleAssignmentScheduleRequestCollection GetRoleAssignmentScheduleRequests(ResourceIdentifier scope)
+        {
+            return new RoleAssignmentScheduleRequestCollection(Client, scope);
+        }
+
+        /// <summary> Get the specified role assignment schedule request. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RoleAssignmentScheduleRequestResource> GetRoleAssignmentScheduleRequest(ResourceIdentifier scope, string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleRequestName, nameof(roleAssignmentScheduleRequestName));
+
+            return GetRoleAssignmentScheduleRequests(scope).Get(roleAssignmentScheduleRequestName, cancellationToken);
+        }
+
+        /// <summary> Get the specified role assignment schedule request. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RoleAssignmentScheduleRequestResource>> GetRoleAssignmentScheduleRequestAsync(ResourceIdentifier scope, string roleAssignmentScheduleRequestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleRequestName, nameof(roleAssignmentScheduleRequestName));
+
+            return await GetRoleAssignmentScheduleRequests(scope).GetAsync(roleAssignmentScheduleRequestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RoleEligibilityScheduleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RoleEligibilityScheduleResource"/> object. </returns>
         public virtual RoleEligibilityScheduleResource GetRoleEligibilityScheduleResource(ResourceIdentifier id)
@@ -993,10 +410,43 @@ namespace Azure.ResourceManager.Authorization.Mocking
             return new RoleEligibilityScheduleResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleEligibilityScheduleInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleEligibilityScheduleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="RoleEligibilityScheduleInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="RoleEligibilityScheduleCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="RoleEligibilityScheduleResource"/> objects. </returns>
+        public virtual RoleEligibilityScheduleCollection GetRoleEligibilitySchedules(ResourceIdentifier scope)
+        {
+            return new RoleEligibilityScheduleCollection(Client, scope);
+        }
+
+        /// <summary> Get the specified role eligibility schedule for a resource scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RoleEligibilityScheduleResource> GetRoleEligibilitySchedule(ResourceIdentifier scope, string roleEligibilityScheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleName, nameof(roleEligibilityScheduleName));
+
+            return GetRoleEligibilitySchedules(scope).Get(roleEligibilityScheduleName, cancellationToken);
+        }
+
+        /// <summary> Get the specified role eligibility schedule for a resource scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RoleEligibilityScheduleResource>> GetRoleEligibilityScheduleAsync(ResourceIdentifier scope, string roleEligibilityScheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleName, nameof(roleEligibilityScheduleName));
+
+            return await GetRoleEligibilitySchedules(scope).GetAsync(roleEligibilityScheduleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RoleEligibilityScheduleInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RoleEligibilityScheduleInstanceResource"/> object. </returns>
         public virtual RoleEligibilityScheduleInstanceResource GetRoleEligibilityScheduleInstanceResource(ResourceIdentifier id)
@@ -1005,10 +455,43 @@ namespace Azure.ResourceManager.Authorization.Mocking
             return new RoleEligibilityScheduleInstanceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleEligibilityScheduleRequestResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleEligibilityScheduleRequestResource.CreateResourceIdentifier" /> to create a <see cref="RoleEligibilityScheduleRequestResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="RoleEligibilityScheduleInstanceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="RoleEligibilityScheduleInstanceResource"/> objects. </returns>
+        public virtual RoleEligibilityScheduleInstanceCollection GetRoleEligibilityScheduleInstances(ResourceIdentifier scope)
+        {
+            return new RoleEligibilityScheduleInstanceCollection(Client, scope);
+        }
+
+        /// <summary> Gets the specified role eligibility schedule instance. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RoleEligibilityScheduleInstanceResource> GetRoleEligibilityScheduleInstance(ResourceIdentifier scope, string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleInstanceName, nameof(roleEligibilityScheduleInstanceName));
+
+            return GetRoleEligibilityScheduleInstances(scope).Get(roleEligibilityScheduleInstanceName, cancellationToken);
+        }
+
+        /// <summary> Gets the specified role eligibility schedule instance. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RoleEligibilityScheduleInstanceResource>> GetRoleEligibilityScheduleInstanceAsync(ResourceIdentifier scope, string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleInstanceName, nameof(roleEligibilityScheduleInstanceName));
+
+            return await GetRoleEligibilityScheduleInstances(scope).GetAsync(roleEligibilityScheduleInstanceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RoleEligibilityScheduleRequestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RoleEligibilityScheduleRequestResource"/> object. </returns>
         public virtual RoleEligibilityScheduleRequestResource GetRoleEligibilityScheduleRequestResource(ResourceIdentifier id)
@@ -1017,10 +500,43 @@ namespace Azure.ResourceManager.Authorization.Mocking
             return new RoleEligibilityScheduleRequestResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleManagementPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleManagementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="RoleManagementPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="RoleEligibilityScheduleRequestCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="RoleEligibilityScheduleRequestResource"/> objects. </returns>
+        public virtual RoleEligibilityScheduleRequestCollection GetRoleEligibilityScheduleRequests(ResourceIdentifier scope)
+        {
+            return new RoleEligibilityScheduleRequestCollection(Client, scope);
+        }
+
+        /// <summary> Get the specified role eligibility schedule request. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RoleEligibilityScheduleRequestResource> GetRoleEligibilityScheduleRequest(ResourceIdentifier scope, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleRequestName, nameof(roleEligibilityScheduleRequestName));
+
+            return GetRoleEligibilityScheduleRequests(scope).Get(roleEligibilityScheduleRequestName, cancellationToken);
+        }
+
+        /// <summary> Get the specified role eligibility schedule request. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleRequestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleRequestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RoleEligibilityScheduleRequestResource>> GetRoleEligibilityScheduleRequestAsync(ResourceIdentifier scope, string roleEligibilityScheduleRequestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleEligibilityScheduleRequestName, nameof(roleEligibilityScheduleRequestName));
+
+            return await GetRoleEligibilityScheduleRequests(scope).GetAsync(roleEligibilityScheduleRequestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RoleManagementPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RoleManagementPolicyResource"/> object. </returns>
         public virtual RoleManagementPolicyResource GetRoleManagementPolicyResource(ResourceIdentifier id)
@@ -1029,16 +545,1015 @@ namespace Azure.ResourceManager.Authorization.Mocking
             return new RoleManagementPolicyResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="RoleManagementPolicyAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleManagementPolicyAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="RoleManagementPolicyAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="RoleManagementPolicyCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="RoleManagementPolicyResource"/> objects. </returns>
+        public virtual RoleManagementPolicyCollection GetRoleManagementPolicies(ResourceIdentifier scope)
+        {
+            return new RoleManagementPolicyCollection(Client, scope);
+        }
+
+        /// <summary> Get the specified role management policy for a resource scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RoleManagementPolicyResource> GetRoleManagementPolicy(ResourceIdentifier scope, string roleManagementPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyName, nameof(roleManagementPolicyName));
+
+            return GetRoleManagementPolicies(scope).Get(roleManagementPolicyName, cancellationToken);
+        }
+
+        /// <summary> Get the specified role management policy for a resource scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RoleManagementPolicyResource>> GetRoleManagementPolicyAsync(ResourceIdentifier scope, string roleManagementPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyName, nameof(roleManagementPolicyName));
+
+            return await GetRoleManagementPolicies(scope).GetAsync(roleManagementPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RoleManagementPolicyAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RoleManagementPolicyAssignmentResource"/> object. </returns>
         public virtual RoleManagementPolicyAssignmentResource GetRoleManagementPolicyAssignmentResource(ResourceIdentifier id)
         {
             RoleManagementPolicyAssignmentResource.ValidateResourceId(id);
             return new RoleManagementPolicyAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="RoleManagementPolicyAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="RoleManagementPolicyAssignmentResource"/> objects. </returns>
+        public virtual RoleManagementPolicyAssignmentCollection GetRoleManagementPolicyAssignments(ResourceIdentifier scope)
+        {
+            return new RoleManagementPolicyAssignmentCollection(Client, scope);
+        }
+
+        /// <summary> Get the specified role management policy assignment for a resource scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RoleManagementPolicyAssignmentResource> GetRoleManagementPolicyAssignment(ResourceIdentifier scope, string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyAssignmentName, nameof(roleManagementPolicyAssignmentName));
+
+            return GetRoleManagementPolicyAssignments(scope).Get(roleManagementPolicyAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Get the specified role management policy assignment for a resource scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleManagementPolicyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RoleManagementPolicyAssignmentResource>> GetRoleManagementPolicyAssignmentAsync(ResourceIdentifier scope, string roleManagementPolicyAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyAssignmentName, nameof(roleManagementPolicyAssignmentName));
+
+            return await GetRoleManagementPolicyAssignments(scope).GetAsync(roleManagementPolicyAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DenyAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DenyAssignmentResource"/> object. </returns>
+        public virtual DenyAssignmentResource GetDenyAssignmentResource(ResourceIdentifier id)
+        {
+            DenyAssignmentResource.ValidateResourceId(id);
+            return new DenyAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="DenyAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DenyAssignmentResource"/> objects. </returns>
+        public virtual DenyAssignmentCollection GetDenyAssignments(ResourceIdentifier scope)
+        {
+            return new DenyAssignmentCollection(Client, scope);
+        }
+
+        /// <summary> Get the specified deny assignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DenyAssignmentResource> GetDenyAssignment(ResourceIdentifier scope, string denyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
+
+            return GetDenyAssignments(scope).Get(denyAssignmentId, cancellationToken);
+        }
+
+        /// <summary> Get the specified deny assignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DenyAssignmentResource>> GetDenyAssignmentAsync(ResourceIdentifier scope, string denyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
+
+            return await GetDenyAssignments(scope).GetAsync(denyAssignmentId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RoleAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RoleAssignmentResource"/> object. </returns>
+        public virtual RoleAssignmentResource GetRoleAssignmentResource(ResourceIdentifier id)
+        {
+            RoleAssignmentResource.ValidateResourceId(id);
+            return new RoleAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="RoleAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="RoleAssignmentResource"/> objects. </returns>
+        public virtual RoleAssignmentCollection GetRoleAssignments(ResourceIdentifier scope)
+        {
+            return new RoleAssignmentCollection(Client, scope);
+        }
+
+        /// <summary> Get a role assignment by scope and name. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RoleAssignmentResource> GetRoleAssignment(ResourceIdentifier scope, string roleAssignmentName, string tenantId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+
+            return GetRoleAssignments(scope).Get(roleAssignmentName, tenantId, cancellationToken);
+        }
+
+        /// <summary> Get a role assignment by scope and name. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RoleAssignmentResource>> GetRoleAssignmentAsync(ResourceIdentifier scope, string roleAssignmentName, string tenantId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+
+            return await GetRoleAssignments(scope).GetAsync(roleAssignmentName, tenantId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="RoleDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RoleDefinitionResource"/> object. </returns>
+        public virtual RoleDefinitionResource GetRoleDefinitionResource(ResourceIdentifier id)
+        {
+            RoleDefinitionResource.ValidateResourceId(id);
+            return new RoleDefinitionResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="RoleDefinitionCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="RoleDefinitionResource"/> objects. </returns>
+        public virtual RoleDefinitionCollection GetRoleDefinitions(ResourceIdentifier scope)
+        {
+            return new RoleDefinitionCollection(Client, scope);
+        }
+
+        /// <summary> Get role definition by ID (GUID). </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RoleDefinitionResource> GetRoleDefinition(ResourceIdentifier scope, string roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+
+            return GetRoleDefinitions(scope).Get(roleDefinitionId, cancellationToken);
+        }
+
+        /// <summary> Get role definition by ID (GUID). </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="roleDefinitionId"> The ID of the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RoleDefinitionResource>> GetRoleDefinitionAsync(ResourceIdentifier scope, string roleDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
+
+            return await GetRoleDefinitions(scope).GetAsync(roleDefinitionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AlertResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AlertResource"/> object. </returns>
+        public virtual AlertResource GetAlertResource(ResourceIdentifier id)
+        {
+            AlertResource.ValidateResourceId(id);
+            return new AlertResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="AlertCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="AlertResource"/> objects. </returns>
+        public virtual AlertCollection GetAlerts(ResourceIdentifier scope)
+        {
+            return new AlertCollection(Client, scope);
+        }
+
+        /// <summary> Get the specified alert. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="alertId"> The name of the alert to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AlertResource> GetAlert(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
+
+            return GetAlerts(scope).Get(alertId, cancellationToken);
+        }
+
+        /// <summary> Get the specified alert. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="alertId"> The name of the alert to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AlertResource>> GetAlertAsync(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
+
+            return await GetAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AlertConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AlertConfigurationResource"/> object. </returns>
+        public virtual AlertConfigurationResource GetAlertConfigurationResource(ResourceIdentifier id)
+        {
+            AlertConfigurationResource.ValidateResourceId(id);
+            return new AlertConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="AlertConfigurationCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="AlertConfigurationResource"/> objects. </returns>
+        public virtual AlertConfigurationCollection GetAlertConfigurations(ResourceIdentifier scope)
+        {
+            return new AlertConfigurationCollection(Client, scope);
+        }
+
+        /// <summary> Get the specified alert configuration. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="alertId"> The name of the alert configuration to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AlertConfigurationResource> GetAlertConfiguration(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
+
+            return GetAlertConfigurations(scope).Get(alertId, cancellationToken);
+        }
+
+        /// <summary> Get the specified alert configuration. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="alertId"> The name of the alert configuration to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AlertConfigurationResource>> GetAlertConfigurationAsync(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
+
+            return await GetAlertConfigurations(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AlertDefinitionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AlertDefinitionResource"/> object. </returns>
+        public virtual AlertDefinitionResource GetAlertDefinitionResource(ResourceIdentifier id)
+        {
+            AlertDefinitionResource.ValidateResourceId(id);
+            return new AlertDefinitionResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="AlertDefinitionCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="AlertDefinitionResource"/> objects. </returns>
+        public virtual AlertDefinitionCollection GetAlertDefinitions(ResourceIdentifier scope)
+        {
+            return new AlertDefinitionCollection(Client, scope);
+        }
+
+        /// <summary> Get the specified alert definition. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="alertDefinitionId"> The name of the alert definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AlertDefinitionResource> GetAlertDefinition(ResourceIdentifier scope, string alertDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertDefinitionId, nameof(alertDefinitionId));
+
+            return GetAlertDefinitions(scope).Get(alertDefinitionId, cancellationToken);
+        }
+
+        /// <summary> Get the specified alert definition. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="alertDefinitionId"> The name of the alert definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertDefinitionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AlertDefinitionResource>> GetAlertDefinitionAsync(ResourceIdentifier scope, string alertDefinitionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertDefinitionId, nameof(alertDefinitionId));
+
+            return await GetAlertDefinitions(scope).GetAsync(alertDefinitionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AlertIncidentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AlertIncidentResource"/> object. </returns>
+        public virtual AlertIncidentResource GetAlertIncidentResource(ResourceIdentifier id)
+        {
+            AlertIncidentResource.ValidateResourceId(id);
+            return new AlertIncidentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="AlertIncidentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="AlertIncidentResource"/> objects. </returns>
+        public virtual AlertIncidentCollection GetAlertIncidents(ResourceIdentifier scope)
+        {
+            return new AlertIncidentCollection(Client, scope);
+        }
+
+        /// <summary> Get the specified alert incident. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="alertIncidentId"> The name of the alert incident to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertIncidentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertIncidentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AlertIncidentResource> GetAlertIncident(ResourceIdentifier scope, string alertIncidentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertIncidentId, nameof(alertIncidentId));
+
+            return GetAlertIncidents(scope).Get(alertIncidentId, cancellationToken);
+        }
+
+        /// <summary> Get the specified alert incident. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="alertIncidentId"> The name of the alert incident to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertIncidentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertIncidentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AlertIncidentResource>> GetAlertIncidentAsync(ResourceIdentifier scope, string alertIncidentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertIncidentId, nameof(alertIncidentId));
+
+            return await GetAlertIncidents(scope).GetAsync(alertIncidentId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AccessReviewDefaultSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AccessReviewDefaultSettingResource"/> object. </returns>
+        public virtual AccessReviewDefaultSettingResource GetAccessReviewDefaultSettingResource(ResourceIdentifier id)
+        {
+            AccessReviewDefaultSettingResource.ValidateResourceId(id);
+            return new AccessReviewDefaultSettingResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AccessReviewDecisionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AccessReviewDecisionResource"/> object. </returns>
+        public virtual AccessReviewDecisionResource GetAccessReviewDecisionResource(ResourceIdentifier id)
+        {
+            AccessReviewDecisionResource.ValidateResourceId(id);
+            return new AccessReviewDecisionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ProviderOperationsMetadataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ProviderOperationsMetadataResource"/> object. </returns>
+        public virtual ProviderOperationsMetadataResource GetProviderOperationsMetadataResource(ResourceIdentifier id)
+        {
+            ProviderOperationsMetadataResource.ValidateResourceId(id);
+            return new ProviderOperationsMetadataResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets deny assignments for a resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/denyAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_ListForResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type of the resource. </param>
+        /// <param name="resourceName"> The name of the resource to get deny assignments for. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq '{name}' to search deny assignments by name at specified scope. Use $filter=principalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DenyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DenyAssignmentResource> GetForResourceAsync(ResourceIdentifier scope, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string subscriptionId, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourcePath, nameof(parentResourcePath));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForResourceAsyncCollectionResultOfT(
+                DenyAssignmentsRestClient,
+                subscriptionId,
+                resourceGroupName,
+                resourceProviderNamespace,
+                parentResourcePath,
+                resourceType,
+                resourceName,
+                filter,
+                context,
+                "MockableAuthorizationArmClient.GetForResource"), data => new DenyAssignmentResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets deny assignments for a resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/denyAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_ListForResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type of the resource. </param>
+        /// <param name="resourceName"> The name of the resource to get deny assignments for. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq '{name}' to search deny assignments by name at specified scope. Use $filter=principalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DenyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DenyAssignmentResource> GetForResource(ResourceIdentifier scope, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string subscriptionId, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourcePath, nameof(parentResourcePath));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForResourceCollectionResultOfT(
+                DenyAssignmentsRestClient,
+                subscriptionId,
+                resourceGroupName,
+                resourceProviderNamespace,
+                parentResourcePath,
+                resourceType,
+                resourceName,
+                filter,
+                context,
+                "MockableAuthorizationArmClient.GetForResource"), data => new DenyAssignmentResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all role assignments that apply to a resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/roleAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RoleAssignments_ListForResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="RoleAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RoleAssignmentResource> GetForResourceAsync(ResourceIdentifier scope, string filter = default, string tenantId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForResourceAsyncCollectionResultOfT(
+                RoleAssignmentsRestClient,
+                scope.SubscriptionId,
+                scope.ResourceGroupName,
+                scope.ResourceType.Namespace,
+                scope.ResourceType.Type,
+                scope.Name,
+                filter,
+                tenantId,
+                context,
+                "MockableAuthorizationArmClient.GetForResource"), data => new RoleAssignmentResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all role assignments that apply to a resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/roleAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RoleAssignments_ListForResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="RoleAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RoleAssignmentResource> GetForResource(ResourceIdentifier scope, string filter = default, string tenantId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForResourceCollectionResultOfT(
+                RoleAssignmentsRestClient,
+                scope.SubscriptionId,
+                scope.ResourceGroupName,
+                scope.ResourceType.Namespace,
+                scope.ResourceType.Type,
+                scope.Name,
+                filter,
+                tenantId,
+                context,
+                "MockableAuthorizationArmClient.GetForResource"), data => new RoleAssignmentResource(Client, data));
+        }
+
+        /// <summary>
+        /// Refresh all alerts for a resource scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleManagementAlerts/refresh. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertsOperationGroup_RefreshAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<ArmOperation<AlertOperationResult>> RefreshAllAsync(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = AlertsClientDiagnostics.CreateScope("MockableAuthorizationArmClient.RefreshAll");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AlertsRestClient.CreateRefreshAllRequest(scope.ToString(), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                AuthorizationArmOperation<AlertOperationResult> operation = new AuthorizationArmOperation<AlertOperationResult>(
+                    new AlertOperationResultOperationSource(),
+                    AlertsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Refresh all alerts for a resource scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleManagementAlerts/refresh. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertsOperationGroup_RefreshAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual ArmOperation<AlertOperationResult> RefreshAll(WaitUntil waitUntil, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = AlertsClientDiagnostics.CreateScope("MockableAuthorizationArmClient.RefreshAll");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AlertsRestClient.CreateRefreshAllRequest(scope.ToString(), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                AuthorizationArmOperation<AlertOperationResult> operation = new AuthorizationArmOperation<AlertOperationResult>(
+                    new AlertOperationResultOperationSource(),
+                    AlertsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the child resources of a resource on which user has eligible access
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/eligibleChildResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EligibleChildResourcesOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="EligibleChildResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EligibleChildResource> GetAsync(ResourceIdentifier scope, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EligibleChildResourcesGetAsyncCollectionResultOfT(EligibleChildResourcesRestClient, scope.ToString(), filter, context, "MockableAuthorizationArmClient.Get");
+        }
+
+        /// <summary>
+        /// Get the child resources of a resource on which user has eligible access
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/eligibleChildResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EligibleChildResourcesOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="EligibleChildResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EligibleChildResource> Get(ResourceIdentifier scope, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new EligibleChildResourcesGetCollectionResultOfT(EligibleChildResourcesRestClient, scope.ToString(), filter, context, "MockableAuthorizationArmClient.Get");
+        }
+
+        /// <summary>
+        /// Gets all permissions the caller has for a resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PermissionsOperationGroup_ListForResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type of the resource. </param>
+        /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="Permission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Permission> GetForResourceAsync(ResourceIdentifier scope, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourcePath, nameof(parentResourcePath));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PermissionsGetForResourceAsyncCollectionResultOfT(
+                PermissionsRestClient,
+                subscriptionId,
+                resourceGroupName,
+                resourceProviderNamespace,
+                parentResourcePath,
+                resourceType,
+                resourceName,
+                context,
+                "MockableAuthorizationArmClient.GetForResource");
+        }
+
+        /// <summary>
+        /// Gets all permissions the caller has for a resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PermissionsOperationGroup_ListForResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="parentResourcePath"> The parent resource identity. </param>
+        /// <param name="resourceType"> The resource type of the resource. </param>
+        /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/>, <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="Permission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Permission> GetForResource(ResourceIdentifier scope, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourcePath, nameof(parentResourcePath));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PermissionsGetForResourceCollectionResultOfT(
+                PermissionsRestClient,
+                subscriptionId,
+                resourceGroupName,
+                resourceProviderNamespace,
+                parentResourcePath,
+                resourceType,
+                resourceName,
+                context,
+                "MockableAuthorizationArmClient.GetForResource");
+        }
+
+        /// <summary>
+        /// Get the specified alert operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleManagementAlertOperations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="operationId"> The id of the alert operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AlertOperationResult>> GetAsync(ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope0 = AlertOperationClientDiagnostics.CreateScope("MockableAuthorizationArmClient.Get");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AlertOperationRestClient.CreateGetRequest(scope.ToString(), operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AlertOperationResult> response = Response.FromValue(AlertOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the specified alert operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleManagementAlertOperations/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-08-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="operationId"> The id of the alert operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AlertOperationResult> Get(ResourceIdentifier scope, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            using DiagnosticScope scope0 = AlertOperationClientDiagnostics.CreateScope("MockableAuthorizationArmClient.Get");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AlertOperationRestClient.CreateGetRequest(scope.ToString(), operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AlertOperationResult> response = Response.FromValue(AlertOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
     }
 }

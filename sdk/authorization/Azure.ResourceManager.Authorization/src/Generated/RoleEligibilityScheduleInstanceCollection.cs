@@ -10,9 +10,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Authorization
 {
@@ -23,60 +24,64 @@ namespace Azure.ResourceManager.Authorization
     /// </summary>
     public partial class RoleEligibilityScheduleInstanceCollection : ArmCollection, IEnumerable<RoleEligibilityScheduleInstanceResource>, IAsyncEnumerable<RoleEligibilityScheduleInstanceResource>
     {
-        private readonly ClientDiagnostics _roleEligibilityScheduleInstanceClientDiagnostics;
-        private readonly RoleEligibilityScheduleInstancesRestOperations _roleEligibilityScheduleInstanceRestClient;
+        private readonly ClientDiagnostics _roleEligibilityScheduleInstancesClientDiagnostics;
+        private readonly RoleEligibilityScheduleInstances _roleEligibilityScheduleInstancesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RoleEligibilityScheduleInstanceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RoleEligibilityScheduleInstanceCollection for mocking. </summary>
         protected RoleEligibilityScheduleInstanceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RoleEligibilityScheduleInstanceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleInstanceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RoleEligibilityScheduleInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _roleEligibilityScheduleInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", RoleEligibilityScheduleInstanceResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(RoleEligibilityScheduleInstanceResource.ResourceType, out string roleEligibilityScheduleInstanceApiVersion);
-            _roleEligibilityScheduleInstanceRestClient = new RoleEligibilityScheduleInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, roleEligibilityScheduleInstanceApiVersion);
+            _roleEligibilityScheduleInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", RoleEligibilityScheduleInstanceResource.ResourceType.Namespace, Diagnostics);
+            _roleEligibilityScheduleInstancesRestClient = new RoleEligibilityScheduleInstances(_roleEligibilityScheduleInstancesClientDiagnostics, Pipeline, Endpoint, roleEligibilityScheduleInstanceApiVersion ?? "2024-09-01-preview");
         }
 
         /// <summary>
         /// Gets the specified role eligibility schedule instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoleEligibilityScheduleInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<RoleEligibilityScheduleInstanceResource>> GetAsync(string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleEligibilityScheduleInstanceName, nameof(roleEligibilityScheduleInstanceName));
 
-            using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.Get");
+            using DiagnosticScope scope = _roleEligibilityScheduleInstancesClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _roleEligibilityScheduleInstanceRestClient.GetAsync(Id, roleEligibilityScheduleInstanceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleEligibilityScheduleInstancesRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleInstanceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RoleEligibilityScheduleInstanceData> response = Response.FromValue(RoleEligibilityScheduleInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoleEligibilityScheduleInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -90,38 +95,42 @@ namespace Azure.ResourceManager.Authorization
         /// Gets the specified role eligibility schedule instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoleEligibilityScheduleInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<RoleEligibilityScheduleInstanceResource> Get(string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleEligibilityScheduleInstanceName, nameof(roleEligibilityScheduleInstanceName));
 
-            using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.Get");
+            using DiagnosticScope scope = _roleEligibilityScheduleInstancesClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = _roleEligibilityScheduleInstanceRestClient.Get(Id, roleEligibilityScheduleInstanceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleEligibilityScheduleInstancesRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleInstanceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RoleEligibilityScheduleInstanceData> response = Response.FromValue(RoleEligibilityScheduleInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoleEligibilityScheduleInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,98 +144,108 @@ namespace Azure.ResourceManager.Authorization
         /// Gets role eligibility schedule instances of a role eligibility schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleInstances_ListForScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoleEligibilityScheduleInstances_ListForScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal. Use $filter=assignedTo('{userId}') to return all role eligibility schedules for the user. Use $filter=asTarget() to return all role eligibility schedules created for the current user. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoleEligibilityScheduleInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RoleEligibilityScheduleInstanceResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleEligibilityScheduleInstanceRestClient.CreateListForScopeRequest(Id, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleEligibilityScheduleInstanceRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleEligibilityScheduleInstanceResource(Client, RoleEligibilityScheduleInstanceData.DeserializeRoleEligibilityScheduleInstanceData(e)), _roleEligibilityScheduleInstanceClientDiagnostics, Pipeline, "RoleEligibilityScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets role eligibility schedule instances of a role eligibility schedule.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleInstances_ListForScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal. Use $filter=assignedTo('{userId}') to return all role eligibility schedules for the user. Use $filter=asTarget() to return all role eligibility schedules created for the current user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoleEligibilityScheduleInstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RoleEligibilityScheduleInstanceResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RoleEligibilityScheduleInstanceResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _roleEligibilityScheduleInstanceRestClient.CreateListForScopeRequest(Id, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleEligibilityScheduleInstanceRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleEligibilityScheduleInstanceResource(Client, RoleEligibilityScheduleInstanceData.DeserializeRoleEligibilityScheduleInstanceData(e)), _roleEligibilityScheduleInstanceClientDiagnostics, Pipeline, "RoleEligibilityScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<RoleEligibilityScheduleInstanceData, RoleEligibilityScheduleInstanceResource>(new RoleEligibilityScheduleInstancesGetForScopeAsyncCollectionResultOfT(_roleEligibilityScheduleInstancesRestClient, Id.ToString(), filter, context, "RoleEligibilityScheduleInstanceCollection.GetAll"), data => new RoleEligibilityScheduleInstanceResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets role eligibility schedule instances of a role eligibility schedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RoleEligibilityScheduleInstances_ListForScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal. Use $filter=assignedTo('{userId}') to return all role eligibility schedules for the user. Use $filter=asTarget() to return all role eligibility schedules created for the current user. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RoleEligibilityScheduleInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RoleEligibilityScheduleInstanceResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<RoleEligibilityScheduleInstanceData, RoleEligibilityScheduleInstanceResource>(new RoleEligibilityScheduleInstancesGetForScopeCollectionResultOfT(_roleEligibilityScheduleInstancesRestClient, Id.ToString(), filter, context, "RoleEligibilityScheduleInstanceCollection.GetAll"), data => new RoleEligibilityScheduleInstanceResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoleEligibilityScheduleInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleEligibilityScheduleInstanceName, nameof(roleEligibilityScheduleInstanceName));
 
-            using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.Exists");
+            using DiagnosticScope scope = _roleEligibilityScheduleInstancesClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _roleEligibilityScheduleInstanceRestClient.GetAsync(Id, roleEligibilityScheduleInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleEligibilityScheduleInstancesRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleInstanceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RoleEligibilityScheduleInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RoleEligibilityScheduleInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RoleEligibilityScheduleInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,36 +259,50 @@ namespace Azure.ResourceManager.Authorization
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoleEligibilityScheduleInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleEligibilityScheduleInstanceName, nameof(roleEligibilityScheduleInstanceName));
 
-            using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.Exists");
+            using DiagnosticScope scope = _roleEligibilityScheduleInstancesClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _roleEligibilityScheduleInstanceRestClient.Get(Id, roleEligibilityScheduleInstanceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleEligibilityScheduleInstancesRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleInstanceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RoleEligibilityScheduleInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RoleEligibilityScheduleInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RoleEligibilityScheduleInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -283,38 +316,54 @@ namespace Azure.ResourceManager.Authorization
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoleEligibilityScheduleInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<RoleEligibilityScheduleInstanceResource>> GetIfExistsAsync(string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleEligibilityScheduleInstanceName, nameof(roleEligibilityScheduleInstanceName));
 
-            using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.GetIfExists");
+            using DiagnosticScope scope = _roleEligibilityScheduleInstancesClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _roleEligibilityScheduleInstanceRestClient.GetAsync(Id, roleEligibilityScheduleInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleEligibilityScheduleInstancesRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleInstanceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RoleEligibilityScheduleInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RoleEligibilityScheduleInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RoleEligibilityScheduleInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<RoleEligibilityScheduleInstanceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoleEligibilityScheduleInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -328,38 +377,54 @@ namespace Azure.ResourceManager.Authorization
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoleEligibilityScheduleInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleEligibilityScheduleInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleEligibilityScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<RoleEligibilityScheduleInstanceResource> GetIfExists(string roleEligibilityScheduleInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roleEligibilityScheduleInstanceName, nameof(roleEligibilityScheduleInstanceName));
 
-            using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.GetIfExists");
+            using DiagnosticScope scope = _roleEligibilityScheduleInstancesClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _roleEligibilityScheduleInstanceRestClient.Get(Id, roleEligibilityScheduleInstanceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleEligibilityScheduleInstancesRestClient.CreateGetRequest(Id.ToString(), roleEligibilityScheduleInstanceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RoleEligibilityScheduleInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RoleEligibilityScheduleInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RoleEligibilityScheduleInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<RoleEligibilityScheduleInstanceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoleEligibilityScheduleInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -379,6 +444,7 @@ namespace Azure.ResourceManager.Authorization
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<RoleEligibilityScheduleInstanceResource> IAsyncEnumerable<RoleEligibilityScheduleInstanceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

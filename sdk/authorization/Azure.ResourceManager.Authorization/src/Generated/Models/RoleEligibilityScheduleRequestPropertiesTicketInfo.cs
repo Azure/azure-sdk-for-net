@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Ticket Info of the role eligibility. </summary>
     public partial class RoleEligibilityScheduleRequestPropertiesTicketInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleRequestPropertiesTicketInfo"/>. </summary>
         public RoleEligibilityScheduleRequestPropertiesTicketInfo()
@@ -53,19 +24,18 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleRequestPropertiesTicketInfo"/>. </summary>
         /// <param name="ticketNumber"> Ticket number for the role eligibility. </param>
         /// <param name="ticketSystem"> Ticket system name for the role eligibility. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoleEligibilityScheduleRequestPropertiesTicketInfo(string ticketNumber, string ticketSystem, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RoleEligibilityScheduleRequestPropertiesTicketInfo(string ticketNumber, string ticketSystem, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TicketNumber = ticketNumber;
             TicketSystem = ticketSystem;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Ticket number for the role eligibility. </summary>
-        [WirePath("ticketNumber")]
         public string TicketNumber { get; set; }
+
         /// <summary> Ticket system name for the role eligibility. </summary>
-        [WirePath("ticketSystem")]
         public string TicketSystem { get; set; }
     }
 }

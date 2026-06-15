@@ -13,93 +13,104 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    /// <summary>
-    /// A class representing the RoleManagementPolicyAssignment data model.
-    /// Role management policy
-    /// </summary>
+    /// <summary> Role management policy. </summary>
     public partial class RoleManagementPolicyAssignmentData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyAssignmentData"/>. </summary>
         public RoleManagementPolicyAssignmentData()
         {
-            EffectiveRules = new ChangeTrackingList<RoleManagementPolicyRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyAssignmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="scope"> The role management policy scope. </param>
-        /// <param name="roleDefinitionId"> The role definition of management policy assignment. </param>
-        /// <param name="policyId"> The policy id role management policy assignment. </param>
-        /// <param name="effectiveRules">
-        /// The readonly computed rule applied to the policy.
-        /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
-        /// </param>
-        /// <param name="policyAssignmentProperties"> Additional properties of scope, role definition and policy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoleManagementPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, ResourceIdentifier policyId, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, PolicyAssignmentProperties policyAssignmentProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Role management policy properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RoleManagementPolicyAssignmentData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, RoleManagementPolicyAssignmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Scope = scope;
-            RoleDefinitionId = roleDefinitionId;
-            PolicyId = policyId;
-            EffectiveRules = effectiveRules;
-            PolicyAssignmentProperties = policyAssignmentProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Role management policy properties. </summary>
+        internal RoleManagementPolicyAssignmentProperties Properties { get; set; }
+
         /// <summary> The role management policy scope. </summary>
-        [WirePath("properties.scope")]
-        public string Scope { get; set; }
+        public string Scope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Scope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoleManagementPolicyAssignmentProperties();
+                }
+                Properties.Scope = value;
+            }
+        }
+
         /// <summary> The role definition of management policy assignment. </summary>
-        [WirePath("properties.roleDefinitionId")]
-        public ResourceIdentifier RoleDefinitionId { get; set; }
+        public string RoleDefinitionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoleDefinitionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoleManagementPolicyAssignmentProperties();
+                }
+                Properties.RoleDefinitionId = value;
+            }
+        }
+
         /// <summary> The policy id role management policy assignment. </summary>
-        [WirePath("properties.policyId")]
-        public ResourceIdentifier PolicyId { get; set; }
-        /// <summary>
-        /// The readonly computed rule applied to the policy.
-        /// Please note <see cref="RoleManagementPolicyRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RoleManagementPolicyApprovalRule"/>, <see cref="RoleManagementPolicyAuthenticationContextRule"/>, <see cref="RoleManagementPolicyEnablementRule"/>, <see cref="RoleManagementPolicyExpirationRule"/> and <see cref="RoleManagementPolicyNotificationRule"/>.
-        /// </summary>
-        [WirePath("properties.effectiveRules")]
-        public IReadOnlyList<RoleManagementPolicyRule> EffectiveRules { get; }
+        public string PolicyId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PolicyId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoleManagementPolicyAssignmentProperties();
+                }
+                Properties.PolicyId = value;
+            }
+        }
+
+        /// <summary> The readonly computed rule applied to the policy. </summary>
+        public IReadOnlyList<RoleManagementPolicyRule> EffectiveRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RoleManagementPolicyAssignmentProperties();
+                }
+                return Properties.EffectiveRules;
+            }
+        }
+
         /// <summary> Additional properties of scope, role definition and policy. </summary>
-        [WirePath("properties.policyAssignmentProperties")]
-        public PolicyAssignmentProperties PolicyAssignmentProperties { get; }
+        public PolicyAssignmentProperties PolicyAssignmentProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PolicyAssignmentProperties;
+            }
+        }
     }
 }

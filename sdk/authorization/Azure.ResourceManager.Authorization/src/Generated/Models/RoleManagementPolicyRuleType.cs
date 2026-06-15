@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -14,47 +15,77 @@ namespace Azure.ResourceManager.Authorization.Models
     internal readonly partial struct RoleManagementPolicyRuleType : IEquatable<RoleManagementPolicyRuleType>
     {
         private readonly string _value;
+        /// <summary> RoleManagementPolicyApprovalRule. </summary>
+        private const string RoleManagementPolicyApprovalRuleValue = "RoleManagementPolicyApprovalRule";
+        /// <summary> RoleManagementPolicyAuthenticationContextRule. </summary>
+        private const string RoleManagementPolicyAuthenticationContextRuleValue = "RoleManagementPolicyAuthenticationContextRule";
+        /// <summary> RoleManagementPolicyEnablementRule. </summary>
+        private const string RoleManagementPolicyEnablementRuleValue = "RoleManagementPolicyEnablementRule";
+        /// <summary> RoleManagementPolicyExpirationRule. </summary>
+        private const string RoleManagementPolicyExpirationRuleValue = "RoleManagementPolicyExpirationRule";
+        /// <summary> RoleManagementPolicyNotificationRule. </summary>
+        private const string RoleManagementPolicyNotificationRuleValue = "RoleManagementPolicyNotificationRule";
+        /// <summary> RoleManagementPolicyPimOnlyModeRule. </summary>
+        private const string RoleManagementPolicyPimOnlyModeRuleValue = "RoleManagementPolicyPimOnlyModeRule";
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoleManagementPolicyRuleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RoleManagementPolicyApprovalRuleValue = "RoleManagementPolicyApprovalRule";
-        private const string RoleManagementPolicyAuthenticationContextRuleValue = "RoleManagementPolicyAuthenticationContextRule";
-        private const string RoleManagementPolicyEnablementRuleValue = "RoleManagementPolicyEnablementRule";
-        private const string RoleManagementPolicyExpirationRuleValue = "RoleManagementPolicyExpirationRule";
-        private const string RoleManagementPolicyNotificationRuleValue = "RoleManagementPolicyNotificationRule";
+            _value = value;
+        }
 
         /// <summary> RoleManagementPolicyApprovalRule. </summary>
         public static RoleManagementPolicyRuleType RoleManagementPolicyApprovalRule { get; } = new RoleManagementPolicyRuleType(RoleManagementPolicyApprovalRuleValue);
+
         /// <summary> RoleManagementPolicyAuthenticationContextRule. </summary>
         public static RoleManagementPolicyRuleType RoleManagementPolicyAuthenticationContextRule { get; } = new RoleManagementPolicyRuleType(RoleManagementPolicyAuthenticationContextRuleValue);
+
         /// <summary> RoleManagementPolicyEnablementRule. </summary>
         public static RoleManagementPolicyRuleType RoleManagementPolicyEnablementRule { get; } = new RoleManagementPolicyRuleType(RoleManagementPolicyEnablementRuleValue);
+
         /// <summary> RoleManagementPolicyExpirationRule. </summary>
         public static RoleManagementPolicyRuleType RoleManagementPolicyExpirationRule { get; } = new RoleManagementPolicyRuleType(RoleManagementPolicyExpirationRuleValue);
+
         /// <summary> RoleManagementPolicyNotificationRule. </summary>
         public static RoleManagementPolicyRuleType RoleManagementPolicyNotificationRule { get; } = new RoleManagementPolicyRuleType(RoleManagementPolicyNotificationRuleValue);
+
+        /// <summary> RoleManagementPolicyPimOnlyModeRule. </summary>
+        public static RoleManagementPolicyRuleType RoleManagementPolicyPimOnlyModeRule { get; } = new RoleManagementPolicyRuleType(RoleManagementPolicyPimOnlyModeRuleValue);
+
         /// <summary> Determines if two <see cref="RoleManagementPolicyRuleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoleManagementPolicyRuleType left, RoleManagementPolicyRuleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoleManagementPolicyRuleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoleManagementPolicyRuleType left, RoleManagementPolicyRuleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoleManagementPolicyRuleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoleManagementPolicyRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoleManagementPolicyRuleType(string value) => new RoleManagementPolicyRuleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoleManagementPolicyRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoleManagementPolicyRuleType?(string value) => value == null ? null : new RoleManagementPolicyRuleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoleManagementPolicyRuleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoleManagementPolicyRuleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

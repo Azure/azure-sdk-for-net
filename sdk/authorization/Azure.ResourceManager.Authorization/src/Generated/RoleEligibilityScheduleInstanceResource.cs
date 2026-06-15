@@ -6,44 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A Class representing a RoleEligibilityScheduleInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleEligibilityScheduleInstanceResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetRoleEligibilityScheduleInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetRoleEligibilityScheduleInstance method.
+    /// A class representing a RoleEligibilityScheduleInstance along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleEligibilityScheduleInstanceResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetRoleEligibilityScheduleInstances method.
     /// </summary>
     public partial class RoleEligibilityScheduleInstanceResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RoleEligibilityScheduleInstanceResource"/> instance. </summary>
-        /// <param name="scope"> The scope. </param>
-        /// <param name="roleEligibilityScheduleInstanceName"> The roleEligibilityScheduleInstanceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string scope, string roleEligibilityScheduleInstanceName)
-        {
-            var resourceId = $"{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _roleEligibilityScheduleInstanceClientDiagnostics;
-        private readonly RoleEligibilityScheduleInstancesRestOperations _roleEligibilityScheduleInstanceRestClient;
+        private readonly ClientDiagnostics _roleEligibilityScheduleInstancesClientDiagnostics;
+        private readonly RoleEligibilityScheduleInstances _roleEligibilityScheduleInstancesRestClient;
         private readonly RoleEligibilityScheduleInstanceData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleEligibilityScheduleInstances";
 
-        /// <summary> Initializes a new instance of the <see cref="RoleEligibilityScheduleInstanceResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RoleEligibilityScheduleInstanceResource for mocking. </summary>
         protected RoleEligibilityScheduleInstanceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RoleEligibilityScheduleInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RoleEligibilityScheduleInstanceResource(ArmClient client, RoleEligibilityScheduleInstanceData data) : this(client, data.Id)
@@ -52,71 +43,91 @@ namespace Azure.ResourceManager.Authorization
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RoleEligibilityScheduleInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RoleEligibilityScheduleInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _roleEligibilityScheduleInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string roleEligibilityScheduleInstanceApiVersion);
-            _roleEligibilityScheduleInstanceRestClient = new RoleEligibilityScheduleInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, roleEligibilityScheduleInstanceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _roleEligibilityScheduleInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
+            _roleEligibilityScheduleInstancesRestClient = new RoleEligibilityScheduleInstances(_roleEligibilityScheduleInstancesClientDiagnostics, Pipeline, Endpoint, roleEligibilityScheduleInstanceApiVersion ?? "2024-09-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual RoleEligibilityScheduleInstanceData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="roleEligibilityScheduleInstanceName"> The roleEligibilityScheduleInstanceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string roleEligibilityScheduleInstanceName)
+        {
+            string resourceId = $"{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Gets the specified role eligibility schedule instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoleEligibilityScheduleInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RoleEligibilityScheduleInstanceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RoleEligibilityScheduleInstanceResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceResource.Get");
+            using DiagnosticScope scope = _roleEligibilityScheduleInstancesClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = await _roleEligibilityScheduleInstanceRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleEligibilityScheduleInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RoleEligibilityScheduleInstanceData> response = Response.FromValue(RoleEligibilityScheduleInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoleEligibilityScheduleInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +141,41 @@ namespace Azure.ResourceManager.Authorization
         /// Gets the specified role eligibility schedule instance.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoleEligibilityScheduleInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RoleEligibilityScheduleInstanceResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RoleEligibilityScheduleInstanceResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _roleEligibilityScheduleInstanceClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceResource.Get");
+            using DiagnosticScope scope = _roleEligibilityScheduleInstancesClientDiagnostics.CreateScope("RoleEligibilityScheduleInstanceResource.Get");
             scope.Start();
             try
             {
-                var response = _roleEligibilityScheduleInstanceRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleEligibilityScheduleInstancesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RoleEligibilityScheduleInstanceData> response = Response.FromValue(RoleEligibilityScheduleInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoleEligibilityScheduleInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

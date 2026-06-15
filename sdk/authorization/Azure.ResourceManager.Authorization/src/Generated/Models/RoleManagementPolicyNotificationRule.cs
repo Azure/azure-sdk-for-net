@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -14,46 +15,43 @@ namespace Azure.ResourceManager.Authorization.Models
     public partial class RoleManagementPolicyNotificationRule : RoleManagementPolicyRule
     {
         /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyNotificationRule"/>. </summary>
-        public RoleManagementPolicyNotificationRule()
+        public RoleManagementPolicyNotificationRule() : base(RoleManagementPolicyRuleType.RoleManagementPolicyNotificationRule)
         {
             NotificationRecipients = new ChangeTrackingList<string>();
-            RuleType = RoleManagementPolicyRuleType.RoleManagementPolicyNotificationRule;
         }
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyNotificationRule"/>. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="notificationDeliveryType"> The type of notification. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="notificationType"> The type of notification. </param>
         /// <param name="notificationLevel"> The notification level. </param>
         /// <param name="recipientType"> The recipient type. </param>
         /// <param name="notificationRecipients"> The list of notification recipients. </param>
-        /// <param name="areDefaultRecipientsEnabled"> Determines if the notification will be sent to the recipient type specified in the policy rule. </param>
-        internal RoleManagementPolicyNotificationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> serializedAdditionalRawData, NotificationDeliveryType? notificationDeliveryType, RoleManagementPolicyNotificationLevel? notificationLevel, RoleManagementPolicyRecipientType? recipientType, IList<string> notificationRecipients, bool? areDefaultRecipientsEnabled) : base(id, ruleType, target, serializedAdditionalRawData)
+        /// <param name="isDefaultRecipientsEnabled"> Determines if the notification will be sent to the recipient type specified in the policy rule. </param>
+        internal RoleManagementPolicyNotificationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> additionalBinaryDataProperties, NotificationDeliveryMechanism? notificationType, Models.RoleManagementPolicyNotificationLevel? notificationLevel, Models.RoleManagementPolicyRecipientType? recipientType, IList<string> notificationRecipients, bool? isDefaultRecipientsEnabled) : base(id, ruleType, target, additionalBinaryDataProperties)
         {
-            NotificationDeliveryType = notificationDeliveryType;
+            NotificationType = notificationType;
             NotificationLevel = notificationLevel;
             RecipientType = recipientType;
             NotificationRecipients = notificationRecipients;
-            AreDefaultRecipientsEnabled = areDefaultRecipientsEnabled;
-            RuleType = ruleType;
+            IsDefaultRecipientsEnabled = isDefaultRecipientsEnabled;
         }
 
         /// <summary> The type of notification. </summary>
-        [WirePath("notificationType")]
-        public NotificationDeliveryType? NotificationDeliveryType { get; set; }
+        public NotificationDeliveryMechanism? NotificationType { get; set; }
+
         /// <summary> The notification level. </summary>
-        [WirePath("notificationLevel")]
-        public RoleManagementPolicyNotificationLevel? NotificationLevel { get; set; }
+        public Models.RoleManagementPolicyNotificationLevel? NotificationLevel { get; set; }
+
         /// <summary> The recipient type. </summary>
-        [WirePath("recipientType")]
-        public RoleManagementPolicyRecipientType? RecipientType { get; set; }
+        public Models.RoleManagementPolicyRecipientType? RecipientType { get; set; }
+
         /// <summary> The list of notification recipients. </summary>
-        [WirePath("notificationRecipients")]
         public IList<string> NotificationRecipients { get; }
+
         /// <summary> Determines if the notification will be sent to the recipient type specified in the policy rule. </summary>
-        [WirePath("isDefaultRecipientsEnabled")]
-        public bool? AreDefaultRecipientsEnabled { get; set; }
+        public bool? IsDefaultRecipientsEnabled { get; set; }
     }
 }

@@ -10,21 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Unknown version of RoleManagementPolicyRule. </summary>
     internal partial class UnknownRoleManagementPolicyRule : RoleManagementPolicyRule
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRoleManagementPolicyRule"/>. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownRoleManagementPolicyRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, ruleType, target, serializedAdditionalRawData)
-        {
-            RuleType = ruleType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownRoleManagementPolicyRule"/> for deserialization. </summary>
-        internal UnknownRoleManagementPolicyRule()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRoleManagementPolicyRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, ruleType != default ? ruleType : "unknown", target, additionalBinaryDataProperties)
         {
         }
     }

@@ -5,170 +5,249 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Authorization.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Authorization.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableAuthorizationResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _azurePermissionsForResourceGroupClientDiagnostics;
-        private AzurePermissionsForResourceGroupRestOperations _azurePermissionsForResourceGroupRestClient;
-        private ClientDiagnostics _azurePermissionsForResourceClientDiagnostics;
-        private AzurePermissionsForResourceRestOperations _azurePermissionsForResourceRestClient;
+        private ClientDiagnostics _denyAssignmentsClientDiagnostics;
+        private DenyAssignments _denyAssignmentsRestClient;
+        private ClientDiagnostics _roleAssignmentsClientDiagnostics;
+        private RoleAssignments _roleAssignmentsRestClient;
+        private ClientDiagnostics _permissionsClientDiagnostics;
+        private Permissions _permissionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAuthorizationResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAuthorizationResourceGroupResource for mocking. </summary>
         protected MockableAuthorizationResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAuthorizationResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAuthorizationResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAuthorizationResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics AzurePermissionsForResourceGroupClientDiagnostics => _azurePermissionsForResourceGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AzurePermissionsForResourceGroupRestOperations AzurePermissionsForResourceGroupRestClient => _azurePermissionsForResourceGroupRestClient ??= new AzurePermissionsForResourceGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics AzurePermissionsForResourceClientDiagnostics => _azurePermissionsForResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private AzurePermissionsForResourceRestOperations AzurePermissionsForResourceRestClient => _azurePermissionsForResourceRestClient ??= new AzurePermissionsForResourceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DenyAssignmentsClientDiagnostics => _denyAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(DenyAssignmentsClientDiagnostics, Pipeline, Endpoint, "2024-07-01-preview");
+
+        private ClientDiagnostics RoleAssignmentsClientDiagnostics => _roleAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(RoleAssignmentsClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
+
+        private ClientDiagnostics PermissionsClientDiagnostics => _permissionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Permissions PermissionsRestClient => _permissionsRestClient ??= new Permissions(PermissionsClientDiagnostics, Pipeline, Endpoint, "2022-05-01-preview");
+
+        /// <summary>
+        /// Gets deny assignments for a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/denyAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_ListForResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq '{name}' to search deny assignments by name at specified scope. Use $filter=principalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DenyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DenyAssignmentResource> GetDenyAssignmentsAsync(string filter = default, CancellationToken cancellationToken = default)
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForResourceGroupAsyncCollectionResultOfT(
+                DenyAssignmentsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                filter,
+                context,
+                "MockableAuthorizationResourceGroupResource.GetDenyAssignments"), data => new DenyAssignmentResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets deny assignments for a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/denyAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_ListForResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq '{name}' to search deny assignments by name at specified scope. Use $filter=principalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DenyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DenyAssignmentResource> GetDenyAssignments(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForResourceGroupCollectionResultOfT(
+                DenyAssignmentsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                filter,
+                context,
+                "MockableAuthorizationResourceGroupResource.GetDenyAssignments"), data => new DenyAssignmentResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all role assignments that apply to a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/roleAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RoleAssignments_ListForResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RoleAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RoleAssignmentResource> GetRoleAssignmentsAsync(string filter = default, string tenantId = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForResourceGroupAsyncCollectionResultOfT(
+                RoleAssignmentsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                filter,
+                tenantId,
+                context,
+                "MockableAuthorizationResourceGroupResource.GetRoleAssignments"), data => new RoleAssignmentResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all role assignments that apply to a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/roleAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RoleAssignments_ListForResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RoleAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RoleAssignmentResource> GetRoleAssignments(string filter = default, string tenantId = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForResourceGroupCollectionResultOfT(
+                RoleAssignmentsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                filter,
+                tenantId,
+                context,
+                "MockableAuthorizationResourceGroupResource.GetRoleAssignments"), data => new RoleAssignmentResource(Client, data));
         }
 
         /// <summary>
         /// Gets all permissions the caller has for a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzurePermissionsForResourceGroup_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> PermissionsOperationGroup_ListForResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourceGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Permission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<Permission> GetForResourceGroupAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RoleDefinitionPermission.DeserializeRoleDefinitionPermission(e), AzurePermissionsForResourceGroupClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PermissionsGetForResourceGroupAsyncCollectionResultOfT(PermissionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "MockableAuthorizationResourceGroupResource.GetForResourceGroup");
         }
 
         /// <summary>
         /// Gets all permissions the caller has for a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Authorization/permissions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzurePermissionsForResourceGroup_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> PermissionsOperationGroup_ListForResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RoleDefinitionPermission> GetAzurePermissionsForResourceGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="Permission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<Permission> GetForResourceGroup(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RoleDefinitionPermission.DeserializeRoleDefinitionPermission(e), AzurePermissionsForResourceGroupClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all permissions the caller has for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzurePermissionsForResource_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
-        /// <param name="parentResourcePath"> The parent resource identity. </param>
-        /// <param name="resourceType"> The resource type of the resource. </param>
-        /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourcesAsync(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
-            Argument.AssertNotNull(parentResourcePath, nameof(parentResourcePath));
-            Argument.AssertNotNull(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RoleDefinitionPermission.DeserializeRoleDefinitionPermission(e), AzurePermissionsForResourceClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all permissions the caller has for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePath}/{resourceType}/{resourceName}/providers/Microsoft.Authorization/permissions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AzurePermissionsForResource_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
-        /// <param name="parentResourcePath"> The parent resource identity. </param>
-        /// <param name="resourceType"> The resource type of the resource. </param>
-        /// <param name="resourceName"> The name of the resource to get the permissions for. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RoleDefinitionPermission> GetAzurePermissionsForResources(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
-            Argument.AssertNotNull(parentResourcePath, nameof(parentResourcePath));
-            Argument.AssertNotNull(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RoleDefinitionPermission.DeserializeRoleDefinitionPermission(e), AzurePermissionsForResourceClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PermissionsGetForResourceGroupCollectionResultOfT(PermissionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "MockableAuthorizationResourceGroupResource.GetForResourceGroup");
         }
     }
 }

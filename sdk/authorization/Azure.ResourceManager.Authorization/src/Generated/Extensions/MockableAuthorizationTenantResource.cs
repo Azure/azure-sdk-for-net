@@ -8,63 +8,216 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Authorization;
+using Azure.ResourceManager.Authorization.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Authorization.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableAuthorizationTenantResource : ArmResource
     {
+        private ClientDiagnostics _denyAssignmentsClientDiagnostics;
+        private DenyAssignments _denyAssignmentsRestClient;
+        private ClientDiagnostics _roleAssignmentsClientDiagnostics;
+        private RoleAssignments _roleAssignmentsRestClient;
+        private ClientDiagnostics _roleDefinitionsClientDiagnostics;
+        private RoleDefinitions _roleDefinitionsRestClient;
+        private ClientDiagnostics _accessReviewScheduleDefinitionsAssignedForMyApprovalClientDiagnostics;
+        private AccessReviewScheduleDefinitionsAssignedForMyApproval _accessReviewScheduleDefinitionsAssignedForMyApprovalRestClient;
         private ClientDiagnostics _globalAdministratorClientDiagnostics;
-        private GlobalAdministratorRestOperations _globalAdministratorRestClient;
+        private GlobalAdministrator _globalAdministratorRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAuthorizationTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAuthorizationTenantResource for mocking. </summary>
         protected MockableAuthorizationTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAuthorizationTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAuthorizationTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAuthorizationTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics GlobalAdministratorClientDiagnostics => _globalAdministratorClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private GlobalAdministratorRestOperations GlobalAdministratorRestClient => _globalAdministratorRestClient ??= new GlobalAdministratorRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DenyAssignmentsClientDiagnostics => _denyAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private DenyAssignments DenyAssignmentsRestClient => _denyAssignmentsRestClient ??= new DenyAssignments(DenyAssignmentsClientDiagnostics, Pipeline, Endpoint, "2024-07-01-preview");
+
+        private ClientDiagnostics RoleAssignmentsClientDiagnostics => _roleAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private RoleAssignments RoleAssignmentsRestClient => _roleAssignmentsRestClient ??= new RoleAssignments(RoleAssignmentsClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
+
+        private ClientDiagnostics RoleDefinitionsClientDiagnostics => _roleDefinitionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private RoleDefinitions RoleDefinitionsRestClient => _roleDefinitionsRestClient ??= new RoleDefinitions(RoleDefinitionsClientDiagnostics, Pipeline, Endpoint, "2022-05-01-preview");
+
+        private ClientDiagnostics AccessReviewScheduleDefinitionsAssignedForMyApprovalClientDiagnostics => _accessReviewScheduleDefinitionsAssignedForMyApprovalClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AccessReviewScheduleDefinitionsAssignedForMyApproval AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient => _accessReviewScheduleDefinitionsAssignedForMyApprovalRestClient ??= new AccessReviewScheduleDefinitionsAssignedForMyApproval(AccessReviewScheduleDefinitionsAssignedForMyApprovalClientDiagnostics, Pipeline, Endpoint, "2021-12-01-preview");
+
+        private ClientDiagnostics GlobalAdministratorClientDiagnostics => _globalAdministratorClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private GlobalAdministrator GlobalAdministratorRestClient => _globalAdministratorRestClient ??= new GlobalAdministrator(GlobalAdministratorClientDiagnostics, Pipeline, Endpoint, "2015-07-01");
+
+        /// <summary> Gets a collection of AttributeNamespaces in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of AttributeNamespaces and their operations over a AttributeNamespaceResource. </returns>
+        public virtual AttributeNamespaceCollection GetAttributeNamespaces()
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            return GetCachedClient(client => new AttributeNamespaceCollection(client, Id));
         }
 
-        /// <summary> Gets a collection of AuthorizationProviderOperationsMetadataResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of AuthorizationProviderOperationsMetadataResources and their operations over a AuthorizationProviderOperationsMetadataResource. </returns>
-        public virtual AuthorizationProviderOperationsMetadataCollection GetAllAuthorizationProviderOperationsMetadata()
+        /// <summary>
+        /// Gets the specified attribute namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/attributeNamespaces/{attributeNamespace}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AttributeNamespaces_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="attributeNamespace"> The name of the attribute namespace to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="attributeNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attributeNamespace"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AttributeNamespaceResource>> GetAttributeNamespaceAsync(string attributeNamespace, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(client => new AuthorizationProviderOperationsMetadataCollection(client, Id));
+            Argument.AssertNotNullOrEmpty(attributeNamespace, nameof(attributeNamespace));
+
+            return await GetAttributeNamespaces().GetAsync(attributeNamespace, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified attribute namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/attributeNamespaces/{attributeNamespace}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AttributeNamespaces_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="attributeNamespace"> The name of the attribute namespace to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="attributeNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attributeNamespace"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AttributeNamespaceResource> GetAttributeNamespace(string attributeNamespace, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(attributeNamespace, nameof(attributeNamespace));
+
+            return GetAttributeNamespaces().Get(attributeNamespace, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of AccessReviewInstancesAssignedForMyApprovals in the <see cref="TenantResource"/>. </summary>
+        /// <param name="scheduleDefinitionId"> The scheduleDefinitionId for the resource. </param>
+        /// <returns> An object representing collection of AccessReviewInstancesAssignedForMyApprovals and their operations over a AccessReviewInstancesAssignedForMyApprovalResource. </returns>
+        public virtual AccessReviewInstancesAssignedForMyApprovalCollection GetAccessReviewInstancesAssignedForMyApprovals(string scheduleDefinitionId)
+        {
+            return GetCachedClient(client => new AccessReviewInstancesAssignedForMyApprovalCollection(client, Id, scheduleDefinitionId));
+        }
+
+        /// <summary>
+        /// Get single access review instance assigned for my approval.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AccessReviewInstancesAssignedForMyApproval_GetById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scheduleDefinitionId"> The scheduleDefinitionId for the resource. </param>
+        /// <param name="id"> The id of the access review instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AccessReviewInstancesAssignedForMyApprovalResource>> GetAccessReviewInstancesAssignedForMyApprovalAsync(string scheduleDefinitionId, string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            return await GetAccessReviewInstancesAssignedForMyApprovals(scheduleDefinitionId).GetAsync(id, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get single access review instance assigned for my approval.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/accessReviewScheduleDefinitions/{scheduleDefinitionId}/instances/{id}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AccessReviewInstancesAssignedForMyApproval_GetById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scheduleDefinitionId"> The scheduleDefinitionId for the resource. </param>
+        /// <param name="id"> The id of the access review instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AccessReviewInstancesAssignedForMyApprovalResource> GetAccessReviewInstancesAssignedForMyApproval(string scheduleDefinitionId, string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            return GetAccessReviewInstancesAssignedForMyApprovals(scheduleDefinitionId).Get(id, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ProviderOperationsMetadata in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of ProviderOperationsMetadata and their operations over a ProviderOperationsMetadataResource. </returns>
+        public virtual ProviderOperationsMetadataCollection GetAllProviderOperationsMetadata()
+        {
+            return GetCachedClient(client => new ProviderOperationsMetadataCollection(client, Id));
         }
 
         /// <summary>
         /// Gets provider operations metadata for the specified resource provider.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderOperationsMetadata_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderOperationsMetadataOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AuthorizationProviderOperationsMetadataResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -72,30 +225,29 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AuthorizationProviderOperationsMetadataResource>> GetAuthorizationProviderOperationsMetadataAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProviderOperationsMetadataResource>> GetProviderOperationsMetadataAsync(string resourceProviderNamespace, string expand = default, CancellationToken cancellationToken = default)
         {
-            return await GetAllAuthorizationProviderOperationsMetadata().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+
+            return await GetAllProviderOperationsMetadata().GetAsync(resourceProviderNamespace, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets provider operations metadata for the specified resource provider.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProviderOperationsMetadata_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProviderOperationsMetadataOperationGroup_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AuthorizationProviderOperationsMetadataResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,37 +255,601 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AuthorizationProviderOperationsMetadataResource> GetAuthorizationProviderOperationsMetadata(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<ProviderOperationsMetadataResource> GetProviderOperationsMetadata(string resourceProviderNamespace, string expand = default, CancellationToken cancellationToken = default)
         {
-            return GetAllAuthorizationProviderOperationsMetadata().Get(resourceProviderNamespace, expand, cancellationToken);
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+
+            return GetAllProviderOperationsMetadata().Get(resourceProviderNamespace, expand, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a deny assignment by ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{denyAssignmentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_GetById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="denyAssignmentId"> The fully qualified ID of the role assignment including scope, resource name, and resource type. Format: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/&lt;SUB_ID&gt;/resourcegroups/&lt;RESOURCE_GROUP&gt;/providers/Microsoft.Authorization/roleAssignments/&lt;ROLE_ASSIGNMENT_NAME&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DenyAssignmentResource>> GetByIdAsync(string denyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
+
+            using DiagnosticScope scope = DenyAssignmentsClientDiagnostics.CreateScope("MockableAuthorizationTenantResource.GetById");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DenyAssignmentsRestClient.CreateGetByIdRequest(denyAssignmentId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DenyAssignmentData> response = Response.FromValue(DenyAssignmentData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DenyAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a deny assignment by ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{denyAssignmentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_GetById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="denyAssignmentId"> The fully qualified ID of the role assignment including scope, resource name, and resource type. Format: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/&lt;SUB_ID&gt;/resourcegroups/&lt;RESOURCE_GROUP&gt;/providers/Microsoft.Authorization/roleAssignments/&lt;ROLE_ASSIGNMENT_NAME&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DenyAssignmentResource> GetById(string denyAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
+
+            using DiagnosticScope scope = DenyAssignmentsClientDiagnostics.CreateScope("MockableAuthorizationTenantResource.GetById");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DenyAssignmentsRestClient.CreateGetByIdRequest(denyAssignmentId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DenyAssignmentData> response = Response.FromValue(DenyAssignmentData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new DenyAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a role assignment by ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{roleAssignmentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RoleAssignmentsByIdOperations_GetById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentId"> The fully qualified ID of the role assignment including scope, resource name, and resource type. Format: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/&lt;SUB_ID&gt;/resourcegroups/&lt;RESOURCE_GROUP&gt;/providers/Microsoft.Authorization/roleAssignments/&lt;ROLE_ASSIGNMENT_NAME&gt;. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<RoleAssignmentResource>> GetByIdAsync(string roleAssignmentId, string tenantId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+
+            using DiagnosticScope scope = RoleAssignmentsClientDiagnostics.CreateScope("MockableAuthorizationTenantResource.GetById");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RoleAssignmentsRestClient.CreateGetByIdRequest(roleAssignmentId, tenantId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new RoleAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get a role assignment by ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{roleAssignmentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RoleAssignmentsByIdOperations_GetById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentId"> The fully qualified ID of the role assignment including scope, resource name, and resource type. Format: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/&lt;SUB_ID&gt;/resourcegroups/&lt;RESOURCE_GROUP&gt;/providers/Microsoft.Authorization/roleAssignments/&lt;ROLE_ASSIGNMENT_NAME&gt;. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<RoleAssignmentResource> GetById(string roleAssignmentId, string tenantId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+
+            using DiagnosticScope scope = RoleAssignmentsClientDiagnostics.CreateScope("MockableAuthorizationTenantResource.GetById");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RoleAssignmentsRestClient.CreateGetByIdRequest(roleAssignmentId, tenantId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new RoleAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update a role assignment by ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{roleAssignmentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RoleAssignmentsByIdOperations_CreateById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentId"> The fully qualified ID of the role assignment including scope, resource name, and resource type. Format: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/&lt;SUB_ID&gt;/resourcegroups/&lt;RESOURCE_GROUP&gt;/providers/Microsoft.Authorization/roleAssignments/&lt;ROLE_ASSIGNMENT_NAME&gt;. </param>
+        /// <param name="content"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<RoleAssignmentResource>> CreateByIdAsync(string roleAssignmentId, RoleAssignmentCreateParameters content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = RoleAssignmentsClientDiagnostics.CreateScope("MockableAuthorizationTenantResource.CreateById");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RoleAssignmentsRestClient.CreateCreateByIdRequest(roleAssignmentId, RoleAssignmentCreateParameters.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new RoleAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update a role assignment by ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{roleAssignmentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RoleAssignmentsByIdOperations_CreateById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentId"> The fully qualified ID of the role assignment including scope, resource name, and resource type. Format: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/&lt;SUB_ID&gt;/resourcegroups/&lt;RESOURCE_GROUP&gt;/providers/Microsoft.Authorization/roleAssignments/&lt;ROLE_ASSIGNMENT_NAME&gt;. </param>
+        /// <param name="content"> Resource create parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<RoleAssignmentResource> CreateById(string roleAssignmentId, RoleAssignmentCreateParameters content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = RoleAssignmentsClientDiagnostics.CreateScope("MockableAuthorizationTenantResource.CreateById");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RoleAssignmentsRestClient.CreateCreateByIdRequest(roleAssignmentId, RoleAssignmentCreateParameters.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new RoleAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a role assignment by ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{roleAssignmentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RoleAssignmentsByIdOperations_DeleteById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentId"> The fully qualified ID of the role assignment including scope, resource name, and resource type. Format: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/&lt;SUB_ID&gt;/resourcegroups/&lt;RESOURCE_GROUP&gt;/providers/Microsoft.Authorization/roleAssignments/&lt;ROLE_ASSIGNMENT_NAME&gt;. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<RoleAssignmentResource>> DeleteByIdAsync(string roleAssignmentId, string tenantId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+
+            using DiagnosticScope scope = RoleAssignmentsClientDiagnostics.CreateScope("MockableAuthorizationTenantResource.DeleteById");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RoleAssignmentsRestClient.CreateDeleteByIdRequest(roleAssignmentId, tenantId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new RoleAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a role assignment by ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{roleAssignmentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RoleAssignmentsByIdOperations_DeleteById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentId"> The fully qualified ID of the role assignment including scope, resource name, and resource type. Format: /{scope}/providers/Microsoft.Authorization/roleAssignments/{roleAssignmentName}. Example: /subscriptions/&lt;SUB_ID&gt;/resourcegroups/&lt;RESOURCE_GROUP&gt;/providers/Microsoft.Authorization/roleAssignments/&lt;ROLE_ASSIGNMENT_NAME&gt;. </param>
+        /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<RoleAssignmentResource> DeleteById(string roleAssignmentId, string tenantId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+
+            using DiagnosticScope scope = RoleAssignmentsClientDiagnostics.CreateScope("MockableAuthorizationTenantResource.DeleteById");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RoleAssignmentsRestClient.CreateDeleteByIdRequest(roleAssignmentId, tenantId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RoleAssignmentData> response = Response.FromValue(RoleAssignmentData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new RoleAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a role definition by ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{roleId}?disambiguation_dummy. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RoleDefinitionsByIdOperationGroup_GetById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleId"> The fully qualified role definition ID. Use the format, /subscriptions/{guid}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for subscription level role definitions, or /providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for tenant level role definitions. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<RoleDefinitionResource>> GetByIdAsync(string roleId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleId, nameof(roleId));
+
+            using DiagnosticScope scope = RoleDefinitionsClientDiagnostics.CreateScope("MockableAuthorizationTenantResource.GetById");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RoleDefinitionsRestClient.CreateGetByIdRequest(roleId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RoleDefinitionData> response = Response.FromValue(RoleDefinitionData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new RoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a role definition by ID.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{roleId}?disambiguation_dummy. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RoleDefinitionsByIdOperationGroup_GetById. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleId"> The fully qualified role definition ID. Use the format, /subscriptions/{guid}/providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for subscription level role definitions, or /providers/Microsoft.Authorization/roleDefinitions/{roleDefinitionId} for tenant level role definitions. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<RoleDefinitionResource> GetById(string roleId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleId, nameof(roleId));
+
+            using DiagnosticScope scope = RoleDefinitionsClientDiagnostics.CreateScope("MockableAuthorizationTenantResource.GetById");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = RoleDefinitionsRestClient.CreateGetByIdRequest(roleId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RoleDefinitionData> response = Response.FromValue(RoleDefinitionData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new RoleDefinitionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get access review instances assigned for my approval.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/accessReviewScheduleDefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeAccessReviewScheduleDefinitions_ListForMyApproval. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. One custom filter option is supported : 'assignedToMeToReview()'. When specified $filter=assignedToMeToReview(), only items that are assigned to the calling user to review are returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AccessReviewScheduleDefinitionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AccessReviewScheduleDefinitionData> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AccessReviewScheduleDefinitionsAssignedForMyApprovalGetAllAsyncCollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAll");
+        }
+
+        /// <summary>
+        /// Get access review instances assigned for my approval.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/accessReviewScheduleDefinitions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScopeAccessReviewScheduleDefinitions_ListForMyApproval. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-12-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. One custom filter option is supported : 'assignedToMeToReview()'. When specified $filter=assignedToMeToReview(), only items that are assigned to the calling user to review are returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AccessReviewScheduleDefinitionData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AccessReviewScheduleDefinitionData> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AccessReviewScheduleDefinitionsAssignedForMyApprovalGetAllCollectionResultOfT(AccessReviewScheduleDefinitionsAssignedForMyApprovalRestClient, filter, context, "MockableAuthorizationTenantResource.GetAll");
         }
 
         /// <summary>
         /// Elevates access for a Global Administrator.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Authorization/elevateAccess</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/elevateAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalAdministrator_ElevateAccess</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalAdministratorOperationGroup_ElevateAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> ElevateAccessGlobalAdministratorAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ElevateAccessAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = GlobalAdministratorClientDiagnostics.CreateScope("MockableAuthorizationTenantResource.ElevateAccessGlobalAdministrator");
+            using DiagnosticScope scope = GlobalAdministratorClientDiagnostics.CreateScope("MockableAuthorizationTenantResource.ElevateAccess");
             scope.Start();
             try
             {
-                var response = await GlobalAdministratorRestClient.ElevateAccessAsync(cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GlobalAdministratorRestClient.CreateElevateAccessRequest(context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -147,27 +863,32 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// Elevates access for a Global Administrator.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Authorization/elevateAccess</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.Authorization/elevateAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GlobalAdministrator_ElevateAccess</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalAdministratorOperationGroup_ElevateAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2015-07-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2015-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response ElevateAccessGlobalAdministrator(CancellationToken cancellationToken = default)
+        public virtual Response ElevateAccess(CancellationToken cancellationToken = default)
         {
-            using var scope = GlobalAdministratorClientDiagnostics.CreateScope("MockableAuthorizationTenantResource.ElevateAccessGlobalAdministrator");
+            using DiagnosticScope scope = GlobalAdministratorClientDiagnostics.CreateScope("MockableAuthorizationTenantResource.ElevateAccess");
             scope.Start();
             try
             {
-                var response = GlobalAdministratorRestClient.ElevateAccess(cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = GlobalAdministratorRestClient.CreateElevateAccessRequest(context);
+                Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }
             catch (Exception e)

@@ -10,9 +10,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Authorization
 {
@@ -23,60 +24,174 @@ namespace Azure.ResourceManager.Authorization
     /// </summary>
     public partial class DenyAssignmentCollection : ArmCollection, IEnumerable<DenyAssignmentResource>, IAsyncEnumerable<DenyAssignmentResource>
     {
-        private readonly ClientDiagnostics _denyAssignmentClientDiagnostics;
-        private readonly DenyAssignmentsRestOperations _denyAssignmentRestClient;
+        private readonly ClientDiagnostics _denyAssignmentsClientDiagnostics;
+        private readonly DenyAssignments _denyAssignmentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DenyAssignmentCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DenyAssignmentCollection for mocking. </summary>
         protected DenyAssignmentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DenyAssignmentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DenyAssignmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DenyAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _denyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", DenyAssignmentResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DenyAssignmentResource.ResourceType, out string denyAssignmentApiVersion);
-            _denyAssignmentRestClient = new DenyAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, denyAssignmentApiVersion);
+            _denyAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", DenyAssignmentResource.ResourceType.Namespace, Diagnostics);
+            _denyAssignmentsRestClient = new DenyAssignments(_denyAssignmentsClientDiagnostics, Pipeline, Endpoint, denyAssignmentApiVersion ?? "2024-07-01-preview");
+        }
+
+        /// <summary>
+        /// Create or update a deny assignment by scope and name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+        /// <param name="data"> Parameters for the deny assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DenyAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string denyAssignmentId, DenyAssignmentData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _denyAssignmentsClientDiagnostics.CreateScope("DenyAssignmentCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _denyAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), denyAssignmentId, DenyAssignmentData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DenyAssignmentData> response = Response.FromValue(DenyAssignmentData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AuthorizationArmOperation<DenyAssignmentResource> operation = new AuthorizationArmOperation<DenyAssignmentResource>(Response.FromValue(new DenyAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create or update a deny assignment by scope and name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
+        /// <param name="data"> Parameters for the deny assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DenyAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string denyAssignmentId, DenyAssignmentData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _denyAssignmentsClientDiagnostics.CreateScope("DenyAssignmentCollection.CreateOrUpdate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _denyAssignmentsRestClient.CreateCreateOrUpdateRequest(Id.ToString(), denyAssignmentId, DenyAssignmentData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DenyAssignmentData> response = Response.FromValue(DenyAssignmentData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AuthorizationArmOperation<DenyAssignmentResource> operation = new AuthorizationArmOperation<DenyAssignmentResource>(Response.FromValue(new DenyAssignmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
         /// Get the specified deny assignment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DenyAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DenyAssignmentResource>> GetAsync(string denyAssignmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
 
-            using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.Get");
+            using DiagnosticScope scope = _denyAssignmentsClientDiagnostics.CreateScope("DenyAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _denyAssignmentRestClient.GetAsync(Id, denyAssignmentId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _denyAssignmentsRestClient.CreateGetRequest(Id.ToString(), denyAssignmentId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DenyAssignmentData> response = Response.FromValue(DenyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DenyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -90,38 +205,42 @@ namespace Azure.ResourceManager.Authorization
         /// Get the specified deny assignment.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DenyAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DenyAssignmentResource> Get(string denyAssignmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
 
-            using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.Get");
+            using DiagnosticScope scope = _denyAssignmentsClientDiagnostics.CreateScope("DenyAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = _denyAssignmentRestClient.Get(Id, denyAssignmentId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _denyAssignmentsRestClient.CreateGetRequest(Id.ToString(), denyAssignmentId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DenyAssignmentData> response = Response.FromValue(DenyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DenyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -135,98 +254,108 @@ namespace Azure.ResourceManager.Authorization
         /// Gets deny assignments for a scope.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/denyAssignments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DenyAssignments_ListForScope</description>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_ListForScope. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DenyAssignmentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq '{name}' to search deny assignments by name at specified scope. Use $filter=principalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DenyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DenyAssignmentResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListForScopeRequest(Id, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets deny assignments for a scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DenyAssignments_ListForScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq '{name}' to search deny assignments by name at specified scope. Use $filter=principalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DenyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DenyAssignmentResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DenyAssignmentResource> GetAllAsync(string filter = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _denyAssignmentRestClient.CreateListForScopeRequest(Id, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _denyAssignmentRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DenyAssignmentResource(Client, DenyAssignmentData.DeserializeDenyAssignmentData(e)), _denyAssignmentClientDiagnostics, Pipeline, "DenyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForScopeAsyncCollectionResultOfT(_denyAssignmentsRestClient, Id.ToString(), filter, context, "DenyAssignmentCollection.GetAll"), data => new DenyAssignmentResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets deny assignments for a scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/denyAssignments. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_ListForScope. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all deny assignments at or above the scope. Use $filter=denyAssignmentName eq '{name}' to search deny assignments by name at specified scope. Use $filter=principalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. Use $filter=gdprExportPrincipalId eq '{id}' to return all deny assignments at, above and below the scope for the specified principal. This filter is different from the principalId filter as it returns not only those deny assignments that contain the specified principal is the Principals list but also those deny assignments that contain the specified principal is the ExcludePrincipals list. Additionally, when gdprExportPrincipalId filter is used, only the deny assignment name and description properties are returned. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DenyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DenyAssignmentResource> GetAll(string filter = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForScopeCollectionResultOfT(_denyAssignmentsRestClient, Id.ToString(), filter, context, "DenyAssignmentCollection.GetAll"), data => new DenyAssignmentResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DenyAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string denyAssignmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
 
-            using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.Exists");
+            using DiagnosticScope scope = _denyAssignmentsClientDiagnostics.CreateScope("DenyAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _denyAssignmentRestClient.GetAsync(Id, denyAssignmentId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _denyAssignmentsRestClient.CreateGetRequest(Id.ToString(), denyAssignmentId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DenyAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DenyAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DenyAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,36 +369,50 @@ namespace Azure.ResourceManager.Authorization
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DenyAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string denyAssignmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
 
-            using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.Exists");
+            using DiagnosticScope scope = _denyAssignmentsClientDiagnostics.CreateScope("DenyAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _denyAssignmentRestClient.Get(Id, denyAssignmentId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _denyAssignmentsRestClient.CreateGetRequest(Id.ToString(), denyAssignmentId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DenyAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DenyAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DenyAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -283,38 +426,54 @@ namespace Azure.ResourceManager.Authorization
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DenyAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DenyAssignmentResource>> GetIfExistsAsync(string denyAssignmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
 
-            using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _denyAssignmentsClientDiagnostics.CreateScope("DenyAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _denyAssignmentRestClient.GetAsync(Id, denyAssignmentId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _denyAssignmentsRestClient.CreateGetRequest(Id.ToString(), denyAssignmentId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DenyAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DenyAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DenyAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DenyAssignmentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DenyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -328,38 +487,54 @@ namespace Azure.ResourceManager.Authorization
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/denyAssignments/{denyAssignmentId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DenyAssignments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DenyAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="denyAssignmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="denyAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DenyAssignmentResource> GetIfExists(string denyAssignmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(denyAssignmentId, nameof(denyAssignmentId));
 
-            using var scope = _denyAssignmentClientDiagnostics.CreateScope("DenyAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _denyAssignmentsClientDiagnostics.CreateScope("DenyAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _denyAssignmentRestClient.Get(Id, denyAssignmentId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _denyAssignmentsRestClient.CreateGetRequest(Id.ToString(), denyAssignmentId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DenyAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DenyAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DenyAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DenyAssignmentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DenyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -379,6 +554,7 @@ namespace Azure.ResourceManager.Authorization
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DenyAssignmentResource> IAsyncEnumerable<DenyAssignmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

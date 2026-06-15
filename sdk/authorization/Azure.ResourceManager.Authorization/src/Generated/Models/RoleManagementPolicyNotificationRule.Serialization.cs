@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementPolicyNotificationRule : IUtf8JsonSerializable, IJsonModel<RoleManagementPolicyNotificationRule>
+    /// <summary> The role management policy notification rule. </summary>
+    public partial class RoleManagementPolicyNotificationRule : RoleManagementPolicyRule, IJsonModel<RoleManagementPolicyNotificationRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleManagementPolicyNotificationRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override RoleManagementPolicyRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRoleManagementPolicyNotificationRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoleManagementPolicyNotificationRule)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RoleManagementPolicyNotificationRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RoleManagementPolicyNotificationRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RoleManagementPolicyNotificationRule IPersistableModel<RoleManagementPolicyNotificationRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (RoleManagementPolicyNotificationRule)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RoleManagementPolicyNotificationRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RoleManagementPolicyNotificationRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,17 +69,16 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoleManagementPolicyNotificationRule)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(NotificationDeliveryType))
+            if (Optional.IsDefined(NotificationType))
             {
                 writer.WritePropertyName("notificationType"u8);
-                writer.WriteStringValue(NotificationDeliveryType.Value.ToString());
+                writer.WriteStringValue(NotificationType.Value.ToString());
             }
             if (Optional.IsDefined(NotificationLevel))
             {
@@ -56,331 +94,151 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 writer.WritePropertyName("notificationRecipients"u8);
                 writer.WriteStartArray();
-                foreach (var item in NotificationRecipients)
+                foreach (string item in NotificationRecipients)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(AreDefaultRecipientsEnabled))
+            if (Optional.IsDefined(IsDefaultRecipientsEnabled))
             {
                 writer.WritePropertyName("isDefaultRecipientsEnabled"u8);
-                writer.WriteBooleanValue(AreDefaultRecipientsEnabled.Value);
+                writer.WriteBooleanValue(IsDefaultRecipientsEnabled.Value);
             }
         }
 
-        RoleManagementPolicyNotificationRule IJsonModel<RoleManagementPolicyNotificationRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RoleManagementPolicyNotificationRule IJsonModel<RoleManagementPolicyNotificationRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RoleManagementPolicyNotificationRule)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override RoleManagementPolicyRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RoleManagementPolicyNotificationRule)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRoleManagementPolicyNotificationRule(document.RootElement, options);
         }
 
-        internal static RoleManagementPolicyNotificationRule DeserializeRoleManagementPolicyNotificationRule(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RoleManagementPolicyNotificationRule DeserializeRoleManagementPolicyNotificationRule(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            NotificationDeliveryType? notificationType = default;
-            RoleManagementPolicyNotificationLevel? notificationLevel = default;
-            RoleManagementPolicyRecipientType? recipientType = default;
-            IList<string> notificationRecipients = default;
-            bool? isDefaultRecipientsEnabled = default;
             string id = default;
             RoleManagementPolicyRuleType ruleType = default;
             RoleManagementPolicyRuleTarget target = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            NotificationDeliveryMechanism? notificationType = default;
+            Models.RoleManagementPolicyNotificationLevel? notificationLevel = default;
+            Models.RoleManagementPolicyRecipientType? recipientType = default;
+            IList<string> notificationRecipients = default;
+            bool? isDefaultRecipientsEnabled = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("notificationType"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("ruleType"u8))
+                {
+                    ruleType = new RoleManagementPolicyRuleType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("target"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    notificationType = new NotificationDeliveryType(property.Value.GetString());
+                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("notificationLevel"u8))
+                if (prop.NameEquals("notificationType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    notificationLevel = new RoleManagementPolicyNotificationLevel(property.Value.GetString());
+                    notificationType = new NotificationDeliveryMechanism(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recipientType"u8))
+                if (prop.NameEquals("notificationLevel"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recipientType = new RoleManagementPolicyRecipientType(property.Value.GetString());
+                    notificationLevel = new Models.RoleManagementPolicyNotificationLevel(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("notificationRecipients"u8))
+                if (prop.NameEquals("recipientType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recipientType = new Models.RoleManagementPolicyRecipientType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("notificationRecipients"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     notificationRecipients = array;
                     continue;
                 }
-                if (property.NameEquals("isDefaultRecipientsEnabled"u8))
+                if (prop.NameEquals("isDefaultRecipientsEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDefaultRecipientsEnabled = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("ruleType"u8))
-                {
-                    ruleType = new RoleManagementPolicyRuleType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("target"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value, options);
+                    isDefaultRecipientsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RoleManagementPolicyNotificationRule(
                 id,
                 ruleType,
                 target,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 notificationType,
                 notificationLevel,
                 recipientType,
                 notificationRecipients ?? new ChangeTrackingList<string>(),
                 isDefaultRecipientsEnabled);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationDeliveryType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  notificationType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NotificationDeliveryType))
-                {
-                    builder.Append("  notificationType: ");
-                    builder.AppendLine($"'{NotificationDeliveryType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationLevel), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  notificationLevel: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NotificationLevel))
-                {
-                    builder.Append("  notificationLevel: ");
-                    builder.AppendLine($"'{NotificationLevel.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecipientType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  recipientType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RecipientType))
-                {
-                    builder.Append("  recipientType: ");
-                    builder.AppendLine($"'{RecipientType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationRecipients), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  notificationRecipients: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NotificationRecipients))
-                {
-                    if (NotificationRecipients.Any())
-                    {
-                        builder.Append("  notificationRecipients: ");
-                        builder.AppendLine("[");
-                        foreach (var item in NotificationRecipients)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AreDefaultRecipientsEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isDefaultRecipientsEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AreDefaultRecipientsEnabled))
-                {
-                    builder.Append("  isDefaultRecipientsEnabled: ");
-                    var boolValue = AreDefaultRecipientsEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Id}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ruleType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  ruleType: ");
-                builder.AppendLine($"'{RuleType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Target), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  target: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Target))
-                {
-                    builder.Append("  target: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Target, options, 2, false, "  target: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<RoleManagementPolicyNotificationRule>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(RoleManagementPolicyNotificationRule)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RoleManagementPolicyNotificationRule IPersistableModel<RoleManagementPolicyNotificationRule>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyNotificationRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRoleManagementPolicyNotificationRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RoleManagementPolicyNotificationRule)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RoleManagementPolicyNotificationRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

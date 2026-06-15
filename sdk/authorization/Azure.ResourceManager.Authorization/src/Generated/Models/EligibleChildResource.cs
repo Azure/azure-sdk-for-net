@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> Eligible child resource. </summary>
     public partial class EligibleChildResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EligibleChildResource"/>. </summary>
         internal EligibleChildResource()
@@ -53,24 +24,23 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of <see cref="EligibleChildResource"/>. </summary>
         /// <param name="id"> The resource scope Id. </param>
         /// <param name="name"> The resource name. </param>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EligibleChildResource(string id, string name, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="type"> The resource type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EligibleChildResource(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
-            ResourceType = resourceType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource scope Id. </summary>
-        [WirePath("id")]
         public string Id { get; }
+
         /// <summary> The resource name. </summary>
-        [WirePath("name")]
         public string Name { get; }
+
         /// <summary> The resource type. </summary>
-        [WirePath("type")]
-        public string ResourceType { get; }
+        public string Type { get; }
     }
 }

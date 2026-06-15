@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -14,30 +15,33 @@ namespace Azure.ResourceManager.Authorization.Models
     public partial class RoleManagementPolicyExpirationRule : RoleManagementPolicyRule
     {
         /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyExpirationRule"/>. </summary>
-        public RoleManagementPolicyExpirationRule()
+        public RoleManagementPolicyExpirationRule() : base(RoleManagementPolicyRuleType.RoleManagementPolicyExpirationRule)
         {
-            RuleType = RoleManagementPolicyRuleType.RoleManagementPolicyExpirationRule;
+            ExceptionMembers = new ChangeTrackingList<UserSet>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyExpirationRule"/>. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isExpirationRequired"> The value indicating whether expiration is required. </param>
         /// <param name="maximumDuration"> The maximum duration of expiration in timespan. </param>
-        internal RoleManagementPolicyExpirationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isExpirationRequired, TimeSpan? maximumDuration) : base(id, ruleType, target, serializedAdditionalRawData)
+        /// <param name="exceptionMembers"> The members not restricted by expiration rule. </param>
+        internal RoleManagementPolicyExpirationRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? isExpirationRequired, TimeSpan? maximumDuration, IList<UserSet> exceptionMembers) : base(id, ruleType, target, additionalBinaryDataProperties)
         {
             IsExpirationRequired = isExpirationRequired;
             MaximumDuration = maximumDuration;
-            RuleType = ruleType;
+            ExceptionMembers = exceptionMembers;
         }
 
         /// <summary> The value indicating whether expiration is required. </summary>
-        [WirePath("isExpirationRequired")]
         public bool? IsExpirationRequired { get; set; }
+
         /// <summary> The maximum duration of expiration in timespan. </summary>
-        [WirePath("maximumDuration")]
         public TimeSpan? MaximumDuration { get; set; }
+
+        /// <summary> The members not restricted by expiration rule. </summary>
+        public IList<UserSet> ExceptionMembers { get; }
     }
 }

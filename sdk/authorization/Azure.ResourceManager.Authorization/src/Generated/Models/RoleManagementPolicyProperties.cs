@@ -7,71 +7,82 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    /// <summary> Expanded info of resource scope. </summary>
-    public partial class RoleManagementPolicyProperties
+    /// <summary> Role management policy properties with scope. </summary>
+    internal partial class RoleManagementPolicyProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyProperties"/>. </summary>
-        internal RoleManagementPolicyProperties()
+        public RoleManagementPolicyProperties()
         {
+            Rules = new ChangeTrackingList<RoleManagementPolicyRule>();
+            EffectiveRules = new ChangeTrackingList<RoleManagementPolicyRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyProperties"/>. </summary>
-        /// <param name="scopeId"> Scope id of the resource. </param>
-        /// <param name="scopeDisplayName"> Display name of the resource. </param>
-        /// <param name="scopeType"> Type of the scope. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoleManagementPolicyProperties(ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="scope"> The role management policy scope. </param>
+        /// <param name="displayName"> The role management policy display name. </param>
+        /// <param name="description"> The role management policy description. </param>
+        /// <param name="isOrganizationDefault"> The role management policy is default policy. </param>
+        /// <param name="lastModifiedBy"> The name of the entity last modified it. </param>
+        /// <param name="lastModifiedOn"> The last modified date time. </param>
+        /// <param name="rules"> The rule applied to the policy. </param>
+        /// <param name="effectiveRules"> The readonly computed rule applied to the policy. </param>
+        /// <param name="policyProperties"> Additional properties of scope. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RoleManagementPolicyProperties(string scope, string displayName, string description, bool? isOrganizationDefault, Principal lastModifiedBy, DateTimeOffset? lastModifiedOn, IList<RoleManagementPolicyRule> rules, IReadOnlyList<RoleManagementPolicyRule> effectiveRules, PolicyProperties policyProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ScopeId = scopeId;
-            ScopeDisplayName = scopeDisplayName;
-            ScopeType = scopeType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Scope = scope;
+            DisplayName = displayName;
+            Description = description;
+            IsOrganizationDefault = isOrganizationDefault;
+            LastModifiedBy = lastModifiedBy;
+            LastModifiedOn = lastModifiedOn;
+            Rules = rules;
+            EffectiveRules = effectiveRules;
+            PolicyProperties = policyProperties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Scope id of the resource. </summary>
-        [WirePath("scope.id")]
-        public ResourceIdentifier ScopeId { get; }
-        /// <summary> Display name of the resource. </summary>
-        [WirePath("scope.displayName")]
-        public string ScopeDisplayName { get; }
-        /// <summary> Type of the scope. </summary>
-        [WirePath("scope.type")]
-        public RoleManagementScopeType? ScopeType { get; }
+        /// <summary> The role management policy scope. </summary>
+        public string Scope { get; set; }
+
+        /// <summary> The role management policy display name. </summary>
+        public string DisplayName { get; set; }
+
+        /// <summary> The role management policy description. </summary>
+        public string Description { get; set; }
+
+        /// <summary> The role management policy is default policy. </summary>
+        public bool? IsOrganizationDefault { get; set; }
+
+        /// <summary> The name of the entity last modified it. </summary>
+        public Principal LastModifiedBy { get; }
+
+        /// <summary> The last modified date time. </summary>
+        public DateTimeOffset? LastModifiedOn { get; }
+
+        /// <summary> The rule applied to the policy. </summary>
+        public IList<RoleManagementPolicyRule> Rules { get; } = new ChangeTrackingList<RoleManagementPolicyRule>();
+
+        /// <summary> The readonly computed rule applied to the policy. </summary>
+        public IReadOnlyList<RoleManagementPolicyRule> EffectiveRules { get; } = new ChangeTrackingList<RoleManagementPolicyRule>();
+
+        /// <summary> Additional properties of scope. </summary>
+        internal PolicyProperties PolicyProperties { get; }
+
+        /// <summary> Details of the resource scope. </summary>
+        public PolicyPropertiesScope PolicyScope
+        {
+            get
+            {
+                return PolicyProperties is null ? default : PolicyProperties.Scope;
+            }
+        }
     }
 }

@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    /// <summary>
-    /// A class representing the RoleAssignmentScheduleInstance data model.
-    /// Information about current or upcoming role assignment schedule instance
-    /// </summary>
+    /// <summary> Information about current or upcoming role assignment schedule instance. </summary>
     public partial class RoleAssignmentScheduleInstanceData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleInstanceData"/>. </summary>
         internal RoleAssignmentScheduleInstanceData()
@@ -57,100 +25,172 @@ namespace Azure.ResourceManager.Authorization
         }
 
         /// <summary> Initializes a new instance of <see cref="RoleAssignmentScheduleInstanceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="scope"> The role assignment schedule scope. </param>
-        /// <param name="roleDefinitionId"> The role definition ID. </param>
-        /// <param name="principalId"> The principal ID. </param>
-        /// <param name="principalType"> The principal type of the assigned principal ID. </param>
-        /// <param name="roleAssignmentScheduleId"> Id of the master role assignment schedule. </param>
-        /// <param name="originRoleAssignmentId"> Role Assignment Id in external system. </param>
-        /// <param name="status"> The status of the role assignment schedule instance. </param>
-        /// <param name="startOn"> The startDateTime of the role assignment schedule instance. </param>
-        /// <param name="endOn"> The endDateTime of the role assignment schedule instance. </param>
-        /// <param name="linkedRoleEligibilityScheduleId"> roleEligibilityScheduleId used to activate. </param>
-        /// <param name="linkedRoleEligibilityScheduleInstanceId"> roleEligibilityScheduleInstanceId linked to this roleAssignmentScheduleInstance. </param>
-        /// <param name="assignmentType"> Assignment type of the role assignment schedule. </param>
-        /// <param name="memberType"> Membership type of the role assignment schedule. </param>
-        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
-        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is '2.0'. </param>
-        /// <param name="createdOn"> DateTime when role assignment schedule was created. </param>
-        /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoleAssignmentScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleId, ResourceIdentifier originRoleAssignmentId, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ResourceIdentifier linkedRoleEligibilityScheduleId, ResourceIdentifier linkedRoleEligibilityScheduleInstanceId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleManagementScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, RoleManagementExpandedProperties expandedProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Role assignment schedule instance properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RoleAssignmentScheduleInstanceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, RoleAssignmentScheduleInstanceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Scope = scope;
-            RoleDefinitionId = roleDefinitionId;
-            PrincipalId = principalId;
-            PrincipalType = principalType;
-            RoleAssignmentScheduleId = roleAssignmentScheduleId;
-            OriginRoleAssignmentId = originRoleAssignmentId;
-            Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
-            LinkedRoleEligibilityScheduleId = linkedRoleEligibilityScheduleId;
-            LinkedRoleEligibilityScheduleInstanceId = linkedRoleEligibilityScheduleInstanceId;
-            AssignmentType = assignmentType;
-            MemberType = memberType;
-            Condition = condition;
-            ConditionVersion = conditionVersion;
-            CreatedOn = createdOn;
-            ExpandedProperties = expandedProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Role assignment schedule instance properties. </summary>
+        internal RoleAssignmentScheduleInstanceProperties Properties { get; }
+
         /// <summary> The role assignment schedule scope. </summary>
-        [WirePath("properties.scope")]
-        public string Scope { get; }
+        public string Scope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Scope;
+            }
+        }
+
         /// <summary> The role definition ID. </summary>
-        [WirePath("properties.roleDefinitionId")]
-        public ResourceIdentifier RoleDefinitionId { get; }
+        public string RoleDefinitionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoleDefinitionId;
+            }
+        }
+
         /// <summary> The principal ID. </summary>
-        [WirePath("properties.principalId")]
-        public Guid? PrincipalId { get; }
+        public string PrincipalId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalId;
+            }
+        }
+
         /// <summary> The principal type of the assigned principal ID. </summary>
-        [WirePath("properties.principalType")]
-        public RoleManagementPrincipalType? PrincipalType { get; }
+        public PrincipalType? PrincipalType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalType;
+            }
+        }
+
         /// <summary> Id of the master role assignment schedule. </summary>
-        [WirePath("properties.roleAssignmentScheduleId")]
-        public ResourceIdentifier RoleAssignmentScheduleId { get; }
+        public string RoleAssignmentScheduleId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoleAssignmentScheduleId;
+            }
+        }
+
         /// <summary> Role Assignment Id in external system. </summary>
-        [WirePath("properties.originRoleAssignmentId")]
-        public ResourceIdentifier OriginRoleAssignmentId { get; }
+        public string OriginRoleAssignmentId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OriginRoleAssignmentId;
+            }
+        }
+
         /// <summary> The status of the role assignment schedule instance. </summary>
-        [WirePath("properties.status")]
-        public RoleManagementScheduleStatus? Status { get; }
+        public Status? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> The startDateTime of the role assignment schedule instance. </summary>
-        [WirePath("properties.startDateTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+        }
+
         /// <summary> The endDateTime of the role assignment schedule instance. </summary>
-        [WirePath("properties.endDateTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+        }
+
         /// <summary> roleEligibilityScheduleId used to activate. </summary>
-        [WirePath("properties.linkedRoleEligibilityScheduleId")]
-        public ResourceIdentifier LinkedRoleEligibilityScheduleId { get; }
+        public string LinkedRoleEligibilityScheduleId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkedRoleEligibilityScheduleId;
+            }
+        }
+
         /// <summary> roleEligibilityScheduleInstanceId linked to this roleAssignmentScheduleInstance. </summary>
-        [WirePath("properties.linkedRoleEligibilityScheduleInstanceId")]
-        public ResourceIdentifier LinkedRoleEligibilityScheduleInstanceId { get; }
+        public string LinkedRoleEligibilityScheduleInstanceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkedRoleEligibilityScheduleInstanceId;
+            }
+        }
+
         /// <summary> Assignment type of the role assignment schedule. </summary>
-        [WirePath("properties.assignmentType")]
-        public RoleAssignmentScheduleAssignmentType? AssignmentType { get; }
+        public AssignmentType? AssignmentType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssignmentType;
+            }
+        }
+
         /// <summary> Membership type of the role assignment schedule. </summary>
-        [WirePath("properties.memberType")]
-        public RoleManagementScheduleMemberType? MemberType { get; }
+        public MemberType? MemberType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MemberType;
+            }
+        }
+
         /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </summary>
-        [WirePath("properties.condition")]
-        public string Condition { get; }
+        public string Condition
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Condition;
+            }
+        }
+
         /// <summary> Version of the condition. Currently accepted value is '2.0'. </summary>
-        [WirePath("properties.conditionVersion")]
-        public string ConditionVersion { get; }
+        public string ConditionVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConditionVersion;
+            }
+        }
+
         /// <summary> DateTime when role assignment schedule was created. </summary>
-        [WirePath("properties.createdOn")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Additional properties of principal, scope and role definition. </summary>
-        [WirePath("properties.expandedProperties")]
-        public RoleManagementExpandedProperties ExpandedProperties { get; }
+        public ExpandedProperties ExpandedProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpandedProperties;
+            }
+        }
     }
 }

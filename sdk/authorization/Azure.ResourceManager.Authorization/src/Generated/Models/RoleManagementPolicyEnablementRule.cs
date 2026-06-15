@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -14,26 +15,23 @@ namespace Azure.ResourceManager.Authorization.Models
     public partial class RoleManagementPolicyEnablementRule : RoleManagementPolicyRule
     {
         /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyEnablementRule"/>. </summary>
-        public RoleManagementPolicyEnablementRule()
+        public RoleManagementPolicyEnablementRule() : base(RoleManagementPolicyRuleType.RoleManagementPolicyEnablementRule)
         {
-            EnablementRules = new ChangeTrackingList<RoleAssignmentEnablementRuleType>();
-            RuleType = RoleManagementPolicyRuleType.RoleManagementPolicyEnablementRule;
+            EnabledRules = new ChangeTrackingList<EnablementRules>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyEnablementRule"/>. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="enablementRules"> The list of enabled rules. </param>
-        internal RoleManagementPolicyEnablementRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<RoleAssignmentEnablementRuleType> enablementRules) : base(id, ruleType, target, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="enabledRules"> The list of enabled rules. </param>
+        internal RoleManagementPolicyEnablementRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<EnablementRules> enabledRules) : base(id, ruleType, target, additionalBinaryDataProperties)
         {
-            EnablementRules = enablementRules;
-            RuleType = ruleType;
+            EnabledRules = enabledRules;
         }
 
         /// <summary> The list of enabled rules. </summary>
-        [WirePath("enabledRules")]
-        public IList<RoleAssignmentEnablementRuleType> EnablementRules { get; }
+        public IList<EnablementRules> EnabledRules { get; }
     }
 }

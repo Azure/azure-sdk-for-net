@@ -13,102 +13,234 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    /// <summary>
-    /// A class representing the DenyAssignment data model.
-    /// Deny Assignment
-    /// </summary>
+    /// <summary> Deny Assignment. </summary>
     public partial class DenyAssignmentData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DenyAssignmentData"/>. </summary>
-        internal DenyAssignmentData()
+        public DenyAssignmentData()
         {
-            Permissions = new ChangeTrackingList<DenyAssignmentPermission>();
-            Principals = new ChangeTrackingList<RoleManagementPrincipal>();
-            ExcludePrincipals = new ChangeTrackingList<RoleManagementPrincipal>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DenyAssignmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="denyAssignmentName"> The display name of the deny assignment. </param>
-        /// <param name="description"> The description of the deny assignment. </param>
-        /// <param name="permissions"> An array of permissions that are denied by the deny assignment. </param>
-        /// <param name="scope"> The deny assignment scope. </param>
-        /// <param name="isAppliedToChildScopes"> Determines if the deny assignment applies to child scopes. Default value is false. </param>
-        /// <param name="principals"> Array of principals to which the deny assignment applies. </param>
-        /// <param name="excludePrincipals"> Array of principals to which the deny assignment does not apply. </param>
-        /// <param name="isSystemProtected"> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DenyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string denyAssignmentName, string description, IReadOnlyList<DenyAssignmentPermission> permissions, string scope, bool? isAppliedToChildScopes, IReadOnlyList<RoleManagementPrincipal> principals, IReadOnlyList<RoleManagementPrincipal> excludePrincipals, bool? isSystemProtected, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Deny assignment properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DenyAssignmentData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DenyAssignmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            DenyAssignmentName = denyAssignmentName;
-            Description = description;
-            Permissions = permissions;
-            Scope = scope;
-            IsAppliedToChildScopes = isAppliedToChildScopes;
-            Principals = principals;
-            ExcludePrincipals = excludePrincipals;
-            IsSystemProtected = isSystemProtected;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Deny assignment properties. </summary>
+        internal DenyAssignmentProperties Properties { get; set; }
 
         /// <summary> The display name of the deny assignment. </summary>
-        [WirePath("properties.denyAssignmentName")]
-        public string DenyAssignmentName { get; }
+        public string DenyAssignmentName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DenyAssignmentName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DenyAssignmentProperties();
+                }
+                Properties.DenyAssignmentName = value;
+            }
+        }
+
         /// <summary> The description of the deny assignment. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DenyAssignmentProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> An array of permissions that are denied by the deny assignment. </summary>
-        [WirePath("properties.permissions")]
-        public IReadOnlyList<DenyAssignmentPermission> Permissions { get; }
+        public IList<DenyAssignmentPermission> Permissions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DenyAssignmentProperties();
+                }
+                return Properties.Permissions;
+            }
+        }
+
         /// <summary> The deny assignment scope. </summary>
-        [WirePath("properties.scope")]
-        public string Scope { get; }
+        public string Scope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Scope;
+            }
+        }
+
         /// <summary> Determines if the deny assignment applies to child scopes. Default value is false. </summary>
-        [WirePath("properties.doNotApplyToChildScopes")]
-        public bool? IsAppliedToChildScopes { get; }
+        public bool? DoNotApplyToChildScopes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DoNotApplyToChildScopes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DenyAssignmentProperties();
+                }
+                Properties.DoNotApplyToChildScopes = value;
+            }
+        }
+
         /// <summary> Array of principals to which the deny assignment applies. </summary>
-        [WirePath("properties.principals")]
-        public IReadOnlyList<RoleManagementPrincipal> Principals { get; }
+        public IList<DenyAssignmentPrincipal> Principals
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DenyAssignmentProperties();
+                }
+                return Properties.Principals;
+            }
+        }
+
         /// <summary> Array of principals to which the deny assignment does not apply. </summary>
-        [WirePath("properties.excludePrincipals")]
-        public IReadOnlyList<RoleManagementPrincipal> ExcludePrincipals { get; }
+        public IList<DenyAssignmentPrincipal> ExcludePrincipals
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DenyAssignmentProperties();
+                }
+                return Properties.ExcludePrincipals;
+            }
+        }
+
         /// <summary> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </summary>
-        [WirePath("properties.isSystemProtected")]
-        public bool? IsSystemProtected { get; }
+        public bool? IsSystemProtected
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSystemProtected;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DenyAssignmentProperties();
+                }
+                Properties.IsSystemProtected = value;
+            }
+        }
+
+        /// <summary> The effect of the deny assignment. 'enforced' blocks access, 'audit' logs without blocking. </summary>
+        public DenyAssignmentEffect? DenyAssignmentEffect
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DenyAssignmentEffect;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DenyAssignmentProperties();
+                }
+                Properties.DenyAssignmentEffect = value;
+            }
+        }
+
+        /// <summary> The conditions on the deny assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </summary>
+        public string Condition
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Condition;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DenyAssignmentProperties();
+                }
+                Properties.Condition = value;
+            }
+        }
+
+        /// <summary> Version of the condition. </summary>
+        public string ConditionVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConditionVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DenyAssignmentProperties();
+                }
+                Properties.ConditionVersion = value;
+            }
+        }
+
+        /// <summary> Time it was created. </summary>
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
+        /// <summary> Time it was updated. </summary>
+        public DateTimeOffset? UpdatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdatedOn;
+            }
+        }
+
+        /// <summary> Id of the user who created the assignment. </summary>
+        public string CreatedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedBy;
+            }
+        }
+
+        /// <summary> Id of the user who updated the assignment. </summary>
+        public string UpdatedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdatedBy;
+            }
+        }
     }
 }

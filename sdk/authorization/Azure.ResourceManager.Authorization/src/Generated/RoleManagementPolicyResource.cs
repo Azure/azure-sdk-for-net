@@ -6,44 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A Class representing a RoleManagementPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleManagementPolicyResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetRoleManagementPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetRoleManagementPolicy method.
+    /// A class representing a RoleManagementPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleManagementPolicyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetRoleManagementPolicies method.
     /// </summary>
     public partial class RoleManagementPolicyResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RoleManagementPolicyResource"/> instance. </summary>
-        /// <param name="scope"> The scope. </param>
-        /// <param name="roleManagementPolicyName"> The roleManagementPolicyName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string scope, string roleManagementPolicyName)
-        {
-            var resourceId = $"{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _roleManagementPolicyClientDiagnostics;
-        private readonly RoleManagementPoliciesRestOperations _roleManagementPolicyRestClient;
+        private readonly ClientDiagnostics _roleManagementPoliciesClientDiagnostics;
+        private readonly RoleManagementPolicies _roleManagementPoliciesRestClient;
         private readonly RoleManagementPolicyData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleManagementPolicies";
 
-        /// <summary> Initializes a new instance of the <see cref="RoleManagementPolicyResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RoleManagementPolicyResource for mocking. </summary>
         protected RoleManagementPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RoleManagementPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RoleManagementPolicyResource(ArmClient client, RoleManagementPolicyData data) : this(client, data.Id)
@@ -52,71 +43,91 @@ namespace Azure.ResourceManager.Authorization
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RoleManagementPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleManagementPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RoleManagementPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _roleManagementPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string roleManagementPolicyApiVersion);
-            _roleManagementPolicyRestClient = new RoleManagementPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, roleManagementPolicyApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _roleManagementPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Authorization", ResourceType.Namespace, Diagnostics);
+            _roleManagementPoliciesRestClient = new RoleManagementPolicies(_roleManagementPoliciesClientDiagnostics, Pipeline, Endpoint, roleManagementPolicyApiVersion ?? "2024-09-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual RoleManagementPolicyData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="roleManagementPolicyName"> The roleManagementPolicyName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string roleManagementPolicyName)
+        {
+            string resourceId = $"{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get the specified role management policy for a resource scope
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleManagementPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoleManagementPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleManagementPolicyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RoleManagementPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RoleManagementPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Get");
+            using DiagnosticScope scope = _roleManagementPoliciesClientDiagnostics.CreateScope("RoleManagementPolicyResource.Get");
             scope.Start();
             try
             {
-                var response = await _roleManagementPolicyRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleManagementPoliciesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RoleManagementPolicyData> response = Response.FromValue(RoleManagementPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoleManagementPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -130,33 +141,41 @@ namespace Azure.ResourceManager.Authorization
         /// Get the specified role management policy for a resource scope
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleManagementPolicies_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoleManagementPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleManagementPolicyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RoleManagementPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RoleManagementPolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Get");
+            using DiagnosticScope scope = _roleManagementPoliciesClientDiagnostics.CreateScope("RoleManagementPolicyResource.Get");
             scope.Start();
             try
             {
-                var response = _roleManagementPolicyRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleManagementPoliciesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RoleManagementPolicyData> response = Response.FromValue(RoleManagementPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoleManagementPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -170,20 +189,20 @@ namespace Azure.ResourceManager.Authorization
         /// Update a role management policy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleManagementPolicies_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoleManagementPolicies_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleManagementPolicyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RoleManagementPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,11 +213,21 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Update");
+            using DiagnosticScope scope = _roleManagementPoliciesClientDiagnostics.CreateScope("RoleManagementPolicyResource.Update");
             scope.Start();
             try
             {
-                var response = await _roleManagementPolicyRestClient.UpdateAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleManagementPoliciesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, RoleManagementPolicyData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RoleManagementPolicyData> response = Response.FromValue(RoleManagementPolicyData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoleManagementPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -212,20 +241,20 @@ namespace Azure.ResourceManager.Authorization
         /// Update a role management policy
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RoleManagementPolicies_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> RoleManagementPolicies_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-10-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RoleManagementPolicyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RoleManagementPolicyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,12 +265,124 @@ namespace Azure.ResourceManager.Authorization
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _roleManagementPolicyClientDiagnostics.CreateScope("RoleManagementPolicyResource.Update");
+            using DiagnosticScope scope = _roleManagementPoliciesClientDiagnostics.CreateScope("RoleManagementPolicyResource.Update");
             scope.Start();
             try
             {
-                var response = _roleManagementPolicyRestClient.Update(Id.Parent, Id.Name, data, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleManagementPoliciesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, RoleManagementPolicyData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RoleManagementPolicyData> response = Response.FromValue(RoleManagementPolicyData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RoleManagementPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a role management policy
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RoleManagementPolicies_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RoleManagementPolicyResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _roleManagementPoliciesClientDiagnostics.CreateScope("RoleManagementPolicyResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleManagementPoliciesRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AuthorizationArmOperation operation = new AuthorizationArmOperation(response, rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a role management policy
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Authorization/roleManagementPolicies/{roleManagementPolicyName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RoleManagementPolicies_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RoleManagementPolicyResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _roleManagementPoliciesClientDiagnostics.CreateScope("RoleManagementPolicyResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _roleManagementPoliciesRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                AuthorizationArmOperation operation = new AuthorizationArmOperation(response, rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
