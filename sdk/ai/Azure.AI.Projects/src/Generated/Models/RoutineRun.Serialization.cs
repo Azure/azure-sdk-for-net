@@ -75,13 +75,13 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(StatusInternal))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(StatusInternal);
+                writer.WriteRawValue(Status);
 #else
-                using (JsonDocument document = JsonDocument.Parse(StatusInternal))
+                using (JsonDocument document = JsonDocument.Parse(Status))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -230,7 +230,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             string id = default;
-            BinaryData statusInternal = default;
+            BinaryData status = default;
             RoutineRunPhase? phase = default;
             RoutineTriggerType? triggerType = default;
             string triggerName = default;
@@ -265,7 +265,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    statusInternal = BinaryData.FromString(prop.Value.GetRawText());
+                    status = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("phase"u8))
@@ -411,7 +411,7 @@ namespace Azure.AI.Projects
             }
             return new RoutineRun(
                 id,
-                statusInternal,
+                status,
                 phase,
                 triggerType,
                 triggerName,
