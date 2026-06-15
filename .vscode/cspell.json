@@ -379,6 +379,7 @@
         "ccfs",
         "cose",
         "jwks",
+        "mrenclave",
         "phdr",
         "pkix",
         "scitt",
