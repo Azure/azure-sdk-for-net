@@ -9,7 +9,15 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualNetworkData
     {
-        public global::System.Collections.Generic.IList<global::System.String> AddressPrefixes => default;
+        public global::System.Collections.Generic.IList<global::System.String> AddressPrefixes
+        {
+            get
+            {
+                AddressSpace ??= new global::Azure.ResourceManager.Network.Models.VirtualNetworkAddressSpace();
+                return AddressSpace.AddressPrefixes;
+            }
+        }
+
         internal global::Azure.ResourceManager.Network.Models.DhcpOptions DhcpOptions
         {
             get => new global::Azure.ResourceManager.Network.Models.DhcpOptions(DhcpOptionsDnsServers, default);
