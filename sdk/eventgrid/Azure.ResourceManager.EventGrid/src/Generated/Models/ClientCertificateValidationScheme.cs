@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> UriMatchesAuthenticationName. </summary>
         private const string UriMatchesAuthenticationNameValue = "UriMatchesAuthenticationName";
         /// <summary> IpMatchesAuthenticationName. </summary>
-        private const string IpMatchesAuthenticationNameValue = "IpMatchesAuthenticationName";
+        private const string IPMatchesAuthenticationNameValue = "IpMatchesAuthenticationName";
         /// <summary> EmailMatchesAuthenticationName. </summary>
         private const string EmailMatchesAuthenticationNameValue = "EmailMatchesAuthenticationName";
         /// <summary> ThumbprintMatch. </summary>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static ClientCertificateValidationScheme UriMatchesAuthenticationName { get; } = new ClientCertificateValidationScheme(UriMatchesAuthenticationNameValue);
 
         /// <summary> IpMatchesAuthenticationName. </summary>
-        public static ClientCertificateValidationScheme IpMatchesAuthenticationName { get; } = new ClientCertificateValidationScheme(IpMatchesAuthenticationNameValue);
+        public static ClientCertificateValidationScheme IPMatchesAuthenticationName { get; } = new ClientCertificateValidationScheme(IPMatchesAuthenticationNameValue);
 
         /// <summary> EmailMatchesAuthenticationName. </summary>
         public static ClientCertificateValidationScheme EmailMatchesAuthenticationName { get; } = new ClientCertificateValidationScheme(EmailMatchesAuthenticationNameValue);

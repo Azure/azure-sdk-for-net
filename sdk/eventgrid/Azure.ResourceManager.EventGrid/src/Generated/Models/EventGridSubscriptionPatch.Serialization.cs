@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ExpirationTimeUtc))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTimeUtc"u8);
-                writer.WriteStringValue(ExpirationTimeUtc.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(EventDeliverySchema))
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             DeliveryWithResourceIdentity deliveryWithResourceIdentity = default;
             EventSubscriptionFilter filter = default;
             IList<string> labels = default;
-            DateTimeOffset? expirationTimeUtc = default;
+            DateTimeOffset? expireOn = default;
             EventDeliverySchema? eventDeliverySchema = default;
             EventSubscriptionRetryPolicy retryPolicy = default;
             DeadLetterDestination deadLetterDestination = default;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    expirationTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("eventDeliverySchema"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 deliveryWithResourceIdentity,
                 filter,
                 labels ?? new ChangeTrackingList<string>(),
-                expirationTimeUtc,
+                expireOn,
                 eventDeliverySchema,
                 retryPolicy,
                 deadLetterDestination,

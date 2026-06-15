@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 throw new FormatException($"The model {nameof(EventGridInboundIPRule)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpMask))
+            if (Optional.IsDefined(IPMask))
             {
                 writer.WritePropertyName("ipMask"u8);
-                writer.WriteStringValue(IpMask);
+                writer.WriteStringValue(IPMask);
             }
             if (Optional.IsDefined(Action))
             {

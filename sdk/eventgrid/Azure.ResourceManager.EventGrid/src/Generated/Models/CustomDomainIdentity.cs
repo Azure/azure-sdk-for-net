@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomDomainIdentity"/>. </summary>
-        /// <param name="type"> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </param>
+        /// <param name="identityType"> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </param>
         /// <param name="userAssignedIdentity"> The user identity associated with the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomDomainIdentity(CustomDomainIdentityType? @type, string userAssignedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomDomainIdentity(CustomDomainIdentityType? identityType, string userAssignedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            IdentityType = identityType;
             UserAssignedIdentity = userAssignedIdentity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </summary>
         [WirePath("type")]
-        public CustomDomainIdentityType? Type { get; set; }
+        public CustomDomainIdentityType? IdentityType { get; set; }
 
         /// <summary> The user identity associated with the resource. </summary>
         [WirePath("userAssignedIdentity")]

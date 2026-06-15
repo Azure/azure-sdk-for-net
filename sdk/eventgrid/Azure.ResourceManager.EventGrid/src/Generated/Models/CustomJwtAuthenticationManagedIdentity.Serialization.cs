@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 throw new FormatException($"The model {nameof(CustomJwtAuthenticationManagedIdentity)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(IdentityType.ToString());
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
@@ -129,14 +129,14 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            CustomJwtAuthenticationManagedIdentityType @type = default;
+            CustomJwtAuthenticationManagedIdentityType identityType = default;
             ResourceIdentifier userAssignedIdentity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new CustomJwtAuthenticationManagedIdentityType(prop.Value.GetString());
+                    identityType = new CustomJwtAuthenticationManagedIdentityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentity"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CustomJwtAuthenticationManagedIdentity(@type, userAssignedIdentity, additionalBinaryDataProperties);
+            return new CustomJwtAuthenticationManagedIdentity(identityType, userAssignedIdentity, additionalBinaryDataProperties);
         }
     }
 }

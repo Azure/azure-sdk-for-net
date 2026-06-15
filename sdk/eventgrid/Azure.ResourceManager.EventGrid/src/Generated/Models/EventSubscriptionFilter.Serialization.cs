@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("isSubjectCaseSensitive"u8);
                 writer.WriteBooleanValue(IsSubjectCaseSensitive.Value);
             }
-            if (Optional.IsDefined(EnableAdvancedFilteringOnArrays))
+            if (Optional.IsDefined(IsAdvancedFilteringOnArraysEnabled))
             {
                 writer.WritePropertyName("enableAdvancedFilteringOnArrays"u8);
-                writer.WriteBooleanValue(EnableAdvancedFilteringOnArrays.Value);
+                writer.WriteBooleanValue(IsAdvancedFilteringOnArraysEnabled.Value);
             }
             if (Optional.IsCollectionDefined(AdvancedFilters))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             string subjectEndsWith = default;
             IList<string> includedEventTypes = default;
             bool? isSubjectCaseSensitive = default;
-            bool? enableAdvancedFilteringOnArrays = default;
+            bool? isAdvancedFilteringOnArraysEnabled = default;
             IList<AdvancedFilter> advancedFilters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    enableAdvancedFilteringOnArrays = prop.Value.GetBoolean();
+                    isAdvancedFilteringOnArraysEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("advancedFilters"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 subjectEndsWith,
                 includedEventTypes ?? new ChangeTrackingList<string>(),
                 isSubjectCaseSensitive,
-                enableAdvancedFilteringOnArrays,
+                isAdvancedFilteringOnArraysEnabled,
                 advancedFilters ?? new ChangeTrackingList<AdvancedFilter>(),
                 additionalBinaryDataProperties);
         }

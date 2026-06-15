@@ -165,12 +165,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                 default);
         }
 
-        /// <param name="type"> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </param>
+        /// <param name="identityType"> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </param>
         /// <param name="userAssignedIdentity"> The user identity associated with the resource. </param>
         /// <returns> A new <see cref="Models.CustomDomainIdentity"/> instance for mocking. </returns>
-        public static CustomDomainIdentity CustomDomainIdentity(CustomDomainIdentityType? @type = default, string userAssignedIdentity = default)
+        public static CustomDomainIdentity CustomDomainIdentity(CustomDomainIdentityType? identityType = default, string userAssignedIdentity = default)
         {
-            return new CustomDomainIdentity(@type, userAssignedIdentity, default);
+            return new CustomDomainIdentity(identityType, userAssignedIdentity, default);
         }
 
         /// <param name="state"> Indicate if Topic Spaces Configuration is enabled for the namespace. Default is Disabled. </param>
@@ -268,12 +268,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new IssuerCertificateInfo(certificateUri, identity, default);
         }
 
-        /// <param name="type"> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </param>
+        /// <param name="identityType"> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </param>
         /// <param name="userAssignedIdentity"> The user identity associated with the resource. </param>
         /// <returns> A new <see cref="Models.CustomJwtAuthenticationManagedIdentity"/> instance for mocking. </returns>
-        public static CustomJwtAuthenticationManagedIdentity CustomJwtAuthenticationManagedIdentity(CustomJwtAuthenticationManagedIdentityType @type = default, ResourceIdentifier userAssignedIdentity = default)
+        public static CustomJwtAuthenticationManagedIdentity CustomJwtAuthenticationManagedIdentity(CustomJwtAuthenticationManagedIdentityType identityType = default, ResourceIdentifier userAssignedIdentity = default)
         {
-            return new CustomJwtAuthenticationManagedIdentity(@type, userAssignedIdentity, default);
+            return new CustomJwtAuthenticationManagedIdentity(identityType, userAssignedIdentity, default);
         }
 
         /// <param name="kid"> Identifier for the certificate. </param>
@@ -301,12 +301,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                 default);
         }
 
-        /// <param name="type"> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </param>
+        /// <param name="identityType"> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </param>
         /// <param name="userAssignedIdentity"> The user identity associated with the resource. </param>
         /// <returns> A new <see cref="Models.CustomWebhookAuthenticationManagedIdentity"/> instance for mocking. </returns>
-        public static CustomWebhookAuthenticationManagedIdentity CustomWebhookAuthenticationManagedIdentity(CustomWebhookAuthenticationManagedIdentityType @type = default, ResourceIdentifier userAssignedIdentity = default)
+        public static CustomWebhookAuthenticationManagedIdentity CustomWebhookAuthenticationManagedIdentity(CustomWebhookAuthenticationManagedIdentityType identityType = default, ResourceIdentifier userAssignedIdentity = default)
         {
-            return new CustomWebhookAuthenticationManagedIdentity(@type, userAssignedIdentity, default);
+            return new CustomWebhookAuthenticationManagedIdentity(identityType, userAssignedIdentity, default);
         }
 
         /// <param name="identityType"> Routing identity type for topic spaces configuration. </param>
@@ -1154,10 +1154,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Specifies if the SubjectBeginsWith and SubjectEndsWith properties of the filter
         /// should be compared in a case sensitive manner.
         /// </param>
-        /// <param name="enableAdvancedFilteringOnArrays"> Allows advanced filters to be evaluated against an array of values instead of expecting a singular value. </param>
+        /// <param name="isAdvancedFilteringOnArraysEnabled"> Allows advanced filters to be evaluated against an array of values instead of expecting a singular value. </param>
         /// <param name="advancedFilters"> An array of advanced filters that are used for filtering event subscriptions. </param>
         /// <returns> A new <see cref="Models.EventSubscriptionFilter"/> instance for mocking. </returns>
-        public static EventSubscriptionFilter EventSubscriptionFilter(string subjectBeginsWith = default, string subjectEndsWith = default, IEnumerable<string> includedEventTypes = default, bool? isSubjectCaseSensitive = default, bool? enableAdvancedFilteringOnArrays = default, IEnumerable<AdvancedFilter> advancedFilters = default)
+        public static EventSubscriptionFilter EventSubscriptionFilter(string subjectBeginsWith = default, string subjectEndsWith = default, IEnumerable<string> includedEventTypes = default, bool? isSubjectCaseSensitive = default, bool? isAdvancedFilteringOnArraysEnabled = default, IEnumerable<AdvancedFilter> advancedFilters = default)
         {
             includedEventTypes ??= new ChangeTrackingList<string>();
             advancedFilters ??= new ChangeTrackingList<AdvancedFilter>();
@@ -1167,7 +1167,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 subjectEndsWith,
                 (includedEventTypes ?? new ChangeTrackingList<string>()).ToList(),
                 isSubjectCaseSensitive,
-                enableAdvancedFilteringOnArrays,
+                isAdvancedFilteringOnArraysEnabled,
                 (advancedFilters ?? new ChangeTrackingList<AdvancedFilter>()).ToList(),
                 default);
         }
@@ -1383,7 +1383,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </param>
         /// <param name="filter"> Information about the filter for the event subscription. </param>
         /// <param name="labels"> List of user defined labels. </param>
-        /// <param name="expirationTimeUtc"> Information about the expiration time for the event subscription. </param>
+        /// <param name="expireOn"> Information about the expiration time for the event subscription. </param>
         /// <param name="eventDeliverySchema"> The event delivery schema for the event subscription. </param>
         /// <param name="retryPolicy"> The retry policy for events. This can be used to configure maximum number of delivery attempts and time to live for events. </param>
         /// <param name="deadLetterDestination">
@@ -1395,7 +1395,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Uses the managed identity setup on the parent resource (topic / domain) to acquire the authentication tokens being used during delivery / dead-lettering.
         /// </param>
         /// <returns> A new <see cref="Models.EventGridSubscriptionPatch"/> instance for mocking. </returns>
-        public static EventGridSubscriptionPatch EventGridSubscriptionPatch(EventSubscriptionDestination destination = default, DeliveryWithResourceIdentity deliveryWithResourceIdentity = default, EventSubscriptionFilter filter = default, IEnumerable<string> labels = default, DateTimeOffset? expirationTimeUtc = default, EventDeliverySchema? eventDeliverySchema = default, EventSubscriptionRetryPolicy retryPolicy = default, DeadLetterDestination deadLetterDestination = default, DeadLetterWithResourceIdentity deadLetterWithResourceIdentity = default)
+        public static EventGridSubscriptionPatch EventGridSubscriptionPatch(EventSubscriptionDestination destination = default, DeliveryWithResourceIdentity deliveryWithResourceIdentity = default, EventSubscriptionFilter filter = default, IEnumerable<string> labels = default, DateTimeOffset? expireOn = default, EventDeliverySchema? eventDeliverySchema = default, EventSubscriptionRetryPolicy retryPolicy = default, DeadLetterDestination deadLetterDestination = default, DeadLetterWithResourceIdentity deadLetterWithResourceIdentity = default)
         {
             labels ??= new ChangeTrackingList<string>();
 
@@ -1404,7 +1404,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 deliveryWithResourceIdentity,
                 filter,
                 (labels ?? new ChangeTrackingList<string>()).ToList(),
-                expirationTimeUtc,
+                expireOn,
                 eventDeliverySchema,
                 retryPolicy,
                 deadLetterDestination,
@@ -1499,15 +1499,15 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <param name="partnerRegistrationImmutableId"> The immutableId of the corresponding partner registration. </param>
         /// <param name="partnerName"> The partner name. </param>
-        /// <param name="authorizationExpirationTimeInUtc">
+        /// <param name="authorizationExpireOn">
         /// Expiration time of the partner authorization. If this timer expires, any request from this partner to create, update or delete resources in subscriber's
         /// context will fail. If specified, the allowed values are between 1 to the value of defaultMaximumExpirationTimeInDays specified in PartnerConfiguration.
         /// If not specified, the default value will be the value of defaultMaximumExpirationTimeInDays specified in PartnerConfiguration or 7 if this value is not specified.
         /// </param>
         /// <returns> A new <see cref="Models.EventGridPartnerContent"/> instance for mocking. </returns>
-        public static EventGridPartnerContent EventGridPartnerContent(Guid? partnerRegistrationImmutableId = default, string partnerName = default, DateTimeOffset? authorizationExpirationTimeInUtc = default)
+        public static EventGridPartnerContent EventGridPartnerContent(Guid? partnerRegistrationImmutableId = default, string partnerName = default, DateTimeOffset? authorizationExpireOn = default)
         {
-            return new EventGridPartnerContent(partnerRegistrationImmutableId, partnerName, authorizationExpirationTimeInUtc, default);
+            return new EventGridPartnerContent(partnerRegistrationImmutableId, partnerName, authorizationExpireOn, default);
         }
 
         /// <param name="tags"> Tags of the partner configuration resource. </param>

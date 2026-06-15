@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </param>
         /// <param name="filter"> Information about the filter for the event subscription. </param>
         /// <param name="labels"> List of user defined labels. </param>
-        /// <param name="expirationTimeUtc"> Information about the expiration time for the event subscription. </param>
+        /// <param name="expireOn"> Information about the expiration time for the event subscription. </param>
         /// <param name="eventDeliverySchema"> The event delivery schema for the event subscription. </param>
         /// <param name="retryPolicy"> The retry policy for events. This can be used to configure maximum number of delivery attempts and time to live for events. </param>
         /// <param name="deadLetterDestination">
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Uses the managed identity setup on the parent resource (topic / domain) to acquire the authentication tokens being used during delivery / dead-lettering.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridSubscriptionPatch(EventSubscriptionDestination destination, DeliveryWithResourceIdentity deliveryWithResourceIdentity, EventSubscriptionFilter filter, IList<string> labels, DateTimeOffset? expirationTimeUtc, EventDeliverySchema? eventDeliverySchema, EventSubscriptionRetryPolicy retryPolicy, DeadLetterDestination deadLetterDestination, DeadLetterWithResourceIdentity deadLetterWithResourceIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventGridSubscriptionPatch(EventSubscriptionDestination destination, DeliveryWithResourceIdentity deliveryWithResourceIdentity, EventSubscriptionFilter filter, IList<string> labels, DateTimeOffset? expireOn, EventDeliverySchema? eventDeliverySchema, EventSubscriptionRetryPolicy retryPolicy, DeadLetterDestination deadLetterDestination, DeadLetterWithResourceIdentity deadLetterWithResourceIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Destination = destination;
             DeliveryWithResourceIdentity = deliveryWithResourceIdentity;
             Filter = filter;
             Labels = labels;
-            ExpirationTimeUtc = expirationTimeUtc;
+            ExpireOn = expireOn;
             EventDeliverySchema = eventDeliverySchema;
             RetryPolicy = retryPolicy;
             DeadLetterDestination = deadLetterDestination;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Information about the expiration time for the event subscription. </summary>
         [WirePath("expirationTimeUtc")]
-        public DateTimeOffset? ExpirationTimeUtc { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
 
         /// <summary> The event delivery schema for the event subscription. </summary>
         [WirePath("eventDeliverySchema")]

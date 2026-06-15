@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal EventGridInboundIPRule(string ipMask, EventGridIPActionType? action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpMask = ipMask;
+            IPMask = ipMask;
             Action = action;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IP Address in CIDR notation e.g., 10.0.0.0/8. </summary>
         [WirePath("ipMask")]
-        public string IpMask { get; set; }
+        public string IPMask { get; set; }
 
         /// <summary> Action to perform based on the match or no match of the IpMask. </summary>
         [WirePath("action")]

@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Specifies if the SubjectBeginsWith and SubjectEndsWith properties of the filter
         /// should be compared in a case sensitive manner.
         /// </param>
-        /// <param name="enableAdvancedFilteringOnArrays"> Allows advanced filters to be evaluated against an array of values instead of expecting a singular value. </param>
+        /// <param name="isAdvancedFilteringOnArraysEnabled"> Allows advanced filters to be evaluated against an array of values instead of expecting a singular value. </param>
         /// <param name="advancedFilters"> An array of advanced filters that are used for filtering event subscriptions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventSubscriptionFilter(string subjectBeginsWith, string subjectEndsWith, IList<string> includedEventTypes, bool? isSubjectCaseSensitive, bool? enableAdvancedFilteringOnArrays, IList<AdvancedFilter> advancedFilters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventSubscriptionFilter(string subjectBeginsWith, string subjectEndsWith, IList<string> includedEventTypes, bool? isSubjectCaseSensitive, bool? isAdvancedFilteringOnArraysEnabled, IList<AdvancedFilter> advancedFilters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubjectBeginsWith = subjectBeginsWith;
             SubjectEndsWith = subjectEndsWith;
             IncludedEventTypes = includedEventTypes;
             IsSubjectCaseSensitive = isSubjectCaseSensitive;
-            EnableAdvancedFilteringOnArrays = enableAdvancedFilteringOnArrays;
+            IsAdvancedFilteringOnArraysEnabled = isAdvancedFilteringOnArraysEnabled;
             AdvancedFilters = advancedFilters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Allows advanced filters to be evaluated against an array of values instead of expecting a singular value. </summary>
         [WirePath("enableAdvancedFilteringOnArrays")]
-        public bool? EnableAdvancedFilteringOnArrays { get; set; }
+        public bool? IsAdvancedFilteringOnArraysEnabled { get; set; }
 
         /// <summary> An array of advanced filters that are used for filtering event subscriptions. </summary>
         [WirePath("advancedFilters")]

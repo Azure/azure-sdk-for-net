@@ -10,12 +10,6 @@ using System;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventSubscriptionIdentity
-    {
-        [WirePath("type")]
-        public EventSubscriptionIdentityType? IdentityType { get; set; }
-    }
-
     public partial class NamespaceTopicEventSubscriptionPatch
     {
         [WirePath("properties.expirationTimeUtc")]
@@ -42,12 +36,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 Properties.ExpireOnIfNotActivated = value;
             }
         }
-    }
-
-    public partial class RoutingIdentityInfo
-    {
-        [WirePath("type")]
-        public RoutingIdentityType? IdentityType { get; set; }
     }
 
     public partial class WebHookEventSubscriptionDestination

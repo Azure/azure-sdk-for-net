@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="EventGridPartnerContent"/>. </summary>
         /// <param name="partnerRegistrationImmutableId"> The immutableId of the corresponding partner registration. </param>
         /// <param name="partnerName"> The partner name. </param>
-        /// <param name="authorizationExpirationTimeInUtc">
+        /// <param name="authorizationExpireOn">
         /// Expiration time of the partner authorization. If this timer expires, any request from this partner to create, update or delete resources in subscriber's
         /// context will fail. If specified, the allowed values are between 1 to the value of defaultMaximumExpirationTimeInDays specified in PartnerConfiguration.
         /// If not specified, the default value will be the value of defaultMaximumExpirationTimeInDays specified in PartnerConfiguration or 7 if this value is not specified.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridPartnerContent(Guid? partnerRegistrationImmutableId, string partnerName, DateTimeOffset? authorizationExpirationTimeInUtc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventGridPartnerContent(Guid? partnerRegistrationImmutableId, string partnerName, DateTimeOffset? authorizationExpireOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
             PartnerName = partnerName;
-            AuthorizationExpirationTimeInUtc = authorizationExpirationTimeInUtc;
+            AuthorizationExpireOn = authorizationExpireOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// If not specified, the default value will be the value of defaultMaximumExpirationTimeInDays specified in PartnerConfiguration or 7 if this value is not specified.
         /// </summary>
         [WirePath("authorizationExpirationTimeInUtc")]
-        public DateTimeOffset? AuthorizationExpirationTimeInUtc { get; set; }
+        public DateTimeOffset? AuthorizationExpireOn { get; set; }
     }
 }

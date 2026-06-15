@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 throw new FormatException($"The model {nameof(CustomDomainIdentity)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(IdentityType.Value.ToString());
             }
             if (Optional.IsDefined(UserAssignedIdentity))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            CustomDomainIdentityType? @type = default;
+            CustomDomainIdentityType? identityType = default;
             string userAssignedIdentity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    @type = new CustomDomainIdentityType(prop.Value.GetString());
+                    identityType = new CustomDomainIdentityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentity"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CustomDomainIdentity(@type, userAssignedIdentity, additionalBinaryDataProperties);
+            return new CustomDomainIdentity(identityType, userAssignedIdentity, additionalBinaryDataProperties);
         }
     }
 }

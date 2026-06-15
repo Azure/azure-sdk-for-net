@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </summary>
+        [WirePath("type")]
+        public EventSubscriptionIdentityType? IdentityType { get; set; }
+
         /// <summary> The user identity associated with the resource. </summary>
         [WirePath("userAssignedIdentity")]
         public string UserAssignedIdentity { get; set; }
