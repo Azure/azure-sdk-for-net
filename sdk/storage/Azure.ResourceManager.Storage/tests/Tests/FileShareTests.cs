@@ -512,6 +512,8 @@ namespace Azure.ResourceManager.Storage.Tests
             Assert.IsTrue(usage.Properties.FileShareLimits.MinProvisionedBandwidthMiBPerSec.Value > 0);
             Assert.IsTrue(usage.Properties.FileShareLimits.MinProvisionedIops.Value > 0);
             Assert.IsTrue(usage.Properties.FileShareLimits.MinProvisionedStorageGiB.Value > 0);
+            Assert.IsTrue(usage.Properties.FileShareLimits.GuardrailIOScalar.Value > 0);
+            Assert.IsTrue(usage.Properties.FileShareLimits.GuardrailBandwidthScalar.Value > 0);
             Assert.IsNotNull(usage.Properties.BurstingConstants);
             Assert.IsTrue(usage.Properties.FileShareRecommendations.BandwidthScalar.Value > 0);
             Assert.IsTrue(usage.Properties.FileShareRecommendations.BaseBandwidthMiBPerSec.Value > 0);
