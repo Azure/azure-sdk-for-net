@@ -167,8 +167,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 // Block until either the test releases the gate or the per-attempt
                 // HttpClient timeout fires (which surfaces as cancellation).
-                using var registration = cancellationToken.Register(() => _gate.GetType()); // no-op anchor
-                return await _gate.WaitAsync(cancellationToken).ConfigureAwait(false);
+                // Note: Task.WaitAsync(CancellationToken) is .NET 6+; this polyfill keeps the test buildable for net462.
+                var cancelTcs = new TaskCompletionSource<HttpResponseMessage>(TaskCreationOptions.RunContinuationsAsynchronously);
+                using var registration = cancellationToken.Register(static state => ((TaskCompletionSource<HttpResponseMessage>)state!).TrySetCanceled(), cancelTcs);
+                var completed = await Task.WhenAny(_gate, cancelTcs.Task).ConfigureAwait(false);
+                return await completed.ConfigureAwait(false);
             }
         }
 
@@ -372,8 +375,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var task = statsbeat._configInitializationTask;
             Assert.NotNull(task);
-            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            await task!.WaitAsync(cts.Token).ConfigureAwait(false);
+            // Note: Task.WaitAsync(CancellationToken) is .NET 6+; this polyfill keeps the test buildable for net462.
+            var timeout = Task.Delay(TimeSpan.FromSeconds(10));
+            var completed = await Task.WhenAny(task!, timeout).ConfigureAwait(false);
+            if (completed == timeout)
+            {
+                throw new TimeoutException("AzureMonitorStatsbeat distro-path background initialization did not complete within 10 seconds.");
+            }
+            await task!.ConfigureAwait(false);
         }
 
         private static HttpResponseMessage OkJson(string body) =>
