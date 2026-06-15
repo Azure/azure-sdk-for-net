@@ -5,6 +5,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.ComponentModel;
 using System.Text.Json;
 
 namespace Azure.ResourceManager.Monitor.Models

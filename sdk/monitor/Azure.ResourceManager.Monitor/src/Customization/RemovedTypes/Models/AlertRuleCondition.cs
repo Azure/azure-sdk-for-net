@@ -5,6 +5,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.ComponentModel;
 using System.Text.Json;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The rule data source. </summary>
-        public RuleDataSource DataSource { get => throw new NotSupportedException("This API is no longer supported."); set => throw new NotSupportedException("This API is no longer supported."); }
+        public RuleDataSource DataSource { get; set; }
 
         void IJsonModel<AlertRuleCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This API is no longer supported.");
 

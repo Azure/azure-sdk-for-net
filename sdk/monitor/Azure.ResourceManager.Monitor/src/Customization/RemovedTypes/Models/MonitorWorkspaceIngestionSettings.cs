@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The data collection endpoint resource ID. </summary>
-        public ResourceIdentifier DataCollectionEndpointResourceId => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
+        public ResourceIdentifier DataCollectionEndpointResourceId { get; }
 
         /// <summary> The data collection rule resource ID. </summary>
-        public ResourceIdentifier DataCollectionRuleResourceId => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
+        public ResourceIdentifier DataCollectionRuleResourceId { get; }
 
         /// <summary> Writes the model as JSON. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");

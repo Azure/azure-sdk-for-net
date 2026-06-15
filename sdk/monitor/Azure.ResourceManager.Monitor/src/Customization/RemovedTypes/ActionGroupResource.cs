@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -16,6 +18,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> The notification status. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public virtual Response<NotificationStatus> GetNotificationStatus(string notificationId, CancellationToken cancellationToken = default)
             => throw new System.NotSupportedException("This API is no longer supported.");
 

@@ -6,6 +6,7 @@
 #pragma warning disable CS0618 // This file intentionally exposes obsolete removed-type compatibility signatures.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -24,12 +25,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns an <see cref="AlertRuleResource"/> object. </returns>
         [Obsolete("This API is no longer supported.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AlertRuleResource GetAlertRuleResource(this ArmClient client, ResourceIdentifier id) => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets a collection of <see cref="AlertRuleResource"/> objects in the resource group. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> instance the method will execute against. </param>
         /// <returns> Returns a collection of <see cref="AlertRuleResource"/> objects. </returns>
         [Obsolete("This API is no longer supported.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AlertRuleCollection GetAlertRules(this ResourceGroupResource resourceGroupResource) => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets all alert rules in a subscription. </summary>
@@ -37,6 +40,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AlertRuleResource"/> objects. </returns>
         [Obsolete("This API is no longer supported.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<AlertRuleResource> GetAlertRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets all alert rules in a subscription. </summary>
@@ -44,6 +48,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AlertRuleResource"/> objects. </returns>
         [Obsolete("This API is no longer supported.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<AlertRuleResource> GetAlertRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets an alert rule. </summary>
@@ -53,6 +58,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> The alert rule resource. </returns>
         [Obsolete("This API is no longer supported.", false)]
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<AlertRuleResource> GetAlertRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets an alert rule. </summary>
@@ -62,6 +68,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> The alert rule resource. </returns>
         [Obsolete("This API is no longer supported.", false)]
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Task<Response<AlertRuleResource>> GetAlertRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets an object representing a <see cref="DiagnosticSettingsCategoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -69,6 +76,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource"/> object. </returns>
         [Obsolete("This API is no longer supported.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DiagnosticSettingsCategoryResource GetDiagnosticSettingsCategoryResource(this ArmClient client, ResourceIdentifier id) => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets a collection of <see cref="DiagnosticSettingsCategoryResource"/> objects within the specified scope. </summary>
@@ -76,6 +84,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scope"> The scope of the resource collection to get. </param>
         /// <returns> Returns a collection of <see cref="DiagnosticSettingsCategoryResource"/> objects. </returns>
         [Obsolete("This API is no longer supported.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static DiagnosticSettingsCategoryCollection GetDiagnosticSettingsCategories(this ArmClient client, ResourceIdentifier scope) => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets the diagnostic settings category. </summary>
@@ -86,6 +95,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> The diagnostic settings category resource. </returns>
         [Obsolete("This API is no longer supported.", false)]
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<DiagnosticSettingsCategoryResource> GetDiagnosticSettingsCategory(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets the diagnostic settings category. </summary>
@@ -96,6 +106,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> The diagnostic settings category resource. </returns>
         [Obsolete("This API is no longer supported.", false)]
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Task<Response<DiagnosticSettingsCategoryResource>> GetDiagnosticSettingsCategoryAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets an object representing a <see cref="MonitorWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -103,12 +114,14 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MonitorWorkspaceResource"/> object. </returns>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MonitorWorkspaceResource GetMonitorWorkspaceResource(this ArmClient client, ResourceIdentifier id) => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
 
         /// <summary> Gets a collection of <see cref="MonitorWorkspaceResource"/> objects in the resource group. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> instance the method will execute against. </param>
         /// <returns> Returns a collection of <see cref="MonitorWorkspaceResource"/> objects. </returns>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MonitorWorkspaceResourceCollection GetMonitorWorkspaceResources(this ResourceGroupResource resourceGroupResource) => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
 
         /// <summary> Gets all MonitorWorkspace resources in a subscription. </summary>
@@ -116,6 +129,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MonitorWorkspaceResource"/> objects. </returns>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<MonitorWorkspaceResource> GetMonitorWorkspaceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
 
         /// <summary> Gets all MonitorWorkspace resources in a subscription. </summary>
@@ -123,6 +137,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MonitorWorkspaceResource"/> objects. </returns>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<MonitorWorkspaceResource> GetMonitorWorkspaceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
 
         /// <summary> Gets a MonitorWorkspace resource. </summary>
@@ -132,6 +147,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> The MonitorWorkspace resource. </returns>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<MonitorWorkspaceResource> GetMonitorWorkspaceResource(this ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
 
         /// <summary> Gets a MonitorWorkspace resource. </summary>
@@ -141,6 +157,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> The MonitorWorkspace resource. </returns>
         [Obsolete("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static Task<Response<MonitorWorkspaceResource>> GetMonitorWorkspaceResourceAsync(this ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.");
 
         /// <summary> Gets an object representing a <see cref="VmInsightsOnboardingStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -148,6 +165,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
         [Obsolete("This API is no longer supported.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatusResource(this ArmClient client, ResourceIdentifier id) => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets an object representing a <see cref="VmInsightsOnboardingStatusResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -155,6 +173,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource"/> object. </returns>
         [Obsolete("This API is no longer supported.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatus(this ArmClient client, ResourceIdentifier scope) => throw new NotSupportedException("This API is no longer supported.");
 
         private static MockableMonitorArmClient GetMockableArmClient(ResourceGroupResource resourceGroupResource)
@@ -164,11 +183,15 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> Gets a collection of action groups in the resource group. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static ActionGroupCollection GetActionGroups(this ResourceGroupResource resourceGroupResource)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets an action group in the resource group. </summary>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Response<ActionGroupResource> GetActionGroup(this ResourceGroupResource resourceGroupResource, string actionGroupName, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
@@ -178,11 +201,15 @@ namespace Azure.ResourceManager.Monitor
             => Task.FromException<Response<ActionGroupResource>>(new NotSupportedException("This API is no longer supported."));
 
         /// <summary> Gets a collection of activity log alerts in the resource group. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static ActivityLogAlertCollection GetActivityLogAlerts(this ResourceGroupResource resourceGroupResource)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets an activity log alert in the resource group. </summary>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Response<ActivityLogAlertResource> GetActivityLogAlert(this ResourceGroupResource resourceGroupResource, string activityLogAlertName, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
@@ -192,11 +219,15 @@ namespace Azure.ResourceManager.Monitor
             => Task.FromException<Response<ActivityLogAlertResource>>(new NotSupportedException("This API is no longer supported."));
 
         /// <summary> Gets a collection of autoscale settings in the resource group. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static AutoscaleSettingCollection GetAutoscaleSettings(this ResourceGroupResource resourceGroupResource)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets an autoscale setting in the resource group. </summary>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Response<AutoscaleSettingResource> GetAutoscaleSetting(this ResourceGroupResource resourceGroupResource, string autoscaleSettingName, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
@@ -206,11 +237,15 @@ namespace Azure.ResourceManager.Monitor
             => Task.FromException<Response<AutoscaleSettingResource>>(new NotSupportedException("This API is no longer supported."));
 
         /// <summary> Gets a collection of data collection endpoints in the resource group. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static DataCollectionEndpointCollection GetDataCollectionEndpoints(this ResourceGroupResource resourceGroupResource)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets a data collection endpoint in the resource group. </summary>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Response<DataCollectionEndpointResource> GetDataCollectionEndpoint(this ResourceGroupResource resourceGroupResource, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
@@ -220,11 +255,15 @@ namespace Azure.ResourceManager.Monitor
             => Task.FromException<Response<DataCollectionEndpointResource>>(new NotSupportedException("This API is no longer supported."));
 
         /// <summary> Gets a collection of data collection rules in the resource group. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static DataCollectionRuleCollection GetDataCollectionRules(this ResourceGroupResource resourceGroupResource)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets a data collection rule in the resource group. </summary>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Response<DataCollectionRuleResource> GetDataCollectionRule(this ResourceGroupResource resourceGroupResource, string dataCollectionRuleName, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
@@ -234,11 +273,15 @@ namespace Azure.ResourceManager.Monitor
             => Task.FromException<Response<DataCollectionRuleResource>>(new NotSupportedException("This API is no longer supported."));
 
         /// <summary> Gets a collection of metric alerts in the resource group. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static MetricAlertCollection GetMetricAlerts(this ResourceGroupResource resourceGroupResource)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets a metric alert in the resource group. </summary>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Response<MetricAlertResource> GetMetricAlert(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
@@ -248,11 +291,15 @@ namespace Azure.ResourceManager.Monitor
             => Task.FromException<Response<MetricAlertResource>>(new NotSupportedException("This API is no longer supported."));
 
         /// <summary> Gets a collection of monitor private link scopes in the resource group. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static MonitorPrivateLinkScopeCollection GetMonitorPrivateLinkScopes(this ResourceGroupResource resourceGroupResource)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets a monitor private link scope in the resource group. </summary>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Response<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScope(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
@@ -262,99 +309,147 @@ namespace Azure.ResourceManager.Monitor
             => Task.FromException<Response<MonitorPrivateLinkScopeResource>>(new NotSupportedException("This API is no longer supported."));
 
         /// <summary> Sends test notifications. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static ArmOperation<NotificationStatus> CreateNotifications(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Sends test notifications. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Sends test notifications. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static ArmOperation<NotificationStatus> CreateNotifications(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Sends test notifications. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets activity log events for the subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Pageable<EventDataInfo> GetActivityLogs(this SubscriptionResource subscriptionResource, string filter, string select, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets activity log events for the subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static AsyncPageable<EventDataInfo> GetActivityLogsAsync(this SubscriptionResource subscriptionResource, string filter, string select, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets event categories for the tenant. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Pageable<MonitorLocalizableString> GetEventCategories(this TenantResource tenantResource, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets event categories for the tenant. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static AsyncPageable<MonitorLocalizableString> GetEventCategoriesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets metric baselines for a resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Pageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselines(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets metric baselines for a resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static AsyncPageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselinesAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets metrics for a resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Pageable<MonitorMetric> GetMonitorMetrics(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets metrics for a resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static AsyncPageable<MonitorMetric> GetMonitorMetricsAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets metrics for a subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Pageable<SubscriptionMonitorMetric> GetMonitorMetrics(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets metrics for a subscription. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets metrics for a subscription with POST. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Pageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPost(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets metrics for a subscription with POST. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPostAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets notification status. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Response<NotificationStatus> GetNotificationStatus(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets notification status. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Task<Response<NotificationStatus>> GetNotificationStatusAsync(this ResourceGroupResource resourceGroupResource, string notificationId, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets notification status. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Response<NotificationStatus> GetNotificationStatus(this SubscriptionResource subscriptionResource, string notificationId, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets notification status. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Task<Response<NotificationStatus>> GetNotificationStatusAsync(this SubscriptionResource subscriptionResource, string notificationId, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets private link scope operation status. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Response<MonitorPrivateLinkScopeOperationStatus> GetPrivateLinkScopeOperationStatus(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets private link scope operation status. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Task<Response<MonitorPrivateLinkScopeOperationStatus>> GetPrivateLinkScopeOperationStatusAsync(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets a collection of scheduled query rules in the resource group. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static ScheduledQueryRuleCollection GetScheduledQueryRules(this ResourceGroupResource resourceGroupResource)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets a scheduled query rule in the resource group. </summary>
         [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Response<ScheduledQueryRuleResource> GetScheduledQueryRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
@@ -364,10 +459,14 @@ namespace Azure.ResourceManager.Monitor
             => Task.FromException<Response<ScheduledQueryRuleResource>>(new NotSupportedException("This API is no longer supported."));
 
         /// <summary> Gets tenant activity log events. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static Pageable<EventDataInfo> GetTenantActivityLogs(this TenantResource tenantResource, string filter, string select, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
 
         /// <summary> Gets tenant activity log events. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public static AsyncPageable<EventDataInfo> GetTenantActivityLogsAsync(this TenantResource tenantResource, string filter, string select, CancellationToken cancellationToken = default)
             => throw new NotSupportedException("This API is no longer supported.");
     }

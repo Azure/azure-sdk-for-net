@@ -29,25 +29,25 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The immutable ID of the Azure Monitor Workspace. </summary>
-        public string AccountId => throw new NotSupportedException(MovedMessage);
+        public string AccountId { get; }
 
         /// <summary> The etag of the Azure Monitor Workspace. </summary>
-        public ETag? ETag => throw new NotSupportedException(MovedMessage);
+        public ETag? ETag { get; }
 
         /// <summary> Metrics settings for the Azure Monitor Workspace. </summary>
-        public MonitorWorkspaceMetrics Metrics => throw new NotSupportedException(MovedMessage);
+        public MonitorWorkspaceMetrics Metrics { get; }
 
         /// <summary> Provisioning state of the Azure Monitor Workspace. </summary>
-        public MonitorProvisioningState? ProvisioningState => throw new NotSupportedException(MovedMessage);
+        public MonitorProvisioningState? ProvisioningState { get; }
 
         /// <summary> Default ingestion settings for the Azure Monitor Workspace. </summary>
-        public MonitorWorkspaceDefaultIngestionSettings DefaultIngestionSettings => throw new NotSupportedException(MovedMessage);
+        public MonitorWorkspaceDefaultIngestionSettings DefaultIngestionSettings { get; }
 
         /// <summary> Private endpoint connections for the Azure Monitor Workspace. </summary>
-        public IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> PrivateEndpointConnections => throw new NotSupportedException(MovedMessage);
+        public IReadOnlyList<MonitorWorkspacePrivateEndpointConnection> PrivateEndpointConnections { get; }
 
         /// <summary> Public network access setting for the Azure Monitor Workspace. </summary>
-        public MonitorWorkspacePublicNetworkAccess? PublicNetworkAccess => throw new NotSupportedException(MovedMessage);
+        public MonitorWorkspacePublicNetworkAccess? PublicNetworkAccess { get; }
 
         /// <inheritdoc/>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException(MovedMessage);

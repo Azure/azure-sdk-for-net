@@ -4,6 +4,8 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System;
+using System.ComponentModel;
 using System.Threading;
 using Azure;
 using Azure.ResourceManager.Monitor.Models;
@@ -32,6 +34,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="statusName"> The status name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of metric alert status values. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public virtual Pageable<MetricAlertStatus> GetAllMetricAlertsStatusByName(string statusName, CancellationToken cancellationToken = default)
             => throw new System.NotSupportedException("This API is no longer supported.");
 
@@ -39,6 +43,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="statusName"> The status name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of metric alert status values. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This API is no longer supported.", false)]
         public virtual AsyncPageable<MetricAlertStatus> GetAllMetricAlertsStatusByNameAsync(string statusName, CancellationToken cancellationToken = default)
             => throw new System.NotSupportedException("This API is no longer supported.");
     }

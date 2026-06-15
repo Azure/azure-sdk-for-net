@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The alert rule action. </summary>
-        public AlertRuleAction Action { get => throw new NotSupportedException("This API is no longer supported."); set => throw new NotSupportedException("This API is no longer supported."); }
+        public AlertRuleAction Action { get; set; }
 
         /// <summary> The alert rule actions. </summary>
-        public IList<AlertRuleAction> Actions => throw new NotSupportedException("This API is no longer supported.");
+        public IList<AlertRuleAction> Actions { get; }
 
         /// <summary> The alert rule condition. </summary>
-        public AlertRuleCondition Condition { get => throw new NotSupportedException("This API is no longer supported."); set => throw new NotSupportedException("This API is no longer supported."); }
+        public AlertRuleCondition Condition { get; set; }
 
         /// <summary> The alert rule description. </summary>
-        public string Description { get => throw new NotSupportedException("This API is no longer supported."); set => throw new NotSupportedException("This API is no longer supported."); }
+        public string Description { get; set; }
 
         /// <summary> Whether the alert rule is enabled. </summary>
-        public bool? IsEnabled { get => throw new NotSupportedException("This API is no longer supported."); set => throw new NotSupportedException("This API is no longer supported."); }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> The last updated time. </summary>
-        public DateTimeOffset? LastUpdatedOn => throw new NotSupportedException("This API is no longer supported.");
+        public DateTimeOffset? LastUpdatedOn { get; }
 
         /// <summary> The alert rule name. </summary>
-        public string Name { get => throw new NotSupportedException("This API is no longer supported."); set => throw new NotSupportedException("This API is no longer supported."); }
+        public string Name { get; set; }
 
         /// <summary> The provisioning state. </summary>
-        public string ProvisioningState { get => throw new NotSupportedException("This API is no longer supported."); set => throw new NotSupportedException("This API is no longer supported."); }
+        public string ProvisioningState { get; set; }
 
         /// <summary> The tags. </summary>
-        public IDictionary<string, string> Tags => throw new NotSupportedException("This API is no longer supported.");
+        public IDictionary<string, string> Tags { get; }
 
         void IJsonModel<AlertRulePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This API is no longer supported.");
 

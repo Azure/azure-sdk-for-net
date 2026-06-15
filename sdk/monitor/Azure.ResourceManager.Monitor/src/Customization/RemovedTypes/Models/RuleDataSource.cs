@@ -5,6 +5,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.ComponentModel;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,16 +22,16 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The legacy resource id. </summary>
-        public ResourceIdentifier LegacyResourceId { get => throw new NotSupportedException("This API is no longer supported."); set => throw new NotSupportedException("This API is no longer supported."); }
+        public ResourceIdentifier LegacyResourceId { get; set; }
 
         /// <summary> The metric namespace. </summary>
-        public string MetricNamespace { get => throw new NotSupportedException("This API is no longer supported."); set => throw new NotSupportedException("This API is no longer supported."); }
+        public string MetricNamespace { get; set; }
 
         /// <summary> The resource id. </summary>
-        public ResourceIdentifier ResourceId { get => throw new NotSupportedException("This API is no longer supported."); set => throw new NotSupportedException("This API is no longer supported."); }
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> The resource location. </summary>
-        public string ResourceLocation { get => throw new NotSupportedException("This API is no longer supported."); set => throw new NotSupportedException("This API is no longer supported."); }
+        public string ResourceLocation { get; set; }
 
         void IJsonModel<RuleDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This API is no longer supported.");
 

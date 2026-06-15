@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The workspace. </summary>
-        public DataContainerWorkspace Workspace => throw new NotSupportedException("This API is no longer supported.");
+        public DataContainerWorkspace Workspace { get; }
 
         /// <summary> Writes the model as JSON. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This API is no longer supported.");

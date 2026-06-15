@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The collection of what category groups are supported. </summary>
-        public IList<string> CategoryGroups => throw new NotSupportedException("This API is no longer supported.");
+        public IList<string> CategoryGroups { get; }
 
         /// <summary> The type of the diagnostic settings category. </summary>
-        public MonitorCategoryType? CategoryType { get => throw new NotSupportedException("This API is no longer supported."); set => throw new NotSupportedException("This API is no longer supported."); }
+        public MonitorCategoryType? CategoryType { get; set; }
 
         void IJsonModel<DiagnosticSettingsCategoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This API is no longer supported.");
 

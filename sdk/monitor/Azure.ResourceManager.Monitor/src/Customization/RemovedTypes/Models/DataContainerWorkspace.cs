@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The workspace id. </summary>
-        public ResourceIdentifier Id => throw new NotSupportedException("This API is no longer supported.");
+        public ResourceIdentifier Id { get; }
 
         /// <summary> The location. </summary>
-        public AzureLocation Location => throw new NotSupportedException("This API is no longer supported.");
+        public AzureLocation Location { get; }
 
         /// <summary> The customer id. </summary>
-        public string CustomerId => throw new NotSupportedException("This API is no longer supported.");
+        public string CustomerId { get; }
 
         /// <summary> Writes the model as JSON. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This API is no longer supported.");

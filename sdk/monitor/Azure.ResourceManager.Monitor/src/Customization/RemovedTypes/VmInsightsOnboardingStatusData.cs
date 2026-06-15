@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The resource ID. </summary>
-        public ResourceIdentifier ResourceId => throw new NotSupportedException("This API is no longer supported.");
+        public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The data status. </summary>
-        public DataStatus? DataStatus => throw new NotSupportedException("This API is no longer supported.");
+        public DataStatus? DataStatus { get; }
 
         /// <summary> The onboarding status. </summary>
-        public OnboardingStatus? OnboardingStatus => throw new NotSupportedException("This API is no longer supported.");
+        public OnboardingStatus? OnboardingStatus { get; }
 
         /// <summary> The data containers. </summary>
-        public IReadOnlyList<DataContainer> Data => throw new NotSupportedException("This API is no longer supported.");
+        public IReadOnlyList<DataContainer> Data { get; }
 
         /// <summary> Writes the model as JSON. </summary>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This API is no longer supported.");
