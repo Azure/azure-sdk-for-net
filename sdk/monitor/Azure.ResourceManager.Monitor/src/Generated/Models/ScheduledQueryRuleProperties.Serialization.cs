@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("severity"u8);
                 writer.WriteNumberValue(Severity.Value.ToSerialInt64());
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsCollectionDefined(Scopes))
             {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string description = default;
             string displayName = default;
             AlertSeverity? severity = default;
-            bool? enabled = default;
+            bool? isEnabled = default;
             IList<string> scopes = default;
             TimeSpan? evaluationFrequency = default;
             TimeSpan? windowSize = default;
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("scopes"u8))
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 description,
                 displayName,
                 severity,
-                enabled,
+                isEnabled,
                 scopes ?? new ChangeTrackingList<string>(),
                 evaluationFrequency,
                 windowSize,

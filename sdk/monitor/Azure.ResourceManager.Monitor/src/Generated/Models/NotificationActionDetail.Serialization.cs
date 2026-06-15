@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("SubState"u8);
                 writer.WriteStringValue(SubState);
             }
-            if (Optional.IsDefined(SendTime))
+            if (Optional.IsDefined(SendOn))
             {
                 writer.WritePropertyName("SendTime"u8);
-                writer.WriteStringValue(SendTime);
+                writer.WriteStringValue(SendOn.Value);
             }
             if (Optional.IsDefined(Detail))
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             string status = default;
             string subState = default;
-            string sendTime = default;
+            DateTimeOffset? sendOn = default;
             string detail = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -177,7 +177,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("SendTime"u8))
                 {
-                    sendTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sendOn = prop.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (prop.NameEquals("Detail"u8))
@@ -195,7 +199,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 name,
                 status,
                 subState,
-                sendTime,
+                sendOn,
                 detail,
                 additionalBinaryDataProperties);
         }

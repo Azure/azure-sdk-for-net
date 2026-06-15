@@ -10,18 +10,18 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The EventHubDataSource. </summary>
-    public partial class EventHubDataSource
+    /// <summary> The DataCollectionRuleEventHubDataSource. </summary>
+    public partial class DataCollectionRuleEventHubDataSource
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EventHubDataSource"/>. </summary>
-        public EventHubDataSource()
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleEventHubDataSource"/>. </summary>
+        public DataCollectionRuleEventHubDataSource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventHubDataSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleEventHubDataSource"/>. </summary>
         /// <param name="name">
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="consumerGroup"> Event Hub consumer group name. </param>
         /// <param name="stream"> The stream to collect from EventHub. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubDataSource(string name, string consumerGroup, string stream, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataCollectionRuleEventHubDataSource(string name, string consumerGroup, string stream, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ConsumerGroup = consumerGroup;

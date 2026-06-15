@@ -14,11 +14,11 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Definition of Event Hub configuration. </summary>
-    public partial class DataImportSourcesEventHub : EventHubDataSource, IJsonModel<DataImportSourcesEventHub>
+    public partial class DataImportSourcesEventHub : DataCollectionRuleEventHubDataSource, IJsonModel<DataImportSourcesEventHub>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override EventHubDataSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override DataCollectionRuleEventHubDataSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataImportSourcesEventHub>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override EventHubDataSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override DataCollectionRuleEventHubDataSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataImportSourcesEventHub>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

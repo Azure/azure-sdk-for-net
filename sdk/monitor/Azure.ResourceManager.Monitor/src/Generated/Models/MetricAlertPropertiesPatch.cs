@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="MetricAlertPropertiesPatch"/>. </summary>
         /// <param name="description"> The description of the metric alert that will be included in the alert email. </param>
         /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
-        /// <param name="enabled"> The flag that indicates whether the metric alert is enabled. </param>
+        /// <param name="isEnabled"> The flag that indicates whether the metric alert is enabled. </param>
         /// <param name="scopes"> The list of resource id's that this metric alert is scoped to. </param>
         /// <param name="evaluationFrequency"> How often the metric alert is evaluated represented in ISO 8601 duration format. </param>
         /// <param name="windowSize"> The period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
         /// <param name="targetResourceType"> The resource type of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </param>
         /// <param name="targetResourceRegion"> The region of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </param>
         /// <param name="criteria"> Defines the specific alert criteria information. </param>
-        /// <param name="autoMitigate"> The flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
+        /// <param name="isAutoMitigateEnabled"> The flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
         /// <param name="resolveConfiguration"> The configuration for how the alert is resolved. Applicable for PromQLCriteria. </param>
         /// <param name="actions"> The array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
         /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
@@ -44,18 +44,18 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="customProperties"> The properties of an alert payload. </param>
         /// <param name="actionProperties"> The properties of an action properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricAlertPropertiesPatch(string description, int? severity, bool? enabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, string targetResourceType, string targetResourceRegion, MetricAlertCriteria criteria, bool? autoMitigate, ResolveConfiguration resolveConfiguration, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated, IDictionary<string, string> customProperties, IDictionary<string, string> actionProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricAlertPropertiesPatch(string description, int? severity, bool? isEnabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, string targetResourceType, string targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, ResolveConfiguration resolveConfiguration, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated, IDictionary<string, string> customProperties, IDictionary<string, string> actionProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Severity = severity;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Scopes = scopes;
             EvaluationFrequency = evaluationFrequency;
             WindowSize = windowSize;
             TargetResourceType = targetResourceType;
             TargetResourceRegion = targetResourceRegion;
             Criteria = criteria;
-            AutoMitigate = autoMitigate;
+            IsAutoMitigateEnabled = isAutoMitigateEnabled;
             ResolveConfiguration = resolveConfiguration;
             Actions = actions;
             LastUpdatedOn = lastUpdatedOn;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public int? Severity { get; set; }
 
         /// <summary> The flag that indicates whether the metric alert is enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> The list of resource id's that this metric alert is scoped to. </summary>
         public IList<string> Scopes { get; } = new ChangeTrackingList<string>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public MetricAlertCriteria Criteria { get; set; }
 
         /// <summary> The flag that indicates whether the alert should be auto resolved or not. The default is true. </summary>
-        public bool? AutoMitigate { get; set; }
+        public bool? IsAutoMitigateEnabled { get; set; }
 
         /// <summary> The configuration for how the alert is resolved. Applicable for PromQLCriteria. </summary>
         public ResolveConfiguration ResolveConfiguration { get; set; }

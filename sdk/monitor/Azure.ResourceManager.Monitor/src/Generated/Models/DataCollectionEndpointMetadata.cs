@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Metadata for the resource. This property can only be updated by Log Analytics Control Plane for Data Collection Endpoint with Log Analytics Destination. </summary>
-    public partial class DataCollectionEndpointMetadata : Metadata
+    public partial class DataCollectionEndpointMetadata : DataCollectionRuleRelatedResourceMetadata
     {
         /// <summary> Initializes a new instance of <see cref="DataCollectionEndpointMetadata"/>. </summary>
         internal DataCollectionEndpointMetadata()

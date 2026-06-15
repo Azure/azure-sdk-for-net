@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Monitor.Models
             int? top = default;
             string orderBy = default;
             string rollUpBy = default;
-            MetricResultType? resultType = default;
+            MonitorMetricResultType? resultType = default;
             string metricNamespace = default;
             bool? autoAdjustTimegrain = default;
             bool? validateDimensions = default;
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    resultType = new MetricResultType(prop.Value.GetString());
+                    resultType = new MonitorMetricResultType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("metricNamespace"u8))

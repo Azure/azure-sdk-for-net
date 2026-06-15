@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToSerialString());
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(ScaleType.ToSerialString());
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             MonitorScaleDirection direction = default;
-            ScaleType @type = default;
+            MonitorScaleType scaleType = default;
             string value = default;
             TimeSpan cooldown = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToScaleType();
+                    scaleType = prop.Value.GetString().ToMonitorScaleType();
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MonitorScaleAction(direction, @type, value, cooldown, additionalBinaryDataProperties);
+            return new MonitorScaleAction(direction, scaleType, value, cooldown, additionalBinaryDataProperties);
         }
     }
 }

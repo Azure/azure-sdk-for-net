@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("timeGrain"u8);
             writer.WriteStringValue(TimeGrain.Value, "P");
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             TimeSpan? timeGrain = default;
-            bool enabled = default;
+            bool isEnabled = default;
             RetentionPolicy retentionPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("retentionPolicy"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MetricSettings(timeGrain, enabled, retentionPolicy, additionalBinaryDataProperties);
+            return new MetricSettings(timeGrain, isEnabled, retentionPolicy, additionalBinaryDataProperties);
         }
     }
 }

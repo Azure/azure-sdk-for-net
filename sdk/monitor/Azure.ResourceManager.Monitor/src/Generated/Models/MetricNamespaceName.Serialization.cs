@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 throw new FormatException($"The model {nameof(MetricNamespaceName)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(MetricNamespaceNameProperty))
+            if (Optional.IsDefined(MetricNamespaceNameValue))
             {
                 writer.WritePropertyName("metricNamespaceName"u8);
-                writer.WriteStringValue(MetricNamespaceNameProperty);
+                writer.WriteStringValue(MetricNamespaceNameValue);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            string metricNamespaceNameProperty = default;
+            string metricNamespaceNameValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("metricNamespaceName"u8))
                 {
-                    metricNamespaceNameProperty = prop.Value.GetString();
+                    metricNamespaceNameValue = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MetricNamespaceName(metricNamespaceNameProperty, additionalBinaryDataProperties);
+            return new MetricNamespaceName(metricNamespaceNameValue, additionalBinaryDataProperties);
         }
     }
 }

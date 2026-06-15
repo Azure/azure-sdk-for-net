@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="MetricSettings"/>. </summary>
         /// <param name="timeGrain"> the timegrain of the metric in ISO8601 format. </param>
-        /// <param name="enabled"> a value indicating whether this timegrain is enabled. </param>
-        public MetricSettings(TimeSpan? timeGrain, bool enabled)
+        /// <param name="isEnabled"> a value indicating whether this timegrain is enabled. </param>
+        public MetricSettings(TimeSpan? timeGrain, bool isEnabled)
         {
             TimeGrain = timeGrain;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricSettings"/>. </summary>
         /// <param name="timeGrain"> the timegrain of the metric in ISO8601 format. </param>
-        /// <param name="enabled"> a value indicating whether this timegrain is enabled. </param>
+        /// <param name="isEnabled"> a value indicating whether this timegrain is enabled. </param>
         /// <param name="retentionPolicy"> the retention policy for this timegrain. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricSettings(TimeSpan? timeGrain, bool enabled, RetentionPolicy retentionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricSettings(TimeSpan? timeGrain, bool isEnabled, RetentionPolicy retentionPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimeGrain = timeGrain;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             RetentionPolicy = retentionPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public TimeSpan? TimeGrain { get; set; }
 
         /// <summary> a value indicating whether this timegrain is enabled. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
 
         /// <summary> the retention policy for this timegrain. </summary>
         public RetentionPolicy RetentionPolicy { get; set; }

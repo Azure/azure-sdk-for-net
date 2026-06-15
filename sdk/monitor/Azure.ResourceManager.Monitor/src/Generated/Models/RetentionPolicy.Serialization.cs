@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 throw new FormatException($"The model {nameof(RetentionPolicy)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("days"u8);
             writer.WriteNumberValue(Days);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -125,14 +125,14 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            bool enabled = default;
+            bool isEnabled = default;
             int days = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("days"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RetentionPolicy(enabled, days, additionalBinaryDataProperties);
+            return new RetentionPolicy(isEnabled, days, additionalBinaryDataProperties);
         }
     }
 }

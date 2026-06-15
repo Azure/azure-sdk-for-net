@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Metadata about the resource. </summary>
-    public partial class DataCollectionRuleAssociationMetadata : Metadata
+    public partial class DataCollectionRuleAssociationMetadata : DataCollectionRuleRelatedResourceMetadata
     {
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleAssociationMetadata"/>. </summary>
         internal DataCollectionRuleAssociationMetadata()

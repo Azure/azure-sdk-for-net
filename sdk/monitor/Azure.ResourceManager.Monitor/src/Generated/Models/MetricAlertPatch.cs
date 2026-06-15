@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The flag that indicates whether the metric alert is enabled. </summary>
-        public bool? Enabled
+        public bool? IsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
             set
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     Properties = new MetricAlertPropertiesPatch();
                 }
-                Properties.Enabled = value;
+                Properties.IsEnabled = value;
             }
         }
 
@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The flag that indicates whether the alert should be auto resolved or not. The default is true. </summary>
-        public bool? AutoMitigate
+        public bool? IsAutoMitigateEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.AutoMitigate;
+                return Properties is null ? default : Properties.IsAutoMitigateEnabled;
             }
             set
             {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     Properties = new MetricAlertPropertiesPatch();
                 }
-                Properties.AutoMitigate = value;
+                Properties.IsAutoMitigateEnabled = value;
             }
         }
 

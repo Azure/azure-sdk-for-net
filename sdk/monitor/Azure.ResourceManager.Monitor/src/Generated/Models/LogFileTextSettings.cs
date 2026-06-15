@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="LogFileTextSettings"/>. </summary>
         /// <param name="recordStartTimestampFormat"> One of the supported timestamp formats. </param>
-        public LogFileTextSettings(KnownLogFileTextSettingsRecordStartTimestampFormat recordStartTimestampFormat)
+        public LogFileTextSettings(LogFileTextSettingsRecordStartTimestampFormat recordStartTimestampFormat)
         {
             RecordStartTimestampFormat = recordStartTimestampFormat;
         }
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="LogFileTextSettings"/>. </summary>
         /// <param name="recordStartTimestampFormat"> One of the supported timestamp formats. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogFileTextSettings(KnownLogFileTextSettingsRecordStartTimestampFormat recordStartTimestampFormat, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogFileTextSettings(LogFileTextSettingsRecordStartTimestampFormat recordStartTimestampFormat, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RecordStartTimestampFormat = recordStartTimestampFormat;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> One of the supported timestamp formats. </summary>
-        public KnownLogFileTextSettingsRecordStartTimestampFormat RecordStartTimestampFormat { get; set; }
+        public LogFileTextSettingsRecordStartTimestampFormat RecordStartTimestampFormat { get; set; }
     }
 }

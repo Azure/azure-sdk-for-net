@@ -14,11 +14,11 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Metadata for the resource. This property can only be updated by Log Analytics Control Plane for Data Collection Endpoint with Log Analytics Destination. </summary>
-    public partial class DataCollectionEndpointFailoverConfiguration : FailoverConfigurationSpec, IJsonModel<DataCollectionEndpointFailoverConfiguration>
+    public partial class DataCollectionEndpointFailoverConfiguration : DataCollectionRuleBcdrFailoverConfigurationSpec, IJsonModel<DataCollectionEndpointFailoverConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override FailoverConfigurationSpec PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override DataCollectionRuleBcdrFailoverConfigurationSpec PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointFailoverConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override FailoverConfigurationSpec JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override DataCollectionRuleBcdrFailoverConfigurationSpec JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointFailoverConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string activeLocation = default;
-            IList<DataCollectionRuleBcdrLocationSpec> locations = default;
+            IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

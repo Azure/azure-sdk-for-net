@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricNamespaceName"/>. </summary>
-        /// <param name="metricNamespaceNameProperty"> The metric namespace name. </param>
+        /// <param name="metricNamespaceNameValue"> The metric namespace name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricNamespaceName(string metricNamespaceNameProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricNamespaceName(string metricNamespaceNameValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            MetricNamespaceNameProperty = metricNamespaceNameProperty;
+            MetricNamespaceNameValue = metricNamespaceNameValue;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The metric namespace name. </summary>
-        public string MetricNamespaceNameProperty { get; }
+        public string MetricNamespaceNameValue { get; }
     }
 }

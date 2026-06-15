@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStringValue(TimeZone);
             }
             writer.WritePropertyName("start"u8);
-            writer.WriteStringValue(Start, "O");
+            writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("end"u8);
-            writer.WriteStringValue(End, "O");
+            writer.WriteStringValue(EndOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string timeZone = default;
-            DateTimeOffset start = default;
-            DateTimeOffset end = default;
+            DateTimeOffset startOn = default;
+            DateTimeOffset endOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("start"u8))
                 {
-                    start = prop.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("end"u8))
                 {
-                    end = prop.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MonitorTimeWindow(timeZone, start, end, additionalBinaryDataProperties);
+            return new MonitorTimeWindow(timeZone, startOn, endOn, additionalBinaryDataProperties);
         }
     }
 }

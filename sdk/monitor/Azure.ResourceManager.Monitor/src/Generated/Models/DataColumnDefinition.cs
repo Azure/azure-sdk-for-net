@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="DataColumnDefinition"/>. </summary>
         /// <param name="name"> The name of the column. </param>
-        /// <param name="type"> The type of the column data. </param>
+        /// <param name="definitionType"> The type of the column data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataColumnDefinition(string name, KnownColumnDefinitionType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataColumnDefinition(string name, DataColumnDefinitionType? definitionType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            DefinitionType = definitionType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Name { get; set; }
 
         /// <summary> The type of the column data. </summary>
-        public KnownColumnDefinitionType? Type { get; set; }
+        public DataColumnDefinitionType? DefinitionType { get; set; }
     }
 }

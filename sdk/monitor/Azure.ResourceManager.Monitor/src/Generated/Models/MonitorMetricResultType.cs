@@ -12,7 +12,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </summary>
-    public readonly partial struct MetricResultType : IEquatable<MetricResultType>
+    public readonly partial struct MonitorMetricResultType : IEquatable<MonitorMetricResultType>
     {
         private readonly string _value;
         /// <summary> Data. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Metadata. </summary>
         private const string MetadataValue = "Metadata";
 
-        /// <summary> Initializes a new instance of <see cref="MetricResultType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorMetricResultType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MetricResultType(string value)
+        public MonitorMetricResultType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Data. </summary>
-        public static MetricResultType Data { get; } = new MetricResultType(DataValue);
+        public static MonitorMetricResultType Data { get; } = new MonitorMetricResultType(DataValue);
 
         /// <summary> Metadata. </summary>
-        public static MetricResultType Metadata { get; } = new MetricResultType(MetadataValue);
+        public static MonitorMetricResultType Metadata { get; } = new MonitorMetricResultType(MetadataValue);
 
-        /// <summary> Determines if two <see cref="MetricResultType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="MonitorMetricResultType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(MetricResultType left, MetricResultType right) => left.Equals(right);
+        public static bool operator ==(MonitorMetricResultType left, MonitorMetricResultType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MetricResultType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="MonitorMetricResultType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(MetricResultType left, MetricResultType right) => !left.Equals(right);
+        public static bool operator !=(MonitorMetricResultType left, MonitorMetricResultType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MetricResultType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MonitorMetricResultType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MetricResultType(string value) => new MetricResultType(value);
+        public static implicit operator MonitorMetricResultType(string value) => new MonitorMetricResultType(value);
 
-        /// <summary> Converts a string to a <see cref="MetricResultType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MonitorMetricResultType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MetricResultType?(string value) => value == null ? null : new MetricResultType(value);
+        public static implicit operator MonitorMetricResultType?(string value) => value == null ? null : new MonitorMetricResultType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MetricResultType other && Equals(other);
+        public override bool Equals(object obj) => obj is MonitorMetricResultType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(MetricResultType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MonitorMetricResultType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

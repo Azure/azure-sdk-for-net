@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<Models.Response>> GetAllAsync(ResourceIdentifier scope, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, ResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models.Response>> GetAllAsync(ResourceIdentifier scope, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="rollupby"> Dimension name(s) to rollup results by. For example if you only want to see metric values with a filter like 'City eq Seattle or City eq Tacoma' but don't want to see separate values for each city, you can specify 'RollUpBy=City' to see the results for Seattle and Tacoma rolled up into one timeseries. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<Models.Response> GetAll(ResourceIdentifier scope, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, ResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public virtual Response<Models.Response> GetAll(ResourceIdentifier scope, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="MonitorSingleMetricBaseline"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MonitorSingleMetricBaseline> GetAllAsync(ResourceIdentifier scope, string metricnames = default, string metricnamespace = default, string timespan = default, TimeSpan? interval = default, string aggregation = default, string sensitivities = default, string filter = default, ResultType? resultType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MonitorSingleMetricBaseline> GetAllAsync(ResourceIdentifier scope, string metricnames = default, string metricnamespace = default, string timespan = default, TimeSpan? interval = default, string aggregation = default, string sensitivities = default, string filter = default, MonitorResultType? resultType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="MonitorSingleMetricBaseline"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MonitorSingleMetricBaseline> GetAll(ResourceIdentifier scope, string metricnames = default, string metricnamespace = default, string timespan = default, TimeSpan? interval = default, string aggregation = default, string sensitivities = default, string filter = default, ResultType? resultType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<MonitorSingleMetricBaseline> GetAll(ResourceIdentifier scope, string metricnames = default, string metricnamespace = default, string timespan = default, TimeSpan? interval = default, string aggregation = default, string sensitivities = default, string filter = default, MonitorResultType? resultType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 

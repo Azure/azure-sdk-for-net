@@ -14,11 +14,11 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Metadata for the resource. This property can only be updated by Log Analytics Control Plane for Data Collection Endpoint with Log Analytics Destination. </summary>
-    public partial class DataCollectionEndpointMetadata : Metadata, IJsonModel<DataCollectionEndpointMetadata>
+    public partial class DataCollectionEndpointMetadata : DataCollectionRuleRelatedResourceMetadata, IJsonModel<DataCollectionEndpointMetadata>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Metadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override DataCollectionRuleRelatedResourceMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Metadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override DataCollectionRuleRelatedResourceMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

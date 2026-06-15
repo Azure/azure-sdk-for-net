@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(DefinitionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(DefinitionType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string name = default;
-            KnownColumnDefinitionType? @type = default;
+            DataColumnDefinitionType? definitionType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    @type = new KnownColumnDefinitionType(prop.Value.GetString());
+                    definitionType = new DataColumnDefinitionType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataColumnDefinition(name, @type, additionalBinaryDataProperties);
+            return new DataColumnDefinition(name, definitionType, additionalBinaryDataProperties);
         }
     }
 }

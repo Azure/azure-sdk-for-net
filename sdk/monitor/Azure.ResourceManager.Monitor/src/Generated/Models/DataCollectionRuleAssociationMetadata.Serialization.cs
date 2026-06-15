@@ -14,11 +14,11 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Metadata about the resource. </summary>
-    public partial class DataCollectionRuleAssociationMetadata : Metadata, IJsonModel<DataCollectionRuleAssociationMetadata>
+    public partial class DataCollectionRuleAssociationMetadata : DataCollectionRuleRelatedResourceMetadata, IJsonModel<DataCollectionRuleAssociationMetadata>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Metadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override DataCollectionRuleRelatedResourceMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationMetadata>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Metadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override DataCollectionRuleRelatedResourceMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleAssociationMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            KnownLogFileTextSettingsRecordStartTimestampFormat recordStartTimestampFormat = default;
+            LogFileTextSettingsRecordStartTimestampFormat recordStartTimestampFormat = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("recordStartTimestampFormat"u8))
                 {
-                    recordStartTimestampFormat = new KnownLogFileTextSettingsRecordStartTimestampFormat(prop.Value.GetString());
+                    recordStartTimestampFormat = new LogFileTextSettingsRecordStartTimestampFormat(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

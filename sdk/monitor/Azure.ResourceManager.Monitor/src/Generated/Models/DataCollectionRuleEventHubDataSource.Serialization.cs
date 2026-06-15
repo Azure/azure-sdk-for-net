@@ -13,52 +13,52 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> Metadata about the resource. </summary>
-    public partial class Metadata : IJsonModel<Metadata>
+    /// <summary> The DataCollectionRuleEventHubDataSource. </summary>
+    public partial class DataCollectionRuleEventHubDataSource : IJsonModel<DataCollectionRuleEventHubDataSource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Metadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DataCollectionRuleEventHubDataSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Metadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleEventHubDataSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMetadata(document.RootElement, options);
+                        return DeserializeDataCollectionRuleEventHubDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Metadata)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Metadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleEventHubDataSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Metadata)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Metadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DataCollectionRuleEventHubDataSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Metadata IPersistableModel<Metadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DataCollectionRuleEventHubDataSource IPersistableModel<DataCollectionRuleEventHubDataSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Metadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataCollectionRuleEventHubDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Metadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataCollectionRuleEventHubDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +69,25 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Metadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleEventHubDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Metadata)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDataSource)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisionedBy))
+            if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("provisionedBy"u8);
-                writer.WriteStringValue(ProvisionedBy);
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisionedByResourceId))
+            if (Optional.IsDefined(ConsumerGroup))
             {
-                writer.WritePropertyName("provisionedByResourceId"u8);
-                writer.WriteStringValue(ProvisionedByResourceId);
+                writer.WritePropertyName("consumerGroup"u8);
+                writer.WriteStringValue(ConsumerGroup);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisionedByImmutableId))
+            if (Optional.IsDefined(Stream))
             {
-                writer.WritePropertyName("provisionedByImmutableId"u8);
-                writer.WriteStringValue(ProvisionedByImmutableId);
+                writer.WritePropertyName("stream"u8);
+                writer.WriteStringValue(Stream);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,48 +108,48 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Metadata IJsonModel<Metadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DataCollectionRuleEventHubDataSource IJsonModel<DataCollectionRuleEventHubDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Metadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DataCollectionRuleEventHubDataSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Metadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleEventHubDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Metadata)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleEventHubDataSource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMetadata(document.RootElement, options);
+            return DeserializeDataCollectionRuleEventHubDataSource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Metadata DeserializeMetadata(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataCollectionRuleEventHubDataSource DeserializeDataCollectionRuleEventHubDataSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string provisionedBy = default;
-            string provisionedByResourceId = default;
-            string provisionedByImmutableId = default;
+            string name = default;
+            string consumerGroup = default;
+            string stream = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("provisionedBy"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    provisionedBy = prop.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("provisionedByResourceId"u8))
+                if (prop.NameEquals("consumerGroup"u8))
                 {
-                    provisionedByResourceId = prop.Value.GetString();
+                    consumerGroup = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("provisionedByImmutableId"u8))
+                if (prop.NameEquals("stream"u8))
                 {
-                    provisionedByImmutableId = prop.Value.GetString();
+                    stream = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Metadata(provisionedBy, provisionedByResourceId, provisionedByImmutableId, additionalBinaryDataProperties);
+            return new DataCollectionRuleEventHubDataSource(name, consumerGroup, stream, additionalBinaryDataProperties);
         }
     }
 }

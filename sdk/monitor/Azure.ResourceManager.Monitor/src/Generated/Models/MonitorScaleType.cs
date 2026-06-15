@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> the type of action that should occur when the scale rule fires. </summary>
-    public enum ScaleType
+    public enum MonitorScaleType
     {
         /// <summary> ChangeCount. </summary>
         ChangeCount,

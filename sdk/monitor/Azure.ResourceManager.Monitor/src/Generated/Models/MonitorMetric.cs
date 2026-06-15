@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="MonitorMetric"/>. </summary>
         /// <param name="id"> The metric Id. </param>
-        /// <param name="type"> The resource type of the metric resource. </param>
+        /// <param name="metricType"> The resource type of the metric resource. </param>
         /// <param name="name"> The name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeseries"> The time series returned when a data query is performed. </param>
-        internal MonitorMetric(string id, string @type, MonitorLocalizableString name, MonitorMetricUnit unit, IEnumerable<MonitorTimeSeriesElement> timeseries)
+        internal MonitorMetric(string id, string metricType, MonitorLocalizableString name, MonitorMetricUnit unit, IEnumerable<MonitorTimeSeriesElement> timeseries)
         {
             Id = id;
-            Type = @type;
+            MetricType = metricType;
             Name = name;
             Unit = unit;
             Timeseries = timeseries.ToList();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="MonitorMetric"/>. </summary>
         /// <param name="id"> The metric Id. </param>
-        /// <param name="type"> The resource type of the metric resource. </param>
+        /// <param name="metricType"> The resource type of the metric resource. </param>
         /// <param name="name"> The name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="displayDescription"> Detailed description of this metric. </param>
         /// <param name="errorCode"> 'Success' or the error details on query failures for this metric. </param>
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeseries"> The time series returned when a data query is performed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorMetric(string id, string @type, MonitorLocalizableString name, string displayDescription, string errorCode, string errorMessage, MonitorMetricUnit unit, IReadOnlyList<MonitorTimeSeriesElement> timeseries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorMetric(string id, string metricType, MonitorLocalizableString name, string displayDescription, string errorCode, string errorMessage, MonitorMetricUnit unit, IReadOnlyList<MonitorTimeSeriesElement> timeseries, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Type = @type;
+            MetricType = metricType;
             Name = name;
             DisplayDescription = displayDescription;
             ErrorCode = errorCode;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Id { get; }
 
         /// <summary> The resource type of the metric resource. </summary>
-        public string Type { get; }
+        public string MetricType { get; }
 
         /// <summary> The name and the display name of the metric, i.e. it is localizable string. </summary>
         public MonitorLocalizableString Name { get; }

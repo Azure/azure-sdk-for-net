@@ -142,11 +142,11 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </summary>
-        public bool? Enabled
+        public bool? IsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
             set
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     Properties = new ScheduledQueryRuleProperties();
                 }
-                Properties.Enabled = value;
+                Properties.IsEnabled = value;
             }
         }
 

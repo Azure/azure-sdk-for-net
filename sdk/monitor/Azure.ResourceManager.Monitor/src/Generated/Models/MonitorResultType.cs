@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary></summary>
-    public enum ResultType
+    public enum MonitorResultType
     {
         /// <summary> Data. </summary>
         Data,

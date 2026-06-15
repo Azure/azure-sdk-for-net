@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="MetricTrigger"/>. </summary>
         /// <param name="metricName"> the name of the metric that defines what the rule monitors. </param>
-        /// <param name="metricResourceUri"> the resource identifier of the resource the rule monitors. </param>
+        /// <param name="metricResourceId"> the resource identifier of the resource the rule monitors. </param>
         /// <param name="timeGrain"> the granularity of metrics the rule monitors. Must be one of the predefined values returned from metric definitions for the metric. Must be between 12 hours and 1 minute. </param>
         /// <param name="statistic"> the metric statistic type. How the metrics from multiple instances are combined. </param>
         /// <param name="timeWindow"> the range of time in which instance data is collected. This value must be greater than the delay in metric collection, which can vary from resource-to-resource. Must be between 12 hours and 5 minutes. </param>
         /// <param name="timeAggregation"> time aggregation type. How the data that is collected should be combined over time. The default value is Average. </param>
         /// <param name="operator"> the operator that is used to compare the metric data and the threshold. </param>
         /// <param name="threshold"> the threshold of the metric that triggers the scale action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metricName"/> or <paramref name="metricResourceUri"/> is null. </exception>
-        public MetricTrigger(string metricName, string metricResourceUri, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperation @operator, double threshold)
+        /// <exception cref="ArgumentNullException"> <paramref name="metricName"/> or <paramref name="metricResourceId"/> is null. </exception>
+        public MetricTrigger(string metricName, ResourceIdentifier metricResourceId, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperation @operator, double threshold)
         {
             Argument.AssertNotNull(metricName, nameof(metricName));
-            Argument.AssertNotNull(metricResourceUri, nameof(metricResourceUri));
+            Argument.AssertNotNull(metricResourceId, nameof(metricResourceId));
 
             MetricName = metricName;
-            MetricResourceUri = metricResourceUri;
+            MetricResourceId = metricResourceId;
             TimeGrain = timeGrain;
             Statistic = statistic;
             TimeWindow = timeWindow;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="MetricTrigger"/>. </summary>
         /// <param name="metricName"> the name of the metric that defines what the rule monitors. </param>
         /// <param name="metricNamespace"> the namespace of the metric that defines what the rule monitors. </param>
-        /// <param name="metricResourceUri"> the resource identifier of the resource the rule monitors. </param>
+        /// <param name="metricResourceId"> the resource identifier of the resource the rule monitors. </param>
         /// <param name="metricResourceLocation"> the location of the resource the rule monitors. </param>
         /// <param name="timeGrain"> the granularity of metrics the rule monitors. Must be one of the predefined values returned from metric definitions for the metric. Must be between 12 hours and 1 minute. </param>
         /// <param name="statistic"> the metric statistic type. How the metrics from multiple instances are combined. </param>
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="operator"> the operator that is used to compare the metric data and the threshold. </param>
         /// <param name="threshold"> the threshold of the metric that triggers the scale action. </param>
         /// <param name="dimensions"> List of dimension conditions. For example: [{"DimensionName":"AppName","Operator":"Equals","Values":["App1"]},{"DimensionName":"Deployment","Operator":"Equals","Values":["default"]}]. </param>
-        /// <param name="dividePerInstance"> a value indicating whether metric should divide per instance. </param>
+        /// <param name="isDividedPerInstance"> a value indicating whether metric should divide per instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricTrigger(string metricName, string metricNamespace, string metricResourceUri, AzureLocation? metricResourceLocation, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperation @operator, double threshold, IList<AutoscaleRuleMetricDimension> dimensions, bool? dividePerInstance, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricTrigger(string metricName, string metricNamespace, ResourceIdentifier metricResourceId, AzureLocation? metricResourceLocation, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperation @operator, double threshold, IList<AutoscaleRuleMetricDimension> dimensions, bool? isDividedPerInstance, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MetricName = metricName;
             MetricNamespace = metricNamespace;
-            MetricResourceUri = metricResourceUri;
+            MetricResourceId = metricResourceId;
             MetricResourceLocation = metricResourceLocation;
             TimeGrain = timeGrain;
             Statistic = statistic;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Operator = @operator;
             Threshold = threshold;
             Dimensions = dimensions;
-            DividePerInstance = dividePerInstance;
+            IsDividedPerInstance = isDividedPerInstance;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string MetricNamespace { get; set; }
 
         /// <summary> the resource identifier of the resource the rule monitors. </summary>
-        public string MetricResourceUri { get; set; }
+        public ResourceIdentifier MetricResourceId { get; set; }
 
         /// <summary> the location of the resource the rule monitors. </summary>
         public AzureLocation? MetricResourceLocation { get; set; }
@@ -109,6 +109,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public IList<AutoscaleRuleMetricDimension> Dimensions { get; }
 
         /// <summary> a value indicating whether metric should divide per instance. </summary>
-        public bool? DividePerInstance { get; set; }
+        public bool? IsDividedPerInstance { get; set; }
     }
 }

@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.Monitor.Models
         internal MetricNamespaceName Properties { get; }
 
         /// <summary> The metric namespace name. </summary>
-        public string MetricNamespaceNameProperty
+        public string MetricNamespaceNameValue
         {
             get
             {
-                return Properties is null ? default : Properties.MetricNamespaceNameProperty;
+                return Properties is null ? default : Properties.MetricNamespaceNameValue;
             }
         }
     }

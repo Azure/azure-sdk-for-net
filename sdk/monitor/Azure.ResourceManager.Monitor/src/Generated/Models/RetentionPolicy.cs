@@ -17,27 +17,27 @@ namespace Azure.ResourceManager.Monitor.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RetentionPolicy"/>. </summary>
-        /// <param name="enabled"> a value indicating whether the retention policy is enabled. </param>
+        /// <param name="isEnabled"> a value indicating whether the retention policy is enabled. </param>
         /// <param name="days"> the number of days for the retention in days. A value of 0 will retain the events indefinitely. </param>
-        public RetentionPolicy(bool enabled, int days)
+        public RetentionPolicy(bool isEnabled, int days)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Days = days;
         }
 
         /// <summary> Initializes a new instance of <see cref="RetentionPolicy"/>. </summary>
-        /// <param name="enabled"> a value indicating whether the retention policy is enabled. </param>
+        /// <param name="isEnabled"> a value indicating whether the retention policy is enabled. </param>
         /// <param name="days"> the number of days for the retention in days. A value of 0 will retain the events indefinitely. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RetentionPolicy(bool enabled, int days, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RetentionPolicy(bool isEnabled, int days, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Days = days;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> a value indicating whether the retention policy is enabled. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
 
         /// <summary> the number of days for the retention in days. A value of 0 will retain the events indefinitely. </summary>
         public int Days { get; set; }

@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AlertRulePatchProperties"/>. </summary>
-        /// <param name="enabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
+        /// <param name="isEnabled"> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertRulePatchProperties(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertRulePatchProperties(bool? isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

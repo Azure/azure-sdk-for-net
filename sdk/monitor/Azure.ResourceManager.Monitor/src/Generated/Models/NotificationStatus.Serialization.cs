@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State);
-            if (Optional.IsDefined(CompletedTime))
+            if (Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completedTime"u8);
-                writer.WriteStringValue(CompletedTime);
+                writer.WriteStringValue(CompletedOn.Value);
             }
-            if (Optional.IsDefined(CreatedTime))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
-                writer.WriteStringValue(CreatedTime);
+                writer.WriteStringValue(CreatedOn.Value);
             }
             if (Optional.IsCollectionDefined(ActionDetails))
             {
@@ -158,8 +158,8 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             NotificationContext context = default;
             string state = default;
-            string completedTime = default;
-            string createdTime = default;
+            DateTimeOffset? completedOn = default;
+            DateTimeOffset? createdOn = default;
             IReadOnlyList<NotificationActionDetail> actionDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -180,12 +180,20 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("completedTime"u8))
                 {
-                    completedTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    completedOn = prop.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (prop.NameEquals("createdTime"u8))
                 {
-                    createdTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdOn = prop.Value.GetDateTimeOffset();
                     continue;
                 }
                 if (prop.NameEquals("actionDetails"u8))
@@ -210,8 +218,8 @@ namespace Azure.ResourceManager.Monitor.Models
             return new NotificationStatus(
                 context,
                 state,
-                completedTime,
-                createdTime,
+                completedOn,
+                createdOn,
                 actionDetails ?? new ChangeTrackingList<NotificationActionDetail>(),
                 additionalBinaryDataProperties);
         }

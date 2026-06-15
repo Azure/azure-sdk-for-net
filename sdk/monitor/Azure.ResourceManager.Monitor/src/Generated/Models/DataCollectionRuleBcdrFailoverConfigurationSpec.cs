@@ -11,23 +11,23 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The FailoverConfigurationSpec. </summary>
-    public partial class FailoverConfigurationSpec
+    /// <summary> The DataCollectionRuleBcdrFailoverConfigurationSpec. </summary>
+    public partial class DataCollectionRuleBcdrFailoverConfigurationSpec
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FailoverConfigurationSpec"/>. </summary>
-        internal FailoverConfigurationSpec()
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleBcdrFailoverConfigurationSpec"/>. </summary>
+        internal DataCollectionRuleBcdrFailoverConfigurationSpec()
         {
             Locations = new ChangeTrackingList<DataCollectionRuleBcdrLocationSpec>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FailoverConfigurationSpec"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleBcdrFailoverConfigurationSpec"/>. </summary>
         /// <param name="activeLocation"> Active location where data flow will occur. </param>
         /// <param name="locations"> Locations that are configured for failover. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FailoverConfigurationSpec(string activeLocation, IList<DataCollectionRuleBcdrLocationSpec> locations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataCollectionRuleBcdrFailoverConfigurationSpec(string activeLocation, IReadOnlyList<DataCollectionRuleBcdrLocationSpec> locations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActiveLocation = activeLocation;
             Locations = locations;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public string ActiveLocation { get; }
 
         /// <summary> Locations that are configured for failover. </summary>
-        public IList<DataCollectionRuleBcdrLocationSpec> Locations { get; }
+        public IReadOnlyList<DataCollectionRuleBcdrLocationSpec> Locations { get; }
     }
 }

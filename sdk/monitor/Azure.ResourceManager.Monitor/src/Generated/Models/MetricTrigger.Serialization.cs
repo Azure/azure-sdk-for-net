@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStringValue(MetricNamespace);
             }
             writer.WritePropertyName("metricResourceUri"u8);
-            writer.WriteStringValue(MetricResourceUri);
+            writer.WriteStringValue(MetricResourceId);
             if (Optional.IsDefined(MetricResourceLocation))
             {
                 writer.WritePropertyName("metricResourceLocation"u8);
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DividePerInstance))
+            if (Optional.IsDefined(IsDividedPerInstance))
             {
                 writer.WritePropertyName("dividePerInstance"u8);
-                writer.WriteBooleanValue(DividePerInstance.Value);
+                writer.WriteBooleanValue(IsDividedPerInstance.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             string metricName = default;
             string metricNamespace = default;
-            string metricResourceUri = default;
+            ResourceIdentifier metricResourceId = default;
             AzureLocation? metricResourceLocation = default;
             TimeSpan timeGrain = default;
             MetricStatisticType statistic = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Monitor.Models
             MetricTriggerComparisonOperation @operator = default;
             double threshold = default;
             IList<AutoscaleRuleMetricDimension> dimensions = default;
-            bool? dividePerInstance = default;
+            bool? isDividedPerInstance = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("metricResourceUri"u8))
                 {
-                    metricResourceUri = prop.Value.GetString();
+                    metricResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("metricResourceLocation"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    dividePerInstance = prop.Value.GetBoolean();
+                    isDividedPerInstance = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MetricTrigger(
                 metricName,
                 metricNamespace,
-                metricResourceUri,
+                metricResourceId,
                 metricResourceLocation,
                 timeGrain,
                 statistic,
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 @operator,
                 threshold,
                 dimensions ?? new ChangeTrackingList<AutoscaleRuleMetricDimension>(),
-                dividePerInstance,
+                isDividedPerInstance,
                 additionalBinaryDataProperties);
         }
     }

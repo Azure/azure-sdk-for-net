@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Monitor.Models
         internal AlertRulePatchProperties Properties { get; set; }
 
         /// <summary> Indicates whether this Activity Log Alert rule is enabled. If an Activity Log Alert rule is not enabled, then none of its actions will be activated. </summary>
-        public bool? Enabled
+        public bool? IsEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.Enabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
             set
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     Properties = new AlertRulePatchProperties();
                 }
-                Properties.Enabled = value;
+                Properties.IsEnabled = value;
             }
         }
     }

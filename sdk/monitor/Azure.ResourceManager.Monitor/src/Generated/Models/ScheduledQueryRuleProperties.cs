@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="description"> The description of the scheduled query rule. </param>
         /// <param name="displayName"> The display name of the alert rule. </param>
         /// <param name="severity"> Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert. </param>
-        /// <param name="enabled"> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </param>
+        /// <param name="isEnabled"> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </param>
         /// <param name="scopes"> The list of resource id's that this scheduled query rule is scoped to. </param>
         /// <param name="evaluationFrequency"> How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert. </param>
         /// <param name="windowSize"> The period of time (in ISO 8601 duration format) on which the Alert query will be executed (bin size). Relevant and required only for rules of the kind LogAlert. </param>
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="autoMitigate"> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of kinds LogAlert and SimpleLogAlert. </param>
         /// <param name="resolveConfiguration"> Defines the configuration for resolving fired alerts. Relevant only for rules of kinds LogAlert and SimpleLogAlert. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledQueryRuleProperties(string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? enabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IList<string> targetResourceTypes, ScheduledQueryRuleCriteria criteria, TimeSpan? muteActionsDuration, ScheduledQueryRuleActions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate, RuleResolveConfiguration resolveConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledQueryRuleProperties(string createdWithApiVersion, bool? isLegacyLogAnalyticsRule, string description, string displayName, AlertSeverity? severity, bool? isEnabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, TimeSpan? overrideQueryTimeRange, IList<string> targetResourceTypes, ScheduledQueryRuleCriteria criteria, TimeSpan? muteActionsDuration, ScheduledQueryRuleActions actions, bool? isWorkspaceAlertsStorageConfigured, bool? checkWorkspaceAlertsStorageConfigured, bool? skipQueryValidation, bool? autoMitigate, RuleResolveConfiguration resolveConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedWithApiVersion = createdWithApiVersion;
             IsLegacyLogAnalyticsRule = isLegacyLogAnalyticsRule;
             Description = description;
             DisplayName = displayName;
             Severity = severity;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Scopes = scopes;
             EvaluationFrequency = evaluationFrequency;
             WindowSize = windowSize;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public AlertSeverity? Severity { get; set; }
 
         /// <summary> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> The list of resource id's that this scheduled query rule is scoped to. </summary>
         public IList<string> Scopes { get; } = new ChangeTrackingList<string>();

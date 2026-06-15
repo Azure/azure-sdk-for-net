@@ -12,7 +12,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The type of the column data. </summary>
-    public readonly partial struct KnownColumnDefinitionType : IEquatable<KnownColumnDefinitionType>
+    public readonly partial struct DataColumnDefinitionType : IEquatable<DataColumnDefinitionType>
     {
         private readonly string _value;
         /// <summary> string. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> dynamic. </summary>
         private const string DynamicValue = "dynamic";
 
-        /// <summary> Initializes a new instance of <see cref="KnownColumnDefinitionType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataColumnDefinitionType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public KnownColumnDefinitionType(string value)
+        public DataColumnDefinitionType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -41,50 +41,50 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> string. </summary>
-        public static KnownColumnDefinitionType String { get; } = new KnownColumnDefinitionType(StringValue);
+        public static DataColumnDefinitionType String { get; } = new DataColumnDefinitionType(StringValue);
 
         /// <summary> int. </summary>
-        public static KnownColumnDefinitionType Int { get; } = new KnownColumnDefinitionType(IntValue);
+        public static DataColumnDefinitionType Int { get; } = new DataColumnDefinitionType(IntValue);
 
         /// <summary> long. </summary>
-        public static KnownColumnDefinitionType Long { get; } = new KnownColumnDefinitionType(LongValue);
+        public static DataColumnDefinitionType Long { get; } = new DataColumnDefinitionType(LongValue);
 
         /// <summary> real. </summary>
-        public static KnownColumnDefinitionType Real { get; } = new KnownColumnDefinitionType(RealValue);
+        public static DataColumnDefinitionType Real { get; } = new DataColumnDefinitionType(RealValue);
 
         /// <summary> boolean. </summary>
-        public static KnownColumnDefinitionType Boolean { get; } = new KnownColumnDefinitionType(BooleanValue);
+        public static DataColumnDefinitionType Boolean { get; } = new DataColumnDefinitionType(BooleanValue);
 
         /// <summary> datetime. </summary>
-        public static KnownColumnDefinitionType Datetime { get; } = new KnownColumnDefinitionType(DatetimeValue);
+        public static DataColumnDefinitionType Datetime { get; } = new DataColumnDefinitionType(DatetimeValue);
 
         /// <summary> dynamic. </summary>
-        public static KnownColumnDefinitionType Dynamic { get; } = new KnownColumnDefinitionType(DynamicValue);
+        public static DataColumnDefinitionType Dynamic { get; } = new DataColumnDefinitionType(DynamicValue);
 
-        /// <summary> Determines if two <see cref="KnownColumnDefinitionType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="DataColumnDefinitionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(KnownColumnDefinitionType left, KnownColumnDefinitionType right) => left.Equals(right);
+        public static bool operator ==(DataColumnDefinitionType left, DataColumnDefinitionType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="KnownColumnDefinitionType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="DataColumnDefinitionType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(KnownColumnDefinitionType left, KnownColumnDefinitionType right) => !left.Equals(right);
+        public static bool operator !=(DataColumnDefinitionType left, DataColumnDefinitionType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="KnownColumnDefinitionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DataColumnDefinitionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnownColumnDefinitionType(string value) => new KnownColumnDefinitionType(value);
+        public static implicit operator DataColumnDefinitionType(string value) => new DataColumnDefinitionType(value);
 
-        /// <summary> Converts a string to a <see cref="KnownColumnDefinitionType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="DataColumnDefinitionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator KnownColumnDefinitionType?(string value) => value == null ? null : new KnownColumnDefinitionType(value);
+        public static implicit operator DataColumnDefinitionType?(string value) => value == null ? null : new DataColumnDefinitionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is KnownColumnDefinitionType other && Equals(other);
+        public override bool Equals(object obj) => obj is DataColumnDefinitionType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(KnownColumnDefinitionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DataColumnDefinitionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

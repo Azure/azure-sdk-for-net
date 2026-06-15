@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(MetricType);
             writer.WritePropertyName("name"u8);
             writer.WriteObjectValue(Name, options);
             if (Optional.IsDefined(DisplayDescription))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string id = default;
-            string @type = default;
+            string metricType = default;
             MonitorLocalizableString name = default;
             string displayDescription = default;
             string errorCode = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    metricType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             return new MonitorMetric(
                 id,
-                @type,
+                metricType,
                 name,
                 displayDescription,
                 errorCode,

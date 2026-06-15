@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStringValue(Category);
             }
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string category = default;
-            bool enabled = default;
+            bool isEnabled = default;
             RetentionPolicy retentionPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("retentionPolicy"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LogSettings(category, enabled, retentionPolicy, additionalBinaryDataProperties);
+            return new LogSettings(category, isEnabled, retentionPolicy, additionalBinaryDataProperties);
         }
     }
 }

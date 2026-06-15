@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
         internal LogFileSettingsText Text { get; set; }
 
         /// <summary> One of the supported timestamp formats. </summary>
-        public KnownLogFileTextSettingsRecordStartTimestampFormat? TextRecordStartTimestampFormat
+        public LogFileTextSettingsRecordStartTimestampFormat? TextRecordStartTimestampFormat
         {
             get
             {

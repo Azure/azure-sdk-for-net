@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
         /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionScopeMetricsRequestBodyParameters(string timespan, string interval, string metricNames, string aggregation, string filter, int? top, string orderBy, string rollUpBy, MetricResultType? resultType, string metricNamespace, bool? autoAdjustTimegrain, bool? validateDimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionScopeMetricsRequestBodyParameters(string timespan, string interval, string metricNames, string aggregation, string filter, int? top, string orderBy, string rollUpBy, MonitorMetricResultType? resultType, string metricNamespace, bool? autoAdjustTimegrain, bool? validateDimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Timespan = timespan;
             Interval = interval;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string RollUpBy { get; set; }
 
         /// <summary> Reduces the set of data collected. The syntax allowed depends on the operation. See the operation's description for details. </summary>
-        public MetricResultType? ResultType { get; set; }
+        public MonitorMetricResultType? ResultType { get; set; }
 
         /// <summary> Metric namespace where the metrics you want reside. </summary>
         public string MetricNamespace { get; set; }

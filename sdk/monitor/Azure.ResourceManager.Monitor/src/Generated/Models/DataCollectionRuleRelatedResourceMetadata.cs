@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Metadata about the resource. </summary>
-    public partial class Metadata
+    public partial class DataCollectionRuleRelatedResourceMetadata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Metadata"/>. </summary>
-        internal Metadata()
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleRelatedResourceMetadata"/>. </summary>
+        internal DataCollectionRuleRelatedResourceMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Metadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleRelatedResourceMetadata"/>. </summary>
         /// <param name="provisionedBy"> Azure offering managing this resource on-behalf-of customer. </param>
         /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
         /// <param name="provisionedByImmutableId"> Immutable Id of azure offering managing this resource on-behalf-of customer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Metadata(string provisionedBy, string provisionedByResourceId, string provisionedByImmutableId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataCollectionRuleRelatedResourceMetadata(string provisionedBy, string provisionedByResourceId, string provisionedByImmutableId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisionedBy = provisionedBy;
             ProvisionedByResourceId = provisionedByResourceId;

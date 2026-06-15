@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Definition of Event Hub configuration. </summary>
-    public partial class DataImportSourcesEventHub : EventHubDataSource
+    public partial class DataImportSourcesEventHub : DataCollectionRuleEventHubDataSource
     {
         /// <summary> Initializes a new instance of <see cref="DataImportSourcesEventHub"/>. </summary>
         public DataImportSourcesEventHub()

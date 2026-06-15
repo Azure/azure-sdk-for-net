@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Models.Response>> GetAtSubscriptionScopeAsync(string region, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models.Response>> GetAtSubscriptionScopeAsync(string region, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
 
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Models.Response> GetAtSubscriptionScope(string region, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public virtual Response<Models.Response> GetAtSubscriptionScope(string region, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
 
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Models.Response>> GetAtSubscriptionScopePostAsync(string region, SubscriptionScopeMetricsRequestBodyParameters content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models.Response>> GetAtSubscriptionScopePostAsync(string region, SubscriptionScopeMetricsRequestBodyParameters content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
 
@@ -1047,7 +1047,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Models.Response> GetAtSubscriptionScopePost(string region, SubscriptionScopeMetricsRequestBodyParameters content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
+        public virtual Response<Models.Response> GetAtSubscriptionScopePost(string region, SubscriptionScopeMetricsRequestBodyParameters content = default, string timespan = default, string interval = default, string metricnames = default, string aggregation = default, int? top = default, string @orderby = default, string filter = default, MonitorMetricResultType? resultType = default, string metricnamespace = default, bool? autoAdjustTimegrain = default, bool? validateDimensions = default, string rollupby = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(region, nameof(region));
 
