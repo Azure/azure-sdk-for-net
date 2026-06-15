@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -16,17 +17,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         /// <summary> Initializes a new instance of <see cref="CommonPostActionResponseForDeviceROCommandsOperationStatusResult"/>. </summary>
         /// <param name="status"> Operation status. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
         internal CommonPostActionResponseForDeviceROCommandsOperationStatusResult(string status)
         {
-            Argument.AssertNotNull(status, nameof(status));
-
             Status = status;
         }
 
         /// <summary> Initializes a new instance of <see cref="CommonPostActionResponseForDeviceROCommandsOperationStatusResult"/>. </summary>
         /// <param name="error"> The error object. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
@@ -34,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="startOn"> The start time of the operation. </param>
         /// <param name="status"> Operation status. </param>
-        internal CommonPostActionResponseForDeviceROCommandsOperationStatusResult(ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? endOn, string id, string name, CommonPostActionResponseForDeviceROCommands properties, ResourceIdentifier resourceId, DateTimeOffset? startOn, string status) : base(error, serializedAdditionalRawData)
+        internal CommonPostActionResponseForDeviceROCommandsOperationStatusResult(ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? endOn, string id, string name, CommonPostActionResponseForDeviceROCommands properties, ResourceIdentifier resourceId, DateTimeOffset? startOn, string status) : base(error, additionalBinaryDataProperties)
         {
             EndOn = endOn;
             Id = id;
@@ -45,23 +43,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommonPostActionResponseForDeviceROCommandsOperationStatusResult"/> for deserialization. </summary>
-        internal CommonPostActionResponseForDeviceROCommandsOperationStatusResult()
-        {
-        }
-
         /// <summary> The end time of the operation. </summary>
         public DateTimeOffset? EndOn { get; }
+
         /// <summary> Fully qualified ID for the async operation. </summary>
         public string Id { get; }
+
         /// <summary> Name of the async operation. </summary>
         public string Name { get; }
+
         /// <summary> The additional properties of the operation status result. </summary>
         public CommonPostActionResponseForDeviceROCommands Properties { get; }
+
         /// <summary> Fully qualified ID of the resource against which the original async operation was started. </summary>
         public ResourceIdentifier ResourceId { get; }
+
         /// <summary> The start time of the operation. </summary>
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> Operation status. </summary>
         public string Status { get; }
     }
