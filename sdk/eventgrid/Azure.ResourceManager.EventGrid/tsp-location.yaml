@@ -1,4 +1,4 @@
 directory: specification/eventgrid/resource-manager/Microsoft.EventGrid/EventGrid
-repo: Azure/azure-rest-api-specs
-commit: 54d15f9078326bf587550731845dc732b864af4d
+repo: weidongxu-microsoft/azure-rest-api-specs
+commit: 0efd4a4c05a443f27e9a194947dfae288f55c3eb
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
