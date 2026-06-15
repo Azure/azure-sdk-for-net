@@ -52,10 +52,23 @@ namespace Azure.Test.PerfStress
                 var baseOptionsType = t.GetConstructors().First().GetParameters()[0].ParameterType;
                 var tb = mb.DefineType(t.Name + "Options", TypeAttributes.Public, baseOptionsType);
 
-                var attrCtor = typeof(VerbAttribute).GetConstructor(new Type[] { typeof(string), typeof(bool) });
+                // Select the VerbAttribute constructor whose first parameter is the verb name. We pass the
+                // verb name for that first parameter and the compiler-provided default value for every other
+                // parameter. This keeps working if CommandLineParser adds more optional constructor parameters
+                // in the future (e.g. the 'aliases' parameter added in 2.9.1).
+                var attrCtor = typeof(VerbAttribute).GetConstructors()
+                    .Where(c => c.GetParameters() is var p && p.Length >= 1 && p[0].ParameterType == typeof(string))
+                    .OrderByDescending(c => c.GetParameters().Length)
+                    .First();
+                var ctorParameters = attrCtor.GetParameters();
                 var verbName = GetVerbName(t.Name);
-                tb.SetCustomAttribute(new CustomAttributeBuilder(attrCtor,
-                    new object[] { verbName, attrCtor.GetParameters()[1].DefaultValue }));
+                var attrArgs = new object[ctorParameters.Length];
+                attrArgs[0] = verbName;
+                for (var i = 1; i < ctorParameters.Length; i++)
+                {
+                    attrArgs[i] = ctorParameters[i].DefaultValue;
+                }
+                tb.SetCustomAttribute(new CustomAttributeBuilder(attrCtor, attrArgs));
 
                 optionTypes.Add(tb.CreateType());
             }
