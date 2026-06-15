@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (MonitorPrivateLinkScopedData item in Value)
+            foreach (MonitorPrivateLinkScopedResourceData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            IList<MonitorPrivateLinkScopedData> value = default;
+            IList<MonitorPrivateLinkScopedResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<MonitorPrivateLinkScopedData> array = new List<MonitorPrivateLinkScopedData>();
+                    List<MonitorPrivateLinkScopedResourceData> array = new List<MonitorPrivateLinkScopedResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MonitorPrivateLinkScopedData.DeserializeMonitorPrivateLinkScopedData(item, options));
+                        array.Add(MonitorPrivateLinkScopedResourceData.DeserializeMonitorPrivateLinkScopedResourceData(item, options));
                     }
                     value = array;
                     continue;

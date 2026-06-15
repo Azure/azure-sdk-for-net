@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary></summary>
-    public partial class MonitorPrivateLinkScopedResource : IJsonModel<MonitorPrivateLinkScopedData>
+    public partial class MonitorPrivateLinkScopedResource : IJsonModel<MonitorPrivateLinkScopedResourceData>
     {
-        private static IJsonModel<MonitorPrivateLinkScopedData> s_dataDeserializationInstance;
+        private static IJsonModel<MonitorPrivateLinkScopedResourceData> s_dataDeserializationInstance;
 
-        private static IJsonModel<MonitorPrivateLinkScopedData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MonitorPrivateLinkScopedData();
+        private static IJsonModel<MonitorPrivateLinkScopedResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MonitorPrivateLinkScopedResourceData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MonitorPrivateLinkScopedData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MonitorPrivateLinkScopedData>)Data).Write(writer, options);
+        void IJsonModel<MonitorPrivateLinkScopedResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MonitorPrivateLinkScopedResourceData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorPrivateLinkScopedData IJsonModel<MonitorPrivateLinkScopedData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        MonitorPrivateLinkScopedResourceData IJsonModel<MonitorPrivateLinkScopedResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MonitorPrivateLinkScopedData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MonitorPrivateLinkScopedData>(Data, options, AzureResourceManagerMonitorContext.Default);
+        BinaryData IPersistableModel<MonitorPrivateLinkScopedResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MonitorPrivateLinkScopedResourceData>(Data, options, AzureResourceManagerMonitorContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorPrivateLinkScopedData IPersistableModel<MonitorPrivateLinkScopedData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitorPrivateLinkScopedData>(data, options, AzureResourceManagerMonitorContext.Default);
+        MonitorPrivateLinkScopedResourceData IPersistableModel<MonitorPrivateLinkScopedResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitorPrivateLinkScopedResourceData>(data, options, AzureResourceManagerMonitorContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MonitorPrivateLinkScopedData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<MonitorPrivateLinkScopedResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

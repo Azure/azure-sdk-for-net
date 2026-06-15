@@ -15,7 +15,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    internal partial class PrivateLinkScopedResourcesGetByPrivateLinkScopeAsyncCollectionResultOfT : AsyncPageable<MonitorPrivateLinkScopedData>
+    internal partial class PrivateLinkScopedResourcesGetByPrivateLinkScopeAsyncCollectionResultOfT : AsyncPageable<MonitorPrivateLinkScopedResourceData>
     {
         private readonly PrivateLinkScopedResources _client;
         private readonly Guid _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of PrivateLinkScopedResourcesGetByPrivateLinkScopeAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<MonitorPrivateLinkScopedData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<MonitorPrivateLinkScopedResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor
                     yield break;
                 }
                 ScopedResourceListResult result = ScopedResourceListResult.FromResponse(response);
-                yield return Page<MonitorPrivateLinkScopedData>.FromValues((IReadOnlyList<MonitorPrivateLinkScopedData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<MonitorPrivateLinkScopedResourceData>.FromValues((IReadOnlyList<MonitorPrivateLinkScopedResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

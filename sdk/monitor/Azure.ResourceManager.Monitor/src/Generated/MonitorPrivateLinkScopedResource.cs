@@ -17,15 +17,15 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a MonitorPrivateLinkScoped along with the instance operations that can be performed on it.
+    /// A class representing a MonitorPrivateLinkScopedResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MonitorPrivateLinkScopedResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MonitorPrivateLinkScopeResource"/> using the GetMonitorPrivateLinkScopeds method.
+    /// Otherwise you can get one from its parent resource <see cref="MonitorPrivateLinkScopeResource"/> using the GetMonitorPrivateLinkScopedResources method.
     /// </summary>
     public partial class MonitorPrivateLinkScopedResource : ArmResource
     {
         private readonly ClientDiagnostics _privateLinkScopedResourcesClientDiagnostics;
         private readonly PrivateLinkScopedResources _privateLinkScopedResourcesRestClient;
-        private readonly MonitorPrivateLinkScopedData _data;
+        private readonly MonitorPrivateLinkScopedResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/privateLinkScopes/scopedResources";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopedResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MonitorPrivateLinkScopedResource(ArmClient client, MonitorPrivateLinkScopedData data) : this(client, data.Id)
+        internal MonitorPrivateLinkScopedResource(ArmClient client, MonitorPrivateLinkScopedResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MonitorPrivateLinkScopedResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string monitorPrivateLinkScopedApiVersion);
+            TryGetApiVersion(ResourceType, out string monitorPrivateLinkScopedResourceApiVersion);
             _privateLinkScopedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
-            _privateLinkScopedResourcesRestClient = new PrivateLinkScopedResources(_privateLinkScopedResourcesClientDiagnostics, Pipeline, Endpoint, monitorPrivateLinkScopedApiVersion ?? "2023-06-01-preview");
+            _privateLinkScopedResourcesRestClient = new PrivateLinkScopedResources(_privateLinkScopedResourcesClientDiagnostics, Pipeline, Endpoint, monitorPrivateLinkScopedResourceApiVersion ?? "2023-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MonitorPrivateLinkScopedData Data
+        public virtual MonitorPrivateLinkScopedResourceData Data
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MonitorPrivateLinkScopedData> response = Response.FromValue(MonitorPrivateLinkScopedData.FromResponse(result), result);
+                Response<MonitorPrivateLinkScopedResourceData> response = Response.FromValue(MonitorPrivateLinkScopedResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MonitorPrivateLinkScopedData> response = Response.FromValue(MonitorPrivateLinkScopedData.FromResponse(result), result);
+                Response<MonitorPrivateLinkScopedResourceData> response = Response.FromValue(MonitorPrivateLinkScopedResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Update a MonitorPrivateLinkScoped.
+        /// Update a MonitorPrivateLinkScopedResource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MonitorPrivateLinkScopedResource>> UpdateAsync(WaitUntil waitUntil, MonitorPrivateLinkScopedData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MonitorPrivateLinkScopedResource>> UpdateAsync(WaitUntil waitUntil, MonitorPrivateLinkScopedResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MonitorPrivateLinkScopedData.ToRequestContent(data), context);
+                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MonitorPrivateLinkScopedResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MonitorArmOperation<MonitorPrivateLinkScopedResource> operation = new MonitorArmOperation<MonitorPrivateLinkScopedResource>(
                     new MonitorPrivateLinkScopedResourceOperationSource(Client),
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Update a MonitorPrivateLinkScoped.
+        /// Update a MonitorPrivateLinkScopedResource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="data"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MonitorPrivateLinkScopedResource> Update(WaitUntil waitUntil, MonitorPrivateLinkScopedData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MonitorPrivateLinkScopedResource> Update(WaitUntil waitUntil, MonitorPrivateLinkScopedResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MonitorPrivateLinkScopedData.ToRequestContent(data), context);
+                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MonitorPrivateLinkScopedResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MonitorArmOperation<MonitorPrivateLinkScopedResource> operation = new MonitorArmOperation<MonitorPrivateLinkScopedResource>(
                     new MonitorPrivateLinkScopedResourceOperationSource(Client),

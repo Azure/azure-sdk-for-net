@@ -21,26 +21,26 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing a collection of <see cref="MonitorPrivateLinkScopedResource"/> and their operations.
     /// Each <see cref="MonitorPrivateLinkScopedResource"/> in the collection will belong to the same instance of <see cref="MonitorPrivateLinkScopeResource"/>.
-    /// To get a <see cref="MonitorPrivateLinkScopedCollection"/> instance call the GetMonitorPrivateLinkScopeds method from an instance of <see cref="MonitorPrivateLinkScopeResource"/>.
+    /// To get a <see cref="MonitorPrivateLinkScopedResourceCollection"/> instance call the GetMonitorPrivateLinkScopedResources method from an instance of <see cref="MonitorPrivateLinkScopeResource"/>.
     /// </summary>
-    public partial class MonitorPrivateLinkScopedCollection : ArmCollection, IEnumerable<MonitorPrivateLinkScopedResource>, IAsyncEnumerable<MonitorPrivateLinkScopedResource>
+    public partial class MonitorPrivateLinkScopedResourceCollection : ArmCollection, IEnumerable<MonitorPrivateLinkScopedResource>, IAsyncEnumerable<MonitorPrivateLinkScopedResource>
     {
         private readonly ClientDiagnostics _privateLinkScopedResourcesClientDiagnostics;
         private readonly PrivateLinkScopedResources _privateLinkScopedResourcesRestClient;
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkScopedCollection for mocking. </summary>
-        protected MonitorPrivateLinkScopedCollection()
+        /// <summary> Initializes a new instance of MonitorPrivateLinkScopedResourceCollection for mocking. </summary>
+        protected MonitorPrivateLinkScopedResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopedCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkScopedResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MonitorPrivateLinkScopedCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MonitorPrivateLinkScopedResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MonitorPrivateLinkScopedResource.ResourceType, out string monitorPrivateLinkScopedApiVersion);
+            TryGetApiVersion(MonitorPrivateLinkScopedResource.ResourceType, out string monitorPrivateLinkScopedResourceApiVersion);
             _privateLinkScopedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorPrivateLinkScopedResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkScopedResourcesRestClient = new PrivateLinkScopedResources(_privateLinkScopedResourcesClientDiagnostics, Pipeline, Endpoint, monitorPrivateLinkScopedApiVersion ?? "2023-06-01-preview");
+            _privateLinkScopedResourcesRestClient = new PrivateLinkScopedResources(_privateLinkScopedResourcesClientDiagnostics, Pipeline, Endpoint, monitorPrivateLinkScopedResourceApiVersion ?? "2023-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<MonitorPrivateLinkScopedResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, MonitorPrivateLinkScopedData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MonitorPrivateLinkScopedResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, MonitorPrivateLinkScopedResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, MonitorPrivateLinkScopedData.ToRequestContent(data), context);
+                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, MonitorPrivateLinkScopedResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MonitorArmOperation<MonitorPrivateLinkScopedResource> operation = new MonitorArmOperation<MonitorPrivateLinkScopedResource>(
                     new MonitorPrivateLinkScopedResourceOperationSource(Client),
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<MonitorPrivateLinkScopedResource> CreateOrUpdate(WaitUntil waitUntil, string name, MonitorPrivateLinkScopedData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MonitorPrivateLinkScopedResource> CreateOrUpdate(WaitUntil waitUntil, string name, MonitorPrivateLinkScopedResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Monitor
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, MonitorPrivateLinkScopedData.ToRequestContent(data), context);
+                HttpMessage message = _privateLinkScopedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, MonitorPrivateLinkScopedResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MonitorArmOperation<MonitorPrivateLinkScopedResource> operation = new MonitorArmOperation<MonitorPrivateLinkScopedResource>(
                     new MonitorPrivateLinkScopedResourceOperationSource(Client),
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedCollection.Get");
+            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResourceCollection.Get");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MonitorPrivateLinkScopedData> response = Response.FromValue(MonitorPrivateLinkScopedData.FromResponse(result), result);
+                Response<MonitorPrivateLinkScopedResourceData> response = Response.FromValue(MonitorPrivateLinkScopedResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedCollection.Get");
+            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResourceCollection.Get");
             scope.Start();
             try
             {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MonitorPrivateLinkScopedData> response = Response.FromValue(MonitorPrivateLinkScopedData.FromResponse(result), result);
+                Response<MonitorPrivateLinkScopedResourceData> response = Response.FromValue(MonitorPrivateLinkScopedResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -294,14 +294,14 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MonitorPrivateLinkScopedData, MonitorPrivateLinkScopedResource>(new PrivateLinkScopedResourcesGetByPrivateLinkScopeAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MonitorPrivateLinkScopedResourceData, MonitorPrivateLinkScopedResource>(new PrivateLinkScopedResourcesGetByPrivateLinkScopeAsyncCollectionResultOfT(
                 _privateLinkScopedResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
                 kind,
                 context,
-                "MonitorPrivateLinkScopedCollection.GetAll"), data => new MonitorPrivateLinkScopedResource(Client, data));
+                "MonitorPrivateLinkScopedResourceCollection.GetAll"), data => new MonitorPrivateLinkScopedResource(Client, data));
         }
 
         /// <summary>
@@ -330,14 +330,14 @@ namespace Azure.ResourceManager.Monitor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MonitorPrivateLinkScopedData, MonitorPrivateLinkScopedResource>(new PrivateLinkScopedResourcesGetByPrivateLinkScopeCollectionResultOfT(
+            return new PageableWrapper<MonitorPrivateLinkScopedResourceData, MonitorPrivateLinkScopedResource>(new PrivateLinkScopedResourcesGetByPrivateLinkScopeCollectionResultOfT(
                 _privateLinkScopedResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.Parent.Name,
                 Id.Name,
                 kind,
                 context,
-                "MonitorPrivateLinkScopedCollection.GetAll"), data => new MonitorPrivateLinkScopedResource(Client, data));
+                "MonitorPrivateLinkScopedResourceCollection.GetAll"), data => new MonitorPrivateLinkScopedResource(Client, data));
         }
 
         /// <summary>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedCollection.Exists");
+            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -376,14 +376,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MonitorPrivateLinkScopedData> response = default;
+                Response<MonitorPrivateLinkScopedResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MonitorPrivateLinkScopedData.FromResponse(result), result);
+                        response = Response.FromValue(MonitorPrivateLinkScopedResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MonitorPrivateLinkScopedData)null, result);
+                        response = Response.FromValue((MonitorPrivateLinkScopedResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedCollection.Exists");
+            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -433,14 +433,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MonitorPrivateLinkScopedData> response = default;
+                Response<MonitorPrivateLinkScopedResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MonitorPrivateLinkScopedData.FromResponse(result), result);
+                        response = Response.FromValue(MonitorPrivateLinkScopedResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MonitorPrivateLinkScopedData)null, result);
+                        response = Response.FromValue((MonitorPrivateLinkScopedResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -490,14 +490,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MonitorPrivateLinkScopedData> response = default;
+                Response<MonitorPrivateLinkScopedResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MonitorPrivateLinkScopedData.FromResponse(result), result);
+                        response = Response.FromValue(MonitorPrivateLinkScopedResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MonitorPrivateLinkScopedData)null, result);
+                        response = Response.FromValue((MonitorPrivateLinkScopedResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkScopedResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkScopedResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -551,14 +551,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _privateLinkScopedResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MonitorPrivateLinkScopedData> response = default;
+                Response<MonitorPrivateLinkScopedResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MonitorPrivateLinkScopedData.FromResponse(result), result);
+                        response = Response.FromValue(MonitorPrivateLinkScopedResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MonitorPrivateLinkScopedData)null, result);
+                        response = Response.FromValue((MonitorPrivateLinkScopedResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

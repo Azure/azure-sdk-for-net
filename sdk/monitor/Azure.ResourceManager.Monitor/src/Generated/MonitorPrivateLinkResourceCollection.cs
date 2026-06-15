@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.Monitor
     /// <summary>
     /// A class representing a collection of <see cref="MonitorPrivateLinkResource"/> and their operations.
     /// Each <see cref="MonitorPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="MonitorPrivateLinkScopeResource"/>.
-    /// To get a <see cref="MonitorPrivateLinkCollection"/> instance call the GetMonitorPrivateLinks method from an instance of <see cref="MonitorPrivateLinkScopeResource"/>.
+    /// To get a <see cref="MonitorPrivateLinkResourceCollection"/> instance call the GetMonitorPrivateLinkResources method from an instance of <see cref="MonitorPrivateLinkScopeResource"/>.
     /// </summary>
-    public partial class MonitorPrivateLinkCollection : ArmCollection
+    public partial class MonitorPrivateLinkResourceCollection : ArmCollection
     {
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResources _privateLinkResourcesRestClient;
 
-        /// <summary> Initializes a new instance of MonitorPrivateLinkCollection for mocking. </summary>
-        protected MonitorPrivateLinkCollection()
+        /// <summary> Initializes a new instance of MonitorPrivateLinkResourceCollection for mocking. </summary>
+        protected MonitorPrivateLinkResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MonitorPrivateLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MonitorPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(MonitorPrivateLinkResource.ResourceType, out string monitorPrivateLinkApiVersion);
+            TryGetApiVersion(MonitorPrivateLinkResource.ResourceType, out string monitorPrivateLinkResourceApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, monitorPrivateLinkApiVersion ?? "2023-06-01-preview");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, monitorPrivateLinkResourceApiVersion ?? "2023-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkCollection.Get");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, groupName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MonitorPrivateLinkData> response = Response.FromValue(MonitorPrivateLinkData.FromResponse(result), result);
+                Response<MonitorPrivateLinkResourceData> response = Response.FromValue(MonitorPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkCollection.Get");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.Get");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Monitor
                 };
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, groupName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MonitorPrivateLinkData> response = Response.FromValue(MonitorPrivateLinkData.FromResponse(result), result);
+                Response<MonitorPrivateLinkResourceData> response = Response.FromValue(MonitorPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkCollection.Exists");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -186,14 +186,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, groupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MonitorPrivateLinkData> response = default;
+                Response<MonitorPrivateLinkResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MonitorPrivateLinkData.FromResponse(result), result);
+                        response = Response.FromValue(MonitorPrivateLinkResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MonitorPrivateLinkData)null, result);
+                        response = Response.FromValue((MonitorPrivateLinkResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkCollection.Exists");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
@@ -243,14 +243,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, groupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MonitorPrivateLinkData> response = default;
+                Response<MonitorPrivateLinkResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MonitorPrivateLinkData.FromResponse(result), result);
+                        response = Response.FromValue(MonitorPrivateLinkResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MonitorPrivateLinkData)null, result);
+                        response = Response.FromValue((MonitorPrivateLinkResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -300,14 +300,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, groupName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<MonitorPrivateLinkData> response = default;
+                Response<MonitorPrivateLinkResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MonitorPrivateLinkData.FromResponse(result), result);
+                        response = Response.FromValue(MonitorPrivateLinkResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MonitorPrivateLinkData)null, result);
+                        response = Response.FromValue((MonitorPrivateLinkResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Monitor
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkCollection.GetIfExists");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("MonitorPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -361,14 +361,14 @@ namespace Azure.ResourceManager.Monitor
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, groupName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<MonitorPrivateLinkData> response = default;
+                Response<MonitorPrivateLinkResourceData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(MonitorPrivateLinkData.FromResponse(result), result);
+                        response = Response.FromValue(MonitorPrivateLinkResourceData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((MonitorPrivateLinkData)null, result);
+                        response = Response.FromValue((MonitorPrivateLinkResourceData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

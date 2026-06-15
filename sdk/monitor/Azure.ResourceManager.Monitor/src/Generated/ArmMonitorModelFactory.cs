@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Resource properties. </param>
-        /// <returns> A new <see cref="Monitor.MonitorPrivateLinkData"/> instance for mocking. </returns>
-        public static MonitorPrivateLinkData MonitorPrivateLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorPrivateLinkResourceProperties properties = default)
+        /// <returns> A new <see cref="Monitor.MonitorPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static MonitorPrivateLinkResourceData MonitorPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorPrivateLinkResourceProperties properties = default)
         {
-            return new MonitorPrivateLinkData(
+            return new MonitorPrivateLinkResourceData(
                 id,
                 name,
                 resourceType,
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="value"> The PrivateLinkResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.MonitorPrivateLinkResourceListResult"/> instance for mocking. </returns>
-        public static MonitorPrivateLinkResourceListResult MonitorPrivateLinkResourceListResult(IEnumerable<MonitorPrivateLinkData> value = default, Uri nextLink = default)
+        public static MonitorPrivateLinkResourceListResult MonitorPrivateLinkResourceListResult(IEnumerable<MonitorPrivateLinkResourceData> value = default, Uri nextLink = default)
         {
-            value ??= new ChangeTrackingList<MonitorPrivateLinkData>();
+            value ??= new ChangeTrackingList<MonitorPrivateLinkResourceData>();
 
-            return new MonitorPrivateLinkResourceListResult((value ?? new ChangeTrackingList<MonitorPrivateLinkData>()).ToList(), nextLink, default);
+            return new MonitorPrivateLinkResourceListResult((value ?? new ChangeTrackingList<MonitorPrivateLinkResourceData>()).ToList(), nextLink, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1452,10 +1452,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="linkedResourceId"> The resource id of the scoped Azure monitor resource. </param>
         /// <param name="subscriptionLocation"> The location of a scoped subscription. Only needs to be specified for metric dataplane subscriptions. </param>
         /// <param name="provisioningState"> State of the Azure monitor resource. </param>
-        /// <returns> A new <see cref="Monitor.MonitorPrivateLinkScopedData"/> instance for mocking. </returns>
-        public static MonitorPrivateLinkScopedData MonitorPrivateLinkScopedData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScopedResourceKind? kind = default, string linkedResourceId = default, string subscriptionLocation = default, ScopedResourceProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Monitor.MonitorPrivateLinkScopedResourceData"/> instance for mocking. </returns>
+        public static MonitorPrivateLinkScopedResourceData MonitorPrivateLinkScopedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScopedResourceKind? kind = default, string linkedResourceId = default, string subscriptionLocation = default, ScopedResourceProvisioningState? provisioningState = default)
         {
-            return new MonitorPrivateLinkScopedData(
+            return new MonitorPrivateLinkScopedResourceData(
                 id,
                 name,
                 resourceType,
@@ -3736,6 +3736,47 @@ namespace Azure.ResourceManager.Monitor.Models
                 resourceType,
                 systemData,
                 privateEndpointId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), default, provisioningState, default),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Monitor.MonitorPrivateLinkResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
+        /// <returns> A new <see cref="Monitor.MonitorPrivateLinkResourceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MonitorPrivateLinkResourceData MonitorPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            return new MonitorPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new MonitorPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Monitor.MonitorPrivateLinkScopedResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="linkedResourceId"> The resource id of the scoped Azure monitor resource. </param>
+        /// <param name="provisioningState"> State of the private endpoint connection. </param>
+        /// <returns> A new <see cref="Monitor.MonitorPrivateLinkScopedResourceData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MonitorPrivateLinkScopedResourceData MonitorPrivateLinkScopedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier linkedResourceId = default, string provisioningState = default)
+        {
+            return new MonitorPrivateLinkScopedResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                default,
                 default);
         }
 

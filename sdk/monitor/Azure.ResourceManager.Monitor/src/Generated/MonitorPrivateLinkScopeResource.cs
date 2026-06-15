@@ -865,11 +865,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> Gets a collection of MonitorPrivateLinks in the <see cref="MonitorPrivateLinkScopeResource"/>. </summary>
-        /// <returns> An object representing collection of MonitorPrivateLinks and their operations over a MonitorPrivateLinkResource. </returns>
-        public virtual MonitorPrivateLinkCollection GetMonitorPrivateLinks()
+        /// <summary> Gets a collection of MonitorPrivateLinkResources in the <see cref="MonitorPrivateLinkScopeResource"/>. </summary>
+        /// <returns> An object representing collection of MonitorPrivateLinkResources and their operations over a MonitorPrivateLinkResource. </returns>
+        public virtual MonitorPrivateLinkResourceCollection GetMonitorPrivateLinkResources()
         {
-            return GetCachedClient(client => new MonitorPrivateLinkCollection(client, Id));
+            return GetCachedClient(client => new MonitorPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary> Gets the private link resources that need to be created for a Azure Monitor PrivateLinkScope. </summary>
@@ -878,11 +878,11 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MonitorPrivateLinkResource>> GetMonitorPrivateLinkAsync(string groupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorPrivateLinkResource>> GetMonitorPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            return await GetMonitorPrivateLinks().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorPrivateLinkResources().GetAsync(groupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the private link resources that need to be created for a Azure Monitor PrivateLinkScope. </summary>
@@ -891,11 +891,11 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MonitorPrivateLinkResource> GetMonitorPrivateLink(string groupName, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorPrivateLinkResource> GetMonitorPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
 
-            return GetMonitorPrivateLinks().Get(groupName, cancellationToken);
+            return GetMonitorPrivateLinkResources().Get(groupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MonitorPrivateEndpointConnections in the <see cref="MonitorPrivateLinkScopeResource"/>. </summary>
@@ -931,11 +931,11 @@ namespace Azure.ResourceManager.Monitor
             return GetMonitorPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MonitorPrivateLinkScopeds in the <see cref="MonitorPrivateLinkScopeResource"/>. </summary>
-        /// <returns> An object representing collection of MonitorPrivateLinkScopeds and their operations over a MonitorPrivateLinkScopedResource. </returns>
-        public virtual MonitorPrivateLinkScopedCollection GetMonitorPrivateLinkScopeds()
+        /// <summary> Gets a collection of MonitorPrivateLinkScopedResources in the <see cref="MonitorPrivateLinkScopeResource"/>. </summary>
+        /// <returns> An object representing collection of MonitorPrivateLinkScopedResources and their operations over a MonitorPrivateLinkScopedResource. </returns>
+        public virtual MonitorPrivateLinkScopedResourceCollection GetMonitorPrivateLinkScopedResources()
         {
-            return GetCachedClient(client => new MonitorPrivateLinkScopedCollection(client, Id));
+            return GetCachedClient(client => new MonitorPrivateLinkScopedResourceCollection(client, Id));
         }
 
         /// <summary> Gets a scoped resource in a private link scope. </summary>
@@ -944,11 +944,11 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<MonitorPrivateLinkScopedResource>> GetMonitorPrivateLinkScopedAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorPrivateLinkScopedResource>> GetMonitorPrivateLinkScopedResourceAsync(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetMonitorPrivateLinkScopeds().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorPrivateLinkScopedResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a scoped resource in a private link scope. </summary>
@@ -957,11 +957,11 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MonitorPrivateLinkScopedResource> GetMonitorPrivateLinkScoped(string name, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorPrivateLinkScopedResource> GetMonitorPrivateLinkScopedResource(string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetMonitorPrivateLinkScopeds().Get(name, cancellationToken);
+            return GetMonitorPrivateLinkScopedResources().Get(name, cancellationToken);
         }
     }
 }

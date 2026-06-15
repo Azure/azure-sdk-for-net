@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Monitor
         MonitorPrivateLinkScopedResource IOperationSource<MonitorPrivateLinkScopedResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            MonitorPrivateLinkScopedData data = MonitorPrivateLinkScopedData.DeserializeMonitorPrivateLinkScopedData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            MonitorPrivateLinkScopedResourceData data = MonitorPrivateLinkScopedResourceData.DeserializeMonitorPrivateLinkScopedResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new MonitorPrivateLinkScopedResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor
         async ValueTask<MonitorPrivateLinkScopedResource> IOperationSource<MonitorPrivateLinkScopedResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            MonitorPrivateLinkScopedData data = MonitorPrivateLinkScopedData.DeserializeMonitorPrivateLinkScopedData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            MonitorPrivateLinkScopedResourceData data = MonitorPrivateLinkScopedResourceData.DeserializeMonitorPrivateLinkScopedResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new MonitorPrivateLinkScopedResource(_client, data);
         }
     }

@@ -18,68 +18,68 @@ using Azure.ResourceManager.Monitor.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A private link scoped resource. </summary>
-    public partial class MonitorPrivateLinkScopedData : ResourceData, IJsonModel<MonitorPrivateLinkScopedData>
+    public partial class MonitorPrivateLinkScopedResourceData : ResourceData, IJsonModel<MonitorPrivateLinkScopedResourceData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkScopedData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkScopedResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMonitorPrivateLinkScopedData(document.RootElement, options);
+                        return DeserializeMonitorPrivateLinkScopedResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorPrivateLinkScopedData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorPrivateLinkScopedResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkScopedData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkScopedResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorPrivateLinkScopedData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorPrivateLinkScopedResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MonitorPrivateLinkScopedData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MonitorPrivateLinkScopedResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorPrivateLinkScopedData IPersistableModel<MonitorPrivateLinkScopedData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MonitorPrivateLinkScopedData)PersistableModelCreateCore(data, options);
+        MonitorPrivateLinkScopedResourceData IPersistableModel<MonitorPrivateLinkScopedResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MonitorPrivateLinkScopedResourceData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MonitorPrivateLinkScopedData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MonitorPrivateLinkScopedResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="monitorPrivateLinkScopedData"> The <see cref="MonitorPrivateLinkScopedData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MonitorPrivateLinkScopedData monitorPrivateLinkScopedData)
+        /// <param name="monitorPrivateLinkScopedResourceData"> The <see cref="MonitorPrivateLinkScopedResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MonitorPrivateLinkScopedResourceData monitorPrivateLinkScopedResourceData)
         {
-            if (monitorPrivateLinkScopedData == null)
+            if (monitorPrivateLinkScopedResourceData == null)
             {
                 return null;
             }
-            return RequestContent.Create(monitorPrivateLinkScopedData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(monitorPrivateLinkScopedResourceData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MonitorPrivateLinkScopedData"/> from. </param>
-        internal static MonitorPrivateLinkScopedData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MonitorPrivateLinkScopedResourceData"/> from. </param>
+        internal static MonitorPrivateLinkScopedResourceData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMonitorPrivateLinkScopedData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMonitorPrivateLinkScopedResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MonitorPrivateLinkScopedData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MonitorPrivateLinkScopedResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkScopedData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkScopedResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorPrivateLinkScopedData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorPrivateLinkScopedResourceData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -120,24 +120,24 @@ namespace Azure.ResourceManager.Monitor
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorPrivateLinkScopedData IJsonModel<MonitorPrivateLinkScopedData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MonitorPrivateLinkScopedData)JsonModelCreateCore(ref reader, options);
+        MonitorPrivateLinkScopedResourceData IJsonModel<MonitorPrivateLinkScopedResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MonitorPrivateLinkScopedResourceData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkScopedData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MonitorPrivateLinkScopedResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorPrivateLinkScopedData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorPrivateLinkScopedResourceData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMonitorPrivateLinkScopedData(document.RootElement, options);
+            return DeserializeMonitorPrivateLinkScopedResourceData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MonitorPrivateLinkScopedData DeserializeMonitorPrivateLinkScopedData(JsonElement element, ModelReaderWriterOptions options)
+        internal static MonitorPrivateLinkScopedResourceData DeserializeMonitorPrivateLinkScopedResourceData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Monitor
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MonitorPrivateLinkScopedData(
+            return new MonitorPrivateLinkScopedResourceData(
                 id,
                 name,
                 resourceType,

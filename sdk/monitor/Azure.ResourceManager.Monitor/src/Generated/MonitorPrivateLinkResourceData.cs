@@ -14,24 +14,24 @@ using Azure.ResourceManager.Monitor.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> A private link resource. </summary>
-    public partial class MonitorPrivateLinkData : ResourceData
+    public partial class MonitorPrivateLinkResourceData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkData"/>. </summary>
-        internal MonitorPrivateLinkData()
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkResourceData"/>. </summary>
+        internal MonitorPrivateLinkResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Resource properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorPrivateLinkResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal MonitorPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorPrivateLinkResourceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
