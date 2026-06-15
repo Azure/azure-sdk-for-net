@@ -9,57 +9,57 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Reference to a registered dataset in the Foundry Dataset Service. </summary>
-    public partial class DatasetRef : IJsonModel<DatasetRef>
+    /// <summary> Evaluation criterion: a name + instruction pair used for per-item scoring. </summary>
+    public partial class OptimizationDatasetCriterion : IJsonModel<OptimizationDatasetCriterion>
     {
-        /// <summary> Initializes a new instance of <see cref="DatasetRef"/> for deserialization. </summary>
-        internal DatasetRef()
+        /// <summary> Initializes a new instance of <see cref="OptimizationDatasetCriterion"/> for deserialization. </summary>
+        internal OptimizationDatasetCriterion()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatasetRef PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OptimizationDatasetCriterion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatasetRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationDatasetCriterion>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDatasetRef(document.RootElement, options);
+                        return DeserializeOptimizationDatasetCriterion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatasetRef)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OptimizationDatasetCriterion)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatasetRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationDatasetCriterion>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DatasetRef)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OptimizationDatasetCriterion)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DatasetRef>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OptimizationDatasetCriterion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatasetRef IPersistableModel<DatasetRef>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OptimizationDatasetCriterion IPersistableModel<OptimizationDatasetCriterion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DatasetRef>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OptimizationDatasetCriterion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DatasetRef>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OptimizationDatasetCriterion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,18 +70,15 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatasetRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationDatasetCriterion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatasetRef)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OptimizationDatasetCriterion)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
-            }
+            writer.WritePropertyName("instruction"u8);
+            writer.WriteStringValue(Instruction);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -101,31 +98,31 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatasetRef IJsonModel<DatasetRef>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OptimizationDatasetCriterion IJsonModel<OptimizationDatasetCriterion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatasetRef JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OptimizationDatasetCriterion JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatasetRef>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationDatasetCriterion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatasetRef)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OptimizationDatasetCriterion)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDatasetRef(document.RootElement, options);
+            return DeserializeOptimizationDatasetCriterion(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DatasetRef DeserializeDatasetRef(JsonElement element, ModelReaderWriterOptions options)
+        internal static OptimizationDatasetCriterion DeserializeOptimizationDatasetCriterion(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            string version = default;
+            string instruction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,9 +131,9 @@ namespace Azure.AI.Projects.Agents
                     name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("version"u8))
+                if (prop.NameEquals("instruction"u8))
                 {
-                    version = prop.Value.GetString();
+                    instruction = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,7 +141,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DatasetRef(name, version, additionalBinaryDataProperties);
+            return new OptimizationDatasetCriterion(name, instruction, additionalBinaryDataProperties);
         }
     }
 }

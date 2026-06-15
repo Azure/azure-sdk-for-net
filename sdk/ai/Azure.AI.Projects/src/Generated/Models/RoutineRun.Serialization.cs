@@ -78,7 +78,14 @@ namespace Azure.AI.Projects
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Status);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Status))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Phase))
             {
@@ -223,7 +230,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             string id = default;
-            string status = default;
+            BinaryData status = default;
             RoutineRunPhase? phase = default;
             RoutineTriggerType? triggerType = default;
             string triggerName = default;
@@ -254,7 +261,11 @@ namespace Azure.AI.Projects
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("phase"u8))

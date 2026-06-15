@@ -9,57 +9,57 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Identifies the registered Foundry agent to optimize (request-only). Skills, tools, and system_prompt are specified in options.optimization_config. </summary>
-    public partial class AgentIdentifier : IJsonModel<AgentIdentifier>
+    /// <summary> Reference to a named evaluator, optionally pinned to a version. </summary>
+    public partial class OptimizationEvaluatorRef : IJsonModel<OptimizationEvaluatorRef>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentIdentifier"/> for deserialization. </summary>
-        internal AgentIdentifier()
+        /// <summary> Initializes a new instance of <see cref="OptimizationEvaluatorRef"/> for deserialization. </summary>
+        internal OptimizationEvaluatorRef()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentIdentifier PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OptimizationEvaluatorRef PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationEvaluatorRef>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgentIdentifier(document.RootElement, options);
+                        return DeserializeOptimizationEvaluatorRef(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentIdentifier)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OptimizationEvaluatorRef)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationEvaluatorRef>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgentIdentifier)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OptimizationEvaluatorRef)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentIdentifier>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OptimizationEvaluatorRef>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentIdentifier IPersistableModel<AgentIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OptimizationEvaluatorRef IPersistableModel<OptimizationEvaluatorRef>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgentIdentifier>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OptimizationEvaluatorRef>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgentIdentifier>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OptimizationEvaluatorRef>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,17 +70,17 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationEvaluatorRef>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentIdentifier)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OptimizationEvaluatorRef)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("agent_name"u8);
-            writer.WriteStringValue(AgentName);
-            if (Optional.IsDefined(AgentVersion))
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("agent_version"u8);
-                writer.WriteStringValue(AgentVersion);
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -101,42 +101,42 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentIdentifier IJsonModel<AgentIdentifier>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OptimizationEvaluatorRef IJsonModel<OptimizationEvaluatorRef>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgentIdentifier JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OptimizationEvaluatorRef JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgentIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OptimizationEvaluatorRef>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentIdentifier)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OptimizationEvaluatorRef)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgentIdentifier(document.RootElement, options);
+            return DeserializeOptimizationEvaluatorRef(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgentIdentifier DeserializeAgentIdentifier(JsonElement element, ModelReaderWriterOptions options)
+        internal static OptimizationEvaluatorRef DeserializeOptimizationEvaluatorRef(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string agentName = default;
-            string agentVersion = default;
+            string name = default;
+            string version = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("agent_name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    agentName = prop.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("agent_version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    agentVersion = prop.Value.GetString();
+                    version = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,7 +144,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentIdentifier(agentName, agentVersion, additionalBinaryDataProperties);
+            return new OptimizationEvaluatorRef(name, version, additionalBinaryDataProperties);
         }
     }
 }
