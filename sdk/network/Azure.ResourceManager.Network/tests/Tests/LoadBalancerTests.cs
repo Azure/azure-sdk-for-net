@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Verify List FrontendIPConfigurations in LoadBalancer
             var loadBalancerCollection = resourceGroup.GetLoadBalancers();
-            var loadBalancerOperations = loadBalancerCollection.Get(lbName).Value;
+            LoadBalancerResource loadBalancerOperations = getLoadBalancer.Value;
             AsyncPageable<FrontendIPConfigurationResource> listLoadBalancerFrontendIPConfigurationsAP = loadBalancerOperations.GetFrontendIPConfigurations().GetAllAsync();
             List<FrontendIPConfigurationResource> listLoadBalancerFrontendIPConfigurations = await listLoadBalancerFrontendIPConfigurationsAP.ToEnumerableAsync();
             Has.One.EqualTo(listLoadBalancerFrontendIPConfigurations);
