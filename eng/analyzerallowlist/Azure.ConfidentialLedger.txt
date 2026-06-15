@@ -1,0 +1,16 @@
+# Azure.ConfidentialLedger approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# AZC0012: Generated model type names (Bundle, Collection, Constitution,
+# Metadata, Role) match the Confidential Ledger service API terminology.
+# Renaming them would break alignment with the REST API and confuse users
+# who reference the service documentation. These names are auto-generated
+# from the TypeSpec specification and cannot be changed without diverging
+# from the API contract.
+nowarn:AZC0012
+
+# AZC0030: Generated model 'Collection' ends with 'Collection' and
+# 'UserDefinedFunctionExecutionResponse' triggers naming convention checks.
+# Both names are derived directly from the TypeSpec/REST API schema and
+# renaming them would create a mismatch with the service contract.
+nowarn:AZC0030
