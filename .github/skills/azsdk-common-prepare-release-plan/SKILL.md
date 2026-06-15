@@ -4,14 +4,25 @@ license: MIT
 metadata:
   version: "1.0.0"
   distribution: shared
-description: 'Create, get, update, abandon, and link SDK PRs to release plan work items for Azure SDK releases. **UTILITY SKILL**. USE FOR: "create release plan", "get release plan", "update release plan", "update API spec in release plan", "update SDK details in release plan", "abandon release plan", "link SDK PR to plan", "namespace approval", "check release plan status". DO NOT USE FOR: SDK code generation, pipeline troubleshooting, API review feedback. INVOKES: azure-sdk-mcp:azsdk_create_release_plan, azure-sdk-mcp:azsdk_get_release_plan, azure-sdk-mcp:azsdk_get_release_plan_for_spec_pr, azure-sdk-mcp:azsdk_update_release_plan, azure-sdk-mcp:azsdk_update_api_spec_pull_request_in_release_plan, azure-sdk-mcp:azsdk_update_sdk_details_in_release_plan, azure-sdk-mcp:azsdk_abandon_release_plan, azure-sdk-mcp:azsdk_link_sdk_pull_request_to_release_plan.'
-compatibility:
-  requires: "azure-sdk-mcp server, API spec PR in Azure/azure-rest-api-specs"
+description: 'Create, get, update, abandon, and link SDK PRs to release plan work items for Azure SDK releases. **UTILITY SKILL**. USE FOR: "create release plan", "get release plan", "update release plan", "update API spec in release plan", "update SDK details in release plan", "abandon release plan", "link SDK PR to plan", "namespace approval", "check release plan status". DO NOT USE FOR: SDK code generation, pipeline troubleshooting, API review feedback. INVOKES: azure-sdk-mcp:azsdk_create_release_plan, azure-sdk-mcp:azsdk_get_release_plan, azure-sdk-mcp:azsdk_get_release_plan_for_spec_pr, azure-sdk-mcp:azsdk_update_release_plan, azure-sdk-mcp:azsdk_update_api_spec_pull_request_in_release_plan, azure-sdk-mcp:azsdk_update_sdk_details_in_release_plan, azure-sdk-mcp:azsdk_abandon_release_plan, azure-sdk-mcp:azsdk_link_sdk_pull_request_to_release_plan, azure-sdk-mcp:azsdk_link_namespace_approval_issue.'
+compatibility: "azure-sdk-mcp server, API spec PR in Azure/azure-rest-api-specs"
 ---
 
 # Prepare Release Plan
 
-> **CRITICAL**: Do not display Azure DevOps work item URLs. Only provide Release Plan Link and Release Plan ID to the user.
+This skill creates, gets, updates, abandons, and links SDK PRs to release plan work items for Azure SDK releases, helping gather required release data, validate spec inputs, and link related approvals or SDK pull requests without exposing internal work item URLs.
+
+## Triggers
+
+USE FOR: create release plan, get release plan, update release plan, update API spec in release plan, update SDK details in release plan, abandon release plan, link SDK PR to plan, namespace approval, check release plan status
+WHEN: "create release plan", "get release plan", "update release plan", "abandon release plan", "link SDK PR to plan", "namespace approval", "check release plan status"
+DO NOT USE FOR: SDK code generation, pipeline troubleshooting, API review feedback
+
+## Rules
+
+- Do not display Azure DevOps work item URLs; only provide the Release Plan Link and ID.
+- Require an API spec PR link or a TypeSpec project path before creating or updating a plan.
+- Validate that the spec PR repository matches the requested API release type before creation.
 
 ## MCP Tools
 

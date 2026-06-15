@@ -27,8 +27,9 @@ namespace Azure.Data.AppConfiguration
         /// <param name="sizeInBytes"> The size in bytes of the snapshot. </param>
         /// <param name="itemCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. </param>
+        /// <param name="description"> The description of the snapshot. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
-        internal ConfigurationSnapshot(string name, ConfigurationSnapshotStatus? status, IList<ConfigurationSettingsFilter> filters, SnapshotComposition? snapshotComposition, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, long? retentionPeriod, long? sizeInBytes, long? itemCount, IDictionary<string, string> tags, ETag eTag)
+        internal ConfigurationSnapshot(string name, ConfigurationSnapshotStatus? status, IList<ConfigurationSettingsFilter> filters, SnapshotComposition? snapshotComposition, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, long? retentionPeriod, long? sizeInBytes, long? itemCount, IDictionary<string, string> tags, string description, ETag eTag)
         {
             Name = name;
             Status = status;
@@ -40,6 +41,7 @@ namespace Azure.Data.AppConfiguration
             SizeInBytes = sizeInBytes;
             ItemCount = itemCount;
             Tags = tags;
+            Description = description;
             ETag = eTag;
         }
 
@@ -71,6 +73,11 @@ namespace Azure.Data.AppConfiguration
             }
             set
             {
+                if (value == null)
+                {
+                    _retentionPeriod = null;
+                    return;
+                }
                 var seconds = value.Value.TotalSeconds;
                 long secondsLong;
                 try
