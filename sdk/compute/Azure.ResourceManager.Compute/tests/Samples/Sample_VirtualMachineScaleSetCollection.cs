@@ -5436,7 +5436,7 @@ EnableIPForwarding = true,
                     },
                     LifecycleHooks = {new LifecycleHook
 {
-Type = VmScaleSetLifecycleHookEventType.UpgradeAutoOSRollingBatchStarting,
+VmScaleSetLifecycleHookEventType = VmScaleSetLifecycleHookEventType.UpgradeAutoOSRollingBatchStarting,
 WaitDuration = XmlConvert.ToTimeSpan("PT20M"),
 DefaultAction = LifecycleHookAction.Approve,
 }},
