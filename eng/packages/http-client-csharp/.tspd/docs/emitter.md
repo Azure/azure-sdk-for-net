@@ -96,6 +96,12 @@ Set the log level for which to collect traces. The default value is `info`.
 
 Set to `true` to disable XML documentation generation. The default value is `false`.
 
+### `disable-roslyn-reduce`
+
+**Type:** `boolean`
+
+Set to `true` to skip the Roslyn reduce (simplification) post-processing step. This speeds up generation and is useful when iterating quickly. The default value is `false`.
+
 ### `generator-name`
 
 **Type:** `string`

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Cache encryption settings. </summary>
     public partial class StorageCacheEncryptionSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageCacheEncryptionSettings"/>. </summary>
         public StorageCacheEncryptionSettings()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <summary> Initializes a new instance of <see cref="StorageCacheEncryptionSettings"/>. </summary>
         /// <param name="keyEncryptionKey"> Specifies the location of the key encryption key in key vault. </param>
         /// <param name="enableRotationToLatestKeyVersion"> Specifies whether the service will automatically rotate to the newest version of the key in the key vault. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageCacheEncryptionSettings(StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey, bool? enableRotationToLatestKeyVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheEncryptionSettings(StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey, bool? enableRotationToLatestKeyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyEncryptionKey = keyEncryptionKey;
             EnableRotationToLatestKeyVersion = enableRotationToLatestKeyVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the location of the key encryption key in key vault. </summary>
         public StorageCacheEncryptionKeyVaultKeyReference KeyEncryptionKey { get; set; }
+
         /// <summary> Specifies whether the service will automatically rotate to the newest version of the key in the key vault. </summary>
         public bool? EnableRotationToLatestKeyVersion { get; set; }
     }

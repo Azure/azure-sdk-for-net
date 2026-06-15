@@ -6,8 +6,8 @@
     hierarchy as JSON.
 
 .DESCRIPTION
-    Walks every child client and inspects the ARM URL templates of its
-    operations to derive, for each resource:
+    Reads the ARM provider schema emitted into tspCodeModel.json and reports,
+    for each resource:
 
         * ARM ResourceType (e.g. "Microsoft.Foo/bars/bazes")
         * ResourceId template
@@ -96,195 +96,19 @@ function Get-DefaultClassName {
     return (ConvertTo-Pascal $singular) + 'Resource'
 }
 
-# Strip the scope prefix from a tokenized URL template. Returns the scope
-# label and the remaining tokens.
-# Scope prefixes recognized at the start of a resource template, in priority
-# order (most specific first). Each pattern is a sequence of expected tokens;
-# `{*}` matches any single placeholder token like `{subscriptionId}`.
-# `ConsumeMatch = $false` leaves the matched tokens in the remaining body
-# (used by `Tenant`, where the matching `providers` segment is also part of
-# the resource path).
-$script:ScopePatterns = @(
-    @{ Scope = 'ResourceGroup';   Tokens = @('subscriptions', '{*}', 'resourceGroups', '{*}') },
-    @{ Scope = 'Subscription';    Tokens = @('subscriptions', '{*}') },
-    @{ Scope = 'ManagementGroup'; Tokens = @('providers', 'Microsoft.Management', 'managementGroups', '{*}') },
-    @{ Scope = 'ServiceGroup';    Tokens = @('providers', 'Microsoft.Management', 'serviceGroups', '{*}') },
-    @{ Scope = 'Extension';       Tokens = @('{scope}') },
-    @{ Scope = 'Extension';       Tokens = @('{resourceUri}') },
-    @{ Scope = 'Extension';       Tokens = @('{resourceScope}') },
-    @{ Scope = 'Extension';       Tokens = @('{parentProviderNamespace}', '{parentResourceType}', '{parentResourceName}') },
-    @{ Scope = 'Tenant';          Tokens = @('providers'); ConsumeMatch = $false }
-)
+function Convert-ScopeMetadataToHierarchyScope {
+    param([object] $ScopeMetadata)
 
-function Get-ScopePrefix {
-    param([string[]] $Tokens)
-
-    foreach ($pattern in $script:ScopePatterns) {
-        $expected = $pattern.Tokens
-        if ($Tokens.Count -lt $expected.Count) { continue }
-
-        $isMatch = $true
-        for ($k = 0; $k -lt $expected.Count; $k++) {
-            $exp = $expected[$k]
-            $act = $Tokens[$k]
-            if ($exp -eq '{*}') {
-                if ($act -notmatch '^\{[^}]+\}$') { $isMatch = $false; break }
-            }
-            elseif ($exp -ne $act) {
-                $isMatch = $false; break
-            }
-        }
-        if (-not $isMatch) { continue }
-
-        $consume = if ($pattern.ContainsKey('ConsumeMatch') -and -not $pattern.ConsumeMatch) { 0 } else { $expected.Count }
-        $rest = if ($consume -ge $Tokens.Count) { @() } else { @($Tokens[$consume..($Tokens.Count - 1)]) }
-        return @{ Scope = $pattern.Scope; Rest = $rest }
+    if ($null -eq $ScopeMetadata -or -not ($ScopeMetadata.PSObject.Properties.Name -contains 'kind')) {
+        return 'Unknown'
     }
-    return @{ Scope = 'Unknown'; Rest = @($Tokens) }
-}
 
-# Parse the post-scope portion of a URL template into a sequence of
-# resource-type segments. Each segment captures: provider, type segment, and
-# whether it has a name parameter (or a literal singleton segment).
-#
-# For `providers/<RP>/<seg1>/{name1}/<seg2>/{name2}/providers/<RP2>/<seg3>` we
-# return a flat list:
-#   { Provider=<RP>; Segment=<seg1>; HasName=true;  NameToken='{name1}'   }
-#   { Provider=<RP>; Segment=<seg2>; HasName=true;  NameToken='{name2}'   }
-#   { Provider=<RP2>; Segment=<seg3>; HasName=false; NameToken=$null      }
-function Get-ResourceSegments {
-    param([string[]] $Tokens)
-
-    $segments = New-Object System.Collections.Generic.List[object]
-    $i = 0
-    $currentProvider = $null
-    while ($i -lt $Tokens.Count) {
-        $t = $Tokens[$i]
-        if ($t -eq 'providers' -and ($i + 1) -lt $Tokens.Count) {
-            $currentProvider = $Tokens[$i + 1]
-            $i += 2
-            continue
-        }
-        if ($null -eq $currentProvider) { $i++; continue }
-        # type segment
-        $typeSeg = $t
-        $i++
-        $nameToken = $null
-        $isLiteralSingleton = $false
-        if ($i -lt $Tokens.Count) {
-            $next = $Tokens[$i]
-            if ($next -match '^\{[^}]+\}$') {
-                $nameToken = $next
-                $i++
-            }
-            elseif ($next -ne 'providers') {
-                # Literal segment after the type — treat as singleton (e.g. "default", "current").
-                $isLiteralSingleton = $true
-                $nameToken = $next
-                $i++
-            }
-        }
-        $segments.Add([pscustomobject]@{
-            Provider           = $currentProvider
-            Segment            = $typeSeg
-            HasName            = ($null -ne $nameToken)
-            NameToken          = $nameToken
-            IsLiteralSingleton = $isLiteralSingleton
-        }) | Out-Null
+    $kind = [string] $ScopeMetadata.kind
+    if ($kind -eq 'Extension') {
+        return 'ArmClient'
     }
-    return $segments
-}
 
-# Build a synthetic ResourceId template from the original tokens up to the
-# end of a given segment index.
-function Get-ResourceIdTemplate {
-    param([string[]] $Tokens, [int] $LastSegmentIndex, [int[]] $SegmentEndTokenIndex)
-    if ($LastSegmentIndex -lt 0 -or $LastSegmentIndex -ge $SegmentEndTokenIndex.Count) { return $null }
-    $end = $SegmentEndTokenIndex[$LastSegmentIndex]
-    if ($end -lt 0) { return $null }
-    return '/' + ($Tokens[0..$end] -join '/')
-}
-
-# Same as Get-ResourceSegments but also records the token index where each
-# segment's name (or singleton literal) sits, so we can rebuild ResourceId
-# templates.
-function Get-ResourceSegmentsWithIndex {
-    param([string[]] $Tokens)
-
-    $segments = New-Object System.Collections.Generic.List[object]
-    $endIdx   = New-Object System.Collections.Generic.List[int]
-    $i = 0
-    $currentProvider = $null
-    while ($i -lt $Tokens.Count) {
-        $t = $Tokens[$i]
-        if ($t -eq 'providers' -and ($i + 1) -lt $Tokens.Count) {
-            $currentProvider = $Tokens[$i + 1]
-            $i += 2
-            # Special-case: parameterized parent provider triple
-            # (`{parentProviderNamespace}/{parentResourceType}/{parentResourceName}`)
-            # is not a real resource segment — it's an extension marker.
-            # Skip the parameterized type+name pair too.
-            if ($currentProvider -match '^\{[^}]+\}$' -and ($i + 1) -lt $Tokens.Count `
-                -and $Tokens[$i] -match '^\{[^}]+\}$' -and $Tokens[$i + 1] -match '^\{[^}]+\}$') {
-                $i += 2
-                $currentProvider = $null
-            }
-            continue
-        }
-        if ($null -eq $currentProvider) { $i++; continue }
-        $typeSeg = $t
-        $typeIdx = $i
-        $i++
-        $nameToken = $null
-        $isLiteralSingleton = $false
-        $segEnd = $typeIdx
-        if ($i -lt $Tokens.Count) {
-            $next = $Tokens[$i]
-            if ($next -match '^\{[^}]+\}$') {
-                $nameToken = $next
-                $segEnd = $i
-                $i++
-            }
-            elseif ($next -ne 'providers') {
-                $isLiteralSingleton = $true
-                $nameToken = $next
-                $segEnd = $i
-                $i++
-            }
-        }
-        $segments.Add([pscustomobject]@{
-            Provider           = $currentProvider
-            Segment            = $typeSeg
-            HasName            = ($null -ne $nameToken -and -not $isLiteralSingleton)
-            NameToken          = $nameToken
-            IsLiteralSingleton = $isLiteralSingleton
-        }) | Out-Null
-        $endIdx.Add($segEnd) | Out-Null
-    }
-    return @{ Segments = $segments.ToArray(); EndIndex = $endIdx.ToArray() }
-}
-
-# Builds the cumulative ResourceType for segment index k:
-# joins all providers + segments up to and including k, but consecutive
-# segments under the same provider don't repeat the provider.
-# e.g. providers=[RP, RP, RP2], segs=[a,b,c] -> "RP/a", "RP/a/b", "RP2/c"
-function Get-CumulativeResourceTypes {
-    param($Segments)
-    $result = New-Object System.Collections.Generic.List[string]
-    $currentProvider = $null
-    $currentParts = $null
-    foreach ($s in $Segments) {
-        if ($s.Provider -ne $currentProvider) {
-            $currentProvider = $s.Provider
-            $currentParts = @($s.Provider, $s.Segment)
-        }
-        else {
-            $currentParts += $s.Segment
-        }
-        $result.Add(($currentParts -join '/')) | Out-Null
-    }
-    # Return a .NET string[] so PowerShell pipeline behavior doesn't reshape it.
-    return $result.ToArray()
+    return $kind
 }
 
 # === Main =====================================================================
@@ -316,112 +140,64 @@ if ($GeneratedDir) {
     }
 }
 
-# Walk all child clients of the top-level service client(s).
-$childClients = New-Object System.Collections.Generic.List[object]
+# The ARM provider schema emitted in tspCodeModel.json is the source of truth
+# for resource hierarchy metadata.
+$providerResources = New-Object System.Collections.Generic.List[object]
 foreach ($top in $json.clients) {
-    if ($top.children) {
-        foreach ($c in $top.children) { $childClients.Add($c) | Out-Null }
+    foreach ($decorator in @($top.decorators)) {
+        if ($decorator.name -ne 'Azure.ClientGenerator.Core.@armProviderSchema') { continue }
+        foreach ($resource in @($decorator.arguments.resources)) {
+            if ($resource.resourceType) {
+                $providerResources.Add($resource) | Out-Null
+            }
+        }
     }
 }
-[Console]::Error.WriteLine("Found $($childClients.Count) child clients")
+if ($providerResources.Count -eq 0) {
+    throw "No Azure.ClientGenerator.Core.@armProviderSchema resource metadata found in $tspFile."
+}
+[Console]::Error.WriteLine("Found $($providerResources.Count) ARM provider schema resource metadata entries")
 
-# Aggregate by ResourceType — multiple clients can target the same resource.
+$resourceTypeByIdPattern = @{}
+foreach ($resource in $providerResources) {
+    if ($resource.resourceIdPattern -and $resource.resourceType) {
+        $resourceTypeByIdPattern[[string] $resource.resourceIdPattern] = [string] $resource.resourceType
+    }
+}
+
 $resourcesByType = @{}
+foreach ($resource in $providerResources) {
+    $resourceType = [string] $resource.resourceType
+    if ([string]::IsNullOrWhiteSpace($resourceType)) { continue }
 
-foreach ($client in $childClients) {
-    $allPaths = @($client.methods | ForEach-Object { $_.operation.path } | Where-Object { $_ } | Select-Object -Unique)
-    if ($allPaths.Count -eq 0) { continue }
-
-    foreach ($path in $allPaths) {
-        $tokens = $path.TrimStart('/').Split('/')
-        $scopeInfo = Get-ScopePrefix -Tokens $tokens
-        $rest      = $scopeInfo.Rest
-        if (-not $rest -or $rest.Count -lt 2) { continue }
-
-        # Need at least one provider/segment block.
-        if (-not ($rest -contains 'providers')) { continue }
-
-        $parsed   = Get-ResourceSegmentsWithIndex -Tokens $rest
-        $segs     = @($parsed.Segments)
-        $segEnds  = @($parsed.EndIndex)
-        if ($segs.Count -eq 0) { continue }
-
-        # If the path included a parameterized parent (`/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/`)
-        # nested under a real subscription/RG scope, treat the resulting
-        # resource as an extension on top of that scope.
-        $effectiveScope = $scopeInfo.Scope
-        if ($path -match '/\{parentProviderNamespace\}/\{parentResourceType\}/\{parentResourceName\}/') {
-            $effectiveScope = 'Extension'
+    $parentChain = @()
+    if ($resource.parentResourceId) {
+        $parentResourceId = [string] $resource.parentResourceId
+        if ($resourceTypeByIdPattern.ContainsKey($parentResourceId)) {
+            $parentChain = @($resourceTypeByIdPattern[$parentResourceId])
         }
-
-        # Heuristic: a segment is the canonical "resource" only if it has a
-        # name parameter or is a literal singleton. Skip pure action paths
-        # (e.g. /providers/MgmtTypeSpec/operations).
-        for ($k = 0; $k -lt $segs.Count; $k++) {
-            $seg = $segs[$k]
-            if (-not $seg.HasName -and -not $seg.IsLiteralSingleton) { continue }
-
-            $segSlice    = New-Object System.Collections.Generic.List[object]
-            for ($j = 0; $j -le $k; $j++) { $segSlice.Add($segs[$j]) | Out-Null }
-            [string[]] $cumulative = Get-CumulativeResourceTypes -Segments $segSlice
-            $resourceType  = [string]$cumulative[$cumulative.Length - 1]
-            if ($cumulative.Length -gt 1) {
-                [string[]] $parentChain = $cumulative[0..($cumulative.Length - 2)]
-                if ($GeneratedDir -and $resourceTypeToClassName.Count -gt 0) {
-                    $nearestGeneratedParent = @($parentChain | Where-Object { $resourceTypeToClassName.ContainsKey($_) } | Select-Object -Last 1)
-                    [string[]] $parentChain = @($nearestGeneratedParent)
-                }
-            }
-            else {
-                [string[]] $parentChain = @()
-            }
-
-            # Compute the prefix-of-rest length corresponding to segment k.
-            # The original `rest` token array carries the indices we recorded.
-            $endTokenInRest = $segEnds[$k]
-            $resourceIdTemplate = $null
-            if ($endTokenInRest -ge 0) {
-                # Reconstruct the full path up to segment k by combining the
-                # scope prefix consumed earlier with the rest tokens up to
-                # endTokenInRest.
-                $consumedScopeTokens = $tokens.Count - $rest.Count
-                $globalEnd           = $consumedScopeTokens + $endTokenInRest
-                $resourceIdTemplate  = '/' + ($tokens[0..$globalEnd] -join '/')
-            }
-
-            $isSingleton = $seg.IsLiteralSingleton -or (-not $seg.HasName)
-
-            if (-not $resourcesByType.ContainsKey($resourceType)) {
-                $defaultClassName = Get-DefaultClassName -LeafSegment $seg.Segment
-                $className = if ($resourceTypeToClassName.ContainsKey($resourceType)) {
-                    $resourceTypeToClassName[$resourceType]
-                } else { $defaultClassName }
-
-                $resourcesByType[$resourceType] = [pscustomobject]@{
-                    Name                = $className
-                    ResourceType        = $resourceType
-                    ResourceId          = $resourceIdTemplate
-                    IsSingleton         = $isSingleton
-                    ParentResourceTypes = @($parentChain)
-                    ParentResources     = @()
-                    Scopes              = @($effectiveScope)
-                    SourceClients       = @($client.name)
-                    OriginalNameDefault = $defaultClassName
-                }
-            }
-            else {
-                $existing = $resourcesByType[$resourceType]
-                if (-not (@($existing.Scopes) -contains $effectiveScope)) {
-                    $existing.Scopes = @($existing.Scopes) + $effectiveScope
-                }
-                if (-not (@($existing.SourceClients) -contains $client.name)) {
-                    $existing.SourceClients = @($existing.SourceClients) + $client.name
-                }
-                if (@($parentChain).Count -gt @($existing.ParentResourceTypes).Count) {
-                    $existing.ParentResourceTypes = @($parentChain)
-                }
-            }
+        else {
+            $parentChain = @($parentResourceId)
         }
+    }
+
+    $leafSegment = ($resourceType -split '/')[-1]
+    $defaultClassName = Get-DefaultClassName -LeafSegment $leafSegment
+    $className = if ($resourceTypeToClassName.ContainsKey($resourceType)) {
+        $resourceTypeToClassName[$resourceType]
+    } else { $defaultClassName }
+    $resourceScope = Convert-ScopeMetadataToHierarchyScope -ScopeMetadata $resource.scope
+
+    $resourcesByType[$resourceType] = [pscustomobject]@{
+        Name                = $className
+        ResourceType        = $resourceType
+        ResourceId          = [string] $resource.resourceIdPattern
+        IsSingleton         = -not [string]::IsNullOrWhiteSpace([string] $resource.singletonResourceName)
+        ParentResourceTypes = @($parentChain)
+        ParentResources     = @()
+        Scopes              = @($resourceScope)
+        SourceClients       = @()
+        OriginalNameDefault = $defaultClassName
     }
 }
 
