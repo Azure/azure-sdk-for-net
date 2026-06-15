@@ -14,15 +14,19 @@ namespace Azure.ResourceManager.Storage.Models
     public readonly partial struct StorageMinimumTlsVersion
     {
         // Backward-compatible alias for Tls10.
+        /// <summary> Tls1_0. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageMinimumTlsVersion Tls1_0 { get; } = new StorageMinimumTlsVersion("TLS1_0");
         // Backward-compatible alias for Tls11.
+        /// <summary> Tls1_1. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageMinimumTlsVersion Tls1_1 { get; } = new StorageMinimumTlsVersion("TLS1_1");
         // Backward-compatible alias for Tls12.
+        /// <summary> Tls1_2. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageMinimumTlsVersion Tls1_2 { get; } = new StorageMinimumTlsVersion("TLS1_2");
         // Backward-compatible alias for Tls13.
+        /// <summary> Tls1_3. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StorageMinimumTlsVersion Tls1_3 { get; } = new StorageMinimumTlsVersion("TLS1_3");
     }

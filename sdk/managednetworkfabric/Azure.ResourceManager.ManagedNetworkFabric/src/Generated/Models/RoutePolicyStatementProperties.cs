@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -30,26 +31,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="RoutePolicyStatementProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. </param>
         /// <param name="condition"> Route policy condition properties. </param>
         /// <param name="action"> Route policy action properties. </param>
-        internal RoutePolicyStatementProperties(string annotation, IDictionary<string, BinaryData> serializedAdditionalRawData, long sequenceNumber, StatementConditionProperties condition, StatementActionProperties action) : base(annotation, serializedAdditionalRawData)
+        internal RoutePolicyStatementProperties(string annotation, IDictionary<string, BinaryData> additionalBinaryDataProperties, long sequenceNumber, StatementConditionProperties condition, StatementActionProperties action) : base(annotation, additionalBinaryDataProperties)
         {
             SequenceNumber = sequenceNumber;
             Condition = condition;
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RoutePolicyStatementProperties"/> for deserialization. </summary>
-        internal RoutePolicyStatementProperties()
-        {
-        }
-
         /// <summary> Sequence to insert to/delete from existing route. </summary>
         public long SequenceNumber { get; set; }
+
         /// <summary> Route policy condition properties. </summary>
         public StatementConditionProperties Condition { get; set; }
+
         /// <summary> Route policy action properties. </summary>
         public StatementActionProperties Action { get; set; }
     }

@@ -22,9 +22,7 @@ namespace Azure.Generator.Provisioning.Primitives
             ResourceType = GetSameResourceType(metadata);
             ResourceName = GetSameValueOrDefault(metadata.Select(resource => resource.ResourceName), ResourceModel.Name, StringComparer.Ordinal);
             SingletonResourceName = GetSameNullableValueOrDefault(metadata.Select(resource => resource.SingletonResourceName), null, StringComparer.Ordinal);
-            // TODO: Revisit parent merging in the parent/scope PR. For now, preserve
-            // the previous behavior by using the first detected parent.
-            ParentResourceId = metadata[0].ParentResourceId;
+            ParentResourceId = GetSameNullableValueOrDefault(metadata.Select(resource => resource.ParentResourceId), null);
             NameConstraints = GetSameValueOrDefault(
                 metadata.Select(resource => resource.NameConstraints),
                 new ArmResourceNameConstraints(null, null, null));
@@ -153,42 +151,14 @@ namespace Azure.Generator.Provisioning.Primitives
         private static T GetSameValueOrDefault<T>(IEnumerable<T> values, T defaultValue, IEqualityComparer<T>? comparer = null)
             where T : notnull
         {
-            comparer ??= EqualityComparer<T>.Default;
-            using var enumerator = values.GetEnumerator();
-            if (!enumerator.MoveNext())
-            {
-                return defaultValue;
-            }
-
-            var first = enumerator.Current;
-            while (enumerator.MoveNext())
-            {
-                if (!comparer.Equals(first, enumerator.Current))
-                {
-                    return defaultValue;
-                }
-            }
-            return first;
+            var distinctValues = values.Distinct(comparer).Take(2).ToArray();
+            return distinctValues.Length == 1 ? distinctValues[0] : defaultValue;
         }
 
         private static T? GetSameNullableValueOrDefault<T>(IEnumerable<T?> values, T? defaultValue, IEqualityComparer<T?>? comparer = null)
         {
-            comparer ??= EqualityComparer<T?>.Default;
-            using var enumerator = values.GetEnumerator();
-            if (!enumerator.MoveNext())
-            {
-                return defaultValue;
-            }
-
-            var first = enumerator.Current;
-            while (enumerator.MoveNext())
-            {
-                if (!comparer.Equals(first, enumerator.Current))
-                {
-                    return defaultValue;
-                }
-            }
-            return first;
+            var distinctValues = values.Distinct(comparer).Take(2).ToArray();
+            return distinctValues.Length == 1 ? distinctValues[0] : defaultValue;
         }
 
         private static IEnumerable<RequestPathPattern> CollectResourceIdPatterns(IReadOnlyList<ArmResourceMetadata> metadata)

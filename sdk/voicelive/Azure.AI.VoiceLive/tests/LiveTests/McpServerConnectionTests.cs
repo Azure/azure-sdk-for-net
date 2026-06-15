@@ -301,7 +301,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             var invalidMcpServer = new VoiceLiveMcpServerDefinition(
                 serverLabel: "invalid-server",
-                serverUrl: "https://nonexistent.invalid.microsoft.com/mcp")
+                serverUrl: new Uri("https://nonexistent.invalid.microsoft.com/mcp"))
             {
                 RequireApproval = McpApprovalKind.Never
             };

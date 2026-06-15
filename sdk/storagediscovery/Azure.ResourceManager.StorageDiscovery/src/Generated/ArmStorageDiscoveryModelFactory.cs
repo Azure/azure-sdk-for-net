@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmStorageDiscoveryModelFactory
     {
-        /// <summary> A Storage Discovery Workspace resource. This resource configures the collection of storage account metrics. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -36,13 +35,12 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
-        /// <summary> Storage Discovery Workspace Properties. </summary>
         /// <param name="sku"> The storage discovery sku. </param>
         /// <param name="description"> The description of the storage discovery workspace. </param>
         /// <param name="workspaceRoots"> The view level storage discovery data estate. </param>
@@ -57,13 +55,12 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             return new StorageDiscoveryWorkspaceProperties(
                 sku,
                 description,
-                workspaceRoots.ToList(),
-                scopes.ToList(),
+                (workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                (scopes ?? new ChangeTrackingList<StorageDiscoveryScope>()).ToList(),
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Storage Discovery Scope. This had added validations. </summary>
         /// <param name="displayName"> Display name of the collection. </param>
         /// <param name="resourceTypes"> Resource types for the collection. </param>
         /// <param name="tagKeysOnly"> The storage account tags keys to filter. </param>
@@ -75,10 +72,9 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             tagKeysOnly ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new StorageDiscoveryScope(displayName, resourceTypes.ToList(), tagKeysOnly.ToList(), tags, additionalBinaryDataProperties: null);
+            return new StorageDiscoveryScope(displayName, (resourceTypes ?? new ChangeTrackingList<StorageDiscoveryResourceKind>()).ToList(), (tagKeysOnly ?? new ChangeTrackingList<string>()).ToList(), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> The template for adding updateable properties. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.StorageDiscoveryWorkspacePatch"/> instance for mocking. </returns>
@@ -86,10 +82,9 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new StorageDiscoveryWorkspacePatch(tags, properties, additionalBinaryDataProperties: null);
+            return new StorageDiscoveryWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
-        /// <summary> The template for adding updateable properties. </summary>
         /// <param name="sku"> The storage discovery sku. </param>
         /// <param name="description"> The description of the storage discovery workspace. </param>
         /// <param name="workspaceRoots"> The view level storage discovery data estate. </param>
@@ -100,7 +95,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             workspaceRoots ??= new ChangeTrackingList<ResourceIdentifier>();
             scopes ??= new ChangeTrackingList<StorageDiscoveryScope>();
 
-            return new StorageDiscoveryWorkspacePatchProperties(sku, description, workspaceRoots.ToList(), scopes.ToList(), additionalBinaryDataProperties: null);
+            return new StorageDiscoveryWorkspacePatchProperties(sku, description, (workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), (scopes ?? new ChangeTrackingList<StorageDiscoveryScope>()).ToList(), default);
         }
     }
 }
