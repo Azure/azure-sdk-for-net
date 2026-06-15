@@ -163,11 +163,6 @@ namespace Azure.Generator.Visitors
             }
 
             string scopeName = method.GetScopeName();
-            const string asyncSuffix = "Async";
-            if (scopeName.EndsWith(asyncSuffix))
-            {
-                scopeName = scopeName[..^asyncSuffix.Length];
-            }
 
             PropertyProvider clientDiagnosticsProperty = method.GetClient().GetClientDiagnosticProperty();
 
@@ -296,11 +291,6 @@ namespace Azure.Generator.Visitors
         private static void UpdatePagingMethodWithScope(ScmMethodProvider method)
         {
             string scopeName = method.GetScopeName();
-            const string asyncSuffix = "Async";
-            if (scopeName.EndsWith(asyncSuffix))
-            {
-                scopeName = scopeName[..^asyncSuffix.Length];
-            }
 
             if (method.BodyExpression is NewInstanceExpression newInstance)
             {
