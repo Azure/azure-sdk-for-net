@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ComputeFleet
         {
             TryGetApiVersion(ResourceType, out string computeFleetApiVersion);
             _fleetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ComputeFleet", ResourceType.Namespace, Diagnostics);
-            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Endpoint, computeFleetApiVersion ?? "2025-07-01-preview");
+            _fleetsRestClient = new Fleets(_fleetsClientDiagnostics, Pipeline, Endpoint, computeFleetApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -406,105 +406,7 @@ namespace Azure.ResourceManager.ComputeFleet
         }
 
         /// <summary>
-        /// Cancels an instance Fleet creation that is in progress.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}/cancel. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Fleets_Cancel. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ComputeFleetResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> CancelAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("ComputeFleetResource.Cancel");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeFleetArmOperation operation = new ComputeFleetArmOperation(_fleetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Cancels an instance Fleet creation that is in progress.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}/cancel. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Fleets_Cancel. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ComputeFleetResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Cancel(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _fleetsClientDiagnostics.CreateScope("ComputeFleetResource.Cancel");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _fleetsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                ComputeFleetArmOperation operation = new ComputeFleetArmOperation(_fleetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List VirtualMachine resources of an instance Fleet.
+        /// List VirtualMachine resources of a Launch mode Fleet.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -516,7 +418,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -546,7 +448,7 @@ namespace Azure.ResourceManager.ComputeFleet
         }
 
         /// <summary>
-        /// List VirtualMachine resources of an instance Fleet.
+        /// List VirtualMachine resources of a Launch mode Fleet.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -558,7 +460,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -600,7 +502,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -638,7 +540,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01-preview. </description>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

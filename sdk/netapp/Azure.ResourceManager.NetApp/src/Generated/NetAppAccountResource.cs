@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _accountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppAccountPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetAppArmOperation<NetAppAccountResource> operation = new NetAppArmOperation<NetAppAccountResource>(
-                    new NetAppAccountOperationSource(Client),
+                    new NetAppAccountResourceOperationSource(Client),
                     _accountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.NetApp
                 HttpMessage message = _accountsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NetAppAccountPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetAppArmOperation<NetAppAccountResource> operation = new NetAppArmOperation<NetAppAccountResource>(
-                    new NetAppAccountOperationSource(Client),
+                    new NetAppAccountResourceOperationSource(Client),
                     _accountsClientDiagnostics,
                     Pipeline,
                     message.Request,

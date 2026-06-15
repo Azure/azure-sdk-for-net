@@ -15,7 +15,7 @@ namespace Azure.Data.AppConfiguration.Tests
     [TestFixture(false)]
     public class AudienceErrorHandlingPolicyTests : SyncAsyncPolicyTestBase
     {
-        private const string AadAudienceErrorCode = "AADSTS500011"; // Must match code in AudienceErrorHandlingPolicy
+        private const string EntraIdAudienceErrorCode = "AADSTS500011"; // Must match code in AudienceErrorHandlingPolicy
 
         public AudienceErrorHandlingPolicyTests(bool isAsync) : base(isAsync)
         {
@@ -96,7 +96,7 @@ namespace Azure.Data.AppConfiguration.Tests
                 new HttpPipelinePolicy[]
                 {
                     new AudienceErrorHandlingPolicy(isAudienceConfigured),
-                    new ThrowingPolicy($"Simulated authentication failure {AadAudienceErrorCode}: Resource principal not found")
+                    new ThrowingPolicy($"Simulated authentication failure {EntraIdAudienceErrorCode}: Resource principal not found")
                 },
                 responseClassifier: null);
 
@@ -122,7 +122,7 @@ namespace Azure.Data.AppConfiguration.Tests
             Assert.That(ex, Is.Not.Null);
             Assert.That(ex.Message, Does.Contain(ExpectedErrorMessage(isAudienceConfigured)));
             Assert.That(ex.InnerException, Is.Not.Null);
-            Assert.That(ex.InnerException.Message, Does.Contain(AadAudienceErrorCode));
+            Assert.That(ex.InnerException.Message, Does.Contain(EntraIdAudienceErrorCode));
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationSkuRestrictionsType : IEquatable<DataMigrationSkuRestrictionsType>
     {
         private readonly string _value;
+        /// <summary> location. </summary>
+        private const string LocationValue = "location";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationSkuRestrictionsType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationSkuRestrictionsType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LocationValue = "location";
+            _value = value;
+        }
 
         /// <summary> location. </summary>
         public static DataMigrationSkuRestrictionsType Location { get; } = new DataMigrationSkuRestrictionsType(LocationValue);
+
         /// <summary> Determines if two <see cref="DataMigrationSkuRestrictionsType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationSkuRestrictionsType left, DataMigrationSkuRestrictionsType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationSkuRestrictionsType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationSkuRestrictionsType left, DataMigrationSkuRestrictionsType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationSkuRestrictionsType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationSkuRestrictionsType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationSkuRestrictionsType(string value) => new DataMigrationSkuRestrictionsType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationSkuRestrictionsType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationSkuRestrictionsType?(string value) => value == null ? null : new DataMigrationSkuRestrictionsType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationSkuRestrictionsType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationSkuRestrictionsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

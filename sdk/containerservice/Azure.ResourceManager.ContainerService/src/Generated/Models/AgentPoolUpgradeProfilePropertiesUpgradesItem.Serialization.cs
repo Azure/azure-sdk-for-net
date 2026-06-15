@@ -84,11 +84,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
             }
-            if (Optional.IsDefined(IsOutOfSupport))
-            {
-                writer.WritePropertyName("isOutOfSupport"u8);
-                writer.WriteBooleanValue(IsOutOfSupport.Value);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,7 +128,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             string kubernetesVersion = default;
             bool? isPreview = default;
-            bool? isOutOfSupport = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,21 +145,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                     isPreview = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("isOutOfSupport"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isOutOfSupport = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentPoolUpgradeProfilePropertiesUpgradesItem(kubernetesVersion, isPreview, isOutOfSupport, additionalBinaryDataProperties);
+            return new AgentPoolUpgradeProfilePropertiesUpgradesItem(kubernetesVersion, isPreview, additionalBinaryDataProperties);
         }
     }
 }

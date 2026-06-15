@@ -21,6 +21,15 @@
     <_AnalyzerAllowListFile>$(_AnalyzerAllowListDir)$(MSBuildProjectName).txt</_AnalyzerAllowListFile>
   </PropertyGroup>
 
+  <!-- Expose the allow-list file to AllowListDiagnosticSuppressor via the AzureSdkAllowList metadata. -->
+  <ItemGroup Condition="'$(IsShippingClientLibrary)' == 'true' and Exists('$(_AnalyzerAllowListFile)')">
+    <AdditionalFiles Include="$(_AnalyzerAllowListFile)" AzureSdkAllowList="true" Visible="false" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsShippingClientLibrary)' == 'true'">
+    <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="AzureSdkAllowList" />
+  </ItemGroup>
+
   <!--
     Read the allow-list file and extract nowarn: entries into _ProjectAllowedNoWarn.
 
@@ -54,15 +63,57 @@
                                     $([System.String]::Copy('%(_AllowListRaw.Trimmed)').StartsWith('nowarn:', System.StringComparison.OrdinalIgnoreCase)) " />
     </ItemGroup>
 
-    <!-- Strip the 7-char prefix and trim what remains (tolerates `nowarn: CODE`) -->
+    <!--
+      Strip the "nowarn:" prefix into Code, then strip any trailing inline
+      comment (" #...") into CodeNoComment. The comment strip must run before
+      the scoped-vs-whole-assembly split below so that entries like
+      "nowarn:AZC0102 # reason" are still classified as whole-assembly.
+    -->
     <ItemGroup>
       <_AllowListNoWarn>
         <Code>$([System.String]::Copy('%(Identity)').Substring(7).Trim())</Code>
       </_AllowListNoWarn>
+      <_AllowListNoWarn>
+        <CodeNoComment Condition=" $([System.String]::Copy('%(Code)').Contains(' #')) ">$([System.String]::Copy('%(Code)').Substring(0, $([System.String]::Copy('%(Code)').IndexOf(' #'))).TrimEnd())</CodeNoComment>
+        <CodeNoComment Condition=" !$([System.String]::Copy('%(Code)').Contains(' #')) ">%(Code)</CodeNoComment>
+      </_AllowListNoWarn>
+    </ItemGroup>
+
+    <!--
+      Whole-assembly entries (just CODE) flow into $(NoWarn) below. Scoped
+      entries (CODE Target) are handled at-site by AllowListDiagnosticSuppressor
+      and intentionally NOT injected here — that would defeat point-suppression.
+    -->
+    <ItemGroup>
+      <_AllowListWholeAssembly Include="%(_AllowListNoWarn.CodeNoComment)"
+                               Condition=" '%(_AllowListNoWarn.CodeNoComment)' != '' and !$([System.String]::Copy('%(_AllowListNoWarn.CodeNoComment)').Contains(' ')) " />
     </ItemGroup>
 
     <PropertyGroup>
-      <_ProjectAllowedNoWarn>@(_AllowListNoWarn -> '%(Code)', ';')</_ProjectAllowedNoWarn>
+      <_ProjectAllowedNoWarn>@(_AllowListWholeAssembly, ';')</_ProjectAllowedNoWarn>
+    </PropertyGroup>
+  </Target>
+
+  <!--
+    Apply the approved codes to $(NoWarn) so projects don't have to duplicate them
+    in their csproj. The allow-list file is the single source of truth: an entry
+    both approves the suppression AND makes it take effect at compile time.
+
+    This runs independently before CoreCompile (with no DesignTimeBuild guard) so
+    allow-listed suppressions are applied during both regular and design-time builds.
+    Design-time builds (IDE IntelliSense / error squiggles) invoke CoreCompile too;
+    if injection only ran via ValidateNoWarn (which is design-time-skipped for the
+    AZSDK0002 enforcement), the IDE would surface analyzer warnings that the
+    command-line build suppresses — pressuring developers to re-add csproj <NoWarn>
+    entries and defeating the single-source-of-truth design.
+  -->
+  <Target
+    Name="ApplyAnalyzerAllowListNoWarn"
+    BeforeTargets="CoreCompile"
+    DependsOnTargets="ReadAnalyzerAllowList"
+    Condition="'$(IsShippingClientLibrary)' == 'true'">
+    <PropertyGroup Condition="'$(_ProjectAllowedNoWarn)' != ''">
+      <NoWarn>$(NoWarn);$(_ProjectAllowedNoWarn)</NoWarn>
     </PropertyGroup>
   </Target>
 </Project>

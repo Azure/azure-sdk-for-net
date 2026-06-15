@@ -63,7 +63,6 @@ docker push <DOCKER_USERNAME>.azurecr.io/<DOCKER_USERNAME>/workflow-agent:latest
 
 ```C# Snippet:Sample_CreateAgentClient_HostedAgent
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-var containerImage = System.Environment.GetEnvironmentVariable("FOUNDRY_AGENT_CONTAINER_IMAGE");
 var dockerImage = System.Environment.GetEnvironmentVariable("AGENT_DOCKER_IMAGE");
 Uri uriEndpoint = new(projectEndpoint);
 DefaultAzureCredential credential = new();

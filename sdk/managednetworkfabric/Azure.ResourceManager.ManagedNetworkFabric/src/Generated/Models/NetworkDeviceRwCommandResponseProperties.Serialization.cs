@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkDeviceRwCommandResponseProperties : IUtf8JsonSerializable, IJsonModel<NetworkDeviceRwCommandResponseProperties>
+    /// <summary> Network Device Resource defines the properties of the resource. </summary>
+    public partial class NetworkDeviceRwCommandResponseProperties : IJsonModel<NetworkDeviceRwCommandResponseProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkDeviceRwCommandResponseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkDeviceRwCommandResponseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceRwCommandResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkDeviceRwCommandResponseProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkDeviceRwCommandResponseProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceRwCommandResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkDeviceRwCommandResponseProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkDeviceRwCommandResponseProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkDeviceRwCommandResponseProperties IPersistableModel<NetworkDeviceRwCommandResponseProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkDeviceRwCommandResponseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkDeviceRwCommandResponseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceRwCommandResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceRwCommandResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkDeviceRwCommandResponseProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
                 writer.WritePropertyName("configurationState"u8);
@@ -44,15 +84,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("outputUrl"u8);
                 writer.WriteStringValue(OutputUri.AbsoluteUri);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,88 +101,60 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        NetworkDeviceRwCommandResponseProperties IJsonModel<NetworkDeviceRwCommandResponseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkDeviceRwCommandResponseProperties IJsonModel<NetworkDeviceRwCommandResponseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkDeviceRwCommandResponseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceRwCommandResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceRwCommandResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkDeviceRwCommandResponseProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkDeviceRwCommandResponseProperties(document.RootElement, options);
         }
 
-        internal static NetworkDeviceRwCommandResponseProperties DeserializeNetworkDeviceRwCommandResponseProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkDeviceRwCommandResponseProperties DeserializeNetworkDeviceRwCommandResponseProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             NetworkFabricConfigurationState? configurationState = default;
-            Uri outputUrl = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            Uri outputUri = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("configurationState"u8))
+                if (prop.NameEquals("configurationState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    configurationState = new NetworkFabricConfigurationState(property.Value.GetString());
+                    configurationState = new NetworkFabricConfigurationState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("outputUrl"u8))
+                if (prop.NameEquals("outputUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    outputUrl = new Uri(property.Value.GetString());
+                    outputUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkDeviceRwCommandResponseProperties(configurationState, outputUrl, serializedAdditionalRawData);
+            return new NetworkDeviceRwCommandResponseProperties(configurationState, outputUri, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<NetworkDeviceRwCommandResponseProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceRwCommandResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkDeviceRwCommandResponseProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkDeviceRwCommandResponseProperties IPersistableModel<NetworkDeviceRwCommandResponseProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceRwCommandResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkDeviceRwCommandResponseProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkDeviceRwCommandResponseProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkDeviceRwCommandResponseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -99,8 +99,11 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="options">The <see cref="HttpPipelineTransportOptions"/> that to configure the behavior of the transport.</param>
         internal HttpClientTransport(HttpPipelineTransportOptions? options = null)
-            : this(_ => CreateDefaultClient(options))
-        { }
+            : this(CreateDefaultClient(options))
+        {
+            _clientFactory = opts => CreateDefaultClient(opts);
+            _clientWrapper.IsRefCountingEnabled = true;
+        }
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided client instance.
@@ -145,6 +148,7 @@ namespace Azure.Core.Pipeline
         /// <inheritdoc />
         public override void Update(HttpPipelineTransportOptions options)
         {
+            AzureCoreEventSource.Singleton.TokenBinding($"HttpClientTransport updating transport options with {options.ClientCertificates.Count} client certificate(s).");
             if (this == Shared)
             {
                 throw new InvalidOperationException("Cannot update the shared HttpClientTransport instance.");
@@ -176,6 +180,7 @@ namespace Azure.Core.Pipeline
 
             var newWrapper = new HttpClientWrapper(newClient);
             var oldWrapper = Interlocked.Exchange(ref _clientWrapper!, newWrapper);
+            AzureCoreEventSource.Singleton.TokenBinding("HttpClientTransport replaced HttpClient for updated transport options.");
 
             // Release the transport's reference to the old client
             oldWrapper?.Release();
@@ -359,6 +364,19 @@ namespace Azure.Core.Pipeline
                 httpHandler.SslOptions.ClientCertificates ??= new X509CertificateCollection();
                 httpHandler.SslOptions.ClientCertificates!.Add(cert);
             }
+
+            // Ensure the first available client certificate is selected during TLS handshake
+            if (options.ClientCertificates.Count > 0)
+            {
+                httpHandler.SslOptions.LocalCertificateSelectionCallback = (sender, targetHost, localCerts, remoteCert, acceptableIssuers) =>
+                {
+                    if (localCerts.Count > 0)
+                    {
+                        return localCerts[0];
+                    }
+                    return null!;
+                };
+            }
 #pragma warning restore CA1416 // 'X509Certificate2' is unsupported on 'browser'
             return httpHandler;
         }
@@ -383,6 +401,12 @@ namespace Azure.Core.Pipeline
             foreach (var cert in options.ClientCertificates)
             {
                 httpHandler.ClientCertificates.Add(cert);
+            }
+
+            // Ensure client certificates are sent during TLS handshake
+            if (options.ClientCertificates.Count > 0)
+            {
+                httpHandler.ClientCertificateOptions = ClientCertificateOption.Manual;
             }
             return httpHandler;
         }

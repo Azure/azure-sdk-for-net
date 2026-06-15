@@ -53,6 +53,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OptimizationJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="optimizationJob"> The <see cref="OptimizationJob"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(OptimizationJob optimizationJob)
+        {
+            if (optimizationJob == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(optimizationJob, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="OptimizationJob"/> from. </param>
         public static explicit operator OptimizationJob(ClientResult result)
         {
@@ -84,6 +94,16 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (Optional.IsDefined(Inputs))
+            {
+                writer.WritePropertyName("inputs"u8);
+                writer.WriteObjectValue(Inputs, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Result))
+            {
+                writer.WritePropertyName("result"u8);
+                writer.WriteObjectValue(Result, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("status"u8);
@@ -94,35 +114,35 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(Result))
-            {
-                writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result, options);
-            }
-            if (Optional.IsDefined(Inputs))
-            {
-                writer.WritePropertyName("inputs"u8);
-                writer.WriteObjectValue(Inputs, options);
-            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("created_at"u8);
                 writer.WriteNumberValue(CreatedAt, "U");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedAt))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("updated_at"u8);
-                writer.WriteNumberValue(UpdatedAt.Value, "U");
+                writer.WriteNumberValue(UpdatedAt, "U");
             }
             if (options.Format != "W" && Optional.IsDefined(Progress))
             {
                 writer.WritePropertyName("progress"u8);
                 writer.WriteObjectValue(Progress, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(Dataset))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Warnings))
             {
-                writer.WritePropertyName("dataset"u8);
-                writer.WriteObjectValue(Dataset, options);
+                writer.WritePropertyName("warnings"u8);
+                writer.WriteStartArray();
+                foreach (string item in Warnings)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -167,20 +187,38 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             string id = default;
+            OptimizationJobInputs inputs = default;
+            OptimizationJobResult result = default;
             JobStatus status = default;
             FoundryOpenAIError error = default;
-            OptimizationJobResult result = default;
-            OptimizationJobInputs inputs = default;
             DateTimeOffset createdAt = default;
-            DateTimeOffset? updatedAt = default;
+            DateTimeOffset updatedAt = default;
             OptimizationJobProgress progress = default;
-            DatasetInfo dataset = default;
+            IReadOnlyList<string> warnings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
                     id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("inputs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    inputs = OptimizationJobInputs.DeserializeOptimizationJobInputs(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("result"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    result = OptimizationJobResult.DeserializeOptimizationJobResult(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -197,24 +235,6 @@ namespace Azure.AI.Projects.Agents
                     error = FoundryOpenAIError.DeserializeFoundryOpenAIError(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("result"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    result = OptimizationJobResult.DeserializeOptimizationJobResult(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("inputs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    inputs = OptimizationJobInputs.DeserializeOptimizationJobInputs(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("created_at"u8))
                 {
                     createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
@@ -222,10 +242,6 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("updated_at"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     updatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
@@ -238,13 +254,25 @@ namespace Azure.AI.Projects.Agents
                     progress = OptimizationJobProgress.DeserializeOptimizationJobProgress(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("dataset"u8))
+                if (prop.NameEquals("warnings"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataset = DatasetInfo.DeserializeDatasetInfo(prop.Value, options);
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    warnings = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -254,14 +282,14 @@ namespace Azure.AI.Projects.Agents
             }
             return new OptimizationJob(
                 id,
+                inputs,
+                result,
                 status,
                 error,
-                result,
-                inputs,
                 createdAt,
                 updatedAt,
                 progress,
-                dataset,
+                warnings ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

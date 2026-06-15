@@ -196,30 +196,6 @@ namespace Azure.ResourceManager.ContainerService
             return message;
         }
 
-        internal HttpMessage CreateCompleteUpgradeRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/agentPools/", false);
-            uri.AppendPath(agentPoolName, true);
-            uri.AppendPath("/completeUpgrade", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            return message;
-        }
-
         internal HttpMessage CreateDeleteMachinesRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
