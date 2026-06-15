@@ -14,9 +14,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation
 {
-    // Compatibility shim preserving GA Dsc compilation job stream operations that are SDK-only in the TypeSpec migration.
-    [CodeGenSuppress("GetSoftwareUpdateConfigurations", typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetSoftwareUpdateConfigurationsAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    // TypeSpec now places DSC compilation job stream operations on the SDK-only DscCompilationJobResource shape.
+    // Keep the GA AutomationAccountResource methods so callers can pass jobId directly without using that generated resource.
     public partial class AutomationAccountResource
     {
         /// <summary>

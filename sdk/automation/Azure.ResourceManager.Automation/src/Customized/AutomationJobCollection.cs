@@ -13,7 +13,8 @@ using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    // Compatibility shim preserving the GA job-list pageable item type and enumerable collection surface.
+    // TypeSpec generation exposes jobs through the ARM resource collection shape.
+    // Keep the GA enumerable/pageable GetAll surface returning AutomationJobCollectionItemData.
     public partial class AutomationJobCollection : IEnumerable<AutomationJobCollectionItemData>, IAsyncEnumerable<AutomationJobCollectionItemData>
     {
         /// <summary>

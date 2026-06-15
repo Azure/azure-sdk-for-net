@@ -5,10 +5,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving GA setters for flattened job create/update properties.
-    [CodeGenSuppress("AutomationJobCreateOrUpdateContent")]
-    [CodeGenSuppress("RunbookName")]
-    [CodeGenSuppress("RunOn")]
+    // Generated job create content stores RunbookName and RunOn under JobCreateProperties.
+    // Keep GA top-level setters and initialize the nested Properties model for callers.
     public partial class AutomationJobCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of <see cref="AutomationJobCreateOrUpdateContent"/>. </summary>

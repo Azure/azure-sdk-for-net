@@ -6,8 +6,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation
 {
-    // Compatibility shim preserving the GA ResourceData base type; the wire model is tracked in the new API version.
-    [CodeGenSuppress("HybridRunbookWorkerData")]
+    // Generated HybridRunbookWorkerData materializes through internal constructors for the wire model.
+    // Keep the GA public ResourceData constructor used by callers and tests to create instances.
     public partial class HybridRunbookWorkerData : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="HybridRunbookWorkerData"/>. </summary>

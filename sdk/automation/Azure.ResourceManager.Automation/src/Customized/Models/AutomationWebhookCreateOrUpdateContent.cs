@@ -7,13 +7,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving GA setters for flattened webhook create/update properties.
-    [CodeGenSuppress("AutomationWebhookCreateOrUpdateContent", typeof(string))]
-    [CodeGenSuppress("ExpireOn")]
-    [CodeGenSuppress("IsEnabled")]
-    [CodeGenSuppress("RunbookName")]
-    [CodeGenSuppress("RunOn")]
-    [CodeGenSuppress("Uri")]
+    // Generated webhook content keeps most fields under WebhookCreateOrUpdateProperties.
+    // Keep the GA name constructor and top-level setters for expiry, enabled state, runbook, runOn, and URI.
     public partial class AutomationWebhookCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of <see cref="AutomationWebhookCreateOrUpdateContent"/>. </summary>

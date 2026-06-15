@@ -13,7 +13,8 @@ using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    // Compatibility shim preserving the GA Update signature backed by the service PUT create operation.
+    // TypeSpec generates resource Update as PATCH, but the GA Update method called the service PUT create operation.
+    // Keep the GA WaitUntil update wrapper by sending CreateCreateRequest and returning an ArmOperation.
     public partial class HybridRunbookWorkerResource
     {
         /// <summary>

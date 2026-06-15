@@ -10,8 +10,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving the GA model factory overload for flattened webhook create/update properties.
-    [CodeGenSuppress("AutomationWebhookCreateOrUpdateContent", typeof(string), typeof(bool?), typeof(Uri), typeof(DateTimeOffset?), typeof(IDictionary<string, string>), typeof(string), typeof(string))]
+    // Generated webhook create/update content now stores these values inside WebhookCreateOrUpdateProperties.
+    // Keep the GA model factory overload that accepts the flattened webhook fields.
     public static partial class ArmAutomationModelFactory
     {
         /// <param name="name"> Gets or sets the name of the webhook. </param>

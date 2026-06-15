@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -16,6 +17,12 @@ namespace Azure.ResourceManager.Automation.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="DscCompilationJobCreateOrUpdateContent"/>. </summary>
+        public DscCompilationJobCreateOrUpdateContent()
+        {
+            Tags = new ChangeTrackingDictionary<string, string>();
+        }
 
         /// <summary> Initializes a new instance of <see cref="DscCompilationJobCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Gets or sets the list of compilation job properties. </param>

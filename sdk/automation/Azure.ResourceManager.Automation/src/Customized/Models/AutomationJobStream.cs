@@ -8,8 +8,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving GA IReadOnlyDictionary type for job stream values.
-    [CodeGenSuppress("Value")]
+    // Generated job stream values live under internal JobStreamProperties and are not exposed as the GA type.
+    // Keep the GA read-only Value dictionary on AutomationJobStream.
     public partial class AutomationJobStream
     {
         /// <summary> Gets or sets the values of the job stream. </summary>

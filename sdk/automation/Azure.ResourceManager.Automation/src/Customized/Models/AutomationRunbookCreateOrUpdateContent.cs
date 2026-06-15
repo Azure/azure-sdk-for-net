@@ -5,13 +5,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving GA flattened runbook create/update setters.
-    [CodeGenSuppress("Description")]
-    [CodeGenSuppress("Draft")]
-    [CodeGenSuppress("IsLogProgressEnabled")]
-    [CodeGenSuppress("IsLogVerboseEnabled")]
-    [CodeGenSuppress("LogActivityTrace")]
-    [CodeGenSuppress("PublishContentLink")]
+    // Generated runbook content exposes only selected fields and keeps the rest under RunbookCreateOrUpdateProperties.
+    // Keep GA top-level setters for log, draft, content link, description, and trace settings.
     public partial class AutomationRunbookCreateOrUpdateContent
     {
         /// <summary> Gets or sets verbose log option. </summary>

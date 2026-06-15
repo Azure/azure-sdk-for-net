@@ -5,8 +5,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving the GA flattened IsGlobal setter.
-    [CodeGenSuppress("IsGlobal")]
+    // Generated connection type content keeps IsGlobal under ConnectionTypeCreateOrUpdateProperties.
+    // Keep the GA top-level settable IsGlobal property.
     public partial class AutomationConnectionTypeCreateOrUpdateContent
     {
         /// <summary> Gets or sets a Boolean value to indicate if the connection type is global. </summary>

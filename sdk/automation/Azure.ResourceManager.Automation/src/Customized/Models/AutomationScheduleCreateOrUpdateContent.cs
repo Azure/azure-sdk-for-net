@@ -6,12 +6,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving GA setters for flattened schedule create/update properties.
-    [CodeGenSuppress("AdvancedSchedule")]
-    [CodeGenSuppress("Description")]
-    [CodeGenSuppress("ExpireOn")]
-    [CodeGenSuppress("Interval")]
-    [CodeGenSuppress("TimeZone")]
+    // Generated schedule content exposes required fields but keeps optional settings under ScheduleCreateOrUpdateProperties.
+    // Keep GA top-level setters for description, expiry, interval, time zone, and advanced schedule.
     public partial class AutomationScheduleCreateOrUpdateContent
     {
         /// <summary> Gets or sets the description of the schedule. </summary>

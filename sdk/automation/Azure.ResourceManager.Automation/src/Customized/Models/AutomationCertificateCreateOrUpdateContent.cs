@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -7,10 +7,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving GA flattened setters and the obsolete BinaryData thumbprint property.
-    [CodeGenSuppress("Description")]
-    [CodeGenSuppress("ThumbprintString")]
-    [CodeGenSuppress("IsExportable")]
+    // Generated certificate content keeps optional values under CertificateCreateOrUpdateProperties and uses ThumbprintString.
+    // Keep GA top-level setters and the obsolete BinaryData Thumbprint API for source compatibility.
     public partial class AutomationCertificateCreateOrUpdateContent
     {
         /// <summary> Gets or sets the description of the certificate. </summary>
@@ -68,8 +66,8 @@ namespace Azure.ResourceManager.Automation.Models
         [Obsolete("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.", false)]
         public BinaryData Thumbprint
         {
-            get { return BinaryData.FromString(ThumbprintString); }
-            set { ThumbprintString = value.ToString(); }
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.");
+            set => throw new NotSupportedException("This property is obsolete and will be removed in a future release. Please use `ThumbprintString` instead.");
         }
     }
 }

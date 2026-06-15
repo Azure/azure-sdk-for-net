@@ -245,6 +245,8 @@ namespace Azure.ResourceManager.Automation
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRuns(string clientRequestId = null, string filter = null, string skip = null, string top = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRunsAsync(string clientRequestId = null, string filter = null, string skip = null, string top = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Automation.SoftwareUpdateConfigurationCollection GetSoftwareUpdateConfigurations() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem> GetSoftwareUpdateConfigurations(string clientRequestId = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.SoftwareUpdateConfigurationCollectionItem> GetSoftwareUpdateConfigurationsAsync(string clientRequestId = null, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.AutomationAccountStatistics> GetStatistics(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.Models.AutomationAccountStatistics> GetStatisticsAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Automation.Models.AutomationJobStream> GetStreamDscCompilationJob(System.Guid jobId, string jobStreamId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2605,6 +2607,7 @@ namespace Azure.ResourceManager.Automation.Models
     }
     public partial class AutomationJobScheduleCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.AutomationJobScheduleCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.AutomationJobScheduleCreateOrUpdateContent>
     {
+        public AutomationJobScheduleCreateOrUpdateContent() { }
         public AutomationJobScheduleCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.ScheduleAssociationProperty schedule, Azure.ResourceManager.Automation.Models.RunbookAssociationProperty runbook) { }
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         public string RunbookName { get { throw null; } }
@@ -3257,6 +3260,7 @@ namespace Azure.ResourceManager.Automation.Models
     }
     public partial class DscCompilationJobCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Automation.Models.DscCompilationJobCreateOrUpdateContent>
     {
+        public DscCompilationJobCreateOrUpdateContent() { }
         public DscCompilationJobCreateOrUpdateContent(Azure.ResourceManager.Automation.Models.DscConfigurationAssociationProperty configuration) { }
         public string ConfigurationName { get { throw null; } }
         public bool? IsIncrementNodeConfigurationBuildRequired { get { throw null; } set { } }

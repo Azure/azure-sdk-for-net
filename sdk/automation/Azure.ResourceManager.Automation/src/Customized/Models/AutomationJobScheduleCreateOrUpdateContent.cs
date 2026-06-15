@@ -7,9 +7,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving the GA constructor and flattened RunOn setter.
-    [CodeGenSuppress("AutomationJobScheduleCreateOrUpdateContent")]
-    [CodeGenSuppress("RunOn")]
+    // Generated job schedule content exposes schedule/runbook names from nested JobScheduleCreateProperties.
+    // Keep the GA constructor using association models and the top-level RunOn setter.
     public partial class AutomationJobScheduleCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of <see cref="AutomationJobScheduleCreateOrUpdateContent"/>. </summary>

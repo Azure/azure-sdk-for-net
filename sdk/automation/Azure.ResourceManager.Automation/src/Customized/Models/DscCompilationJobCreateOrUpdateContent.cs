@@ -9,8 +9,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving the GA constructor for SDK-only DscCompilationJob create content.
-    [CodeGenSuppress("DscCompilationJobCreateOrUpdateContent")]
+    // The SDK-only generated DSC compilation job content has the new parameterless/ConfigurationName shape.
+    // Keep the GA constructor that accepts DscConfigurationAssociationProperty and initializes tags/parameters.
     public partial class DscCompilationJobCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of <see cref="DscCompilationJobCreateOrUpdateContent"/>. </summary>

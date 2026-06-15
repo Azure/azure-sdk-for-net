@@ -6,16 +6,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving GA setters for flattened source control create/update properties.
-    [CodeGenSuppress("AutomationSourceControlCreateOrUpdateContent")]
-    [CodeGenSuppress("Branch")]
-    [CodeGenSuppress("Description")]
-    [CodeGenSuppress("FolderPath")]
-    [CodeGenSuppress("IsAutoPublishRunbookEnabled")]
-    [CodeGenSuppress("IsAutoSyncEnabled")]
-    [CodeGenSuppress("RepoUri")]
-    [CodeGenSuppress("SecurityToken")]
-    [CodeGenSuppress("SourceType")]
+    // Generated source-control content only exposes an internal Properties payload.
+    // Keep the GA public constructor and flattened setters over SourceControlCreateOrUpdateProperties.
     public partial class AutomationSourceControlCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of <see cref="AutomationSourceControlCreateOrUpdateContent"/>. </summary>

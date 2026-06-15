@@ -7,11 +7,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving GA setters for flattened variable create/update properties.
-    [CodeGenSuppress("AutomationVariableCreateOrUpdateContent", typeof(string))]
-    [CodeGenSuppress("Description")]
-    [CodeGenSuppress("IsEncrypted")]
-    [CodeGenSuppress("Value")]
+    // Generated variable content keeps Description, IsEncrypted, and Value under VariableCreateOrUpdateProperties.
+    // Keep the GA name constructor and top-level variable setters.
     public partial class AutomationVariableCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of <see cref="AutomationVariableCreateOrUpdateContent"/>. </summary>

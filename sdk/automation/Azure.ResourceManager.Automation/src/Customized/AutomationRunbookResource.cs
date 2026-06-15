@@ -11,7 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Automation
 {
-    // Compatibility shim preserving GA runbook draft content operations after generated REST helper shape changed.
+    // Generated ReplaceContentRunbookDraft now accepts string content from the new REST helper shape.
+    // Keep the GA Stream overload by converting the stream to RequestContent before sending the request.
     /// <summary>
     /// A Class representing an AutomationRunbook along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomationRunbookResource" />

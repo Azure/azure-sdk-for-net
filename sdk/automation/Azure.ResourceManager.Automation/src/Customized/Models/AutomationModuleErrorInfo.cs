@@ -5,10 +5,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving GA constructor and setters for module error info.
-    [CodeGenSuppress("AutomationModuleErrorInfo")]
-    [CodeGenSuppress("Code")]
-    [CodeGenSuppress("Message")]
+    // Generated module error info is materialized through an internal constructor.
+    // Keep the GA public constructor and settable Code/Message properties.
     public partial class AutomationModuleErrorInfo
     {
         /// <summary> Initializes a new instance of <see cref="AutomationModuleErrorInfo"/>. </summary>

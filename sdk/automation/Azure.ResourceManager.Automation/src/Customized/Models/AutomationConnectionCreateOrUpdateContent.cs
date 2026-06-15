@@ -8,9 +8,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving GA constructors and flattened connection description setter.
-    [CodeGenSuppress("AutomationConnectionCreateOrUpdateContent", typeof(string))]
-    [CodeGenSuppress("Description")]
+    // Generated connection content nests values under ConnectionCreateOrUpdateProperties and omits the GA public constructors.
+    // Keep the GA name/connection-type constructors and top-level Description setter.
     public partial class AutomationConnectionCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of <see cref="AutomationConnectionCreateOrUpdateContent"/>. </summary>

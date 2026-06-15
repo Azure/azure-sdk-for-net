@@ -5,8 +5,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving the GA flattened credential description setter.
-    [CodeGenSuppress("Description")]
+    // Generated credential content keeps Description under CredentialCreateOrUpdateProperties.
+    // Keep the GA top-level settable Description property.
     public partial class AutomationCredentialCreateOrUpdateContent
     {
         /// <summary> Gets or sets the description of the credential. </summary>

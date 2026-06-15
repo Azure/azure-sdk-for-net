@@ -5,9 +5,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving GA flattened DSC node configuration source and name setters.
-    [CodeGenSuppress("ConfigurationName")]
-    [CodeGenSuppress("Source")]
+    // Generated DSC node configuration content nests Source and ConfigurationName under Properties.Configuration.
+    // Keep the GA top-level setters by updating the nested properties payload.
     public partial class DscNodeConfigurationCreateOrUpdateContent
     {
         /// <summary> Gets or sets the source. </summary>

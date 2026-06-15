@@ -17,6 +17,12 @@ namespace Azure.ResourceManager.Automation.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationJobScheduleCreateOrUpdateContent"/>. </summary>
+        public AutomationJobScheduleCreateOrUpdateContent()
+        {
+
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationJobScheduleCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Gets or sets the list of job schedule properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AutomationJobScheduleCreateOrUpdateContent(JobScheduleCreateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)

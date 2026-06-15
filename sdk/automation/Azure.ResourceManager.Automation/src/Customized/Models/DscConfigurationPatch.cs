@@ -6,8 +6,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving the GA flattened DSC configuration source setter.
-    [CodeGenSuppress("Source")]
+    // Generated DSC configuration patch exposes other flattened fields but not a public Source setter.
+    // Keep the GA Source setter by rebuilding the nested Properties payload.
     public partial class DscConfigurationPatch
     {
         /// <summary> Gets or sets the source. </summary>

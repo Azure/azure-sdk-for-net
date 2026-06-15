@@ -13,7 +13,8 @@ using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    // Compatibility shim preserving the GA list-item pageable surface for account-level software update configurations.
+    // TypeSpec generation exposes software update configurations through the ARM resource collection shape.
+    // Keep the GA GetAll enumerable/pageable surface returning SoftwareUpdateConfigurationCollectionItem.
     public partial class SoftwareUpdateConfigurationCollection : IEnumerable<SoftwareUpdateConfigurationCollectionItem>, IAsyncEnumerable<SoftwareUpdateConfigurationCollectionItem>
     {
         /// <summary>

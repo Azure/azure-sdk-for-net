@@ -7,8 +7,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation
 {
-    // Compatibility shim preserving the GA IReadOnlyDictionary type for job schedule parameters.
-    [CodeGenSuppress("Parameters")]
+    // Generated job schedule parameters are nested under JobScheduleProperties as a mutable dictionary.
+    // Keep the GA read-only Parameters property on AutomationJobScheduleData.
     public partial class AutomationJobScheduleData
     {
         /// <summary> Gets the parameters of the job schedule. </summary>

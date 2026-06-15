@@ -13,9 +13,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation
 {
-    // Compatibility shim preserving the GA node-report content operation return type as BinaryData.
-    [CodeGenSuppress("GetContentNodeReport", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetContentNodeReportAsync", typeof(string), typeof(CancellationToken))]
+    // TypeSpec generation does not emit the GA content convenience method on DscNodeResource.
+    // Keep GetContentNodeReport returning raw response content as BinaryData.
     public partial class DscNodeResource
     {
         /// <summary>

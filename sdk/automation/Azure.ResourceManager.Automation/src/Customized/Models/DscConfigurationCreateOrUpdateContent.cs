@@ -5,10 +5,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving GA flattened DSC configuration create/update setters.
-    [CodeGenSuppress("Description")]
-    [CodeGenSuppress("IsLogProgressEnabled")]
-    [CodeGenSuppress("IsLogVerboseEnabled")]
+    // Generated DSC configuration content keeps optional settings under DscConfigurationCreateOrUpdateProperties.
+    // Keep GA top-level setters for log flags and description.
     public partial class DscConfigurationCreateOrUpdateContent
     {
         /// <summary> Gets or sets verbose log option. </summary>

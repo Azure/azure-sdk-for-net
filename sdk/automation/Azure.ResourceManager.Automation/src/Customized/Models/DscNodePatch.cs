@@ -3,7 +3,8 @@
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    // Compatibility shim preserving the GA DSC node configuration-name alias.
+    // TypeSpec generates the wire-derived NamePropertiesNodeConfigurationName property name.
+    // Keep the GA DscNodeUpdateParametersName alias that forwards to the generated property.
     public partial class DscNodePatch
     {
         /// <summary> Gets or sets the name of the dsc node configuration. </summary>
