@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceAssociation"/>. </summary>
-        internal ResourceAssociation()
+        public ResourceAssociation()
         {
         }
 
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Association name. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary> Network security perimeter access mode. </summary>
         [WirePath("accessMode")]
-        public NetworkSecurityPerimeterAssociationAccessMode? AccessMode { get; }
+        public NetworkSecurityPerimeterAssociationAccessMode? AccessMode { get; set; }
     }
 }

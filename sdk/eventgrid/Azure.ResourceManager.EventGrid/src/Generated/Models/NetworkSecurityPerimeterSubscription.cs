@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterSubscription"/>. </summary>
-        internal NetworkSecurityPerimeterSubscription()
+        public NetworkSecurityPerimeterSubscription()
         {
         }
 
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Subscription id. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public string Id { get; set; }
     }
 }
