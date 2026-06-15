@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="location"> Resource location. </param>
         /// <param name="kind"> Metadata used for the Azure portal experience. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerConnectionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServerConnectionPolicyProperties properties, string location, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SqlServerConnectionPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServerConnectionPolicyProperties properties, AzureLocation? location, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource location. </summary>
         [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> Metadata used for the Azure portal experience. </summary>
         [WirePath("kind")]

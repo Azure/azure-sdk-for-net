@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("isUserError"u8);
                 writer.WriteBooleanValue(IsUserError.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EstimatedCompletionOn))
+            if (options.Format != "W" && Optional.IsDefined(EstimatedCompleteOn))
             {
                 writer.WritePropertyName("estimatedCompletionTime"u8);
-                writer.WriteStringValue(EstimatedCompletionOn.Value, "O");
+                writer.WriteStringValue(EstimatedCompleteOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Description))
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Sql.Models
             string errorDescription = default;
             int? errorSeverity = default;
             bool? isUserError = default;
-            DateTimeOffset? estimatedCompletionOn = default;
+            DateTimeOffset? estimatedCompleteOn = default;
             string description = default;
             bool? isCancellable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    estimatedCompletionOn = prop.Value.GetDateTimeOffset("O");
+                    estimatedCompleteOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Sql.Models
                 errorDescription,
                 errorSeverity,
                 isUserError,
-                estimatedCompletionOn,
+                estimatedCompleteOn,
                 description,
                 isCancellable,
                 additionalBinaryDataProperties);

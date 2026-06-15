@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatabaseTableProperties"/>. </summary>
-        internal DatabaseTableProperties()
+        public DatabaseTableProperties()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabaseTableProperties"/>. </summary>
         /// <param name="temporalType"> The table temporal type. </param>
-        /// <param name="memoryOptimized"> Whether or not the table is memory optimized. </param>
+        /// <param name="isMemoryOptimized"> Whether or not the table is memory optimized. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseTableProperties(TableTemporalType? temporalType, bool? memoryOptimized, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseTableProperties(TableTemporalType? temporalType, bool? isMemoryOptimized, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TemporalType = temporalType;
-            MemoryOptimized = memoryOptimized;
+            IsMemoryOptimized = isMemoryOptimized;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The table temporal type. </summary>
         [WirePath("temporalType")]
-        public TableTemporalType? TemporalType { get; }
+        public TableTemporalType? TemporalType { get; set; }
 
         /// <summary> Whether or not the table is memory optimized. </summary>
         [WirePath("memoryOptimized")]
-        public bool? MemoryOptimized { get; }
+        public bool? IsMemoryOptimized { get; set; }
     }
 }

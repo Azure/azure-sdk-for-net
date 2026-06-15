@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.Sql.Models
             int? interval = default;
             DateTimeOffset? lastSyncOn = default;
             SyncConflictResolutionPolicy? conflictResolutionPolicy = default;
-            string syncDatabaseId = default;
+            ResourceIdentifier syncDatabaseId = default;
             string hubDatabaseUserName = default;
             string hubDatabasePassword = default;
             SyncGroupState? syncState = default;
@@ -220,7 +221,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("syncDatabaseId"u8))
                 {
-                    syncDatabaseId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    syncDatabaseId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("hubDatabaseUserName"u8))

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServerKeyProperties properties, string kind, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServerKeyProperties properties, string kind, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource location. </summary>
         [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> Subregion of the server key. </summary>
         [WirePath("properties.subregion")]
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. The AKV URI is required to be in this format: 'https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion' or can be 'https://YourVaultName.vault.azure.net/keys/YourKeyName'. </summary>
         [WirePath("properties.uri")]
-        public string Uri
+        public Uri Uri
         {
             get
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
         [WirePath("properties.autoRotationEnabled")]
-        public bool? AutoRotationEnabled
+        public bool? IsAutoRotationEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.AutoRotationEnabled;
+                return Properties is null ? default : Properties.IsAutoRotationEnabled;
             }
         }
 

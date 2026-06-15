@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QueryStatistics"/>. </summary>
-        internal QueryStatistics()
+        public QueryStatistics()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal QueryStatisticsProperties Properties { get; }
+        internal QueryStatisticsProperties Properties { get; set; }
 
         /// <summary> Database name of the database in which this query was executed. </summary>
         [WirePath("properties.databaseName")]
@@ -87,7 +87,11 @@ namespace Azure.ResourceManager.Sql.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Intervals;
+                if (Properties is null)
+                {
+                    Properties = new QueryStatisticsProperties();
+                }
+                return Properties.Intervals;
             }
         }
     }

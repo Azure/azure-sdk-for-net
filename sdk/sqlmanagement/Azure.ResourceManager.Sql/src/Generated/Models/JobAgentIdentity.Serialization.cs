@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStringValue(TenantId.Value);
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(IdentityType.ToString());
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             Guid? tenantId = default;
-            JobAgentIdentityType @type = default;
+            JobAgentIdentityType identityType = default;
             IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new JobAgentIdentityType(prop.Value.GetString());
+                    identityType = new JobAgentIdentityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentities"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new JobAgentIdentity(tenantId, @type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), additionalBinaryDataProperties);
+            return new JobAgentIdentity(tenantId, identityType, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), additionalBinaryDataProperties);
         }
     }
 }

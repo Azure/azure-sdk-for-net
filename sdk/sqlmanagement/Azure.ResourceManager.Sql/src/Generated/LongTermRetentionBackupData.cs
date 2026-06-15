@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The delete time of the database. </summary>
         [WirePath("properties.databaseDeletionTime")]
-        public DateTimeOffset? DatabaseDeletionOn
+        public DateTimeOffset? DatabaseDeletedOn
         {
             get
             {
-                return Properties is null ? default : Properties.DatabaseDeletionOn;
+                return Properties is null ? default : Properties.DatabaseDeletedOn;
             }
         }
 
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The time the long term retention backup will expire. </summary>
         [WirePath("properties.backupExpirationTime")]
-        public DateTimeOffset? BackupExpirationOn
+        public DateTimeOffset? BackupExpireOn
         {
             get
             {
-                return Properties is null ? default : Properties.BackupExpirationOn;
+                return Properties is null ? default : Properties.BackupExpireOn;
             }
         }
 

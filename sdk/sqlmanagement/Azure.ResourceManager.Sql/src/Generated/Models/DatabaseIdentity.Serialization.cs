@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 throw new FormatException($"The model {nameof(DatabaseIdentity)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(IdentityType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            DatabaseIdentityType? @type = default;
+            DatabaseIdentityType? identityType = default;
             Guid? tenantId = default;
             IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    @type = new DatabaseIdentityType(prop.Value.GetString());
+                    identityType = new DatabaseIdentityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tenantId"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DatabaseIdentity(@type, tenantId, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), additionalBinaryDataProperties);
+            return new DatabaseIdentity(identityType, tenantId, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), additionalBinaryDataProperties);
         }
     }
 }

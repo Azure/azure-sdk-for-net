@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverName"> The server name that the backup database belong to. </param>
         /// <param name="serverCreateOn"> The create time of the server. </param>
         /// <param name="databaseName"> The name of the database the backup belong to. </param>
-        /// <param name="databaseDeletionOn"> The delete time of the database. </param>
+        /// <param name="databaseDeletedOn"> The delete time of the database. </param>
         /// <param name="backupOn"> The time the backup was taken. </param>
-        /// <param name="backupExpirationOn"> The time the long term retention backup will expire. </param>
+        /// <param name="backupExpireOn"> The time the long term retention backup will expire. </param>
         /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
         /// <param name="requestedBackupStorageRedundancy"> The storage redundancy type of the backup. </param>
         /// <param name="isBackupImmutable"> The setting whether the LTR backup is immutable. </param>
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="legalHoldImmutability"> The setting for whether LegalHold is enabled or disabled on the LTR backup. When LegalHold is enabled, the backup cannot be deleted until the LegalHold is removed. </param>
         /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LongTermRetentionBackupProperties(string serverName, DateTimeOffset? serverCreateOn, string databaseName, DateTimeOffset? databaseDeletionOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpirationOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isBackupImmutable, TimeBasedImmutability? timeBasedImmutability, TimeBasedImmutabilityMode? timeBasedImmutabilityMode, SetLegalHoldImmutability? legalHoldImmutability, SqlBackupStorageAccessTier? backupStorageAccessTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LongTermRetentionBackupProperties(string serverName, DateTimeOffset? serverCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isBackupImmutable, TimeBasedImmutability? timeBasedImmutability, TimeBasedImmutabilityMode? timeBasedImmutabilityMode, SetLegalHoldImmutability? legalHoldImmutability, SqlBackupStorageAccessTier? backupStorageAccessTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerName = serverName;
             ServerCreateOn = serverCreateOn;
             DatabaseName = databaseName;
-            DatabaseDeletionOn = databaseDeletionOn;
+            DatabaseDeletedOn = databaseDeletedOn;
             BackupOn = backupOn;
-            BackupExpirationOn = backupExpirationOn;
+            BackupExpireOn = backupExpireOn;
             BackupStorageRedundancy = backupStorageRedundancy;
             RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
             IsBackupImmutable = isBackupImmutable;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The delete time of the database. </summary>
         [WirePath("databaseDeletionTime")]
-        public DateTimeOffset? DatabaseDeletionOn { get; }
+        public DateTimeOffset? DatabaseDeletedOn { get; }
 
         /// <summary> The time the backup was taken. </summary>
         [WirePath("backupTime")]
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The time the long term retention backup will expire. </summary>
         [WirePath("backupExpirationTime")]
-        public DateTimeOffset? BackupExpirationOn { get; }
+        public DateTimeOffset? BackupExpireOn { get; }
 
         /// <summary> The storage redundancy type of the backup. </summary>
         [WirePath("backupStorageRedundancy")]

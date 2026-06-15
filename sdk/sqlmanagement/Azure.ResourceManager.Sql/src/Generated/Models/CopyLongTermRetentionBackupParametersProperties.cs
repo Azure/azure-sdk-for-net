@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="targetDatabaseName"> The name of the database owns the copied backup. </param>
         /// <param name="targetBackupStorageRedundancy"> The storage redundancy type of the copied backup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CopyLongTermRetentionBackupParametersProperties(string targetSubscriptionId, string targetResourceGroup, string targetServerResourceId, string targetServerFullyQualifiedDomainName, string targetDatabaseName, SqlBackupStorageRedundancy? targetBackupStorageRedundancy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CopyLongTermRetentionBackupParametersProperties(string targetSubscriptionId, string targetResourceGroup, ResourceIdentifier targetServerResourceId, string targetServerFullyQualifiedDomainName, string targetDatabaseName, SqlBackupStorageRedundancy? targetBackupStorageRedundancy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetSubscriptionId = targetSubscriptionId;
             TargetResourceGroup = targetResourceGroup;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The resource Id of the target server that owns the database. </summary>
         [WirePath("targetServerResourceId")]
-        public string TargetServerResourceId { get; set; }
+        public ResourceIdentifier TargetServerResourceId { get; set; }
 
         /// <summary> The fully qualified domain name of the target server. </summary>
         [WirePath("targetServerFullyQualifiedDomainName")]

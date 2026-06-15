@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -153,8 +154,8 @@ namespace Azure.ResourceManager.Sql.Models
             }
             Guid? requestId = default;
             string operationType = default;
-            string fromBackupResourceId = default;
-            string toBackupResourceId = default;
+            ResourceIdentifier fromBackupResourceId = default;
+            ResourceIdentifier toBackupResourceId = default;
             SqlBackupStorageRedundancy? targetBackupStorageRedundancy = default;
             string status = default;
             string message = default;
@@ -177,12 +178,20 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("fromBackupResourceId"u8))
                 {
-                    fromBackupResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fromBackupResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("toBackupResourceId"u8))
                 {
-                    toBackupResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    toBackupResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetBackupStorageRedundancy"u8))

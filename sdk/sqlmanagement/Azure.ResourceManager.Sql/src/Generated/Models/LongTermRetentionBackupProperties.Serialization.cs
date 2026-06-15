@@ -89,20 +89,20 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseDeletionOn))
+            if (options.Format != "W" && Optional.IsDefined(DatabaseDeletedOn))
             {
                 writer.WritePropertyName("databaseDeletionTime"u8);
-                writer.WriteStringValue(DatabaseDeletionOn.Value, "O");
+                writer.WriteStringValue(DatabaseDeletedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(BackupOn))
             {
                 writer.WritePropertyName("backupTime"u8);
                 writer.WriteStringValue(BackupOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupExpirationOn))
+            if (options.Format != "W" && Optional.IsDefined(BackupExpireOn))
             {
                 writer.WritePropertyName("backupExpirationTime"u8);
-                writer.WriteStringValue(BackupExpirationOn.Value, "O");
+                writer.WriteStringValue(BackupExpireOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(BackupStorageRedundancy))
             {
@@ -184,9 +184,9 @@ namespace Azure.ResourceManager.Sql.Models
             string serverName = default;
             DateTimeOffset? serverCreateOn = default;
             string databaseName = default;
-            DateTimeOffset? databaseDeletionOn = default;
+            DateTimeOffset? databaseDeletedOn = default;
             DateTimeOffset? backupOn = default;
-            DateTimeOffset? backupExpirationOn = default;
+            DateTimeOffset? backupExpireOn = default;
             SqlBackupStorageRedundancy? backupStorageRedundancy = default;
             SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default;
             bool? isBackupImmutable = default;
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    databaseDeletionOn = prop.Value.GetDateTimeOffset("O");
+                    databaseDeletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("backupTime"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    backupExpirationOn = prop.Value.GetDateTimeOffset("O");
+                    backupExpireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("backupStorageRedundancy"u8))
@@ -315,9 +315,9 @@ namespace Azure.ResourceManager.Sql.Models
                 serverName,
                 serverCreateOn,
                 databaseName,
-                databaseDeletionOn,
+                databaseDeletedOn,
                 backupOn,
-                backupExpirationOn,
+                backupExpireOn,
                 backupStorageRedundancy,
                 requestedBackupStorageRedundancy,
                 isBackupImmutable,

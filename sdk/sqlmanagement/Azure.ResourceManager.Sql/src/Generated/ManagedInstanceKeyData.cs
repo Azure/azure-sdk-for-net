@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The URI of the key. If the ServerKeyType is AzureKeyVault, then the URI is required. </summary>
         [WirePath("properties.uri")]
-        public string Uri
+        public Uri Uri
         {
             get
             {
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
         [WirePath("properties.autoRotationEnabled")]
-        public bool? AutoRotationEnabled
+        public bool? IsAutoRotationEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.AutoRotationEnabled;
+                return Properties is null ? default : Properties.IsAutoRotationEnabled;
             }
         }
     }

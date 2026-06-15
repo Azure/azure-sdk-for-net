@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JobStepOutput"/>. </summary>
-        /// <param name="type"> The output destination type. </param>
+        /// <param name="outputType"> The output destination type. </param>
         /// <param name="subscriptionId"> The output destination subscription id. </param>
         /// <param name="resourceGroupName"> The output destination resource group. </param>
         /// <param name="serverName"> The output destination server name. </param>
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="tableName"> The output destination table. </param>
         /// <param name="credential"> The resource ID of the credential to use to connect to the output destination. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobStepOutput(JobStepOutputType? @type, Guid? subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobStepOutput(JobStepOutputType? outputType, Guid? subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            OutputType = outputType;
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
             ServerName = serverName;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The output destination type. </summary>
         [WirePath("type")]
-        public JobStepOutputType? Type { get; set; }
+        public JobStepOutputType? OutputType { get; set; }
 
         /// <summary> The output destination subscription id. </summary>
         [WirePath("subscriptionId")]

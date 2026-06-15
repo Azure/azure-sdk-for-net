@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="originalId"> The original ID of the server before deletion. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedServerProperties(string version, DateTimeOffset? deletedOn, string originalId, string fullyQualifiedDomainName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedServerProperties(string version, DateTimeOffset? deletedOn, ResourceIdentifier originalId, string fullyQualifiedDomainName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             DeletedOn = deletedOn;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The original ID of the server before deletion. </summary>
         [WirePath("originalId")]
-        public string OriginalId { get; }
+        public ResourceIdentifier OriginalId { get; }
 
         /// <summary> The fully qualified domain name of the server. </summary>
         [WirePath("fullyQualifiedDomainName")]

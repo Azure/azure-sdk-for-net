@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ZoneRedundant))
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMaintenanceConfigurations))
             {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Sql.Models
             IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes = default;
             IReadOnlyList<MaxSizeRangeCapability> supportedPerDatabaseMaxSizes = default;
             IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels = default;
-            bool? zoneRedundant = default;
+            bool? isZoneRedundant = default;
             IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default;
             IReadOnlyList<MinCapacityCapability> supportedMinCapacities = default;
             AutoPauseDelayTimeRange supportedAutoPauseDelay = default;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    zoneRedundant = prop.Value.GetBoolean();
+                    isZoneRedundant = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("supportedMaintenanceConfigurations"u8))
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Sql.Models
                 supportedMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
                 supportedPerDatabaseMaxSizes ?? new ChangeTrackingList<MaxSizeRangeCapability>(),
                 supportedPerDatabaseMaxPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>(),
-                zoneRedundant,
+                isZoneRedundant,
                 supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(),
                 supportedMinCapacities ?? new ChangeTrackingList<MinCapacityCapability>(),
                 supportedAutoPauseDelay,

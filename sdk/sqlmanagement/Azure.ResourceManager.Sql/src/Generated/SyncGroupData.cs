@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> ARM resource id of the sync database in the sync group. </summary>
         [WirePath("properties.syncDatabaseId")]
-        public string SyncDatabaseId
+        public ResourceIdentifier SyncDatabaseId
         {
             get
             {

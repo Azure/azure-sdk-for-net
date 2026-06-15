@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of <see cref="SyncGroupLogProperties"/>. </summary>
         /// <param name="timestamp"> Timestamp of the sync group log. </param>
-        /// <param name="type"> Type of the sync group log. </param>
+        /// <param name="logType"> Type of the sync group log. </param>
         /// <param name="source"> Source of the sync group log. </param>
         /// <param name="details"> Details of the sync group log. </param>
         /// <param name="tracingId"> TracingId of the sync group log. </param>
         /// <param name="operationStatus"> OperationStatus of the sync group log. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SyncGroupLogProperties(DateTimeOffset? timestamp, SyncGroupLogType? @type, string source, string details, Guid? tracingId, string operationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SyncGroupLogProperties(DateTimeOffset? timestamp, SyncGroupLogType? logType, string source, string details, Guid? tracingId, string operationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
-            Type = @type;
+            LogType = logType;
             Source = source;
             Details = details;
             TracingId = tracingId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Type of the sync group log. </summary>
         [WirePath("type")]
-        public SyncGroupLogType? Type { get; }
+        public SyncGroupLogType? LogType { get; }
 
         /// <summary> Source of the sync group log. </summary>
         [WirePath("source")]

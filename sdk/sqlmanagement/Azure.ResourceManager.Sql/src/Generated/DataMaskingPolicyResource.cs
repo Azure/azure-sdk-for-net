@@ -219,12 +219,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> or <paramref name="dataMaskingRule"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataMaskingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DataMaskingRule>> CreateOrUpdateAsync(string dataMaskingRuleName, DataMaskingRule dataMaskingRule, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataMaskingRule>> CreateOrUpdateDataMaskingRuleAsync(string dataMaskingRuleName, DataMaskingRule dataMaskingRule, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
             Argument.AssertNotNull(dataMaskingRule, nameof(dataMaskingRule));
 
-            using DiagnosticScope scope = _dataMaskingRulesClientDiagnostics.CreateScope("DataMaskingPolicyResource.CreateOrUpdate");
+            using DiagnosticScope scope = _dataMaskingRulesClientDiagnostics.CreateScope("DataMaskingPolicyResource.CreateOrUpdateDataMaskingRule");
             scope.Start();
             try
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataMaskingRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, dataMaskingRuleName, DataMaskingRule.ToRequestContent(dataMaskingRule), context);
+                HttpMessage message = _dataMaskingRulesRestClient.CreateCreateOrUpdateDataMaskingRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, dataMaskingRuleName, DataMaskingRule.ToRequestContent(dataMaskingRule), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DataMaskingRule> response = Response.FromValue(DataMaskingRule.FromResponse(result), result);
                 if (response.Value == null)
@@ -274,12 +274,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> or <paramref name="dataMaskingRule"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataMaskingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DataMaskingRule> CreateOrUpdate(string dataMaskingRuleName, DataMaskingRule dataMaskingRule, CancellationToken cancellationToken = default)
+        public virtual Response<DataMaskingRule> CreateOrUpdateDataMaskingRule(string dataMaskingRuleName, DataMaskingRule dataMaskingRule, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
             Argument.AssertNotNull(dataMaskingRule, nameof(dataMaskingRule));
 
-            using DiagnosticScope scope = _dataMaskingRulesClientDiagnostics.CreateScope("DataMaskingPolicyResource.CreateOrUpdate");
+            using DiagnosticScope scope = _dataMaskingRulesClientDiagnostics.CreateScope("DataMaskingPolicyResource.CreateOrUpdateDataMaskingRule");
             scope.Start();
             try
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dataMaskingRulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, dataMaskingRuleName, DataMaskingRule.ToRequestContent(dataMaskingRule), context);
+                HttpMessage message = _dataMaskingRulesRestClient.CreateCreateOrUpdateDataMaskingRuleRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, dataMaskingRuleName, DataMaskingRule.ToRequestContent(dataMaskingRule), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DataMaskingRule> response = Response.FromValue(DataMaskingRule.FromResponse(result), result);
                 if (response.Value == null)

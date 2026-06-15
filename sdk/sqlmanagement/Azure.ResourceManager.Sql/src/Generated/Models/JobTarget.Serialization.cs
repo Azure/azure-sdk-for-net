@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStringValue(MembershipType.Value.ToSerialString());
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(TargetType.ToString());
             if (Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             JobTargetGroupMembershipType? membershipType = default;
-            JobTargetType @type = default;
+            JobTargetType targetType = default;
             string serverName = default;
             string databaseName = default;
             string elasticPoolName = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new JobTargetType(prop.Value.GetString());
+                    targetType = new JobTargetType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("serverName"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             return new JobTarget(
                 membershipType,
-                @type,
+                targetType,
                 serverName,
                 databaseName,
                 elasticPoolName,

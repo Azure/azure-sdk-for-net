@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="vCores"> Count of vCores belonging to this instance pool. </param>
         /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (price for SQL license is included) and 'BasePrice' (without SQL license price). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/> is null. </exception>
-        public InstancePoolProperties(string subnetId, int vCores, InstancePoolLicenseType licenseType)
+        public InstancePoolProperties(ResourceIdentifier subnetId, int vCores, InstancePoolLicenseType licenseType)
         {
             Argument.AssertNotNull(subnetId, nameof(subnetId));
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="dnsZone"> The Dns Zone that the managed instance pool is in. </param>
         /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InstancePoolProperties(string subnetId, int vCores, InstancePoolLicenseType licenseType, string dnsZone, ResourceIdentifier maintenanceConfigurationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InstancePoolProperties(ResourceIdentifier subnetId, int vCores, InstancePoolLicenseType licenseType, string dnsZone, ResourceIdentifier maintenanceConfigurationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubnetId = subnetId;
             VCores = vCores;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Resource ID of the subnet to place this instance pool in. </summary>
         [WirePath("subnetId")]
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
 
         /// <summary> Count of vCores belonging to this instance pool. </summary>
         [WirePath("vCores")]

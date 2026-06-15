@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(LogType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(LogType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(Source))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             DateTimeOffset? timestamp = default;
-            SyncGroupLogType? @type = default;
+            SyncGroupLogType? logType = default;
             string source = default;
             string details = default;
             Guid? tracingId = default;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    @type = new SyncGroupLogType(prop.Value.GetString());
+                    logType = new SyncGroupLogType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("source"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             return new SyncGroupLogProperties(
                 timestamp,
-                @type,
+                logType,
                 source,
                 details,
                 tracingId,

@@ -26,20 +26,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="managedInstanceName"> The managed instance that the backup database belongs to. </param>
         /// <param name="managedInstanceCreateOn"> The create time of the instance. </param>
         /// <param name="databaseName"> The name of the database the backup belong to. </param>
-        /// <param name="databaseDeletionOn"> The delete time of the database. </param>
+        /// <param name="databaseDeletedOn"> The delete time of the database. </param>
         /// <param name="backupOn"> The time the backup was taken. </param>
-        /// <param name="backupExpirationOn"> The time the long term retention backup will expire. </param>
+        /// <param name="backupExpireOn"> The time the long term retention backup will expire. </param>
         /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
         /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceLongTermRetentionBackupProperties(string managedInstanceName, DateTimeOffset? managedInstanceCreateOn, string databaseName, DateTimeOffset? databaseDeletionOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpirationOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageAccessTier? backupStorageAccessTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedInstanceLongTermRetentionBackupProperties(string managedInstanceName, DateTimeOffset? managedInstanceCreateOn, string databaseName, DateTimeOffset? databaseDeletedOn, DateTimeOffset? backupOn, DateTimeOffset? backupExpireOn, SqlBackupStorageRedundancy? backupStorageRedundancy, SqlBackupStorageAccessTier? backupStorageAccessTier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedInstanceName = managedInstanceName;
             ManagedInstanceCreateOn = managedInstanceCreateOn;
             DatabaseName = databaseName;
-            DatabaseDeletionOn = databaseDeletionOn;
+            DatabaseDeletedOn = databaseDeletedOn;
             BackupOn = backupOn;
-            BackupExpirationOn = backupExpirationOn;
+            BackupExpireOn = backupExpireOn;
             BackupStorageRedundancy = backupStorageRedundancy;
             BackupStorageAccessTier = backupStorageAccessTier;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The delete time of the database. </summary>
         [WirePath("databaseDeletionTime")]
-        public DateTimeOffset? DatabaseDeletionOn { get; }
+        public DateTimeOffset? DatabaseDeletedOn { get; }
 
         /// <summary> The time the backup was taken. </summary>
         [WirePath("backupTime")]
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The time the long term retention backup will expire. </summary>
         [WirePath("backupExpirationTime")]
-        public DateTimeOffset? BackupExpirationOn { get; }
+        public DateTimeOffset? BackupExpireOn { get; }
 
         /// <summary> The storage redundancy type of the backup. </summary>
         [WirePath("backupStorageRedundancy")]

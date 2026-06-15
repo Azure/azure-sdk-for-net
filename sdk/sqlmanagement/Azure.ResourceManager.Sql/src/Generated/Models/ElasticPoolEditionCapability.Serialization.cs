@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ZoneRedundant))
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ZonePinning))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             string name = default;
             IReadOnlyList<ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels = default;
-            bool? zoneRedundant = default;
+            bool? isZoneRedundant = default;
             bool? zonePinning = default;
             SqlCapabilityStatus? status = default;
             string reason = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    zoneRedundant = prop.Value.GetBoolean();
+                    isZoneRedundant = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("zonePinning"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ElasticPoolEditionCapability(
                 name,
                 supportedElasticPoolPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerformanceLevelCapability>(),
-                zoneRedundant,
+                isZoneRedundant,
                 zonePinning,
                 status,
                 reason,

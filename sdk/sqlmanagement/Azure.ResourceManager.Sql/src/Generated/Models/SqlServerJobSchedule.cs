@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="SqlServerJobSchedule"/>. </summary>
         /// <param name="startOn"> Schedule start time. </param>
         /// <param name="endOn"> Schedule end time. </param>
-        /// <param name="type"> Schedule interval type. </param>
-        /// <param name="enabled"> Whether or not the schedule is enabled. </param>
+        /// <param name="scheduleType"> Schedule interval type. </param>
+        /// <param name="isEnabled"> Whether or not the schedule is enabled. </param>
         /// <param name="interval"> Value of the schedule's recurring interval, if the ScheduleType is recurring. ISO8601 duration format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerJobSchedule(DateTimeOffset? startOn, DateTimeOffset? endOn, SqlServerJobScheduleType? @type, bool? enabled, TimeSpan? interval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerJobSchedule(DateTimeOffset? startOn, DateTimeOffset? endOn, SqlServerJobScheduleType? scheduleType, bool? isEnabled, TimeSpan? interval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
-            Type = @type;
-            Enabled = enabled;
+            ScheduleType = scheduleType;
+            IsEnabled = isEnabled;
             Interval = interval;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Schedule interval type. </summary>
         [WirePath("type")]
-        public SqlServerJobScheduleType? Type { get; set; }
+        public SqlServerJobScheduleType? ScheduleType { get; set; }
 
         /// <summary> Whether or not the schedule is enabled. </summary>
         [WirePath("enabled")]
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
 
         /// <summary> Value of the schedule's recurring interval, if the ScheduleType is recurring. ISO8601 duration format. </summary>
         [WirePath("interval")]

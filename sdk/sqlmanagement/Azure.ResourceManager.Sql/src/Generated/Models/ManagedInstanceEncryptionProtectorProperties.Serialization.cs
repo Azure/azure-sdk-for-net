@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (Optional.IsDefined(AutoRotationEnabled))
+            if (Optional.IsDefined(IsAutoRotationEnabled))
             {
                 writer.WritePropertyName("autoRotationEnabled"u8);
-                writer.WriteBooleanValue(AutoRotationEnabled.Value);
+                writer.WriteBooleanValue(IsAutoRotationEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.Sql.Models
             }
             string serverKeyName = default;
             SqlServerKeyType serverKeyType = default;
-            string uri = default;
+            Uri uri = default;
             string thumbprint = default;
-            bool? autoRotationEnabled = default;
+            bool? isAutoRotationEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -163,7 +163,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("uri"u8))
                 {
-                    uri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("thumbprint"u8))
@@ -177,7 +181,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    autoRotationEnabled = prop.Value.GetBoolean();
+                    isAutoRotationEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -190,7 +194,7 @@ namespace Azure.ResourceManager.Sql.Models
                 serverKeyType,
                 uri,
                 thumbprint,
-                autoRotationEnabled,
+                isAutoRotationEnabled,
                 additionalBinaryDataProperties);
         }
     }

@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Specifies that the alert is sent to the account administrators. </summary>
         [WirePath("properties.emailAccountAdmins")]
-        public bool? EmailAccountAdmins
+        public bool? SendToEmailAccountAdmins
         {
             get
             {
-                return Properties is null ? default : Properties.EmailAccountAdmins;
+                return Properties is null ? default : Properties.SendToEmailAccountAdmins;
             }
             set
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     Properties = new SecurityAlertsPolicyProperties();
                 }
-                Properties.EmailAccountAdmins = value;
+                Properties.SendToEmailAccountAdmins = value;
             }
         }
 

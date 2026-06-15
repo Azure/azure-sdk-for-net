@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="storageKey"> Storage key for the storage account. If StorageKeyType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </param>
         /// <param name="storageUri"> Storage Uri for the storage account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageKey"/> or <paramref name="storageUri"/> is null. </exception>
-        public DatabaseExtensionsProperties(DatabaseExtensionOperationMode operationMode, StorageKeyType storageKeyType, string storageKey, string storageUri)
+        public DatabaseExtensionsProperties(DatabaseExtensionOperationMode operationMode, StorageKeyType storageKeyType, string storageKey, Uri storageUri)
         {
             Argument.AssertNotNull(storageKey, nameof(storageKey));
             Argument.AssertNotNull(storageUri, nameof(storageUri));
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="maxSizeBytes"> Database max size in bytes for the newly created database in the case of an import operation. </param>
         /// <param name="networkIsolation"> Optional resource information to enable network isolation for request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseExtensionsProperties(DatabaseExtensionOperationMode operationMode, StorageKeyType storageKeyType, string storageKey, string storageUri, string administratorLogin, string administratorLoginPassword, string authenticationType, string databaseEdition, string serviceObjectiveName, string maxSizeBytes, NetworkIsolationSettings networkIsolation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseExtensionsProperties(DatabaseExtensionOperationMode operationMode, StorageKeyType storageKeyType, string storageKey, Uri storageUri, string administratorLogin, string administratorLoginPassword, string authenticationType, string databaseEdition, string serviceObjectiveName, string maxSizeBytes, NetworkIsolationSettings networkIsolation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationMode = operationMode;
             StorageKeyType = storageKeyType;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Storage Uri for the storage account. </summary>
         [WirePath("storageUri")]
-        public string StorageUri { get; }
+        public Uri StorageUri { get; }
 
         /// <summary> Administrator login name. If AuthenticationType is ManagedIdentity, this field should specify the Managed Identity's resource ID. </summary>
         [WirePath("administratorLogin")]

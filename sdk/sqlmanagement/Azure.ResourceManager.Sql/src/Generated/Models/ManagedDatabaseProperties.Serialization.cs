@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(DefaultSecondaryLocation))
             {
                 writer.WritePropertyName("defaultSecondaryLocation"u8);
-                writer.WriteStringValue(DefaultSecondaryLocation);
+                writer.WriteStringValue(DefaultSecondaryLocation.Value);
             }
             if (Optional.IsDefined(CatalogCollation))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(StorageContainerUri))
             {
                 writer.WritePropertyName("storageContainerUri"u8);
-                writer.WriteStringValue(StorageContainerUri);
+                writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SourceDatabaseId))
             {
@@ -237,22 +237,22 @@ namespace Azure.ResourceManager.Sql.Models
             DateTimeOffset? createdOn = default;
             DateTimeOffset? earliestRestorePoint = default;
             DateTimeOffset? restorePointInTime = default;
-            string defaultSecondaryLocation = default;
+            AzureLocation? defaultSecondaryLocation = default;
             CatalogCollationType? catalogCollation = default;
             ManagedDatabaseCreateMode? createMode = default;
-            string storageContainerUri = default;
-            string sourceDatabaseId = default;
+            Uri storageContainerUri = default;
+            ResourceIdentifier sourceDatabaseId = default;
             ResourceIdentifier crossSubscriptionSourceDatabaseId = default;
-            string restorableDroppedDatabaseId = default;
+            ResourceIdentifier restorableDroppedDatabaseId = default;
             ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId = default;
             string storageContainerIdentity = default;
             string storageContainerSasToken = default;
-            string failoverGroupId = default;
-            string recoverableDatabaseId = default;
-            string longTermRetentionBackupResourceId = default;
+            ResourceIdentifier failoverGroupId = default;
+            ResourceIdentifier recoverableDatabaseId = default;
+            ResourceIdentifier longTermRetentionBackupResourceId = default;
             bool? allowAutoCompleteRestore = default;
             string lastBackupName = default;
-            string crossSubscriptionTargetManagedInstanceId = default;
+            ResourceIdentifier crossSubscriptionTargetManagedInstanceId = default;
             bool? isLedgerOn = default;
             ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -301,7 +301,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("defaultSecondaryLocation"u8))
                 {
-                    defaultSecondaryLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    defaultSecondaryLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("catalogCollation"u8))
@@ -324,12 +328,20 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("storageContainerUri"u8))
                 {
-                    storageContainerUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageContainerUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("sourceDatabaseId"u8))
                 {
-                    sourceDatabaseId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceDatabaseId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("crossSubscriptionSourceDatabaseId"u8))
@@ -343,7 +355,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("restorableDroppedDatabaseId"u8))
                 {
-                    restorableDroppedDatabaseId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restorableDroppedDatabaseId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("crossSubscriptionRestorableDroppedDatabaseId"u8))
@@ -367,17 +383,29 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("failoverGroupId"u8))
                 {
-                    failoverGroupId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failoverGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("recoverableDatabaseId"u8))
                 {
-                    recoverableDatabaseId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoverableDatabaseId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("longTermRetentionBackupResourceId"u8))
                 {
-                    longTermRetentionBackupResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    longTermRetentionBackupResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("autoCompleteRestore"u8))
@@ -396,7 +424,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("crossSubscriptionTargetManagedInstanceId"u8))
                 {
-                    crossSubscriptionTargetManagedInstanceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    crossSubscriptionTargetManagedInstanceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("isLedgerOn"u8))

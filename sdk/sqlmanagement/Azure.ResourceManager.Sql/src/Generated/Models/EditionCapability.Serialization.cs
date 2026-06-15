@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ZoneRedundant))
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ReadScale))
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             string name = default;
             IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives = default;
-            bool? zoneRedundant = default;
+            bool? isZoneRedundant = default;
             ReadScaleCapability readScale = default;
             IReadOnlyList<StorageCapability> supportedStorageCapabilities = default;
             bool? zonePinning = default;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    zoneRedundant = prop.Value.GetBoolean();
+                    isZoneRedundant = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("readScale"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new EditionCapability(
                 name,
                 supportedServiceLevelObjectives ?? new ChangeTrackingList<ServiceObjectiveCapability>(),
-                zoneRedundant,
+                isZoneRedundant,
                 readScale,
                 supportedStorageCapabilities ?? new ChangeTrackingList<StorageCapability>(),
                 zonePinning,

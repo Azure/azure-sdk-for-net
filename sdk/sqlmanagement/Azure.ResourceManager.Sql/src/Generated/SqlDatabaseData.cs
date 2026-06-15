@@ -294,11 +294,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Specifies the time that the database was deleted. </summary>
         [WirePath("properties.sourceDatabaseDeletionDate")]
-        public DateTimeOffset? SourceDatabaseDeletionOn
+        public DateTimeOffset? SourceDatabaseDeletedOn
         {
             get
             {
-                return Properties is null ? default : Properties.SourceDatabaseDeletionOn;
+                return Properties is null ? default : Properties.SourceDatabaseDeletedOn;
             }
             set
             {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     Properties = new DatabaseProperties();
                 }
-                Properties.SourceDatabaseDeletionOn = value;
+                Properties.SourceDatabaseDeletedOn = value;
             }
         }
 
@@ -402,11 +402,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Whether or not this database is zone redundant, which means the replicas of this database will be spread across multiple availability zones. </summary>
         [WirePath("properties.zoneRedundant")]
-        public bool? ZoneRedundant
+        public bool? IsZoneRedundant
         {
             get
             {
-                return Properties is null ? default : Properties.ZoneRedundant;
+                return Properties is null ? default : Properties.IsZoneRedundant;
             }
             set
             {
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     Properties = new DatabaseProperties();
                 }
-                Properties.ZoneRedundant = value;
+                Properties.IsZoneRedundant = value;
             }
         }
 

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WritePropertyName("storageKey"u8);
             writer.WriteStringValue(StorageKey);
             writer.WritePropertyName("storageUri"u8);
-            writer.WriteStringValue(StorageUri);
+            writer.WriteStringValue(StorageUri.AbsoluteUri);
             if (Optional.IsDefined(AdministratorLogin))
             {
                 writer.WritePropertyName("administratorLogin"u8);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql.Models
             DatabaseExtensionOperationMode operationMode = default;
             StorageKeyType storageKeyType = default;
             string storageKey = default;
-            string storageUri = default;
+            Uri storageUri = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
             string authenticationType = default;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("storageUri"u8))
                 {
-                    storageUri = prop.Value.GetString();
+                    storageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("administratorLogin"u8))

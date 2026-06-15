@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatabaseColumnData"/>. </summary>
-        internal DatabaseColumnData()
+        public DatabaseColumnData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal DatabaseColumnProperties Properties { get; }
+        internal DatabaseColumnProperties Properties { get; set; }
 
         /// <summary> The column data type. </summary>
         [WirePath("properties.columnType")]
@@ -48,6 +48,14 @@ namespace Azure.ResourceManager.Sql
             get
             {
                 return Properties is null ? default : Properties.ColumnType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseColumnProperties();
+                }
+                Properties.ColumnType = value;
             }
         }
 
@@ -59,15 +67,31 @@ namespace Azure.ResourceManager.Sql
             {
                 return Properties is null ? default : Properties.TemporalType;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseColumnProperties();
+                }
+                Properties.TemporalType = value;
+            }
         }
 
         /// <summary> Whether or not the column belongs to a memory optimized table. </summary>
         [WirePath("properties.memoryOptimized")]
-        public bool? MemoryOptimized
+        public bool? IsMemoryOptimized
         {
             get
             {
-                return Properties is null ? default : Properties.MemoryOptimized;
+                return Properties is null ? default : Properties.IsMemoryOptimized;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseColumnProperties();
+                }
+                Properties.IsMemoryOptimized = value;
             }
         }
 
@@ -78,6 +102,14 @@ namespace Azure.ResourceManager.Sql
             get
             {
                 return Properties is null ? default : Properties.IsComputed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseColumnProperties();
+                }
+                Properties.IsComputed = value;
             }
         }
     }

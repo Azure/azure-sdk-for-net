@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            string subnetId = default;
+            ResourceIdentifier subnetId = default;
             string version = default;
             IReadOnlyList<string> childResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -149,7 +150,11 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (prop.NameEquals("subnetId"u8))
                 {
-                    subnetId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("version"u8))

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkRuleProperties"/>. </summary>
         /// <param name="virtualNetworkSubnetId"> The ARM resource id of the virtual network subnet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkSubnetId"/> is null. </exception>
-        public VirtualNetworkRuleProperties(string virtualNetworkSubnetId)
+        public VirtualNetworkRuleProperties(ResourceIdentifier virtualNetworkSubnetId)
         {
             Argument.AssertNotNull(virtualNetworkSubnetId, nameof(virtualNetworkSubnetId));
 
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="ignoreMissingVnetServiceEndpoint"> Create firewall rule before the virtual network has vnet service endpoint enabled. </param>
         /// <param name="state"> Virtual Network Rule State. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkRuleProperties(string virtualNetworkSubnetId, bool? ignoreMissingVnetServiceEndpoint, SqlServerVirtualNetworkRuleState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkRuleProperties(ResourceIdentifier virtualNetworkSubnetId, bool? ignoreMissingVnetServiceEndpoint, SqlServerVirtualNetworkRuleState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualNetworkSubnetId = virtualNetworkSubnetId;
             IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The ARM resource id of the virtual network subnet. </summary>
         [WirePath("virtualNetworkSubnetId")]
-        public string VirtualNetworkSubnetId { get; set; }
+        public ResourceIdentifier VirtualNetworkSubnetId { get; set; }
 
         /// <summary> Create firewall rule before the virtual network has vnet service endpoint enabled. </summary>
         [WirePath("ignoreMissingVnetServiceEndpoint")]

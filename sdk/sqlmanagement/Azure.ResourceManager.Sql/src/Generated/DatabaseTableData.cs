@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatabaseTableData"/>. </summary>
-        internal DatabaseTableData()
+        public DatabaseTableData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal DatabaseTableProperties Properties { get; }
+        internal DatabaseTableProperties Properties { get; set; }
 
         /// <summary> The table temporal type. </summary>
         [WirePath("properties.temporalType")]
@@ -49,15 +49,31 @@ namespace Azure.ResourceManager.Sql
             {
                 return Properties is null ? default : Properties.TemporalType;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseTableProperties();
+                }
+                Properties.TemporalType = value;
+            }
         }
 
         /// <summary> Whether or not the table is memory optimized. </summary>
         [WirePath("properties.memoryOptimized")]
-        public bool? MemoryOptimized
+        public bool? IsMemoryOptimized
         {
             get
             {
-                return Properties is null ? default : Properties.MemoryOptimized;
+                return Properties is null ? default : Properties.IsMemoryOptimized;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseTableProperties();
+                }
+                Properties.IsMemoryOptimized = value;
             }
         }
     }

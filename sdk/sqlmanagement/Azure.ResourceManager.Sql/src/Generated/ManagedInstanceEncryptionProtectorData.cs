@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The URI of the server key. </summary>
         [WirePath("properties.uri")]
-        public string Uri
+        public Uri Uri
         {
             get
             {
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
         [WirePath("properties.autoRotationEnabled")]
-        public bool? AutoRotationEnabled
+        public bool? IsAutoRotationEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.AutoRotationEnabled;
+                return Properties is null ? default : Properties.IsAutoRotationEnabled;
             }
             set
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     Properties = new ManagedInstanceEncryptionProtectorProperties();
                 }
-                Properties.AutoRotationEnabled = value;
+                Properties.IsAutoRotationEnabled = value;
             }
         }
     }

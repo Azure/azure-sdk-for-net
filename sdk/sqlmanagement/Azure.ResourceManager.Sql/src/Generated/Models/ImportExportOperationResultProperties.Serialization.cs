@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blobUri"u8);
-                writer.WriteStringValue(BlobUri);
+                writer.WriteStringValue(BlobUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Sql.Models
             string requestType = default;
             string queuedTime = default;
             string lastModifiedTime = default;
-            string blobUri = default;
+            Uri blobUri = default;
             string serverName = default;
             string databaseName = default;
             string status = default;
@@ -210,7 +210,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("blobUri"u8))
                 {
-                    blobUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("serverName"u8))

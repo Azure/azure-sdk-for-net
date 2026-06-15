@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 throw new FormatException($"The model {nameof(JobStepAction)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ActionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(ActionType.Value.ToString());
             }
             if (Optional.IsDefined(Source))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            JobStepActionType? @type = default;
+            JobStepActionType? actionType = default;
             JobStepActionSource? source = default;
             string value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    @type = new JobStepActionType(prop.Value.GetString());
+                    actionType = new JobStepActionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("source"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new JobStepAction(@type, source, value, additionalBinaryDataProperties);
+            return new JobStepAction(actionType, source, value, additionalBinaryDataProperties);
         }
     }
 }

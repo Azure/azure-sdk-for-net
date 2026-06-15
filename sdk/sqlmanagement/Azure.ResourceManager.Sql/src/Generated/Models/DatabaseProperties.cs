@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="defaultSecondaryLocation"> The default secondary region for this database. </param>
         /// <param name="failoverGroupId"> Failover Group resource identifier that this database belongs to. </param>
         /// <param name="restorePointInTime"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
-        /// <param name="sourceDatabaseDeletionOn"> Specifies the time that the database was deleted. </param>
+        /// <param name="sourceDatabaseDeletedOn"> Specifies the time that the database was deleted. </param>
         /// <param name="recoveryServicesRecoveryPointId"> The resource identifier of the recovery point associated with create operation of this database. </param>
         /// <param name="longTermRetentionBackupResourceId"> The resource identifier of the long term retention backup associated with create operation of this database. </param>
         /// <param name="recoverableDatabaseId"> The resource identifier of the recoverable database associated with create operation of this database. </param>
         /// <param name="restorableDroppedDatabaseId"> The resource identifier of the restorable dropped database associated with create operation of this database. </param>
         /// <param name="catalogCollation"> Collation of the metadata catalog. </param>
-        /// <param name="zoneRedundant"> Whether or not this database is zone redundant, which means the replicas of this database will be spread across multiple availability zones. </param>
+        /// <param name="isZoneRedundant"> Whether or not this database is zone redundant, which means the replicas of this database will be spread across multiple availability zones. </param>
         /// <param name="licenseType"> The license type to apply for this database. `LicenseIncluded` if you need a license, or `BasePrice` if you have a license and are eligible for the Azure Hybrid Benefit. </param>
         /// <param name="maxLogSizeBytes"> The max log size for this database. </param>
         /// <param name="earliestRestoreOn"> This records the earliest start date and time that restore is available for this database (ISO8601 format). </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="availabilityZone"> Specifies the availability zone the database is pinned to. </param>
         /// <param name="encryptionProtectorAutoRotation"> The flag to enable or disable auto rotation of database encryption protector AKV key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseProperties(SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, string defaultSecondaryLocation, string failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletionOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? zoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, string maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, SqlDatabaseKey> keys, string encryptionProtector, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, bool? useFreeLimit, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior, ResourceIdentifier sourceResourceId, bool? manualCutover, bool? performCutover, SqlAvailabilityZoneType? availabilityZone, bool? encryptionProtectorAutoRotation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseProperties(SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, string defaultSecondaryLocation, string failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, string maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, SqlDatabaseKey> keys, string encryptionProtector, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, bool? useFreeLimit, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior, ResourceIdentifier sourceResourceId, bool? manualCutover, bool? performCutover, SqlAvailabilityZoneType? availabilityZone, bool? encryptionProtectorAutoRotation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreateMode = createMode;
             Collation = collation;
@@ -122,13 +122,13 @@ namespace Azure.ResourceManager.Sql.Models
             DefaultSecondaryLocation = defaultSecondaryLocation;
             FailoverGroupId = failoverGroupId;
             RestorePointInTime = restorePointInTime;
-            SourceDatabaseDeletionOn = sourceDatabaseDeletionOn;
+            SourceDatabaseDeletedOn = sourceDatabaseDeletedOn;
             RecoveryServicesRecoveryPointId = recoveryServicesRecoveryPointId;
             LongTermRetentionBackupResourceId = longTermRetentionBackupResourceId;
             RecoverableDatabaseId = recoverableDatabaseId;
             RestorableDroppedDatabaseId = restorableDroppedDatabaseId;
             CatalogCollation = catalogCollation;
-            ZoneRedundant = zoneRedundant;
+            IsZoneRedundant = isZoneRedundant;
             LicenseType = licenseType;
             MaxLogSizeBytes = maxLogSizeBytes;
             EarliestRestoreOn = earliestRestoreOn;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Specifies the time that the database was deleted. </summary>
         [WirePath("sourceDatabaseDeletionDate")]
-        public DateTimeOffset? SourceDatabaseDeletionOn { get; set; }
+        public DateTimeOffset? SourceDatabaseDeletedOn { get; set; }
 
         /// <summary> The resource identifier of the recovery point associated with create operation of this database. </summary>
         [WirePath("recoveryServicesRecoveryPointId")]
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Whether or not this database is zone redundant, which means the replicas of this database will be spread across multiple availability zones. </summary>
         [WirePath("zoneRedundant")]
-        public bool? ZoneRedundant { get; set; }
+        public bool? IsZoneRedundant { get; set; }
 
         /// <summary> The license type to apply for this database. `LicenseIncluded` if you need a license, or `BasePrice` if you have a license and are eligible for the Azure Hybrid Benefit. </summary>
         [WirePath("licenseType")]

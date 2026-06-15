@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </summary>
         [WirePath("properties.publicNetworkAccess")]
-        public ServerPublicNetworkAccessFlag? PublicNetworkAccess
+        public ServerNetworkAccessFlag? PublicNetworkAccess
         {
             get
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The resource id of a user assigned identity to be used by default. </summary>
         [WirePath("properties.primaryUserAssignedIdentityId")]
-        public string PrimaryUserAssignedIdentityId
+        public ResourceIdentifier PrimaryUserAssignedIdentityId
         {
             get
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> A CMK URI of the key to use for encryption. </summary>
         [WirePath("properties.keyId")]
-        public string KeyId
+        public Uri KeyId
         {
             get
             {

@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(ScheduleType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
+                writer.WriteStringValue(ScheduleType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(Interval))
             {
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Sql.Models
             }
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            SqlServerJobScheduleType? @type = default;
-            bool? enabled = default;
+            SqlServerJobScheduleType? scheduleType = default;
+            bool? isEnabled = default;
             TimeSpan? interval = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    @type = prop.Value.GetString().ToSqlServerJobScheduleType();
+                    scheduleType = prop.Value.GetString().ToSqlServerJobScheduleType();
                     continue;
                 }
                 if (prop.NameEquals("enabled"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("interval"u8))
@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlServerJobSchedule(
                 startOn,
                 endOn,
-                @type,
-                enabled,
+                scheduleType,
+                isEnabled,
                 interval,
                 additionalBinaryDataProperties);
         }

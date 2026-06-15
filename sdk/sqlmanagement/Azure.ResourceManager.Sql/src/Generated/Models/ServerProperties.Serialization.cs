@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId"u8);
-                writer.WriteStringValue(KeyId);
+                writer.WriteStringValue(KeyId.AbsoluteUri);
             }
             if (Optional.IsDefined(Administrators))
             {
@@ -218,11 +219,11 @@ namespace Azure.ResourceManager.Sql.Models
             string fullyQualifiedDomainName = default;
             IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections = default;
             SqlMinimalTlsVersion? minTlsVersion = default;
-            ServerPublicNetworkAccessFlag? publicNetworkAccess = default;
+            ServerNetworkAccessFlag? publicNetworkAccess = default;
             ServerWorkspaceFeature? workspaceFeature = default;
-            string primaryUserAssignedIdentityId = default;
+            ResourceIdentifier primaryUserAssignedIdentityId = default;
             Guid? federatedClientId = default;
-            string keyId = default;
+            Uri keyId = default;
             ServerExternalAdministrator administrators = default;
             ServerNetworkAccessFlag? restrictOutboundNetworkAccess = default;
             ServerNetworkAccessFlag? isIPv6Enabled = default;
@@ -286,7 +287,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new ServerPublicNetworkAccessFlag(prop.Value.GetString());
+                    publicNetworkAccess = new ServerNetworkAccessFlag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("workspaceFeature"u8))
@@ -300,7 +301,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("primaryUserAssignedIdentityId"u8))
                 {
-                    primaryUserAssignedIdentityId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryUserAssignedIdentityId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("federatedClientId"u8))
@@ -314,7 +319,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("keyId"u8))
                 {
-                    keyId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyId = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("administrators"u8))

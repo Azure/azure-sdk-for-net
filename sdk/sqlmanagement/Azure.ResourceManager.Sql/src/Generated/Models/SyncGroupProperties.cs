@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="usePrivateLinkConnection"> If use private link connection is enabled. </param>
         /// <param name="privateEndpointName"> Private endpoint name of the sync group if use private link connection is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SyncGroupProperties(int? interval, DateTimeOffset? lastSyncOn, SyncConflictResolutionPolicy? conflictResolutionPolicy, string syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? isConflictLoggingEnabled, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SyncGroupProperties(int? interval, DateTimeOffset? lastSyncOn, SyncConflictResolutionPolicy? conflictResolutionPolicy, ResourceIdentifier syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? isConflictLoggingEnabled, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Interval = interval;
             LastSyncOn = lastSyncOn;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> ARM resource id of the sync database in the sync group. </summary>
         [WirePath("syncDatabaseId")]
-        public string SyncDatabaseId { get; set; }
+        public ResourceIdentifier SyncDatabaseId { get; set; }
 
         /// <summary> User name for the sync group hub database credential. </summary>
         [WirePath("hubDatabaseUserName")]

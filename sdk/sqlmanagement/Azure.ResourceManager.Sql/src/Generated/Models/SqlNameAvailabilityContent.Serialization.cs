@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
+            writer.WriteStringValue(ResourceType.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             string name = default;
-            SqlNameAvailabilityResourceType @type = default;
+            SqlNameAvailabilityResourceType resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString().ToSqlNameAvailabilityResourceType();
+                    resourceType = new SqlNameAvailabilityResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SqlNameAvailabilityContent(name, @type, additionalBinaryDataProperties);
+            return new SqlNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties);
         }
     }
 }

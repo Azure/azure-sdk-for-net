@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -177,9 +178,9 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             SyncMemberDbType? databaseType = default;
-            string syncAgentId = default;
+            ResourceIdentifier syncAgentId = default;
             Guid? sqlServerDatabaseId = default;
-            string syncMemberAzureDatabaseResourceId = default;
+            ResourceIdentifier syncMemberAzureDatabaseResourceId = default;
             bool? usePrivateLinkConnection = default;
             string privateEndpointName = default;
             string serverName = default;
@@ -202,7 +203,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("syncAgentId"u8))
                 {
-                    syncAgentId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    syncAgentId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sqlServerDatabaseId"u8))
@@ -216,7 +221,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("syncMemberAzureDatabaseResourceId"u8))
                 {
-                    syncMemberAzureDatabaseResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    syncMemberAzureDatabaseResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("usePrivateLinkConnection"u8))

@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabaseIdentity"/>. </summary>
-        /// <param name="type"> The identity type. </param>
+        /// <param name="identityType"> The identity type. </param>
         /// <param name="tenantId"> The Azure Active Directory tenant id. </param>
         /// <param name="userAssignedIdentities"> The resource ids of the user assigned identities to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseIdentity(DatabaseIdentityType? @type, Guid? tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseIdentity(DatabaseIdentityType? identityType, Guid? tenantId, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            IdentityType = identityType;
             TenantId = tenantId;
             UserAssignedIdentities = userAssignedIdentities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The identity type. </summary>
         [WirePath("type")]
-        public DatabaseIdentityType? Type { get; set; }
+        public DatabaseIdentityType? IdentityType { get; set; }
 
         /// <summary> The Azure Active Directory tenant id. </summary>
         [WirePath("tenantId")]

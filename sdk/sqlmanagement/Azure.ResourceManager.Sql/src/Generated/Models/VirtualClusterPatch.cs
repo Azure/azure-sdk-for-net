@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Subnet resource ID for the virtual cluster. </summary>
         [WirePath("properties.subnetId")]
-        public string SubnetId
+        public ResourceIdentifier SubnetId
         {
             get
             {

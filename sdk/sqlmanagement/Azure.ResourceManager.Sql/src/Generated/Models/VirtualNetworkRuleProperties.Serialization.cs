@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -133,7 +134,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            string virtualNetworkSubnetId = default;
+            ResourceIdentifier virtualNetworkSubnetId = default;
             bool? ignoreMissingVnetServiceEndpoint = default;
             SqlServerVirtualNetworkRuleState? state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (prop.NameEquals("virtualNetworkSubnetId"u8))
                 {
-                    virtualNetworkSubnetId = prop.Value.GetString();
+                    virtualNetworkSubnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ignoreMissingVnetServiceEndpoint"u8))

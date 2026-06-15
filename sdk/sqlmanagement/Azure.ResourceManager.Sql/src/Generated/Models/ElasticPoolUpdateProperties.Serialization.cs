@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("perDatabaseSettings"u8);
                 writer.WriteObjectValue(PerDatabaseSettings, options);
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -169,9 +170,9 @@ namespace Azure.ResourceManager.Sql.Models
             long? maxSizeBytes = default;
             double? minCapacity = default;
             ElasticPoolPerDatabaseSettings perDatabaseSettings = default;
-            bool? zoneRedundant = default;
+            bool? isZoneRedundant = default;
             ElasticPoolLicenseType? licenseType = default;
-            string maintenanceConfigurationId = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
             int? highAvailabilityReplicaCount = default;
             int? autoPauseDelay = default;
             SqlAlwaysEncryptedEnclaveType? preferredEnclaveType = default;
@@ -212,7 +213,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    zoneRedundant = prop.Value.GetBoolean();
+                    isZoneRedundant = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("licenseType"u8))
@@ -226,7 +227,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("maintenanceConfigurationId"u8))
                 {
-                    maintenanceConfigurationId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maintenanceConfigurationId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("highAvailabilityReplicaCount"u8))
@@ -274,7 +279,7 @@ namespace Azure.ResourceManager.Sql.Models
                 maxSizeBytes,
                 minCapacity,
                 perDatabaseSettings,
-                zoneRedundant,
+                isZoneRedundant,
                 licenseType,
                 maintenanceConfigurationId,
                 highAvailabilityReplicaCount,

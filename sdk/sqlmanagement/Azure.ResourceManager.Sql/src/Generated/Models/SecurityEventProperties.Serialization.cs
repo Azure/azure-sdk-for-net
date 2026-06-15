@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.Sql;
 
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(ClientIp))
             {
                 writer.WritePropertyName("clientIp"u8);
-                writer.WriteStringValue(ClientIp);
+                writer.WriteStringValue(ClientIp.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ApplicationName))
             {
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.Sql.Models
             string subscription = default;
             string server = default;
             string database = default;
-            string clientIp = default;
+            IPAddress clientIp = default;
             string applicationName = default;
             string principalName = default;
             SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties = default;
@@ -208,7 +209,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("clientIp"u8))
                 {
-                    clientIp = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientIp = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("applicationName"u8))

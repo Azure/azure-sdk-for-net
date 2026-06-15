@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isLedgerOn"> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </param>
         /// <param name="extendedAccessibilityInfo"> Additional observability and troubleshooting information for databases in ‘Inaccessible’ state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDatabaseProperties(string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, string defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, string storageContainerUri, string sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, string restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, string failoverGroupId, string recoverableDatabaseId, string longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, string crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn, ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedDatabaseProperties(string collation, ManagedDatabaseStatus? status, DateTimeOffset? createdOn, DateTimeOffset? earliestRestorePoint, DateTimeOffset? restorePointInTime, AzureLocation? defaultSecondaryLocation, CatalogCollationType? catalogCollation, ManagedDatabaseCreateMode? createMode, Uri storageContainerUri, ResourceIdentifier sourceDatabaseId, ResourceIdentifier crossSubscriptionSourceDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, ResourceIdentifier crossSubscriptionRestorableDroppedDatabaseId, string storageContainerIdentity, string storageContainerSasToken, ResourceIdentifier failoverGroupId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier longTermRetentionBackupResourceId, bool? allowAutoCompleteRestore, string lastBackupName, ResourceIdentifier crossSubscriptionTargetManagedInstanceId, bool? isLedgerOn, ManagedDatabaseExtendedAccessibilityInfo extendedAccessibilityInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Collation = collation;
             Status = status;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Geo paired region. </summary>
         [WirePath("defaultSecondaryLocation")]
-        public string DefaultSecondaryLocation { get; }
+        public AzureLocation? DefaultSecondaryLocation { get; }
 
         /// <summary> Collation of the metadata catalog. </summary>
         [WirePath("catalogCollation")]
@@ -110,11 +110,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the uri of the storage container where backups for this restore are stored. </summary>
         [WirePath("storageContainerUri")]
-        public string StorageContainerUri { get; set; }
+        public Uri StorageContainerUri { get; set; }
 
         /// <summary> The resource identifier of the source database associated with create operation of this database. </summary>
         [WirePath("sourceDatabaseId")]
-        public string SourceDatabaseId { get; set; }
+        public ResourceIdentifier SourceDatabaseId { get; set; }
 
         /// <summary> The resource identifier of the cross-subscription source database associated with create operation of this database. </summary>
         [WirePath("crossSubscriptionSourceDatabaseId")]
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The restorable dropped database resource id to restore when creating this database. </summary>
         [WirePath("restorableDroppedDatabaseId")]
-        public string RestorableDroppedDatabaseId { get; set; }
+        public ResourceIdentifier RestorableDroppedDatabaseId { get; set; }
 
         /// <summary> The restorable cross-subscription dropped database resource id to restore when creating this database. </summary>
         [WirePath("crossSubscriptionRestorableDroppedDatabaseId")]
@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Instance Failover Group resource identifier that this managed database belongs to. </summary>
         [WirePath("failoverGroupId")]
-        public string FailoverGroupId { get; }
+        public ResourceIdentifier FailoverGroupId { get; }
 
         /// <summary> The resource identifier of the recoverable database associated with create operation of this database. </summary>
         [WirePath("recoverableDatabaseId")]
-        public string RecoverableDatabaseId { get; set; }
+        public ResourceIdentifier RecoverableDatabaseId { get; set; }
 
         /// <summary> The name of the Long Term Retention backup to be used for restore of this managed database. </summary>
         [WirePath("longTermRetentionBackupResourceId")]
-        public string LongTermRetentionBackupResourceId { get; set; }
+        public ResourceIdentifier LongTermRetentionBackupResourceId { get; set; }
 
         /// <summary> Whether to auto complete restore of this managed database. </summary>
         [WirePath("autoCompleteRestore")]
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Target managed instance id used in cross-subscription restore. </summary>
         [WirePath("crossSubscriptionTargetManagedInstanceId")]
-        public string CrossSubscriptionTargetManagedInstanceId { get; set; }
+        public ResourceIdentifier CrossSubscriptionTargetManagedInstanceId { get; set; }
 
         /// <summary> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </summary>
         [WirePath("isLedgerOn")]

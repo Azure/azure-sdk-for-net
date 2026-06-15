@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 throw new FormatException($"The model {nameof(JobStepOutput)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(OutputType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(OutputType.Value.ToString());
             }
             if (Optional.IsDefined(SubscriptionId))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            JobStepOutputType? @type = default;
+            JobStepOutputType? outputType = default;
             Guid? subscriptionId = default;
             string resourceGroupName = default;
             string serverName = default;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    @type = new JobStepOutputType(prop.Value.GetString());
+                    outputType = new JobStepOutputType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subscriptionId"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             return new JobStepOutput(
-                @type,
+                outputType,
                 subscriptionId,
                 resourceGroupName,
                 serverName,

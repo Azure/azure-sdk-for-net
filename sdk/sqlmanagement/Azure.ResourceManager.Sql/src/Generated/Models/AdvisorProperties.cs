@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="autoExecuteStatus"> Gets the auto-execute status (whether to let the system execute the recommendations) of this advisor. Possible values are 'Enabled' and 'Disabled'. </param>
         /// <param name="autoExecuteStatusInheritedFrom"> Gets the resource from which current value of auto-execute status is inherited. Auto-execute status can be set on (and inherited from) different levels in the resource hierarchy. Possible values are 'Subscription', 'Server', 'ElasticPool', 'Database' and 'Default' (when status is not explicitly set on any level). </param>
         /// <param name="recommendationsStatus"> Gets that status of recommendations for this advisor and reason for not having any recommendations. Possible values include, but are not limited to, 'Ok' (Recommendations available),LowActivity (not enough workload to analyze), 'DbSeemsTuned' (Database is doing well), etc. </param>
-        /// <param name="lastChecked"> Gets the time when the current resource was analyzed for recommendations by this advisor. </param>
+        /// <param name="lastCheckedOn"> Gets the time when the current resource was analyzed for recommendations by this advisor. </param>
         /// <param name="recommendedActions"> Gets the recommended actions for this advisor. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AdvisorProperties(SqlAdvisorStatus? advisorStatus, AutoExecuteStatus autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastChecked, IReadOnlyList<RecommendedActionData> recommendedActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AdvisorProperties(SqlAdvisorStatus? advisorStatus, AutoExecuteStatus autoExecuteStatus, AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom, string recommendationsStatus, DateTimeOffset? lastCheckedOn, IReadOnlyList<RecommendedActionData> recommendedActions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdvisorStatus = advisorStatus;
             AutoExecuteStatus = autoExecuteStatus;
             AutoExecuteStatusInheritedFrom = autoExecuteStatusInheritedFrom;
             RecommendationsStatus = recommendationsStatus;
-            LastChecked = lastChecked;
+            LastCheckedOn = lastCheckedOn;
             RecommendedActions = recommendedActions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Gets the time when the current resource was analyzed for recommendations by this advisor. </summary>
         [WirePath("lastChecked")]
-        public DateTimeOffset? LastChecked { get; }
+        public DateTimeOffset? LastCheckedOn { get; }
 
         /// <summary> Gets the recommended actions for this advisor. </summary>
         [WirePath("recommendedActions")]

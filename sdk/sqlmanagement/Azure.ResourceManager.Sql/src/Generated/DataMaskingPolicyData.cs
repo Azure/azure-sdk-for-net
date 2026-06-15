@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="location"> The location of the data masking policy. </param>
         /// <param name="kind"> The kind of Data Masking Policy. Metadata, used for Azure portal. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataMaskingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataMaskingPolicyProperties properties, string location, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal DataMaskingPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataMaskingPolicyProperties properties, AzureLocation? location, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The location of the data masking policy. </summary>
         [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> The kind of Data Masking Policy. Metadata, used for Azure portal. </summary>
         [WirePath("kind")]

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Source backup resource id. </summary>
         [WirePath("properties.fromBackupResourceId")]
-        public string FromBackupResourceId
+        public ResourceIdentifier FromBackupResourceId
         {
             get
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Target backup resource id. </summary>
         [WirePath("properties.toBackupResourceId")]
-        public string ToBackupResourceId
+        public ResourceIdentifier ToBackupResourceId
         {
             get
             {

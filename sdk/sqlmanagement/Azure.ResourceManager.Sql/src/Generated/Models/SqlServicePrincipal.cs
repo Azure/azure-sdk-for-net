@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="principalId"> The Azure Active Directory application object id. </param>
         /// <param name="clientId"> The Azure Active Directory application client id. </param>
         /// <param name="tenantId"> The Azure Active Directory tenant id. </param>
-        /// <param name="type"> Service principal type. </param>
+        /// <param name="principalType"> Service principal type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServicePrincipal(Guid? principalId, Guid? clientId, Guid? tenantId, SqlServicePrincipalType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServicePrincipal(Guid? principalId, Guid? clientId, Guid? tenantId, SqlServicePrincipalType? principalType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalId = principalId;
             ClientId = clientId;
             TenantId = tenantId;
-            Type = @type;
+            PrincipalType = principalType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Service principal type. </summary>
         [WirePath("type")]
-        public SqlServicePrincipalType? Type { get; set; }
+        public SqlServicePrincipalType? PrincipalType { get; set; }
     }
 }

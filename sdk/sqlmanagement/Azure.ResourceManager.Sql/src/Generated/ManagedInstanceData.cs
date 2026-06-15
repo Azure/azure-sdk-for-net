@@ -364,11 +364,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Whether or not the public data endpoint is enabled. </summary>
         [WirePath("properties.publicDataEndpointEnabled")]
-        public bool? PublicDataEndpointEnabled
+        public bool? IsPublicDataEndpointEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.PublicDataEndpointEnabled;
+                return Properties is null ? default : Properties.IsPublicDataEndpointEnabled;
             }
             set
             {
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     Properties = new ManagedInstanceProperties();
                 }
-                Properties.PublicDataEndpointEnabled = value;
+                Properties.IsPublicDataEndpointEnabled = value;
             }
         }
 
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The Id of the instance pool this managed server belongs to. </summary>
         [WirePath("properties.instancePoolId")]
-        public string InstancePoolId
+        public ResourceIdentifier InstancePoolId
         {
             get
             {
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Specifies maintenance configuration id to apply to this managed instance. </summary>
         [WirePath("properties.maintenanceConfigurationId")]
-        public string MaintenanceConfigurationId
+        public ResourceIdentifier MaintenanceConfigurationId
         {
             get
             {
@@ -557,11 +557,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Whether or not the zone-redundancy is enabled. </summary>
         [WirePath("properties.zoneRedundant")]
-        public bool? ZoneRedundant
+        public bool? IsZoneRedundant
         {
             get
             {
-                return Properties is null ? default : Properties.ZoneRedundant;
+                return Properties is null ? default : Properties.IsZoneRedundant;
             }
             set
             {
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     Properties = new ManagedInstanceProperties();
                 }
-                Properties.ZoneRedundant = value;
+                Properties.IsZoneRedundant = value;
             }
         }
 
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> A CMK URI of the key to use for encryption. </summary>
         [WirePath("properties.keyId")]
-        public string KeyId
+        public Uri KeyId
         {
             get
             {

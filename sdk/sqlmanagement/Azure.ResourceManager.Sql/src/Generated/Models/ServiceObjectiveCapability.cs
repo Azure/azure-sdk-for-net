@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="sku"> The sku. </param>
         /// <param name="supportedLicenseTypes"> List of supported license types. </param>
         /// <param name="includedMaxSize"> The included (free) max size. </param>
-        /// <param name="zoneRedundant"> Whether or not zone redundancy is supported for the service objective. </param>
+        /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the service objective. </param>
         /// <param name="supportedAutoPauseDelay"> Supported time range for auto pause delay. </param>
         /// <param name="supportedMinCapacities"> List of supported min capacities. </param>
         /// <param name="computeModel"> The compute model. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceObjectiveCapability(Guid? id, string name, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, MaxSizeCapability includedMaxSize, bool? zoneRedundant, AutoPauseDelayTimeRange supportedAutoPauseDelay, IReadOnlyList<MinCapacityCapability> supportedMinCapacities, string computeModel, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, bool? zonePinning, IReadOnlyList<ZonePinningCapability> supportedZones, IReadOnlyList<FreeLimitExhaustionBehaviorCapability> supportedFreeLimitExhaustionBehaviors, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceObjectiveCapability(Guid? id, string name, IReadOnlyList<MaxSizeRangeCapability> supportedMaxSizes, PerformanceLevelCapability performanceLevel, SqlSku sku, IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes, MaxSizeCapability includedMaxSize, bool? isZoneRedundant, AutoPauseDelayTimeRange supportedAutoPauseDelay, IReadOnlyList<MinCapacityCapability> supportedMinCapacities, string computeModel, IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations, bool? zonePinning, IReadOnlyList<ZonePinningCapability> supportedZones, IReadOnlyList<FreeLimitExhaustionBehaviorCapability> supportedFreeLimitExhaustionBehaviors, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Models
             Sku = sku;
             SupportedLicenseTypes = supportedLicenseTypes;
             IncludedMaxSize = includedMaxSize;
-            ZoneRedundant = zoneRedundant;
+            IsZoneRedundant = isZoneRedundant;
             SupportedAutoPauseDelay = supportedAutoPauseDelay;
             SupportedMinCapacities = supportedMinCapacities;
             ComputeModel = computeModel;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Whether or not zone redundancy is supported for the service objective. </summary>
         [WirePath("zoneRedundant")]
-        public bool? ZoneRedundant { get; }
+        public bool? IsZoneRedundant { get; }
 
         /// <summary> Supported time range for auto pause delay. </summary>
         [WirePath("supportedAutoPauseDelay")]

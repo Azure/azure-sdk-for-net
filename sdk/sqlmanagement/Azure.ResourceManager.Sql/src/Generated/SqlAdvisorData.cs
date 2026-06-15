@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="kind"> Resource kind. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlAdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdvisorProperties properties, string kind, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SqlAdvisorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdvisorProperties properties, string kind, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource location. </summary>
         [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> Gets the status of availability of this advisor to customers. Possible values are 'GA', 'PublicPreview', 'LimitedPublicPreview' and 'PrivatePreview'. </summary>
         [WirePath("properties.advisorStatus")]
@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets the time when the current resource was analyzed for recommendations by this advisor. </summary>
         [WirePath("properties.lastChecked")]
-        public DateTimeOffset? LastChecked
+        public DateTimeOffset? LastCheckedOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastChecked;
+                return Properties is null ? default : Properties.LastCheckedOn;
             }
         }
 

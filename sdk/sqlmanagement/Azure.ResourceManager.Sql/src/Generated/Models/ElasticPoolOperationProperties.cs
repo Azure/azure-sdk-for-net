@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="errorDescription"> The operation error description. </param>
         /// <param name="errorSeverity"> The operation error severity. </param>
         /// <param name="isUserError"> Whether or not the error is a user error. </param>
-        /// <param name="estimatedCompletionOn"> The estimated completion time of the operation. </param>
+        /// <param name="estimatedCompleteOn"> The estimated completion time of the operation. </param>
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticPoolOperationProperties(string elasticPoolName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, string state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompletionOn, string description, bool? isCancellable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticPoolOperationProperties(string elasticPoolName, string operation, string operationFriendlyName, int? percentComplete, string serverName, DateTimeOffset? startOn, string state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ElasticPoolName = elasticPoolName;
             Operation = operation;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
             ErrorDescription = errorDescription;
             ErrorSeverity = errorSeverity;
             IsUserError = isUserError;
-            EstimatedCompletionOn = estimatedCompletionOn;
+            EstimatedCompleteOn = estimatedCompleteOn;
             Description = description;
             IsCancellable = isCancellable;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The estimated completion time of the operation. </summary>
         [WirePath("estimatedCompletionTime")]
-        public DateTimeOffset? EstimatedCompletionOn { get; }
+        public DateTimeOffset? EstimatedCompleteOn { get; }
 
         /// <summary> The operation description. </summary>
         [WirePath("description")]

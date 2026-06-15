@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource ID of the subnet to place this instance pool in. </summary>
         [WirePath("properties.subnetId")]
-        public string SubnetId
+        public ResourceIdentifier SubnetId
         {
             get
             {

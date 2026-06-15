@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql;
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The IP address of the client who executed the statement. </summary>
         [WirePath("properties.clientIp")]
-        public string ClientIp
+        public IPAddress ClientIp
         {
             get
             {

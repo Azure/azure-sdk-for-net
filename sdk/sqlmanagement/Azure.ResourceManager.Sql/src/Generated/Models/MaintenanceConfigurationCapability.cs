@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceConfigurationCapability"/>. </summary>
         /// <param name="name"> Maintenance configuration name. </param>
-        /// <param name="zoneRedundant"> Whether or not zone redundancy is supported for the maintenance configuration. </param>
+        /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the maintenance configuration. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceConfigurationCapability(string name, bool? zoneRedundant, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceConfigurationCapability(string name, bool? isZoneRedundant, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            ZoneRedundant = zoneRedundant;
+            IsZoneRedundant = isZoneRedundant;
             Status = status;
             Reason = reason;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Whether or not zone redundancy is supported for the maintenance configuration. </summary>
         [WirePath("zoneRedundant")]
-        public bool? ZoneRedundant { get; }
+        public bool? IsZoneRedundant { get; }
 
         /// <summary> The status of the capability. </summary>
         [WirePath("status")]

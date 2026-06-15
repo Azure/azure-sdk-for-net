@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="maxSizeBytes"> The storage limit for the database elastic pool in bytes. </param>
         /// <param name="minCapacity"> Minimal capacity that serverless pool will not shrink below, if not paused. </param>
         /// <param name="perDatabaseSettings"> The per database settings for the elastic pool. </param>
-        /// <param name="zoneRedundant"> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </param>
+        /// <param name="isZoneRedundant"> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </param>
         /// <param name="licenseType"> The license type to apply for this elastic pool. </param>
         /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </param>
         /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the Business Critical, Premium, or Hyperscale edition elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </param>
@@ -34,12 +35,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="preferredEnclaveType"> Type of enclave requested on the elastic pool. </param>
         /// <param name="availabilityZone"> Specifies the availability zone the pool's primary replica is pinned to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticPoolUpdateProperties(long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? zoneRedundant, ElasticPoolLicenseType? licenseType, string maintenanceConfigurationId, int? highAvailabilityReplicaCount, int? autoPauseDelay, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, SqlAvailabilityZoneType? availabilityZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticPoolUpdateProperties(long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount, int? autoPauseDelay, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, SqlAvailabilityZoneType? availabilityZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxSizeBytes = maxSizeBytes;
             MinCapacity = minCapacity;
             PerDatabaseSettings = perDatabaseSettings;
-            ZoneRedundant = zoneRedundant;
+            IsZoneRedundant = isZoneRedundant;
             LicenseType = licenseType;
             MaintenanceConfigurationId = maintenanceConfigurationId;
             HighAvailabilityReplicaCount = highAvailabilityReplicaCount;
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </summary>
         [WirePath("zoneRedundant")]
-        public bool? ZoneRedundant { get; set; }
+        public bool? IsZoneRedundant { get; set; }
 
         /// <summary> The license type to apply for this elastic pool. </summary>
         [WirePath("licenseType")]
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </summary>
         [WirePath("maintenanceConfigurationId")]
-        public string MaintenanceConfigurationId { get; set; }
+        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
 
         /// <summary> The number of secondary replicas associated with the Business Critical, Premium, or Hyperscale edition elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </summary>
         [WirePath("highAvailabilityReplicaCount")]

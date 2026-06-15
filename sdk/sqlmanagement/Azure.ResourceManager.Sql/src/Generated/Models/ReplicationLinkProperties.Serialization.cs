@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(PartnerLocation))
             {
                 writer.WritePropertyName("partnerLocation"u8);
-                writer.WriteStringValue(PartnerLocation);
+                writer.WriteStringValue(PartnerLocation.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Role))
             {
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.Sql.Models
             string partnerServer = default;
             string partnerDatabase = default;
             string partnerDatabaseId = default;
-            string partnerLocation = default;
+            AzureLocation? partnerLocation = default;
             SqlServerDatabaseReplicationRole? role = default;
             SqlServerDatabaseReplicationRole? partnerRole = default;
             string replicationMode = default;
@@ -208,7 +209,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("partnerLocation"u8))
                 {
-                    partnerLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    partnerLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("role"u8))

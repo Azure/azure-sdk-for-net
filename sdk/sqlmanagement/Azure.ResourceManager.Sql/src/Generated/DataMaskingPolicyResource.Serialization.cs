@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary></summary>
-    public partial class DataMaskingPolicyResource : IJsonModel<DataMaskingPolicyData>
+    public partial class DataMaskingPolicyResource : ArmResource, IJsonModel<DataMaskingPolicyData>
     {
         private static IJsonModel<DataMaskingPolicyData> s_dataDeserializationInstance;
 

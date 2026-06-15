@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Id of the sync agent linked database. </summary>
         [WirePath("properties.databaseId")]
-        public string DatabaseId
+        public Guid? DatabaseId
         {
             get
             {

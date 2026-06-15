@@ -149,15 +149,15 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB"u8);
                 writer.WriteNumberValue(ThroughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(InstancePoolSupported))
+            if (options.Format != "W" && Optional.IsDefined(IsInstancePoolSupported))
             {
                 writer.WritePropertyName("instancePoolSupported"u8);
-                writer.WriteBooleanValue(InstancePoolSupported.Value);
+                writer.WriteBooleanValue(IsInstancePoolSupported.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StandaloneSupported))
+            if (options.Format != "W" && Optional.IsDefined(IsStandaloneSupported))
             {
                 writer.WritePropertyName("standaloneSupported"u8);
-                writer.WriteBooleanValue(StandaloneSupported.Value);
+                writer.WriteBooleanValue(IsStandaloneSupported.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMaintenanceConfigurations))
             {
@@ -235,8 +235,8 @@ namespace Azure.ResourceManager.Sql.Models
             MaxLimitRangeCapability supportedStorageThroughputMBps = default;
             double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB = default;
             double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = default;
-            bool? instancePoolSupported = default;
-            bool? standaloneSupported = default;
+            bool? isInstancePoolSupported = default;
+            bool? isStandaloneSupported = default;
             IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default;
             SqlCapabilityStatus? status = default;
             string reason = default;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    instancePoolSupported = prop.Value.GetBoolean();
+                    isInstancePoolSupported = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("standaloneSupported"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    standaloneSupported = prop.Value.GetBoolean();
+                    isStandaloneSupported = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("supportedMaintenanceConfigurations"u8))
@@ -436,8 +436,8 @@ namespace Azure.ResourceManager.Sql.Models
                 supportedStorageThroughputMBps,
                 throughputMBpsMinValueOverrideFactorPerSelectedStorageGB,
                 throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB,
-                instancePoolSupported,
-                standaloneSupported,
+                isInstancePoolSupported,
+                isStandaloneSupported,
                 supportedMaintenanceConfigurations ?? new ChangeTrackingList<ManagedInstanceMaintenanceConfigurationCapability>(),
                 status,
                 reason,

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="collation"> Collation of the managed instance. </param>
         /// <param name="dnsZone"> The Dns Zone that the managed instance is in. </param>
         /// <param name="managedDnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
-        /// <param name="publicDataEndpointEnabled"> Whether or not the public data endpoint is enabled. </param>
+        /// <param name="isPublicDataEndpointEnabled"> Whether or not the public data endpoint is enabled. </param>
         /// <param name="sourceManagedInstanceId"> The resource identifier of the source managed instance associated with create operation of this instance. </param>
         /// <param name="restorePointInTime"> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </param>
         /// <param name="proxyOverride"> Connection type used for connecting to the instance. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </param>
         /// <param name="currentBackupStorageRedundancy"> The storage account type used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
         /// <param name="requestedBackupStorageRedundancy"> The storage account type to be used to store backups for this instance. The options are Local (LocallyRedundantStorage), Zone (ZoneRedundantStorage), Geo (GeoRedundantStorage) and GeoZone(GeoZoneRedundantStorage). </param>
-        /// <param name="zoneRedundant"> Whether or not the zone-redundancy is enabled. </param>
+        /// <param name="isZoneRedundant"> Whether or not the zone-redundancy is enabled. </param>
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
         /// <param name="administrators"> The Azure Active Directory administrator can be utilized during instance creation and for instance updates, except for the azureADOnlyAuthentication property. To update the azureADOnlyAuthentication property, individual API must be used. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="databaseFormat"> Specifies the internal format of instance databases specific to the SQL engine version. </param>
         /// <param name="requestedLogicalAvailabilityZone"> Specifies the logical availability zone Managed Instance is pinned to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceProperties(ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, bool? isGeneralPurposeV2, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, HybridSecondaryUsage? hybridSecondaryUsage, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected, int? vCores, int? storageSizeInGB, int? storageIOps, int? storageThroughputMBps, int? memorySizeInGB, string collation, string dnsZone, ResourceIdentifier managedDnsZonePartner, bool? publicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, string instancePoolId, string maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? zoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, string keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal, ResourceIdentifier virtualClusterId, ExternalGovernanceStatus? externalGovernanceStatus, SqlManagedInstancePricingModel? pricingModel, DateTimeOffset? createOn, AuthMetadataLookupMode? authenticationMetadata, ManagedInstanceDatabaseFormat? databaseFormat, SqlAvailabilityZoneType? requestedLogicalAvailabilityZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedInstanceProperties(ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, bool? isGeneralPurposeV2, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, HybridSecondaryUsage? hybridSecondaryUsage, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected, int? vCores, int? storageSizeInGB, int? storageIOps, int? storageThroughputMBps, int? memorySizeInGB, string collation, string dnsZone, ResourceIdentifier managedDnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal, ResourceIdentifier virtualClusterId, ExternalGovernanceStatus? externalGovernanceStatus, SqlManagedInstancePricingModel? pricingModel, DateTimeOffset? createOn, AuthMetadataLookupMode? authenticationMetadata, ManagedInstanceDatabaseFormat? databaseFormat, SqlAvailabilityZoneType? requestedLogicalAvailabilityZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ManagedInstanceCreateMode = managedInstanceCreateMode;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql.Models
             Collation = collation;
             DnsZone = dnsZone;
             ManagedDnsZonePartner = managedDnsZonePartner;
-            PublicDataEndpointEnabled = publicDataEndpointEnabled;
+            IsPublicDataEndpointEnabled = isPublicDataEndpointEnabled;
             SourceManagedInstanceId = sourceManagedInstanceId;
             RestorePointInTime = restorePointInTime;
             ProxyOverride = proxyOverride;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Models
             MinimalTlsVersion = minimalTlsVersion;
             CurrentBackupStorageRedundancy = currentBackupStorageRedundancy;
             RequestedBackupStorageRedundancy = requestedBackupStorageRedundancy;
-            ZoneRedundant = zoneRedundant;
+            IsZoneRedundant = isZoneRedundant;
             PrimaryUserAssignedIdentityId = primaryUserAssignedIdentityId;
             KeyId = keyId;
             Administrators = administrators;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Whether or not the public data endpoint is enabled. </summary>
         [WirePath("publicDataEndpointEnabled")]
-        public bool? PublicDataEndpointEnabled { get; set; }
+        public bool? IsPublicDataEndpointEnabled { get; set; }
 
         /// <summary> The resource identifier of the source managed instance associated with create operation of this instance. </summary>
         [WirePath("sourceManagedInstanceId")]
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The Id of the instance pool this managed server belongs to. </summary>
         [WirePath("instancePoolId")]
-        public string InstancePoolId { get; set; }
+        public ResourceIdentifier InstancePoolId { get; set; }
 
         /// <summary> Specifies maintenance configuration id to apply to this managed instance. </summary>
         [WirePath("maintenanceConfigurationId")]
-        public string MaintenanceConfigurationId { get; set; }
+        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
 
         /// <summary> List of private endpoint connections on a managed instance. </summary>
         [WirePath("privateEndpointConnections")]
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Whether or not the zone-redundancy is enabled. </summary>
         [WirePath("zoneRedundant")]
-        public bool? ZoneRedundant { get; set; }
+        public bool? IsZoneRedundant { get; set; }
 
         /// <summary> The resource id of a user assigned identity to be used by default. </summary>
         [WirePath("primaryUserAssignedIdentityId")]
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> A CMK URI of the key to use for encryption. </summary>
         [WirePath("keyId")]
-        public string KeyId { get; set; }
+        public Uri KeyId { get; set; }
 
         /// <summary> The Azure Active Directory administrator can be utilized during instance creation and for instance updates, except for the azureADOnlyAuthentication property. To update the azureADOnlyAuthentication property, individual API must be used. </summary>
         [WirePath("administrators")]

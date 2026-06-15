@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Initializes a new instance of <see cref="SqlNameAvailabilityContent"/>. </summary>
         /// <param name="name"></param>
-        /// <param name="type"></param>
+        /// <param name="resourceType"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public SqlNameAvailabilityContent(string name, SqlNameAvailabilityResourceType @type)
+        public SqlNameAvailabilityContent(string name, SqlNameAvailabilityResourceType resourceType)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlNameAvailabilityContent"/>. </summary>
         /// <param name="name"></param>
-        /// <param name="type"></param>
+        /// <param name="resourceType"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlNameAvailabilityContent(string name, SqlNameAvailabilityResourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlNameAvailabilityContent(string name, SqlNameAvailabilityResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.Sql.Models
         [WirePath("name")]
         public string Name { get; }
 
-        /// <summary> Gets the Type. </summary>
+        /// <summary> Gets the ResourceType. </summary>
         [WirePath("type")]
-        public SqlNameAvailabilityResourceType Type { get; }
+        public SqlNameAvailabilityResourceType ResourceType { get; }
     }
 }

@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Available))
+            if (options.Format != "W" && Optional.IsDefined(IsAvailable))
             {
                 writer.WritePropertyName("available"u8);
-                writer.WriteBooleanValue(Available.Value);
+                writer.WriteBooleanValue(IsAvailable.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Reason))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             string name = default;
-            bool? available = default;
+            bool? isAvailable = default;
             SqlNameUnavailableReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    available = prop.Value.GetBoolean();
+                    isAvailable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SqlNameAvailabilityResponse(name, available, reason, message, additionalBinaryDataProperties);
+            return new SqlNameAvailabilityResponse(name, isAvailable, reason, message, additionalBinaryDataProperties);
         }
     }
 }

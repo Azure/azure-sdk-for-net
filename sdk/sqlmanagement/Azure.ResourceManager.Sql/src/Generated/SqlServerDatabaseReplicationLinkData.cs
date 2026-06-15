@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource partner location. </summary>
         [WirePath("properties.partnerLocation")]
-        public string PartnerLocation
+        public AzureLocation? PartnerLocation
         {
             get
             {

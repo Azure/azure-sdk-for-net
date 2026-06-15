@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("dnsZonePartner"u8);
                 writer.WriteStringValue(ManagedDnsZonePartner);
             }
-            if (Optional.IsDefined(PublicDataEndpointEnabled))
+            if (Optional.IsDefined(IsPublicDataEndpointEnabled))
             {
                 writer.WritePropertyName("publicDataEndpointEnabled"u8);
-                writer.WriteBooleanValue(PublicDataEndpointEnabled.Value);
+                writer.WriteBooleanValue(IsPublicDataEndpointEnabled.Value);
             }
             if (Optional.IsDefined(SourceManagedInstanceId))
             {
@@ -230,10 +230,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId"u8);
-                writer.WriteStringValue(KeyId);
+                writer.WriteStringValue(KeyId.AbsoluteUri);
             }
             if (Optional.IsDefined(Administrators))
             {
@@ -351,20 +351,20 @@ namespace Azure.ResourceManager.Sql.Models
             string collation = default;
             string dnsZone = default;
             ResourceIdentifier managedDnsZonePartner = default;
-            bool? publicDataEndpointEnabled = default;
+            bool? isPublicDataEndpointEnabled = default;
             ResourceIdentifier sourceManagedInstanceId = default;
             DateTimeOffset? restorePointInTime = default;
             ManagedInstanceProxyOverride? proxyOverride = default;
             string timezoneId = default;
-            string instancePoolId = default;
-            string maintenanceConfigurationId = default;
+            ResourceIdentifier instancePoolId = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
             IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections = default;
             string minimalTlsVersion = default;
             SqlBackupStorageRedundancy? currentBackupStorageRedundancy = default;
             SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = default;
-            bool? zoneRedundant = default;
+            bool? isZoneRedundant = default;
             ResourceIdentifier primaryUserAssignedIdentityId = default;
-            string keyId = default;
+            Uri keyId = default;
             ManagedInstanceExternalAdministrator administrators = default;
             SqlServicePrincipal servicePrincipal = default;
             ResourceIdentifier virtualClusterId = default;
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    publicDataEndpointEnabled = prop.Value.GetBoolean();
+                    isPublicDataEndpointEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("sourceManagedInstanceId"u8))
@@ -567,12 +567,20 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("instancePoolId"u8))
                 {
-                    instancePoolId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    instancePoolId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("maintenanceConfigurationId"u8))
                 {
-                    maintenanceConfigurationId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maintenanceConfigurationId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateEndpointConnections"u8))
@@ -618,7 +626,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    zoneRedundant = prop.Value.GetBoolean();
+                    isZoneRedundant = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("primaryUserAssignedIdentityId"u8))
@@ -632,7 +640,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("keyId"u8))
                 {
-                    keyId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyId = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("administrators"u8))
@@ -741,7 +753,7 @@ namespace Azure.ResourceManager.Sql.Models
                 collation,
                 dnsZone,
                 managedDnsZonePartner,
-                publicDataEndpointEnabled,
+                isPublicDataEndpointEnabled,
                 sourceManagedInstanceId,
                 restorePointInTime,
                 proxyOverride,
@@ -752,7 +764,7 @@ namespace Azure.ResourceManager.Sql.Models
                 minimalTlsVersion,
                 currentBackupStorageRedundancy,
                 requestedBackupStorageRedundancy,
-                zoneRedundant,
+                isZoneRedundant,
                 primaryUserAssignedIdentityId,
                 keyId,
                 administrators,

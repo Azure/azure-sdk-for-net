@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverKeyType"> The encryption protector type like 'ServiceManaged', 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the server key. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
-        /// <param name="autoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
+        /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
         /// <param name="keyVersion"> The version of the server key being used as encryption protector. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionProtectorProperties(string subregion, string serverKeyName, SqlServerKeyType serverKeyType, string uri, string thumbprint, bool? autoRotationEnabled, string keyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EncryptionProtectorProperties(string subregion, string serverKeyName, SqlServerKeyType serverKeyType, Uri uri, string thumbprint, bool? isAutoRotationEnabled, string keyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subregion = subregion;
             ServerKeyName = serverKeyName;
             ServerKeyType = serverKeyType;
             Uri = uri;
             Thumbprint = thumbprint;
-            AutoRotationEnabled = autoRotationEnabled;
+            IsAutoRotationEnabled = isAutoRotationEnabled;
             KeyVersion = keyVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The URI of the server key. </summary>
         [WirePath("uri")]
-        public string Uri { get; }
+        public Uri Uri { get; }
 
         /// <summary> Thumbprint of the server key. </summary>
         [WirePath("thumbprint")]
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
         [WirePath("autoRotationEnabled")]
-        public bool? AutoRotationEnabled { get; set; }
+        public bool? IsAutoRotationEnabled { get; set; }
 
         /// <summary> The version of the server key being used as encryption protector. </summary>
         [WirePath("keyVersion")]

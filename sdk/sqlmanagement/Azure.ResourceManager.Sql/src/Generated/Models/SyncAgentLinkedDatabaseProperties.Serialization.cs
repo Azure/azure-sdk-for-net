@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(DatabaseId))
             {
                 writer.WritePropertyName("databaseId"u8);
-                writer.WriteStringValue(DatabaseId);
+                writer.WriteStringValue(DatabaseId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Description))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             SyncMemberDbType? databaseType = default;
-            string databaseId = default;
+            Guid? databaseId = default;
             string description = default;
             string serverName = default;
             string databaseName = default;
@@ -166,7 +166,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("databaseId"u8))
                 {
-                    databaseId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    databaseId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))

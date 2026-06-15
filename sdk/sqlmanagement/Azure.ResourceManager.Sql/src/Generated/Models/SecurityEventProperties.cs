@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="principalName"> The principal user who executed the statement. </param>
         /// <param name="securityEventSqlInjectionAdditionalProperties"> The sql injection additional properties, populated only if the type of the security event is sql injection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityEventProperties(DateTimeOffset? eventOn, SecurityEventType? securityEventType, string subscription, string server, string database, string clientIp, string applicationName, string principalName, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityEventProperties(DateTimeOffset? eventOn, SecurityEventType? securityEventType, string subscription, string server, string database, IPAddress clientIp, string applicationName, string principalName, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EventOn = eventOn;
             SecurityEventType = securityEventType;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The IP address of the client who executed the statement. </summary>
         [WirePath("clientIp")]
-        public string ClientIp { get; }
+        public IPAddress ClientIp { get; }
 
         /// <summary> The application used to execute the statement. </summary>
         [WirePath("applicationName")]

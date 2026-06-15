@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="uri"> The URI of the key. If the ServerKeyType is AzureKeyVault, then the URI is required. </param>
         /// <param name="thumbprint"> Thumbprint of the key. </param>
         /// <param name="createdOn"> The key creation date. </param>
-        /// <param name="autoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
+        /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceKeyProperties(SqlServerKeyType serverKeyType, string uri, string thumbprint, DateTimeOffset? createdOn, bool? autoRotationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedInstanceKeyProperties(SqlServerKeyType serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerKeyType = serverKeyType;
             Uri = uri;
             Thumbprint = thumbprint;
             CreatedOn = createdOn;
-            AutoRotationEnabled = autoRotationEnabled;
+            IsAutoRotationEnabled = isAutoRotationEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The URI of the key. If the ServerKeyType is AzureKeyVault, then the URI is required. </summary>
         [WirePath("uri")]
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary> Thumbprint of the key. </summary>
         [WirePath("thumbprint")]
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
         [WirePath("autoRotationEnabled")]
-        public bool? AutoRotationEnabled { get; }
+        public bool? IsAutoRotationEnabled { get; }
     }
 }

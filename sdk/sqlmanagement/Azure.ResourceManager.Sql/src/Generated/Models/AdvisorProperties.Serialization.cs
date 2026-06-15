@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("recommendationsStatus"u8);
                 writer.WriteStringValue(RecommendationsStatus);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastChecked))
+            if (options.Format != "W" && Optional.IsDefined(LastCheckedOn))
             {
                 writer.WritePropertyName("lastChecked"u8);
-                writer.WriteStringValue(LastChecked.Value, "O");
+                writer.WriteStringValue(LastCheckedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RecommendedActions))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql.Models
             AutoExecuteStatus autoExecuteStatus = default;
             AutoExecuteStatusInheritedFrom? autoExecuteStatusInheritedFrom = default;
             string recommendationsStatus = default;
-            DateTimeOffset? lastChecked = default;
+            DateTimeOffset? lastCheckedOn = default;
             IReadOnlyList<RecommendedActionData> recommendedActions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    lastChecked = prop.Value.GetDateTimeOffset("O");
+                    lastCheckedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("recommendedActions"u8))
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Sql.Models
                 autoExecuteStatus,
                 autoExecuteStatusInheritedFrom,
                 recommendationsStatus,
-                lastChecked,
+                lastCheckedOn,
                 recommendedActions ?? new ChangeTrackingList<RecommendedActionData>(),
                 additionalBinaryDataProperties);
         }

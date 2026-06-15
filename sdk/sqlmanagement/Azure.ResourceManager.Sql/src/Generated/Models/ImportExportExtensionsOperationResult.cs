@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Blob URI. </summary>
         [WirePath("properties.blobUri")]
-        public string BlobUri
+        public Uri BlobUri
         {
             get
             {

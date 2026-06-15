@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("temporalType"u8);
                 writer.WriteStringValue(TemporalType.Value.ToString());
             }
-            if (Optional.IsDefined(MemoryOptimized))
+            if (Optional.IsDefined(IsMemoryOptimized))
             {
                 writer.WritePropertyName("memoryOptimized"u8);
-                writer.WriteBooleanValue(MemoryOptimized.Value);
+                writer.WriteBooleanValue(IsMemoryOptimized.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             TableTemporalType? temporalType = default;
-            bool? memoryOptimized = default;
+            bool? isMemoryOptimized = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    memoryOptimized = prop.Value.GetBoolean();
+                    isMemoryOptimized = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DatabaseTableProperties(temporalType, memoryOptimized, additionalBinaryDataProperties);
+            return new DatabaseTableProperties(temporalType, isMemoryOptimized, additionalBinaryDataProperties);
         }
     }
 }

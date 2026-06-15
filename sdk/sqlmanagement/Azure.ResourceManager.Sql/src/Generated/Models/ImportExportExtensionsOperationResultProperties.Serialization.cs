@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blobUri"u8);
-                writer.WriteStringValue(BlobUri);
+                writer.WriteStringValue(BlobUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Sql.Models
             string status = default;
             string errorMessage = default;
             string queuedTime = default;
-            string blobUri = default;
+            Uri blobUri = default;
             IReadOnlyList<PrivateEndpointConnectionRequestStatus> privateEndpointConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -230,7 +230,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("blobUri"u8))
                 {
-                    blobUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("privateEndpointConnections"u8))

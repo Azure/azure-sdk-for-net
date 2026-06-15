@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="properties"> Resource properties. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerDatabaseRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RestorePointProperties properties, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SqlServerDatabaseRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RestorePointProperties properties, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource location. </summary>
         [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> The type of restore point. </summary>
         [WirePath("properties.restorePointType")]

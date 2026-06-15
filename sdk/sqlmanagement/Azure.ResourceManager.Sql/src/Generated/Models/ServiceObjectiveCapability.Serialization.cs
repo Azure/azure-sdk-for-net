@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("includedMaxSize"u8);
                 writer.WriteObjectValue(IncludedMaxSize, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ZoneRedundant))
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(SupportedAutoPauseDelay))
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql.Models
             SqlSku sku = default;
             IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes = default;
             MaxSizeCapability includedMaxSize = default;
-            bool? zoneRedundant = default;
+            bool? isZoneRedundant = default;
             AutoPauseDelayTimeRange supportedAutoPauseDelay = default;
             IReadOnlyList<MinCapacityCapability> supportedMinCapacities = default;
             string computeModel = default;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    zoneRedundant = prop.Value.GetBoolean();
+                    isZoneRedundant = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("supportedAutoPauseDelay"u8))
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Sql.Models
                 sku,
                 supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
                 includedMaxSize,
-                zoneRedundant,
+                isZoneRedundant,
                 supportedAutoPauseDelay,
                 supportedMinCapacities ?? new ChangeTrackingList<MinCapacityCapability>(),
                 computeModel,

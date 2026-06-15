@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> ARM resource id of the sync agent in the sync member. </summary>
         [WirePath("properties.syncAgentId")]
-        public string SyncAgentId
+        public ResourceIdentifier SyncAgentId
         {
             get
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> ARM resource id of the sync member logical database, for sync members in Azure. </summary>
         [WirePath("properties.syncMemberAzureDatabaseResourceId")]
-        public string SyncMemberAzureDatabaseResourceId
+        public ResourceIdentifier SyncMemberAzureDatabaseResourceId
         {
             get
             {

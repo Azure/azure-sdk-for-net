@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The original ID of the server before deletion. </summary>
         [WirePath("properties.originalId")]
-        public string OriginalId
+        public ResourceIdentifier OriginalId
         {
             get
             {

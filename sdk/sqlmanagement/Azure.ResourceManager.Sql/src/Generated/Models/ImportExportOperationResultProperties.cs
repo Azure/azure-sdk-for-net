@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="errorMessage"> Error message. </param>
         /// <param name="privateEndpointConnections"> Gets the status of private endpoints associated with this request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImportExportOperationResultProperties(Guid? requestId, string requestType, string queuedTime, string lastModifiedTime, string blobUri, string serverName, string databaseName, string status, string errorMessage, IReadOnlyList<PrivateEndpointConnectionRequestStatus> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImportExportOperationResultProperties(Guid? requestId, string requestType, string queuedTime, string lastModifiedTime, Uri blobUri, string serverName, string databaseName, string status, string errorMessage, IReadOnlyList<PrivateEndpointConnectionRequestStatus> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RequestId = requestId;
             RequestType = requestType;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Blob Uri. </summary>
         [WirePath("blobUri")]
-        public string BlobUri { get; }
+        public Uri BlobUri { get; }
 
         /// <summary> Server name. </summary>
         [WirePath("serverName")]

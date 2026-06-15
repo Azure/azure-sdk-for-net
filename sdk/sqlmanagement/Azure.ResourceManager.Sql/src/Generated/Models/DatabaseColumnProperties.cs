@@ -18,39 +18,39 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatabaseColumnProperties"/>. </summary>
-        internal DatabaseColumnProperties()
+        public DatabaseColumnProperties()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabaseColumnProperties"/>. </summary>
         /// <param name="columnType"> The column data type. </param>
         /// <param name="temporalType"> The table temporal type. </param>
-        /// <param name="memoryOptimized"> Whether or not the column belongs to a memory optimized table. </param>
+        /// <param name="isMemoryOptimized"> Whether or not the column belongs to a memory optimized table. </param>
         /// <param name="isComputed"> Whether or not the column is computed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseColumnProperties(SqlColumnDataType? columnType, TableTemporalType? temporalType, bool? memoryOptimized, bool? isComputed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseColumnProperties(SqlColumnDataType? columnType, TableTemporalType? temporalType, bool? isMemoryOptimized, bool? isComputed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ColumnType = columnType;
             TemporalType = temporalType;
-            MemoryOptimized = memoryOptimized;
+            IsMemoryOptimized = isMemoryOptimized;
             IsComputed = isComputed;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The column data type. </summary>
         [WirePath("columnType")]
-        public SqlColumnDataType? ColumnType { get; }
+        public SqlColumnDataType? ColumnType { get; set; }
 
         /// <summary> The table temporal type. </summary>
         [WirePath("temporalType")]
-        public TableTemporalType? TemporalType { get; }
+        public TableTemporalType? TemporalType { get; set; }
 
         /// <summary> Whether or not the column belongs to a memory optimized table. </summary>
         [WirePath("memoryOptimized")]
-        public bool? MemoryOptimized { get; }
+        public bool? IsMemoryOptimized { get; set; }
 
         /// <summary> Whether or not the column is computed. </summary>
         [WirePath("isComputed")]
-        public bool? IsComputed { get; }
+        public bool? IsComputed { get; set; }
     }
 }

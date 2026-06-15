@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> Operation status. </param>
         /// <param name="message"> Progress message. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LongTermRetentionOperationResultProperties(Guid? requestId, string operationType, string fromBackupResourceId, string toBackupResourceId, SqlBackupStorageRedundancy? targetBackupStorageRedundancy, string status, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LongTermRetentionOperationResultProperties(Guid? requestId, string operationType, ResourceIdentifier fromBackupResourceId, ResourceIdentifier toBackupResourceId, SqlBackupStorageRedundancy? targetBackupStorageRedundancy, string status, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RequestId = requestId;
             OperationType = operationType;
@@ -53,11 +54,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Source backup resource id. </summary>
         [WirePath("fromBackupResourceId")]
-        public string FromBackupResourceId { get; }
+        public ResourceIdentifier FromBackupResourceId { get; }
 
         /// <summary> Target backup resource id. </summary>
         [WirePath("toBackupResourceId")]
-        public string ToBackupResourceId { get; }
+        public ResourceIdentifier ToBackupResourceId { get; }
 
         /// <summary> The storage redundancy type of the copied backup. </summary>
         [WirePath("targetBackupStorageRedundancy")]

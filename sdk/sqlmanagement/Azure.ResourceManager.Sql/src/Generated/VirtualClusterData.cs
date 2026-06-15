@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Subnet resource ID for the virtual cluster. </summary>
         [WirePath("properties.subnetId")]
-        public string SubnetId
+        public ResourceIdentifier SubnetId
         {
             get
             {

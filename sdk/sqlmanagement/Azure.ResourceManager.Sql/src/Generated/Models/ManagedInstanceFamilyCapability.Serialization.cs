@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (options.Format != "W" && Optional.IsDefined(ZoneRedundant))
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedLicenseTypes))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             string name = default;
             string sku = default;
-            bool? zoneRedundant = default;
+            bool? isZoneRedundant = default;
             IReadOnlyList<LicenseTypeCapability> supportedLicenseTypes = default;
             IReadOnlyList<ManagedInstanceVcoresCapability> supportedVcoresValues = default;
             SqlCapabilityStatus? status = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    zoneRedundant = prop.Value.GetBoolean();
+                    isZoneRedundant = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("supportedLicenseTypes"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceFamilyCapability(
                 name,
                 sku,
-                zoneRedundant,
+                isZoneRedundant,
                 supportedLicenseTypes ?? new ChangeTrackingList<LicenseTypeCapability>(),
                 supportedVcoresValues ?? new ChangeTrackingList<ManagedInstanceVcoresCapability>(),
                 status,

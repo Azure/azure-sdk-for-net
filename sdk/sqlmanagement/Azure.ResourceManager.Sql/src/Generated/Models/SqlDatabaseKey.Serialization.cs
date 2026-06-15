@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 throw new FormatException($"The model {nameof(SqlDatabaseKey)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(KeyType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            SqlDatabaseKeyType? @type = default;
+            SqlDatabaseKeyType? keyType = default;
             string thumbprint = default;
             DateTimeOffset? createdOn = default;
             string subregion = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    @type = new SqlDatabaseKeyType(prop.Value.GetString());
+                    keyType = new SqlDatabaseKeyType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("thumbprint"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             return new SqlDatabaseKey(
-                @type,
+                keyType,
                 thumbprint,
                 createdOn,
                 subregion,

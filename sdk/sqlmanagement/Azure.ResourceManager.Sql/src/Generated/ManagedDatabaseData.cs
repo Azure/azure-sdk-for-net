@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Geo paired region. </summary>
         [WirePath("properties.defaultSecondaryLocation")]
-        public string DefaultSecondaryLocation
+        public AzureLocation? DefaultSecondaryLocation
         {
             get
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is required. Specifies the uri of the storage container where backups for this restore are stored. </summary>
         [WirePath("properties.storageContainerUri")]
-        public string StorageContainerUri
+        public Uri StorageContainerUri
         {
             get
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The resource identifier of the source database associated with create operation of this database. </summary>
         [WirePath("properties.sourceDatabaseId")]
-        public string SourceDatabaseId
+        public ResourceIdentifier SourceDatabaseId
         {
             get
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The restorable dropped database resource id to restore when creating this database. </summary>
         [WirePath("properties.restorableDroppedDatabaseId")]
-        public string RestorableDroppedDatabaseId
+        public ResourceIdentifier RestorableDroppedDatabaseId
         {
             get
             {
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Instance Failover Group resource identifier that this managed database belongs to. </summary>
         [WirePath("properties.failoverGroupId")]
-        public string FailoverGroupId
+        public ResourceIdentifier FailoverGroupId
         {
             get
             {
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The resource identifier of the recoverable database associated with create operation of this database. </summary>
         [WirePath("properties.recoverableDatabaseId")]
-        public string RecoverableDatabaseId
+        public ResourceIdentifier RecoverableDatabaseId
         {
             get
             {
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The name of the Long Term Retention backup to be used for restore of this managed database. </summary>
         [WirePath("properties.longTermRetentionBackupResourceId")]
-        public string LongTermRetentionBackupResourceId
+        public ResourceIdentifier LongTermRetentionBackupResourceId
         {
             get
             {
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Target managed instance id used in cross-subscription restore. </summary>
         [WirePath("properties.crossSubscriptionTargetManagedInstanceId")]
-        public string CrossSubscriptionTargetManagedInstanceId
+        public ResourceIdentifier CrossSubscriptionTargetManagedInstanceId
         {
             get
             {

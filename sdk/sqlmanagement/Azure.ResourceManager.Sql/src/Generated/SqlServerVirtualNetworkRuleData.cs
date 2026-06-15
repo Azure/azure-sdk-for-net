@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The ARM resource id of the virtual network subnet. </summary>
         [WirePath("properties.virtualNetworkSubnetId")]
-        public string VirtualNetworkSubnetId
+        public ResourceIdentifier VirtualNetworkSubnetId
         {
             get
             {

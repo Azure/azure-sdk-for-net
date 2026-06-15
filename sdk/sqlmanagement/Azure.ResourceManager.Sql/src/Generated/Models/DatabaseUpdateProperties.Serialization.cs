@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("restorePointInTime"u8);
                 writer.WriteStringValue(RestorePointInTime.Value, "O");
             }
-            if (Optional.IsDefined(SourceDatabaseDeletionOn))
+            if (Optional.IsDefined(SourceDatabaseDeletedOn))
             {
                 writer.WritePropertyName("sourceDatabaseDeletionDate"u8);
-                writer.WriteStringValue(SourceDatabaseDeletionOn.Value, "O");
+                writer.WriteStringValue(SourceDatabaseDeletedOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryServicesRecoveryPointId))
             {
@@ -175,10 +175,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("catalogCollation"u8);
                 writer.WriteStringValue(CatalogCollation.Value.ToString());
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -367,13 +367,13 @@ namespace Azure.ResourceManager.Sql.Models
             string defaultSecondaryLocation = default;
             string failoverGroupId = default;
             DateTimeOffset? restorePointInTime = default;
-            DateTimeOffset? sourceDatabaseDeletionOn = default;
+            DateTimeOffset? sourceDatabaseDeletedOn = default;
             ResourceIdentifier recoveryServicesRecoveryPointId = default;
             ResourceIdentifier longTermRetentionBackupResourceId = default;
             ResourceIdentifier recoverableDatabaseId = default;
             ResourceIdentifier restorableDroppedDatabaseId = default;
             CatalogCollationType? catalogCollation = default;
-            bool? zoneRedundant = default;
+            bool? isZoneRedundant = default;
             DatabaseLicenseType? licenseType = default;
             long? maxLogSizeBytes = default;
             DateTimeOffset? earliestRestoreOn = default;
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    sourceDatabaseDeletionOn = prop.Value.GetDateTimeOffset("O");
+                    sourceDatabaseDeletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("recoveryServicesRecoveryPointId"u8))
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    zoneRedundant = prop.Value.GetBoolean();
+                    isZoneRedundant = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("licenseType"u8))
@@ -813,13 +813,13 @@ namespace Azure.ResourceManager.Sql.Models
                 defaultSecondaryLocation,
                 failoverGroupId,
                 restorePointInTime,
-                sourceDatabaseDeletionOn,
+                sourceDatabaseDeletedOn,
                 recoveryServicesRecoveryPointId,
                 longTermRetentionBackupResourceId,
                 recoverableDatabaseId,
                 restorableDroppedDatabaseId,
                 catalogCollation,
-                zoneRedundant,
+                isZoneRedundant,
                 licenseType,
                 maxLogSizeBytes,
                 earliestRestoreOn,

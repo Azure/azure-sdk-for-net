@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="version"> Virtual cluster version. </param>
         /// <param name="childResources"> List of resources in this virtual cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualClusterProperties(string subnetId, string version, IReadOnlyList<string> childResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualClusterProperties(ResourceIdentifier subnetId, string version, IReadOnlyList<string> childResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubnetId = subnetId;
             Version = version;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Subnet resource ID for the virtual cluster. </summary>
         [WirePath("subnetId")]
-        public string SubnetId { get; }
+        public ResourceIdentifier SubnetId { get; }
 
         /// <summary> Virtual cluster version. </summary>
         [WirePath("version")]

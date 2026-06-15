@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> ARM resource id of the sync database in the sync agent. </summary>
         [WirePath("properties.syncDatabaseId")]
-        public string SyncDatabaseId
+        public ResourceIdentifier SyncDatabaseId
         {
             get
             {
@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Expiration time of the sync agent version. </summary>
         [WirePath("properties.expiryTime")]
-        public DateTimeOffset? ExpiryOn
+        public DateTimeOffset? ExpireOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpiryOn;
+                return Properties is null ? default : Properties.ExpireOn;
             }
         }
 

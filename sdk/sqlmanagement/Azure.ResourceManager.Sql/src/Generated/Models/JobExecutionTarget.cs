@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JobExecutionTarget"/>. </summary>
-        /// <param name="type"> The type of the target. </param>
+        /// <param name="targetType"> The type of the target. </param>
         /// <param name="serverName"> The server name. </param>
         /// <param name="databaseName"> The database name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobExecutionTarget(JobTargetType? @type, string serverName, string databaseName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobExecutionTarget(JobTargetType? targetType, string serverName, string databaseName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            TargetType = targetType;
             ServerName = serverName;
             DatabaseName = databaseName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The type of the target. </summary>
         [WirePath("type")]
-        public JobTargetType? Type { get; }
+        public JobTargetType? TargetType { get; }
 
         /// <summary> The server name. </summary>
         [WirePath("serverName")]

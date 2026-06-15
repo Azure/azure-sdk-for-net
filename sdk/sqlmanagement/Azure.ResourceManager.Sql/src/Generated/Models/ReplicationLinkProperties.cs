@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isTerminationAllowed"> Whether the user is currently allowed to terminate the link. </param>
         /// <param name="linkType"> Link type (GEO, NAMED, STANDBY). Update operation does not support NAMED. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicationLinkProperties(string partnerServer, string partnerDatabase, string partnerDatabaseId, string partnerLocation, SqlServerDatabaseReplicationRole? role, SqlServerDatabaseReplicationRole? partnerRole, string replicationMode, DateTimeOffset? startOn, int? percentComplete, ReplicationLinkState? replicationState, bool? isTerminationAllowed, ReplicationLinkType? linkType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReplicationLinkProperties(string partnerServer, string partnerDatabase, string partnerDatabaseId, AzureLocation? partnerLocation, SqlServerDatabaseReplicationRole? role, SqlServerDatabaseReplicationRole? partnerRole, string replicationMode, DateTimeOffset? startOn, int? percentComplete, ReplicationLinkState? replicationState, bool? isTerminationAllowed, ReplicationLinkType? linkType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PartnerServer = partnerServer;
             PartnerDatabase = partnerDatabase;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Resource partner location. </summary>
         [WirePath("partnerLocation")]
-        public string PartnerLocation { get; }
+        public AzureLocation? PartnerLocation { get; }
 
         /// <summary> Local replication role. </summary>
         [WirePath("role")]

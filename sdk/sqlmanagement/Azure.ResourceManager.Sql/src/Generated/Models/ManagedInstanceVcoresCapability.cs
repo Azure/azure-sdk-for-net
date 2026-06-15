@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedStorageThroughputMBps"> Storage throughput MBps ranges. </param>
         /// <param name="throughputMBpsMinValueOverrideFactorPerSelectedStorageGB"> Min throughput MBps override factor per selected storage GB. </param>
         /// <param name="throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB"> Included throughput MBps override factor per selected storage GB. </param>
-        /// <param name="instancePoolSupported"> True if this service objective is supported for managed instances in an instance pool. </param>
-        /// <param name="standaloneSupported"> True if this service objective is supported for standalone managed instances. </param>
+        /// <param name="isInstancePoolSupported"> True if this service objective is supported for managed instances in an instance pool. </param>
+        /// <param name="isStandaloneSupported"> True if this service objective is supported for standalone managed instances. </param>
         /// <param name="supportedMaintenanceConfigurations"> List of supported maintenance configurations. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceVcoresCapability(string name, int? value, MaxLimitRangeCapability supportedMemorySizesInGB, MaxLimitRangeCapability supportedMemoryLimitsInMB, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedStorageSizes, long? includedStorageIOps, MaxLimitRangeCapability supportedStorageIOps, double? iopsMinValueOverrideFactorPerSelectedStorageGB, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB, long? includedStorageThroughputMBps, MaxLimitRangeCapability supportedStorageThroughputMBps, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB, bool? instancePoolSupported, bool? standaloneSupported, IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedInstanceVcoresCapability(string name, int? value, MaxLimitRangeCapability supportedMemorySizesInGB, MaxLimitRangeCapability supportedMemoryLimitsInMB, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedStorageSizes, long? includedStorageIOps, MaxLimitRangeCapability supportedStorageIOps, double? iopsMinValueOverrideFactorPerSelectedStorageGB, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB, long? includedStorageThroughputMBps, MaxLimitRangeCapability supportedStorageThroughputMBps, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB, bool? isInstancePoolSupported, bool? isStandaloneSupported, IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedStorageThroughputMBps = supportedStorageThroughputMBps;
             ThroughputMBpsMinValueOverrideFactorPerSelectedStorageGB = throughputMBpsMinValueOverrideFactorPerSelectedStorageGB;
             ThroughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB = throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB;
-            InstancePoolSupported = instancePoolSupported;
-            StandaloneSupported = standaloneSupported;
+            IsInstancePoolSupported = isInstancePoolSupported;
+            IsStandaloneSupported = isStandaloneSupported;
             SupportedMaintenanceConfigurations = supportedMaintenanceConfigurations;
             Status = status;
             Reason = reason;
@@ -127,11 +127,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> True if this service objective is supported for managed instances in an instance pool. </summary>
         [WirePath("instancePoolSupported")]
-        public bool? InstancePoolSupported { get; }
+        public bool? IsInstancePoolSupported { get; }
 
         /// <summary> True if this service objective is supported for standalone managed instances. </summary>
         [WirePath("standaloneSupported")]
-        public bool? StandaloneSupported { get; }
+        public bool? IsStandaloneSupported { get; }
 
         /// <summary> List of supported maintenance configurations. </summary>
         [WirePath("supportedMaintenanceConfigurations")]

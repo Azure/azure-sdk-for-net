@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="databaseName"> Database name of the sync agent linked database. </param>
         /// <param name="userName"> User name of the sync agent linked database. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SyncAgentLinkedDatabaseProperties(SyncMemberDbType? databaseType, string databaseId, string description, string serverName, string databaseName, string userName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SyncAgentLinkedDatabaseProperties(SyncMemberDbType? databaseType, Guid? databaseId, string description, string serverName, string databaseName, string userName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseType = databaseType;
             DatabaseId = databaseId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Id of the sync agent linked database. </summary>
         [WirePath("databaseId")]
-        public string DatabaseId { get; }
+        public Guid? DatabaseId { get; }
 
         /// <summary> Description of the sync agent linked database. </summary>
         [WirePath("description")]

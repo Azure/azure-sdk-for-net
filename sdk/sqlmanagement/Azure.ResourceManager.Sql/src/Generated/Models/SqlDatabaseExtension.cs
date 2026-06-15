@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Storage Uri for the storage account. </summary>
         [WirePath("properties.storageUri")]
-        public string StorageUri
+        public Uri StorageUri
         {
             get
             {

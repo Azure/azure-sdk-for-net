@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EmailAccountAdmins))
+            if (Optional.IsDefined(SendToEmailAccountAdmins))
             {
                 writer.WritePropertyName("emailAccountAdmins"u8);
-                writer.WriteBooleanValue(EmailAccountAdmins.Value);
+                writer.WriteBooleanValue(SendToEmailAccountAdmins.Value);
             }
             if (Optional.IsDefined(StorageEndpoint))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Sql.Models
             SecurityAlertsPolicyState state = default;
             IList<string> disabledAlerts = default;
             IList<string> emailAddresses = default;
-            bool? emailAccountAdmins = default;
+            bool? sendToEmailAccountAdmins = default;
             string storageEndpoint = default;
             string storageAccountAccessKey = default;
             int? retentionDays = default;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    emailAccountAdmins = prop.Value.GetBoolean();
+                    sendToEmailAccountAdmins = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("storageEndpoint"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql.Models
                 state,
                 disabledAlerts ?? new ChangeTrackingList<string>(),
                 emailAddresses ?? new ChangeTrackingList<string>(),
-                emailAccountAdmins,
+                sendToEmailAccountAdmins,
                 storageEndpoint,
                 storageAccountAccessKey,
                 retentionDays,

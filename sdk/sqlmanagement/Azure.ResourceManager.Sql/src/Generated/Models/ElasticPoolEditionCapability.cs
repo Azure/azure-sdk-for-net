@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="ElasticPoolEditionCapability"/>. </summary>
         /// <param name="name"> The elastic pool edition name. </param>
         /// <param name="supportedElasticPoolPerformanceLevels"> The list of supported elastic pool DTU levels for the edition. </param>
-        /// <param name="zoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>
+        /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>
         /// <param name="zonePinning"> Whether or not zone pinning is supported for the edition. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticPoolEditionCapability(string name, IReadOnlyList<ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels, bool? zoneRedundant, bool? zonePinning, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ElasticPoolEditionCapability(string name, IReadOnlyList<ElasticPoolPerformanceLevelCapability> supportedElasticPoolPerformanceLevels, bool? isZoneRedundant, bool? zonePinning, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             SupportedElasticPoolPerformanceLevels = supportedElasticPoolPerformanceLevels;
-            ZoneRedundant = zoneRedundant;
+            IsZoneRedundant = isZoneRedundant;
             ZonePinning = zonePinning;
             Status = status;
             Reason = reason;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Whether or not zone redundancy is supported for the edition. </summary>
         [WirePath("zoneRedundant")]
-        public bool? ZoneRedundant { get; }
+        public bool? IsZoneRedundant { get; }
 
         /// <summary> Whether or not zone pinning is supported for the edition. </summary>
         [WirePath("zonePinning")]

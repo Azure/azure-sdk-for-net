@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(AutoRotationEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsAutoRotationEnabled))
             {
                 writer.WritePropertyName("autoRotationEnabled"u8);
-                writer.WriteBooleanValue(AutoRotationEnabled.Value);
+                writer.WriteBooleanValue(IsAutoRotationEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             SqlServerKeyType serverKeyType = default;
-            string uri = default;
+            Uri uri = default;
             string thumbprint = default;
             DateTimeOffset? createdOn = default;
-            bool? autoRotationEnabled = default;
+            bool? isAutoRotationEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -158,7 +158,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("uri"u8))
                 {
-                    uri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("thumbprint"u8))
@@ -181,7 +185,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    autoRotationEnabled = prop.Value.GetBoolean();
+                    isAutoRotationEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -194,7 +198,7 @@ namespace Azure.ResourceManager.Sql.Models
                 uri,
                 thumbprint,
                 createdOn,
-                autoRotationEnabled,
+                isAutoRotationEnabled,
                 additionalBinaryDataProperties);
         }
     }

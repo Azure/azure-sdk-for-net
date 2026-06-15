@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(PrincipalType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql.Models
             Guid? principalId = default;
             Guid? clientId = default;
             Guid? tenantId = default;
-            SqlServicePrincipalType? @type = default;
+            SqlServicePrincipalType? principalType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    @type = new SqlServicePrincipalType(prop.Value.GetString());
+                    principalType = new SqlServicePrincipalType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SqlServicePrincipal(principalId, clientId, tenantId, @type, additionalBinaryDataProperties);
+            return new SqlServicePrincipal(principalId, clientId, tenantId, principalType, additionalBinaryDataProperties);
         }
     }
 }

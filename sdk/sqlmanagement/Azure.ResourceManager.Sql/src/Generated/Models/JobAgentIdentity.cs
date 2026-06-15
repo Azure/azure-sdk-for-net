@@ -19,22 +19,22 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="JobAgentIdentity"/>. </summary>
-        /// <param name="type"> The job agent identity type. </param>
-        public JobAgentIdentity(JobAgentIdentityType @type)
+        /// <param name="identityType"> The job agent identity type. </param>
+        public JobAgentIdentity(JobAgentIdentityType identityType)
         {
-            Type = @type;
+            IdentityType = identityType;
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
         /// <summary> Initializes a new instance of <see cref="JobAgentIdentity"/>. </summary>
         /// <param name="tenantId"> The job agent identity tenant id. </param>
-        /// <param name="type"> The job agent identity type. </param>
+        /// <param name="identityType"> The job agent identity type. </param>
         /// <param name="userAssignedIdentities"> The resource ids of the user assigned identities to use. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobAgentIdentity(Guid? tenantId, JobAgentIdentityType @type, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobAgentIdentity(Guid? tenantId, JobAgentIdentityType identityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
-            Type = @type;
+            IdentityType = identityType;
             UserAssignedIdentities = userAssignedIdentities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The job agent identity type. </summary>
         [WirePath("type")]
-        public JobAgentIdentityType Type { get; set; }
+        public JobAgentIdentityType IdentityType { get; set; }
 
         /// <summary> The resource ids of the user assigned identities to use. </summary>
         [WirePath("userAssignedIdentities")]

@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlDatabaseKey"/>. </summary>
-        /// <param name="type"> The database key type. Only supported value is 'AzureKeyVault'. </param>
+        /// <param name="keyType"> The database key type. Only supported value is 'AzureKeyVault'. </param>
         /// <param name="thumbprint"> Thumbprint of the database key. </param>
         /// <param name="createdOn"> The database key creation date. </param>
         /// <param name="subregion"> Subregion of the server key. </param>
         /// <param name="keyVersion"> The database key's version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlDatabaseKey(SqlDatabaseKeyType? @type, string thumbprint, DateTimeOffset? createdOn, string subregion, string keyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlDatabaseKey(SqlDatabaseKeyType? keyType, string thumbprint, DateTimeOffset? createdOn, string subregion, string keyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            KeyType = keyType;
             Thumbprint = thumbprint;
             CreatedOn = createdOn;
             Subregion = subregion;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The database key type. Only supported value is 'AzureKeyVault'. </summary>
         [WirePath("type")]
-        public SqlDatabaseKeyType? Type { get; }
+        public SqlDatabaseKeyType? KeyType { get; }
 
         /// <summary> Thumbprint of the database key. </summary>
         [WirePath("thumbprint")]

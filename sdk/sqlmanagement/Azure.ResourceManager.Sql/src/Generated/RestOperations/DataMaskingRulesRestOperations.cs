@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string dataMaskingPolicyName, string dataMaskingRuleName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateDataMaskingRuleRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string dataMaskingPolicyName, string dataMaskingRuleName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

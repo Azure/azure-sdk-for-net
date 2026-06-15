@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -99,10 +100,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("isUpToDate"u8);
                 writer.WriteBooleanValue(IsUpToDate.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpiryOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
-                writer.WriteStringValue(ExpiryOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
@@ -152,11 +153,11 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             string syncAgentName = default;
-            string syncDatabaseId = default;
+            ResourceIdentifier syncDatabaseId = default;
             DateTimeOffset? lastAliveOn = default;
             SyncAgentState? state = default;
             bool? isUpToDate = default;
-            DateTimeOffset? expiryOn = default;
+            DateTimeOffset? expireOn = default;
             string version = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -168,7 +169,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("syncDatabaseId"u8))
                 {
-                    syncDatabaseId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    syncDatabaseId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("lastAliveTime"u8))
@@ -204,7 +209,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    expiryOn = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -223,7 +228,7 @@ namespace Azure.ResourceManager.Sql.Models
                 lastAliveOn,
                 state,
                 isUpToDate,
-                expiryOn,
+                expireOn,
                 version,
                 additionalBinaryDataProperties);
         }

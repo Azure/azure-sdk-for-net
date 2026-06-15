@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 throw new FormatException($"The model {nameof(JobExecutionTarget)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
+            if (options.Format != "W" && Optional.IsDefined(TargetType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(TargetType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            JobTargetType? @type = default;
+            JobTargetType? targetType = default;
             string serverName = default;
             string databaseName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    @type = new JobTargetType(prop.Value.GetString());
+                    targetType = new JobTargetType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("serverName"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new JobExecutionTarget(@type, serverName, databaseName, additionalBinaryDataProperties);
+            return new JobExecutionTarget(targetType, serverName, databaseName, additionalBinaryDataProperties);
         }
     }
 }

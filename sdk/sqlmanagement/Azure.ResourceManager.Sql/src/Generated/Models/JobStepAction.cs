@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JobStepAction"/>. </summary>
-        /// <param name="type"> Type of action being executed by the job step. </param>
+        /// <param name="actionType"> Type of action being executed by the job step. </param>
         /// <param name="source"> The source of the action to execute. </param>
         /// <param name="value"> The action value, for example the text of the T-SQL script to execute. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobStepAction(JobStepActionType? @type, JobStepActionSource? source, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobStepAction(JobStepActionType? actionType, JobStepActionSource? source, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            ActionType = actionType;
             Source = source;
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Type of action being executed by the job step. </summary>
         [WirePath("type")]
-        public JobStepActionType? Type { get; set; }
+        public JobStepActionType? ActionType { get; set; }
 
         /// <summary> The source of the action to execute. </summary>
         [WirePath("source")]

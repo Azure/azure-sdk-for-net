@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -36,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="syncDirection"> Sync direction of the sync member. </param>
         /// <param name="syncState"> Sync state of the sync member. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SyncMemberProperties(SyncMemberDbType? databaseType, string syncAgentId, Guid? sqlServerDatabaseId, string syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SyncMemberProperties(SyncMemberDbType? databaseType, ResourceIdentifier syncAgentId, Guid? sqlServerDatabaseId, ResourceIdentifier syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseType = databaseType;
             SyncAgentId = syncAgentId;
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> ARM resource id of the sync agent in the sync member. </summary>
         [WirePath("syncAgentId")]
-        public string SyncAgentId { get; set; }
+        public ResourceIdentifier SyncAgentId { get; set; }
 
         /// <summary> SQL Server database id of the sync member. </summary>
         [WirePath("sqlServerDatabaseId")]
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> ARM resource id of the sync member logical database, for sync members in Azure. </summary>
         [WirePath("syncMemberAzureDatabaseResourceId")]
-        public string SyncMemberAzureDatabaseResourceId { get; set; }
+        public ResourceIdentifier SyncMemberAzureDatabaseResourceId { get; set; }
 
         /// <summary> Whether to use private link connection. </summary>
         [WirePath("usePrivateLinkConnection")]

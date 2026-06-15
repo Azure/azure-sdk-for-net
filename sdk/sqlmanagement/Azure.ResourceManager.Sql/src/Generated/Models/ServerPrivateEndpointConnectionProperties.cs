@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -26,14 +27,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="ServerPrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
         /// <param name="groupIds"> Group IDs. </param>
-        /// <param name="privateLinkServiceConnectionState"> Connection state of the private endpoint connection. </param>
+        /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> State of the private endpoint connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerPrivateEndpointConnectionProperties(PrivateEndpointProperty privateEndpoint, IReadOnlyList<string> groupIds, SqlPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, SqlPrivateEndpointProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerPrivateEndpointConnectionProperties(PrivateEndpointProperty privateEndpoint, IReadOnlyList<string> groupIds, SqlPrivateLinkServiceConnectionStateProperty connectionState, SqlPrivateEndpointProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpoint = privateEndpoint;
             GroupIds = groupIds;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Connection state of the private endpoint connection. </summary>
         [WirePath("privateLinkServiceConnectionState")]
-        public SqlPrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
+        public SqlPrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
 
         /// <summary> State of the private endpoint connection. </summary>
         [WirePath("provisioningState")]
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Resource id of the private endpoint. </summary>
         [WirePath("privateEndpoint.id")]
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {

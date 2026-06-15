@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The estimated completion time of the operation. </summary>
         [WirePath("properties.estimatedCompletionTime")]
-        public DateTimeOffset? EstimatedCompletionOn
+        public DateTimeOffset? EstimatedCompleteOn
         {
             get
             {
-                return Properties is null ? default : Properties.EstimatedCompletionOn;
+                return Properties is null ? default : Properties.EstimatedCompleteOn;
             }
         }
 

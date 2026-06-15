@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ZoneRedundant))
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             string name = default;
-            bool? zoneRedundant = default;
+            bool? isZoneRedundant = default;
             SqlCapabilityStatus? status = default;
             string reason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    zoneRedundant = prop.Value.GetBoolean();
+                    isZoneRedundant = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MaintenanceConfigurationCapability(name, zoneRedundant, status, reason, additionalBinaryDataProperties);
+            return new MaintenanceConfigurationCapability(name, isZoneRedundant, status, reason, additionalBinaryDataProperties);
         }
     }
 }

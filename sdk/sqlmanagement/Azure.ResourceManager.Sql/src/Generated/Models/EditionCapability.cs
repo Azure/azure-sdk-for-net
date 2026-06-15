@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="EditionCapability"/>. </summary>
         /// <param name="name"> The database edition name. </param>
         /// <param name="supportedServiceLevelObjectives"> The list of supported service objectives for the edition. </param>
-        /// <param name="zoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>
+        /// <param name="isZoneRedundant"> Whether or not zone redundancy is supported for the edition. </param>
         /// <param name="readScale"> The read scale capability for the edition. </param>
         /// <param name="supportedStorageCapabilities"> The list of supported storage capabilities for this edition. </param>
         /// <param name="zonePinning"> Whether or not zone pinning is supported for the edition. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EditionCapability(string name, IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives, bool? zoneRedundant, ReadScaleCapability readScale, IReadOnlyList<StorageCapability> supportedStorageCapabilities, bool? zonePinning, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EditionCapability(string name, IReadOnlyList<ServiceObjectiveCapability> supportedServiceLevelObjectives, bool? isZoneRedundant, ReadScaleCapability readScale, IReadOnlyList<StorageCapability> supportedStorageCapabilities, bool? zonePinning, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             SupportedServiceLevelObjectives = supportedServiceLevelObjectives;
-            ZoneRedundant = zoneRedundant;
+            IsZoneRedundant = isZoneRedundant;
             ReadScale = readScale;
             SupportedStorageCapabilities = supportedStorageCapabilities;
             ZonePinning = zonePinning;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Whether or not zone redundancy is supported for the edition. </summary>
         [WirePath("zoneRedundant")]
-        public bool? ZoneRedundant { get; }
+        public bool? IsZoneRedundant { get; }
 
         /// <summary> The read scale capability for the edition. </summary>
         [WirePath("readScale")]

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -104,11 +105,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </summary>
         [WirePath("properties.zoneRedundant")]
-        public bool? ZoneRedundant
+        public bool? IsZoneRedundant
         {
             get
             {
-                return Properties is null ? default : Properties.ZoneRedundant;
+                return Properties is null ? default : Properties.IsZoneRedundant;
             }
             set
             {
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     Properties = new ElasticPoolUpdateProperties();
                 }
-                Properties.ZoneRedundant = value;
+                Properties.IsZoneRedundant = value;
             }
         }
 
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </summary>
         [WirePath("properties.maintenanceConfigurationId")]
-        public string MaintenanceConfigurationId
+        public ResourceIdentifier MaintenanceConfigurationId
         {
             get
             {

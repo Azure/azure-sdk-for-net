@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="retentionDays"> Number of days this server will stay soft-deleted. </param>
         /// <param name="createMode"> Create mode for server, only valid values for this are Normal and Restore. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerProperties(string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections, SqlMinimalTlsVersion? minTlsVersion, ServerPublicNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, string primaryUserAssignedIdentityId, Guid? federatedClientId, string keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ServerNetworkAccessFlag? isIPv6Enabled, ExternalGovernanceStatus? externalGovernanceStatus, int? retentionDays, SqlServerCreateMode? createMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerProperties(string administratorLogin, string administratorLoginPassword, string version, string state, string fullyQualifiedDomainName, IReadOnlyList<SqlServerPrivateEndpointConnection> privateEndpointConnections, SqlMinimalTlsVersion? minTlsVersion, ServerNetworkAccessFlag? publicNetworkAccess, ServerWorkspaceFeature? workspaceFeature, ResourceIdentifier primaryUserAssignedIdentityId, Guid? federatedClientId, Uri keyId, ServerExternalAdministrator administrators, ServerNetworkAccessFlag? restrictOutboundNetworkAccess, ServerNetworkAccessFlag? isIPv6Enabled, ExternalGovernanceStatus? externalGovernanceStatus, int? retentionDays, SqlServerCreateMode? createMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </summary>
         [WirePath("publicNetworkAccess")]
-        public ServerPublicNetworkAccessFlag? PublicNetworkAccess { get; set; }
+        public ServerNetworkAccessFlag? PublicNetworkAccess { get; set; }
 
         /// <summary> Whether or not existing server has a workspace created and if it allows connection from workspace. </summary>
         [WirePath("workspaceFeature")]
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The resource id of a user assigned identity to be used by default. </summary>
         [WirePath("primaryUserAssignedIdentityId")]
-        public string PrimaryUserAssignedIdentityId { get; set; }
+        public ResourceIdentifier PrimaryUserAssignedIdentityId { get; set; }
 
         /// <summary> The Client id used for cross tenant CMK scenario. </summary>
         [WirePath("federatedClientId")]
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> A CMK URI of the key to use for encryption. </summary>
         [WirePath("keyId")]
-        public string KeyId { get; set; }
+        public Uri KeyId { get; set; }
 
         /// <summary> The Azure Active Directory administrator can be utilized during server creation and for server updates, except for the azureADOnlyAuthentication property. To update the azureADOnlyAuthentication property, individual API must be used. </summary>
         [WirePath("administrators")]

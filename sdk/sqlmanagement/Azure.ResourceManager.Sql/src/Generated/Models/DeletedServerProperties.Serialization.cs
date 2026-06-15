@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             string version = default;
             DateTimeOffset? deletedOn = default;
-            string originalId = default;
+            ResourceIdentifier originalId = default;
             string fullyQualifiedDomainName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +160,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("originalId"u8))
                 {
-                    originalId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    originalId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("fullyQualifiedDomainName"u8))

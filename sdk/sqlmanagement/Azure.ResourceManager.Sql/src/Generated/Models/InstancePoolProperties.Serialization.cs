@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            string subnetId = default;
+            ResourceIdentifier subnetId = default;
             int vCores = default;
             InstancePoolLicenseType licenseType = default;
             string dnsZone = default;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 if (prop.NameEquals("subnetId"u8))
                 {
-                    subnetId = prop.Value.GetString();
+                    subnetId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("vCores"u8))

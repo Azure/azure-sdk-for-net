@@ -584,18 +584,26 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets a job version. </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerJobVersionResource>> GetSqlServerJobVersionAsync(int jobVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerJobVersionResource>> GetSqlServerJobVersionAsync(string jobVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
             return await GetSqlServerJobVersions().GetAsync(jobVersion, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a job version. </summary>
         /// <param name="jobVersion"> The version of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobVersion"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobVersion"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlServerJobVersionResource> GetSqlServerJobVersion(int jobVersion, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerJobVersionResource> GetSqlServerJobVersion(string jobVersion, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(jobVersion, nameof(jobVersion));
+
             return GetSqlServerJobVersions().Get(jobVersion, cancellationToken);
         }
     }

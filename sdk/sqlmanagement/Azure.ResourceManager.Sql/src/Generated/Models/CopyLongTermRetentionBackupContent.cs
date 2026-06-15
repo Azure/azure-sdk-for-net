@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -73,7 +74,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The resource Id of the target server that owns the database. </summary>
         [WirePath("properties.targetServerResourceId")]
-        public string TargetServerResourceId
+        public ResourceIdentifier TargetServerResourceId
         {
             get
             {
