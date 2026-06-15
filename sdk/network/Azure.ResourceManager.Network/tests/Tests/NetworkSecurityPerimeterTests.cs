@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Tests
 
         private ResourceGroupResource _resourceGroup;
 
-        public NetworkSecurityPerimeterTests(bool isAsync) : base(isAsync)
+        public NetworkSecurityPerimeterTests(bool isAsync) : base(isAsync, NetworkSecurityPerimeterResource.ResourceType, "2024-07-01")
         {
         }
 

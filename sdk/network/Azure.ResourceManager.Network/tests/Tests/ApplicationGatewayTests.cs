@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.Network.Tests
             ApplicationGatewayAvailableSslOptionsInfo sslOptionsInfo = await subscription.GetApplicationGatewayAvailableSslOptionsAsync(System.Threading.CancellationToken.None);
             Assert.NotNull(sslOptionsInfo);
             Assert.AreEqual(sslOptionsInfo.Name, "default");
-            Assert.AreEqual(sslOptionsInfo.Id.ResourceType, sslOptionsInfo.ResourceType);
+            Assert.AreEqual(new ResourceType("Microsoft.Network/applicationGatewayAvailableSslOptions"), sslOptionsInfo.ResourceType);
             Assert.AreEqual(sslOptionsInfo.DefaultPolicy, ApplicationGatewaySslPolicyName.AppGwSslPolicy20220101);
             Assert.AreEqual(sslOptionsInfo.PredefinedPolicies.Count, 5);
             foreach (var predefinedPolicy in sslOptionsInfo.PredefinedPolicies)

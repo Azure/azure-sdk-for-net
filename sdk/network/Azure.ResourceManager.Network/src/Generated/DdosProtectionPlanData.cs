@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
@@ -30,6 +31,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DdosProtectionPlanData(DdosProtectionPlanPropertiesFormat properties, string name, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+            : this(default, name, default, default, default, properties, eTag, additionalBinaryDataProperties)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DdosProtectionPlanData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> The name of the DDoS protection plan. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="properties"> Properties of the DDoS protection plan. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DdosProtectionPlanData(ResourceIdentifier id, string name, ResourceType resourceType, IDictionary<string, string> tags, AzureLocation location, DdosProtectionPlanPropertiesFormat properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+            : base(id, name, resourceType, null, tags, location)
         {
             Properties = properties;
             Name = name;

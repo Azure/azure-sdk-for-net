@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
             DefaultPolicy = defaultPolicy;
         }
 
-        internal static ApplicationGatewayAvailableSslOptionsInfo FromData(global::Azure.ResourceManager.Network.ApplicationGatewayAvailableSslOptionsInfoData data)
+        internal static ApplicationGatewayAvailableSslOptionsInfo FromData(global::Azure.ResourceManager.Network.ApplicationGatewayAvailableSslOptionsInfoData data, string subscriptionId = null)
         {
             if (data is null)
             {
@@ -44,16 +44,16 @@ namespace Azure.ResourceManager.Network.Models
             foreach (var policy in data.PredefinedPolicies ?? Array.Empty<NetworkSubResource>())
             {
                 string policyName = GetNameFromId(policy.Id);
-                predefinedPolicies.Add(new WritableSubResource { Id = NetworkExtensions.CreateApplicationGatewaySslPredefinedPolicyIdentifier(data.Id.SubscriptionId, policyName) });
+                predefinedPolicies.Add(new WritableSubResource { Id = NetworkExtensions.CreateApplicationGatewaySslPredefinedPolicyIdentifier(subscriptionId, policyName) });
             }
 
-            string name = data.Name ?? data.Id?.Name;
-            string type = data.Type ?? data.Id?.ResourceType.ToString();
+            string name = data.Name ?? "default";
+            string type = data.Type ?? "Microsoft.Network/applicationGatewayAvailableSslOptions";
             return new ApplicationGatewayAvailableSslOptionsInfo(data.Id, name, type, data.Location, data.Tags, predefinedPolicies, data.DefaultPolicy, data.AvailableCipherSuites, data.AvailableProtocols);
         }
 
         /// <summary> The resource type. </summary>
-        public ResourceType ResourceType => Id?.ResourceType ?? Type;
+        public ResourceType ResourceType => Type;
 
         private static string GetNameFromId(ResourceIdentifier id)
         {

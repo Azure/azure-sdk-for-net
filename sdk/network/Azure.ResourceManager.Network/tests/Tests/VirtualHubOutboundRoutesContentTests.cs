@@ -41,10 +41,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             using var stream = new MemoryStream();
             using var writer = new Utf8JsonWriter(stream);
-            ((IJsonModel<VirtualHubOutboundRoutesContent>)model).Write(writer, ModelReaderWriterOptions.Json);
-            writer.Flush();
-            var json = Encoding.UTF8.GetString(stream.ToArray());
-            Assert.IsTrue(json.Contains(relativeUri.OriginalString));
+            Assert.Throws<InvalidOperationException>(() => ((IJsonModel<VirtualHubOutboundRoutesContent>)model).Write(writer, ModelReaderWriterOptions.Json));
         }
 
         [Test]
@@ -68,9 +65,8 @@ namespace Azure.ResourceManager.Network.Tests
         {
             var json = "{\"resourceUri\":\"\"}";
             using var doc = JsonDocument.Parse(json);
-            var property = doc.RootElement.GetProperty("resourceUri");
             var content = VirtualHubOutboundRoutesContent.DeserializeVirtualHubOutboundRoutesContent(doc.RootElement, default);
-            Assert.AreEqual(content.ResourceUri, new Uri("", UriKind.Relative));
+            Assert.IsNull(content.ResourceUri);
         }
 
         [Test]
@@ -78,7 +74,6 @@ namespace Azure.ResourceManager.Network.Tests
         {
             var json = "{\"resourceUri\":null}";
             using var doc = JsonDocument.Parse(json);
-            var property = doc.RootElement.GetProperty("resourceUri");
             var content = VirtualHubOutboundRoutesContent.DeserializeVirtualHubOutboundRoutesContent(doc.RootElement, default);
             Assert.IsNull(content.ResourceUri);
         }
