@@ -33,6 +33,8 @@ jobs:
     displayName: "Analyze"
     dependsOn: ${{ parameters.DependsOn }}
     condition: and(succeededOrFailed(), ne(${{ parameters.Matrix }}, '{}'))
+    variables:
+      NPM_CONFIG_USERCONFIG: $(Agent.TempDirectory)/analyze-job/.npmrc
 
     strategy:
       matrix: $[ ${{ parameters.Matrix }} ]
