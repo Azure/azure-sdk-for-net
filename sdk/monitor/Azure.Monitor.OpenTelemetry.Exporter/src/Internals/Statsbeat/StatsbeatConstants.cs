@@ -40,8 +40,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         /// startup. If the config returns <c>enabled: true</c>, SDK statistics are emitted
         /// to the <c>url</c> from the response (with the standard
         /// <c>/v2.1/track</c> path appended by the existing transmitter). If the fetch
-        /// fails, returns <c>enabled: false</c>, or returns a malformed response, SDK
-        /// statistics are disabled for the process.
+        /// fails or returns a malformed response, SDK statistics fall back to the existing
+        /// region-derived ingestion endpoint; if the config returns <c>enabled: false</c>,
+        /// SDK statistics are disabled for the process.
         /// </summary>
         /// <remarks>
         /// Intended to be set by the Microsoft OpenTelemetry distro before any
