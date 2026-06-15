@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
@@ -112,9 +113,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         internal const int GeneralStatsbeatInterval = 86400000;
 
         /// <summary>
-        /// 15 min == 900000 milliseconds. Short interval for Network SDKStats.
+        /// 15 min == 900000 milliseconds. Cadence of the shared statsbeat reader.
         /// </summary>
         internal const int NetworkStatsbeatInterval = 900000;
+
+        /// <summary>
+        /// Min time between Attach observable gauge emissions (long-interval cadence
+        /// while sharing the 15-min reader).
+        /// </summary>
+        internal static readonly TimeSpan AttachEmissionInterval = TimeSpan.FromHours(24);
 
         internal const string AttachStatsbeatMeterName = "AttachStatsbeatMeter";
         internal const string AttachStatsbeatMetricName = "Attach";
