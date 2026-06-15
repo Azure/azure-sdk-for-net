@@ -16,15 +16,15 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         private readonly long _value;
         /// <summary> 0. </summary>
-        private const long _0Value = 0L;
+        private const long ZeroValue = 0L;
         /// <summary> 1. </summary>
-        private const long _1Value = 1L;
+        private const long OneValue = 1L;
         /// <summary> 2. </summary>
-        private const long _2Value = 2L;
+        private const long TwoValue = 2L;
         /// <summary> 3. </summary>
-        private const long _3Value = 3L;
+        private const long ThreeValue = 3L;
         /// <summary> 4. </summary>
-        private const long _4Value = 4L;
+        private const long FourValue = 4L;
 
         /// <summary> Initializes a new instance of <see cref="AlertSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,19 +34,19 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> 0. </summary>
-        public static AlertSeverity _0 { get; } = new AlertSeverity(_0Value);
+        public static AlertSeverity Zero { get; } = new AlertSeverity(ZeroValue);
 
         /// <summary> 1. </summary>
-        public static AlertSeverity _1 { get; } = new AlertSeverity(_1Value);
+        public static AlertSeverity One { get; } = new AlertSeverity(OneValue);
 
         /// <summary> 2. </summary>
-        public static AlertSeverity _2 { get; } = new AlertSeverity(_2Value);
+        public static AlertSeverity Two { get; } = new AlertSeverity(TwoValue);
 
         /// <summary> 3. </summary>
-        public static AlertSeverity _3 { get; } = new AlertSeverity(_3Value);
+        public static AlertSeverity Three { get; } = new AlertSeverity(ThreeValue);
 
         /// <summary> 4. </summary>
-        public static AlertSeverity _4 { get; } = new AlertSeverity(_4Value);
+        public static AlertSeverity Four { get; } = new AlertSeverity(FourValue);
 
         /// <summary> Determines if two <see cref="AlertSeverity"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

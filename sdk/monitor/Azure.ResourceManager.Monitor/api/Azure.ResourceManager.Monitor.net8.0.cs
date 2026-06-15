@@ -1118,18 +1118,31 @@ namespace Azure.ResourceManager.Monitor
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorPrivateLinkScopeResource>> UpdateAsync(Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkScopePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
-    public partial class MonitorWorkspaceResource : Azure.ResourceManager.ArmResource
+    public partial class MonitorWorkspaceResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected MonitorWorkspaceResource() { }
         public virtual Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> Update(Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> Update(System.BinaryData patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> UpdateAsync(Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> UpdateAsync(System.BinaryData patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
@@ -1144,14 +1157,29 @@ namespace Azure.ResourceManager.Monitor
         public virtual Azure.Pageable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> GetAsync(string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> GetIfExists(string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>> GetIfExistsAsync(string azureMonitorWorkspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Monitor.MonitorWorkspaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.MonitorWorkspaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
-    public partial class MonitorWorkspaceResourceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class MonitorWorkspaceResourceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>
     {
         public MonitorWorkspaceResourceData(Azure.Core.AzureLocation location) { }
+        public string AccountId { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings DefaultIngestionSettings { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics Metrics { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess? PublicNetworkAccess { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.MonitorWorkspaceResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScheduledQueryRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Monitor.ScheduledQueryRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.ScheduledQueryRuleResource>, System.Collections.IEnumerable
     {
@@ -1239,12 +1267,22 @@ namespace Azure.ResourceManager.Monitor
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.ScheduledQueryRuleResource>> UpdateAsync(Azure.ResourceManager.Monitor.Models.ScheduledQueryRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.ObsoleteAttribute("This API is no longer supported.", false)]
-    public partial class VmInsightsOnboardingStatusData : Azure.ResourceManager.Models.ResourceData
+    public partial class VmInsightsOnboardingStatusData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>
     {
         internal VmInsightsOnboardingStatusData() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Monitor.Models.DataContainer> Data { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.DataStatus? DataStatus { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.OnboardingStatus? OnboardingStatus { get { throw null; } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.ObsoleteAttribute("This API is no longer supported.", false)]
-    public partial class VmInsightsOnboardingStatusResource : Azure.ResourceManager.ArmResource
+    public partial class VmInsightsOnboardingStatusResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected VmInsightsOnboardingStatusResource() { }
@@ -1253,6 +1291,11 @@ namespace Azure.ResourceManager.Monitor
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceUri) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Monitor.Mocking
@@ -1659,11 +1702,11 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         private readonly int _dummyPrimitive;
         public AlertSeverity(long value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.AlertSeverity _0 { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.AlertSeverity _1 { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.AlertSeverity _2 { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.AlertSeverity _3 { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.AlertSeverity _4 { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.AlertSeverity Four { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.AlertSeverity One { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.AlertSeverity Three { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.AlertSeverity Two { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.AlertSeverity Zero { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Monitor.Models.AlertSeverity other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -1899,10 +1942,12 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.WindowsEventLogDataSource WindowsEventLogDataSource(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.WindowsEventLogDataSourceStream> streams = null, System.Collections.Generic.IEnumerable<string> xPathQueries = null, string transformKql = null, string name = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.WindowsFirewallLogsDataSource WindowsFirewallLogsDataSource(System.Collections.Generic.IEnumerable<string> streams = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.KnownWindowsFirewallLogsDataSourceProfileFilter> profileFilter = null, string name = null) { throw null; }
     }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
     public partial class ArmResourceGetMonitorMetricBaselinesOptions
     {
         public ArmResourceGetMonitorMetricBaselinesOptions() { }
     }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
     public partial class ArmResourceGetMonitorMetricsOptions
     {
         public ArmResourceGetMonitorMetricsOptions() { }
@@ -2427,6 +2472,32 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataColumnDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataColumnDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    public partial class DataContainer : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DataContainer>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataContainer>
+    {
+        internal DataContainer() { }
+        public Azure.ResourceManager.Monitor.Models.DataContainerWorkspace Workspace { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.DataContainer System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DataContainer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DataContainer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.DataContainer System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataContainer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataContainer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataContainer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    public partial class DataContainerWorkspace : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DataContainerWorkspace>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataContainerWorkspace>
+    {
+        internal DataContainerWorkspace() { }
+        public string CustomerId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public Azure.Core.AzureLocation Location { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.DataContainerWorkspace System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DataContainerWorkspace>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DataContainerWorkspace>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.DataContainerWorkspace System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataContainerWorkspace>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataContainerWorkspace>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataContainerWorkspace>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DataFlow : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DataFlow>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataFlow>
     {
         public DataFlow() { }
@@ -2506,6 +2577,23 @@ namespace Azure.ResourceManager.Monitor.Models
         Azure.ResourceManager.Monitor.Models.DataSourcesSpec System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataSourcesSpec>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataSourcesSpec>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataSourcesSpec>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataStatus : System.IEquatable<Azure.ResourceManager.Monitor.Models.DataStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.DataStatus NotPresent { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.DataStatus Present { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.DataStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.DataStatus left, Azure.ResourceManager.Monitor.Models.DataStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.DataStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.DataStatus left, Azure.ResourceManager.Monitor.Models.DataStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DataStreamDeclaration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DataStreamDeclaration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DataStreamDeclaration>
     {
@@ -3888,9 +3976,20 @@ namespace Azure.ResourceManager.Monitor.Models
         Verbose = 4,
     }
     [System.ObsoleteAttribute("This API is no longer supported.", false)]
-    public partial class MonitorIncident
+    public partial class MonitorIncident : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorIncident>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorIncident>
     {
         public MonitorIncident() { }
+        public System.DateTimeOffset? ActivatedOn { get { throw null; } }
+        public bool? IsActive { get { throw null; } }
+        public string Name { get { throw null; } }
+        public System.DateTimeOffset? ResolvedOn { get { throw null; } }
+        public string RuleName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorIncident System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorIncident>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorIncident>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorIncident System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorIncident>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorIncident>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorIncident>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MonitoringAccountDestination : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitoringAccountDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitoringAccountDestination>
     {
@@ -4301,6 +4400,7 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
     public partial class MonitorPrivateLinkScopeOperationStatus
     {
         public MonitorPrivateLinkScopeOperationStatus() { }
@@ -4334,6 +4434,26 @@ namespace Azure.ResourceManager.Monitor.Models
         Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitorProvisioningState : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MonitorProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorProvisioningState left, Azure.ResourceManager.Monitor.Models.MonitorProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorProvisioningState left, Azure.ResourceManager.Monitor.Models.MonitorProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MonitorPublicNetworkAccess : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorPublicNetworkAccess>
@@ -4577,6 +4697,99 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWebhookReceiver>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWebhookReceiver>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    public partial class MonitorWorkspaceDefaultIngestionSettings : Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings>
+    {
+        internal MonitorWorkspaceDefaultIngestionSettings() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceDefaultIngestionSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    public partial class MonitorWorkspaceIngestionSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings>
+    {
+        internal MonitorWorkspaceIngestionSettings() { }
+        public Azure.Core.ResourceIdentifier DataCollectionEndpointResourceId { get { throw null; } }
+        public Azure.Core.ResourceIdentifier DataCollectionRuleResourceId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceIngestionSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    public partial class MonitorWorkspaceMetricProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties>
+    {
+        public MonitorWorkspaceMetricProperties() { }
+        public string InternalId { get { throw null; } }
+        public string PrometheusQueryEndpoint { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    public partial class MonitorWorkspaceMetrics : Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics>
+    {
+        public MonitorWorkspaceMetrics() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetrics>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    public partial class MonitorWorkspacePrivateEndpointConnection : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection>
+    {
+        public MonitorWorkspacePrivateEndpointConnection() { }
+        public Azure.ResourceManager.Monitor.Models.MonitorPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
+        public Azure.ResourceManager.Monitor.Models.MonitorPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePrivateEndpointConnection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MonitorWorkspacePublicNetworkAccess : System.IEquatable<Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MonitorWorkspacePublicNetworkAccess(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess left, Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess left, Azure.ResourceManager.Monitor.Models.MonitorWorkspacePublicNetworkAccess right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This API has moved to Azure.ResourceManager.Monitor.Workspaces. Use Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceResource, Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceCollection, or Azure.ResourceManager.Monitor.Workspaces.MonitorWorkspaceData instead.", false)]
+    public partial class MonitorWorkspaceResourcePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch>
+    {
+        public MonitorWorkspaceResourcePatch() { }
+        public Azure.ResourceManager.Monitor.Models.MonitorWorkspaceMetricProperties Metrics { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MonitorWorkspaceResourcePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class MultiMetricCriteria : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MultiMetricCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiMetricCriteria>
     {
         public MultiMetricCriteria(Azure.ResourceManager.Monitor.Models.CriterionType criterionType, string name, string metricName, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType timeAggregation) { }
@@ -4795,6 +5008,24 @@ namespace Azure.ResourceManager.Monitor.Models
         public static implicit operator Azure.ResourceManager.Monitor.Models.Odatatype (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Monitor.Models.Odatatype? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.Odatatype left, Azure.ResourceManager.Monitor.Models.Odatatype right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct OnboardingStatus : System.IEquatable<Azure.ResourceManager.Monitor.Models.OnboardingStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public OnboardingStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.OnboardingStatus NotOnboarded { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.OnboardingStatus Onboarded { get { throw null; } }
+        public static Azure.ResourceManager.Monitor.Models.OnboardingStatus Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Monitor.Models.OnboardingStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Monitor.Models.OnboardingStatus left, Azure.ResourceManager.Monitor.Models.OnboardingStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Monitor.Models.OnboardingStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Monitor.Models.OnboardingStatus left, Azure.ResourceManager.Monitor.Models.OnboardingStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class OperationStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.OperationStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.OperationStatus>
@@ -5577,14 +5808,17 @@ namespace Azure.ResourceManager.Monitor.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.StorageBlob>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.StorageBlob>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
     public partial class SubscriptionMonitorMetric
     {
         public SubscriptionMonitorMetric() { }
     }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
     public partial class SubscriptionResourceGetMonitorMetricsOptions
     {
         public SubscriptionResourceGetMonitorMetricsOptions() { }
     }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
     public partial class SubscriptionResourceGetMonitorMetricsWithPostOptions
     {
         public SubscriptionResourceGetMonitorMetricsWithPostOptions() { }
