@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Network.Tests
                 FrontendIPConfigurations = {
                     new FrontendIPConfigurationData()
                     {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-                        Subnet = vnet.Data.Subnets[0]
+                        Subnet = new SubnetData() { Id = vnet.Data.Subnets[0].Id }
                     }
                 },
                 BackendAddressPools = {
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new FrontendIPConfigurationData()
                     {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.0.38",
-                        Subnet = vnet.Data.Subnets[0]
+                        Subnet = new SubnetData() { Id = vnet.Data.Subnets[0].Id }
                     }
                 },
                 BackendAddressPools = {
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new FrontendIPConfigurationData()
                     {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.0.38",
-                        Subnet = vnet.Data.Subnets[0]
+                        Subnet = new SubnetData() { Id = vnet.Data.Subnets[0].Id }
                     }
                 },
                 BackendAddressPools = {
@@ -811,7 +811,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new FrontendIPConfigurationData()
                     {PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.0.38",
-                        Subnet = vnet.Data.Subnets[0]
+                        Subnet = new SubnetData() { Id = vnet.Data.Subnets[0].Id }
                     }
                 },
                 BackendAddressPools = {
