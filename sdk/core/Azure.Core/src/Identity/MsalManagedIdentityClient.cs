@@ -7,6 +7,7 @@ using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -19,8 +20,8 @@ namespace Azure.Identity
     {
         private readonly ConcurrentDictionary<(bool EnableCae, bool IsTokenBinding), AsyncLockWithValue<IManagedIdentityApplication>> _clientCache = new();
         private bool _isForceRefreshEnabled { get; }
-        private readonly Action<AcquireTokenForManagedIdentityParameterBuilder> _beforeTokenAcquisition;
-        private readonly bool _isAttestationOptionsEnabled;
+        private readonly bool _disableMtlsProofOfPossession;
+        private static readonly Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> s_withAttestationSupport = ResolveWithAttestationSupport();
 
         internal bool IsSupportLoggingEnabled { get; }
         internal Microsoft.Identity.Client.AppConfig.ManagedIdentityId ManagedIdentityId { get; }
@@ -55,11 +56,31 @@ namespace Azure.Identity
 
             Pipeline = clientOptions.Pipeline;
             _isForceRefreshEnabled = clientOptions.IsForceRefreshEnabled;
+            _disableMtlsProofOfPossession = clientOptions.DisableMtlsProofOfPossession;
+        }
 
-            if (clientOptions.Options is IMsalManagedIdentityInitializerOptions initializerOptions)
+        private static Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> ResolveWithAttestationSupport()
+        {
+            const string managedIdentityAttestationExtensionTypeName = "Microsoft.Identity.Client.KeyAttestation.ManagedIdentityAttestationExtensions, Microsoft.Identity.Client.KeyAttestation";
+
+            try
             {
-                _isAttestationOptionsEnabled = true;
-                _beforeTokenAcquisition = initializerOptions.BeforeTokenAcquisition;
+                Type extensionType = Type.GetType(managedIdentityAttestationExtensionTypeName, throwOnError: false);
+
+                MethodInfo withAttestationSupport = extensionType?.GetMethod(
+                    "WithAttestationSupport",
+                    BindingFlags.Public | BindingFlags.Static,
+                    binder: null,
+                    types: [typeof(AcquireTokenForManagedIdentityParameterBuilder)],
+                    modifiers: null);
+
+                return withAttestationSupport == null
+                    ? null
+                    : (Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder>)withAttestationSupport.CreateDelegate(typeof(Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder>));
+            }
+            catch
+            {
+                return null;
             }
         }
 
@@ -127,14 +148,13 @@ namespace Azure.Identity
                 builder.WithClaims(requestContext.Claims);
             }
 
-            bool shouldEnableMtlsPop = isTokenBindingAvailable && _isAttestationOptionsEnabled;
+            bool shouldEnableMtlsPop = !_disableMtlsProofOfPossession && requestContext.IsProofOfPossessionEnabled && isTokenBindingAvailable && s_withAttestationSupport != null;
             if (shouldEnableMtlsPop)
             {
                 builder.WithMtlsProofOfPossession();
                 AzureIdentityEventSource.Singleton.LogMsal(LogLevel.Verbose, "Managed identity token request configured with mTLS proof-of-possession.");
+                builder = s_withAttestationSupport(builder);
             }
-
-            _beforeTokenAcquisition?.Invoke(builder);
 
             if (_isForceRefreshEnabled)
             {
