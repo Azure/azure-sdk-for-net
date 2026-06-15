@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The name of the NSP link. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public new string Name { get; }
 
         /// <summary> The provisioning state of the NSP Link resource. </summary>
         [WirePath("properties.provisioningState")]

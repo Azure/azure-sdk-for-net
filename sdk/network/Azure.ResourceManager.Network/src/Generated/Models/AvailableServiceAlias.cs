@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The name of the service alias. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public new string Name { get; }
 
         /// <summary> The ID of the service alias. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public new string Id { get; }
 
         /// <summary> The type of the resource. </summary>
         [WirePath("type")]

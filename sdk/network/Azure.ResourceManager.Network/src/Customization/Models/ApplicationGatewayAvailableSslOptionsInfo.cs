@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The resource type. </summary>
-        public ResourceType ResourceType => Type;
+        public new ResourceType ResourceType => Type;
 
         private static string GetNameFromId(ResourceIdentifier id)
         {
@@ -90,6 +90,6 @@ namespace Azure.ResourceManager.Network.Models
         BinaryData IPersistableModel<ApplicationGatewayAvailableSslOptionsInfo>.Write(ModelReaderWriterOptions options) => BinaryData.FromString("{}");
 
         /// <summary> Writes the model as JSON. </summary>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); writer.WriteEndObject(); }
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) { writer.WriteStartObject(); writer.WriteEndObject(); }
     }
 }

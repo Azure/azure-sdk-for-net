@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The name of the connection monitor. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public new string Name { get; }
 
         /// <summary> Describes the source of connection monitor. </summary>
         [WirePath("properties.source")]

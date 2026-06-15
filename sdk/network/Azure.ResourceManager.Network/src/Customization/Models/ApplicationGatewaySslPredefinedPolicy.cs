@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationGatewaySslPredefinedPolicy
     {
-        public Azure.Core.ResourceType ResourceType => Id?.ResourceType ?? Type;
+        public new Azure.Core.ResourceType ResourceType => Id?.ResourceType ?? Type;
 
         public System.Nullable<ApplicationGatewaySslProtocol> MinProtocolVersion
         {

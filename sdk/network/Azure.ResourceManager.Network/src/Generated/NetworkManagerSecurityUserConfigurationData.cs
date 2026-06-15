@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The name of the network manager Security Configuration. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public new string Name { get; }
 
         /// <summary> The system metadata related to this resource. </summary>
         [WirePath("systemData")]
-        public SystemData SystemData { get; }
+        public new SystemData SystemData { get; }
 
         /// <summary> A description of the security user configuration. </summary>
         [WirePath("properties.description")]

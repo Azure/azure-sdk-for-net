@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Gets the Name. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public new string Name { get; }
 
         /// <summary> Specifies slot info on a cloud service. </summary>
         [WirePath("properties.slotType")]

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The name of the network security perimeter. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public new string Name { get; }
 
         /// <summary> The provisioning state of the scope assignment resource. </summary>
         [WirePath("properties.provisioningState")]

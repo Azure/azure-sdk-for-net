@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The name of the rule. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public new string Name { get; }
 
         /// <summary> The system metadata related to this resource. </summary>
         [WirePath("systemData")]
-        public SystemData SystemData { get; }
+        public new SystemData SystemData { get; }
 
         /// <summary> Whether the rule is custom or default. </summary>
         [WirePath("kind")]
