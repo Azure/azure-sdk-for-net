@@ -2113,7 +2113,7 @@ namespace Azure.Developer.LoadTesting
                 Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
 
                 using HttpMessage message = CreateGenerateTestRunInsightsRequest(testRunId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "LoadTestRunClient.GenerateTestRunInsightsAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "LoadTestRunClient.GenerateTestRunInsights", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {

@@ -9,5 +9,6 @@ public readonly partial struct AgentResponseItemKind
     // Customization: manually restore kinds pruned by code generator
     // (due to lack of model grounding in client view)
     private const string MessageValue = "message";
+    /// <summary> Indicates the item represents a message in an agent conversation. </summary>
     public static AgentResponseItemKind Message { get; } = new AgentResponseItemKind(MessageValue);
 }

@@ -982,7 +982,7 @@ namespace Azure.AI.VoiceLive.Tests
         }
 
         [Test]
-        public async Task GetUpdatesAsync_ResponseTextDone_EmitsStructuredContent()
+        public async Task GetUpdatesAsync_ResponseTextDone_DoesNotEmitContentByDefault()
         {
             using var capturer = new ActivityCapturer();
             var session = CreateSession(out var fake);
@@ -999,7 +999,7 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.That(span, Is.Not.Null, "response.text.done should produce a recv span");
             Assert.That(span!.Events.Count, Is.EqualTo(1));
             var content = span.Events[0].Tags.FirstOrDefault(t => t.Key == Keys.GenAiEventContent).Value as string;
-            Assert.That(content, Does.Contain("Hello!"), "structured text content must be emitted unconditionally");
+            Assert.That(content, Is.Null, "content recording is opt-in; gen_ai.event.content must not appear without OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT or AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED set to true.");
         }
 
         // ─── Phase 1: ID tracking & propagation ──────────────────────────────────

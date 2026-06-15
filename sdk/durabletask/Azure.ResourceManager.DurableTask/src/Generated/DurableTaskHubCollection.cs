@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _taskHubsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, DurableTaskHubData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DurableTaskArmOperation<DurableTaskHubResource> operation = new DurableTaskArmOperation<DurableTaskHubResource>(
-                    new DurableTaskHubOperationSource(Client),
+                    new DurableTaskHubResourceOperationSource(Client),
                     _taskHubsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DurableTask
                 HttpMessage message = _taskHubsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, taskHubName, DurableTaskHubData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DurableTaskArmOperation<DurableTaskHubResource> operation = new DurableTaskArmOperation<DurableTaskHubResource>(
-                    new DurableTaskHubOperationSource(Client),
+                    new DurableTaskHubResourceOperationSource(Client),
                     _taskHubsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -4,13 +4,25 @@ license: MIT
 metadata:
   version: "1.0.0"
   distribution: shared
-description: "Analyze and resolve APIView review feedback on Azure SDK PRs. **UTILITY SKILL**. USE FOR: APIView comments, API review feedback, SDK API surface changes. DO NOT USE FOR: general code review, non-APIView feedback. INVOKES: azure-sdk-mcp:azsdk_apiview_get_comments, azure-sdk-mcp:azsdk_customized_code_update."
+description: "Analyze and resolve APIView review feedback on Azure SDK PRs. **UTILITY SKILL**. USE FOR: APIView comments, API review feedback, SDK API surface changes. DO NOT USE FOR: general code review, non-APIView feedback. INVOKES: azure-sdk-mcp:azsdk_apiview_get_comments, azure-sdk-mcp:azsdk_customized_code_update, azure-sdk-mcp:azsdk_typespec_delegate_apiview_feedback, azure-sdk-mcp:azsdk_run_typespec_validation, azure-sdk-mcp:azsdk_package_generate_code."
 compatibility: "azure-sdk-mcp server, SDK pull request with APIView review link"
 ---
 
 # APIView Feedback Resolution
 
-**Prerequisites:** azure-sdk-mcp server required; no CLI fallback. Without MCP, this skill cannot retrieve APIView comments or apply TypeSpec changes. Connect the `azure-sdk-mcp` server before use.
+This skill analyzes and resolves APIView review feedback on Azure SDK pull requests by retrieving reviewer comments, categorizing them, and applying TypeSpec or customization updates that bring the SDK API surface into compliance before re-review.
+
+## Triggers
+
+USE FOR: APIView comments, API review feedback, SDK API surface changes
+WHEN: "resolve APIView comments", "address API review feedback", "update SDK API surface after APIView"
+DO NOT USE FOR: general code review, non-APIView feedback
+
+## Rules
+
+- Requires the `azure-sdk-mcp` server; there is no CLI fallback for retrieving APIView comments or applying TypeSpec changes.
+- Retrieve and categorize APIView comments before making changes so fixes map to reviewer intent.
+- Validate, regenerate, build, and test after applying fixes before requesting re-review.
 
 ## MCP Tools
 

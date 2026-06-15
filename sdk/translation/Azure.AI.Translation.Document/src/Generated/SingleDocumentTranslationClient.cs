@@ -128,8 +128,8 @@ namespace Azure.AI.Translation.Document
         /// </param>
         /// <param name="translateTextWithinImage"> Optional boolean parameter to translate text within an image in the document. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetLanguage"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetLanguage"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response Translate(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = default, string category = default, bool? allowFallback = default, bool? translateTextWithinImage = default, RequestContext context = null)
@@ -140,6 +140,7 @@ namespace Azure.AI.Translation.Document
             {
                 Argument.AssertNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
                 Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
                 using HttpMessage message = CreateTranslateRequest(targetLanguage, content, contentType, sourceLanguage, category, allowFallback, translateTextWithinImage, context);
                 return Pipeline.ProcessMessage(message, context);
@@ -182,8 +183,8 @@ namespace Azure.AI.Translation.Document
         /// </param>
         /// <param name="translateTextWithinImage"> Optional boolean parameter to translate text within an image in the document. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="targetLanguage"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetLanguage"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> TranslateAsync(string targetLanguage, RequestContent content, string contentType, string sourceLanguage = default, string category = default, bool? allowFallback = default, bool? translateTextWithinImage = default, RequestContext context = null)
@@ -194,6 +195,7 @@ namespace Azure.AI.Translation.Document
             {
                 Argument.AssertNotNullOrEmpty(targetLanguage, nameof(targetLanguage));
                 Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
                 using HttpMessage message = CreateTranslateRequest(targetLanguage, content, contentType, sourceLanguage, category, allowFallback, translateTextWithinImage, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);

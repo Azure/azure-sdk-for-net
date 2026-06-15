@@ -24,5 +24,7 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
         public static Dinosaur Dinosaur(string kind = default, int size = default) => throw null;
 
         public static TRex TRex(int size = default) => throw null;
+
+        public static Fish Fish(string kind = default, int size = default) => throw null;
     }
 }

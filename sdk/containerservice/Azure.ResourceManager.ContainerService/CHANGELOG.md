@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.2 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2026-06-05)
+
+### Features Added
+
+- Upgraded api-version to 2026-04-01.
 
 ## 1.5.0-beta.1 (2026-04-03)
 

@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Nginx
                 HttpMessage message = _nginxCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NginxCertificateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NginxArmOperation<NginxCertificateResource> operation = new NginxArmOperation<NginxCertificateResource>(
-                    new NginxCertificateOperationSource(Client),
+                    new NginxCertificateResourceOperationSource(Client),
                     _nginxCertificatesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Nginx
                 HttpMessage message = _nginxCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NginxCertificateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NginxArmOperation<NginxCertificateResource> operation = new NginxArmOperation<NginxCertificateResource>(
-                    new NginxCertificateOperationSource(Client),
+                    new NginxCertificateResourceOperationSource(Client),
                     _nginxCertificatesClientDiagnostics,
                     Pipeline,
                     message.Request,

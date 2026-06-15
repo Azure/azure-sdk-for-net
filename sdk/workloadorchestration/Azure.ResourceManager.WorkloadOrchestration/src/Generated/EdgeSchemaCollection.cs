@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _schemasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaName, EdgeSchemaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSchemaResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaResource>(
-                    new EdgeSchemaOperationSource(Client),
+                    new EdgeSchemaResourceOperationSource(Client),
                     _schemasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _schemasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, schemaName, EdgeSchemaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSchemaResource> operation = new WorkloadOrchestrationArmOperation<EdgeSchemaResource>(
-                    new EdgeSchemaOperationSource(Client),
+                    new EdgeSchemaResourceOperationSource(Client),
                     _schemasClientDiagnostics,
                     Pipeline,
                     message.Request,

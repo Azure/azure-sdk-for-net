@@ -20,16 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         [Obsolete("This property is obsolete and will be removed in a future version. Use IsWorkloadManagementNetworkEnabled instead.")]
         public bool? IsWorkloadManagementNetwork
         {
-            get
-            {
-                if (IsWorkloadManagementNetworkEnabled == null)
-                    return null;
-                if (IsWorkloadManagementNetworkEnabled == Models.IsWorkloadManagementNetworkEnabled.True)
-                    return true;
-                if (IsWorkloadManagementNetworkEnabled == Models.IsWorkloadManagementNetworkEnabled.False)
-                    return false;
-                return null;
-            }
+            get => throw new NotSupportedException("This property is obsolete and will be removed in a future version. Use IsWorkloadManagementNetworkEnabled instead.");
         }
     }
 }

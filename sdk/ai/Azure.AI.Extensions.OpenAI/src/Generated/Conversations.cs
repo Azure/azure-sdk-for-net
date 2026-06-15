@@ -34,7 +34,7 @@ namespace Azure.AI.Extensions.OpenAI
         public ClientPipeline Pipeline { get; }
 
         /// <summary>
-        /// [Protocol Method] Create a conversation.
+        /// [Protocol Method] Creates a new conversation resource.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -53,7 +53,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary>
-        /// [Protocol Method] Create a conversation.
+        /// [Protocol Method] Creates a new conversation resource.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -71,7 +71,7 @@ namespace Azure.AI.Extensions.OpenAI
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Create a conversation. </summary>
+        /// <summary> Creates a new conversation resource. </summary>
         /// <param name="metadata"></param>
         /// <param name="items"></param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
@@ -84,7 +84,7 @@ namespace Azure.AI.Extensions.OpenAI
             return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }
 
-        /// <summary> Create a conversation. </summary>
+        /// <summary> Creates a new conversation resource. </summary>
         /// <param name="metadata"></param>
         /// <param name="items"></param>
         /// <param name="userIsolationKey"> Opaque per-user isolation key used to scope endpoint-scoped data (responses, conversations, sessions) to a specific end user. </param>
@@ -98,7 +98,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary>
-        /// [Protocol Method] Update a conversation.
+        /// [Protocol Method] Modifies the specified conversation's properties.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -118,7 +118,7 @@ namespace Azure.AI.Extensions.OpenAI
         }
 
         /// <summary>
-        /// [Protocol Method] Update a conversation.
+        /// [Protocol Method] Modifies the specified conversation's properties.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -137,7 +137,7 @@ namespace Azure.AI.Extensions.OpenAI
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Update a conversation. </summary>
+        /// <summary> Modifies the specified conversation's properties. </summary>
         /// <param name="conversationId"> The id of the conversation to update. </param>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.
@@ -153,7 +153,7 @@ namespace Azure.AI.Extensions.OpenAI
             return ClientResult.FromValue((ProjectConversation)result, result.GetRawResponse());
         }
 
-        /// <summary> Update a conversation. </summary>
+        /// <summary> Modifies the specified conversation's properties. </summary>
         /// <param name="conversationId"> The id of the conversation to update. </param>
         /// <param name="metadata">
         /// Set of 16 key-value pairs that can be attached to an object. This can be         useful for storing additional information about the object in a structured         format, and querying for objects via API or the dashboard.

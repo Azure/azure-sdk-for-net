@@ -5,15 +5,16 @@ using System;
 
 namespace Azure.AI.Extensions.OpenAI;
 
+/// <summary> Represents the content filter configuration used for requests. </summary>
 [CodeGenType("RaiConfig")]
 public partial class ContentFilterConfiguration
 {
-    /// <summary> The name of the RAI policy to apply. </summary>
+    /// <summary> The name of the responsible AI policy to apply. </summary>
     [CodeGenMember("RaiPolicyName")]
     public string PolicyName { get; set; }
 
     /// <summary> Initializes a new instance of <see cref="ContentFilterConfiguration"/>. </summary>
-    /// <param name="policyName"> The name of the RAI policy to apply. </param>
+    /// <param name="policyName"> The name of the responsible AI policy to apply. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="policyName"/> is null. </exception>
     public ContentFilterConfiguration(string policyName)
     {

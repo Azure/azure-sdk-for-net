@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The current status of an async operation. </summary>
-    public partial class DevCenterOperationStatus
+    public partial class DevCenterOperationStatus : OperationStatusResult
     {
         /// <summary> Initializes a new instance of <see cref="DevCenterOperationStatus"/>. </summary>
         /// <param name="properties"> Custom operation properties, populated only for a successful operation. </param>

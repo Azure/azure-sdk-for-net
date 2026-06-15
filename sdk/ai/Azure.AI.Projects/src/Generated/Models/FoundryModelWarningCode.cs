@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> Warning code for model artifacts. </summary>
-    public readonly partial struct FoundryModelWarningCode : IEquatable<FoundryModelWarningCode>
+    internal readonly partial struct FoundryModelWarningCode : IEquatable<FoundryModelWarningCode>
     {
         private readonly string _value;
         /// <summary> Runtime dependent artifact warning. </summary>
