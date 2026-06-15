@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> Extra details needed to run the user's request. </summary>
-    internal partial class ScheduledActionExecutionParameterDetail : IJsonModel<ScheduledActionExecutionParameterDetail>
+    public partial class ScheduledActionExecutionParameterDetail : IJsonModel<ScheduledActionExecutionParameterDetail>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

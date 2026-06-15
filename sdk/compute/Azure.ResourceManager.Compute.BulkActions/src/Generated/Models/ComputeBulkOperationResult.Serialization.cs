@@ -75,20 +75,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 throw new FormatException($"The model {nameof(ComputeBulkOperationResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(ResourceIds))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
-                writer.WriteStartArray();
-                foreach (ResourceIdentifier item in ResourceIds)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(ErrorCode))
             {
@@ -147,7 +137,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            IList<ResourceIdentifier> resourceIds = default;
+            ResourceIdentifier resourceId = default;
             string errorCode = default;
             string errorDetails = default;
             ComputeBulkOperationDetails operation = default;
@@ -160,19 +150,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new ResourceIdentifier(item.GetString()));
-                        }
-                    }
-                    resourceIds = array;
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errorCode"u8))
@@ -199,7 +177,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeBulkOperationResult(resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), errorCode, errorDetails, operation, additionalBinaryDataProperties);
+            return new ComputeBulkOperationResult(resourceId, errorCode, errorDetails, operation, additionalBinaryDataProperties);
         }
     }
 }

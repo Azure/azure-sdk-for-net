@@ -82,20 +82,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
-            if (Optional.IsCollectionDefined(ResourceIds))
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
-                writer.WriteStartArray();
-                foreach (ResourceIdentifier item in ResourceIds)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(OperationType))
             {
@@ -190,7 +180,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 return null;
             }
             string operationId = default;
-            IList<ResourceIdentifier> resourceIds = default;
+            ResourceIdentifier resourceId = default;
             ComputeBulkOperationType? operationType = default;
             string subscriptionId = default;
             DateTimeOffset? deadlineOn = default;
@@ -215,19 +205,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new ResourceIdentifier(item.GetString()));
-                        }
-                    }
-                    resourceIds = array;
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("opType"u8))
@@ -319,7 +297,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             }
             return new ComputeBulkOperationDetails(
                 operationId,
-                resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                resourceId,
                 operationType,
                 subscriptionId,
                 deadlineOn,

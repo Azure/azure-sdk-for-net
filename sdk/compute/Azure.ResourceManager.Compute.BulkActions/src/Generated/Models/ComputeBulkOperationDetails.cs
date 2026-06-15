@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
@@ -23,12 +22,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         internal ComputeBulkOperationDetails(string operationId)
         {
             OperationId = operationId;
-            ResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation identifier for the unique operation. </param>
-        /// <param name="resourceIds"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
+        /// <param name="resourceId"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
         /// <param name="operationType"> Type of operation performed on the resources. </param>
         /// <param name="subscriptionId"> Subscription id attached to the request. </param>
         /// <param name="deadlineOn"> Deadline for the operation. </param>
@@ -40,10 +38,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkOperationDetails(string operationId, IList<ResourceIdentifier> resourceIds, ComputeBulkOperationType? operationType, string subscriptionId, DateTimeOffset? deadlineOn, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, BulkOperationRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkOperationDetails(string operationId, ResourceIdentifier resourceId, ComputeBulkOperationType? operationType, string subscriptionId, DateTimeOffset? deadlineOn, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, BulkOperationRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
-            ResourceIds = resourceIds;
+            ResourceId = resourceId;
             OperationType = operationType;
             SubscriptionId = subscriptionId;
             DeadlineOn = deadlineOn;
@@ -61,7 +59,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public string OperationId { get; }
 
         /// <summary> Unique identifier for the resource involved in the operation, for example Azure resource ID. </summary>
-        public IList<ResourceIdentifier> ResourceIds { get; }
+        public ResourceIdentifier ResourceId { get; }
 
         /// <summary> Type of operation performed on the resources. </summary>
         public ComputeBulkOperationType? OperationType { get; }

@@ -27,6 +27,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new ExecuteDeallocateContent(executionParametersRetryPolicy is null ? default : new ScheduledActionExecutionParameterDetail(executionParametersRetryPolicy, default), resourcesIds is null ? default : new UserRequestResources((resourcesIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default), default);
         }
 
+        /// <param name="retryPolicy"> Retry policy the user can pass. </param>
+        /// <returns> A new <see cref="Models.ScheduledActionExecutionParameterDetail"/> instance for mocking. </returns>
+        public static ScheduledActionExecutionParameterDetail ScheduledActionExecutionParameterDetail(BulkOperationRetryPolicy retryPolicy = default)
+        {
+            return new ScheduledActionExecutionParameterDetail(retryPolicy, default);
+        }
+
         /// <param name="retryCount"> Retry count for user request. </param>
         /// <param name="retryWindowInMinutes"> Retry window in minutes for user request. </param>
         /// <param name="onFailureAction"> Action to take on failure. </param>
@@ -48,20 +55,18 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new DeallocateResourceOperationResult(description, resourceType, location, (results ?? new ChangeTrackingList<ComputeBulkOperationResult>()).ToList(), default);
         }
 
-        /// <param name="resourceIds"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
+        /// <param name="resourceId"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
         /// <param name="errorCode"> Resource level error code if it exists. </param>
         /// <param name="errorDetails"> Resource level error details if they exist. </param>
         /// <param name="operation"> Details of the operation performed on a resource. </param>
         /// <returns> A new <see cref="Models.ComputeBulkOperationResult"/> instance for mocking. </returns>
-        public static ComputeBulkOperationResult ComputeBulkOperationResult(IEnumerable<ResourceIdentifier> resourceIds = default, string errorCode = default, string errorDetails = default, ComputeBulkOperationDetails operation = default)
+        public static ComputeBulkOperationResult ComputeBulkOperationResult(ResourceIdentifier resourceId = default, string errorCode = default, string errorDetails = default, ComputeBulkOperationDetails operation = default)
         {
-            resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
-
-            return new ComputeBulkOperationResult((resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), errorCode, errorDetails, operation, default);
+            return new ComputeBulkOperationResult(resourceId, errorCode, errorDetails, operation, default);
         }
 
         /// <param name="operationId"> Operation identifier for the unique operation. </param>
-        /// <param name="resourceIds"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
+        /// <param name="resourceId"> Unique identifier for the resource involved in the operation, for example Azure resource ID. </param>
         /// <param name="operationType"> Type of operation performed on the resources. </param>
         /// <param name="subscriptionId"> Subscription id attached to the request. </param>
         /// <param name="deadlineOn"> Deadline for the operation. </param>
@@ -73,13 +78,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ComputeBulkOperationDetails"/> instance for mocking. </returns>
-        public static ComputeBulkOperationDetails ComputeBulkOperationDetails(string operationId = default, IEnumerable<ResourceIdentifier> resourceIds = default, ComputeBulkOperationType? operationType = default, string subscriptionId = default, DateTimeOffset? deadlineOn = default, ScheduledActionDeadlineType? deadlineType = default, ScheduledActionOperationState? state = default, string timeZone = default, ComputeBulkOperationError error = default, ComputeBulkFallbackOperationInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, BulkOperationRetryPolicy retryPolicy = default)
+        public static ComputeBulkOperationDetails ComputeBulkOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ComputeBulkOperationType? operationType = default, string subscriptionId = default, DateTimeOffset? deadlineOn = default, ScheduledActionDeadlineType? deadlineType = default, ScheduledActionOperationState? state = default, string timeZone = default, ComputeBulkOperationError error = default, ComputeBulkFallbackOperationInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, BulkOperationRetryPolicy retryPolicy = default)
         {
-            resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
-
             return new ComputeBulkOperationDetails(
                 operationId,
-                (resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                resourceId,
                 operationType,
                 subscriptionId,
                 deadlineOn,
