@@ -71,33 +71,6 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentApiKeyRequestProperties(secretText, endOn, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Nginx Deployment Properties. </param>
-        /// <param name="identity"> Identity Properties. </param>
-        /// <param name="skuName"> Name of the SKU. </param>
-        /// <returns> A new <see cref="Nginx.NginxDeploymentData"/> instance for mocking. </returns>
-        public static NginxDeploymentData NginxDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NginxDeploymentProperties properties = default, ManagedServiceIdentity identity = default, string skuName = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NginxDeploymentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                skuName is null ? default : new NginxResourceSku(skuName, default),
-                default);
-        }
-
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="nginxVersion"></param>
         /// <param name="networkProfile"> Nginx Network Profile. </param>
@@ -625,6 +598,33 @@ namespace Azure.ResourceManager.Nginx.Models
         public static NginxDeploymentWafPolicyError NginxDeploymentWafPolicyError(string code = default, string @field = default, string message = default)
         {
             return new NginxDeploymentWafPolicyError(code, @field, message, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Nginx Deployment Properties. </param>
+        /// <param name="identity"> Identity Properties. </param>
+        /// <param name="skuName"> Name of the SKU. </param>
+        /// <returns> A new <see cref="Nginx.NginxDeploymentData"/> instance for mocking. </returns>
+        public static NginxDeploymentData NginxDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NginxDeploymentProperties properties = default, ManagedServiceIdentity identity = default, string skuName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NginxDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                skuName is null ? default : new NginxResourceSku(skuName, default),
+                default);
         }
     }
 }

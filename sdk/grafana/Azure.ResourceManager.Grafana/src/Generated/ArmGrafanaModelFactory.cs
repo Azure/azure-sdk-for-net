@@ -89,26 +89,6 @@ namespace Azure.ResourceManager.Grafana.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="groupIds"> The private endpoint connection group ids. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
-        /// <returns> A new <see cref="Grafana.GrafanaPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static GrafanaPrivateEndpointConnectionData GrafanaPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GrafanaPrivateLinkServiceConnectionState connectionState = default, IEnumerable<string> groupIds = default, GrafanaPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new GrafanaPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && connectionState is null && groupIds is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), provisioningState, default),
-                default);
-        }
-
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>

@@ -508,54 +508,6 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaLimitProperties"/>. </summary>
-        /// <param name="resourceName"> The resource name, such as SKU name. </param>
-        /// <param name="limit"> The current Group Quota Limit at the parentId level. </param>
-        /// <param name="comment"> Any comment related to quota request. </param>
-        /// <param name="unit"> The usages units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
-        /// <param name="value"> Resource name. </param>
-        /// <param name="localizedValue"> Resource display name. </param>
-        /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
-        /// <param name="allocatedToSubscriptionsValue"> Quota allocated to subscriptions. </param>
-        /// <returns> A new <see cref="Models.GroupQuotaLimitProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName = default, long? limit = default, string comment = default, string unit = default, string value = default, string localizedValue = default, long? availableLimit = default, IEnumerable<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = default)
-        {
-            return new GroupQuotaLimitProperties(
-                resourceName,
-                limit,
-                comment,
-                unit,
-                value is null && localizedValue is null ? default : new GroupQuotaDetailsName(value, localizedValue, default),
-                availableLimit,
-                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList((allocatedToSubscriptionsValue ?? new ChangeTrackingList<SubscriptionAllocatedQuota>()).ToList(), default),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaDetails"/>. </summary>
-        /// <param name="resourceName"> The resource name, such as SKU name. </param>
-        /// <param name="limit"> The current Group Quota Limit at the parentId level. </param>
-        /// <param name="comment"> Any comment related to quota request. </param>
-        /// <param name="unit"> The usages units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
-        /// <param name="value"> Resource name. </param>
-        /// <param name="localizedValue"> Resource display name. </param>
-        /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
-        /// <param name="allocatedToSubscriptionsValue"> Quota allocated to subscriptions. </param>
-        /// <returns> A new <see cref="Models.GroupQuotaDetails"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static GroupQuotaDetails GroupQuotaDetails(string resourceName = default, long? limit = default, string comment = default, string unit = default, string value = default, string localizedValue = default, long? availableLimit = default, IEnumerable<SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = default)
-        {
-            return new GroupQuotaDetails(
-                resourceName,
-                limit,
-                comment,
-                unit,
-                value is null && localizedValue is null ? default : new GroupQuotaDetailsName(value, localizedValue, default),
-                availableLimit,
-                allocatedToSubscriptionsValue is null ? default : new AllocatedQuotaToSubscriptionList((allocatedToSubscriptionsValue ?? new ChangeTrackingList<SubscriptionAllocatedQuota>()).ToList(), default),
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Quota.QuotaRequestDetailData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

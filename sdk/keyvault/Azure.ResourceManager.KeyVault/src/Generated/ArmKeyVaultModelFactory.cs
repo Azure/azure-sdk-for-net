@@ -124,17 +124,6 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultVirtualNetworkRule(id, ignoreMissingVnetServiceEndpoint, default);
         }
 
-        /// <param name="id"> Id of private endpoint connection. </param>
-        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
-        /// <param name="connectionState"> Approval state of the private link connection. </param>
-        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        /// <param name="privateEndpointId"> Full identifier of the private endpoint resource. </param>
-        /// <returns> A new <see cref="Models.KeyVaultPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
-        public static KeyVaultPrivateEndpointConnectionItemData KeyVaultPrivateEndpointConnectionItemData(string id = default, ETag? etag = default, KeyVaultPrivateLinkServiceConnectionState connectionState = default, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new KeyVaultPrivateEndpointConnectionItemData(id, etag, privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default), default);
-        }
-
         /// <param name="status"> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </param>
         /// <param name="description"> The reason for approval or rejection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -272,33 +261,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> Approval state of the private link connection. </param>
-        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        /// <param name="privateEndpointId"> Full identifier of the private endpoint resource. </param>
-        /// <param name="location"> Azure location of the key vault resource. </param>
-        /// <param name="tags"> Tags assigned to the key vault resource. </param>
-        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
-        /// <returns> A new <see cref="KeyVault.KeyVaultPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static KeyVaultPrivateEndpointConnectionData KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KeyVaultPrivateLinkServiceConnectionState connectionState = default, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default, ETag? etag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new KeyVaultPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                etag,
-                default);
-        }
-
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the managed HSM pool. </param>
         /// <param name="initialAdminObjectIds"> Array of initial administrators object ids for this managed hsm pool. </param>
         /// <param name="hsmUri"> The URI of the managed hsm pool for performing operations on keys. </param>
@@ -389,17 +351,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         public static ManagedHsmGeoReplicatedRegion ManagedHsmGeoReplicatedRegion(string name = default, ManagedHsmGeoReplicatedRegionProvisioningState? provisioningState = default, bool? isPrimary = default)
         {
             return new ManagedHsmGeoReplicatedRegion(name, provisioningState, isPrimary, default);
-        }
-
-        /// <param name="id"> Id of private endpoint connection. </param>
-        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
-        /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
-        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        /// <param name="privateEndpointId"> Full identifier of the private endpoint resource. </param>
-        /// <returns> A new <see cref="Models.ManagedHsmPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateEndpointConnectionItemData ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id = default, ETag? etag = default, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new ManagedHsmPrivateEndpointConnectionItemData(id, etag, privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default), default);
         }
 
         /// <param name="status"> Indicates whether the connection has been approved, rejected or removed by the key vault owner. </param>
@@ -642,6 +593,55 @@ namespace Azure.ResourceManager.KeyVault.Models
                 location,
                 accessPolicies is null ? default : new KeyVaultAccessPolicyProperties((accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>()).ToList(), default),
                 default);
+        }
+
+        /// <param name="id"> Id of private endpoint connection. </param>
+        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        /// <param name="connectionState"> Approval state of the private link connection. </param>
+        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
+        /// <param name="privateEndpointId"> Full identifier of the private endpoint resource. </param>
+        /// <returns> A new <see cref="Models.KeyVaultPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
+        public static KeyVaultPrivateEndpointConnectionItemData KeyVaultPrivateEndpointConnectionItemData(string id = default, ETag? etag = default, KeyVaultPrivateLinkServiceConnectionState connectionState = default, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        {
+            return new KeyVaultPrivateEndpointConnectionItemData(id, etag, privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="connectionState"> Approval state of the private link connection. </param>
+        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
+        /// <param name="privateEndpointId"> Full identifier of the private endpoint resource. </param>
+        /// <param name="location"> Azure location of the key vault resource. </param>
+        /// <param name="tags"> Tags assigned to the key vault resource. </param>
+        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        /// <returns> A new <see cref="KeyVault.KeyVaultPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static KeyVaultPrivateEndpointConnectionData KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KeyVaultPrivateLinkServiceConnectionState connectionState = default, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default, ETag? etag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new KeyVaultPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                etag,
+                default);
+        }
+
+        /// <param name="id"> Id of private endpoint connection. </param>
+        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
+        /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
+        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
+        /// <param name="privateEndpointId"> Full identifier of the private endpoint resource. </param>
+        /// <returns> A new <see cref="Models.ManagedHsmPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
+        public static ManagedHsmPrivateEndpointConnectionItemData ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id = default, ETag? etag = default, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        {
+            return new ManagedHsmPrivateEndpointConnectionItemData(id, etag, privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default), default);
         }
     }
 }

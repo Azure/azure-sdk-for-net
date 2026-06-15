@@ -38,35 +38,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties of the vault. </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <param name="sku"> Identifies the unique system identifier for each Azure resource. </param>
-        /// <param name="etag"> etag for the resource. </param>
-        /// <returns> A new <see cref="RecoveryServices.RecoveryServicesVaultData"/> instance for mocking. </returns>
-        public static RecoveryServicesVaultData RecoveryServicesVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RecoveryServicesVaultProperties properties = default, ManagedServiceIdentity identity = default, RecoveryServicesSku sku = default, ETag? etag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new RecoveryServicesVaultData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                sku,
-                etag,
-                default);
-        }
-
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="upgradeDetails"> Details for upgrading vault. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection. </param>
@@ -678,6 +649,35 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilityState? immutabilityState, RecoveryServicesSoftDeleteSettings softDeleteSettings, MultiUserAuthorization? multiUserAuthorization)
         {
             return new RecoveryServicesSecuritySettings(immutabilityState is null ? default : new ImmutabilitySettings(immutabilityState, default), softDeleteSettings, multiUserAuthorization, default, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the vault. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="sku"> Identifies the unique system identifier for each Azure resource. </param>
+        /// <param name="etag"> etag for the resource. </param>
+        /// <returns> A new <see cref="RecoveryServices.RecoveryServicesVaultData"/> instance for mocking. </returns>
+        public static RecoveryServicesVaultData RecoveryServicesVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RecoveryServicesVaultProperties properties = default, ManagedServiceIdentity identity = default, RecoveryServicesSku sku = default, ETag? etag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RecoveryServicesVaultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                sku,
+                etag,
+                default);
         }
     }
 }

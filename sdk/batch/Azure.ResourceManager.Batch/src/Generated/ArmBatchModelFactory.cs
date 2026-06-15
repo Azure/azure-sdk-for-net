@@ -1190,32 +1190,6 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection. </param>
-        /// <param name="privateEndpointId"> The private endpoint of the private endpoint connection. </param>
-        /// <param name="groupIds"> The value has one and only one group id. </param>
-        /// <param name="connectionState"> The private link service connection state of the private endpoint connection. </param>
-        /// <returns> A new <see cref="Batch.BatchPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BatchPrivateEndpointConnectionData BatchPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, BatchPrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId, IEnumerable<string> groupIds, BatchPrivateLinkServiceConnectionState connectionState)
-        {
-            return new BatchPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
-                etag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.BatchAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The region in which to create the account. </param>
         /// <param name="tags"> The user-specified tags associated with the account. </param>
@@ -1240,87 +1214,6 @@ namespace Azure.ResourceManager.Batch.Models
                 encryption,
                 (allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>()).ToList(),
                 default), identity, default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchApplicationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        /// <param name="displayName"> The display name for the application. </param>
-        /// <param name="allowUpdates"> A value indicating whether packages within the application may be overwritten using the same version string. </param>
-        /// <param name="defaultVersion"> The package to use if a client requests the application but does not specify a version. This property can only be set to the name of an existing package. </param>
-        /// <returns> A new <see cref="Batch.BatchApplicationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BatchApplicationData BatchApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> tags = default, string displayName = default, bool? allowUpdates = default, string defaultVersion = default)
-        {
-            return new BatchApplicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName is null && allowUpdates is null && defaultVersion is null ? default : new ApplicationProperties(displayName, allowUpdates, defaultVersion, default),
-                etag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchApplicationPackageData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        /// <param name="state"> The current state of the application package. </param>
-        /// <param name="format"> The format of the application package, if the package is active. </param>
-        /// <param name="storageUri"> The URL for the application package in Azure Storage. </param>
-        /// <param name="storageUriExpireOn"> The UTC time at which the Azure Storage URL will expire. </param>
-        /// <param name="lastActivatedOn"> The time at which the package was last activated, if the package is active. </param>
-        /// <returns> A new <see cref="Batch.BatchApplicationPackageData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BatchApplicationPackageData BatchApplicationPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, BatchApplicationPackageState? state, string format, Uri storageUri, DateTimeOffset? storageUriExpireOn, DateTimeOffset? lastActivatedOn)
-        {
-            return new BatchApplicationPackageData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                state is null && format is null && storageUri is null && storageUriExpireOn is null && lastActivatedOn is null ? default : new ApplicationPackageProperties(
-                    state,
-                    format,
-                    storageUri,
-                    storageUriExpireOn,
-                    lastActivatedOn,
-                    default),
-                etag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountDetectorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        /// <param name="value"> A base64 encoded string that represents the content of a detector. </param>
-        /// <returns> A new <see cref="Batch.BatchAccountDetectorData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BatchAccountDetectorData BatchAccountDetectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> tags = default, string value = default)
-        {
-            return new BatchAccountDetectorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                value is null ? default : new DetectorResponseProperties(value, default),
-                etag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountPoolData"/>. </summary>
@@ -1416,6 +1309,119 @@ namespace Azure.ResourceManager.Batch.Models
                 resourceType,
                 systemData,
                 groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new BatchPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchPrivateEndpointConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection. </param>
+        /// <param name="privateEndpointId"> The private endpoint of the private endpoint connection. </param>
+        /// <param name="groupIds"> The value has one and only one group id. </param>
+        /// <param name="connectionState"> The private link service connection state of the private endpoint connection. </param>
+        /// <returns> A new <see cref="Batch.BatchPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchPrivateEndpointConnectionData BatchPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, BatchPrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId, IEnumerable<string> groupIds, BatchPrivateLinkServiceConnectionState connectionState)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            groupIds ??= new ChangeTrackingList<string>();
+
+            return new BatchPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchApplicationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="displayName"> The display name for the application. </param>
+        /// <param name="allowUpdates"> A value indicating whether packages within the application may be overwritten using the same version string. </param>
+        /// <param name="defaultVersion"> The package to use if a client requests the application but does not specify a version. This property can only be set to the name of an existing package. </param>
+        /// <returns> A new <see cref="Batch.BatchApplicationData"/> instance for mocking. </returns>
+        public static BatchApplicationData BatchApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> tags = default, string displayName = default, bool? allowUpdates = default, string defaultVersion = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BatchApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName is null && allowUpdates is null && defaultVersion is null ? default : new ApplicationProperties(displayName, allowUpdates, defaultVersion, default),
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchApplicationPackageData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="state"> The current state of the application package. </param>
+        /// <param name="format"> The format of the application package, if the package is active. </param>
+        /// <param name="storageUri"> The URL for the application package in Azure Storage. </param>
+        /// <param name="storageUriExpireOn"> The UTC time at which the Azure Storage URL will expire. </param>
+        /// <param name="lastActivatedOn"> The time at which the package was last activated, if the package is active. </param>
+        /// <returns> A new <see cref="Batch.BatchApplicationPackageData"/> instance for mocking. </returns>
+        public static BatchApplicationPackageData BatchApplicationPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, BatchApplicationPackageState? state, string format, Uri storageUri, DateTimeOffset? storageUriExpireOn, DateTimeOffset? lastActivatedOn)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BatchApplicationPackageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                state is null && format is null && storageUri is null && storageUriExpireOn is null && lastActivatedOn is null ? default : new ApplicationPackageProperties(
+                    state,
+                    format,
+                    storageUri,
+                    storageUriExpireOn,
+                    lastActivatedOn,
+                    default),
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountDetectorData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="value"> A base64 encoded string that represents the content of a detector. </param>
+        /// <returns> A new <see cref="Batch.BatchAccountDetectorData"/> instance for mocking. </returns>
+        public static BatchAccountDetectorData BatchAccountDetectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> tags = default, string value = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BatchAccountDetectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                value is null ? default : new DetectorResponseProperties(value, default),
                 etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);

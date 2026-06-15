@@ -54,52 +54,6 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new StorageMoverPatch(description is null ? default : new StorageMoverUpdateProperties(description, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> A description for the Agent. </param>
-        /// <param name="agentVersion"> The Agent version. </param>
-        /// <param name="arcResourceId"> The fully qualified resource ID of the Hybrid Compute resource for the Agent. </param>
-        /// <param name="arcVmUuid"> The VM UUID of the Hybrid Compute resource for the Agent. </param>
-        /// <param name="agentStatus"> The Agent status. </param>
-        /// <param name="lastStatusUpdate"> The last updated time of the Agent status. </param>
-        /// <param name="localIPAddress"> Local IP address reported by the Agent. </param>
-        /// <param name="memoryInMB"> Available memory reported by the Agent, in MB. </param>
-        /// <param name="numberOfCores"> Available compute cores reported by the Agent. </param>
-        /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
-        /// <param name="timeZone"> The agent's local time zone represented in Windows format. </param>
-        /// <param name="errorDetails"> Gets the ErrorDetails. </param>
-        /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <param name="uploadLimitScheduleWeeklyRecurrences"> The set of weekly repeating recurrences of the WAN-link upload limit schedule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="arcResourceId"/> or <paramref name="arcVmUuid"/> is null. </exception>
-        /// <returns> A new <see cref="StorageMover.StorageMoverAgentData"/> instance for mocking. </returns>
-        public static StorageMoverAgentData StorageMoverAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string agentVersion = default, string arcResourceId = default, string arcVmUuid = default, StorageMoverAgentStatus? agentStatus = default, DateTimeOffset? lastStatusUpdate = default, string localIPAddress = default, long? memoryInMB = default, long? numberOfCores = default, long? uptimeInSeconds = default, string timeZone = default, StorageMoverAgentPropertiesErrorDetails errorDetails = default, StorageMoverProvisioningState? provisioningState = default, IEnumerable<UploadLimitWeeklyRecurrence> uploadLimitScheduleWeeklyRecurrences = default)
-        {
-            return new StorageMoverAgentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                agentVersion is null && agentStatus is null && uploadLimitScheduleWeeklyRecurrences is null ? default : new AgentProperties(
-                    default,
-                    agentVersion,
-                    default,
-                    default,
-                    agentStatus,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    new UploadLimitSchedule((uploadLimitScheduleWeeklyRecurrences ?? new ChangeTrackingList<UploadLimitWeeklyRecurrence>()).ToList(), default),
-                    default,
-                    default,
-                    default),
-                default);
-        }
-
         /// <param name="startTime"> The start time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
         /// <param name="endTime"> The end time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
         /// <param name="days"> The set of days of week for the schedule recurrence. A day must not be specified more than once in a recurrence. </param>
@@ -773,6 +727,53 @@ namespace Azure.ResourceManager.StorageMover.Models
                 default,
                 multiCloudConnectorId,
                 awsS3BucketId);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="description"> A description for the Agent. </param>
+        /// <param name="agentVersion"> The Agent version. </param>
+        /// <param name="arcResourceId"> The fully qualified resource ID of the Hybrid Compute resource for the Agent. </param>
+        /// <param name="arcVmUuid"> The VM UUID of the Hybrid Compute resource for the Agent. </param>
+        /// <param name="agentStatus"> The Agent status. </param>
+        /// <param name="lastStatusUpdate"> The last updated time of the Agent status. </param>
+        /// <param name="localIPAddress"> Local IP address reported by the Agent. </param>
+        /// <param name="memoryInMB"> Available memory reported by the Agent, in MB. </param>
+        /// <param name="numberOfCores"> Available compute cores reported by the Agent. </param>
+        /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
+        /// <param name="timeZone"> The agent's local time zone represented in Windows format. </param>
+        /// <param name="errorDetails"> Gets the ErrorDetails. </param>
+        /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <param name="uploadLimitScheduleWeeklyRecurrences"> The set of weekly repeating recurrences of the WAN-link upload limit schedule. </param>
+        /// <returns> A new <see cref="StorageMover.StorageMoverAgentData"/> instance for mocking. </returns>
+        public static StorageMoverAgentData StorageMoverAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string agentVersion = default, string arcResourceId = default, string arcVmUuid = default, StorageMoverAgentStatus? agentStatus = default, DateTimeOffset? lastStatusUpdate = default, string localIPAddress = default, long? memoryInMB = default, long? numberOfCores = default, long? uptimeInSeconds = default, string timeZone = default, StorageMoverAgentPropertiesErrorDetails errorDetails = default, StorageMoverProvisioningState? provisioningState = default, IEnumerable<UploadLimitWeeklyRecurrence> uploadLimitScheduleWeeklyRecurrences = default)
+        {
+            uploadLimitScheduleWeeklyRecurrences ??= new ChangeTrackingList<UploadLimitWeeklyRecurrence>();
+
+            return new StorageMoverAgentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && agentVersion is null && arcResourceId is null && arcVmUuid is null && agentStatus is null && lastStatusUpdate is null && localIPAddress is null && memoryInMB is null && numberOfCores is null && uptimeInSeconds is null && timeZone is null && uploadLimitScheduleWeeklyRecurrences is null && errorDetails is null && provisioningState is null ? default : new AgentProperties(
+                    description,
+                    agentVersion,
+                    arcResourceId,
+                    arcVmUuid,
+                    agentStatus,
+                    lastStatusUpdate,
+                    localIPAddress,
+                    memoryInMB,
+                    numberOfCores,
+                    uptimeInSeconds,
+                    timeZone,
+                    new UploadLimitSchedule((uploadLimitScheduleWeeklyRecurrences ?? new ChangeTrackingList<UploadLimitWeeklyRecurrence>()).ToList(), default),
+                    errorDetails,
+                    provisioningState,
+                    default),
+                default);
         }
     }
 }

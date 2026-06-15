@@ -19,35 +19,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public static partial class ArmPaloAltoNetworksNgfwModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="panETag"> PanEtag info. </param>
-        /// <param name="panLocation"> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </param>
-        /// <param name="scope"> Rulestack Type. </param>
-        /// <param name="associatedSubscriptions"> subscription scope of global rulestack. </param>
-        /// <param name="description"> rulestack description. </param>
-        /// <param name="defaultMode"> Mode for default rules creation. </param>
-        /// <param name="minAppIdVersion"> minimum version. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="securityServices"> Security Profile. </param>
-        /// <param name="location"> Global Location. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Ngfw.GlobalRulestackData"/> instance for mocking. </returns>
-        public static GlobalRulestackData GlobalRulestackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? panETag = default, AzureLocation? panLocation = default, RulestackScopeType? scope = default, IEnumerable<string> associatedSubscriptions = default, string description = default, RuleCreationDefaultMode? defaultMode = default, string minAppIdVersion = default, FirewallProvisioningState? provisioningState = default, RulestackSecurityServices securityServices = default, AzureLocation location = default, ManagedServiceIdentity identity = default)
-        {
-            return new GlobalRulestackData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                default,
-                location,
-                identity,
-                default);
-        }
-
         /// <param name="vulnerabilityProfile"> IPs Vulnerability Profile Data. </param>
         /// <param name="antiSpywareProfile"> Anti spyware Profile data. </param>
         /// <param name="antiVirusProfile"> anti virus profile data. </param>
@@ -843,39 +814,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="panETag"> PanEtag info. </param>
-        /// <param name="panLocation"> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </param>
-        /// <param name="scope"> Rulestack Type. </param>
-        /// <param name="associatedSubscriptions"> subscription scope of global rulestack. </param>
-        /// <param name="description"> rulestack description. </param>
-        /// <param name="defaultMode"> Mode for default rules creation. </param>
-        /// <param name="minAppIdVersion"> minimum version. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="securityServices"> Security Profile. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Ngfw.LocalRulestackData"/> instance for mocking. </returns>
-        public static LocalRulestackData LocalRulestackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? panETag = default, AzureLocation? panLocation = default, RulestackScopeType? scope = default, IEnumerable<string> associatedSubscriptions = default, string description = default, RuleCreationDefaultMode? defaultMode = default, string minAppIdVersion = default, FirewallProvisioningState? provisioningState = default, RulestackSecurityServices securityServices = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new LocalRulestackData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                default,
-                identity,
-                default);
-        }
-
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The updatable properties of the LocalRulestackResource. </param>
@@ -1152,6 +1090,91 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 monthlyCreditLeft,
                 startDateForCredits,
                 endDateForCredits,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="panETag"> PanEtag info. </param>
+        /// <param name="panLocation"> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </param>
+        /// <param name="scope"> Rulestack Type. </param>
+        /// <param name="associatedSubscriptions"> subscription scope of global rulestack. </param>
+        /// <param name="description"> rulestack description. </param>
+        /// <param name="defaultMode"> Mode for default rules creation. </param>
+        /// <param name="minAppIdVersion"> minimum version. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="securityServices"> Security Profile. </param>
+        /// <param name="location"> Global Location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Ngfw.GlobalRulestackData"/> instance for mocking. </returns>
+        public static GlobalRulestackData GlobalRulestackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? panETag = default, AzureLocation? panLocation = default, RulestackScopeType? scope = default, IEnumerable<string> associatedSubscriptions = default, string description = default, RuleCreationDefaultMode? defaultMode = default, string minAppIdVersion = default, FirewallProvisioningState? provisioningState = default, RulestackSecurityServices securityServices = default, AzureLocation location = default, ManagedServiceIdentity identity = default)
+        {
+            associatedSubscriptions ??= new ChangeTrackingList<string>();
+
+            return new GlobalRulestackData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                panETag is null && panLocation is null && scope is null && associatedSubscriptions is null && description is null && defaultMode is null && minAppIdVersion is null && provisioningState is null && securityServices is null ? default : new RulestackProperties(
+                    panETag,
+                    panLocation,
+                    scope,
+                    (associatedSubscriptions ?? new ChangeTrackingList<string>()).ToList(),
+                    description,
+                    defaultMode,
+                    minAppIdVersion,
+                    provisioningState,
+                    securityServices,
+                    default),
+                location,
+                identity,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="panETag"> PanEtag info. </param>
+        /// <param name="panLocation"> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </param>
+        /// <param name="scope"> Rulestack Type. </param>
+        /// <param name="associatedSubscriptions"> subscription scope of global rulestack. </param>
+        /// <param name="description"> rulestack description. </param>
+        /// <param name="defaultMode"> Mode for default rules creation. </param>
+        /// <param name="minAppIdVersion"> minimum version. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="securityServices"> Security Profile. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Ngfw.LocalRulestackData"/> instance for mocking. </returns>
+        public static LocalRulestackData LocalRulestackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? panETag = default, AzureLocation? panLocation = default, RulestackScopeType? scope = default, IEnumerable<string> associatedSubscriptions = default, string description = default, RuleCreationDefaultMode? defaultMode = default, string minAppIdVersion = default, FirewallProvisioningState? provisioningState = default, RulestackSecurityServices securityServices = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            associatedSubscriptions ??= new ChangeTrackingList<string>();
+
+            return new LocalRulestackData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                panETag is null && panLocation is null && scope is null && associatedSubscriptions is null && description is null && defaultMode is null && minAppIdVersion is null && provisioningState is null && securityServices is null ? default : new RulestackProperties(
+                    panETag,
+                    panLocation,
+                    scope,
+                    (associatedSubscriptions ?? new ChangeTrackingList<string>()).ToList(),
+                    description,
+                    defaultMode,
+                    minAppIdVersion,
+                    provisioningState,
+                    securityServices,
+                    default),
+                identity,
                 default);
         }
     }

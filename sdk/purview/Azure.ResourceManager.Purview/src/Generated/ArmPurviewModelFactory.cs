@@ -192,25 +192,6 @@ namespace Azure.ResourceManager.Purview.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> The private link service connection state. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="privateEndpointId"> The private endpoint identifier. </param>
-        /// <returns> A new <see cref="Purview.PurviewPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static PurviewPrivateEndpointConnectionData PurviewPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PurviewPrivateLinkServiceConnectionState connectionState = default, string provisioningState = default, ResourceIdentifier privateEndpointId = default)
-        {
-            return new PurviewPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                default);
-        }
-
         /// <param name="actionsRequired"> The required actions. </param>
         /// <param name="description"> The description. </param>
         /// <param name="status"> The status. </param>
