@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="NamespaceUpdateParameterProperties"/>. </summary>
         public NamespaceUpdateParameterProperties()
         {
-            InboundIpRules = new ChangeTrackingList<EventGridInboundIPRule>();
+            InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NamespaceUpdateParameterProperties"/>. </summary>
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceUpdateParameterProperties.InboundIpRules" /&gt;
         /// </param>
-        /// <param name="inboundIpRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
+        /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceUpdateParameterProperties(UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration, UpdateTopicsConfigurationInfo topicsConfiguration, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIpRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NamespaceUpdateParameterProperties(UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration, UpdateTopicsConfigurationInfo topicsConfiguration, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TopicSpacesConfiguration = topicSpacesConfiguration;
             TopicsConfiguration = topicsConfiguration;
             PublicNetworkAccess = publicNetworkAccess;
-            InboundIpRules = inboundIpRules;
+            InboundIPRules = inboundIPRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
         [WirePath("inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIpRules { get; } = new ChangeTrackingList<EventGridInboundIPRule>();
+        public IList<EventGridInboundIPRule> InboundIPRules { get; } = new ChangeTrackingList<EventGridInboundIPRule>();
 
         /// <summary> Custom domain info for topics configuration. </summary>
         [WirePath("topicsConfiguration.customDomains")]
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     TopicsConfiguration = new UpdateTopicsConfigurationInfo();
                 }
-                return TopicsConfiguration.CustomDomains;
+                return TopicsConfiguration.TopicsCustomDomains;
             }
         }
     }

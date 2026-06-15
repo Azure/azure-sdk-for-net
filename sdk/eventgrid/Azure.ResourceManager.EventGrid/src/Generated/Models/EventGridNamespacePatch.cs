@@ -93,19 +93,5 @@ namespace Azure.ResourceManager.EventGrid.Models
                 Properties.PublicNetworkAccess = value;
             }
         }
-
-        /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
-        [WirePath("properties.inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIpRules
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NamespaceUpdateParameterProperties();
-                }
-                return Properties.InboundIpRules;
-            }
-        }
     }
 }

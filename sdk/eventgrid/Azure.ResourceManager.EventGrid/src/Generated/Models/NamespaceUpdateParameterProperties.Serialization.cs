@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(InboundIpRules))
+            if (Optional.IsCollectionDefined(InboundIPRules))
             {
                 writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
-                foreach (EventGridInboundIPRule item in InboundIpRules)
+                foreach (EventGridInboundIPRule item in InboundIPRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration = default;
             UpdateTopicsConfigurationInfo topicsConfiguration = default;
             EventGridPublicNetworkAccess? publicNetworkAccess = default;
-            IList<EventGridInboundIPRule> inboundIpRules = default;
+            IList<EventGridInboundIPRule> inboundIPRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item, options));
                     }
-                    inboundIpRules = array;
+                    inboundIPRules = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NamespaceUpdateParameterProperties(topicSpacesConfiguration, topicsConfiguration, publicNetworkAccess, inboundIpRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), additionalBinaryDataProperties);
+            return new NamespaceUpdateParameterProperties(topicSpacesConfiguration, topicsConfiguration, publicNetworkAccess, inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), additionalBinaryDataProperties);
         }
     }
 }

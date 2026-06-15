@@ -76,20 +76,6 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
         }
 
-        /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
-        [WirePath("properties.inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIpRules
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new DomainUpdateParameterProperties();
-                }
-                return Properties.InboundIpRules;
-            }
-        }
-
         /// <summary> Minimum TLS version of the publisher allowed to publish to this domain. </summary>
         [WirePath("properties.minimumTlsVersionAllowed")]
         public TlsVersion? MinimumTlsVersionAllowed
@@ -105,24 +91,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                     Properties = new DomainUpdateParameterProperties();
                 }
                 Properties.MinimumTlsVersionAllowed = value;
-            }
-        }
-
-        /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the domain. </summary>
-        [WirePath("properties.disableLocalAuth")]
-        public bool? DisableLocalAuth
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DisableLocalAuth;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DomainUpdateParameterProperties();
-                }
-                Properties.DisableLocalAuth = value;
             }
         }
 

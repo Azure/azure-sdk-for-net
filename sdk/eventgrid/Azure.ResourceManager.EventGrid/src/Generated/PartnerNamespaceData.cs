@@ -138,20 +138,6 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
-        [WirePath("properties.inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIpRules
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new PartnerNamespaceProperties();
-                }
-                return Properties.InboundIpRules;
-            }
-        }
-
         /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the partner namespace. </summary>
         [WirePath("properties.disableLocalAuth")]
         public bool? IsLocalAuthDisabled

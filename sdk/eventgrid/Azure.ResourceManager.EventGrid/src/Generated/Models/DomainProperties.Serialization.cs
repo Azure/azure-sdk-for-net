@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(InboundIpRules))
+            if (Optional.IsCollectionDefined(InboundIPRules))
             {
                 writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
-                foreach (EventGridInboundIPRule item in InboundIpRules)
+                foreach (EventGridInboundIPRule item in InboundIPRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             EventGridInputSchemaMapping inputSchemaMapping = default;
             string metricResourceId = default;
             EventGridPublicNetworkAccess? publicNetworkAccess = default;
-            IList<EventGridInboundIPRule> inboundIpRules = default;
+            IList<EventGridInboundIPRule> inboundIPRules = default;
             bool? isLocalAuthDisabled = default;
             bool? autoCreateTopicWithFirstSubscription = default;
             bool? autoDeleteTopicWithLastSubscription = default;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item, options));
                     }
-                    inboundIpRules = array;
+                    inboundIPRules = array;
                     continue;
                 }
                 if (prop.NameEquals("disableLocalAuth"u8))
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 inputSchemaMapping,
                 metricResourceId,
                 publicNetworkAccess,
-                inboundIpRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
+                inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(),
                 isLocalAuthDisabled,
                 autoCreateTopicWithFirstSubscription,
                 autoDeleteTopicWithLastSubscription,

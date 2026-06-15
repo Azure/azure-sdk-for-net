@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="PartnerEventSubscriptionDestinationProperties"/>. </summary>
         /// <param name="resourceId"> The Azure Resource Id that represents the endpoint of a Partner Destination of an event subscription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerEventSubscriptionDestinationProperties(string resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PartnerEventSubscriptionDestinationProperties(ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +34,6 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> The Azure Resource Id that represents the endpoint of a Partner Destination of an event subscription. </summary>
         [WirePath("resourceId")]
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

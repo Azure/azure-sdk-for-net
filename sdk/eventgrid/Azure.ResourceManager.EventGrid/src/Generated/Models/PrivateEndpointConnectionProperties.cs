@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             get
             {
-                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+                return PrivateEndpoint is null ? default : PrivateEndpoint.PrivateEndpointId;
             }
             set
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     PrivateEndpoint = new PrivateEndpoint();
                 }
-                PrivateEndpoint.Id = value;
+                PrivateEndpoint.PrivateEndpointId = value;
             }
         }
     }

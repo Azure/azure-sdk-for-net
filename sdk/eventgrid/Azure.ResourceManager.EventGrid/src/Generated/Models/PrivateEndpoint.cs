@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpoint"/>. </summary>
-        /// <param name="id"> The ARM identifier for Private Endpoint. </param>
+        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpoint(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateEndpoint(ResourceIdentifier privateEndpointId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
+            PrivateEndpointId = privateEndpointId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ARM identifier for Private Endpoint. </summary>
         [WirePath("id")]
-        public ResourceIdentifier Id { get; set; }
+        public ResourceIdentifier PrivateEndpointId { get; set; }
     }
 }

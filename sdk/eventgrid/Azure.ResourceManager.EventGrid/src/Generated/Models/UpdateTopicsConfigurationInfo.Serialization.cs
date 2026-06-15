@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 throw new FormatException($"The model {nameof(UpdateTopicsConfigurationInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(CustomDomains))
+            if (Optional.IsCollectionDefined(TopicsCustomDomains))
             {
                 writer.WritePropertyName("customDomains"u8);
                 writer.WriteStartArray();
-                foreach (CustomDomainConfiguration item in CustomDomains)
+                foreach (CustomDomainConfiguration item in TopicsCustomDomains)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            IList<CustomDomainConfiguration> customDomains = default;
+            IList<CustomDomainConfiguration> topicsCustomDomains = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         array.Add(CustomDomainConfiguration.DeserializeCustomDomainConfiguration(item, options));
                     }
-                    customDomains = array;
+                    topicsCustomDomains = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpdateTopicsConfigurationInfo(customDomains ?? new ChangeTrackingList<CustomDomainConfiguration>(), additionalBinaryDataProperties);
+            return new UpdateTopicsConfigurationInfo(topicsCustomDomains ?? new ChangeTrackingList<CustomDomainConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

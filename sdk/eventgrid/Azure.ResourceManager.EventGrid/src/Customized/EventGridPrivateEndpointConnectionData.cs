@@ -16,34 +16,15 @@ namespace Azure.ResourceManager.EventGrid
         [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            get => Properties is null ? default : Properties.PrivateEndpointId;
             set
             {
-                if (PrivateEndpoint is null)
+                if (Properties is null)
                 {
-                    EnsureProperties();
-                    PrivateEndpoint = new PrivateEndpoint();
+                    Properties = new PrivateEndpointConnectionProperties();
                 }
 
-                PrivateEndpoint.Id = value;
-            }
-        }
-
-        internal PrivateEndpoint PrivateEndpoint
-        {
-            get => Properties is null ? default : Properties.PrivateEndpoint;
-            set
-            {
-                EnsureProperties();
-                Properties.PrivateEndpoint = value;
-            }
-        }
-
-        private void EnsureProperties()
-        {
-            if (Properties is null)
-            {
-                Properties = new PrivateEndpointConnectionProperties();
+                Properties.PrivateEndpointId = value;
             }
         }
     }

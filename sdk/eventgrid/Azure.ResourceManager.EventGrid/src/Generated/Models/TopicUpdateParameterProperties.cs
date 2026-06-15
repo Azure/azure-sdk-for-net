@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="TopicUpdateParameterProperties"/>. </summary>
         public TopicUpdateParameterProperties()
         {
-            InboundIpRules = new ChangeTrackingList<EventGridInboundIPRule>();
+            InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TopicUpdateParameterProperties"/>. </summary>
@@ -28,18 +28,18 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.TopicUpdateParameterProperties.InboundIpRules" /&gt;
         /// </param>
-        /// <param name="inboundIpRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
+        /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this domain. </param>
-        /// <param name="disableLocalAuth"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the topic. </param>
+        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the topic. </param>
         /// <param name="dataResidencyBoundary"> The data residency boundary for the topic. </param>
         /// <param name="eventTypeInfo"> The eventTypeInfo for the topic. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TopicUpdateParameterProperties(EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIpRules, TlsVersion? minimumTlsVersionAllowed, bool? disableLocalAuth, DataResidencyBoundary? dataResidencyBoundary, PartnerTopicEventTypeInfo eventTypeInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TopicUpdateParameterProperties(EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, TlsVersion? minimumTlsVersionAllowed, bool? isLocalAuthDisabled, DataResidencyBoundary? dataResidencyBoundary, PartnerTopicEventTypeInfo eventTypeInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicNetworkAccess = publicNetworkAccess;
-            InboundIpRules = inboundIpRules;
+            InboundIPRules = inboundIPRules;
             MinimumTlsVersionAllowed = minimumTlsVersionAllowed;
-            DisableLocalAuth = disableLocalAuth;
+            IsLocalAuthDisabled = isLocalAuthDisabled;
             DataResidencyBoundary = dataResidencyBoundary;
             EventTypeInfo = eventTypeInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
         [WirePath("inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIpRules { get; } = new ChangeTrackingList<EventGridInboundIPRule>();
+        public IList<EventGridInboundIPRule> InboundIPRules { get; } = new ChangeTrackingList<EventGridInboundIPRule>();
 
         /// <summary> Minimum TLS version of the publisher allowed to publish to this domain. </summary>
         [WirePath("minimumTlsVersionAllowed")]
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the topic. </summary>
         [WirePath("disableLocalAuth")]
-        public bool? DisableLocalAuth { get; set; }
+        public bool? IsLocalAuthDisabled { get; set; }
 
         /// <summary> The data residency boundary for the topic. </summary>
         [WirePath("dataResidencyBoundary")]

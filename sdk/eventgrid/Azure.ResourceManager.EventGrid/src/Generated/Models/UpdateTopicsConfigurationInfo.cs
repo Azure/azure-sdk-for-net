@@ -20,20 +20,20 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="UpdateTopicsConfigurationInfo"/>. </summary>
         public UpdateTopicsConfigurationInfo()
         {
-            CustomDomains = new ChangeTrackingList<CustomDomainConfiguration>();
+            TopicsCustomDomains = new ChangeTrackingList<CustomDomainConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="UpdateTopicsConfigurationInfo"/>. </summary>
-        /// <param name="customDomains"> Custom domain info for topics configuration. </param>
+        /// <param name="topicsCustomDomains"> Custom domain info for topics configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateTopicsConfigurationInfo(IList<CustomDomainConfiguration> customDomains, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpdateTopicsConfigurationInfo(IList<CustomDomainConfiguration> topicsCustomDomains, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CustomDomains = customDomains;
+            TopicsCustomDomains = topicsCustomDomains;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Custom domain info for topics configuration. </summary>
         [WirePath("customDomains")]
-        public IList<CustomDomainConfiguration> CustomDomains { get; }
+        public IList<CustomDomainConfiguration> TopicsCustomDomains { get; } = new ChangeTrackingList<CustomDomainConfiguration>();
     }
 }

@@ -11,14 +11,33 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. </summary>
         [WirePath("properties.inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIPRules => InboundIpRules;
+        public IList<EventGridInboundIPRule> InboundIPRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DomainUpdateParameterProperties();
+                }
+
+                return Properties.InboundIPRules;
+            }
+        }
 
         /// <summary> Indicates whether local auth is disabled. </summary>
         [WirePath("properties.disableLocalAuth")]
         public bool? IsLocalAuthDisabled
         {
-            get => DisableLocalAuth;
-            set => DisableLocalAuth = value;
+            get => Properties?.IsLocalAuthDisabled;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DomainUpdateParameterProperties();
+                }
+
+                Properties.IsLocalAuthDisabled = value;
+            }
         }
     }
 }

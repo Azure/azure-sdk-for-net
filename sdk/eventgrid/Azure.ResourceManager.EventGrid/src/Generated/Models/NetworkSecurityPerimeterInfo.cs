@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="perimeterGuid"> Network security perimeter guid. </param>
         /// <param name="location"> Network security perimeter location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterInfo(string id, string perimeterGuid, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkSecurityPerimeterInfo(string id, string perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             PerimeterGuid = perimeterGuid;
@@ -45,6 +46,6 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Network security perimeter location. </summary>
         [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

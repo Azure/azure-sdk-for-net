@@ -12,6 +12,17 @@ namespace Azure.ResourceManager.EventGrid
     {
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. </summary>
         [WirePath("properties.inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIPRules => InboundIpRules;
+        public IList<EventGridInboundIPRule> InboundIPRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerNamespaceProperties();
+                }
+
+                return Properties.InboundIPRules;
+            }
+        }
     }
 }

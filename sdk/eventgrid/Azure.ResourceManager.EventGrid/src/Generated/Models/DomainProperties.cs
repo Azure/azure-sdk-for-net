@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public DomainProperties()
         {
             PrivateEndpointConnections = new ChangeTrackingList<EventGridPrivateEndpointConnectionData>();
-            InboundIpRules = new ChangeTrackingList<EventGridInboundIPRule>();
+            InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DomainProperties"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainProperties.InboundIpRules" /&gt;
         /// </param>
-        /// <param name="inboundIpRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
+        /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the domain. </param>
         /// <param name="autoCreateTopicWithFirstSubscription">
         /// This Boolean is used to specify the creation mechanism for 'all' the Event Grid Domain Topics associated with this Event Grid Domain resource.
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </param>
         /// <param name="dataResidencyBoundary"> Data Residency Boundary of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DomainProperties(IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridDomainProvisioningState? provisioningState, TlsVersion? minimumTlsVersionAllowed, Uri endpoint, EventGridInputSchema? inputSchema, PartnerTopicEventTypeInfo eventTypeInfo, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIpRules, bool? isLocalAuthDisabled, bool? autoCreateTopicWithFirstSubscription, bool? autoDeleteTopicWithLastSubscription, DataResidencyBoundary? dataResidencyBoundary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DomainProperties(IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridDomainProvisioningState? provisioningState, TlsVersion? minimumTlsVersionAllowed, Uri endpoint, EventGridInputSchema? inputSchema, PartnerTopicEventTypeInfo eventTypeInfo, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, bool? autoCreateTopicWithFirstSubscription, bool? autoDeleteTopicWithLastSubscription, DataResidencyBoundary? dataResidencyBoundary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             InputSchemaMapping = inputSchemaMapping;
             MetricResourceId = metricResourceId;
             PublicNetworkAccess = publicNetworkAccess;
-            InboundIpRules = inboundIpRules;
+            InboundIPRules = inboundIPRules;
             IsLocalAuthDisabled = isLocalAuthDisabled;
             AutoCreateTopicWithFirstSubscription = autoCreateTopicWithFirstSubscription;
             AutoDeleteTopicWithLastSubscription = autoDeleteTopicWithLastSubscription;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
         [WirePath("inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIpRules { get; } = new ChangeTrackingList<EventGridInboundIPRule>();
+        public IList<EventGridInboundIPRule> InboundIPRules { get; } = new ChangeTrackingList<EventGridInboundIPRule>();
 
         /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the domain. </summary>
         [WirePath("disableLocalAuth")]

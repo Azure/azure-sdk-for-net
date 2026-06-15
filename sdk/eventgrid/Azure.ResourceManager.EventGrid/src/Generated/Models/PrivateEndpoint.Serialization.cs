@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 throw new FormatException($"The model {nameof(PrivateEndpoint)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(PrivateEndpointId))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(PrivateEndpointId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            ResourceIdentifier privateEndpointId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    privateEndpointId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateEndpoint(id, additionalBinaryDataProperties);
+            return new PrivateEndpoint(privateEndpointId, additionalBinaryDataProperties);
         }
     }
 }

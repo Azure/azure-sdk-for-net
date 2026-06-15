@@ -14,7 +14,18 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. </summary>
         [WirePath("properties.inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIPRules => InboundIpRules;
+        public IList<EventGridInboundIPRule> InboundIPRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamespaceUpdateParameterProperties();
+                }
+
+                return Properties.InboundIPRules;
+            }
+        }
 
         [WirePath("properties.topicsConfiguration.customDomains")]
         public IList<CustomDomainConfiguration> TopicsCustomDomains
@@ -26,7 +37,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     TopicsConfiguration = new UpdateTopicsConfigurationInfo();
                 }
 
-                return TopicsConfiguration.CustomDomains;
+                return TopicsConfiguration.TopicsCustomDomains;
             }
         }
 

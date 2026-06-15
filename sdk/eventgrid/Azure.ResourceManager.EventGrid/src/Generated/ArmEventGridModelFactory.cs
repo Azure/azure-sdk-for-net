@@ -345,14 +345,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceUpdateParameterProperties.InboundIpRules" /&gt;
         /// </param>
-        /// <param name="inboundIpRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
+        /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="topicsCustomDomains"> Custom domain info for topics configuration. </param>
         /// <returns> A new <see cref="Models.EventGridNamespacePatch"/> instance for mocking. </returns>
-        public static EventGridNamespacePatch EventGridNamespacePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, NamespaceSku sku = default, UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration = default, EventGridPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<EventGridInboundIPRule> inboundIpRules = default, IEnumerable<CustomDomainConfiguration> topicsCustomDomains = default)
+        public static EventGridNamespacePatch EventGridNamespacePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, NamespaceSku sku = default, UpdateTopicSpacesConfigurationInfo topicSpacesConfiguration = default, EventGridPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<EventGridInboundIPRule> inboundIPRules = default, IEnumerable<CustomDomainConfiguration> topicsCustomDomains = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new EventGridNamespacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, sku, topicSpacesConfiguration is null && topicsCustomDomains is null && publicNetworkAccess is null && inboundIpRules is null ? default : new NamespaceUpdateParameterProperties(topicSpacesConfiguration, new UpdateTopicsConfigurationInfo((topicsCustomDomains ?? new ChangeTrackingList<CustomDomainConfiguration>()).ToList(), default), publicNetworkAccess, (inboundIpRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(), default), default);
+            return new EventGridNamespacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, sku, topicSpacesConfiguration is null && topicsCustomDomains is null && publicNetworkAccess is null && inboundIPRules is null ? default : new NamespaceUpdateParameterProperties(topicSpacesConfiguration, new UpdateTopicsConfigurationInfo((topicsCustomDomains ?? new ChangeTrackingList<CustomDomainConfiguration>()).ToList(), default), publicNetworkAccess, (inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(), default), default);
         }
 
         /// <param name="state"> Indicate if Topic Spaces Configuration is enabled for the namespace. Default is Disabled. </param>
@@ -671,15 +671,15 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PartnerNamespaceUpdateParameterProperties.InboundIpRules" /&gt;
         /// </param>
-        /// <param name="inboundIpRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
+        /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this domain. </param>
-        /// <param name="disableLocalAuth"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the partner namespace. </param>
+        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the partner namespace. </param>
         /// <returns> A new <see cref="Models.PartnerNamespacePatch"/> instance for mocking. </returns>
-        public static PartnerNamespacePatch PartnerNamespacePatch(IDictionary<string, string> tags = default, EventGridPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<EventGridInboundIPRule> inboundIpRules = default, TlsVersion? minimumTlsVersionAllowed = default, bool? disableLocalAuth = default)
+        public static PartnerNamespacePatch PartnerNamespacePatch(IDictionary<string, string> tags = default, EventGridPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<EventGridInboundIPRule> inboundIPRules = default, TlsVersion? minimumTlsVersionAllowed = default, bool? isLocalAuthDisabled = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PartnerNamespacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), publicNetworkAccess is null && inboundIpRules is null && minimumTlsVersionAllowed is null && disableLocalAuth is null ? default : new PartnerNamespaceUpdateParameterProperties(publicNetworkAccess, (inboundIpRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(), minimumTlsVersionAllowed, disableLocalAuth, default), default);
+            return new PartnerNamespacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), publicNetworkAccess is null && inboundIPRules is null && minimumTlsVersionAllowed is null && isLocalAuthDisabled is null ? default : new PartnerNamespaceUpdateParameterProperties(publicNetworkAccess, (inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(), minimumTlsVersionAllowed, isLocalAuthDisabled, default), default);
         }
 
         /// <param name="key1"> Shared access key1 for the partner namespace. </param>
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainProperties.InboundIpRules" /&gt;
         /// </param>
-        /// <param name="inboundIpRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
+        /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the domain. </param>
         /// <param name="autoCreateTopicWithFirstSubscription">
         /// This Boolean is used to specify the creation mechanism for 'all' the Event Grid Domain Topics associated with this Event Grid Domain resource.
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="skuName"> The Sku name of the resource. The possible values are: Basic or Premium. </param>
         /// <param name="identity"> Identity information for the Event Grid Domain resource. </param>
         /// <returns> A new <see cref="EventGrid.EventGridDomainData"/> instance for mocking. </returns>
-        public static EventGridDomainData EventGridDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<EventGridPrivateEndpointConnectionData> privateEndpointConnections = default, EventGridDomainProvisioningState? provisioningState = default, TlsVersion? minimumTlsVersionAllowed = default, Uri endpoint = default, EventGridInputSchema? inputSchema = default, PartnerTopicEventTypeInfo eventTypeInfo = default, EventGridInputSchemaMapping inputSchemaMapping = default, string metricResourceId = default, EventGridPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<EventGridInboundIPRule> inboundIpRules = default, bool? isLocalAuthDisabled = default, bool? autoCreateTopicWithFirstSubscription = default, bool? autoDeleteTopicWithLastSubscription = default, DataResidencyBoundary? dataResidencyBoundary = default, EventGridSku? skuName = default, ManagedServiceIdentity identity = default)
+        public static EventGridDomainData EventGridDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<EventGridPrivateEndpointConnectionData> privateEndpointConnections = default, EventGridDomainProvisioningState? provisioningState = default, TlsVersion? minimumTlsVersionAllowed = default, Uri endpoint = default, EventGridInputSchema? inputSchema = default, PartnerTopicEventTypeInfo eventTypeInfo = default, EventGridInputSchemaMapping inputSchemaMapping = default, string metricResourceId = default, EventGridPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<EventGridInboundIPRule> inboundIPRules = default, bool? isLocalAuthDisabled = default, bool? autoCreateTopicWithFirstSubscription = default, bool? autoDeleteTopicWithLastSubscription = default, DataResidencyBoundary? dataResidencyBoundary = default, EventGridSku? skuName = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                privateEndpointConnections is null && provisioningState is null && minimumTlsVersionAllowed is null && endpoint is null && inputSchema is null && eventTypeInfo is null && inputSchemaMapping is null && metricResourceId is null && publicNetworkAccess is null && inboundIpRules is null && isLocalAuthDisabled is null && autoCreateTopicWithFirstSubscription is null && autoDeleteTopicWithLastSubscription is null && dataResidencyBoundary is null ? default : new DomainProperties(
+                privateEndpointConnections is null && provisioningState is null && minimumTlsVersionAllowed is null && endpoint is null && inputSchema is null && eventTypeInfo is null && inputSchemaMapping is null && metricResourceId is null && publicNetworkAccess is null && inboundIPRules is null && isLocalAuthDisabled is null && autoCreateTopicWithFirstSubscription is null && autoDeleteTopicWithLastSubscription is null && dataResidencyBoundary is null ? default : new DomainProperties(
                     (privateEndpointConnections ?? new ChangeTrackingList<EventGridPrivateEndpointConnectionData>()).ToList(),
                     provisioningState,
                     minimumTlsVersionAllowed,
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     inputSchemaMapping,
                     metricResourceId,
                     publicNetworkAccess,
-                    (inboundIpRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(),
+                    (inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(),
                     isLocalAuthDisabled,
                     autoCreateTopicWithFirstSubscription,
                     autoDeleteTopicWithLastSubscription,
@@ -871,9 +871,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainUpdateParameterProperties.InboundIpRules" /&gt;
         /// </param>
-        /// <param name="inboundIpRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
+        /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this domain. </param>
-        /// <param name="disableLocalAuth"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the domain. </param>
+        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the domain. </param>
         /// <param name="autoCreateTopicWithFirstSubscription">
         /// This Boolean is used to specify the creation mechanism for 'all' the Event Grid Domain Topics associated with this Event Grid Domain resource.
         /// In this context, creation of domain topic can be auto-managed (when true) or self-managed (when false). The default value for this property is true.
@@ -897,15 +897,15 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="identity"> Identity information for the resource. </param>
         /// <param name="skuName"> The Sku name of the resource. The possible values are: Basic or Premium. </param>
         /// <returns> A new <see cref="Models.EventGridDomainPatch"/> instance for mocking. </returns>
-        public static EventGridDomainPatch EventGridDomainPatch(IDictionary<string, string> tags = default, EventGridPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<EventGridInboundIPRule> inboundIpRules = default, TlsVersion? minimumTlsVersionAllowed = default, bool? disableLocalAuth = default, bool? autoCreateTopicWithFirstSubscription = default, bool? autoDeleteTopicWithLastSubscription = default, DataResidencyBoundary? dataResidencyBoundary = default, PartnerTopicEventTypeInfo eventTypeInfo = default, ManagedServiceIdentity identity = default, EventGridSku? skuName = default)
+        public static EventGridDomainPatch EventGridDomainPatch(IDictionary<string, string> tags = default, EventGridPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<EventGridInboundIPRule> inboundIPRules = default, TlsVersion? minimumTlsVersionAllowed = default, bool? isLocalAuthDisabled = default, bool? autoCreateTopicWithFirstSubscription = default, bool? autoDeleteTopicWithLastSubscription = default, DataResidencyBoundary? dataResidencyBoundary = default, PartnerTopicEventTypeInfo eventTypeInfo = default, ManagedServiceIdentity identity = default, EventGridSku? skuName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new EventGridDomainPatch(tags ?? new ChangeTrackingDictionary<string, string>(), publicNetworkAccess is null && inboundIpRules is null && minimumTlsVersionAllowed is null && disableLocalAuth is null && autoCreateTopicWithFirstSubscription is null && autoDeleteTopicWithLastSubscription is null && dataResidencyBoundary is null && eventTypeInfo is null ? default : new DomainUpdateParameterProperties(
+            return new EventGridDomainPatch(tags ?? new ChangeTrackingDictionary<string, string>(), publicNetworkAccess is null && inboundIPRules is null && minimumTlsVersionAllowed is null && isLocalAuthDisabled is null && autoCreateTopicWithFirstSubscription is null && autoDeleteTopicWithLastSubscription is null && dataResidencyBoundary is null && eventTypeInfo is null ? default : new DomainUpdateParameterProperties(
                 publicNetworkAccess,
-                (inboundIpRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(),
+                (inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(),
                 minimumTlsVersionAllowed,
-                disableLocalAuth,
+                isLocalAuthDisabled,
                 autoCreateTopicWithFirstSubscription,
                 autoDeleteTopicWithLastSubscription,
                 dataResidencyBoundary,
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <param name="resourceId"> The Azure Resource Id that represents the endpoint of a Partner Destination of an event subscription. </param>
         /// <returns> A new <see cref="Models.PartnerEventSubscriptionDestination"/> instance for mocking. </returns>
-        public static PartnerEventSubscriptionDestination PartnerEventSubscriptionDestination(string resourceId = default)
+        public static PartnerEventSubscriptionDestination PartnerEventSubscriptionDestination(ResourceIdentifier resourceId = default)
         {
             return new PartnerEventSubscriptionDestination(default, default, resourceId is null ? default : new PartnerEventSubscriptionDestinationProperties(resourceId, default));
         }
@@ -1711,7 +1711,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="perimeterGuid"> Network security perimeter guid. </param>
         /// <param name="location"> Network security perimeter location. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterInfo"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterInfo NetworkSecurityPerimeterInfo(string id = default, string perimeterGuid = default, string location = default)
+        public static NetworkSecurityPerimeterInfo NetworkSecurityPerimeterInfo(string id = default, string perimeterGuid = default, AzureLocation? location = default)
         {
             return new NetworkSecurityPerimeterInfo(id, perimeterGuid, location, default);
         }
@@ -1985,22 +1985,22 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.TopicUpdateParameterProperties.InboundIpRules" /&gt;
         /// </param>
-        /// <param name="inboundIpRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
+        /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this domain. </param>
-        /// <param name="disableLocalAuth"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the topic. </param>
+        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the topic. </param>
         /// <param name="dataResidencyBoundary"> The data residency boundary for the topic. </param>
         /// <param name="eventTypeInfo"> The eventTypeInfo for the topic. </param>
         /// <param name="skuName"> The Sku name of the resource. The possible values are: Basic or Premium. </param>
         /// <returns> A new <see cref="Models.EventGridTopicPatch"/> instance for mocking. </returns>
-        public static EventGridTopicPatch EventGridTopicPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, EventGridPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<EventGridInboundIPRule> inboundIpRules = default, TlsVersion? minimumTlsVersionAllowed = default, bool? disableLocalAuth = default, DataResidencyBoundary? dataResidencyBoundary = default, PartnerTopicEventTypeInfo eventTypeInfo = default, EventGridSku? skuName = default)
+        public static EventGridTopicPatch EventGridTopicPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, EventGridPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<EventGridInboundIPRule> inboundIPRules = default, TlsVersion? minimumTlsVersionAllowed = default, bool? isLocalAuthDisabled = default, DataResidencyBoundary? dataResidencyBoundary = default, PartnerTopicEventTypeInfo eventTypeInfo = default, EventGridSku? skuName = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new EventGridTopicPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, publicNetworkAccess is null && inboundIpRules is null && minimumTlsVersionAllowed is null && disableLocalAuth is null && dataResidencyBoundary is null && eventTypeInfo is null ? default : new TopicUpdateParameterProperties(
+            return new EventGridTopicPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, publicNetworkAccess is null && inboundIPRules is null && minimumTlsVersionAllowed is null && isLocalAuthDisabled is null && dataResidencyBoundary is null && eventTypeInfo is null ? default : new TopicUpdateParameterProperties(
                 publicNetworkAccess,
-                (inboundIpRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(),
+                (inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(),
                 minimumTlsVersionAllowed,
-                disableLocalAuth,
+                isLocalAuthDisabled,
                 dataResidencyBoundary,
                 eventTypeInfo,
                 default), skuName is null ? default : new ResourceSku(skuName, default), default);

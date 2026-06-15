@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(InboundIpRules))
+            if (Optional.IsCollectionDefined(InboundIPRules))
             {
                 writer.WritePropertyName("inboundIpRules"u8);
                 writer.WriteStartArray();
-                foreach (EventGridInboundIPRule item in InboundIpRules)
+                foreach (EventGridInboundIPRule item in InboundIPRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("minimumTlsVersionAllowed"u8);
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
-                writer.WriteBooleanValue(DisableLocalAuth.Value);
+                writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             EventGridPublicNetworkAccess? publicNetworkAccess = default;
-            IList<EventGridInboundIPRule> inboundIpRules = default;
+            IList<EventGridInboundIPRule> inboundIPRules = default;
             TlsVersion? minimumTlsVersionAllowed = default;
-            bool? disableLocalAuth = default;
+            bool? isLocalAuthDisabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item, options));
                     }
-                    inboundIpRules = array;
+                    inboundIPRules = array;
                     continue;
                 }
                 if (prop.NameEquals("minimumTlsVersionAllowed"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    disableLocalAuth = prop.Value.GetBoolean();
+                    isLocalAuthDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PartnerNamespaceUpdateParameterProperties(publicNetworkAccess, inboundIpRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), minimumTlsVersionAllowed, disableLocalAuth, additionalBinaryDataProperties);
+            return new PartnerNamespaceUpdateParameterProperties(publicNetworkAccess, inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>(), minimumTlsVersionAllowed, isLocalAuthDisabled, additionalBinaryDataProperties);
         }
     }
 }
