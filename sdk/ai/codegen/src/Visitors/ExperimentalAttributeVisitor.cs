@@ -53,6 +53,14 @@ namespace Extensions.Plugin.Visitors
 
         protected override MethodProvider VisitMethod(MethodProvider method)
         {
+            // Do not mark internal methods as experimental.
+            if (!IsExternal(method.Signature.Modifiers)
+                || method.Signature.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)))
+                )
+            {
+                return base.VisitMethod(method);
+            }
+
             // If enclising type is not stable, no need to mark its methods.
             string enclosingObjectId = TypeId(method.EnclosingType.Type);
             if (!SupportedPackages.IsStable(enclosingObjectId))
@@ -62,14 +70,6 @@ namespace Extensions.Plugin.Visitors
             string methodId = method.Signature.Parameters
                 .Select(x => TypeId(x.Type))
                 .Aggregate($"{enclosingObjectId}.{method.Signature.Name}->", (x, next) => string.Join(',', [x, next]));
-
-            // Do not mark internal methods as experimental.
-            if (!IsExternal(method.Signature.Modifiers)
-                || method.Signature.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)))
-                )
-            {
-                return base.VisitMethod(method);
-            }
 
             // If method takes in or return experimental class, mark it as experimental.
             string typeId = TypeId(method.Signature.ReturnType);
