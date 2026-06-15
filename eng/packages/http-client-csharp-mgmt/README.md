@@ -102,6 +102,12 @@ Set the log level for which to collect traces. The default value is `info`.
 
 Set to `true` to disable XML documentation generation. The default value is `false`.
 
+### `disable-roslyn-reduce`
+
+**Type:** `boolean`
+
+Set to `true` to skip the Roslyn reduce (simplification) post-processing step. This speeds up generation and is useful when iterating quickly. The default value is `false`.
+
 ### `generator-name`
 
 **Type:** `string`
@@ -116,15 +122,34 @@ Allows emitter authors to specify the path to a custom emitter package, allowing
 
 ### `plugins`
 
-**Type:** `array`
+**Type:** `string[]`
 
-Paths to generator plugin assemblies (DLLs) or directories containing plugin assemblies. Each plugin must contain a class that extends GeneratorPlugin.
+Paths to generator plugin assemblies (DLLs) or directories containing plugin assemblies. Each plugin must contain a class that extends `GeneratorPlugin`. Paths may be absolute or relative to the resolved `emitter-output-dir`. For example, to load plugins that live in a `codegen` folder under the output directory:
+
+```yaml
+options:
+  '@typespec/http-client-csharp':
+    plugins:
+      - 'codegen/MyPlugin.dll' # file relative to emitter-output-dir
+      - 'codegen' # directory containing plugin assemblies
+      - '/abs/path/to/MyPlugin.dll' # absolute path used as-is
+```
 
 ### `license`
 
-**Type:** `object`
+**Type:** `object { name, company, link, header, description }`
 
 License information for the generated client code.
+
+**Properties:**
+
+| Name          | Type     | Default | Description |
+| ------------- | -------- | ------- | ----------- |
+| `name`        | `string` |         |             |
+| `company`     | `string` |         |             |
+| `link`        | `string` |         |             |
+| `header`      | `string` |         |             |
+| `description` | `string` |         |             |
 
 ### `sdk-context-options`
 
@@ -148,16 +173,22 @@ Whether to put models under a separate 'Models' sub-namespace. This only applies
 
 **Type:** `boolean`
 
+**Default:** `false`
+
 Whether to enable the WirePathAttribute on model properties. The default value is 'false'.
 
 ### `use-legacy-resource-detection`
 
 **Type:** `boolean`
 
+**Default:** `true`
+
 Whether to use the legacy custom resource detection logic instead of the standardized resolveArmResources API from @azure-tools/typespec-azure-resource-manager. When true, uses the legacy logic. When false, uses the resolveArmResources API.
 
 ### `skip-api-version-override`
 
 **Type:** `boolean`
+
+**Default:** `false`
 
 Temporary workaround: Whether to pass skipApiVersionOverride: true when instantiating ArmOperation types in generated LRO methods. When true, the LRO polling will not override the api-version from the initial request URI. This option will be removed once the api-version override issue is properly resolved in Azure.Core. The default value is 'false'.
