@@ -1,0 +1,1861 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetConstitutionAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetConstitutionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<Constitution> response = await client.GetConstitutionAsync();
+]]></code></example>
+    </member>
+    <member name="GetConstitution(CancellationToken)">
+      <example>
+This sample shows how to call GetConstitution.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<Constitution> response = client.GetConstitution();
+]]></code></example>
+    </member>
+    <member name="GetConstitutionAsync(RequestContext)">
+      <example>
+This sample shows how to call GetConstitutionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.GetConstitutionAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("digest").ToString());
+Console.WriteLine(result.GetProperty("script").ToString());
+]]></code></example>
+    </member>
+    <member name="GetConstitution(RequestContext)">
+      <example>
+This sample shows how to call GetConstitution and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.GetConstitution(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("digest").ToString());
+Console.WriteLine(result.GetProperty("script").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEnclaveQuotesAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetEnclaveQuotesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<ConfidentialLedgerEnclaves> response = await client.GetEnclaveQuotesAsync();
+]]></code></example>
+    </member>
+    <member name="GetEnclaveQuotes(CancellationToken)">
+      <example>
+This sample shows how to call GetEnclaveQuotes.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<ConfidentialLedgerEnclaves> response = client.GetEnclaveQuotes();
+]]></code></example>
+    </member>
+    <member name="GetEnclaveQuotesAsync(RequestContext)">
+      <example>
+This sample shows how to call GetEnclaveQuotesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.GetEnclaveQuotesAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("currentNodeId").ToString());
+Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("nodeId").ToString());
+Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("quoteVersion").ToString());
+Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("raw").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEnclaveQuotes(RequestContext)">
+      <example>
+This sample shows how to call GetEnclaveQuotes and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.GetEnclaveQuotes(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("currentNodeId").ToString());
+Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("nodeId").ToString());
+Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("quoteVersion").ToString());
+Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetProperty("raw").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateLedgerEntryAsync(LedgerEntry,string,string,CancellationToken)">
+      <example>
+This sample shows how to call CreateLedgerEntryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+LedgerEntry entry = new LedgerEntry("New ledger entry contents.")
+{
+    PreHooks = {new UserDefinedFunctionHook("myFunction1")
+    {
+        Properties = new UserDefinedFunctionExecutionProperties
+        {
+            Arguments = {"arg1", "arg2"},
+            ExportedFunctionName = "main",
+            RuntimeOptions = new JsRuntimeOptions
+            {
+                LogExceptionDetails = true,
+                MaxCachedInterpreters = 0L,
+                MaxExecutionTimeMs = 0L,
+                MaxHeapBytes = 0L,
+                MaxStackBytes = 0L,
+                ReturnExceptionDetails = true,
+            },
+        },
+    }},
+    PostHooks = {new UserDefinedFunctionHook("myFunction2")
+    {
+        Properties = new UserDefinedFunctionExecutionProperties
+        {
+            Arguments = {"arg3", "arg4"},
+            ExportedFunctionName = "main",
+            RuntimeOptions = new JsRuntimeOptions
+            {
+                LogExceptionDetails = true,
+                MaxCachedInterpreters = 0L,
+                MaxExecutionTimeMs = 0L,
+                MaxHeapBytes = 0L,
+                MaxStackBytes = 0L,
+                ReturnExceptionDetails = true,
+            },
+        },
+    }},
+};
+Response<LedgerWriteResult> response = await client.CreateLedgerEntryAsync(entry);
+]]></code></example>
+    </member>
+    <member name="CreateLedgerEntry(LedgerEntry,string,string,CancellationToken)">
+      <example>
+This sample shows how to call CreateLedgerEntry.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+LedgerEntry entry = new LedgerEntry("New ledger entry contents.")
+{
+    PreHooks = {new UserDefinedFunctionHook("myFunction1")
+    {
+        Properties = new UserDefinedFunctionExecutionProperties
+        {
+            Arguments = {"arg1", "arg2"},
+            ExportedFunctionName = "main",
+            RuntimeOptions = new JsRuntimeOptions
+            {
+                LogExceptionDetails = true,
+                MaxCachedInterpreters = 0L,
+                MaxExecutionTimeMs = 0L,
+                MaxHeapBytes = 0L,
+                MaxStackBytes = 0L,
+                ReturnExceptionDetails = true,
+            },
+        },
+    }},
+    PostHooks = {new UserDefinedFunctionHook("myFunction2")
+    {
+        Properties = new UserDefinedFunctionExecutionProperties
+        {
+            Arguments = {"arg3", "arg4"},
+            ExportedFunctionName = "main",
+            RuntimeOptions = new JsRuntimeOptions
+            {
+                LogExceptionDetails = true,
+                MaxCachedInterpreters = 0L,
+                MaxExecutionTimeMs = 0L,
+                MaxHeapBytes = 0L,
+                MaxStackBytes = 0L,
+                ReturnExceptionDetails = true,
+            },
+        },
+    }},
+};
+Response<LedgerWriteResult> response = client.CreateLedgerEntry(entry);
+]]></code></example>
+    </member>
+    <member name="CreateLedgerEntryAsync(RequestContent,string,string,RequestContext)">
+      <example>
+This sample shows how to call CreateLedgerEntryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    contents = "New ledger entry contents.",
+    preHooks = new object[]
+    {
+        new
+        {
+            functionId = "myFunction1",
+            properties = new
+            {
+                arguments = new object[]
+                {
+                    "arg1",
+                    "arg2"
+                },
+                exportedFunctionName = "main",
+                runtimeOptions = new
+                {
+                    log_exception_details = true,
+                    max_cached_interpreters = 0L,
+                    max_execution_time_ms = 0L,
+                    max_heap_bytes = 0L,
+                    max_stack_bytes = 0L,
+                    return_exception_details = true,
+                },
+            },
+        }
+    },
+    postHooks = new object[]
+    {
+        new
+        {
+            functionId = "myFunction2",
+            properties = new
+            {
+                arguments = new object[]
+                {
+                    "arg3",
+                    "arg4"
+                },
+                exportedFunctionName = "main",
+                runtimeOptions = new
+                {
+                    log_exception_details = true,
+                    max_cached_interpreters = 0L,
+                    max_execution_time_ms = 0L,
+                    max_heap_bytes = 0L,
+                    max_stack_bytes = 0L,
+                    return_exception_details = true,
+                },
+            },
+        }
+    },
+});
+Response response = await client.CreateLedgerEntryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("collectionId").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateLedgerEntry(RequestContent,string,string,RequestContext)">
+      <example>
+This sample shows how to call CreateLedgerEntry and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    contents = "New ledger entry contents.",
+    preHooks = new object[]
+    {
+        new
+        {
+            functionId = "myFunction1",
+            properties = new
+            {
+                arguments = new object[]
+                {
+                    "arg1",
+                    "arg2"
+                },
+                exportedFunctionName = "main",
+                runtimeOptions = new
+                {
+                    log_exception_details = true,
+                    max_cached_interpreters = 0L,
+                    max_execution_time_ms = 0L,
+                    max_heap_bytes = 0L,
+                    max_stack_bytes = 0L,
+                    return_exception_details = true,
+                },
+            },
+        }
+    },
+    postHooks = new object[]
+    {
+        new
+        {
+            functionId = "myFunction2",
+            properties = new
+            {
+                arguments = new object[]
+                {
+                    "arg3",
+                    "arg4"
+                },
+                exportedFunctionName = "main",
+                runtimeOptions = new
+                {
+                    log_exception_details = true,
+                    max_cached_interpreters = 0L,
+                    max_execution_time_ms = 0L,
+                    max_heap_bytes = 0L,
+                    max_stack_bytes = 0L,
+                    return_exception_details = true,
+                },
+            },
+        }
+    },
+});
+Response response = client.CreateLedgerEntry(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("collectionId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetLedgerEntryAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetLedgerEntryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<LedgerQueryResult> response = await client.GetLedgerEntryAsync("2.15");
+]]></code></example>
+    </member>
+    <member name="GetLedgerEntry(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetLedgerEntry.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<LedgerQueryResult> response = client.GetLedgerEntry("2.15");
+]]></code></example>
+    </member>
+    <member name="GetLedgerEntryAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetLedgerEntryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.GetLedgerEntryAsync("2.15", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("state").ToString());
+]]></code></example>
+    </member>
+    <member name="GetLedgerEntry(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetLedgerEntry and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.GetLedgerEntry("2.15", null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("state").ToString());
+]]></code></example>
+    </member>
+    <member name="GetReceiptAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetReceiptAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<TransactionReceipt> response = await client.GetReceiptAsync("2.15");
+]]></code></example>
+    </member>
+    <member name="GetReceipt(string,CancellationToken)">
+      <example>
+This sample shows how to call GetReceipt.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<TransactionReceipt> response = client.GetReceipt("2.15");
+]]></code></example>
+    </member>
+    <member name="GetReceiptAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetReceiptAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.GetReceiptAsync("2.15", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("transactionId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetReceipt(string,RequestContext)">
+      <example>
+This sample shows how to call GetReceipt and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.GetReceipt("2.15", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("transactionId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetTransactionStatusAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetTransactionStatusAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<TransactionStatus> response = await client.GetTransactionStatusAsync("4.2");
+]]></code></example>
+    </member>
+    <member name="GetTransactionStatus(string,CancellationToken)">
+      <example>
+This sample shows how to call GetTransactionStatus.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<TransactionStatus> response = client.GetTransactionStatus("4.2");
+]]></code></example>
+    </member>
+    <member name="GetTransactionStatusAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetTransactionStatusAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.GetTransactionStatusAsync("4.2", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("transactionId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetTransactionStatus(string,RequestContext)">
+      <example>
+This sample shows how to call GetTransactionStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.GetTransactionStatus("4.2", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("transactionId").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCurrentLedgerEntryAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetCurrentLedgerEntryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<LedgerEntry> response = await client.GetCurrentLedgerEntryAsync();
+]]></code></example>
+    </member>
+    <member name="GetCurrentLedgerEntry(string,CancellationToken)">
+      <example>
+This sample shows how to call GetCurrentLedgerEntry.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<LedgerEntry> response = client.GetCurrentLedgerEntry();
+]]></code></example>
+    </member>
+    <member name="GetCurrentLedgerEntryAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetCurrentLedgerEntryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.GetCurrentLedgerEntryAsync(null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("contents").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCurrentLedgerEntry(string,RequestContext)">
+      <example>
+This sample shows how to call GetCurrentLedgerEntry and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.GetCurrentLedgerEntry(null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("contents").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteUserAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteUserAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.DeleteUserAsync("AAD object id");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteUser(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteUser.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.DeleteUser("AAD object id");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetUserAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetUserAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<LedgerUser> response = await client.GetUserAsync("AAD object id");
+]]></code></example>
+    </member>
+    <member name="GetUser(string,CancellationToken)">
+      <example>
+This sample shows how to call GetUser.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<LedgerUser> response = client.GetUser("AAD object id");
+]]></code></example>
+    </member>
+    <member name="GetUserAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetUserAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.GetUserAsync("AAD object id", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRole").ToString());
+]]></code></example>
+    </member>
+    <member name="GetUser(string,RequestContext)">
+      <example>
+This sample shows how to call GetUser and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.GetUser("AAD object id", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRole").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdateUserAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdateUserAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignedRole = "Reader",
+});
+Response response = await client.CreateOrUpdateUserAsync("AAD object id", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRole").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdateUser(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdateUser and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignedRole = "Reader",
+});
+Response response = client.CreateOrUpdateUser("AAD object id", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRole").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteLedgerUserAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteLedgerUserAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.DeleteLedgerUserAsync("AAD object id");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteLedgerUser(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteLedgerUser.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.DeleteLedgerUser("AAD object id");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetLedgerUserAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetLedgerUserAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<LedgerUserMultipleRoles> response = await client.GetLedgerUserAsync("AAD object id");
+]]></code></example>
+    </member>
+    <member name="GetLedgerUser(string,CancellationToken)">
+      <example>
+This sample shows how to call GetLedgerUser.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<LedgerUserMultipleRoles> response = client.GetLedgerUser("AAD object id");
+]]></code></example>
+    </member>
+    <member name="GetLedgerUserAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetLedgerUserAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.GetLedgerUserAsync("AAD object id", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetLedgerUser(string,RequestContext)">
+      <example>
+This sample shows how to call GetLedgerUser and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.GetLedgerUser("AAD object id", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdateLedgerUserAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdateLedgerUserAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignedRoles = new object[]
+    {
+        "Reader",
+        "Writer"
+    },
+});
+Response response = await client.CreateOrUpdateLedgerUserAsync("AAD object id", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdateLedgerUser(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdateLedgerUser and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    assignedRoles = new object[]
+    {
+        "Reader",
+        "Writer"
+    },
+});
+Response response = client.CreateOrUpdateLedgerUser("AAD object id", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedEndpointAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetUserDefinedEndpointAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<Bundle> response = await client.GetUserDefinedEndpointAsync();
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedEndpoint(CancellationToken)">
+      <example>
+This sample shows how to call GetUserDefinedEndpoint.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<Bundle> response = client.GetUserDefinedEndpoint();
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedEndpointAsync(RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedEndpointAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.GetUserDefinedEndpointAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("modules")[0].GetProperty("module").ToString());
+Console.WriteLine(result.GetProperty("modules")[0].GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedEndpoint(RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedEndpoint and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.GetUserDefinedEndpoint(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("metadata").GetProperty("endpoints").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("modules")[0].GetProperty("module").ToString());
+Console.WriteLine(result.GetProperty("modules")[0].GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedEndpointAsync(Bundle,CancellationToken)">
+      <example>
+This sample shows how to call CreateUserDefinedEndpointAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Bundle bundle = new Bundle(new Metadata(new Dictionary<string, MethodToEndpointProperties>
+{
+    ["/content"] = new MethodToEndpointProperties
+    {
+        Get = new EndpointProperties(new IDictionary<string, BinaryData>[]
+        {
+            new Dictionary<string, BinaryData>()
+        }, ForwardingRequired.Always),
+    }
+}), new ModuleDef[]
+{
+    new ModuleDef("TESTJS", "test.js")
+});
+Response response = await client.CreateUserDefinedEndpointAsync(bundle);
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedEndpoint(Bundle,CancellationToken)">
+      <example>
+This sample shows how to call CreateUserDefinedEndpoint.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Bundle bundle = new Bundle(new Metadata(new Dictionary<string, MethodToEndpointProperties>
+{
+    ["/content"] = new MethodToEndpointProperties
+    {
+        Get = new EndpointProperties(new IDictionary<string, BinaryData>[]
+        {
+            new Dictionary<string, BinaryData>()
+        }, ForwardingRequired.Always),
+    }
+}), new ModuleDef[]
+{
+    new ModuleDef("TESTJS", "test.js")
+});
+Response response = client.CreateUserDefinedEndpoint(bundle);
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedEndpointAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateUserDefinedEndpointAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    metadata = new
+    {
+        endpoints = new Dictionary<string, object>
+        {
+            ["/content"] = new
+            {
+                get = new
+                {
+                    forwarding_required = "always",
+                    authn_policies = new object[]
+                    {
+                        new object()
+                    },
+                },
+            }
+        },
+    },
+    modules = new object[]
+    {
+        new
+        {
+            name = "test.js",
+            module = "TESTJS",
+        }
+    },
+});
+Response response = await client.CreateUserDefinedEndpointAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedEndpoint(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateUserDefinedEndpoint.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    metadata = new
+    {
+        endpoints = new Dictionary<string, object>
+        {
+            ["/content"] = new
+            {
+                get = new
+                {
+                    forwarding_required = "always",
+                    authn_policies = new object[]
+                    {
+                        new object()
+                    },
+                },
+            }
+        },
+    },
+    modules = new object[]
+    {
+        new
+        {
+            name = "test.js",
+            module = "TESTJS",
+        }
+    },
+});
+Response response = client.CreateUserDefinedEndpoint(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetRuntimeOptionsAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetRuntimeOptionsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<JsRuntimeOptions> response = await client.GetRuntimeOptionsAsync();
+]]></code></example>
+    </member>
+    <member name="GetRuntimeOptions(CancellationToken)">
+      <example>
+This sample shows how to call GetRuntimeOptions.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<JsRuntimeOptions> response = client.GetRuntimeOptions();
+]]></code></example>
+    </member>
+    <member name="GetRuntimeOptionsAsync(RequestContext)">
+      <example>
+This sample shows how to call GetRuntimeOptionsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.GetRuntimeOptionsAsync(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetRuntimeOptions(RequestContext)">
+      <example>
+This sample shows how to call GetRuntimeOptions and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.GetRuntimeOptions(null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateRuntimeOptionsStableAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateRuntimeOptionsStableAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    log_exception_details = false,
+    max_execution_time_ms = 1200L,
+});
+Response response = await client.UpdateRuntimeOptionsStableAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateRuntimeOptionsStable(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateRuntimeOptionsStable and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    log_exception_details = false,
+    max_execution_time_ms = 1200L,
+});
+Response response = client.UpdateRuntimeOptionsStable(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedEndpointsModuleAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetUserDefinedEndpointsModuleAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<ModuleDef> response = await client.GetUserDefinedEndpointsModuleAsync("TESTJS");
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedEndpointsModule(string,CancellationToken)">
+      <example>
+This sample shows how to call GetUserDefinedEndpointsModule.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<ModuleDef> response = client.GetUserDefinedEndpointsModule("TESTJS");
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedEndpointsModuleAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedEndpointsModuleAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.GetUserDefinedEndpointsModuleAsync("TESTJS", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("module").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedEndpointsModule(string,RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedEndpointsModule and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.GetUserDefinedEndpointsModule("TESTJS", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("module").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteUserDefinedFunctionAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteUserDefinedFunctionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.DeleteUserDefinedFunctionAsync("myFunction");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteUserDefinedFunction(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteUserDefinedFunction.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.DeleteUserDefinedFunction("myFunction");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedFunctionAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetUserDefinedFunctionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<UserDefinedFunction> response = await client.GetUserDefinedFunctionAsync("myFunction");
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedFunction(string,CancellationToken)">
+      <example>
+This sample shows how to call GetUserDefinedFunction.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<UserDefinedFunction> response = client.GetUserDefinedFunction("myFunction");
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedFunctionAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedFunctionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.GetUserDefinedFunctionAsync("myFunction", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("code").ToString());
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedFunction(string,RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedFunction and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.GetUserDefinedFunction("myFunction", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("code").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedFunctionAsync(string,UserDefinedFunction,CancellationToken)">
+      <example>
+This sample shows how to call CreateUserDefinedFunctionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+UserDefinedFunction userDefinedFunction = new UserDefinedFunction("export function main() { return true }");
+Response<UserDefinedFunction> response = await client.CreateUserDefinedFunctionAsync("myFunction", userDefinedFunction);
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedFunction(string,UserDefinedFunction,CancellationToken)">
+      <example>
+This sample shows how to call CreateUserDefinedFunction.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+UserDefinedFunction userDefinedFunction = new UserDefinedFunction("export function main() { return true }");
+Response<UserDefinedFunction> response = client.CreateUserDefinedFunction("myFunction", userDefinedFunction);
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedFunctionAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateUserDefinedFunctionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    code = "export function main() { return true }",
+});
+Response response = await client.CreateUserDefinedFunctionAsync("myFunction", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("code").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedFunction(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateUserDefinedFunction and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    code = "export function main() { return true }",
+});
+Response response = client.CreateUserDefinedFunction("myFunction", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("code").ToString());
+]]></code></example>
+    </member>
+    <member name="ExecuteUserDefinedFunctionAsync(string,UserDefinedFunctionExecutionProperties,CancellationToken)">
+      <example>
+This sample shows how to call ExecuteUserDefinedFunctionAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<UserDefinedFunctionExecutionResponse> response = await client.ExecuteUserDefinedFunctionAsync("myFunction");
+]]></code></example>
+    </member>
+    <member name="ExecuteUserDefinedFunction(string,UserDefinedFunctionExecutionProperties,CancellationToken)">
+      <example>
+This sample shows how to call ExecuteUserDefinedFunction.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<UserDefinedFunctionExecutionResponse> response = client.ExecuteUserDefinedFunction("myFunction");
+]]></code></example>
+    </member>
+    <member name="ExecuteUserDefinedFunctionAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ExecuteUserDefinedFunctionAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    arguments = new object[]
+    {
+        "arg1",
+        "arg2"
+    },
+    exportedFunctionName = "main",
+    runtimeOptions = new
+    {
+        log_exception_details = true,
+        max_cached_interpreters = 0L,
+        max_execution_time_ms = 0L,
+        max_heap_bytes = 0L,
+        max_stack_bytes = 0L,
+        return_exception_details = true,
+    },
+});
+Response response = await client.ExecuteUserDefinedFunctionAsync("myFunction", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code></example>
+    </member>
+    <member name="ExecuteUserDefinedFunction(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call ExecuteUserDefinedFunction and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    arguments = new object[]
+    {
+        "arg1",
+        "arg2"
+    },
+    exportedFunctionName = "main",
+    runtimeOptions = new
+    {
+        log_exception_details = true,
+        max_cached_interpreters = 0L,
+        max_execution_time_ms = 0L,
+        max_heap_bytes = 0L,
+        max_stack_bytes = 0L,
+        return_exception_details = true,
+    },
+});
+Response response = client.ExecuteUserDefinedFunction("myFunction", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedRoleAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetUserDefinedRoleAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<UserDefinedRole> response = await client.GetUserDefinedRoleAsync("administrator");
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedRole(string,CancellationToken)">
+      <example>
+This sample shows how to call GetUserDefinedRole.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response<UserDefinedRole> response = client.GetUserDefinedRole("administrator");
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedRoleAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedRoleAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.GetUserDefinedRoleAsync("administrator", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("role")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedRole(string,RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedRole and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.GetUserDefinedRole("administrator", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("role")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedRoleStableAsync(UserDefinedRoles,CancellationToken)">
+      <example>
+This sample shows how to call CreateUserDefinedRoleStableAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+UserDefinedRoles body = new UserDefinedRoles(new Role[]
+{
+    new Role
+    {
+        RoleName = "administrator",
+        RoleActions = {"Microsoft.ConfidentialLedger/ledger/users/write", "Microsoft.ConfidentialLedger/ledger/users/read"},
+    },
+    new Role
+    {
+        RoleName = "contributor",
+        RoleActions = {"Microsoft.ConfidentialLedger/ledger/users/write", "Microsoft.ConfidentialLedger/ledger/users/read"},
+    }
+});
+Response<UserDefinedRoles> response = await client.CreateUserDefinedRoleStableAsync(body);
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedRoleStable(UserDefinedRoles,CancellationToken)">
+      <example>
+This sample shows how to call CreateUserDefinedRoleStable.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+UserDefinedRoles body = new UserDefinedRoles(new Role[]
+{
+    new Role
+    {
+        RoleName = "administrator",
+        RoleActions = {"Microsoft.ConfidentialLedger/ledger/users/write", "Microsoft.ConfidentialLedger/ledger/users/read"},
+    },
+    new Role
+    {
+        RoleName = "contributor",
+        RoleActions = {"Microsoft.ConfidentialLedger/ledger/users/write", "Microsoft.ConfidentialLedger/ledger/users/read"},
+    }
+});
+Response<UserDefinedRoles> response = client.CreateUserDefinedRoleStable(body);
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedRoleStableAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateUserDefinedRoleStableAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    roles = new object[]
+    {
+        new
+        {
+            roleName = "administrator",
+            roleActions = new object[]
+            {
+                "Microsoft.ConfidentialLedger/ledger/users/write",
+                "Microsoft.ConfidentialLedger/ledger/users/read"
+            },
+        },
+        new
+        {
+            roleName = "contributor",
+            roleActions = new object[]
+            {
+                "Microsoft.ConfidentialLedger/ledger/users/write",
+                "Microsoft.ConfidentialLedger/ledger/users/read"
+            },
+        }
+    },
+});
+Response response = await client.CreateUserDefinedRoleStableAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("roles")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="CreateUserDefinedRoleStable(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateUserDefinedRoleStable and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    roles = new object[]
+    {
+        new
+        {
+            roleName = "administrator",
+            roleActions = new object[]
+            {
+                "Microsoft.ConfidentialLedger/ledger/users/write",
+                "Microsoft.ConfidentialLedger/ledger/users/read"
+            },
+        },
+        new
+        {
+            roleName = "contributor",
+            roleActions = new object[]
+            {
+                "Microsoft.ConfidentialLedger/ledger/users/write",
+                "Microsoft.ConfidentialLedger/ledger/users/read"
+            },
+        }
+    },
+});
+Response response = client.CreateUserDefinedRoleStable(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("roles")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateUserDefinedRoleStableAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateUserDefinedRoleStableAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    roles = new object[]
+    {
+        new
+        {
+            roleName = "administrator",
+            roleActions = new object[]
+            {
+                "Microsoft.ConfidentialLedger/ledger/users/write"
+            },
+        }
+    },
+});
+Response response = await client.UpdateUserDefinedRoleStableAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("roles")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="UpdateUserDefinedRoleStable(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call UpdateUserDefinedRoleStable and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new
+{
+    roles = new object[]
+    {
+        new
+        {
+            roleName = "administrator",
+            roleActions = new object[]
+            {
+                "Microsoft.ConfidentialLedger/ledger/users/write"
+            },
+        }
+    },
+});
+Response response = client.UpdateUserDefinedRoleStable(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("roles")[0].ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteUserDefinedRoleStableAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteUserDefinedRoleStableAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = await client.DeleteUserDefinedRoleStableAsync("reader");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteUserDefinedRoleStable(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteUserDefinedRoleStable.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+Response response = client.DeleteUserDefinedRoleStable("reader");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetConsortiumMembersAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetConsortiumMembersAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+await foreach (ConsortiumMember item in client.GetConsortiumMembersAsync())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetConsortiumMembers(CancellationToken)">
+      <example>
+This sample shows how to call GetConsortiumMembers.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+foreach (ConsortiumMember item in client.GetConsortiumMembers())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetConsortiumMembersAsync(RequestContext)">
+      <example>
+This sample shows how to call GetConsortiumMembersAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+await foreach (BinaryData item in client.GetConsortiumMembersAsync(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("certificate").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetConsortiumMembers(RequestContext)">
+      <example>
+This sample shows how to call GetConsortiumMembers and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+foreach (BinaryData item in client.GetConsortiumMembers(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("certificate").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetCollectionsAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetCollectionsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+await foreach (Collection item in client.GetCollectionsAsync())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetCollections(CancellationToken)">
+      <example>
+This sample shows how to call GetCollections.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+foreach (Collection item in client.GetCollections())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetCollectionsAsync(RequestContext)">
+      <example>
+This sample shows how to call GetCollectionsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+await foreach (BinaryData item in client.GetCollectionsAsync(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("collectionId").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetCollections(RequestContext)">
+      <example>
+This sample shows how to call GetCollections and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+foreach (BinaryData item in client.GetCollections(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("collectionId").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetTagsAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetTagsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+await foreach (string item in client.GetTagsAsync())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetTags(string,CancellationToken)">
+      <example>
+This sample shows how to call GetTags.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+foreach (string item in client.GetTags())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetTagsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetTagsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+await foreach (BinaryData item in client.GetTagsAsync("myCollection", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetTags(string,RequestContext)">
+      <example>
+This sample shows how to call GetTags and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+foreach (BinaryData item in client.GetTags("myCollection", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetLedgerEntriesAsync(string,string,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetLedgerEntriesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+await foreach (LedgerEntry item in client.GetLedgerEntriesAsync())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetLedgerEntries(string,string,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetLedgerEntries.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+foreach (LedgerEntry item in client.GetLedgerEntries())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetLedgerEntriesAsync(string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetLedgerEntriesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+await foreach (BinaryData item in client.GetLedgerEntriesAsync(null, "2.15", "2.20", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("contents").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetLedgerEntries(string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetLedgerEntries and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+foreach (BinaryData item in client.GetLedgerEntries(null, "2.15", "2.20", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("contents").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetUsersAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetUsersAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+await foreach (LedgerUser item in client.GetUsersAsync())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetUsers(CancellationToken)">
+      <example>
+This sample shows how to call GetUsers.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+foreach (LedgerUser item in client.GetUsers())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetUsersAsync(RequestContext)">
+      <example>
+This sample shows how to call GetUsersAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+await foreach (BinaryData item in client.GetUsersAsync(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("assignedRole").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetUsers(RequestContext)">
+      <example>
+This sample shows how to call GetUsers and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+foreach (BinaryData item in client.GetUsers(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("assignedRole").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetLedgerUsersAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetLedgerUsersAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+await foreach (LedgerUserMultipleRoles item in client.GetLedgerUsersAsync())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetLedgerUsers(CancellationToken)">
+      <example>
+This sample shows how to call GetLedgerUsers.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+foreach (LedgerUserMultipleRoles item in client.GetLedgerUsers())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetLedgerUsersAsync(RequestContext)">
+      <example>
+This sample shows how to call GetLedgerUsersAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+await foreach (BinaryData item in client.GetLedgerUsersAsync(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetLedgerUsers(RequestContext)">
+      <example>
+This sample shows how to call GetLedgerUsers and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+foreach (BinaryData item in client.GetLedgerUsers(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedFunctionsAsync(CancellationToken)">
+      <example>
+This sample shows how to call GetUserDefinedFunctionsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+await foreach (UserDefinedFunction item in client.GetUserDefinedFunctionsAsync())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedFunctions(CancellationToken)">
+      <example>
+This sample shows how to call GetUserDefinedFunctions.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+foreach (UserDefinedFunction item in client.GetUserDefinedFunctions())
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedFunctionsAsync(RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedFunctionsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+await foreach (BinaryData item in client.GetUserDefinedFunctionsAsync(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("code").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetUserDefinedFunctions(RequestContext)">
+      <example>
+This sample shows how to call GetUserDefinedFunctions and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+
+foreach (BinaryData item in client.GetUserDefinedFunctions(null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("code").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>
