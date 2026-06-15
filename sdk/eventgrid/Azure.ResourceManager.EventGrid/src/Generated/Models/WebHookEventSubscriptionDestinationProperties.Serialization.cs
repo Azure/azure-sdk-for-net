@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 throw new FormatException($"The model {nameof(WebHookEventSubscriptionDestinationProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EndpointUri))
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpointUrl"u8);
-                writer.WriteStringValue(EndpointUri);
+                writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndpointBaseUri))
+            if (options.Format != "W" && Optional.IsDefined(BaseEndpoint))
             {
                 writer.WritePropertyName("endpointBaseUrl"u8);
-                writer.WriteStringValue(EndpointBaseUri);
+                writer.WriteStringValue(BaseEndpoint.AbsoluteUri);
             }
             if (Optional.IsDefined(MaxEventsPerBatch))
             {
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("azureActiveDirectoryTenantId"u8);
                 writer.WriteStringValue(AzureActiveDirectoryTenantId.Value);
             }
-            if (Optional.IsDefined(AzureActiveDirectoryApplicationIdOrUri))
+            if (Optional.IsDefined(UriOrAzureActiveDirectoryApplicationId))
             {
                 writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri"u8);
-                writer.WriteStringValue(AzureActiveDirectoryApplicationIdOrUri);
+                writer.WriteStringValue(UriOrAzureActiveDirectoryApplicationId);
             }
             if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
             {
@@ -161,12 +161,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            string endpointUri = default;
-            string endpointBaseUri = default;
+            Uri endpoint = default;
+            Uri baseEndpoint = default;
             int? maxEventsPerBatch = default;
             int? preferredBatchSizeInKilobytes = default;
             Guid? azureActiveDirectoryTenantId = default;
-            string azureActiveDirectoryApplicationIdOrUri = default;
+            string uriOrAzureActiveDirectoryApplicationId = default;
             IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
             TlsVersion? minimumTlsVersionAllowed = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -174,12 +174,20 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 if (prop.NameEquals("endpointUrl"u8))
                 {
-                    endpointUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("endpointBaseUrl"u8))
                 {
-                    endpointBaseUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    baseEndpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("maxEventsPerBatch"u8))
@@ -211,7 +219,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (prop.NameEquals("azureActiveDirectoryApplicationIdOrUri"u8))
                 {
-                    azureActiveDirectoryApplicationIdOrUri = prop.Value.GetString();
+                    uriOrAzureActiveDirectoryApplicationId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("deliveryAttributeMappings"u8))
@@ -243,12 +251,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             return new WebHookEventSubscriptionDestinationProperties(
-                endpointUri,
-                endpointBaseUri,
+                endpoint,
+                baseEndpoint,
                 maxEventsPerBatch,
                 preferredBatchSizeInKilobytes,
                 azureActiveDirectoryTenantId,
-                azureActiveDirectoryApplicationIdOrUri,
+                uriOrAzureActiveDirectoryApplicationId,
                 deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>(),
                 minimumTlsVersionAllowed,
                 additionalBinaryDataProperties);

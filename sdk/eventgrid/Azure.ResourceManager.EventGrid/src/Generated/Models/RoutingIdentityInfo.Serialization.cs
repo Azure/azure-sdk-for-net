@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 throw new FormatException($"The model {nameof(RoutingIdentityInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(IdentityType.Value.ToString());
             }
             if (Optional.IsDefined(UserAssignedIdentity))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            RoutingIdentityType? @type = default;
+            RoutingIdentityType? identityType = default;
             string userAssignedIdentity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    @type = new RoutingIdentityType(prop.Value.GetString());
+                    identityType = new RoutingIdentityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentity"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RoutingIdentityInfo(@type, userAssignedIdentity, additionalBinaryDataProperties);
+            return new RoutingIdentityInfo(identityType, userAssignedIdentity, additionalBinaryDataProperties);
         }
     }
 }

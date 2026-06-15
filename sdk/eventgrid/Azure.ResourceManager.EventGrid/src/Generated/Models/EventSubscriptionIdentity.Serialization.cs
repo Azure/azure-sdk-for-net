@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 throw new FormatException($"The model {nameof(EventSubscriptionIdentity)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(IdentityType.Value.ToString());
             }
             if (Optional.IsDefined(UserAssignedIdentity))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            EventSubscriptionIdentityType? @type = default;
+            EventSubscriptionIdentityType? identityType = default;
             string userAssignedIdentity = default;
             FederatedIdentityCredentialInfo federatedIdentityCredentialInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    @type = new EventSubscriptionIdentityType(prop.Value.GetString());
+                    identityType = new EventSubscriptionIdentityType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("userAssignedIdentity"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EventSubscriptionIdentity(@type, userAssignedIdentity, federatedIdentityCredentialInfo, additionalBinaryDataProperties);
+            return new EventSubscriptionIdentity(identityType, userAssignedIdentity, federatedIdentityCredentialInfo, additionalBinaryDataProperties);
         }
     }
 }

@@ -23,21 +23,17 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EventSubscriptionIdentity"/>. </summary>
-        /// <param name="type"> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </param>
+        /// <param name="identityType"> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </param>
         /// <param name="userAssignedIdentity"> The user identity associated with the resource. </param>
         /// <param name="federatedIdentityCredentialInfo"> The details of the Federated Identity Credential (FIC) used with the resource delivery. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventSubscriptionIdentity(EventSubscriptionIdentityType? @type, string userAssignedIdentity, FederatedIdentityCredentialInfo federatedIdentityCredentialInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventSubscriptionIdentity(EventSubscriptionIdentityType? identityType, string userAssignedIdentity, FederatedIdentityCredentialInfo federatedIdentityCredentialInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            IdentityType = identityType;
             UserAssignedIdentity = userAssignedIdentity;
             FederatedIdentityCredentialInfo = federatedIdentityCredentialInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </summary>
-        [WirePath("type")]
-        public EventSubscriptionIdentityType? Type { get; set; }
 
         /// <summary> The user identity associated with the resource. </summary>
         [WirePath("userAssignedIdentity")]

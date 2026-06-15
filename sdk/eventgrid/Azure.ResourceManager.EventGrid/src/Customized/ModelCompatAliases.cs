@@ -13,11 +13,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class EventSubscriptionIdentity
     {
         [WirePath("type")]
-        public EventSubscriptionIdentityType? IdentityType
-        {
-            get => Type;
-            set => Type = value;
-        }
+        public EventSubscriptionIdentityType? IdentityType { get; set; }
     }
 
     public partial class NamespaceTopicEventSubscriptionPatch
@@ -25,8 +21,12 @@ namespace Azure.ResourceManager.EventGrid.Models
         [WirePath("properties.expirationTimeUtc")]
         public DateTimeOffset? ExpireOn
         {
-            get => ExpirationTimeUtc;
-            set => ExpirationTimeUtc = value;
+            get => Properties is null ? default : Properties.ExpireOn;
+            set
+            {
+                Properties ??= new SubscriptionUpdateParametersProperties();
+                Properties.ExpireOn = value;
+            }
         }
     }
 
@@ -35,38 +35,46 @@ namespace Azure.ResourceManager.EventGrid.Models
         [WirePath("properties.expirationTimeIfNotActivatedUtc")]
         public DateTimeOffset? ExpireOnIfNotActivated
         {
-            get => ExpirationTimeIfNotActivatedUtc;
-            set => ExpirationTimeIfNotActivatedUtc = value;
+            get => Properties is null ? default : Properties.ExpireOnIfNotActivated;
+            set
+            {
+                Properties ??= new ChannelUpdateParametersProperties();
+                Properties.ExpireOnIfNotActivated = value;
+            }
         }
     }
 
     public partial class RoutingIdentityInfo
     {
         [WirePath("type")]
-        public RoutingIdentityType? IdentityType
-        {
-            get => Type;
-            set => Type = value;
-        }
+        public RoutingIdentityType? IdentityType { get; set; }
     }
 
     public partial class WebHookEventSubscriptionDestination
     {
         [WirePath("properties.endpointBaseUrl")]
-        public Uri BaseEndpoint => string.IsNullOrEmpty(EndpointBaseUri) ? null : new Uri(EndpointBaseUri, UriKind.RelativeOrAbsolute);
+        public Uri BaseEndpoint => Properties is null ? default : Properties.BaseEndpoint;
 
         [WirePath("properties.endpointUrl")]
         public Uri Endpoint
         {
-            get => string.IsNullOrEmpty(EndpointUri) ? null : new Uri(EndpointUri, UriKind.RelativeOrAbsolute);
-            set => EndpointUri = value?.AbsoluteUri;
+            get => Properties is null ? default : Properties.Endpoint;
+            set
+            {
+                Properties ??= new WebHookEventSubscriptionDestinationProperties();
+                Properties.Endpoint = value;
+            }
         }
 
         [WirePath("properties.azureActiveDirectoryApplicationIdOrUri")]
         public string UriOrAzureActiveDirectoryApplicationId
         {
-            get => AzureActiveDirectoryApplicationIdOrUri;
-            set => AzureActiveDirectoryApplicationIdOrUri = value;
+            get => Properties is null ? default : Properties.UriOrAzureActiveDirectoryApplicationId;
+            set
+            {
+                Properties ??= new WebHookEventSubscriptionDestinationProperties();
+                Properties.UriOrAzureActiveDirectoryApplicationId = value;
+            }
         }
     }
 

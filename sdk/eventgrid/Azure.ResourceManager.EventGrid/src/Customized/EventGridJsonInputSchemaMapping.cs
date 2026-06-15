@@ -16,83 +16,33 @@ namespace Azure.ResourceManager.EventGrid.Models
         [WirePath("properties.id.sourceField")]
         public string IdSourceField
         {
-            get => Id is null ? default : Id.SourceField;
+            get => Properties is null ? default : Properties.IdSourceField;
             set
             {
-                if (Id is null)
-                {
-                    Id = new JsonField();
-                }
-
-                Id.SourceField = value;
+                Properties ??= new JsonInputSchemaMappingProperties();
+                Properties.IdSourceField = value;
             }
         }
 
         [WirePath("properties.topic.sourceField")]
         public string TopicSourceField
         {
-            get => Topic is null ? default : Topic.SourceField;
+            get => Properties is null ? default : Properties.TopicSourceField;
             set
             {
-                if (Topic is null)
-                {
-                    Topic = new JsonField();
-                }
-
-                Topic.SourceField = value;
+                Properties ??= new JsonInputSchemaMappingProperties();
+                Properties.TopicSourceField = value;
             }
         }
 
         [WirePath("properties.eventTime.sourceField")]
         public string EventTimeSourceField
         {
-            get => EventTime is null ? default : EventTime.SourceField;
+            get => Properties is null ? default : Properties.EventTimeSourceField;
             set
             {
-                if (EventTime is null)
-                {
-                    EventTime = new JsonField();
-                }
-
-                EventTime.SourceField = value;
-            }
-        }
-
-        internal JsonField Id
-        {
-            get => Properties is null ? default : Properties.Id;
-            set
-            {
-                EnsureProperties();
-                Properties.Id = value;
-            }
-        }
-
-        internal JsonField Topic
-        {
-            get => Properties is null ? default : Properties.Topic;
-            set
-            {
-                EnsureProperties();
-                Properties.Topic = value;
-            }
-        }
-
-        internal JsonField EventTime
-        {
-            get => Properties is null ? default : Properties.EventTime;
-            set
-            {
-                EnsureProperties();
-                Properties.EventTime = value;
-            }
-        }
-
-        private void EnsureProperties()
-        {
-            if (Properties is null)
-            {
-                Properties = new JsonInputSchemaMappingProperties();
+                Properties ??= new JsonInputSchemaMappingProperties();
+                Properties.EventTimeSourceField = value;
             }
         }
     }

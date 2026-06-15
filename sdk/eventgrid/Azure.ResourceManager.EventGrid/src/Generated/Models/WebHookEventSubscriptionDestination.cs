@@ -32,34 +32,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         [WirePath("properties")]
         internal WebHookEventSubscriptionDestinationProperties Properties { get; set; }
 
-        /// <summary> The URL that represents the endpoint of the destination of an event subscription. </summary>
-        [WirePath("properties.endpointUrl")]
-        public string EndpointUri
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EndpointUri;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new WebHookEventSubscriptionDestinationProperties();
-                }
-                Properties.EndpointUri = value;
-            }
-        }
-
-        /// <summary> The base URL that represents the endpoint of the destination of an event subscription. </summary>
-        [WirePath("properties.endpointBaseUrl")]
-        public string EndpointBaseUri
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EndpointBaseUri;
-            }
-        }
-
         /// <summary> Maximum number of events per batch. </summary>
         [WirePath("properties.maxEventsPerBatch")]
         public int? MaxEventsPerBatch
@@ -111,24 +83,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                     Properties = new WebHookEventSubscriptionDestinationProperties();
                 }
                 Properties.AzureActiveDirectoryTenantId = value;
-            }
-        }
-
-        /// <summary> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </summary>
-        [WirePath("properties.azureActiveDirectoryApplicationIdOrUri")]
-        public string AzureActiveDirectoryApplicationIdOrUri
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AzureActiveDirectoryApplicationIdOrUri;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new WebHookEventSubscriptionDestinationProperties();
-                }
-                Properties.AzureActiveDirectoryApplicationIdOrUri = value;
             }
         }
 

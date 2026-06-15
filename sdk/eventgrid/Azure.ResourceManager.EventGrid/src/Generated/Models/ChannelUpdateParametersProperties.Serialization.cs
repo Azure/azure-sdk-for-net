@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 throw new FormatException($"The model {nameof(ChannelUpdateParametersProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ExpirationTimeIfNotActivatedUtc))
+            if (Optional.IsDefined(ExpireOnIfNotActivated))
             {
                 writer.WritePropertyName("expirationTimeIfNotActivatedUtc"u8);
-                writer.WriteStringValue(ExpirationTimeIfNotActivatedUtc.Value, "O");
+                writer.WriteStringValue(ExpireOnIfNotActivated.Value, "O");
             }
             if (Optional.IsDefined(PartnerDestinationInfo))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            DateTimeOffset? expirationTimeIfNotActivatedUtc = default;
+            DateTimeOffset? expireOnIfNotActivated = default;
             PartnerUpdateDestinationInfo partnerDestinationInfo = default;
             PartnerUpdateTopicInfo partnerTopicInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    expirationTimeIfNotActivatedUtc = prop.Value.GetDateTimeOffset("O");
+                    expireOnIfNotActivated = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("partnerDestinationInfo"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ChannelUpdateParametersProperties(expirationTimeIfNotActivatedUtc, partnerDestinationInfo, partnerTopicInfo, additionalBinaryDataProperties);
+            return new ChannelUpdateParametersProperties(expireOnIfNotActivated, partnerDestinationInfo, partnerTopicInfo, additionalBinaryDataProperties);
         }
     }
 }

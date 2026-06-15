@@ -35,27 +35,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         [WirePath("properties")]
         internal ChannelUpdateParametersProperties Properties { get; set; }
 
-        /// <summary>
-        /// Expiration time of the channel. If this timer expires while the corresponding partner topic or partner destination is never activated,
-        /// the channel and corresponding partner topic or partner destination are deleted.
-        /// </summary>
-        [WirePath("properties.expirationTimeIfNotActivatedUtc")]
-        public DateTimeOffset? ExpirationTimeIfNotActivatedUtc
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpirationTimeIfNotActivatedUtc;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ChannelUpdateParametersProperties();
-                }
-                Properties.ExpirationTimeIfNotActivatedUtc = value;
-            }
-        }
-
         /// <summary> Partner destination properties which can be updated if the channel is of type PartnerDestination. </summary>
         [WirePath("properties.partnerDestinationInfo")]
         public PartnerUpdateDestinationInfo PartnerDestinationInfo

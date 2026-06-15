@@ -23,19 +23,15 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RoutingIdentityInfo"/>. </summary>
-        /// <param name="type"> Routing identity type for topic spaces configuration. </param>
+        /// <param name="identityType"> Routing identity type for topic spaces configuration. </param>
         /// <param name="userAssignedIdentity"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingIdentityInfo(RoutingIdentityType? @type, string userAssignedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutingIdentityInfo(RoutingIdentityType? identityType, string userAssignedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            IdentityType = identityType;
             UserAssignedIdentity = userAssignedIdentity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Routing identity type for topic spaces configuration. </summary>
-        [WirePath("type")]
-        public RoutingIdentityType? Type { get; set; }
 
         /// <summary> Gets or sets the UserAssignedIdentity. </summary>
         [WirePath("userAssignedIdentity")]

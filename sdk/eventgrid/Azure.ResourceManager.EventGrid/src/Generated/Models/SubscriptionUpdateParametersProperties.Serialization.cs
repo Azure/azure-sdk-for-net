@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("filtersConfiguration"u8);
                 writer.WriteObjectValue(FiltersConfiguration, options);
             }
-            if (Optional.IsDefined(ExpirationTimeUtc))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTimeUtc"u8);
-                writer.WriteStringValue(ExpirationTimeUtc.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             DeliveryConfiguration deliveryConfiguration = default;
             DeliverySchema? eventDeliverySchema = default;
             FiltersConfiguration filtersConfiguration = default;
-            DateTimeOffset? expirationTimeUtc = default;
+            DateTimeOffset? expireOn = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    expirationTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 deliveryConfiguration,
                 eventDeliverySchema,
                 filtersConfiguration,
-                expirationTimeUtc,
+                expireOn,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }

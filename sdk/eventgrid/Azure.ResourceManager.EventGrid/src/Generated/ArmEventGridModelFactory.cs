@@ -309,12 +309,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new CustomWebhookAuthenticationManagedIdentity(@type, userAssignedIdentity, default);
         }
 
-        /// <param name="type"> Routing identity type for topic spaces configuration. </param>
+        /// <param name="identityType"> Routing identity type for topic spaces configuration. </param>
         /// <param name="userAssignedIdentity"></param>
         /// <returns> A new <see cref="Models.RoutingIdentityInfo"/> instance for mocking. </returns>
-        public static RoutingIdentityInfo RoutingIdentityInfo(RoutingIdentityType? @type = default, string userAssignedIdentity = default)
+        public static RoutingIdentityInfo RoutingIdentityInfo(RoutingIdentityType? identityType = default, string userAssignedIdentity = default)
         {
-            return new RoutingIdentityInfo(@type, userAssignedIdentity, default);
+            return new RoutingIdentityInfo(identityType, userAssignedIdentity, default);
         }
 
         /// <param name="ipMask"> IP Address in CIDR notation e.g., 10.0.0.0/8. </param>
@@ -581,16 +581,16 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new AzureADPartnerClientAuthentication(default, default, azureActiveDirectoryTenantId is null && azureActiveDirectoryApplicationIdOrUri is null ? default : new AzureADPartnerClientAuthenticationProperties(azureActiveDirectoryTenantId, azureActiveDirectoryApplicationIdOrUri, default));
         }
 
-        /// <param name="expirationTimeIfNotActivatedUtc">
+        /// <param name="expireOnIfNotActivated">
         /// Expiration time of the channel. If this timer expires while the corresponding partner topic or partner destination is never activated,
         /// the channel and corresponding partner topic or partner destination are deleted.
         /// </param>
         /// <param name="partnerDestinationInfo"> Partner destination properties which can be updated if the channel is of type PartnerDestination. </param>
         /// <param name="eventTypeInfo"> Event type info for the partner topic. </param>
         /// <returns> A new <see cref="Models.PartnerNamespaceChannelPatch"/> instance for mocking. </returns>
-        public static PartnerNamespaceChannelPatch PartnerNamespaceChannelPatch(DateTimeOffset? expirationTimeIfNotActivatedUtc = default, PartnerUpdateDestinationInfo partnerDestinationInfo = default, PartnerTopicEventTypeInfo eventTypeInfo = default)
+        public static PartnerNamespaceChannelPatch PartnerNamespaceChannelPatch(DateTimeOffset? expireOnIfNotActivated = default, PartnerUpdateDestinationInfo partnerDestinationInfo = default, PartnerTopicEventTypeInfo eventTypeInfo = default)
         {
-            return new PartnerNamespaceChannelPatch(expirationTimeIfNotActivatedUtc is null && partnerDestinationInfo is null && eventTypeInfo is null ? default : new ChannelUpdateParametersProperties(expirationTimeIfNotActivatedUtc, partnerDestinationInfo, new PartnerUpdateTopicInfo(eventTypeInfo, default), default), default);
+            return new PartnerNamespaceChannelPatch(expireOnIfNotActivated is null && partnerDestinationInfo is null && eventTypeInfo is null ? default : new ChannelUpdateParametersProperties(expireOnIfNotActivated, partnerDestinationInfo, new PartnerUpdateTopicInfo(eventTypeInfo, default), default), default);
         }
 
         /// <param name="endpointType"> Type of the endpoint for the partner destination. </param>
@@ -996,24 +996,24 @@ namespace Azure.ResourceManager.EventGrid.Models
                 default);
         }
 
-        /// <param name="endpointUri"> The URL that represents the endpoint of the destination of an event subscription. </param>
-        /// <param name="endpointBaseUri"> The base URL that represents the endpoint of the destination of an event subscription. </param>
+        /// <param name="endpoint"> The URL that represents the endpoint of the destination of an event subscription. </param>
+        /// <param name="baseEndpoint"> The base URL that represents the endpoint of the destination of an event subscription. </param>
         /// <param name="maxEventsPerBatch"> Maximum number of events per batch. </param>
         /// <param name="preferredBatchSizeInKilobytes"> Preferred batch size in Kilobytes. </param>
         /// <param name="azureActiveDirectoryTenantId"> The Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
-        /// <param name="azureActiveDirectoryApplicationIdOrUri"> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
+        /// <param name="uriOrAzureActiveDirectoryApplicationId"> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
         /// <param name="deliveryAttributeMappings"> Delivery attribute details. </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version that should be supported by webhook endpoint. </param>
         /// <returns> A new <see cref="Models.WebHookEventSubscriptionDestination"/> instance for mocking. </returns>
-        public static WebHookEventSubscriptionDestination WebHookEventSubscriptionDestination(string endpointUri = default, string endpointBaseUri = default, int? maxEventsPerBatch = default, int? preferredBatchSizeInKilobytes = default, Guid? azureActiveDirectoryTenantId = default, string azureActiveDirectoryApplicationIdOrUri = default, IEnumerable<DeliveryAttributeMapping> deliveryAttributeMappings = default, TlsVersion? minimumTlsVersionAllowed = default)
+        public static WebHookEventSubscriptionDestination WebHookEventSubscriptionDestination(Uri endpoint = default, Uri baseEndpoint = default, int? maxEventsPerBatch = default, int? preferredBatchSizeInKilobytes = default, Guid? azureActiveDirectoryTenantId = default, string uriOrAzureActiveDirectoryApplicationId = default, IEnumerable<DeliveryAttributeMapping> deliveryAttributeMappings = default, TlsVersion? minimumTlsVersionAllowed = default)
         {
-            return new WebHookEventSubscriptionDestination(default, default, endpointUri is null && endpointBaseUri is null && maxEventsPerBatch is null && preferredBatchSizeInKilobytes is null && azureActiveDirectoryTenantId is null && azureActiveDirectoryApplicationIdOrUri is null && deliveryAttributeMappings is null && minimumTlsVersionAllowed is null ? default : new WebHookEventSubscriptionDestinationProperties(
-                endpointUri,
-                endpointBaseUri,
+            return new WebHookEventSubscriptionDestination(default, default, endpoint is null && baseEndpoint is null && maxEventsPerBatch is null && preferredBatchSizeInKilobytes is null && azureActiveDirectoryTenantId is null && uriOrAzureActiveDirectoryApplicationId is null && deliveryAttributeMappings is null && minimumTlsVersionAllowed is null ? default : new WebHookEventSubscriptionDestinationProperties(
+                endpoint,
+                baseEndpoint,
                 maxEventsPerBatch,
                 preferredBatchSizeInKilobytes,
                 azureActiveDirectoryTenantId,
-                azureActiveDirectoryApplicationIdOrUri,
+                uriOrAzureActiveDirectoryApplicationId,
                 (deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>()).ToList(),
                 minimumTlsVersionAllowed,
                 default));
@@ -1131,13 +1131,13 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new DeliveryWithResourceIdentity(identity, destination, default);
         }
 
-        /// <param name="type"> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </param>
+        /// <param name="identityType"> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </param>
         /// <param name="userAssignedIdentity"> The user identity associated with the resource. </param>
         /// <param name="federatedClientId"> The Multi-Tenant Microsoft Entra ID Application where the Federated Identity Credential (FIC) is associated with. </param>
         /// <returns> A new <see cref="Models.EventSubscriptionIdentity"/> instance for mocking. </returns>
-        public static EventSubscriptionIdentity EventSubscriptionIdentity(EventSubscriptionIdentityType? @type = default, string userAssignedIdentity = default, string federatedClientId = default)
+        public static EventSubscriptionIdentity EventSubscriptionIdentity(EventSubscriptionIdentityType? identityType = default, string userAssignedIdentity = default, string federatedClientId = default)
         {
-            return new EventSubscriptionIdentity(@type, userAssignedIdentity, federatedClientId is null ? default : new FederatedIdentityCredentialInfo(federatedClientId, default), default);
+            return new EventSubscriptionIdentity(identityType, userAssignedIdentity, federatedClientId is null ? default : new FederatedIdentityCredentialInfo(federatedClientId, default), default);
         }
 
         /// <param name="subjectBeginsWith">
@@ -2390,16 +2390,16 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="deliveryConfiguration"> Information about the delivery configuration of the event subscription. </param>
         /// <param name="eventDeliverySchema"> The event delivery schema for the event subscription. </param>
         /// <param name="filtersConfiguration"> Information about the filter for the event subscription. </param>
-        /// <param name="expirationTimeUtc"> Expiration time of the event subscription. </param>
+        /// <param name="expireOn"> Expiration time of the event subscription. </param>
         /// <param name="tags"> Tags relating to Event Subscription resource. </param>
         /// <returns> A new <see cref="Models.NamespaceTopicEventSubscriptionPatch"/> instance for mocking. </returns>
-        public static NamespaceTopicEventSubscriptionPatch NamespaceTopicEventSubscriptionPatch(DeliveryConfiguration deliveryConfiguration = default, DeliverySchema? eventDeliverySchema = default, FiltersConfiguration filtersConfiguration = default, DateTimeOffset? expirationTimeUtc = default, IDictionary<string, string> tags = default)
+        public static NamespaceTopicEventSubscriptionPatch NamespaceTopicEventSubscriptionPatch(DeliveryConfiguration deliveryConfiguration = default, DeliverySchema? eventDeliverySchema = default, FiltersConfiguration filtersConfiguration = default, DateTimeOffset? expireOn = default, IDictionary<string, string> tags = default)
         {
-            return new NamespaceTopicEventSubscriptionPatch(deliveryConfiguration is null && eventDeliverySchema is null && filtersConfiguration is null && expirationTimeUtc is null && tags is null ? default : new SubscriptionUpdateParametersProperties(
+            return new NamespaceTopicEventSubscriptionPatch(deliveryConfiguration is null && eventDeliverySchema is null && filtersConfiguration is null && expireOn is null && tags is null ? default : new SubscriptionUpdateParametersProperties(
                 deliveryConfiguration,
                 eventDeliverySchema,
                 filtersConfiguration,
-                expirationTimeUtc,
+                expireOn,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default), default);
         }
@@ -2894,35 +2894,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                     provisioningState,
                     default),
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.WebHookEventSubscriptionDestination"/>. </summary>
-        /// <param name="endpoint"> The URL that represents the endpoint of the destination of an event subscription. </param>
-        /// <param name="baseEndpoint"> The base URL that represents the endpoint of the destination of an event subscription. </param>
-        /// <param name="maxEventsPerBatch"> Maximum number of events per batch. </param>
-        /// <param name="preferredBatchSizeInKilobytes"> Preferred batch size in Kilobytes. </param>
-        /// <param name="azureActiveDirectoryTenantId"> The Azure Active Directory Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
-        /// <param name="uriOrAzureActiveDirectoryApplicationId"> The Azure Active Directory Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
-        /// <param name="deliveryAttributeMappings">
-        /// Delivery attribute details.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
-        /// </param>
-        /// <param name="minimumTlsVersionAllowed"> Minimum TLS version that should be supported by webhook endpoint. </param>
-        /// <returns> A new <see cref="Models.WebHookEventSubscriptionDestination"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static WebHookEventSubscriptionDestination WebHookEventSubscriptionDestination(Uri endpoint = default, Uri baseEndpoint = default, int? maxEventsPerBatch = default, int? preferredBatchSizeInKilobytes = default, Guid? azureActiveDirectoryTenantId = default, string uriOrAzureActiveDirectoryApplicationId = default, IEnumerable<DeliveryAttributeMapping> deliveryAttributeMappings = default, TlsVersion? minimumTlsVersionAllowed = default)
-        {
-            return new WebHookEventSubscriptionDestination(default, default, maxEventsPerBatch is null && preferredBatchSizeInKilobytes is null && azureActiveDirectoryTenantId is null && deliveryAttributeMappings is null && minimumTlsVersionAllowed is null ? default : new WebHookEventSubscriptionDestinationProperties(
-                default,
-                default,
-                maxEventsPerBatch,
-                preferredBatchSizeInKilobytes,
-                azureActiveDirectoryTenantId,
-                default,
-                (deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>()).ToList(),
-                minimumTlsVersionAllowed,
-                default));
         }
     }
 }

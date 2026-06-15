@@ -89,24 +89,6 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
         }
 
-        /// <summary> Expiration time of the event subscription. </summary>
-        [WirePath("properties.expirationTimeUtc")]
-        public DateTimeOffset? ExpirationTimeUtc
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ExpirationTimeUtc;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SubscriptionUpdateParametersProperties();
-                }
-                Properties.ExpirationTimeUtc = value;
-            }
-        }
-
         /// <summary> Tags relating to Event Subscription resource. </summary>
         [WirePath("properties.tags")]
         public IDictionary<string, string> Tags
