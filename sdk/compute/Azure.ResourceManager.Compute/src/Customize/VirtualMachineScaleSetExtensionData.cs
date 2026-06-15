@@ -6,6 +6,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
+using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
 
@@ -15,6 +17,41 @@ namespace Azure.ResourceManager.Compute
     // Without restoring the direct base type, VMSS extension inline request bodies no longer serialize the extension name.
     public partial class VirtualMachineScaleSetExtensionData : ResourceData
     {
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetExtensionData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetExtensionData)} does not support writing '{format}' format.");
+            }
+            if (options.Format == "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
         /// <summary> Initializes a new instance of VmssExtensionData. </summary>
         /// <param name="name"> The name. </param>
         // Backward compatibility: the previously shipped SDK exposed this name-only constructor.
