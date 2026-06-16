@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string organizationname, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string organizationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Napster.CompanionAPI/organizations/", false);
-            uri.AppendPath(organizationname, true);
+            uri.AppendPath(organizationName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string organizationname, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string organizationName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Napster.CompanionAPI/organizations/", false);
-            uri.AppendPath(organizationname, true);
+            uri.AppendPath(organizationName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string organizationname, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string organizationName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Napster.CompanionAPI/organizations/", false);
-            uri.AppendPath(organizationname, true);
+            uri.AppendPath(organizationName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string organizationname, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string organizationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Napster.CompanionAPI/organizations/", false);
-            uri.AppendPath(organizationname, true);
+            uri.AppendPath(organizationName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             return message;
         }
 
-        internal HttpMessage CreateLinkSaaSRequest(Guid subscriptionId, string resourceGroupName, string organizationname, RequestContent content, RequestContext context)
+        internal HttpMessage CreateLinkSaaSRequest(Guid subscriptionId, string resourceGroupName, string organizationName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Napster.CompanionAPI/organizations/", false);
-            uri.AppendPath(organizationname, true);
+            uri.AppendPath(organizationName, true);
             uri.AppendPath("/linkSaaS", false);
             if (_apiVersion != null)
             {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             return message;
         }
 
-        internal HttpMessage CreateLatestLinkedSaaSRequest(Guid subscriptionId, string resourceGroupName, string organizationname, RequestContext context)
+        internal HttpMessage CreateLatestLinkedSaaSRequest(Guid subscriptionId, string resourceGroupName, string organizationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Napster.CompanionAPI/organizations/", false);
-            uri.AppendPath(organizationname, true);
+            uri.AppendPath(organizationName, true);
             uri.AppendPath("/latestLinkedSaaS", false);
             if (_apiVersion != null)
             {

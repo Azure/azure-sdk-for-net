@@ -16,24 +16,24 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ActivateSaaSParameterRequest))]
-    [ModelReaderWriterBuildable(typeof(LatestLinkedSaaSResponse))]
+    [ModelReaderWriterBuildable(typeof(ActivateSaaSParameterContent))]
+    [ModelReaderWriterBuildable(typeof(LatestLinkedSaaSResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(MarketplaceDetails))]
-    [ModelReaderWriterBuildable(typeof(OfferDetails))]
-    [ModelReaderWriterBuildable(typeof(OrganizationProperties))]
-    [ModelReaderWriterBuildable(typeof(OrganizationResource))]
-    [ModelReaderWriterBuildable(typeof(OrganizationResourceData))]
+    [ModelReaderWriterBuildable(typeof(NapsterMarketplaceDetails))]
+    [ModelReaderWriterBuildable(typeof(NapsterOfferDetails))]
+    [ModelReaderWriterBuildable(typeof(NapsterOrganizationProperties))]
+    [ModelReaderWriterBuildable(typeof(NapsterOrganizationResource))]
+    [ModelReaderWriterBuildable(typeof(NapsterOrganizationResourceData))]
+    [ModelReaderWriterBuildable(typeof(NapsterOrganizationResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(NapsterPartnerProperties))]
+    [ModelReaderWriterBuildable(typeof(NapsterSingleSignOnPropertiesV2))]
+    [ModelReaderWriterBuildable(typeof(NapsterUserDetails))]
     [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(OrganizationResourcePatch))]
-    [ModelReaderWriterBuildable(typeof(PartnerProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SaaSData))]
-    [ModelReaderWriterBuildable(typeof(SaaSResourceDetailsResponse))]
-    [ModelReaderWriterBuildable(typeof(SingleSignOnPropertiesV2))]
+    [ModelReaderWriterBuildable(typeof(SaaSInfo))]
+    [ModelReaderWriterBuildable(typeof(SaaSResourceDetailsData))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(UserDetails))]
     public partial class AzureResourceManagerNapsterOmniagentApiContext : ModelReaderWriterContext
     {
     }

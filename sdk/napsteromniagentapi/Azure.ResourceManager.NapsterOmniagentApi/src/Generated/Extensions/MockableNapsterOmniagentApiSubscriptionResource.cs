@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OrganizationResource> GetOrganizationResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NapsterOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NapsterOrganizationResource> GetNapsterOrganizationResourcesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<OrganizationResourceData, OrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetOrganizationResources"), data => new OrganizationResource(Client, data));
+            return new AsyncPageableWrapper<NapsterOrganizationResourceData, NapsterOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizationResources"), data => new NapsterOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OrganizationResource> GetOrganizationResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NapsterOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NapsterOrganizationResource> GetNapsterOrganizationResources(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<OrganizationResourceData, OrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetOrganizationResources"), data => new OrganizationResource(Client, data));
+            return new PageableWrapper<NapsterOrganizationResourceData, NapsterOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizationResources"), data => new NapsterOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<SaaSResourceDetailsResponse>> ActivateResourceAsync(WaitUntil waitUntil, ActivateSaaSParameterRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SaaSResourceDetailsData>> ActivateResourceAsync(WaitUntil waitUntil, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterRequest.ToRequestContent(content), context);
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NapsterOmniagentApiArmOperation<SaaSResourceDetailsResponse> operation = new NapsterOmniagentApiArmOperation<SaaSResourceDetailsResponse>(
-                    new SaaSResourceDetailsResponseOperationSource(),
+                NapsterOmniagentApiArmOperation<SaaSResourceDetailsData> operation = new NapsterOmniagentApiArmOperation<SaaSResourceDetailsData>(
+                    new SaaSResourceDetailsDataOperationSource(),
                     SaaSOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<SaaSResourceDetailsResponse> ActivateResource(WaitUntil waitUntil, ActivateSaaSParameterRequest content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SaaSResourceDetailsData> ActivateResource(WaitUntil waitUntil, ActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterRequest.ToRequestContent(content), context);
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSParameterContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NapsterOmniagentApiArmOperation<SaaSResourceDetailsResponse> operation = new NapsterOmniagentApiArmOperation<SaaSResourceDetailsResponse>(
-                    new SaaSResourceDetailsResponseOperationSource(),
+                NapsterOmniagentApiArmOperation<SaaSResourceDetailsData> operation = new NapsterOmniagentApiArmOperation<SaaSResourceDetailsData>(
+                    new SaaSResourceDetailsDataOperationSource(),
                     SaaSOperationGroupClientDiagnostics,
                     Pipeline,
                     message.Request,

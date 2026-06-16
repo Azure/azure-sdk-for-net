@@ -26,13 +26,14 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="NapsterOmniagentApi.OrganizationResourceData"/> instance for mocking. </returns>
-        public static OrganizationResourceData OrganizationResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OrganizationProperties properties = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="NapsterOmniagentApi.NapsterOrganizationResourceData"/> instance for mocking. </returns>
+        public static NapsterOrganizationResourceData NapsterOrganizationResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NapsterOrganizationProperties properties = default, string organizationName = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new OrganizationResourceData(
+            return new NapsterOrganizationResourceData(
                 id,
                 name,
                 resourceType,
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                organizationName,
                 identity,
                 default);
         }
@@ -50,26 +52,26 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
         /// <param name="partnerApplication"> Application name. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerApplication"/> is null. </exception>
-        /// <returns> A new <see cref="Models.OrganizationProperties"/> instance for mocking. </returns>
-        public static OrganizationProperties OrganizationProperties(MarketplaceDetails marketplace = default, UserDetails user = default, ResourceProvisioningState? provisioningState = default, string partnerApplication = default, SingleSignOnPropertiesV2 singleSignOnProperties = default)
+        /// <returns> A new <see cref="Models.NapsterOrganizationProperties"/> instance for mocking. </returns>
+        public static NapsterOrganizationProperties NapsterOrganizationProperties(NapsterMarketplaceDetails marketplace = default, NapsterUserDetails user = default, NapsterProvisioningState? provisioningState = default, string partnerApplication = default, NapsterSingleSignOnPropertiesV2 singleSignOnProperties = default)
         {
-            return new OrganizationProperties(
+            return new NapsterOrganizationProperties(
                 marketplace,
                 user,
                 provisioningState,
-                partnerApplication is null ? default : new PartnerProperties(partnerApplication, default),
+                partnerApplication is null ? default : new NapsterPartnerProperties(partnerApplication, default),
                 singleSignOnProperties,
                 default);
         }
 
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
-        /// <param name="saasResourceId"> Marketplace SaaS Resource Id. </param>
+        /// <param name="saaSId"> Marketplace SaaS Resource Id. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
-        /// <returns> A new <see cref="Models.MarketplaceDetails"/> instance for mocking. </returns>
-        public static MarketplaceDetails MarketplaceDetails(string subscriptionId = default, MarketplaceSubscriptionStatus? subscriptionStatus = default, string saasResourceId = default, OfferDetails offerDetails = default)
+        /// <returns> A new <see cref="Models.NapsterMarketplaceDetails"/> instance for mocking. </returns>
+        public static NapsterMarketplaceDetails NapsterMarketplaceDetails(string subscriptionId = default, NapsterMarketplaceSubscriptionStatus? subscriptionStatus = default, string saaSId = default, NapsterOfferDetails offerDetails = default)
         {
-            return new MarketplaceDetails(subscriptionId, subscriptionStatus, saasResourceId, offerDetails, default);
+            return new NapsterMarketplaceDetails(subscriptionId, subscriptionStatus, saaSId, offerDetails, default);
         }
 
         /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
@@ -78,10 +80,10 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
         /// <param name="planName"> Plan Name for the marketplace offer. </param>
         /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
         /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
-        /// <returns> A new <see cref="Models.OfferDetails"/> instance for mocking. </returns>
-        public static OfferDetails OfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default)
+        /// <returns> A new <see cref="Models.NapsterOfferDetails"/> instance for mocking. </returns>
+        public static NapsterOfferDetails NapsterOfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default)
         {
-            return new OfferDetails(
+            return new NapsterOfferDetails(
                 publisherId,
                 offerId,
                 planId,
@@ -96,10 +98,10 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
         /// <param name="emailAddress"> Email address of the user. </param>
         /// <param name="upn"> User's principal name. </param>
         /// <param name="phoneNumber"> User's phone number. </param>
-        /// <returns> A new <see cref="Models.UserDetails"/> instance for mocking. </returns>
-        public static UserDetails UserDetails(string firstName = default, string lastName = default, string emailAddress = default, string upn = default, string phoneNumber = default)
+        /// <returns> A new <see cref="Models.NapsterUserDetails"/> instance for mocking. </returns>
+        public static NapsterUserDetails NapsterUserDetails(string firstName = default, string lastName = default, string emailAddress = default, string upn = default, string phoneNumber = default)
         {
-            return new UserDetails(
+            return new NapsterUserDetails(
                 firstName,
                 lastName,
                 emailAddress,
@@ -113,12 +115,12 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
         /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
         /// <param name="uri"> URL for SSO to be used by the partner to redirect the user to their system. </param>
         /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
-        /// <returns> A new <see cref="Models.SingleSignOnPropertiesV2"/> instance for mocking. </returns>
-        public static SingleSignOnPropertiesV2 SingleSignOnPropertiesV2(SingleSignOnType @type = default, SingleSignOnStates? state = default, string enterpriseAppId = default, string uri = default, IEnumerable<string> aadDomains = default)
+        /// <returns> A new <see cref="Models.NapsterSingleSignOnPropertiesV2"/> instance for mocking. </returns>
+        public static NapsterSingleSignOnPropertiesV2 NapsterSingleSignOnPropertiesV2(NapsterSingleSignOnType @type = default, NapsterSingleSignOnState? state = default, string enterpriseAppId = default, string uri = default, IEnumerable<string> aadDomains = default)
         {
             aadDomains ??= new ChangeTrackingList<string>();
 
-            return new SingleSignOnPropertiesV2(
+            return new NapsterSingleSignOnPropertiesV2(
                 @type,
                 state,
                 enterpriseAppId,
@@ -129,35 +131,35 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.OrganizationResourcePatch"/> instance for mocking. </returns>
-        public static OrganizationResourcePatch OrganizationResourcePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="Models.NapsterOrganizationResourcePatch"/> instance for mocking. </returns>
+        public static NapsterOrganizationResourcePatch NapsterOrganizationResourcePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new OrganizationResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
+            return new NapsterOrganizationResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
-        /// <param name="saaSResourceId"> SaaS resource id. </param>
-        /// <returns> A new <see cref="Models.SaaSData"/> instance for mocking. </returns>
-        public static SaaSData SaaSData(string saaSResourceId = default)
+        /// <param name="saaSId"> SaaS resource id. </param>
+        /// <returns> A new <see cref="Models.SaaSInfo"/> instance for mocking. </returns>
+        public static SaaSInfo SaaSInfo(string saaSId = default)
         {
-            return new SaaSData(saaSResourceId, default);
+            return new SaaSInfo(saaSId, default);
         }
 
-        /// <param name="saaSResourceId"> SaaS resource id. </param>
+        /// <param name="saaSId"> SaaS resource id. </param>
         /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
-        /// <returns> A new <see cref="Models.LatestLinkedSaaSResponse"/> instance for mocking. </returns>
-        public static LatestLinkedSaaSResponse LatestLinkedSaaSResponse(string saaSResourceId = default, bool? isHiddenSaaS = default)
+        /// <returns> A new <see cref="Models.LatestLinkedSaaSResult"/> instance for mocking. </returns>
+        public static LatestLinkedSaaSResult LatestLinkedSaaSResult(string saaSId = default, bool? isHiddenSaaS = default)
         {
-            return new LatestLinkedSaaSResponse(saaSResourceId, isHiddenSaaS, default);
+            return new LatestLinkedSaaSResult(saaSId, isHiddenSaaS, default);
         }
 
         /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
         /// <param name="publisherId"> Publisher Id for Napster resource. </param>
-        /// <returns> A new <see cref="Models.ActivateSaaSParameterRequest"/> instance for mocking. </returns>
-        public static ActivateSaaSParameterRequest ActivateSaaSParameterRequest(string saasGuid = default, string publisherId = default)
+        /// <returns> A new <see cref="Models.ActivateSaaSParameterContent"/> instance for mocking. </returns>
+        public static ActivateSaaSParameterContent ActivateSaaSParameterContent(Guid saasGuid = default, string publisherId = default)
         {
-            return new ActivateSaaSParameterRequest(saasGuid, publisherId, default);
+            return new ActivateSaaSParameterContent(saasGuid, publisherId, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -165,10 +167,10 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="saasId"> Id of the Marketplace SaaS Resource. </param>
-        /// <returns> A new <see cref="Models.SaaSResourceDetailsResponse"/> instance for mocking. </returns>
-        public static SaaSResourceDetailsResponse SaaSResourceDetailsResponse(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string saasId = default)
+        /// <returns> A new <see cref="Models.SaaSResourceDetailsData"/> instance for mocking. </returns>
+        public static SaaSResourceDetailsData SaaSResourceDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string saasId = default)
         {
-            return new SaaSResourceDetailsResponse(
+            return new SaaSResourceDetailsData(
                 id,
                 name,
                 resourceType,

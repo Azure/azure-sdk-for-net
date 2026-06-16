@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
         {
         }
 
-        /// <summary> Gets a collection of OrganizationResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of OrganizationResources and their operations over a OrganizationResource. </returns>
-        public virtual OrganizationResourceCollection GetOrganizationResources()
+        /// <summary> Gets a collection of NapsterOrganizationResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NapsterOrganizationResources and their operations over a NapsterOrganizationResource. </returns>
+        public virtual NapsterOrganizationResourceCollection GetNapsterOrganizationResources()
         {
-            return GetCachedClient(client => new OrganizationResourceCollection(client, Id));
+            return GetCachedClient(client => new NapsterOrganizationResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -55,16 +55,16 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="organizationname"> Name of the Organization resource. </param>
+        /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<OrganizationResource>> GetOrganizationResourceAsync(string organizationname, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NapsterOrganizationResource>> GetNapsterOrganizationResourceAsync(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            return await GetOrganizationResources().GetAsync(organizationname, cancellationToken).ConfigureAwait(false);
+            return await GetNapsterOrganizationResources().GetAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -84,16 +84,16 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="organizationname"> Name of the Organization resource. </param>
+        /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="organizationname"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<OrganizationResource> GetOrganizationResource(string organizationname, CancellationToken cancellationToken = default)
+        public virtual Response<NapsterOrganizationResource> GetNapsterOrganizationResource(string organizationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(organizationname, nameof(organizationname));
+            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            return GetOrganizationResources().Get(organizationname, cancellationToken);
+            return GetNapsterOrganizationResources().Get(organizationName, cancellationToken);
         }
     }
 }
