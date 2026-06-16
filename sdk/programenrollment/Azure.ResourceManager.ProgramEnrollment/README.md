@@ -1,4 +1,4 @@
-# Azure.ResourceManager.ProgramEnrollment management client library for .NET
+# Microsoft Azure ProgramEnrollment management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
