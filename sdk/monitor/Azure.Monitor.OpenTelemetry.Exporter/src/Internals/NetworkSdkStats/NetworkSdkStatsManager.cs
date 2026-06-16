@@ -27,12 +27,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
 
         private readonly string _customerIkey;
         private readonly IPlatform _platform;
+        private readonly string _attach;
+        private readonly string? _runtimeVersion;
+        private readonly string _operatingSystem;
         private string? _resourceProvider;
 
         internal NetworkSdkStatsManager(ConnectionVars connectionVars, IPlatform platform)
         {
             _platform = platform;
             _customerIkey = string.IsNullOrEmpty(connectionVars?.InstrumentationKey) ? "N/A" : connectionVars!.InstrumentationKey;
+
+            // These dimensions are invariant for the process lifetime, so capture them
+            // once instead of recomputing on every recorded measurement (matches
+            // AzureMonitorStatsbeat, which caches the OS name at construction).
+            _attach = SdkVersionUtils.SdkVersionPrefix != null ? "IntegratedAuto" : "Manual";
+            _runtimeVersion = SdkVersionUtils.GetVersion(typeof(object));
+            _operatingSystem = platform.GetOSPlatformName();
         }
 
         /// <summary>
@@ -84,10 +94,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats
             return new TagList
             {
                 { "rp", _resourceProvider },
-                { "attach", SdkVersionUtils.SdkVersionPrefix != null ? "IntegratedAuto" : "Manual" },
+                { "attach", _attach },
                 { "cikey", _customerIkey },
-                { "runtimeVersion", SdkVersionUtils.GetVersion(typeof(object)) },
-                { "os", _platform.GetOSPlatformName() },
+                { "runtimeVersion", _runtimeVersion },
+                { "os", _operatingSystem },
                 { "language", Language },
                 // Read on every recording so the exporter version reflects any late hydration
                 // performed by ResourceExtensions (similar to AzureMonitorStatsbeat).
