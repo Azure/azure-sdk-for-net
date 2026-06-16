@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("deployments"u8);
                 writer.WriteStartArray();
-                foreach (ManagedComputeDeploymentInfo item in Deployments)
+                foreach (CognitiveServicesManagedComputeDeploymentInfo item in Deployments)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             double? limit = default;
             double? currentValue = default;
             string offerScope = default;
-            IList<ManagedComputeDeploymentInfo> deployments = default;
+            IList<CognitiveServicesManagedComputeDeploymentInfo> deployments = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<ManagedComputeDeploymentInfo> array = new List<ManagedComputeDeploymentInfo>();
+                    List<CognitiveServicesManagedComputeDeploymentInfo> array = new List<CognitiveServicesManagedComputeDeploymentInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedComputeDeploymentInfo.DeserializeManagedComputeDeploymentInfo(item, options));
+                        array.Add(CognitiveServicesManagedComputeDeploymentInfo.DeserializeCognitiveServicesManagedComputeDeploymentInfo(item, options));
                     }
                     deployments = array;
                     continue;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 limit,
                 currentValue,
                 offerScope,
-                deployments ?? new ChangeTrackingList<ManagedComputeDeploymentInfo>(),
+                deployments ?? new ChangeTrackingList<CognitiveServicesManagedComputeDeploymentInfo>(),
                 additionalBinaryDataProperties);
         }
     }

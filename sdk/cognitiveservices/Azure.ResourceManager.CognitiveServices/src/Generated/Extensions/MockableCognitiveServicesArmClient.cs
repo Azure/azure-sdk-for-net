@@ -278,13 +278,13 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             return new CognitiveServicesAgentDeploymentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ManagedComputeDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="CognitiveServicesManagedComputeDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedComputeDeploymentResource"/> object. </returns>
-        public virtual ManagedComputeDeploymentResource GetManagedComputeDeploymentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CognitiveServicesManagedComputeDeploymentResource"/> object. </returns>
+        public virtual CognitiveServicesManagedComputeDeploymentResource GetCognitiveServicesManagedComputeDeploymentResource(ResourceIdentifier id)
         {
-            ManagedComputeDeploymentResource.ValidateResourceId(id);
-            return new ManagedComputeDeploymentResource(Client, id);
+            CognitiveServicesManagedComputeDeploymentResource.ValidateResourceId(id);
+            return new CognitiveServicesManagedComputeDeploymentResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="CognitiveServicesComputeResource"/> along with the instance operations that can be performed on it but with no data. </summary>

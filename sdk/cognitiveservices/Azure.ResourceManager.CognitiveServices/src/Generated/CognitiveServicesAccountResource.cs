@@ -1863,11 +1863,11 @@ namespace Azure.ResourceManager.CognitiveServices
             return GetAllCognitiveServicesManagedNetworkSettings().Get(managedNetworkName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedComputeDeployments in the <see cref="CognitiveServicesAccountResource"/>. </summary>
-        /// <returns> An object representing collection of ManagedComputeDeployments and their operations over a ManagedComputeDeploymentResource. </returns>
-        public virtual ManagedComputeDeploymentCollection GetManagedComputeDeployments()
+        /// <summary> Gets a collection of CognitiveServicesManagedComputeDeployments in the <see cref="CognitiveServicesAccountResource"/>. </summary>
+        /// <returns> An object representing collection of CognitiveServicesManagedComputeDeployments and their operations over a CognitiveServicesManagedComputeDeploymentResource. </returns>
+        public virtual CognitiveServicesManagedComputeDeploymentCollection GetCognitiveServicesManagedComputeDeployments()
         {
-            return GetCachedClient(client => new ManagedComputeDeploymentCollection(client, Id));
+            return GetCachedClient(client => new CognitiveServicesManagedComputeDeploymentCollection(client, Id));
         }
 
         /// <summary> Gets the specified managed compute deployment associated with the Cognitive Services account. </summary>
@@ -1876,11 +1876,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedComputeDeploymentResource>> GetManagedComputeDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesManagedComputeDeploymentResource>> GetCognitiveServicesManagedComputeDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            return await GetManagedComputeDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+            return await GetCognitiveServicesManagedComputeDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the specified managed compute deployment associated with the Cognitive Services account. </summary>
@@ -1889,11 +1889,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ManagedComputeDeploymentResource> GetManagedComputeDeployment(string deploymentName, CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesManagedComputeDeploymentResource> GetCognitiveServicesManagedComputeDeployment(string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            return GetManagedComputeDeployments().Get(deploymentName, cancellationToken);
+            return GetCognitiveServicesManagedComputeDeployments().Get(deploymentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CognitiveServicesComputes in the <see cref="CognitiveServicesAccountResource"/>. </summary>

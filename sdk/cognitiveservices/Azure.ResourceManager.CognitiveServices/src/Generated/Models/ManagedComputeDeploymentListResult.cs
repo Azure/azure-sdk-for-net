@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentListResult"/>. </summary>
         internal ManagedComputeDeploymentListResult()
         {
-            Value = new ChangeTrackingList<ManagedComputeDeploymentData>();
+            Value = new ChangeTrackingList<CognitiveServicesManagedComputeDeploymentData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentListResult"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of managed compute deployments. </param>
         /// <param name="value"> Gets the list of managed compute deployments and their properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedComputeDeploymentListResult(string nextLink, IReadOnlyList<ManagedComputeDeploymentData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedComputeDeploymentListResult(string nextLink, IReadOnlyList<CognitiveServicesManagedComputeDeploymentData> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NextLink = nextLink;
             Value = value;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Gets the list of managed compute deployments and their properties. </summary>
         [WirePath("value")]
-        public IReadOnlyList<ManagedComputeDeploymentData> Value { get; }
+        public IReadOnlyList<CognitiveServicesManagedComputeDeploymentData> Value { get; }
     }
 }

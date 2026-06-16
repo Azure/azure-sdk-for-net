@@ -14,7 +14,7 @@ using Azure.ResourceManager.CognitiveServices.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    internal partial class ManagedComputeDeploymentsGetAllCollectionResultOfT : Pageable<ManagedComputeDeploymentData>
+    internal partial class ManagedComputeDeploymentsGetAllCollectionResultOfT : Pageable<CognitiveServicesManagedComputeDeploymentData>
     {
         private readonly ManagedComputeDeployments _client;
         private readonly string _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of ManagedComputeDeploymentsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ManagedComputeDeploymentData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CognitiveServicesManagedComputeDeploymentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CognitiveServices
                     yield break;
                 }
                 ManagedComputeDeploymentListResult result = ManagedComputeDeploymentListResult.FromResponse(response);
-                yield return Page<ManagedComputeDeploymentData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CognitiveServicesManagedComputeDeploymentData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {

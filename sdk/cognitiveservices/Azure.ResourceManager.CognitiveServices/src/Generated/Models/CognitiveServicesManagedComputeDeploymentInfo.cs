@@ -12,24 +12,24 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Deployment detail within a managed compute usage entry. </summary>
-    public partial class ManagedComputeDeploymentInfo
+    public partial class CognitiveServicesManagedComputeDeploymentInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentInfo"/>. </summary>
-        internal ManagedComputeDeploymentInfo()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentInfo"/>. </summary>
+        internal CognitiveServicesManagedComputeDeploymentInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentInfo"/>. </summary>
         /// <param name="deploymentId"> Full ARM resource ID of the deployment. </param>
         /// <param name="projectId"> Full ARM resource ID of the account/project. </param>
         /// <param name="modelId"> Model name (e.g., 'azureml://registries//models//versions/gpt-4o'). </param>
         /// <param name="acceleratorCount"> Number of GPUs consumed by this deployment. </param>
         /// <param name="instanceCount"> Number of instances for this deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedComputeDeploymentInfo(string deploymentId, string projectId, string modelId, long? acceleratorCount, int? instanceCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedComputeDeploymentInfo(string deploymentId, string projectId, string modelId, long? acceleratorCount, int? instanceCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeploymentId = deploymentId;
             ProjectId = projectId;

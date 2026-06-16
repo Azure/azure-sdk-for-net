@@ -12,25 +12,25 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties of a Cognitive Services managed compute deployment. </summary>
-    public partial class ManagedComputeDeploymentProperties
+    public partial class CognitiveServicesManagedComputeDeploymentProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentProperties"/>. </summary>
         /// <param name="model">
         /// AzureML Registry model asset URI. Required on creation; immutable after creation.
         /// Example: azureml://registries/{registry}/models/{model}/versions/{version}
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
-        public ManagedComputeDeploymentProperties(Uri model)
+        public CognitiveServicesManagedComputeDeploymentProperties(Uri model)
         {
             Argument.AssertNotNull(model, nameof(model));
 
             Model = model;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentProperties"/>. </summary>
         /// <param name="model">
         /// AzureML Registry model asset URI. Required on creation; immutable after creation.
         /// Example: azureml://registries/{registry}/models/{model}/versions/{version}
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="provisioningDetails"> Read-only. Status message and timestamp from the last provisioning operation. </param>
         /// <param name="routes"> Read-only. Inference route paths relative to the account endpoint. Populated when provisioningState is Succeeded. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedComputeDeploymentProperties(Uri model, string deploymentTemplate, string acceleratorType, DeploymentModelVersionUpgradeOption? versionUpgradeOption, string computeId, string priority, int? acceleratorsPerInstance, int? totalAccelerators, ServiceAccountProvisioningState? provisioningState, ManagedComputeDeploymentProvisioningDetails provisioningDetails, ManagedComputeDeploymentRoutes routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedComputeDeploymentProperties(Uri model, string deploymentTemplate, string acceleratorType, DeploymentModelVersionUpgradeOption? versionUpgradeOption, string computeId, string priority, int? acceleratorsPerInstance, int? totalAccelerators, ServiceAccountProvisioningState? provisioningState, CognitiveServicesManagedComputeDeploymentProvisioningDetails provisioningDetails, CognitiveServicesManagedComputeDeploymentRoutes routes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             DeploymentTemplate = deploymentTemplate;
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Read-only. Status message and timestamp from the last provisioning operation. </summary>
         [WirePath("provisioningDetails")]
-        public ManagedComputeDeploymentProvisioningDetails ProvisioningDetails { get; }
+        public CognitiveServicesManagedComputeDeploymentProvisioningDetails ProvisioningDetails { get; }
 
         /// <summary> Read-only. Inference route paths relative to the account endpoint. Populated when provisioningState is Succeeded. </summary>
         [WirePath("routes")]
-        public ManagedComputeDeploymentRoutes Routes { get; }
+        public CognitiveServicesManagedComputeDeploymentRoutes Routes { get; }
     }
 }

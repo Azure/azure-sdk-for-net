@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (ManagedComputeDeploymentData item in Value)
+                foreach (CognitiveServicesManagedComputeDeploymentData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<ManagedComputeDeploymentData> value = default;
+            IReadOnlyList<CognitiveServicesManagedComputeDeploymentData> value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    List<ManagedComputeDeploymentData> array = new List<ManagedComputeDeploymentData>();
+                    List<CognitiveServicesManagedComputeDeploymentData> array = new List<CognitiveServicesManagedComputeDeploymentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ManagedComputeDeploymentData.DeserializeManagedComputeDeploymentData(item, options));
+                        array.Add(CognitiveServicesManagedComputeDeploymentData.DeserializeCognitiveServicesManagedComputeDeploymentData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedComputeDeploymentListResult(nextLink, value ?? new ChangeTrackingList<ManagedComputeDeploymentData>(), additionalBinaryDataProperties);
+            return new ManagedComputeDeploymentListResult(nextLink, value ?? new ChangeTrackingList<CognitiveServicesManagedComputeDeploymentData>(), additionalBinaryDataProperties);
         }
     }
 }

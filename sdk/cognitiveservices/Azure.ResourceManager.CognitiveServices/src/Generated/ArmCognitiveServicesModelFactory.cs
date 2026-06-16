@@ -2794,10 +2794,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="properties"> Properties of the Cognitive Services managed compute deployment. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="eTag"> Resource Etag. </param>
-        /// <returns> A new <see cref="CognitiveServices.ManagedComputeDeploymentData"/> instance for mocking. </returns>
-        public static ManagedComputeDeploymentData ManagedComputeDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedComputeDeploymentProperties properties = default, CognitiveServicesSku sku = default, ETag? eTag = default)
+        /// <returns> A new <see cref="CognitiveServices.CognitiveServicesManagedComputeDeploymentData"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedComputeDeploymentData CognitiveServicesManagedComputeDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CognitiveServicesManagedComputeDeploymentProperties properties = default, CognitiveServicesSku sku = default, ETag? eTag = default)
         {
-            return new ManagedComputeDeploymentData(
+            return new CognitiveServicesManagedComputeDeploymentData(
                 id,
                 name,
                 resourceType,
@@ -2826,10 +2826,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="provisioningState"> Read-only. Current provisioning state. </param>
         /// <param name="provisioningDetails"> Read-only. Status message and timestamp from the last provisioning operation. </param>
         /// <param name="routes"> Read-only. Inference route paths relative to the account endpoint. Populated when provisioningState is Succeeded. </param>
-        /// <returns> A new <see cref="Models.ManagedComputeDeploymentProperties"/> instance for mocking. </returns>
-        public static ManagedComputeDeploymentProperties ManagedComputeDeploymentProperties(Uri model = default, string deploymentTemplate = default, string acceleratorType = default, DeploymentModelVersionUpgradeOption? versionUpgradeOption = default, string computeId = default, string priority = default, int? acceleratorsPerInstance = default, int? totalAccelerators = default, ServiceAccountProvisioningState? provisioningState = default, ManagedComputeDeploymentProvisioningDetails provisioningDetails = default, ManagedComputeDeploymentRoutes routes = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedComputeDeploymentProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedComputeDeploymentProperties CognitiveServicesManagedComputeDeploymentProperties(Uri model = default, string deploymentTemplate = default, string acceleratorType = default, DeploymentModelVersionUpgradeOption? versionUpgradeOption = default, string computeId = default, string priority = default, int? acceleratorsPerInstance = default, int? totalAccelerators = default, ServiceAccountProvisioningState? provisioningState = default, CognitiveServicesManagedComputeDeploymentProvisioningDetails provisioningDetails = default, CognitiveServicesManagedComputeDeploymentRoutes routes = default)
         {
-            return new ManagedComputeDeploymentProperties(
+            return new CognitiveServicesManagedComputeDeploymentProperties(
                 model,
                 deploymentTemplate,
                 acceleratorType,
@@ -2846,26 +2846,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="message"> A human-readable status message from the last provisioning operation. </param>
         /// <param name="lastOperationOn"> Timestamp of the last provisioning operation. </param>
-        /// <returns> A new <see cref="Models.ManagedComputeDeploymentProvisioningDetails"/> instance for mocking. </returns>
-        public static ManagedComputeDeploymentProvisioningDetails ManagedComputeDeploymentProvisioningDetails(string message = default, DateTimeOffset? lastOperationOn = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedComputeDeploymentProvisioningDetails"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedComputeDeploymentProvisioningDetails CognitiveServicesManagedComputeDeploymentProvisioningDetails(string message = default, DateTimeOffset? lastOperationOn = default)
         {
-            return new ManagedComputeDeploymentProvisioningDetails(message, lastOperationOn, default);
+            return new CognitiveServicesManagedComputeDeploymentProvisioningDetails(message, lastOperationOn, default);
         }
 
         /// <param name="chatCompletionsScoringPath"> Relative path to the chat completions scoring endpoint. </param>
         /// <param name="swagger"> Relative path to the Swagger/OpenAPI endpoint. </param>
         /// <param name="messagesApiScoringPath"> Relative path to the messages API scoring endpoint. </param>
-        /// <returns> A new <see cref="Models.ManagedComputeDeploymentRoutes"/> instance for mocking. </returns>
-        public static ManagedComputeDeploymentRoutes ManagedComputeDeploymentRoutes(string chatCompletionsScoringPath = default, string swagger = default, string messagesApiScoringPath = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedComputeDeploymentRoutes"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedComputeDeploymentRoutes CognitiveServicesManagedComputeDeploymentRoutes(string chatCompletionsScoringPath = default, string swagger = default, string messagesApiScoringPath = default)
         {
-            return new ManagedComputeDeploymentRoutes(chatCompletionsScoringPath, swagger, messagesApiScoringPath, default);
+            return new CognitiveServicesManagedComputeDeploymentRoutes(chatCompletionsScoringPath, swagger, messagesApiScoringPath, default);
         }
 
         /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <returns> A new <see cref="Models.ManagedComputeDeploymentPatch"/> instance for mocking. </returns>
-        public static ManagedComputeDeploymentPatch ManagedComputeDeploymentPatch(CognitiveServicesSku sku = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedComputeDeploymentPatch"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedComputeDeploymentPatch CognitiveServicesManagedComputeDeploymentPatch(CognitiveServicesSku sku = default)
         {
-            return new ManagedComputeDeploymentPatch(sku, default);
+            return new CognitiveServicesManagedComputeDeploymentPatch(sku, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the managed compute usage. </param>
@@ -2877,9 +2877,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="offerScope"> Offer scope (e.g., 'Global', 'Datazone-US'). </param>
         /// <param name="deployments"> Deployments consuming this managed compute quota. </param>
         /// <returns> A new <see cref="Models.ManagedComputeUsage"/> instance for mocking. </returns>
-        public static ManagedComputeUsage ManagedComputeUsage(string id = default, ServiceAccountUsageMetricName name = default, string @type = default, ServiceAccountUsageUnitType? unit = default, double? limit = default, double? currentValue = default, string offerScope = default, IEnumerable<ManagedComputeDeploymentInfo> deployments = default)
+        public static ManagedComputeUsage ManagedComputeUsage(string id = default, ServiceAccountUsageMetricName name = default, string @type = default, ServiceAccountUsageUnitType? unit = default, double? limit = default, double? currentValue = default, string offerScope = default, IEnumerable<CognitiveServicesManagedComputeDeploymentInfo> deployments = default)
         {
-            deployments ??= new ChangeTrackingList<ManagedComputeDeploymentInfo>();
+            deployments ??= new ChangeTrackingList<CognitiveServicesManagedComputeDeploymentInfo>();
 
             return new ManagedComputeUsage(
                 id,
@@ -2889,7 +2889,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 limit,
                 currentValue,
                 offerScope,
-                (deployments ?? new ChangeTrackingList<ManagedComputeDeploymentInfo>()).ToList(),
+                (deployments ?? new ChangeTrackingList<CognitiveServicesManagedComputeDeploymentInfo>()).ToList(),
                 default);
         }
 
@@ -2898,10 +2898,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="modelId"> Model name (e.g., 'azureml://registries//models//versions/gpt-4o'). </param>
         /// <param name="acceleratorCount"> Number of GPUs consumed by this deployment. </param>
         /// <param name="instanceCount"> Number of instances for this deployment. </param>
-        /// <returns> A new <see cref="Models.ManagedComputeDeploymentInfo"/> instance for mocking. </returns>
-        public static ManagedComputeDeploymentInfo ManagedComputeDeploymentInfo(string deploymentId = default, string projectId = default, string modelId = default, long? acceleratorCount = default, int? instanceCount = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesManagedComputeDeploymentInfo"/> instance for mocking. </returns>
+        public static CognitiveServicesManagedComputeDeploymentInfo CognitiveServicesManagedComputeDeploymentInfo(string deploymentId = default, string projectId = default, string modelId = default, long? acceleratorCount = default, int? instanceCount = default)
         {
-            return new ManagedComputeDeploymentInfo(
+            return new CognitiveServicesManagedComputeDeploymentInfo(
                 deploymentId,
                 projectId,
                 modelId,
@@ -2944,7 +2944,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errors"> Error details for the compute resource. </param>
         /// <param name="createdOn"> Creation time of the compute resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesComputeProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesComputeProperties CognitiveServicesComputeProperties(string computeType = default, ComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default)
+        public static CognitiveServicesComputeProperties CognitiveServicesComputeProperties(string computeType = default, CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
@@ -2957,7 +2957,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="pools"> Pools attached to this compute cluster. </param>
         /// <param name="subnetArmId"> ARM ID of the subnet used for compute. </param>
         /// <returns> A new <see cref="Models.ClusterComputeProperties"/> instance for mocking. </returns>
-        public static ClusterComputeProperties ClusterComputeProperties(ComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default, IEnumerable<CognitiveServicesComputePool> pools = default, string subnetArmId = default)
+        public static ClusterComputeProperties ClusterComputeProperties(CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default, IEnumerable<CognitiveServicesComputePool> pools = default, string subnetArmId = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
             pools ??= new ChangeTrackingList<CognitiveServicesComputePool>();
@@ -2991,7 +2991,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="sshSettings"> SSH configuration for remote access to the container instance. </param>
         /// <param name="connectivityEndpoints"> Network connectivity endpoints assigned to the container instance. </param>
         /// <returns> A new <see cref="Models.ContainerInstanceComputeProperties"/> instance for mocking. </returns>
-        public static ContainerInstanceComputeProperties ContainerInstanceComputeProperties(ComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default, string targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default)
+        public static ContainerInstanceComputeProperties ContainerInstanceComputeProperties(CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default, string targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 
@@ -3062,7 +3062,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errors"> Error details for the workbench resource. </param>
         /// <param name="createdOn"> Creation time of the workbench resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesWorkbenchProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesWorkbenchProperties CognitiveServicesWorkbenchProperties(string targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, string datasetId = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default, string webEndpoint = default, ComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default)
+        public static CognitiveServicesWorkbenchProperties CognitiveServicesWorkbenchProperties(string targetClusterId = default, string imageLink = default, string idleTimeBeforeShutdown = default, string datasetId = default, CognitiveServicesComputeSshSettings sshSettings = default, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default, string webEndpoint = default, CognitiveServicesComputeProvisioningState? provisioningState = default, IEnumerable<ResponseError> errors = default, DateTimeOffset? createdOn = default)
         {
             errors ??= new ChangeTrackingList<ResponseError>();
 

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errors"> Error details for the compute resource. </param>
         /// <param name="createdOn"> Creation time of the compute resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesComputeProperties(ComputeType computeType, ComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesComputeProperties(ComputeType computeType, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputeType = computeType;
             ProvisioningState = provisioningState;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Provisioning state of the compute resource. </summary>
         [WirePath("provisioningState")]
-        public ComputeProvisioningState? ProvisioningState { get; }
+        public CognitiveServicesComputeProvisioningState? ProvisioningState { get; }
 
         /// <summary> Error details for the compute resource. </summary>
         [WirePath("errors")]

@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CognitiveServicesComputeSshSettings sshSettings = default;
             CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints = default;
             string webEndpoint = default;
-            ComputeProvisioningState? provisioningState = default;
+            CognitiveServicesComputeProvisioningState? provisioningState = default;
             IReadOnlyList<ResponseError> errors = default;
             DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    provisioningState = new ComputeProvisioningState(prop.Value.GetString());
+                    provisioningState = new CognitiveServicesComputeProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errors"u8))

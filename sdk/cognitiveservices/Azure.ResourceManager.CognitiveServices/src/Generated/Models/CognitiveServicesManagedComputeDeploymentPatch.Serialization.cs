@@ -15,61 +15,61 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The object being used to update sku of a resource, in general used for PATCH operations. </summary>
-    public partial class ManagedComputeDeploymentPatch : IJsonModel<ManagedComputeDeploymentPatch>
+    public partial class CognitiveServicesManagedComputeDeploymentPatch : IJsonModel<CognitiveServicesManagedComputeDeploymentPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedComputeDeploymentPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CognitiveServicesManagedComputeDeploymentPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedComputeDeploymentPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesManagedComputeDeploymentPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedComputeDeploymentPatch(document.RootElement, options);
+                        return DeserializeCognitiveServicesManagedComputeDeploymentPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedComputeDeploymentPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesManagedComputeDeploymentPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedComputeDeploymentPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesManagedComputeDeploymentPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedComputeDeploymentPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesManagedComputeDeploymentPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedComputeDeploymentPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CognitiveServicesManagedComputeDeploymentPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedComputeDeploymentPatch IPersistableModel<ManagedComputeDeploymentPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CognitiveServicesManagedComputeDeploymentPatch IPersistableModel<CognitiveServicesManagedComputeDeploymentPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedComputeDeploymentPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CognitiveServicesManagedComputeDeploymentPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="managedComputeDeploymentPatch"> The <see cref="ManagedComputeDeploymentPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ManagedComputeDeploymentPatch managedComputeDeploymentPatch)
+        /// <param name="cognitiveServicesManagedComputeDeploymentPatch"> The <see cref="CognitiveServicesManagedComputeDeploymentPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CognitiveServicesManagedComputeDeploymentPatch cognitiveServicesManagedComputeDeploymentPatch)
         {
-            if (managedComputeDeploymentPatch == null)
+            if (cognitiveServicesManagedComputeDeploymentPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(managedComputeDeploymentPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(cognitiveServicesManagedComputeDeploymentPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedComputeDeploymentPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CognitiveServicesManagedComputeDeploymentPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedComputeDeploymentPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesManagedComputeDeploymentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedComputeDeploymentPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesManagedComputeDeploymentPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Sku))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedComputeDeploymentPatch IJsonModel<ManagedComputeDeploymentPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CognitiveServicesManagedComputeDeploymentPatch IJsonModel<CognitiveServicesManagedComputeDeploymentPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedComputeDeploymentPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CognitiveServicesManagedComputeDeploymentPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedComputeDeploymentPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesManagedComputeDeploymentPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedComputeDeploymentPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesManagedComputeDeploymentPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedComputeDeploymentPatch(document.RootElement, options);
+            return DeserializeCognitiveServicesManagedComputeDeploymentPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedComputeDeploymentPatch DeserializeManagedComputeDeploymentPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static CognitiveServicesManagedComputeDeploymentPatch DeserializeCognitiveServicesManagedComputeDeploymentPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedComputeDeploymentPatch(sku, additionalBinaryDataProperties);
+            return new CognitiveServicesManagedComputeDeploymentPatch(sku, additionalBinaryDataProperties);
         }
     }
 }

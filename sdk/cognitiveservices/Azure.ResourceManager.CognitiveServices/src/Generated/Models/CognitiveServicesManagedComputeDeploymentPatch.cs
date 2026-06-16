@@ -12,20 +12,20 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The object being used to update sku of a resource, in general used for PATCH operations. </summary>
-    public partial class ManagedComputeDeploymentPatch
+    public partial class CognitiveServicesManagedComputeDeploymentPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentPatch"/>. </summary>
-        public ManagedComputeDeploymentPatch()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentPatch"/>. </summary>
+        public CognitiveServicesManagedComputeDeploymentPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentPatch"/>. </summary>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedComputeDeploymentPatch(CognitiveServicesSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedComputeDeploymentPatch(CognitiveServicesSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

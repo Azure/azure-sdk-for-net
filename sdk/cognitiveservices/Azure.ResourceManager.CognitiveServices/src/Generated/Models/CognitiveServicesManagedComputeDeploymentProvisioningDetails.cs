@@ -12,21 +12,21 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Provisioning status details for a managed compute deployment. </summary>
-    public partial class ManagedComputeDeploymentProvisioningDetails
+    public partial class CognitiveServicesManagedComputeDeploymentProvisioningDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentProvisioningDetails"/>. </summary>
-        internal ManagedComputeDeploymentProvisioningDetails()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentProvisioningDetails"/>. </summary>
+        internal CognitiveServicesManagedComputeDeploymentProvisioningDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentProvisioningDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentProvisioningDetails"/>. </summary>
         /// <param name="message"> A human-readable status message from the last provisioning operation. </param>
         /// <param name="lastOperationOn"> Timestamp of the last provisioning operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedComputeDeploymentProvisioningDetails(string message, DateTimeOffset? lastOperationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedComputeDeploymentProvisioningDetails(string message, DateTimeOffset? lastOperationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Message = message;
             LastOperationOn = lastOperationOn;

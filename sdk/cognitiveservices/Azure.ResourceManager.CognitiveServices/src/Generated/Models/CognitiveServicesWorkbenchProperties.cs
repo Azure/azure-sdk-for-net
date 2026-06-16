@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errors"> Error details for the workbench resource. </param>
         /// <param name="createdOn"> Creation time of the workbench resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesWorkbenchProperties(string targetClusterId, string imageLink, string idleTimeBeforeShutdown, string datasetId, CognitiveServicesComputeSshSettings sshSettings, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints, string webEndpoint, ComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesWorkbenchProperties(string targetClusterId, string imageLink, string idleTimeBeforeShutdown, string datasetId, CognitiveServicesComputeSshSettings sshSettings, CognitiveServicesComputeConnectivityEndpoints connectivityEndpoints, string webEndpoint, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TargetClusterId = targetClusterId;
             ImageLink = imageLink;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Provisioning state of the workbench resource. </summary>
         [WirePath("provisioningState")]
-        public ComputeProvisioningState? ProvisioningState { get; }
+        public CognitiveServicesComputeProvisioningState? ProvisioningState { get; }
 
         /// <summary> Error details for the workbench resource. </summary>
         [WirePath("errors")]

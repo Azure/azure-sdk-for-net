@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errors"> Error details for the compute resource. </param>
         /// <param name="createdOn"> Creation time of the compute resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownCognitiveServicesComputeProperties(ComputeType computeType, ComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(computeType != default ? computeType : "unknown", provisioningState, errors, createdOn, additionalBinaryDataProperties)
+        internal UnknownCognitiveServicesComputeProperties(ComputeType computeType, CognitiveServicesComputeProvisioningState? provisioningState, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(computeType != default ? computeType : "unknown", provisioningState, errors, createdOn, additionalBinaryDataProperties)
         {
         }
     }

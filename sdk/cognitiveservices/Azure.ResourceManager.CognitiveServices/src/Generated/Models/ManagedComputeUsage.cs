@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Initializes a new instance of <see cref="ManagedComputeUsage"/>. </summary>
         internal ManagedComputeUsage()
         {
-            Deployments = new ChangeTrackingList<ManagedComputeDeploymentInfo>();
+            Deployments = new ChangeTrackingList<CognitiveServicesManagedComputeDeploymentInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedComputeUsage"/>. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="offerScope"> Offer scope (e.g., 'Global', 'Datazone-US'). </param>
         /// <param name="deployments"> Deployments consuming this managed compute quota. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedComputeUsage(string id, ServiceAccountUsageMetricName name, string @type, ServiceAccountUsageUnitType? unit, double? limit, double? currentValue, string offerScope, IList<ManagedComputeDeploymentInfo> deployments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedComputeUsage(string id, ServiceAccountUsageMetricName name, string @type, ServiceAccountUsageUnitType? unit, double? limit, double? currentValue, string offerScope, IList<CognitiveServicesManagedComputeDeploymentInfo> deployments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Deployments consuming this managed compute quota. </summary>
         [WirePath("deployments")]
-        public IList<ManagedComputeDeploymentInfo> Deployments { get; }
+        public IList<CognitiveServicesManagedComputeDeploymentInfo> Deployments { get; }
     }
 }

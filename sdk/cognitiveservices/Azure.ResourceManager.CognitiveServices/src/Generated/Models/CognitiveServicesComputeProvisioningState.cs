@@ -12,7 +12,7 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> The provisioning state of a compute resource. </summary>
-    public readonly partial struct ComputeProvisioningState : IEquatable<ComputeProvisioningState>
+    public readonly partial struct CognitiveServicesComputeProvisioningState : IEquatable<CognitiveServicesComputeProvisioningState>
     {
         private readonly string _value;
         /// <summary> The resource provisioning request has been accepted. </summary>
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> The compute resource is stopped. </summary>
         private const string StoppedValue = "Stopped";
 
-        /// <summary> Initializes a new instance of <see cref="ComputeProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesComputeProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputeProvisioningState(string value)
+        public CognitiveServicesComputeProvisioningState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -49,62 +49,62 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The resource provisioning request has been accepted. </summary>
-        public static ComputeProvisioningState Accepted { get; } = new ComputeProvisioningState(AcceptedValue);
+        public static CognitiveServicesComputeProvisioningState Accepted { get; } = new CognitiveServicesComputeProvisioningState(AcceptedValue);
 
         /// <summary> The resource has been fully provisioned. </summary>
-        public static ComputeProvisioningState Succeeded { get; } = new ComputeProvisioningState(SucceededValue);
+        public static CognitiveServicesComputeProvisioningState Succeeded { get; } = new CognitiveServicesComputeProvisioningState(SucceededValue);
 
         /// <summary> The resource provisioning has failed. </summary>
-        public static ComputeProvisioningState Failed { get; } = new ComputeProvisioningState(FailedValue);
+        public static CognitiveServicesComputeProvisioningState Failed { get; } = new CognitiveServicesComputeProvisioningState(FailedValue);
 
         /// <summary> The resource provisioning was canceled. </summary>
-        public static ComputeProvisioningState Canceled { get; } = new ComputeProvisioningState(CanceledValue);
+        public static CognitiveServicesComputeProvisioningState Canceled { get; } = new CognitiveServicesComputeProvisioningState(CanceledValue);
 
         /// <summary> The resource is being deleted. </summary>
-        public static ComputeProvisioningState Deleting { get; } = new ComputeProvisioningState(DeletingValue);
+        public static CognitiveServicesComputeProvisioningState Deleting { get; } = new CognitiveServicesComputeProvisioningState(DeletingValue);
 
         /// <summary> The resource is scaling. </summary>
-        public static ComputeProvisioningState Scaling { get; } = new ComputeProvisioningState(ScalingValue);
+        public static CognitiveServicesComputeProvisioningState Scaling { get; } = new CognitiveServicesComputeProvisioningState(ScalingValue);
 
         /// <summary> The resource is disabled. </summary>
-        public static ComputeProvisioningState Disabled { get; } = new ComputeProvisioningState(DisabledValue);
+        public static CognitiveServicesComputeProvisioningState Disabled { get; } = new CognitiveServicesComputeProvisioningState(DisabledValue);
 
         /// <summary> The compute resource is starting. </summary>
-        public static ComputeProvisioningState Starting { get; } = new ComputeProvisioningState(StartingValue);
+        public static CognitiveServicesComputeProvisioningState Starting { get; } = new CognitiveServicesComputeProvisioningState(StartingValue);
 
         /// <summary> The compute resource is stopping. </summary>
-        public static ComputeProvisioningState Stopping { get; } = new ComputeProvisioningState(StoppingValue);
+        public static CognitiveServicesComputeProvisioningState Stopping { get; } = new CognitiveServicesComputeProvisioningState(StoppingValue);
 
         /// <summary> The compute resource is restarting. </summary>
-        public static ComputeProvisioningState Restarting { get; } = new ComputeProvisioningState(RestartingValue);
+        public static CognitiveServicesComputeProvisioningState Restarting { get; } = new CognitiveServicesComputeProvisioningState(RestartingValue);
 
         /// <summary> The compute resource is stopped. </summary>
-        public static ComputeProvisioningState Stopped { get; } = new ComputeProvisioningState(StoppedValue);
+        public static CognitiveServicesComputeProvisioningState Stopped { get; } = new CognitiveServicesComputeProvisioningState(StoppedValue);
 
-        /// <summary> Determines if two <see cref="ComputeProvisioningState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="CognitiveServicesComputeProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ComputeProvisioningState left, ComputeProvisioningState right) => left.Equals(right);
+        public static bool operator ==(CognitiveServicesComputeProvisioningState left, CognitiveServicesComputeProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ComputeProvisioningState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="CognitiveServicesComputeProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ComputeProvisioningState left, ComputeProvisioningState right) => !left.Equals(right);
+        public static bool operator !=(CognitiveServicesComputeProvisioningState left, CognitiveServicesComputeProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ComputeProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CognitiveServicesComputeProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeProvisioningState(string value) => new ComputeProvisioningState(value);
+        public static implicit operator CognitiveServicesComputeProvisioningState(string value) => new CognitiveServicesComputeProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="ComputeProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="CognitiveServicesComputeProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ComputeProvisioningState?(string value) => value == null ? null : new ComputeProvisioningState(value);
+        public static implicit operator CognitiveServicesComputeProvisioningState?(string value) => value == null ? null : new CognitiveServicesComputeProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ComputeProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is CognitiveServicesComputeProvisioningState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ComputeProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(CognitiveServicesComputeProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

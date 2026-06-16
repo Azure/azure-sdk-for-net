@@ -15,17 +15,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary> Cognitive Services account managed compute deployment, backed by managed compute (GPU) resources. </summary>
-    public partial class ManagedComputeDeploymentData : ResourceData
+    public partial class CognitiveServicesManagedComputeDeploymentData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentData"/>. </summary>
-        public ManagedComputeDeploymentData()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentData"/>. </summary>
+        public CognitiveServicesManagedComputeDeploymentData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedComputeDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedComputeDeploymentProperties properties, CognitiveServicesSku sku, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal CognitiveServicesManagedComputeDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CognitiveServicesManagedComputeDeploymentProperties properties, CognitiveServicesSku sku, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Sku = sku;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CognitiveServices
 
         /// <summary> Properties of the Cognitive Services managed compute deployment. </summary>
         [WirePath("properties")]
-        public ManagedComputeDeploymentProperties Properties { get; set; }
+        public CognitiveServicesManagedComputeDeploymentProperties Properties { get; set; }
 
         /// <summary> The resource model definition representing SKU. </summary>
         [WirePath("sku")]

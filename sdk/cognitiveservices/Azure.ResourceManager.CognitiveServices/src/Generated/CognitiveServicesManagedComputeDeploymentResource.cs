@@ -18,40 +18,40 @@ using Azure.ResourceManager.CognitiveServices.Models;
 namespace Azure.ResourceManager.CognitiveServices
 {
     /// <summary>
-    /// A class representing a ManagedComputeDeployment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedComputeDeploymentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource"/> using the GetManagedComputeDeployments method.
+    /// A class representing a CognitiveServicesManagedComputeDeployment along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CognitiveServicesManagedComputeDeploymentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CognitiveServicesAccountResource"/> using the GetCognitiveServicesManagedComputeDeployments method.
     /// </summary>
-    public partial class ManagedComputeDeploymentResource : ArmResource
+    public partial class CognitiveServicesManagedComputeDeploymentResource : ArmResource
     {
         private readonly ClientDiagnostics _managedComputeDeploymentsClientDiagnostics;
         private readonly ManagedComputeDeployments _managedComputeDeploymentsRestClient;
-        private readonly ManagedComputeDeploymentData _data;
+        private readonly CognitiveServicesManagedComputeDeploymentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/accounts/managedComputeDeployments";
 
-        /// <summary> Initializes a new instance of ManagedComputeDeploymentResource for mocking. </summary>
-        protected ManagedComputeDeploymentResource()
+        /// <summary> Initializes a new instance of CognitiveServicesManagedComputeDeploymentResource for mocking. </summary>
+        protected CognitiveServicesManagedComputeDeploymentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedComputeDeploymentResource(ArmClient client, ManagedComputeDeploymentData data) : this(client, data.Id)
+        internal CognitiveServicesManagedComputeDeploymentResource(ArmClient client, CognitiveServicesManagedComputeDeploymentData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagedComputeDeploymentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CognitiveServicesManagedComputeDeploymentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string managedComputeDeploymentApiVersion);
+            TryGetApiVersion(ResourceType, out string cognitiveServicesManagedComputeDeploymentApiVersion);
             _managedComputeDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
-            _managedComputeDeploymentsRestClient = new ManagedComputeDeployments(_managedComputeDeploymentsClientDiagnostics, Pipeline, Endpoint, managedComputeDeploymentApiVersion ?? "2026-03-15-preview");
+            _managedComputeDeploymentsRestClient = new ManagedComputeDeployments(_managedComputeDeploymentsClientDiagnostics, Pipeline, Endpoint, cognitiveServicesManagedComputeDeploymentApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ManagedComputeDeploymentData Data
+        public virtual CognitiveServicesManagedComputeDeploymentData Data
         {
             get
             {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ManagedComputeDeploymentResource"/>. </description>
+        /// <description> <see cref="CognitiveServicesManagedComputeDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedComputeDeploymentResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CognitiveServicesManagedComputeDeploymentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedComputeDeploymentsClientDiagnostics.CreateScope("ManagedComputeDeploymentResource.Get");
+            using DiagnosticScope scope = _managedComputeDeploymentsClientDiagnostics.CreateScope("CognitiveServicesManagedComputeDeploymentResource.Get");
             scope.Start();
             try
             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.CognitiveServices
                 };
                 HttpMessage message = _managedComputeDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ManagedComputeDeploymentData> response = Response.FromValue(ManagedComputeDeploymentData.FromResponse(result), result);
+                Response<CognitiveServicesManagedComputeDeploymentData> response = Response.FromValue(CognitiveServicesManagedComputeDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ManagedComputeDeploymentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CognitiveServicesManagedComputeDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ManagedComputeDeploymentResource"/>. </description>
+        /// <description> <see cref="CognitiveServicesManagedComputeDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedComputeDeploymentResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CognitiveServicesManagedComputeDeploymentResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedComputeDeploymentsClientDiagnostics.CreateScope("ManagedComputeDeploymentResource.Get");
+            using DiagnosticScope scope = _managedComputeDeploymentsClientDiagnostics.CreateScope("CognitiveServicesManagedComputeDeploymentResource.Get");
             scope.Start();
             try
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.CognitiveServices
                 };
                 HttpMessage message = _managedComputeDeploymentsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ManagedComputeDeploymentData> response = Response.FromValue(ManagedComputeDeploymentData.FromResponse(result), result);
+                Response<CognitiveServicesManagedComputeDeploymentData> response = Response.FromValue(CognitiveServicesManagedComputeDeploymentData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ManagedComputeDeploymentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CognitiveServicesManagedComputeDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ManagedComputeDeploymentResource"/>. </description>
+        /// <description> <see cref="CognitiveServicesManagedComputeDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="patch"> The managed compute deployment patch properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagedComputeDeploymentResource>> UpdateAsync(WaitUntil waitUntil, ManagedComputeDeploymentPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CognitiveServicesManagedComputeDeploymentResource>> UpdateAsync(WaitUntil waitUntil, CognitiveServicesManagedComputeDeploymentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _managedComputeDeploymentsClientDiagnostics.CreateScope("ManagedComputeDeploymentResource.Update");
+            using DiagnosticScope scope = _managedComputeDeploymentsClientDiagnostics.CreateScope("CognitiveServicesManagedComputeDeploymentResource.Update");
             scope.Start();
             try
             {
@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedComputeDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedComputeDeploymentPatch.ToRequestContent(patch), context);
+                HttpMessage message = _managedComputeDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedComputeDeploymentPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CognitiveServicesArmOperation<ManagedComputeDeploymentResource> operation = new CognitiveServicesArmOperation<ManagedComputeDeploymentResource>(
-                    new ManagedComputeDeploymentResourceOperationSource(Client),
+                CognitiveServicesArmOperation<CognitiveServicesManagedComputeDeploymentResource> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedComputeDeploymentResource>(
+                    new CognitiveServicesManagedComputeDeploymentResourceOperationSource(Client),
                     _managedComputeDeploymentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ManagedComputeDeploymentResource"/>. </description>
+        /// <description> <see cref="CognitiveServicesManagedComputeDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -272,11 +272,11 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="patch"> The managed compute deployment patch properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<ManagedComputeDeploymentResource> Update(WaitUntil waitUntil, ManagedComputeDeploymentPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CognitiveServicesManagedComputeDeploymentResource> Update(WaitUntil waitUntil, CognitiveServicesManagedComputeDeploymentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _managedComputeDeploymentsClientDiagnostics.CreateScope("ManagedComputeDeploymentResource.Update");
+            using DiagnosticScope scope = _managedComputeDeploymentsClientDiagnostics.CreateScope("CognitiveServicesManagedComputeDeploymentResource.Update");
             scope.Start();
             try
             {
@@ -284,10 +284,10 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _managedComputeDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ManagedComputeDeploymentPatch.ToRequestContent(patch), context);
+                HttpMessage message = _managedComputeDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesManagedComputeDeploymentPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CognitiveServicesArmOperation<ManagedComputeDeploymentResource> operation = new CognitiveServicesArmOperation<ManagedComputeDeploymentResource>(
-                    new ManagedComputeDeploymentResourceOperationSource(Client),
+                CognitiveServicesArmOperation<CognitiveServicesManagedComputeDeploymentResource> operation = new CognitiveServicesArmOperation<CognitiveServicesManagedComputeDeploymentResource>(
+                    new CognitiveServicesManagedComputeDeploymentResourceOperationSource(Client),
                     _managedComputeDeploymentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ManagedComputeDeploymentResource"/>. </description>
+        /// <description> <see cref="CognitiveServicesManagedComputeDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedComputeDeploymentsClientDiagnostics.CreateScope("ManagedComputeDeploymentResource.Delete");
+            using DiagnosticScope scope = _managedComputeDeploymentsClientDiagnostics.CreateScope("CognitiveServicesManagedComputeDeploymentResource.Delete");
             scope.Start();
             try
             {
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ManagedComputeDeploymentResource"/>. </description>
+        /// <description> <see cref="CognitiveServicesManagedComputeDeploymentResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _managedComputeDeploymentsClientDiagnostics.CreateScope("ManagedComputeDeploymentResource.Delete");
+            using DiagnosticScope scope = _managedComputeDeploymentsClientDiagnostics.CreateScope("CognitiveServicesManagedComputeDeploymentResource.Delete");
             scope.Start();
             try
             {

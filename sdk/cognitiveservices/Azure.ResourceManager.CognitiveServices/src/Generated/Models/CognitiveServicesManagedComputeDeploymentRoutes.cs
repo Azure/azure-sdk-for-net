@@ -15,22 +15,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// Inference route paths for a managed compute deployment, relative to the account endpoint.
     /// Populated when provisioningState is Succeeded.
     /// </summary>
-    public partial class ManagedComputeDeploymentRoutes
+    public partial class CognitiveServicesManagedComputeDeploymentRoutes
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentRoutes"/>. </summary>
-        internal ManagedComputeDeploymentRoutes()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentRoutes"/>. </summary>
+        internal CognitiveServicesManagedComputeDeploymentRoutes()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedComputeDeploymentRoutes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesManagedComputeDeploymentRoutes"/>. </summary>
         /// <param name="chatCompletionsScoringPath"> Relative path to the chat completions scoring endpoint. </param>
         /// <param name="swagger"> Relative path to the Swagger/OpenAPI endpoint. </param>
         /// <param name="messagesApiScoringPath"> Relative path to the messages API scoring endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedComputeDeploymentRoutes(string chatCompletionsScoringPath, string swagger, string messagesApiScoringPath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedComputeDeploymentRoutes(string chatCompletionsScoringPath, string swagger, string messagesApiScoringPath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ChatCompletionsScoringPath = chatCompletionsScoringPath;
             Swagger = swagger;
