@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateGetAvailabilityStatusResourcesBySubscriptionRequest(string subscriptionId, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateGetAvailabilityStatusesBySubscriptionRequest(string subscriptionId, string filter, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateNextGetAvailabilityStatusResourcesBySubscriptionRequest(Uri nextPage, string subscriptionId, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateNextGetAvailabilityStatusesBySubscriptionRequest(Uri nextPage, string subscriptionId, string filter, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
