@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct HybridComputeOSType : IEquatable<HybridComputeOSType>
     {
         private readonly string _value;
+        /// <summary> Windows. </summary>
+        private const string WindowsValue = "Windows";
+        /// <summary> Linux. </summary>
+        private const string LinuxValue = "Linux";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeOSType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridComputeOSType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WindowsValue = "Windows";
-        private const string LinuxValue = "Linux";
+            _value = value;
+        }
 
         /// <summary> Windows. </summary>
         public static HybridComputeOSType Windows { get; } = new HybridComputeOSType(WindowsValue);
+
         /// <summary> Linux. </summary>
         public static HybridComputeOSType Linux { get; } = new HybridComputeOSType(LinuxValue);
+
         /// <summary> Determines if two <see cref="HybridComputeOSType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridComputeOSType left, HybridComputeOSType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridComputeOSType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridComputeOSType left, HybridComputeOSType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeOSType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridComputeOSType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridComputeOSType(string value) => new HybridComputeOSType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridComputeOSType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridComputeOSType?(string value) => value == null ? null : new HybridComputeOSType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridComputeOSType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridComputeOSType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
