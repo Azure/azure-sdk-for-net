@@ -28,12 +28,12 @@ namespace Azure.Generator.MgmtCustomBaseRepro.Tests
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="type"></param>
-        /// <param name="tags"></param>
         /// <param name="location"></param>
+        /// <param name="tags"></param>
         /// <param name="properties"></param>
         /// <param name="eTag"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomBaseTypeInheritedResourceData(ResourceIdentifier id, string name, string @type, IDictionary<string, string> tags, string location, CustomBaseTypeInheritedResourceProperties properties, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, @type, default, tags, location)
+        internal CustomBaseTypeInheritedResourceData(ResourceIdentifier id, string name, string @type, string location, IDictionary<string, string> tags, CustomBaseTypeInheritedResourceProperties properties, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, @type, default, tags, location)
         {
             Properties = properties;
             ETag = eTag;

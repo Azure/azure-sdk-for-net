@@ -38,8 +38,8 @@ model ServiceDefinedTrackedResourceWithOptionalLocation {
   name?: string;
   @visibility(Lifecycle.Read)
   type?: string;
-  tags?: Record<string>;
   location?: string;
+  tags?: Record<string>;
 }
 
 #suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Testing custom resource pattern"

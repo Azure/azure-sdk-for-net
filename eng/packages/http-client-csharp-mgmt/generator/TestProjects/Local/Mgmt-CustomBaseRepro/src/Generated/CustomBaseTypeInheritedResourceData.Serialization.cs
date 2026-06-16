@@ -150,8 +150,8 @@ namespace Azure.Generator.MgmtCustomBaseRepro.Tests
             ResourceIdentifier id = default;
             string name = default;
             string @type = default;
-            IDictionary<string, string> tags = default;
             string location = default;
+            IDictionary<string, string> tags = default;
             CustomBaseTypeInheritedResourceProperties properties = default;
             string eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -176,6 +176,11 @@ namespace Azure.Generator.MgmtCustomBaseRepro.Tests
                     @type = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -195,11 +200,6 @@ namespace Azure.Generator.MgmtCustomBaseRepro.Tests
                         }
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("location"u8))
-                {
-                    location = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -225,8 +225,8 @@ namespace Azure.Generator.MgmtCustomBaseRepro.Tests
                 id,
                 name,
                 @type,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties,
                 eTag,
                 additionalBinaryDataProperties);

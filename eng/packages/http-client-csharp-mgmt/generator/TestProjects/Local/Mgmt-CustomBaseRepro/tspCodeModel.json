@@ -398,20 +398,46 @@
           {
             "$id": "36",
             "kind": "property",
+            "name": "location",
+            "serializedName": "location",
+            "type": {
+              "$id": "37",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "MgmtCustomBaseRepro.ServiceDefinedTrackedResourceWithOptionalLocation.location",
+            "serializationOptions": {
+              "json": {
+                "name": "location"
+              }
+            },
+            "isHttpMetadata": false,
+            "isExactName": false
+          },
+          {
+            "$id": "38",
+            "kind": "property",
             "name": "tags",
             "serializedName": "tags",
             "type": {
-              "$id": "37",
+              "$id": "39",
               "kind": "dict",
               "keyType": {
-                "$id": "38",
+                "$id": "40",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
                 "decorators": []
               },
               "valueType": {
-                "$id": "39",
+                "$id": "41",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -428,32 +454,6 @@
             "serializationOptions": {
               "json": {
                 "name": "tags"
-              }
-            },
-            "isHttpMetadata": false,
-            "isExactName": false
-          },
-          {
-            "$id": "40",
-            "kind": "property",
-            "name": "location",
-            "serializedName": "location",
-            "type": {
-              "$id": "41",
-              "kind": "string",
-              "name": "string",
-              "crossLanguageDefinitionId": "TypeSpec.string",
-              "decorators": []
-            },
-            "optional": true,
-            "readOnly": false,
-            "discriminator": false,
-            "flatten": false,
-            "decorators": [],
-            "crossLanguageDefinitionId": "MgmtCustomBaseRepro.ServiceDefinedTrackedResourceWithOptionalLocation.location",
-            "serializationOptions": {
-              "json": {
-                "name": "location"
               }
             },
             "isHttpMetadata": false,
@@ -1128,7 +1128,7 @@
           "name": "tags",
           "serializedName": "tags",
           "type": {
-            "$ref": "37"
+            "$ref": "39"
           },
           "optional": true,
           "readOnly": false,
