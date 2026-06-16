@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
@@ -255,76 +254,6 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets all attestations for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/attestations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Attestations_ListForResource. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="queryOptions"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyAttestationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyAttestationResource> GetAllAsync(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<PolicyAttestationData, PolicyAttestationResource>(new AttestationsGetForResourceAsyncCollectionResultOfT(
-                _attestationsRestClient,
-                Id.ToString(),
-                default,
-                default,
-                context,
-                "PolicyAttestationCollection.GetAll"), data => new PolicyAttestationResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets all attestations for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/attestations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Attestations_ListForResource. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="queryOptions"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyAttestationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyAttestationResource> GetAll(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<PolicyAttestationData, PolicyAttestationResource>(new AttestationsGetForResourceCollectionResultOfT(
-                _attestationsRestClient,
-                Id.ToString(),
-                default,
-                default,
-                context,
-                "PolicyAttestationCollection.GetAll"), data => new PolicyAttestationResource(Client, data));
         }
 
         /// <summary>

@@ -13,7 +13,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PolicyInsights;
-using Azure.ResourceManager.PolicyInsights.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PolicyInsights.Mocking
@@ -152,92 +151,6 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Queries component policy states under resource group scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="componentPolicyStatesResource"></param>
-        /// <param name="queryOptions"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceGroupComponentPolicyStatesAsync(ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ComponentPolicyStatesGetQueryResultsForResourceGroupComponentPolicyStatesAsyncCollectionResultOfT(
-                ComponentPolicyStatesRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                componentPolicyStatesResource.ToString(),
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                context,
-                "MockablePolicyInsightsResourceGroupResource.GetQueryResultsForResourceGroupComponentPolicyStates");
-        }
-
-        /// <summary>
-        /// Queries component policy states under resource group scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForResourceGroup. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="componentPolicyStatesResource"></param>
-        /// <param name="queryOptions"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ComponentPolicyState> GetQueryResultsForResourceGroupComponentPolicyStates(ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ComponentPolicyStatesGetQueryResultsForResourceGroupComponentPolicyStatesCollectionResultOfT(
-                ComponentPolicyStatesRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                componentPolicyStatesResource.ToString(),
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                context,
-                "MockablePolicyInsightsResourceGroupResource.GetQueryResultsForResourceGroupComponentPolicyStates");
         }
     }
 }

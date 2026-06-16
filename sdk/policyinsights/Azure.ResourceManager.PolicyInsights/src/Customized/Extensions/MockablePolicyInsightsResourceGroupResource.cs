@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForResourceGroup", typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroupAsync", typeof(PolicyTrackedResourceType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroup", typeof(PolicyTrackedResourceType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    // ComponentPolicyStates — fix queryOptions forwarding (generator bug #59950)
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroupComponentPolicyStatesAsync", typeof(ComponentPolicyStatesResource), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroupComponentPolicyStates", typeof(ComponentPolicyStatesResource), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     public partial class MockablePolicyInsightsResourceGroupResource
     {
         /// <summary>
@@ -252,6 +255,66 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 policyQuerySettings?.Filter,
                 context,
                 "MockablePolicyInsightsResourceGroupResource.SummarizePolicyStates");
+        }
+
+        /// <summary>
+        /// Queries component policy states under resource group scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="componentPolicyStatesResource"></param>
+        /// <param name="queryOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceGroupComponentPolicyStatesAsync(ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new ComponentPolicyStatesGetQueryResultsForResourceGroupComponentPolicyStatesAsyncCollectionResultOfT(
+                ComponentPolicyStatesRestClient, Id.SubscriptionId, Id.ResourceGroupName, componentPolicyStatesResource.ToString(),
+                queryOptions?.Top, queryOptions?.OrderBy, queryOptions?.Select,
+                queryOptions?.From, queryOptions?.To, queryOptions?.Filter, queryOptions?.Apply,
+                context, "MockablePolicyInsightsResourceGroupResource.GetQueryResultsForResourceGroupComponentPolicyStates");
+        }
+
+        /// <summary>
+        /// Queries component policy states under resource group scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="componentPolicyStatesResource"></param>
+        /// <param name="queryOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<ComponentPolicyState> GetQueryResultsForResourceGroupComponentPolicyStates(ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new ComponentPolicyStatesGetQueryResultsForResourceGroupComponentPolicyStatesCollectionResultOfT(
+                ComponentPolicyStatesRestClient, Id.SubscriptionId, Id.ResourceGroupName, componentPolicyStatesResource.ToString(),
+                queryOptions?.Top, queryOptions?.OrderBy, queryOptions?.Select,
+                queryOptions?.From, queryOptions?.To, queryOptions?.Filter, queryOptions?.Apply,
+                context, "MockablePolicyInsightsResourceGroupResource.GetQueryResultsForResourceGroupComponentPolicyStates");
         }
 
         /// <summary> Queries policy tracked resources under the resource group. </summary>

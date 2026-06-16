@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("SummarizeForSubscription", typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForSubscriptionAsync", typeof(PolicyTrackedResourceType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForSubscription", typeof(PolicyTrackedResourceType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    // ComponentPolicyStates — fix queryOptions forwarding (generator bug #59950)
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForSubscriptionComponentPolicyStatesAsync", typeof(ComponentPolicyStatesResource), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForSubscriptionComponentPolicyStates", typeof(ComponentPolicyStatesResource), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     public partial class MockablePolicyInsightsSubscriptionResource
     {
         /// <summary>
@@ -251,6 +254,66 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 policyQuerySettings?.Filter,
                 context,
                 "MockablePolicyInsightsSubscriptionResource.SummarizePolicyStates");
+        }
+
+        /// <summary>
+        /// Queries component policy states under subscription scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForSubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="componentPolicyStatesResource"></param>
+        /// <param name="queryOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForSubscriptionComponentPolicyStatesAsync(ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new ComponentPolicyStatesGetQueryResultsForSubscriptionComponentPolicyStatesAsyncCollectionResultOfT(
+                ComponentPolicyStatesRestClient, Id.SubscriptionId, componentPolicyStatesResource.ToString(),
+                queryOptions?.Top, queryOptions?.OrderBy, queryOptions?.Select,
+                queryOptions?.From, queryOptions?.To, queryOptions?.Filter, queryOptions?.Apply,
+                context, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionComponentPolicyStates");
+        }
+
+        /// <summary>
+        /// Queries component policy states under subscription scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForSubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="componentPolicyStatesResource"></param>
+        /// <param name="queryOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<ComponentPolicyState> GetQueryResultsForSubscriptionComponentPolicyStates(ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new ComponentPolicyStatesGetQueryResultsForSubscriptionComponentPolicyStatesCollectionResultOfT(
+                ComponentPolicyStatesRestClient, Id.SubscriptionId, componentPolicyStatesResource.ToString(),
+                queryOptions?.Top, queryOptions?.OrderBy, queryOptions?.Select,
+                queryOptions?.From, queryOptions?.To, queryOptions?.Filter, queryOptions?.Apply,
+                context, "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionComponentPolicyStates");
         }
 
         /// <summary> Queries policy tracked resources under the subscription. </summary>

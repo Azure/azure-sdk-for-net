@@ -13,7 +13,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PolicyInsights;
-using Azure.ResourceManager.PolicyInsights.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PolicyInsights.Mocking
@@ -152,90 +151,6 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Queries component policy states under subscription scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForSubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="componentPolicyStatesResource"></param>
-        /// <param name="queryOptions"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForSubscriptionComponentPolicyStatesAsync(ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ComponentPolicyStatesGetQueryResultsForSubscriptionComponentPolicyStatesAsyncCollectionResultOfT(
-                ComponentPolicyStatesRestClient,
-                Id.SubscriptionId,
-                componentPolicyStatesResource.ToString(),
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                context,
-                "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionComponentPolicyStates");
-        }
-
-        /// <summary>
-        /// Queries component policy states under subscription scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForSubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="componentPolicyStatesResource"></param>
-        /// <param name="queryOptions"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComponentPolicyState"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ComponentPolicyState> GetQueryResultsForSubscriptionComponentPolicyStates(ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new ComponentPolicyStatesGetQueryResultsForSubscriptionComponentPolicyStatesCollectionResultOfT(
-                ComponentPolicyStatesRestClient,
-                Id.SubscriptionId,
-                componentPolicyStatesResource.ToString(),
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                context,
-                "MockablePolicyInsightsSubscriptionResource.GetQueryResultsForSubscriptionComponentPolicyStates");
         }
     }
 }

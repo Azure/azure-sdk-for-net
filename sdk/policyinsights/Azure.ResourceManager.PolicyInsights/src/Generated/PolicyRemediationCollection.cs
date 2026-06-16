@@ -14,7 +14,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
@@ -249,76 +248,6 @@ namespace Azure.ResourceManager.PolicyInsights
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Gets all remediations for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/remediations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Remediations_ListForResource. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="queryOptions"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyRemediationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyRemediationResource> GetAllAsync(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<PolicyRemediationData, PolicyRemediationResource>(new RemediationsGetForResourceAsyncCollectionResultOfT(
-                _remediationsRestClient,
-                Id.ToString(),
-                default,
-                default,
-                context,
-                "PolicyRemediationCollection.GetAll"), data => new PolicyRemediationResource(Client, data));
-        }
-
-        /// <summary>
-        /// Gets all remediations for a resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/remediations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Remediations_ListForResource. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2024-10-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="queryOptions"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyRemediationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyRemediationResource> GetAll(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<PolicyRemediationData, PolicyRemediationResource>(new RemediationsGetForResourceCollectionResultOfT(
-                _remediationsRestClient,
-                Id.ToString(),
-                default,
-                default,
-                context,
-                "PolicyRemediationCollection.GetAll"), data => new PolicyRemediationResource(Client, data));
         }
 
         /// <summary>

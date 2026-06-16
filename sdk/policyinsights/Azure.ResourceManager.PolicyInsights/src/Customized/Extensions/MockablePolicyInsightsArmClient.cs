@@ -64,6 +64,15 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResource", typeof(ResourceIdentifier), typeof(PolicyTrackedResourceType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForManagementGroupAsync", typeof(ResourceIdentifier), typeof(PolicyTrackedResourceType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForManagementGroup", typeof(ResourceIdentifier), typeof(PolicyTrackedResourceType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    // ComponentPolicyStates — fix queryOptions forwarding (generator bug #59950)
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceComponentPolicyStatesAsync", typeof(ResourceIdentifier), typeof(ComponentPolicyStatesResource), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceComponentPolicyStates", typeof(ResourceIdentifier), typeof(ComponentPolicyStatesResource), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync", typeof(ResourceIdentifier), typeof(ComponentPolicyStatesResource), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForPolicyDefinitionComponentPolicyStates", typeof(ResourceIdentifier), typeof(ComponentPolicyStatesResource), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync", typeof(ResourceIdentifier), typeof(ComponentPolicyStatesResource), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates", typeof(ResourceIdentifier), typeof(ComponentPolicyStatesResource), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsync", typeof(ResourceIdentifier), typeof(ComponentPolicyStatesResource), typeof(PolicyQuerySettings), typeof(CancellationToken))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates", typeof(ResourceIdentifier), typeof(ComponentPolicyStatesResource), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     public partial class MockablePolicyInsightsArmClient
     {
 
@@ -229,6 +238,272 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 PolicyTrackedResourcesRestClient, scope.ToString(), policyTrackedResourceType.ToString(),
                 policyQuerySettings?.Top, policyQuerySettings?.Filter,
                 context, "MockablePolicyInsightsArmClient.GetPolicyTrackedResourceQueryResults");
+        }
+
+        /// <summary>
+        /// Queries component policy states for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="componentPolicyStatesResource"></param>
+        /// <param name="queryOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceComponentPolicyStatesAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new ComponentPolicyStatesGetQueryResultsForResourceComponentPolicyStatesAsyncCollectionResultOfT(
+                ComponentPolicyStatesRestClient, scope.ToString(), componentPolicyStatesResource.ToString(),
+                queryOptions?.Top, queryOptions?.OrderBy, queryOptions?.Select,
+                queryOptions?.From, queryOptions?.To, queryOptions?.Filter,
+                queryOptions?.Apply, queryOptions?.Expand,
+                context, "MockablePolicyInsightsArmClient.GetQueryResultsForResourceComponentPolicyStates");
+        }
+
+        /// <summary>
+        /// Queries component policy states for the resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceId}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="componentPolicyStatesResource"></param>
+        /// <param name="queryOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual Pageable<ComponentPolicyState> GetQueryResultsForResourceComponentPolicyStates(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new ComponentPolicyStatesGetQueryResultsForResourceComponentPolicyStatesCollectionResultOfT(
+                ComponentPolicyStatesRestClient, scope.ToString(), componentPolicyStatesResource.ToString(),
+                queryOptions?.Top, queryOptions?.OrderBy, queryOptions?.Select,
+                queryOptions?.From, queryOptions?.To, queryOptions?.Filter,
+                queryOptions?.Apply, queryOptions?.Expand,
+                context, "MockablePolicyInsightsArmClient.GetQueryResultsForResourceComponentPolicyStates");
+        }
+
+        /// <summary>
+        /// Queries component policy states for the subscription level policy definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForPolicyDefinition. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="componentPolicyStatesResource"></param>
+        /// <param name="queryOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForPolicyDefinitionComponentPolicyStatesAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new ComponentPolicyStatesGetQueryResultsForPolicyDefinitionComponentPolicyStatesAsyncCollectionResultOfT(
+                ComponentPolicyStatesRestClient, scope.SubscriptionId, scope.Name, componentPolicyStatesResource.ToString(),
+                queryOptions?.Top, queryOptions?.OrderBy, queryOptions?.Select,
+                queryOptions?.From, queryOptions?.To, queryOptions?.Filter, queryOptions?.Apply,
+                context, "MockablePolicyInsightsArmClient.GetQueryResultsForPolicyDefinitionComponentPolicyStates");
+        }
+
+        /// <summary>
+        /// Queries component policy states for the subscription level policy definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForPolicyDefinition. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="componentPolicyStatesResource"></param>
+        /// <param name="queryOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual Pageable<ComponentPolicyState> GetQueryResultsForPolicyDefinitionComponentPolicyStates(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new ComponentPolicyStatesGetQueryResultsForPolicyDefinitionComponentPolicyStatesCollectionResultOfT(
+                ComponentPolicyStatesRestClient, scope.SubscriptionId, scope.Name, componentPolicyStatesResource.ToString(),
+                queryOptions?.Top, queryOptions?.OrderBy, queryOptions?.Select,
+                queryOptions?.From, queryOptions?.To, queryOptions?.Filter, queryOptions?.Apply,
+                context, "MockablePolicyInsightsArmClient.GetQueryResultsForPolicyDefinitionComponentPolicyStates");
+        }
+
+        /// <summary>
+        /// Queries component policy states for the subscription level policy assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForSubscriptionLevelPolicyAssignment. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="componentPolicyStatesResource"></param>
+        /// <param name="queryOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new ComponentPolicyStatesGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesAsyncCollectionResultOfT(
+                ComponentPolicyStatesRestClient, scope.SubscriptionId, scope.Name, componentPolicyStatesResource.ToString(),
+                queryOptions?.Top, queryOptions?.OrderBy, queryOptions?.Select,
+                queryOptions?.From, queryOptions?.To, queryOptions?.Filter, queryOptions?.Apply,
+                context, "MockablePolicyInsightsArmClient.GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates");
+        }
+
+        /// <summary>
+        /// Queries component policy states for the subscription level policy assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForSubscriptionLevelPolicyAssignment. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="componentPolicyStatesResource"></param>
+        /// <param name="queryOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual Pageable<ComponentPolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new ComponentPolicyStatesGetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStatesCollectionResultOfT(
+                ComponentPolicyStatesRestClient, scope.SubscriptionId, scope.Name, componentPolicyStatesResource.ToString(),
+                queryOptions?.Top, queryOptions?.OrderBy, queryOptions?.Select,
+                queryOptions?.From, queryOptions?.To, queryOptions?.Filter, queryOptions?.Apply,
+                context, "MockablePolicyInsightsArmClient.GetQueryResultsForSubscriptionLevelPolicyAssignmentComponentPolicyStates");
+        }
+
+        /// <summary>
+        /// Queries component policy states for the resource group level policy assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForResourceGroupLevelPolicyAssignment. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="componentPolicyStatesResource"></param>
+        /// <param name="queryOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual AsyncPageable<ComponentPolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsync(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new ComponentPolicyStatesGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesAsyncCollectionResultOfT(
+                ComponentPolicyStatesRestClient, scope.SubscriptionId, scope.ResourceGroupName, scope.Name, componentPolicyStatesResource.ToString(),
+                queryOptions?.Top, queryOptions?.OrderBy, queryOptions?.Select,
+                queryOptions?.From, queryOptions?.To, queryOptions?.Filter, queryOptions?.Apply,
+                context, "MockablePolicyInsightsArmClient.GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates");
+        }
+
+        /// <summary>
+        /// Queries component policy states for the resource group level policy assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/componentPolicyStates/{componentPolicyStatesResource}/queryResults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ComponentPolicyStatesOperationGroup_ListQueryResultsForResourceGroupLevelPolicyAssignment. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="componentPolicyStatesResource"></param>
+        /// <param name="queryOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual Pageable<ComponentPolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates(ResourceIdentifier scope, ComponentPolicyStatesResource componentPolicyStatesResource, PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+            return new ComponentPolicyStatesGetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStatesCollectionResultOfT(
+                ComponentPolicyStatesRestClient, scope.SubscriptionId, scope.ResourceGroupName, scope.Name, componentPolicyStatesResource.ToString(),
+                queryOptions?.Top, queryOptions?.OrderBy, queryOptions?.Select,
+                queryOptions?.From, queryOptions?.To, queryOptions?.Filter, queryOptions?.Apply,
+                context, "MockablePolicyInsightsArmClient.GetQueryResultsForResourceGroupLevelPolicyAssignmentComponentPolicyStates");
         }
 
         // ===== GA-shape ComponentPolicyStates query overloads (obsolete + throw) =====
