@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="availabilityZone"> Specifies the availability zone the database is pinned to. </param>
         /// <param name="encryptionProtectorAutoRotation"> The flag to enable or disable auto rotation of database encryption protector AKV key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseProperties(SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, string defaultSecondaryLocation, string failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, string maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, SqlDatabaseKey> keys, string encryptionProtector, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, bool? useFreeLimit, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior, ResourceIdentifier sourceResourceId, bool? manualCutover, bool? performCutover, SqlAvailabilityZoneType? availabilityZone, bool? encryptionProtectorAutoRotation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseProperties(SqlDatabaseCreateMode? createMode, string collation, long? maxSizeBytes, SampleSchemaName? sampleName, ResourceIdentifier elasticPoolId, ResourceIdentifier sourceDatabaseId, SqlDatabaseStatus? status, Guid? databaseId, DateTimeOffset? createdOn, string currentServiceObjectiveName, string requestedServiceObjectiveName, AzureLocation? defaultSecondaryLocation, ResourceIdentifier failoverGroupId, DateTimeOffset? restorePointInTime, DateTimeOffset? sourceDatabaseDeletedOn, ResourceIdentifier recoveryServicesRecoveryPointId, ResourceIdentifier longTermRetentionBackupResourceId, ResourceIdentifier recoverableDatabaseId, ResourceIdentifier restorableDroppedDatabaseId, CatalogCollationType? catalogCollation, bool? isZoneRedundant, DatabaseLicenseType? licenseType, long? maxLogSizeBytes, DateTimeOffset? earliestRestoreOn, DatabaseReadScale? readScale, int? highAvailabilityReplicaCount, SecondaryType? secondaryType, SqlSku currentSku, int? autoPauseDelay, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, double? minCapacity, DateTimeOffset? pausedOn, DateTimeOffset? resumedOn, ResourceIdentifier maintenanceConfigurationId, bool? isLedgerOn, bool? isInfraEncryptionEnabled, Guid? federatedClientId, IDictionary<string, SqlDatabaseKey> keys, string encryptionProtector, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, bool? useFreeLimit, FreeLimitExhaustionBehavior? freeLimitExhaustionBehavior, ResourceIdentifier sourceResourceId, bool? manualCutover, bool? performCutover, SqlAvailabilityZoneType? availabilityZone, bool? encryptionProtectorAutoRotation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreateMode = createMode;
             Collation = collation;
@@ -215,11 +215,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The default secondary region for this database. </summary>
         [WirePath("defaultSecondaryLocation")]
-        public string DefaultSecondaryLocation { get; }
+        public AzureLocation? DefaultSecondaryLocation { get; }
 
         /// <summary> Failover Group resource identifier that this database belongs to. </summary>
         [WirePath("failoverGroupId")]
-        public string FailoverGroupId { get; }
+        public ResourceIdentifier FailoverGroupId { get; }
 
         /// <summary> Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database. </summary>
         [WirePath("restorePointInTime")]
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Maintenance configuration id assigned to the database. This configuration defines the period when the maintenance updates will occur. </summary>
         [WirePath("maintenanceConfigurationId")]
-        public string MaintenanceConfigurationId { get; set; }
+        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
 
         /// <summary> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </summary>
         [WirePath("isLedgerOn")]

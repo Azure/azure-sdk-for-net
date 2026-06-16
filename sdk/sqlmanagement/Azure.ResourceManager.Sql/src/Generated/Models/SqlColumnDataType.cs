@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> bigint. </summary>
         private const string BigintValue = "bigint";
         /// <summary> hierarchyid. </summary>
-        private const string HierarchyidValue = "hierarchyid";
+        private const string HierarchyIdValue = "hierarchyid";
         /// <summary> geometry. </summary>
         private const string GeometryValue = "geometry";
         /// <summary> geography. </summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlColumnDataType Bigint { get; } = new SqlColumnDataType(BigintValue);
 
         /// <summary> hierarchyid. </summary>
-        public static SqlColumnDataType Hierarchyid { get; } = new SqlColumnDataType(HierarchyidValue);
+        public static SqlColumnDataType HierarchyId { get; } = new SqlColumnDataType(HierarchyIdValue);
 
         /// <summary> geometry. </summary>
         public static SqlColumnDataType Geometry { get; } = new SqlColumnDataType(GeometryValue);

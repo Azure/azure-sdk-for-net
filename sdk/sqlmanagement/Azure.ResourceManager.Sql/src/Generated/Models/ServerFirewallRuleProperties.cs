@@ -23,22 +23,22 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerFirewallRuleProperties"/>. </summary>
-        /// <param name="startIpAddress"> The start IP address of the firewall rule. Must be IPv4 format. Use value '0.0.0.0' for all Azure-internal IP addresses. </param>
-        /// <param name="endIpAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. Use value '0.0.0.0' for all Azure-internal IP addresses. </param>
+        /// <param name="startIPAddress"> The start IP address of the firewall rule. Must be IPv4 format. Use value '0.0.0.0' for all Azure-internal IP addresses. </param>
+        /// <param name="endIPAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. Use value '0.0.0.0' for all Azure-internal IP addresses. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerFirewallRuleProperties(string startIpAddress, string endIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerFirewallRuleProperties(string startIPAddress, string endIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartIpAddress = startIpAddress;
-            EndIpAddress = endIpAddress;
+            StartIPAddress = startIPAddress;
+            EndIPAddress = endIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The start IP address of the firewall rule. Must be IPv4 format. Use value '0.0.0.0' for all Azure-internal IP addresses. </summary>
         [WirePath("startIpAddress")]
-        public string StartIpAddress { get; set; }
+        public string StartIPAddress { get; set; }
 
         /// <summary> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. Use value '0.0.0.0' for all Azure-internal IP addresses. </summary>
         [WirePath("endIpAddress")]
-        public string EndIpAddress { get; set; }
+        public string EndIPAddress { get; set; }
     }
 }

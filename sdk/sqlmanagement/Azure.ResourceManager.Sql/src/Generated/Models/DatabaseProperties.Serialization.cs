@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(DefaultSecondaryLocation))
             {
                 writer.WritePropertyName("defaultSecondaryLocation"u8);
-                writer.WriteStringValue(DefaultSecondaryLocation);
+                writer.WriteStringValue(DefaultSecondaryLocation.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(FailoverGroupId))
             {
@@ -374,8 +374,8 @@ namespace Azure.ResourceManager.Sql.Models
             DateTimeOffset? createdOn = default;
             string currentServiceObjectiveName = default;
             string requestedServiceObjectiveName = default;
-            string defaultSecondaryLocation = default;
-            string failoverGroupId = default;
+            AzureLocation? defaultSecondaryLocation = default;
+            ResourceIdentifier failoverGroupId = default;
             DateTimeOffset? restorePointInTime = default;
             DateTimeOffset? sourceDatabaseDeletedOn = default;
             ResourceIdentifier recoveryServicesRecoveryPointId = default;
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Sql.Models
             double? minCapacity = default;
             DateTimeOffset? pausedOn = default;
             DateTimeOffset? resumedOn = default;
-            string maintenanceConfigurationId = default;
+            ResourceIdentifier maintenanceConfigurationId = default;
             bool? isLedgerOn = default;
             bool? isInfraEncryptionEnabled = default;
             Guid? federatedClientId = default;
@@ -503,12 +503,20 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("defaultSecondaryLocation"u8))
                 {
-                    defaultSecondaryLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    defaultSecondaryLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("failoverGroupId"u8))
                 {
-                    failoverGroupId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failoverGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("restorePointInTime"u8))
@@ -702,7 +710,11 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (prop.NameEquals("maintenanceConfigurationId"u8))
                 {
-                    maintenanceConfigurationId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maintenanceConfigurationId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("isLedgerOn"u8))

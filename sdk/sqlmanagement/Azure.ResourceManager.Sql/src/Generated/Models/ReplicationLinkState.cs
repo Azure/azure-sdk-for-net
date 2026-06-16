@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
         /// <summary> PENDING. </summary>
-        private const string PENDINGValue = "PENDING";
+        private const string PendingValue = "PENDING";
         /// <summary> SEEDING. </summary>
-        private const string SEEDINGValue = "SEEDING";
+        private const string SeedingValue = "SEEDING";
         /// <summary> CATCH_UP. </summary>
-        private const string CATCHUPValue = "CATCH_UP";
+        private const string CatchUpValue = "CATCH_UP";
         /// <summary> SUSPENDED. </summary>
-        private const string SUSPENDEDValue = "SUSPENDED";
+        private const string SuspendedValue = "SUSPENDED";
 
         /// <summary> Initializes a new instance of <see cref="ReplicationLinkState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> PENDING. </summary>
-        public static ReplicationLinkState PENDING { get; } = new ReplicationLinkState(PENDINGValue);
+        public static ReplicationLinkState Pending { get; } = new ReplicationLinkState(PendingValue);
 
         /// <summary> SEEDING. </summary>
-        public static ReplicationLinkState SEEDING { get; } = new ReplicationLinkState(SEEDINGValue);
+        public static ReplicationLinkState Seeding { get; } = new ReplicationLinkState(SeedingValue);
 
         /// <summary> CATCH_UP. </summary>
-        public static ReplicationLinkState CATCHUP { get; } = new ReplicationLinkState(CATCHUPValue);
+        public static ReplicationLinkState CatchUp { get; } = new ReplicationLinkState(CatchUpValue);
 
         /// <summary> SUSPENDED. </summary>
-        public static ReplicationLinkState SUSPENDED { get; } = new ReplicationLinkState(SUSPENDEDValue);
+        public static ReplicationLinkState Suspended { get; } = new ReplicationLinkState(SuspendedValue);
 
         /// <summary> Determines if two <see cref="ReplicationLinkState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

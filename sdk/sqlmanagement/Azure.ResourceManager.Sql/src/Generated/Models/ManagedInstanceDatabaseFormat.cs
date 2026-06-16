@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> AlwaysUpToDate. </summary>
         private const string AlwaysUpToDateValue = "AlwaysUpToDate";
         /// <summary> SQLServer2022. </summary>
-        private const string SQLServer2022Value = "SQLServer2022";
+        private const string SqlServer2022Value = "SQLServer2022";
         /// <summary> SQLServer2025. </summary>
-        private const string SQLServer2025Value = "SQLServer2025";
+        private const string SqlServer2025Value = "SQLServer2025";
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceDatabaseFormat"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Sql.Models
         public static ManagedInstanceDatabaseFormat AlwaysUpToDate { get; } = new ManagedInstanceDatabaseFormat(AlwaysUpToDateValue);
 
         /// <summary> SQLServer2022. </summary>
-        public static ManagedInstanceDatabaseFormat SQLServer2022 { get; } = new ManagedInstanceDatabaseFormat(SQLServer2022Value);
+        public static ManagedInstanceDatabaseFormat SqlServer2022 { get; } = new ManagedInstanceDatabaseFormat(SqlServer2022Value);
 
         /// <summary> SQLServer2025. </summary>
-        public static ManagedInstanceDatabaseFormat SQLServer2025 { get; } = new ManagedInstanceDatabaseFormat(SQLServer2025Value);
+        public static ManagedInstanceDatabaseFormat SqlServer2025 { get; } = new ManagedInstanceDatabaseFormat(SqlServer2025Value);
 
         /// <summary> Determines if two <see cref="ManagedInstanceDatabaseFormat"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

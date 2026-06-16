@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("xaTransactionsEnabled"u8);
                 writer.WriteBooleanValue(IsXATransactionsEnabled.Value);
             }
-            if (Optional.IsDefined(SnaLu6point2TransactionsEnabled))
+            if (Optional.IsDefined(SnaLu6Point2TransactionsEnabled))
             {
                 writer.WritePropertyName("snaLu6point2TransactionsEnabled"u8);
-                writer.WriteBooleanValue(SnaLu6point2TransactionsEnabled.Value);
+                writer.WriteBooleanValue(SnaLu6Point2TransactionsEnabled.Value);
             }
             if (Optional.IsDefined(XATransactionsDefaultTimeoutInSeconds))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Sql.Models
             }
             ManagedInstanceDtcTransactionManagerCommunicationSettings transactionManagerCommunicationSettings = default;
             bool? isXATransactionsEnabled = default;
-            bool? snaLu6point2TransactionsEnabled = default;
+            bool? snaLu6Point2TransactionsEnabled = default;
             int? xaTransactionsDefaultTimeoutInSeconds = default;
             int? xaTransactionsMaximumTimeoutInSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    snaLu6point2TransactionsEnabled = prop.Value.GetBoolean();
+                    snaLu6Point2TransactionsEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("xaTransactionsDefaultTimeout"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Sql.Models
             return new ManagedInstanceDtcSecuritySettings(
                 transactionManagerCommunicationSettings,
                 isXATransactionsEnabled,
-                snaLu6point2TransactionsEnabled,
+                snaLu6Point2TransactionsEnabled,
                 xaTransactionsDefaultTimeoutInSeconds,
                 xaTransactionsMaximumTimeoutInSeconds,
                 additionalBinaryDataProperties);

@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The default secondary region for this database. </summary>
         [WirePath("properties.defaultSecondaryLocation")]
-        public string DefaultSecondaryLocation
+        public AzureLocation? DefaultSecondaryLocation
         {
             get
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Failover Group resource identifier that this database belongs to. </summary>
         [WirePath("properties.failoverGroupId")]
-        public string FailoverGroupId
+        public ResourceIdentifier FailoverGroupId
         {
             get
             {
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Maintenance configuration id assigned to the database. This configuration defines the period when the maintenance updates will occur. </summary>
         [WirePath("properties.maintenanceConfigurationId")]
-        public string MaintenanceConfigurationId
+        public ResourceIdentifier MaintenanceConfigurationId
         {
             get
             {

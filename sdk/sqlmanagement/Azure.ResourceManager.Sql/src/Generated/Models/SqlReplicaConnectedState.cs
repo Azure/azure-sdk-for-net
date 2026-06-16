@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
         /// <summary> DISCONNECTED. </summary>
-        private const string DISCONNECTEDValue = "DISCONNECTED";
+        private const string DisconnectedValue = "DISCONNECTED";
         /// <summary> CONNECTED. </summary>
-        private const string CONNECTEDValue = "CONNECTED";
+        private const string ConnectedValue = "CONNECTED";
 
         /// <summary> Initializes a new instance of <see cref="SqlReplicaConnectedState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> DISCONNECTED. </summary>
-        public static SqlReplicaConnectedState DISCONNECTED { get; } = new SqlReplicaConnectedState(DISCONNECTEDValue);
+        public static SqlReplicaConnectedState Disconnected { get; } = new SqlReplicaConnectedState(DisconnectedValue);
 
         /// <summary> CONNECTED. </summary>
-        public static SqlReplicaConnectedState CONNECTED { get; } = new SqlReplicaConnectedState(CONNECTEDValue);
+        public static SqlReplicaConnectedState Connected { get; } = new SqlReplicaConnectedState(ConnectedValue);
 
         /// <summary> Determines if two <see cref="SqlReplicaConnectedState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

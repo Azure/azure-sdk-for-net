@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("database"u8);
                 writer.WriteStringValue(Database);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClientIp))
+            if (options.Format != "W" && Optional.IsDefined(ClientIP))
             {
                 writer.WritePropertyName("clientIp"u8);
-                writer.WriteStringValue(ClientIp.ToString());
+                writer.WriteStringValue(ClientIP.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ApplicationName))
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql.Models
             string subscription = default;
             string server = default;
             string database = default;
-            IPAddress clientIp = default;
+            IPAddress clientIP = default;
             string applicationName = default;
             string principalName = default;
             SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties = default;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    clientIp = IPAddress.Parse(prop.Value.GetString());
+                    clientIP = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("applicationName"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Sql.Models
                 subscription,
                 server,
                 database,
-                clientIp,
+                clientIP,
                 applicationName,
                 principalName,
                 securityEventSqlInjectionAdditionalProperties,

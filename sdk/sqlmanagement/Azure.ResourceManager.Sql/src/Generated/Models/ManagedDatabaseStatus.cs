@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Starting. </summary>
         private const string StartingValue = "Starting";
         /// <summary> DbMoving. </summary>
-        private const string DbMovingValue = "DbMoving";
+        private const string DBMovingValue = "DbMoving";
         /// <summary> DbCopying. </summary>
-        private const string DbCopyingValue = "DbCopying";
+        private const string DBCopyingValue = "DbCopying";
 
         /// <summary> Initializes a new instance of <see cref="ManagedDatabaseStatus"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Sql.Models
         public static ManagedDatabaseStatus Starting { get; } = new ManagedDatabaseStatus(StartingValue);
 
         /// <summary> DbMoving. </summary>
-        public static ManagedDatabaseStatus DbMoving { get; } = new ManagedDatabaseStatus(DbMovingValue);
+        public static ManagedDatabaseStatus DBMoving { get; } = new ManagedDatabaseStatus(DBMovingValue);
 
         /// <summary> DbCopying. </summary>
-        public static ManagedDatabaseStatus DbCopying { get; } = new ManagedDatabaseStatus(DbCopyingValue);
+        public static ManagedDatabaseStatus DBCopying { get; } = new ManagedDatabaseStatus(DBCopyingValue);
 
         /// <summary> Determines if two <see cref="ManagedDatabaseStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
         /// <summary> GEO. </summary>
-        private const string GEOValue = "GEO";
+        private const string GeoValue = "GEO";
         /// <summary> NAMED. </summary>
-        private const string NAMEDValue = "NAMED";
+        private const string NamedValue = "NAMED";
         /// <summary> STANDBY. </summary>
-        private const string STANDBYValue = "STANDBY";
+        private const string StandbyValue = "STANDBY";
 
         /// <summary> Initializes a new instance of <see cref="ReplicationLinkType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> GEO. </summary>
-        public static ReplicationLinkType GEO { get; } = new ReplicationLinkType(GEOValue);
+        public static ReplicationLinkType Geo { get; } = new ReplicationLinkType(GeoValue);
 
         /// <summary> NAMED. </summary>
-        public static ReplicationLinkType NAMED { get; } = new ReplicationLinkType(NAMEDValue);
+        public static ReplicationLinkType Named { get; } = new ReplicationLinkType(NamedValue);
 
         /// <summary> STANDBY. </summary>
-        public static ReplicationLinkType STANDBY { get; } = new ReplicationLinkType(STANDBYValue);
+        public static ReplicationLinkType Standby { get; } = new ReplicationLinkType(StandbyValue);
 
         /// <summary> Determines if two <see cref="ReplicationLinkType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

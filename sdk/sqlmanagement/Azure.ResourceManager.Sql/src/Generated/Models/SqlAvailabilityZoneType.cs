@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> NoPreference. </summary>
         private const string NoPreferenceValue = "NoPreference";
         /// <summary> 1. </summary>
-        private const string _1Value = "1";
+        private const string OneValue = "1";
         /// <summary> 2. </summary>
-        private const string _2Value = "2";
+        private const string TwoValue = "2";
         /// <summary> 3. </summary>
-        private const string _3Value = "3";
+        private const string ThreeValue = "3";
 
         /// <summary> Initializes a new instance of <see cref="SqlAvailabilityZoneType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlAvailabilityZoneType NoPreference { get; } = new SqlAvailabilityZoneType(NoPreferenceValue);
 
         /// <summary> 1. </summary>
-        public static SqlAvailabilityZoneType _1 { get; } = new SqlAvailabilityZoneType(_1Value);
+        public static SqlAvailabilityZoneType One { get; } = new SqlAvailabilityZoneType(OneValue);
 
         /// <summary> 2. </summary>
-        public static SqlAvailabilityZoneType _2 { get; } = new SqlAvailabilityZoneType(_2Value);
+        public static SqlAvailabilityZoneType Two { get; } = new SqlAvailabilityZoneType(TwoValue);
 
         /// <summary> 3. </summary>
-        public static SqlAvailabilityZoneType _3 { get; } = new SqlAvailabilityZoneType(_3Value);
+        public static SqlAvailabilityZoneType Three { get; } = new SqlAvailabilityZoneType(ThreeValue);
 
         /// <summary> Determines if two <see cref="SqlAvailabilityZoneType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

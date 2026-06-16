@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly int _value;
         /// <summary> 12. </summary>
-        private const int _12Value = 12;
+        private const int TwelveValue = 12;
         /// <summary> 24. </summary>
-        private const int _24Value = 24;
+        private const int TwentyFourValue = 24;
 
         /// <summary> Initializes a new instance of <see cref="DiffBackupIntervalInHours"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> 12. </summary>
-        public static DiffBackupIntervalInHours _12 { get; } = new DiffBackupIntervalInHours(_12Value);
+        public static DiffBackupIntervalInHours Twelve { get; } = new DiffBackupIntervalInHours(TwelveValue);
 
         /// <summary> 24. </summary>
-        public static DiffBackupIntervalInHours _24 { get; } = new DiffBackupIntervalInHours(_24Value);
+        public static DiffBackupIntervalInHours TwentyFour { get; } = new DiffBackupIntervalInHours(TwentyFourValue);
 
         /// <summary> Determines if two <see cref="DiffBackupIntervalInHours"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

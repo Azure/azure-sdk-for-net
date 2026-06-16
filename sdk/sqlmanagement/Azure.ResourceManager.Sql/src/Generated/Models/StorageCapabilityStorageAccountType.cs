@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
         /// <summary> GRS. </summary>
-        private const string GRSValue = "GRS";
+        private const string GrsValue = "GRS";
         /// <summary> LRS. </summary>
-        private const string LRSValue = "LRS";
+        private const string LrsValue = "LRS";
         /// <summary> ZRS. </summary>
-        private const string ZRSValue = "ZRS";
+        private const string ZrsValue = "ZRS";
         /// <summary> GZRS. </summary>
-        private const string GZRSValue = "GZRS";
+        private const string GzrsValue = "GZRS";
 
         /// <summary> Initializes a new instance of <see cref="StorageCapabilityStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> GRS. </summary>
-        public static StorageCapabilityStorageAccountType GRS { get; } = new StorageCapabilityStorageAccountType(GRSValue);
+        public static StorageCapabilityStorageAccountType Grs { get; } = new StorageCapabilityStorageAccountType(GrsValue);
 
         /// <summary> LRS. </summary>
-        public static StorageCapabilityStorageAccountType LRS { get; } = new StorageCapabilityStorageAccountType(LRSValue);
+        public static StorageCapabilityStorageAccountType Lrs { get; } = new StorageCapabilityStorageAccountType(LrsValue);
 
         /// <summary> ZRS. </summary>
-        public static StorageCapabilityStorageAccountType ZRS { get; } = new StorageCapabilityStorageAccountType(ZRSValue);
+        public static StorageCapabilityStorageAccountType Zrs { get; } = new StorageCapabilityStorageAccountType(ZrsValue);
 
         /// <summary> GZRS. </summary>
-        public static StorageCapabilityStorageAccountType GZRS { get; } = new StorageCapabilityStorageAccountType(GZRSValue);
+        public static StorageCapabilityStorageAccountType Gzrs { get; } = new StorageCapabilityStorageAccountType(GzrsValue);
 
         /// <summary> Determines if two <see cref="StorageCapabilityStorageAccountType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

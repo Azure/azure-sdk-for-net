@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceDtcSecuritySettings"/>. </summary>
         /// <param name="transactionManagerCommunicationSettings"> Transaction Manager communication settings of managed instance DTC. </param>
         /// <param name="isXATransactionsEnabled"> Allow XA Transactions to managed instance DTC. </param>
-        /// <param name="snaLu6point2TransactionsEnabled"> Allow SNA LU 6.2 Transactions to managed instance DTC. </param>
+        /// <param name="snaLu6Point2TransactionsEnabled"> Allow SNA LU 6.2 Transactions to managed instance DTC. </param>
         /// <param name="xaTransactionsDefaultTimeoutInSeconds"> Default timeout for XA Transactions (in seconds). </param>
         /// <param name="xaTransactionsMaximumTimeoutInSeconds"> Maximum timeout for XA Transactions (in seconds). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceDtcSecuritySettings(ManagedInstanceDtcTransactionManagerCommunicationSettings transactionManagerCommunicationSettings, bool? isXATransactionsEnabled, bool? snaLu6point2TransactionsEnabled, int? xaTransactionsDefaultTimeoutInSeconds, int? xaTransactionsMaximumTimeoutInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedInstanceDtcSecuritySettings(ManagedInstanceDtcTransactionManagerCommunicationSettings transactionManagerCommunicationSettings, bool? isXATransactionsEnabled, bool? snaLu6Point2TransactionsEnabled, int? xaTransactionsDefaultTimeoutInSeconds, int? xaTransactionsMaximumTimeoutInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TransactionManagerCommunicationSettings = transactionManagerCommunicationSettings;
             IsXATransactionsEnabled = isXATransactionsEnabled;
-            SnaLu6point2TransactionsEnabled = snaLu6point2TransactionsEnabled;
+            SnaLu6Point2TransactionsEnabled = snaLu6Point2TransactionsEnabled;
             XATransactionsDefaultTimeoutInSeconds = xaTransactionsDefaultTimeoutInSeconds;
             XATransactionsMaximumTimeoutInSeconds = xaTransactionsMaximumTimeoutInSeconds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Allow SNA LU 6.2 Transactions to managed instance DTC. </summary>
         [WirePath("snaLu6point2TransactionsEnabled")]
-        public bool? SnaLu6point2TransactionsEnabled { get; set; }
+        public bool? SnaLu6Point2TransactionsEnabled { get; set; }
 
         /// <summary> Default timeout for XA Transactions (in seconds). </summary>
         [WirePath("xaTransactionsDefaultTimeout")]

@@ -23,34 +23,68 @@ namespace Azure.ResourceManager.Sql
         {
         }
 
-        /// <summary> The id of the distributed availability group. </summary>
+        /// <summary> The name of the target database. </summary>
+        [WirePath("properties.targetDatabase")]
+        public string TargetDatabase { get; set; }
+        /// <summary> The source endpoint. </summary>
+        [WirePath("properties.sourceEndpoint")]
+        public string SourceEndpoint { get; set; }
+        /// <summary> The primary availability group name. </summary>
+        [WirePath("properties.primaryAvailabilityGroupName")]
+        public string PrimaryAvailabilityGroupName { get; set; }
+        /// <summary> The secondary availability group name. </summary>
+        [WirePath("properties.secondaryAvailabilityGroupName")]
+        public string SecondaryAvailabilityGroupName { get; set; }
+        /// <summary> The replication mode of a distributed availability group. Parameter will be ignored during link creation. </summary>
+        [WirePath("properties.replicationMode")]
+        public DistributedAvailabilityGroupReplicationMode? ReplicationMode { get; set; }
+        /// <summary> The distributed availability group id. </summary>
+        [WirePath("properties.distributedAvailabilityGroupId")]
         public Guid? DistributedAvailabilityGroupId { get; }
-
+        /// <summary> The source replica id. </summary>
+        [WirePath("properties.sourceReplicaId")]
+        public Guid? SourceReplicaId { get; }
+        /// <summary> The target replica id. </summary>
+        [WirePath("properties.targetReplicaId")]
+        public Guid? TargetReplicaId { get; }
+        /// <summary> The link state. </summary>
+        [WirePath("properties.linkState")]
+        public string LinkState { get; }
         /// <summary> The last hardened lsn. </summary>
+        [WirePath("properties.lastHardenedLsn")]
         public string LastHardenedLsn { get; }
 
-        /// <summary> The link state. </summary>
-        public string LinkState { get; }
+        internal DistributedAvailabilityGroupData(
+            Azure.Core.ResourceIdentifier id,
+            string name,
+            Azure.Core.ResourceType resourceType,
+            Azure.ResourceManager.Models.SystemData systemData,
+            string targetDatabase,
+            string sourceEndpoint,
+            string primaryAvailabilityGroupName,
+            string secondaryAvailabilityGroupName,
+            DistributedAvailabilityGroupReplicationMode? replicationMode,
+            Guid? distributedAvailabilityGroupId,
+            Guid? sourceReplicaId,
+            Guid? targetReplicaId,
+            string linkState,
+            string lastHardenedLsn,
+            System.Collections.Generic.IDictionary<string, System.BinaryData> serializedAdditionalRawData)
+            : base(id, name, resourceType, systemData)
+        {
+            TargetDatabase = targetDatabase;
+            SourceEndpoint = sourceEndpoint;
+            PrimaryAvailabilityGroupName = primaryAvailabilityGroupName;
+            SecondaryAvailabilityGroupName = secondaryAvailabilityGroupName;
+            ReplicationMode = replicationMode;
+            DistributedAvailabilityGroupId = distributedAvailabilityGroupId;
+            SourceReplicaId = sourceReplicaId;
+            TargetReplicaId = targetReplicaId;
+            LinkState = linkState;
+            LastHardenedLsn = lastHardenedLsn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
 
-        /// <summary> The primary availability group name. </summary>
-        public string PrimaryAvailabilityGroupName { get; set; }
-
-        /// <summary> The replication mode. </summary>
-        public DistributedAvailabilityGroupReplicationMode? ReplicationMode { get; set; }
-
-        /// <summary> The secondary availability group name. </summary>
-        public string SecondaryAvailabilityGroupName { get; set; }
-
-        /// <summary> The source endpoint. </summary>
-        public string SourceEndpoint { get; set; }
-
-        /// <summary> The source replica id. </summary>
-        public Guid? SourceReplicaId { get; }
-
-        /// <summary> The target database name. </summary>
-        public string TargetDatabase { get; set; }
-
-        /// <summary> The target replica id. </summary>
-        public Guid? TargetReplicaId { get; }
+        internal System.Collections.Generic.IDictionary<string, System.BinaryData> _serializedAdditionalRawData;
     }
 }

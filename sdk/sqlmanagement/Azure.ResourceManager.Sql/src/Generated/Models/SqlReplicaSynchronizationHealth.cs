@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> NOT_HEALTHY. </summary>
         private const string NotHealthyValue = "NOT_HEALTHY";
         /// <summary> PARTIALLY_HEALTHY. </summary>
-        private const string PARTIALLYHEALTHYValue = "PARTIALLY_HEALTHY";
+        private const string PartiallyHealthyValue = "PARTIALLY_HEALTHY";
         /// <summary> HEALTHY. </summary>
-        private const string HEALTHYValue = "HEALTHY";
+        private const string HealthyValue = "HEALTHY";
 
         /// <summary> Initializes a new instance of <see cref="SqlReplicaSynchronizationHealth"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.Sql.Models
         public static SqlReplicaSynchronizationHealth NotHealthy { get; } = new SqlReplicaSynchronizationHealth(NotHealthyValue);
 
         /// <summary> PARTIALLY_HEALTHY. </summary>
-        public static SqlReplicaSynchronizationHealth PARTIALLYHEALTHY { get; } = new SqlReplicaSynchronizationHealth(PARTIALLYHEALTHYValue);
+        public static SqlReplicaSynchronizationHealth PartiallyHealthy { get; } = new SqlReplicaSynchronizationHealth(PartiallyHealthyValue);
 
         /// <summary> HEALTHY. </summary>
-        public static SqlReplicaSynchronizationHealth HEALTHY { get; } = new SqlReplicaSynchronizationHealth(HEALTHYValue);
+        public static SqlReplicaSynchronizationHealth Healthy { get; } = new SqlReplicaSynchronizationHealth(HealthyValue);
 
         /// <summary> Determines if two <see cref="SqlReplicaSynchronizationHealth"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

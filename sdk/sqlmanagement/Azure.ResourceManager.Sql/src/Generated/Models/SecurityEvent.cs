@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The IP address of the client who executed the statement. </summary>
         [WirePath("properties.clientIp")]
-        public IPAddress ClientIp
+        public IPAddress ClientIP
         {
             get
             {
-                return Properties is null ? default : Properties.ClientIp;
+                return Properties is null ? default : Properties.ClientIP;
             }
         }
 

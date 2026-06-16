@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
     {
         private readonly string _value;
         /// <summary> DTU. </summary>
-        private const string DTUValue = "DTU";
+        private const string DtuValue = "DTU";
         /// <summary> VCores. </summary>
         private const string VCoresValue = "VCores";
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> DTU. </summary>
-        public static PerformanceLevelUnit DTU { get; } = new PerformanceLevelUnit(DTUValue);
+        public static PerformanceLevelUnit Dtu { get; } = new PerformanceLevelUnit(DtuValue);
 
         /// <summary> VCores. </summary>
         public static PerformanceLevelUnit VCores { get; } = new PerformanceLevelUnit(VCoresValue);

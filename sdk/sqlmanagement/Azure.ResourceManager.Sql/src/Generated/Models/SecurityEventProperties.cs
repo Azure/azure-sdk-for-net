@@ -29,19 +29,19 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="subscription"> The subscription name. </param>
         /// <param name="server"> The server name. </param>
         /// <param name="database"> The database name. </param>
-        /// <param name="clientIp"> The IP address of the client who executed the statement. </param>
+        /// <param name="clientIP"> The IP address of the client who executed the statement. </param>
         /// <param name="applicationName"> The application used to execute the statement. </param>
         /// <param name="principalName"> The principal user who executed the statement. </param>
         /// <param name="securityEventSqlInjectionAdditionalProperties"> The sql injection additional properties, populated only if the type of the security event is sql injection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityEventProperties(DateTimeOffset? eventOn, SecurityEventType? securityEventType, string subscription, string server, string database, IPAddress clientIp, string applicationName, string principalName, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityEventProperties(DateTimeOffset? eventOn, SecurityEventType? securityEventType, string subscription, string server, string database, IPAddress clientIP, string applicationName, string principalName, SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EventOn = eventOn;
             SecurityEventType = securityEventType;
             Subscription = subscription;
             Server = server;
             Database = database;
-            ClientIp = clientIp;
+            ClientIP = clientIP;
             ApplicationName = applicationName;
             PrincipalName = principalName;
             SecurityEventSqlInjectionAdditionalProperties = securityEventSqlInjectionAdditionalProperties;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The IP address of the client who executed the statement. </summary>
         [WirePath("clientIp")]
-        public IPAddress ClientIp { get; }
+        public IPAddress ClientIP { get; }
 
         /// <summary> The application used to execute the statement. </summary>
         [WirePath("applicationName")]
