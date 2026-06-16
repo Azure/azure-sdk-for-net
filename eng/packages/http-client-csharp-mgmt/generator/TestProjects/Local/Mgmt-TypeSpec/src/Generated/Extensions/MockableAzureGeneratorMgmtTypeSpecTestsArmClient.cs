@@ -704,6 +704,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new CustomBaseTypeResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="CustomBaseTypeInheritedResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CustomBaseTypeInheritedResource"/> object. </returns>
+        public virtual CustomBaseTypeInheritedResource GetCustomBaseTypeInheritedResource(ResourceIdentifier id)
+        {
+            CustomBaseTypeInheritedResource.ValidateResourceId(id);
+            return new CustomBaseTypeInheritedResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="TestCertificateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TestCertificateResource"/> object. </returns>
