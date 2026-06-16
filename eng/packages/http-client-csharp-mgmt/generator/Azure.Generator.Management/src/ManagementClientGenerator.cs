@@ -49,6 +49,11 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         public override TypeProviderWriter GetWriter(TypeProvider provider)
         {
+            if (provider is ModelProvider modelProvider)
+            {
+                InheritableSystemObjectModelVisitor.EnsureInheritableSystemModel(modelProvider);
+            }
+
             if (provider is ModelFactoryProvider modelFactory)
             {
                 // Run model-factory repairs at write time, after all visitors have finalized model constructor
