@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.2-beta.4 (Unreleased)
+## 1.1.2-beta.4 (2026-06-09)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Make `Azure.ResourceManager.ResourceMover` AOT-compatible.
 
 ## 1.1.2-beta.3 (2026-04-29)
 

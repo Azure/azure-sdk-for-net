@@ -36,6 +36,9 @@ namespace Azure.Generator.Management
         private WirePathAttributeDefinition? _wirePathAttributeProvider;
         internal TypeProvider WirePathAttributeDefinition => _wirePathAttributeProvider ??= new WirePathAttributeDefinition();
 
+        private CodeGenResourceDataAttributeDefinition? _codeGenResourceDataAttributeProvider;
+        internal TypeProvider CodeGenResourceDataAttributeDefinition => _codeGenResourceDataAttributeProvider ??= new CodeGenResourceDataAttributeDefinition();
+
         private CSharpType? _modelReaderWriterContextType;
         internal CSharpType ModelReaderWriterContextType => _modelReaderWriterContextType ??= new ModelReaderWriterContextDefinition().Type;
 
@@ -48,6 +51,20 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<CSharpType, OperationSourceProvider>? _operationSourceDict;
         internal IReadOnlyDictionary<CSharpType, OperationSourceProvider> OperationSourceDict => _operationSourceDict ??= BuildOperationSources();
+        internal OperationSourceProvider GetOperationSource(ResourceClientProvider resource)
+        {
+            var operationSources = OperationSourceDict;
+            if (!operationSources.TryGetValue(resource.Type, out var operationSource))
+            {
+                operationSource = new OperationSourceProvider(resource);
+                if (operationSources is Dictionary<CSharpType, OperationSourceProvider> mutableOperationSources)
+                {
+                    mutableOperationSources.Add(resource.Type, operationSource);
+                }
+            }
+
+            return operationSource;
+        }
 
         internal IReadOnlyList<ResourceClientProvider> ResourceProviders => GetValue(ref _resources);
         internal IReadOnlyList<ResourceCollectionClientProvider> ResourceCollectionProviders => GetValue(ref _resourceCollections);
@@ -235,18 +252,8 @@ namespace Azure.Generator.Management
             }
         }
 
-        // TODO: replace this with CSharpType to TypeProvider mapping and move this logic to ModelFactoryVisitor
-        private HashSet<CSharpType>? _modelFactoryModels;
+        // TODO: replace this with CSharpType to TypeProvider mapping.
         private HashSet<CSharpType>? _allModelTypes;
-
-        private HashSet<CSharpType> ModelFactoryModels
-        {
-            get
-            {
-                BuildModelTypes();
-                return _modelFactoryModels!;
-            }
-        }
 
         private HashSet<CSharpType> AllModelTypes
         {
@@ -259,13 +266,12 @@ namespace Azure.Generator.Management
 
         private void BuildModelTypes()
         {
-            if (_modelFactoryModels is not null && _allModelTypes is not null)
+            if (_allModelTypes is not null)
             {
                 return; // already built
             }
 
             var allModelTypes = new HashSet<CSharpType>();
-            var modelFactoryModels = new HashSet<CSharpType>();
 
             foreach (var inputModel in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
             {
@@ -274,48 +280,11 @@ namespace Azure.Generator.Management
                 {
                     var eraseNullableType = model.Type.WithNullable(false);
                     allModelTypes.Add(eraseNullableType);
-                    if (IsModelFactoryModel(model))
-                    {
-                        modelFactoryModels.Add(eraseNullableType);
-                    }
                 }
             }
 
             _allModelTypes = allModelTypes;
-            _modelFactoryModels = modelFactoryModels;
         }
-
-        private static bool IsModelFactoryModel(ModelProvider model)
-        {
-            // A model is a model factory model if it is public and it has at least one public property without a setter.
-            return model.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public) && EnumerateAllPublicProperties(model).Any(prop => !prop.Body.HasSetter);
-
-            IEnumerable<PropertyProvider> EnumerateAllPublicProperties(ModelProvider current)
-            {
-                var currentModel = current;
-                foreach (var property in currentModel.Properties)
-                {
-                    if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
-                    {
-                        yield return property;
-                    }
-                }
-
-                while (currentModel.BaseModelProvider is not null)
-                {
-                    currentModel = currentModel.BaseModelProvider;
-                    foreach (var property in currentModel.Properties)
-                    {
-                        if (property.Modifiers.HasFlag(MethodSignatureModifiers.Public))
-                        {
-                            yield return property;
-                        }
-                    }
-                }
-            }
-        }
-
-        internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type.WithNullable(false));
 
         internal bool IsModelType(CSharpType type) => AllModelTypes.Contains(type.WithNullable(false));
 
@@ -337,14 +306,16 @@ namespace Azure.Generator.Management
             {
                 ManagementClientGenerator.Instance.AddTypeToKeep(mockableResource.Name);
             }
+            ManagementClientGenerator.Instance.AddTypeToKeep(CodeGenResourceDataAttributeDefinition.Name);
             ManagementClientGenerator.Instance.AddTypeToKeep(ExtensionProvider.Name);
 
             // Extract array response collection results from all methods
             var arrayResponseCollectionResults = ExtractArrayResponseCollectionResults();
 
             return [
-                .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider { IsSystemBase: true }),
+                .. base.BuildTypeProviders().Where(t => t is not SystemObjectModelProvider),
                 WirePathAttributeDefinition,
+                CodeGenResourceDataAttributeDefinition,
                 ArmOperation,
                 ArmOperationOfT,
                 .. OperationSourceDict.Values,

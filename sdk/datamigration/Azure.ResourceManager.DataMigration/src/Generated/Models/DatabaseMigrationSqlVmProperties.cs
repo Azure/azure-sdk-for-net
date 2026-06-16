@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlVmProperties"/>. </summary>
         public DatabaseMigrationSqlVmProperties()
         {
-            Kind = ResourceType.SqlVm;
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabaseMigrationSqlVmProperties"/>. </summary>
@@ -31,26 +30,28 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="migrationOperationId"> ID for current migration operation. </param>
         /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
         /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceSqlConnection"> Source SQL Server connection details. </param>
         /// <param name="sourceDatabaseName"> Name of the source database. </param>
         /// <param name="sourceServerName"> Name of the source sql server. </param>
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
+        /// <param name="sqlServerInstanceId"> Optional property - Resource Id for the source Sql server instance. Validations are performed on this property to ensure that it follows the correct format. </param>
         /// <param name="migrationStatusDetails"> Detailed migration status. Not included by default. </param>
         /// <param name="backupConfiguration"> Backup configuration info. </param>
         /// <param name="offlineConfiguration"> Offline configuration. </param>
-        internal DatabaseMigrationSqlVmProperties(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> serializedAdditionalRawData, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, DataMigrationStatusDetails migrationStatusDetails, DataMigrationBackupConfiguration backupConfiguration, DataMigrationOfflineConfiguration offlineConfiguration) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, serializedAdditionalRawData, sourceSqlConnection, sourceDatabaseName, sourceServerName, targetDatabaseCollation)
+        internal DatabaseMigrationSqlVmProperties(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, string sqlServerInstanceId, DataMigrationStatusDetails migrationStatusDetails, DataMigrationBackupConfiguration backupConfiguration, DataMigrationOfflineConfiguration offlineConfiguration) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, additionalBinaryDataProperties, sourceSqlConnection, sourceDatabaseName, sourceServerName, targetDatabaseCollation, sqlServerInstanceId)
         {
             MigrationStatusDetails = migrationStatusDetails;
             BackupConfiguration = backupConfiguration;
             OfflineConfiguration = offlineConfiguration;
-            Kind = kind;
         }
 
         /// <summary> Detailed migration status. Not included by default. </summary>
         public DataMigrationStatusDetails MigrationStatusDetails { get; }
+
         /// <summary> Backup configuration info. </summary>
         public DataMigrationBackupConfiguration BackupConfiguration { get; set; }
+
         /// <summary> Offline configuration. </summary>
         public DataMigrationOfflineConfiguration OfflineConfiguration { get; set; }
     }

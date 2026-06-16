@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -16,9 +17,10 @@ namespace Azure.Identity
 {
     internal class MsalManagedIdentityClient
     {
-        private readonly AsyncLockWithValue<IManagedIdentityApplication> _clientAsyncLock;
-        private readonly AsyncLockWithValue<IManagedIdentityApplication> _clientCaeAsyncLock;
+        private readonly ConcurrentDictionary<(bool EnableCae, bool IsTokenBinding), AsyncLockWithValue<IManagedIdentityApplication>> _clientCache = new();
         private bool _isForceRefreshEnabled { get; }
+        private readonly Action<AcquireTokenForManagedIdentityParameterBuilder> _beforeTokenAcquisition;
+        private readonly bool _isAttestationOptionsEnabled;
 
         internal bool IsSupportLoggingEnabled { get; }
         internal Microsoft.Identity.Client.AppConfig.ManagedIdentityId ManagedIdentityId { get; }
@@ -52,25 +54,37 @@ namespace Azure.Identity
             };
 
             Pipeline = clientOptions.Pipeline;
-            _clientAsyncLock = new AsyncLockWithValue<IManagedIdentityApplication>();
-            _clientCaeAsyncLock = new AsyncLockWithValue<IManagedIdentityApplication>();
             _isForceRefreshEnabled = clientOptions.IsForceRefreshEnabled;
+
+            if (clientOptions.Options is IMsalManagedIdentityInitializerOptions initializerOptions)
+            {
+                _isAttestationOptionsEnabled = true;
+                _beforeTokenAcquisition = initializerOptions.BeforeTokenAcquisition;
+            }
         }
 
-        protected ValueTask<IManagedIdentityApplication> CreateClientAsync(bool async, bool enableCae, CancellationToken cancellationToken)
+        protected ValueTask<IManagedIdentityApplication> CreateClientAsync(bool async, bool enableCae, bool isTokenBindingAvailable, CancellationToken cancellationToken)
         {
-            return CreateClientCoreAsync(async, enableCae, cancellationToken);
+            return CreateClientCoreAsync(async, enableCae, isTokenBindingAvailable, cancellationToken);
         }
 
-        protected virtual ValueTask<IManagedIdentityApplication> CreateClientCoreAsync(bool async, bool enableCae, CancellationToken cancellationToken)
+        protected virtual ValueTask<IManagedIdentityApplication> CreateClientCoreAsync(bool async, bool enableCae, bool isTokenBindingAvailable, CancellationToken cancellationToken)
         {
             string[] clientCapabilities =
                 enableCae ? cp1Capabilities : Array.Empty<string>();
 
             ManagedIdentityApplicationBuilder miAppBuilder = ManagedIdentityApplicationBuilder
                 .Create(ManagedIdentityId)
-                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline, Pipeline.ClientOptions), false)
                 .WithLogging(AzureIdentityEventSource.Singleton, enablePiiLogging: IsSupportLoggingEnabled);
+
+            // When token binding (mTLS PoP) is enabled, MSAL must manage its own HTTP
+            // client so it can perform the mTLS handshake with the platform's bound certificate.
+            // The Azure.Core pipeline transport does not carry these mTLS credentials, so
+            // WithHttpClientFactory is intentionally omitted in this path.
+            if (!isTokenBindingAvailable)
+            {
+                miAppBuilder.WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline, Pipeline.ClientOptions), false);
+            }
 
             if (clientCapabilities.Length > 0)
             {
@@ -80,38 +94,47 @@ namespace Azure.Identity
             return new ValueTask<IManagedIdentityApplication>(miAppBuilder.Build());
         }
 
-        protected async ValueTask<IManagedIdentityApplication> GetClientAsync(bool async, bool enableCae, CancellationToken cancellationToken)
+        protected async ValueTask<IManagedIdentityApplication> GetClientAsync(bool async, bool enableCae, bool isTokenBindingAvailable, CancellationToken cancellationToken)
         {
-            using var asyncLock = enableCae ?
-                await _clientCaeAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false) :
-                await _clientAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+            var key = (enableCae, isTokenBindingAvailable);
+            var lockInstance = _clientCache.GetOrAdd(key, _ => new AsyncLockWithValue<IManagedIdentityApplication>());
+
+            using var asyncLock = await lockInstance.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
 
             if (asyncLock.HasValue)
             {
                 return asyncLock.Value;
             }
 
-            var client = await CreateClientAsync(async, enableCae, cancellationToken).ConfigureAwait(false);
+            var client = await CreateClientAsync(async, enableCae, isTokenBindingAvailable, cancellationToken).ConfigureAwait(false);
             asyncLock.SetValue(client);
             return client;
         }
 
-        public virtual async ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
-            await AcquireTokenForManagedIdentityAsyncCore(true, requestContext, cancellationToken).ConfigureAwait(false);
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsync(TokenRequestContext requestContext, bool isTokenBindingAvailable, CancellationToken cancellationToken) =>
+            await AcquireTokenForManagedIdentityAsyncCore(true, requestContext, isTokenBindingAvailable, cancellationToken).ConfigureAwait(false);
 
-        public virtual AuthenticationResult AcquireTokenForManagedIdentity(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
-            AcquireTokenForManagedIdentityAsyncCore(false, requestContext, cancellationToken).EnsureCompleted();
+        public virtual AuthenticationResult AcquireTokenForManagedIdentity(TokenRequestContext requestContext, bool isTokenBindingAvailable, CancellationToken cancellationToken) =>
+            AcquireTokenForManagedIdentityAsyncCore(false, requestContext, isTokenBindingAvailable, cancellationToken).EnsureCompleted();
 
-        public virtual async ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsyncCore(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
+        public virtual async ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsyncCore(bool async, TokenRequestContext requestContext, bool isTokenBindingAvailable, CancellationToken cancellationToken)
         {
-            IManagedIdentityApplication client = await GetClientAsync(async, requestContext.IsCaeEnabled, cancellationToken).ConfigureAwait(false);
-
+            IManagedIdentityApplication client = await GetClientAsync(async, requestContext.IsCaeEnabled, isTokenBindingAvailable, cancellationToken).ConfigureAwait(false);
             var builder = client.AcquireTokenForManagedIdentity(requestContext.Scopes.FirstOrDefault());
 
             if (!string.IsNullOrEmpty(requestContext.Claims))
             {
                 builder.WithClaims(requestContext.Claims);
             }
+
+            bool shouldEnableMtlsPop = isTokenBindingAvailable && _isAttestationOptionsEnabled;
+            if (shouldEnableMtlsPop)
+            {
+                builder.WithMtlsProofOfPossession();
+                AzureIdentityEventSource.Singleton.LogMsal(LogLevel.Verbose, "Managed identity token request configured with mTLS proof-of-possession.");
+            }
+
+            _beforeTokenAcquisition?.Invoke(builder);
 
             if (_isForceRefreshEnabled)
             {
@@ -121,6 +144,29 @@ namespace Azure.Identity
             return async ?
                 await builder.ExecuteAsync(cancellationToken).ConfigureAwait(false) :
                 builder.ExecuteAsync(cancellationToken).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+        }
+
+        public virtual async ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesAsync(TokenRequestContext context, CancellationToken cancellationToken)
+        {
+            // Keep honoring PoP request intent when selecting the cached MSAL MI app,
+            // same behavior as GetManagedIdentitySourceAsync.
+            IManagedIdentityApplication client = await GetClientAsync(true, context.IsCaeEnabled, context.IsProofOfPossessionEnabled, cancellationToken).ConfigureAwait(false);
+            ManagedIdentityApplication app = client as ManagedIdentityApplication;
+            return await app.GetManagedIdentityCapabilitiesAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        public virtual ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesCoreAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
+        {
+            return async
+                ? GetManagedIdentityCapabilitiesAsync(context, cancellationToken)
+                : new ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentityCapabilities>(GetManagedIdentityCapabilities(context, cancellationToken));
+        }
+
+        public virtual Microsoft.Identity.Client.ManagedIdentity.ManagedIdentityCapabilities GetManagedIdentityCapabilities(TokenRequestContext context, CancellationToken cancellationToken)
+        {
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+            return GetManagedIdentityCapabilitiesAsync(context, cancellationToken).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
         }
     }

@@ -136,6 +136,21 @@ namespace Azure.ResourceManager.BillingBenefits
                 writer.WritePropertyName("plan"u8);
                 writer.WriteObjectValue(Plan, options);
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -167,7 +182,6 @@ namespace Azure.ResourceManager.BillingBenefits
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             CreditProperties properties = default;
@@ -177,6 +191,7 @@ namespace Azure.ResourceManager.BillingBenefits
             ManagedServiceIdentity identity = default;
             BillingBenefitsSku sku = default;
             BillingBenefitsPlan plan = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -298,7 +313,6 @@ namespace Azure.ResourceManager.BillingBenefits
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
@@ -307,7 +321,8 @@ namespace Azure.ResourceManager.BillingBenefits
                 eTag,
                 identity,
                 sku,
-                plan);
+                plan,
+                additionalBinaryDataProperties);
         }
     }
 }

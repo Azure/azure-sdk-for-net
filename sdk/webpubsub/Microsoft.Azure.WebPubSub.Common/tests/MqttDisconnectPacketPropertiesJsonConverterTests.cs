@@ -18,18 +18,18 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             MqttDisconnectPacketProperties properties = JsonSerializer.Deserialize<MqttDisconnectPacketProperties>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(properties);
-            Assert.AreEqual((MqttDisconnectReasonCode)128, properties.Code);
-            Assert.AreEqual(1, properties.UserProperties.Count);
-            Assert.AreEqual("key", properties.UserProperties[0].Name);
-            Assert.AreEqual("val", properties.UserProperties[0].Value);
+            Assert.That(properties, Is.Not.Null);
+            Assert.That(properties.Code, Is.EqualTo((MqttDisconnectReasonCode)128));
+            Assert.That(properties.UserProperties.Count, Is.EqualTo(1));
+            Assert.That(properties.UserProperties[0].Name, Is.EqualTo("key"));
+            Assert.That(properties.UserProperties[0].Value, Is.EqualTo("val"));
 
             string serialized = JsonSerializer.Serialize(properties, JsonSerializationOptions);
             MqttDisconnectPacketProperties converted = JsonSerializer.Deserialize<MqttDisconnectPacketProperties>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual(properties.Code, converted.Code);
-            Assert.AreEqual(properties.UserProperties[0].Name, converted.UserProperties[0].Name);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Code, Is.EqualTo(properties.Code));
+            Assert.That(converted.UserProperties[0].Name, Is.EqualTo(properties.UserProperties[0].Name));
         }
 
         [Test]
@@ -39,16 +39,16 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
 
             MqttDisconnectPacketProperties properties = JsonSerializer.Deserialize<MqttDisconnectPacketProperties>(payload, JsonSerializationOptions);
 
-            Assert.NotNull(properties);
-            Assert.AreEqual((MqttDisconnectReasonCode)0, properties.Code);
-            Assert.IsNull(properties.UserProperties);
+            Assert.That(properties, Is.Not.Null);
+            Assert.That(properties.Code, Is.EqualTo((MqttDisconnectReasonCode)0));
+            Assert.That(properties.UserProperties, Is.Null);
 
             string serialized = JsonSerializer.Serialize(properties, JsonSerializationOptions);
             MqttDisconnectPacketProperties converted = JsonSerializer.Deserialize<MqttDisconnectPacketProperties>(serialized, JsonSerializationOptions);
 
-            Assert.NotNull(converted);
-            Assert.AreEqual((MqttDisconnectReasonCode)0, converted.Code);
-            Assert.IsNull(converted.UserProperties);
+            Assert.That(converted, Is.Not.Null);
+            Assert.That(converted.Code, Is.EqualTo((MqttDisconnectReasonCode)0));
+            Assert.That(converted.UserProperties, Is.Null);
         }
 
         [Test]

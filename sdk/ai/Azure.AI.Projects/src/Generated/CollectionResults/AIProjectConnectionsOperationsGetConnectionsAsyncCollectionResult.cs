@@ -19,8 +19,8 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of AIProjectConnectionsOperationsGetConnectionsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The AIProjectConnectionsOperations client used to send requests. </param>
-        /// <param name="connectionType"> List connections of this specific type. </param>
-        /// <param name="defaultConnection"> List connections that are default connections. </param>
+        /// <param name="connectionType"> Lists connections of this specific type. </param>
+        /// <param name="defaultConnection"> Lists connections that are default connections. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         public AIProjectConnectionsOperationsGetConnectionsAsyncCollectionResult(AIProjectConnectionsOperations client, string connectionType, bool? defaultConnection, RequestOptions options)
         {

@@ -13,6 +13,7 @@ namespace Azure.AI.Extensions.OpenAI;
 [CodeGenType("AzureFunctionStorageQueue")] public partial class ResponsesAzureFunctionStorageQueue { }
 [CodeGenType("AzureFunctionTool")] public partial class ResponsesAzureFunctionTool { }
 [CodeGenType("AzureAISearchTool")] public partial class ResponsesAzureAISearchTool { }
+/// <summary> Represents options for the Azure AI Search response tool. </summary>
 [CodeGenType("AzureAISearchToolOptions")] public partial class ResponsesAzureAISearchToolOptions { }
 [CodeGenType("AzureAISearchQueryType")] public readonly partial struct ResponsesAzureAISearchQueryType { }
 [CodeGenType("BingCustomSearchConfiguration")] public partial class ResponsesBingCustomSearchConfiguration { }

@@ -1,11 +1,8 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.8.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Upgraded API version to `2025-06-01`
-- Added `AddTag`, `RemoveTag`, and `SetTags` convenience methods to `BatchAccountResource`.
 
 ### Breaking Changes
 
@@ -13,7 +10,18 @@
 
 ### Other Changes
 
+## 1.7.0 (2026-06-02)
+
+### Features Added
+
+- Upgraded api-version to `2025-06-01`
+- Added `AddTag`, `RemoveTag`, and `SetTags` convenience methods to `BatchAccountResource`.
+
+### Other Changes
+
 - Migrated from AutoRest to TypeSpec-based code generation.
+- Upgraded dependent Azure.Core to 1.57.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.6.0 (2026-02-26)
 
