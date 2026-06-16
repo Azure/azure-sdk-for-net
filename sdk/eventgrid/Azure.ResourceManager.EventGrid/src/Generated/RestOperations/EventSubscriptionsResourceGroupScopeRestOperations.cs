@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetGlobalByResourceGroupForTopicTypeRequest(Guid subscriptionId, string resourceGroupName, string topicTypeName, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetGlobalEventSubscriptionsDataForTopicTypeRequest(Guid subscriptionId, string resourceGroupName, string topicTypeName, string filter, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EventGrid
             return message;
         }
 
-        internal HttpMessage CreateNextGetGlobalByResourceGroupForTopicTypeRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string topicTypeName, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateNextGetGlobalEventSubscriptionsDataForTopicTypeRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string topicTypeName, string filter, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EventGrid
             return message;
         }
 
-        internal HttpMessage CreateGetRegionalByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string location, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetRegionalEventSubscriptionsDataRequest(Guid subscriptionId, string resourceGroupName, AzureLocation location, string filter, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EventGrid
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EventGrid/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/eventSubscriptions", false);
             if (_apiVersion != null)
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventGrid
             return message;
         }
 
-        internal HttpMessage CreateNextGetRegionalByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string location, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateNextGetRegionalEventSubscriptionsDataRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, AzureLocation location, string filter, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.EventGrid
             return message;
         }
 
-        internal HttpMessage CreateGetRegionalByResourceGroupForTopicTypeRequest(Guid subscriptionId, string resourceGroupName, string location, string topicTypeName, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetRegionalEventSubscriptionsDataForTopicTypeRequest(Guid subscriptionId, string resourceGroupName, AzureLocation location, string topicTypeName, string filter, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.EventGrid
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.EventGrid/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/topicTypes/", false);
             uri.AppendPath(topicTypeName, true);
             uri.AppendPath("/eventSubscriptions", false);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.EventGrid
             return message;
         }
 
-        internal HttpMessage CreateNextGetRegionalByResourceGroupForTopicTypeRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string location, string topicTypeName, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateNextGetRegionalEventSubscriptionsDataForTopicTypeRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, AzureLocation location, string topicTypeName, string filter, int? top, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
