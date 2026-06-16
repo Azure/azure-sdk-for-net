@@ -3880,6 +3880,8 @@ namespace Azure.Storage.Blobs.Specialized
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
             {
+                Argument.AssertNotNull(source, nameof(source));
+
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(BlobBaseClient),
                     message:
@@ -3908,7 +3910,6 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     scope.Start();
-                    Argument.AssertNotNull(source, nameof(source));
                     Response response;
 
                     if (async)
