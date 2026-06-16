@@ -2008,6 +2008,7 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class AutoscaleNotification : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AutoscaleNotification>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AutoscaleNotification>
     {
+        public AutoscaleNotification() { }
         public AutoscaleNotification(Azure.ResourceManager.Monitor.Models.MonitorOperationType operation) { }
         public Azure.ResourceManager.Monitor.Models.EmailNotification Email { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.MonitorOperationType Operation { get { throw null; } set { } }

@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> Autoscale notification. </summary>
     public partial class AutoscaleNotification : IJsonModel<AutoscaleNotification>
     {
-        /// <summary> Initializes a new instance of <see cref="AutoscaleNotification"/> for deserialization. </summary>
-        internal AutoscaleNotification()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AutoscaleNotification PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
