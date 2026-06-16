@@ -162,6 +162,31 @@ try {
         Write-Host "Skipping snippet and API listing generation for tools directory"
     }
 
+    Write-Host "Validating that TypeSpec-generated libraries don't declare IncludeAutorestDependency"
+    Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory `
+        | Resolve-Path `
+        | % { Get-ChildItem $_ -Filter "*.csproj" -Recurse } `
+        | % {
+            $csproj = $_
+            if (Select-String -Path $csproj.FullName -Pattern '<IncludeAutorestDependency>' -Quiet) {
+                # Walk up from the project file looking for a tsp-location.yaml, which marks
+                # a TypeSpec-generated library. Such libraries must not pull in the AutoRest dependency.
+                $dir = $csproj.Directory
+                $tspLocation = $null
+                for ($i = 0; $i -lt 4 -and $dir -ne $null; $i++) {
+                    $candidate = Join-Path $dir.FullName "tsp-location.yaml"
+                    if (Test-Path $candidate) { $tspLocation = $candidate; break }
+                    $dir = $dir.Parent
+                }
+                if ($tspLocation) {
+                    LogError `
+"Project '$($csproj.FullName)' declares the 'IncludeAutorestDependency' property but is a TypeSpec-generated`
+    library (a 'tsp-location.yaml' exists at '$tspLocation'). TypeSpec-generated libraries must not use AutoRest.`
+    Remove the <IncludeAutorestDependency> property from the project file."
+                }
+            }
+        }
+
     Write-Host "Validating installation instructions"
     Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory  `
         | Resolve-Path `
