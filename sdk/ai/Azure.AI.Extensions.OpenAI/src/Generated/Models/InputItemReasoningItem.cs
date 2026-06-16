@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Reasoning. </summary>
-    internal partial class InputItemReasoningItem : InputItem
+    public partial class InputItemReasoningItem : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemReasoningItem"/>. </summary>
         /// <param name="id"> The unique identifier of the reasoning content. </param>

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Result details for an individual PII subcategory. </summary>
-    internal partial class AzureContentFilterPiiSubCategoryResult
+    public partial class AzureContentFilterPiiSubCategoryResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

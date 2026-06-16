@@ -9,7 +9,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary></summary>
-    internal readonly partial struct ImageGenToolModel : IEquatable<ImageGenToolModel>
+    public readonly partial struct ImageGenToolModel : IEquatable<ImageGenToolModel>
     {
         private readonly string _value;
         private const string GptImage1Value = "gpt-image-1";

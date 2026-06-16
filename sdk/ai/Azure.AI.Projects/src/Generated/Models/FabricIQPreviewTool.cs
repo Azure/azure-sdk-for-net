@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A FabricIQ server-side tool. </summary>
-    internal partial class FabricIQPreviewTool : InternalTool
+    public partial class FabricIQPreviewTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="FabricIQPreviewTool"/>. </summary>
         /// <param name="projectConnectionId"> The ID of the FabricIQ project connection. </param>

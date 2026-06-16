@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> Specific apply patch tool choice. </summary>
-    internal partial class SpecificApplyPatchParam : InternalToolChoiceParam, IJsonModel<SpecificApplyPatchParam>
+    public partial class SpecificApplyPatchParam : InternalToolChoiceParam, IJsonModel<SpecificApplyPatchParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

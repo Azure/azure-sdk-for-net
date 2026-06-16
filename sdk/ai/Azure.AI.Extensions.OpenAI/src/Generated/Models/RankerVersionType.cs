@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum RankerVersionType
+    public enum RankerVersionType
     {
         /// <summary> Auto. </summary>
         Auto,

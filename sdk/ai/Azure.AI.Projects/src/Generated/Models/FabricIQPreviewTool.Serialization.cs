@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A FabricIQ server-side tool. </summary>
-    internal partial class FabricIQPreviewTool : InternalTool, IJsonModel<FabricIQPreviewTool>
+    public partial class FabricIQPreviewTool : InternalTool, IJsonModel<FabricIQPreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="FabricIQPreviewTool"/> for deserialization. </summary>
         internal FabricIQPreviewTool()

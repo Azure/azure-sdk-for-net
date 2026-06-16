@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum ResponseTruncation
+    public enum ResponseTruncation
     {
         /// <summary> Auto. </summary>
         Auto,

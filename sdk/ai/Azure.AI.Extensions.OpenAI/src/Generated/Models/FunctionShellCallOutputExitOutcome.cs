@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Shell call exit outcome. </summary>
-    internal partial class FunctionShellCallOutputExitOutcome : FunctionShellCallOutputOutcome
+    public partial class FunctionShellCallOutputExitOutcome : FunctionShellCallOutputOutcome
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputExitOutcome"/>. </summary>
         /// <param name="exitCode"> Exit code from the shell process. </param>

@@ -9,7 +9,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> The FunctionShellToolParamEnvironmentLocalEnvironmentParam. </summary>
-    internal partial class FunctionShellToolParamEnvironmentLocalEnvironmentParam : FunctionShellToolParamEnvironment
+    public partial class FunctionShellToolParamEnvironmentLocalEnvironmentParam : FunctionShellToolParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellToolParamEnvironmentLocalEnvironmentParam"/>. </summary>
         public FunctionShellToolParamEnvironmentLocalEnvironmentParam() : base(FunctionShellToolParamEnvironmentType.Local)

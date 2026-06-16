@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The ListMemoriesRequest. </summary>
-    internal partial class ListMemoriesRequest : IJsonModel<ListMemoriesRequest>
+    public partial class ListMemoriesRequest : IJsonModel<ListMemoriesRequest>
     {
         /// <summary> Initializes a new instance of <see cref="ListMemoriesRequest"/> for deserialization. </summary>
         internal ListMemoriesRequest()

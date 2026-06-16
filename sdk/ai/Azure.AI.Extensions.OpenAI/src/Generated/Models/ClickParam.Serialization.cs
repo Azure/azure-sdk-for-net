@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Click. </summary>
-    internal partial class ClickParam : InternalComputerAction, IJsonModel<ClickParam>
+    public partial class ClickParam : InternalComputerAction, IJsonModel<ClickParam>
     {
         /// <summary> Initializes a new instance of <see cref="ClickParam"/> for deserialization. </summary>
         internal ClickParam()

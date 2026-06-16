@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> MCP tool call. </summary>
-    internal partial class InputItemMcpToolCall : InputItem
+    public partial class InputItemMcpToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemMcpToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the tool call. </param>

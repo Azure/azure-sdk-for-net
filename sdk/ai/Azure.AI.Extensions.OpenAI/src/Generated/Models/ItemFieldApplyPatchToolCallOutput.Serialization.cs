@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Apply patch tool call output. </summary>
-    internal partial class ItemFieldApplyPatchToolCallOutput : ItemField, IJsonModel<ItemFieldApplyPatchToolCallOutput>
+    public partial class ItemFieldApplyPatchToolCallOutput : ItemField, IJsonModel<ItemFieldApplyPatchToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldApplyPatchToolCallOutput"/> for deserialization. </summary>
         internal ItemFieldApplyPatchToolCallOutput()

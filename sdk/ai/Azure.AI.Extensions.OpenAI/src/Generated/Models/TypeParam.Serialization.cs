@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Type. </summary>
-    internal partial class TypeParam : InternalComputerAction, IJsonModel<TypeParam>
+    public partial class TypeParam : InternalComputerAction, IJsonModel<TypeParam>
     {
         /// <summary> Initializes a new instance of <see cref="TypeParam"/> for deserialization. </summary>
         internal TypeParam()

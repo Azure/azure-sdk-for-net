@@ -14,7 +14,7 @@ namespace Azure.AI.Projects
     /// When present, deferred tools are hidden from `tools/list` and only
     /// discoverable via `search_tools` queries at runtime.
     /// </summary>
-    internal partial class ToolboxSearchPreviewTool : InternalTool, IJsonModel<ToolboxSearchPreviewTool>
+    public partial class ToolboxSearchPreviewTool : InternalTool, IJsonModel<ToolboxSearchPreviewTool>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

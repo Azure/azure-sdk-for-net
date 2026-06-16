@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum EasyInputMessageStatus
+    public enum EasyInputMessageStatus
     {
         /// <summary> InProgress. </summary>
         InProgress,

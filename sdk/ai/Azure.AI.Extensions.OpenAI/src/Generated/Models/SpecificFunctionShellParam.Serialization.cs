@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Specific shell tool choice. </summary>
-    internal partial class SpecificFunctionShellParam : InternalToolChoiceParam, IJsonModel<SpecificFunctionShellParam>
+    public partial class SpecificFunctionShellParam : InternalToolChoiceParam, IJsonModel<SpecificFunctionShellParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Summary text. </summary>
-    internal partial class SummaryTextContent : MessageContent, IJsonModel<SummaryTextContent>
+    public partial class SummaryTextContent : MessageContent, IJsonModel<SummaryTextContent>
     {
         /// <summary> Initializes a new instance of <see cref="SummaryTextContent"/> for deserialization. </summary>
         internal SummaryTextContent()

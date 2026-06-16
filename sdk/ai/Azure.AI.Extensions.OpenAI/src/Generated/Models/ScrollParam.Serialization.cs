@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Scroll. </summary>
-    internal partial class ScrollParam : InternalComputerAction, IJsonModel<ScrollParam>
+    public partial class ScrollParam : InternalComputerAction, IJsonModel<ScrollParam>
     {
         /// <summary> Initializes a new instance of <see cref="ScrollParam"/> for deserialization. </summary>
         internal ScrollParam()

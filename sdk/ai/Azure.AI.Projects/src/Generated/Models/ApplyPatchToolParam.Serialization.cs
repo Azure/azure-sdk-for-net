@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Apply patch tool. </summary>
-    internal partial class ApplyPatchToolParam : InternalTool, IJsonModel<ApplyPatchToolParam>
+    public partial class ApplyPatchToolParam : InternalTool, IJsonModel<ApplyPatchToolParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
