@@ -20,7 +20,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
         [Test]
         public void HelloWorld()
         {
-            #region Snippet:CreateClient
+            #region Snippet:ConfidentialLedger_CreateClient
 
 #if SNIPPET
             var ledgerClient = new ConfidentialLedgerClient(new Uri("https://my-ledger-url.confidential-ledger.azure.com"), new DefaultAzureCredential());
@@ -28,7 +28,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
             var ledgerClient = new ConfidentialLedgerClient(TestEnvironment.ConfidentialLedgerUrl, TestEnvironment.Credential);
 #endif
             #endregion
-            #region Snippet:AppendToLedger
+            #region Snippet:ConfidentialLedger_AppendToLedger
 
             Operation postOperation = ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
@@ -40,7 +40,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
 
-            #region Snippet:GetStatus
+            #region Snippet:ConfidentialLedger_GetStatus
 
             Response statusResponse = ledgerClient.GetTransactionStatus(transactionId, new RequestContext());
 
@@ -65,7 +65,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
 
-            #region Snippet:GetReceipt
+            #region Snippet:ConfidentialLedger_GetReceipt
 
             Response receiptResponse = ledgerClient.GetReceipt(transactionId, new RequestContext());
             string receiptJson = new StreamReader(receiptResponse.ContentStream).ReadToEnd();
@@ -74,7 +74,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
 
-            #region Snippet:Collection
+            #region Snippet:ConfidentialLedger_Collection
 
             ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
@@ -88,7 +88,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
 
-            #region Snippet:NoCollectionId
+            #region Snippet:ConfidentialLedger_NoCollectionId
             postOperation = ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
                 RequestContent.Create(
@@ -131,7 +131,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
 
-            #region Snippet:GetEnteryWithNoTransactionId
+            #region Snippet:ConfidentialLedger_GetEnteryWithNoTransactionId
 
             Operation firstPostOperation = ledgerClient.PostLedgerEntry(
                 waitUntil: WaitUntil.Completed,
@@ -251,13 +251,13 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
 
-            #region Snippet:RangedQuery
+            #region Snippet:ConfidentialLedger_RangedQuery
 
             ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: collectionTransactionId);
 
             #endregion
 
-            #region Snippet:NewUser
+            #region Snippet:ConfidentialLedger_NewUser
 
 #if SNIPPET
             string newUserAadObjectId = "<some AAD user or service principal object Id>";
@@ -270,7 +270,7 @@ namespace Azure.Security.ConfidentialLedger.Tests.samples
 
             #endregion
 
-            #region Snippet:Consortium
+            #region Snippet:ConfidentialLedger_Consortium
 
             Pageable<BinaryData> consortiumResponse = ledgerClient.GetConsortiumMembers(new RequestContext());
             foreach (var page in consortiumResponse)
