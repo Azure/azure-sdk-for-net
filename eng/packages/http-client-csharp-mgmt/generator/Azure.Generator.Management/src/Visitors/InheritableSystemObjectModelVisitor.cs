@@ -138,9 +138,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
     private static bool TryGetFrameworkResourceDataType(CSharpType type, out CSharpType frameworkType)
     {
-        if (type.AreNamesEqual(typeof(TrackedResourceData)))
+        if (KnownManagementTypes.TryGetInheritableSystemType(type, out var knownFrameworkType))
         {
-            frameworkType = typeof(TrackedResourceData);
+            frameworkType = knownFrameworkType;
             return true;
         }
 
@@ -182,15 +182,28 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
     private static void EnsureSystemBaseSerializationOverride(ModelProvider model)
     {
-        if (model.BaseModelProvider is not SystemObjectModelProvider)
+        if (model.BaseModelProvider is not SystemObjectModelProvider systemBaseModel)
         {
             return;
         }
 
         foreach (var serialization in model.SerializationProviders.OfType<MrwSerializationTypeDefinition>())
         {
-            foreach (var method in serialization.Methods.Where(m => m.Signature.Name == "JsonModelWriteCore"))
+            foreach (var method in serialization.Methods)
             {
+                if (method.Signature.Name is "PersistableModelCreateCore" or "JsonModelCreateCore"
+                    && method.Signature.ReturnType is not null
+                    && !method.Signature.ReturnType.AreNamesEqual(systemBaseModel.SystemType))
+                {
+                    method.Signature.Update(returnType: systemBaseModel.SystemType);
+                    continue;
+                }
+
+                if (method.Signature.Name != "JsonModelWriteCore")
+                {
+                    continue;
+                }
+
                 var modifiers = method.Signature.Modifiers;
                 if (modifiers.HasFlag(MethodSignatureModifiers.Override))
                 {
@@ -219,7 +232,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     {
         if (model.BaseModelProvider is not SystemObjectModelProvider systemBaseModel
             || model.BaseType is null
-            || !model.BaseType.AreNamesEqual(typeof(TrackedResourceData)))
+            || !KnownManagementTypes.TryGetInheritableSystemType(model.BaseType, out _))
         {
             return;
         }

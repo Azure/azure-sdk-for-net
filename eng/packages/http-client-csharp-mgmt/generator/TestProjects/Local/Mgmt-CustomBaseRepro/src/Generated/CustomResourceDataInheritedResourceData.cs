@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.Generator.MgmtCustomBaseRepro.Tests.Models;
 using Azure.ResourceManager.Models;
 
@@ -15,34 +16,28 @@ namespace Azure.Generator.MgmtCustomBaseRepro.Tests
     /// <summary> The CustomResourceDataInheritedResourceData. </summary>
     public partial class CustomResourceDataInheritedResourceData : ResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="CustomResourceDataInheritedResourceData"/>. </summary>
         public CustomResourceDataInheritedResourceData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomResourceDataInheritedResourceData"/>. </summary>
-        /// <param name="properties"></param>
+        /// <param name="id"></param>
         /// <param name="name"></param>
-        /// <param name="eTag"></param>
+        /// <param name="type"></param>
+        /// <param name="systemData"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomResourceDataInheritedResourceData(CustomResourceDataInheritedResourceProperties properties, string name, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="properties"></param>
+        /// <param name="eTag"></param>
+        internal CustomResourceDataInheritedResourceData(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomResourceDataInheritedResourceProperties properties, string eTag) : base(id, name, @type, systemData)
         {
             Properties = properties;
-            Name = name;
             ETag = eTag;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Properties. </summary>
         [WirePath("properties")]
         internal CustomResourceDataInheritedResourceProperties Properties { get; set; }
-
-        /// <summary> Gets the Name. </summary>
-        [WirePath("name")]
-        public string Name { get; }
 
         /// <summary> Gets the ETag. </summary>
         [WirePath("etag")]

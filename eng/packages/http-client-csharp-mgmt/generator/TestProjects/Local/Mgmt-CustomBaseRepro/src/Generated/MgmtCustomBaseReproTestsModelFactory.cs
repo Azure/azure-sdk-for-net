@@ -50,13 +50,23 @@ namespace Azure.Generator.MgmtCustomBaseRepro.Tests.Models
             return new CustomBaseTypeInheritedResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <param name="description"> Gets or sets the Description. </param>
+        /// <param name="id"></param>
         /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="systemData"></param>
+        /// <param name="description"> Gets or sets the Description. </param>
         /// <param name="eTag"></param>
         /// <returns> A new <see cref="Tests.CustomResourceDataInheritedResourceData"/> instance for mocking. </returns>
-        public static CustomResourceDataInheritedResourceData CustomResourceDataInheritedResourceData(string description = default, string name = default, string eTag = default)
+        public static CustomResourceDataInheritedResourceData CustomResourceDataInheritedResourceData(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default, string description = default, string eTag = default)
         {
-            return new CustomResourceDataInheritedResourceData(description is null ? default : new CustomResourceDataInheritedResourceProperties(description, default), name, eTag, default);
+            return new CustomResourceDataInheritedResourceData(
+                id,
+                name,
+                @type,
+                systemData,
+                default,
+                description is null ? default : new CustomResourceDataInheritedResourceProperties(description, default),
+                eTag);
         }
     }
 }
