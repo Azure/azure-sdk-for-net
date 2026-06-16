@@ -24,6 +24,40 @@ namespace Azure.ResourceManager.Monitor.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AlertRuleResource GetAlertRuleResource(ResourceIdentifier id) => throw new NotSupportedException("This API is no longer supported.");
 
+        /// <summary> Gets an object representing a <see cref="DiagnosticSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiagnosticSettingResource"/> object. </returns>
+        [Obsolete("This API is no longer supported.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual DiagnosticSettingResource GetDiagnosticSettingResource(ResourceIdentifier id) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets a collection of <see cref="DiagnosticSettingResource"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DiagnosticSettingResource"/> objects. </returns>
+        [Obsolete("This API is no longer supported.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual DiagnosticSettingCollection GetDiagnosticSettings(ResourceIdentifier scope) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets a diagnostic setting. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The diagnostic setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The diagnostic setting resource. </returns>
+        [Obsolete("This API is no longer supported.", false)]
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<DiagnosticSettingResource> GetDiagnosticSetting(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets a diagnostic setting. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The diagnostic setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The diagnostic setting resource. </returns>
+        [Obsolete("This API is no longer supported.", false)]
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Task<Response<DiagnosticSettingResource>> GetDiagnosticSettingAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
         /// <summary> Gets an object representing a <see cref="DiagnosticSettingsCategoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource"/> object. </returns>

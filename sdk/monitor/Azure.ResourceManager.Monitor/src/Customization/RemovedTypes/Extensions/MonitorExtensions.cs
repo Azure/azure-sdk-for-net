@@ -67,6 +67,44 @@ namespace Azure.ResourceManager.Monitor
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Task<Response<AlertRuleResource>> GetAlertRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
 
+        /// <summary> Gets an object representing a <see cref="DiagnosticSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiagnosticSettingResource"/> object. </returns>
+        [Obsolete("This API is no longer supported.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DiagnosticSettingResource GetDiagnosticSettingResource(this ArmClient client, ResourceIdentifier id) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets a collection of <see cref="DiagnosticSettingResource"/> objects within the specified scope. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="DiagnosticSettingResource"/> objects. </returns>
+        [Obsolete("This API is no longer supported.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DiagnosticSettingCollection GetDiagnosticSettings(this ArmClient client, ResourceIdentifier scope) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets the diagnostic setting. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The diagnostic setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The diagnostic setting resource. </returns>
+        [Obsolete("This API is no longer supported.", false)]
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Response<DiagnosticSettingResource> GetDiagnosticSetting(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
+        /// <summary> Gets the diagnostic setting. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The diagnostic setting name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> The diagnostic setting resource. </returns>
+        [Obsolete("This API is no longer supported.", false)]
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Task<Response<DiagnosticSettingResource>> GetDiagnosticSettingAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default) => throw new NotSupportedException("This API is no longer supported.");
+
         /// <summary> Gets an object representing a <see cref="DiagnosticSettingsCategoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>

@@ -1778,15 +1778,15 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="category"> Custom category name for this metric. </param>
         /// <param name="metricClass"> The class of the metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
-        /// <param name="primaryAggregationType"> The primary aggregation type value defining how to use the values for display. </param>
-        /// <param name="supportedAggregationTypes"> The collection of what aggregation types are supported. </param>
+        /// <param name="primaryAggregationKind"> The primary aggregation type value defining how to use the values for display. </param>
+        /// <param name="supportedAggregationKinds"> The collection of what aggregation types are supported. </param>
         /// <param name="metricAvailabilities"> The collection of what aggregation intervals are available to be queried. </param>
         /// <param name="id"> The resource identifier of the metric definition. </param>
         /// <param name="dimensions"> The name and the display name of the dimension, i.e. it is a localizable string. </param>
         /// <returns> A new <see cref="Models.SubscriptionScopeMetricDefinition"/> instance for mocking. </returns>
-        public static SubscriptionScopeMetricDefinition SubscriptionScopeMetricDefinition(bool? isDimensionRequired = default, string resourceId = default, string @namespace = default, MonitorLocalizableString name = default, string displayDescription = default, string category = default, MonitorMetricClass? metricClass = default, MonitorMetricUnit? unit = default, MonitorAggregationType? primaryAggregationType = default, IEnumerable<MonitorAggregationType> supportedAggregationTypes = default, IEnumerable<MonitorMetricAvailability> metricAvailabilities = default, string id = default, IEnumerable<MonitorLocalizableString> dimensions = default)
+        public static SubscriptionScopeMetricDefinition SubscriptionScopeMetricDefinition(bool? isDimensionRequired = default, string resourceId = default, string @namespace = default, MonitorLocalizableString name = default, string displayDescription = default, string category = default, MonitorMetricClass? metricClass = default, MonitorMetricUnit? unit = default, MonitorAggregationKind? primaryAggregationKind = default, IEnumerable<MonitorAggregationKind> supportedAggregationKinds = default, IEnumerable<MonitorMetricAvailability> metricAvailabilities = default, string id = default, IEnumerable<MonitorLocalizableString> dimensions = default)
         {
-            supportedAggregationTypes ??= new ChangeTrackingList<MonitorAggregationType>();
+            supportedAggregationKinds ??= new ChangeTrackingList<MonitorAggregationKind>();
             metricAvailabilities ??= new ChangeTrackingList<MonitorMetricAvailability>();
             dimensions ??= new ChangeTrackingList<MonitorLocalizableString>();
 
@@ -1799,8 +1799,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 category,
                 metricClass,
                 unit,
-                primaryAggregationType,
-                (supportedAggregationTypes ?? new ChangeTrackingList<MonitorAggregationType>()).ToList(),
+                primaryAggregationKind,
+                (supportedAggregationKinds ?? new ChangeTrackingList<MonitorAggregationKind>()).ToList(),
                 (metricAvailabilities ?? new ChangeTrackingList<MonitorMetricAvailability>()).ToList(),
                 id,
                 (dimensions ?? new ChangeTrackingList<MonitorLocalizableString>()).ToList(),
@@ -1823,15 +1823,15 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="category"> Custom category name for this metric. </param>
         /// <param name="metricClass"> The class of the metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
-        /// <param name="primaryAggregationType"> The primary aggregation type value defining how to use the values for display. </param>
-        /// <param name="supportedAggregationTypes"> The collection of what aggregation types are supported. </param>
+        /// <param name="primaryAggregationKind"> The primary aggregation type value defining how to use the values for display. </param>
+        /// <param name="supportedAggregationKinds"> The collection of what aggregation types are supported. </param>
         /// <param name="metricAvailabilities"> The collection of what aggregation intervals are available to be queried. </param>
         /// <param name="id"> The resource identifier of the metric definition. </param>
         /// <param name="dimensions"> The name and the display name of the dimension, i.e. it is a localizable string. </param>
         /// <returns> A new <see cref="Models.MonitorMetricDefinition"/> instance for mocking. </returns>
-        public static MonitorMetricDefinition MonitorMetricDefinition(bool? isDimensionRequired = default, string resourceId = default, string @namespace = default, MonitorLocalizableString name = default, string displayDescription = default, string category = default, MonitorMetricClass? metricClass = default, MonitorMetricUnit? unit = default, MonitorAggregationType? primaryAggregationType = default, IEnumerable<MonitorAggregationType> supportedAggregationTypes = default, IEnumerable<MonitorMetricAvailability> metricAvailabilities = default, string id = default, IEnumerable<MonitorLocalizableString> dimensions = default)
+        public static MonitorMetricDefinition MonitorMetricDefinition(bool? isDimensionRequired = default, string resourceId = default, string @namespace = default, MonitorLocalizableString name = default, string displayDescription = default, string category = default, MonitorMetricClass? metricClass = default, MonitorMetricUnit? unit = default, AggregationType? primaryAggregationKind = default, IEnumerable<AggregationType> supportedAggregationKinds = default, IEnumerable<MonitorMetricAvailability> metricAvailabilities = default, string id = default, IEnumerable<MonitorLocalizableString> dimensions = default)
         {
-            supportedAggregationTypes ??= new ChangeTrackingList<MonitorAggregationType>();
+            supportedAggregationKinds ??= new ChangeTrackingList<AggregationType>();
             metricAvailabilities ??= new ChangeTrackingList<MonitorMetricAvailability>();
             dimensions ??= new ChangeTrackingList<MonitorLocalizableString>();
 
@@ -1844,8 +1844,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 category,
                 metricClass,
                 unit,
-                primaryAggregationType,
-                (supportedAggregationTypes ?? new ChangeTrackingList<MonitorAggregationType>()).ToList(),
+                primaryAggregationKind,
+                (supportedAggregationKinds ?? new ChangeTrackingList<AggregationType>()).ToList(),
                 (metricAvailabilities ?? new ChangeTrackingList<MonitorMetricAvailability>()).ToList(),
                 id,
                 (dimensions ?? new ChangeTrackingList<MonitorLocalizableString>()).ToList(),
@@ -2012,12 +2012,12 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="workspaceId"> The workspace ID (resource ID of a Log Analytics workspace) for a Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Monitor.DiagnosticSettingData"/> instance for mocking. </returns>
-        public static DiagnosticSettingData DiagnosticSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier storageAccountId = default, ResourceIdentifier serviceBusRuleId = default, ResourceIdentifier eventHubAuthorizationRuleId = default, IEnumerable<MetricSettings> metrics = default, IEnumerable<LogSettings> logs = default, ResourceIdentifier workspaceId = default, string location = default, IDictionary<string, string> tags = default)
+        /// <returns> A new <see cref="Monitor.ServiceDiagnosticSettingData"/> instance for mocking. </returns>
+        public static ServiceDiagnosticSettingData ServiceDiagnosticSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier storageAccountId = default, ResourceIdentifier serviceBusRuleId = default, ResourceIdentifier eventHubAuthorizationRuleId = default, IEnumerable<MetricSettings> metrics = default, IEnumerable<LogSettings> logs = default, ResourceIdentifier workspaceId = default, string location = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DiagnosticSettingData(
+            return new ServiceDiagnosticSettingData(
                 id,
                 name,
                 resourceType,
@@ -2068,12 +2068,12 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metrics"> the list of metric settings. </param>
         /// <param name="logs"> the list of logs settings. </param>
         /// <param name="workspaceId"> The workspace ID (resource ID of a Log Analytics workspace) for a Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </param>
-        /// <returns> A new <see cref="Models.DiagnosticSettingPatch"/> instance for mocking. </returns>
-        public static DiagnosticSettingPatch DiagnosticSettingPatch(IDictionary<string, string> tags = default, ResourceIdentifier storageAccountId = default, ResourceIdentifier serviceBusRuleId = default, ResourceIdentifier eventHubAuthorizationRuleId = default, IEnumerable<MetricSettings> metrics = default, IEnumerable<LogSettings> logs = default, ResourceIdentifier workspaceId = default)
+        /// <returns> A new <see cref="Models.ServiceDiagnosticSettingPatch"/> instance for mocking. </returns>
+        public static ServiceDiagnosticSettingPatch ServiceDiagnosticSettingPatch(IDictionary<string, string> tags = default, ResourceIdentifier storageAccountId = default, ResourceIdentifier serviceBusRuleId = default, ResourceIdentifier eventHubAuthorizationRuleId = default, IEnumerable<MetricSettings> metrics = default, IEnumerable<LogSettings> logs = default, ResourceIdentifier workspaceId = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DiagnosticSettingPatch(tags ?? new ChangeTrackingDictionary<string, string>(), storageAccountId is null && serviceBusRuleId is null && eventHubAuthorizationRuleId is null && metrics is null && logs is null && workspaceId is null ? default : new DiagnosticSettingsProperties(
+            return new ServiceDiagnosticSettingPatch(tags ?? new ChangeTrackingDictionary<string, string>(), storageAccountId is null && serviceBusRuleId is null && eventHubAuthorizationRuleId is null && metrics is null && logs is null && workspaceId is null ? default : new DiagnosticSettingsProperties(
                 storageAccountId,
                 serviceBusRuleId,
                 eventHubAuthorizationRuleId,
@@ -3225,42 +3225,6 @@ namespace Azure.ResourceManager.Monitor.Models
         public static ActionGroupEnableContent ActionGroupEnableContent(string receiverName = default)
         {
             return new ActionGroupEnableContent(receiverName, default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Monitor.DiagnosticSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="storageAccountId"> The resource ID of the storage account to which you would like to send Diagnostic Logs. </param>
-        /// <param name="serviceBusRuleId"> The service bus rule Id of the diagnostic setting. This is here to maintain backwards compatibility. </param>
-        /// <param name="eventHubAuthorizationRuleId"> The resource Id for the event hub authorization rule. </param>
-        /// <param name="eventHubName"> The name of the event hub. If none is specified, the default event hub will be selected. </param>
-        /// <param name="metrics"> The list of metric settings. </param>
-        /// <param name="logs"> The list of logs settings. </param>
-        /// <param name="workspaceId"> The full ARM resource ID of the Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </param>
-        /// <param name="marketplacePartnerId"> The full ARM resource ID of the Marketplace resource to which you would like to send Diagnostic Logs. </param>
-        /// <param name="logAnalyticsDestinationType"> A string indicating whether the export to Log Analytics should use the default destination type, i.e. AzureDiagnostics, or use a destination type constructed as follows: &lt;normalized service identity&gt;_&lt;normalized category name&gt;. Possible values are: Dedicated and null (null is default.). </param>
-        /// <returns> A new <see cref="Monitor.DiagnosticSettingData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DiagnosticSettingData DiagnosticSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier storageAccountId = default, ResourceIdentifier serviceBusRuleId = default, ResourceIdentifier eventHubAuthorizationRuleId = default, string eventHubName = default, IEnumerable<MetricSettings> metrics = default, IEnumerable<LogSettings> logs = default, ResourceIdentifier workspaceId = default, ResourceIdentifier marketplacePartnerId = default, string logAnalyticsDestinationType = default)
-        {
-            return new DiagnosticSettingData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                storageAccountId is null && serviceBusRuleId is null && eventHubAuthorizationRuleId is null && metrics is null && logs is null && workspaceId is null ? default : new DiagnosticSettingsProperties(
-                    storageAccountId,
-                    serviceBusRuleId,
-                    eventHubAuthorizationRuleId,
-                    (metrics ?? new ChangeTrackingList<MetricSettings>()).ToList(),
-                    (logs ?? new ChangeTrackingList<LogSettings>()).ToList(),
-                    workspaceId,
-                    default),
-                default,
-                default,
-                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.ActionGroupData"/>. </summary>

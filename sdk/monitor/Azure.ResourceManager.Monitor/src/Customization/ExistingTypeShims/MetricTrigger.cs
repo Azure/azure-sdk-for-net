@@ -9,6 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
+#pragma warning disable CS0618 // This partial class intentionally exposes obsolete compatibility members.
     public partial class MetricTrigger
     {
         // TypeSpec now generates ComparisonOperator with a new enum to avoid preserving the old enum's numeric values.
@@ -22,38 +23,21 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="timeAggregation"> The time aggregation type. </param>
         /// <param name="operator"> The operator that is used to compare the metric data and the threshold. </param>
         /// <param name="threshold"> The threshold of the metric that triggers the scale action. </param>
+        [Obsolete("This API is no longer supported. Use the constructor overload that takes MetricTriggerComparisonOperator instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MetricTrigger(string metricName, ResourceIdentifier metricResourceId, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperation @operator, double threshold)
-            : this(metricName, metricResourceId, timeGrain, statistic, timeWindow, timeAggregation, FromLegacyComparisonOperation(@operator), threshold)
+            : this(metricName, metricResourceId, timeGrain, statistic, timeWindow, timeAggregation, MetricTriggerComparisonOperationHelper.FromLegacyComparisonOperation(@operator), threshold)
         {
         }
 
         /// <summary> The operator that is used to compare the metric data and the threshold. </summary>
+        [Obsolete("This API is no longer supported. Use ComparisonOperator instead.", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MetricTriggerComparisonOperation Operator
         {
-            get => ToLegacyComparisonOperation(ComparisonOperator);
-            set => ComparisonOperator = FromLegacyComparisonOperation(value);
+            get => MetricTriggerComparisonOperationHelper.ToLegacyComparisonOperation(ComparisonOperator);
+            set => ComparisonOperator = MetricTriggerComparisonOperationHelper.FromLegacyComparisonOperation(value);
         }
-
-        private static MetricTriggerComparisonOperation ToLegacyComparisonOperation(MetricTriggerComparisonOperator value) => value switch
-        {
-            MetricTriggerComparisonOperator.NotEquals => MetricTriggerComparisonOperation.NotEquals,
-            MetricTriggerComparisonOperator.GreaterThan => MetricTriggerComparisonOperation.GreaterThan,
-            MetricTriggerComparisonOperator.GreaterThanOrEqual => MetricTriggerComparisonOperation.GreaterThanOrEqual,
-            MetricTriggerComparisonOperator.LessThan => MetricTriggerComparisonOperation.LessThan,
-            MetricTriggerComparisonOperator.LessThanOrEqual => MetricTriggerComparisonOperation.LessThanOrEqual,
-            _ => MetricTriggerComparisonOperation.EqualsValue
-        };
-
-        private static MetricTriggerComparisonOperator FromLegacyComparisonOperation(MetricTriggerComparisonOperation value) => value switch
-        {
-            MetricTriggerComparisonOperation.NotEquals => MetricTriggerComparisonOperator.NotEquals,
-            MetricTriggerComparisonOperation.GreaterThan => MetricTriggerComparisonOperator.GreaterThan,
-            MetricTriggerComparisonOperation.GreaterThanOrEqual => MetricTriggerComparisonOperator.GreaterThanOrEqual,
-            MetricTriggerComparisonOperation.LessThan => MetricTriggerComparisonOperator.LessThan,
-            MetricTriggerComparisonOperation.LessThanOrEqual => MetricTriggerComparisonOperator.LessThanOrEqual,
-            _ => MetricTriggerComparisonOperator.Equals
-        };
     }
+#pragma warning restore CS0618
 }

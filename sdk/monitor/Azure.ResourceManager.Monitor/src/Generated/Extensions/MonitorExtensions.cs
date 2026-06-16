@@ -247,79 +247,39 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ServiceDiagnosticSettingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettingResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetServiceDiagnosticSettingResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DiagnosticSettingResource"/> object. </returns>
-        public static DiagnosticSettingResource GetDiagnosticSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceDiagnosticSettingResource"/> object. </returns>
+        public static ServiceDiagnosticSettingResource GetServiceDiagnosticSettingResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMonitorArmClient(client).GetDiagnosticSettingResource(id);
+            return GetMockableMonitorArmClient(client).GetServiceDiagnosticSettingResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of <see cref="DiagnosticSettingCollection"/> objects within the specified scope.
+        /// Gets an object representing a <see cref="ServiceDiagnosticSettingResource"/> along with the instance operations that can be performed on it in the ArmClient
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettings(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetServiceDiagnosticSetting(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a collection of <see cref="DiagnosticSettingResource"/> objects. </returns>
-        public static DiagnosticSettingCollection GetDiagnosticSettings(this ArmClient client, ResourceIdentifier scope)
+        /// <returns> Returns a <see cref="ServiceDiagnosticSettingResource"/> object. </returns>
+        public static ServiceDiagnosticSettingResource GetServiceDiagnosticSetting(this ArmClient client, ResourceIdentifier scope)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableMonitorArmClient(client).GetDiagnosticSettings(scope);
-        }
-
-        /// <summary>
-        /// Gets the active diagnostic settings for the specified resource. <b>WARNING</b>: This method will be deprecated in future releases.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSetting(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="diagnosticSetting"> The name of the diagnostic setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<DiagnosticSettingResource> GetDiagnosticSetting(this ArmClient client, ResourceIdentifier scope, string diagnosticSetting, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMonitorArmClient(client).GetDiagnosticSetting(scope, diagnosticSetting, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the active diagnostic settings for the specified resource. <b>WARNING</b>: This method will be deprecated in future releases.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettingAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="diagnosticSetting"> The name of the diagnostic setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<DiagnosticSettingResource>> GetDiagnosticSettingAsync(this ArmClient client, ResourceIdentifier scope, string diagnosticSetting, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return await GetMockableMonitorArmClient(client).GetDiagnosticSettingAsync(scope, diagnosticSetting, cancellationToken).ConfigureAwait(false);
+            return GetMockableMonitorArmClient(client).GetServiceDiagnosticSetting(scope);
         }
 
         /// <summary>

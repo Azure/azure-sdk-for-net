@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="MonitorMetricDefinition"/>. </summary>
         internal MonitorMetricDefinition()
         {
-            SupportedAggregationTypes = new ChangeTrackingList<MonitorAggregationType>();
+            SupportedAggregationKinds = new ChangeTrackingList<AggregationType>();
             MetricAvailabilities = new ChangeTrackingList<MonitorMetricAvailability>();
             Dimensions = new ChangeTrackingList<MonitorLocalizableString>();
         }
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="category"> Custom category name for this metric. </param>
         /// <param name="metricClass"> The class of the metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
-        /// <param name="primaryAggregationType"> The primary aggregation type value defining how to use the values for display. </param>
-        /// <param name="supportedAggregationTypes"> The collection of what aggregation types are supported. </param>
+        /// <param name="primaryAggregationKind"> The primary aggregation type value defining how to use the values for display. </param>
+        /// <param name="supportedAggregationKinds"> The collection of what aggregation types are supported. </param>
         /// <param name="metricAvailabilities"> The collection of what aggregation intervals are available to be queried. </param>
         /// <param name="id"> The resource identifier of the metric definition. </param>
         /// <param name="dimensions"> The name and the display name of the dimension, i.e. it is a localizable string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorMetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, MonitorLocalizableString name, string displayDescription, string category, MonitorMetricClass? metricClass, MonitorMetricUnit? unit, MonitorAggregationType? primaryAggregationType, IReadOnlyList<MonitorAggregationType> supportedAggregationTypes, IReadOnlyList<MonitorMetricAvailability> metricAvailabilities, string id, IReadOnlyList<MonitorLocalizableString> dimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorMetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, MonitorLocalizableString name, string displayDescription, string category, MonitorMetricClass? metricClass, MonitorMetricUnit? unit, AggregationType? primaryAggregationKind, IList<AggregationType> supportedAggregationKinds, IReadOnlyList<MonitorMetricAvailability> metricAvailabilities, string id, IReadOnlyList<MonitorLocalizableString> dimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsDimensionRequired = isDimensionRequired;
             ResourceId = resourceId;
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Monitor.Models
             Category = category;
             MetricClass = metricClass;
             Unit = unit;
-            PrimaryAggregationType = primaryAggregationType;
-            SupportedAggregationTypes = supportedAggregationTypes;
+            PrimaryAggregationKind = primaryAggregationKind;
+            SupportedAggregationKinds = supportedAggregationKinds;
             MetricAvailabilities = metricAvailabilities;
             Id = id;
             Dimensions = dimensions;
@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.Monitor.Models
         public MonitorMetricUnit? Unit { get; }
 
         /// <summary> The primary aggregation type value defining how to use the values for display. </summary>
-        public MonitorAggregationType? PrimaryAggregationType { get; }
+        public AggregationType? PrimaryAggregationKind { get; }
 
         /// <summary> The collection of what aggregation types are supported. </summary>
-        public IReadOnlyList<MonitorAggregationType> SupportedAggregationTypes { get; }
+        public IList<AggregationType> SupportedAggregationKinds { get; }
 
         /// <summary> The collection of what aggregation intervals are available to be queried. </summary>
         public IReadOnlyList<MonitorMetricAvailability> MetricAvailabilities { get; }

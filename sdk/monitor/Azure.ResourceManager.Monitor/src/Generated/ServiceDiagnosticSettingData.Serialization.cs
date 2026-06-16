@@ -18,68 +18,73 @@ using Azure.ResourceManager.Monitor.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> Description of a service diagnostic setting. </summary>
-    public partial class DiagnosticSettingData : ResourceData, IJsonModel<DiagnosticSettingData>
+    public partial class ServiceDiagnosticSettingData : ResourceData, IJsonModel<ServiceDiagnosticSettingData>
     {
+        /// <summary> Initializes a new instance of <see cref="ServiceDiagnosticSettingData"/> for deserialization. </summary>
+        internal ServiceDiagnosticSettingData()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceDiagnosticSettingData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDiagnosticSettingData(document.RootElement, options);
+                        return DeserializeServiceDiagnosticSettingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticSettingData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceDiagnosticSettingData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceDiagnosticSettingData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticSettingData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceDiagnosticSettingData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DiagnosticSettingData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServiceDiagnosticSettingData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiagnosticSettingData IPersistableModel<DiagnosticSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DiagnosticSettingData)PersistableModelCreateCore(data, options);
+        ServiceDiagnosticSettingData IPersistableModel<ServiceDiagnosticSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServiceDiagnosticSettingData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DiagnosticSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceDiagnosticSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="diagnosticSettingData"> The <see cref="DiagnosticSettingData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DiagnosticSettingData diagnosticSettingData)
+        /// <param name="serviceDiagnosticSettingData"> The <see cref="ServiceDiagnosticSettingData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ServiceDiagnosticSettingData serviceDiagnosticSettingData)
         {
-            if (diagnosticSettingData == null)
+            if (serviceDiagnosticSettingData == null)
             {
                 return null;
             }
-            return RequestContent.Create(diagnosticSettingData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(serviceDiagnosticSettingData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DiagnosticSettingData"/> from. </param>
-        internal static DiagnosticSettingData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ServiceDiagnosticSettingData"/> from. </param>
+        internal static ServiceDiagnosticSettingData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDiagnosticSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeServiceDiagnosticSettingData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DiagnosticSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceDiagnosticSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +95,10 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceDiagnosticSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticSettingData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceDiagnosticSettingData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -138,24 +143,24 @@ namespace Azure.ResourceManager.Monitor
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiagnosticSettingData IJsonModel<DiagnosticSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DiagnosticSettingData)JsonModelCreateCore(ref reader, options);
+        ServiceDiagnosticSettingData IJsonModel<ServiceDiagnosticSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServiceDiagnosticSettingData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceDiagnosticSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticSettingData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceDiagnosticSettingData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiagnosticSettingData(document.RootElement, options);
+            return DeserializeServiceDiagnosticSettingData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DiagnosticSettingData DeserializeDiagnosticSettingData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServiceDiagnosticSettingData DeserializeServiceDiagnosticSettingData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -243,7 +248,7 @@ namespace Azure.ResourceManager.Monitor
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiagnosticSettingData(
+            return new ServiceDiagnosticSettingData(
                 id,
                 name,
                 resourceType,

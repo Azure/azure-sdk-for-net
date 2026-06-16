@@ -12,7 +12,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The aggregation type of the metric. </summary>
-    public readonly partial struct MonitorAggregationType : IEquatable<MonitorAggregationType>
+    public readonly partial struct MonitorAggregationKind : IEquatable<MonitorAggregationKind>
     {
         private readonly string _value;
         /// <summary> None. </summary>
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Total. </summary>
         private const string TotalValue = "Total";
 
-        /// <summary> Initializes a new instance of <see cref="MonitorAggregationType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorAggregationKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MonitorAggregationType(string value)
+        public MonitorAggregationKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -39,47 +39,47 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> None. </summary>
-        public static MonitorAggregationType None { get; } = new MonitorAggregationType(NoneValue);
+        public static MonitorAggregationKind None { get; } = new MonitorAggregationKind(NoneValue);
 
         /// <summary> Average. </summary>
-        public static MonitorAggregationType Average { get; } = new MonitorAggregationType(AverageValue);
+        public static MonitorAggregationKind Average { get; } = new MonitorAggregationKind(AverageValue);
 
         /// <summary> Count. </summary>
-        public static MonitorAggregationType Count { get; } = new MonitorAggregationType(CountValue);
+        public static MonitorAggregationKind Count { get; } = new MonitorAggregationKind(CountValue);
 
         /// <summary> Minimum. </summary>
-        public static MonitorAggregationType Minimum { get; } = new MonitorAggregationType(MinimumValue);
+        public static MonitorAggregationKind Minimum { get; } = new MonitorAggregationKind(MinimumValue);
 
         /// <summary> Maximum. </summary>
-        public static MonitorAggregationType Maximum { get; } = new MonitorAggregationType(MaximumValue);
+        public static MonitorAggregationKind Maximum { get; } = new MonitorAggregationKind(MaximumValue);
 
         /// <summary> Total. </summary>
-        public static MonitorAggregationType Total { get; } = new MonitorAggregationType(TotalValue);
+        public static MonitorAggregationKind Total { get; } = new MonitorAggregationKind(TotalValue);
 
-        /// <summary> Determines if two <see cref="MonitorAggregationType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="MonitorAggregationKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(MonitorAggregationType left, MonitorAggregationType right) => left.Equals(right);
+        public static bool operator ==(MonitorAggregationKind left, MonitorAggregationKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="MonitorAggregationType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="MonitorAggregationKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(MonitorAggregationType left, MonitorAggregationType right) => !left.Equals(right);
+        public static bool operator !=(MonitorAggregationKind left, MonitorAggregationKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="MonitorAggregationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MonitorAggregationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorAggregationType(string value) => new MonitorAggregationType(value);
+        public static implicit operator MonitorAggregationKind(string value) => new MonitorAggregationKind(value);
 
-        /// <summary> Converts a string to a <see cref="MonitorAggregationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MonitorAggregationKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator MonitorAggregationType?(string value) => value == null ? null : new MonitorAggregationType(value);
+        public static implicit operator MonitorAggregationKind?(string value) => value == null ? null : new MonitorAggregationKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is MonitorAggregationType other && Equals(other);
+        public override bool Equals(object obj) => obj is MonitorAggregationKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(MonitorAggregationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MonitorAggregationKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -41,14 +41,13 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string resourceUri, string diagnosticSetting, RequestContext context)
+        internal HttpMessage CreateGetRequest(string resourceUri, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.Insights/diagnosticSettings/", false);
-            uri.AppendPath(diagnosticSetting, true);
+            uri.AppendPath("/providers/microsoft.insights/diagnosticSettings/service", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -61,14 +60,13 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string diagnosticSetting, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.Insights/diagnosticSettings/", false);
-            uri.AppendPath(diagnosticSetting, true);
+            uri.AppendPath("/providers/microsoft.insights/diagnosticSettings/service", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -83,14 +81,13 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceUri, string diagnosticSetting, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(string resourceUri, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.Insights/diagnosticSettings/", false);
-            uri.AppendPath(diagnosticSetting, true);
+            uri.AppendPath("/providers/microsoft.insights/diagnosticSettings/service", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

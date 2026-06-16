@@ -165,49 +165,21 @@ namespace Azure.ResourceManager.Monitor.Mocking
             return new AutoscaleSettingResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DiagnosticSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ServiceDiagnosticSettingResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingResource"/> object. </returns>
-        public virtual DiagnosticSettingResource GetDiagnosticSettingResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceDiagnosticSettingResource"/> object. </returns>
+        public virtual ServiceDiagnosticSettingResource GetServiceDiagnosticSettingResource(ResourceIdentifier id)
         {
-            DiagnosticSettingResource.ValidateResourceId(id);
-            return new DiagnosticSettingResource(Client, id);
+            ServiceDiagnosticSettingResource.ValidateResourceId(id);
+            return new ServiceDiagnosticSettingResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="DiagnosticSettingCollection"/> objects within the specified scope. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="DiagnosticSettingResource"/> objects. </returns>
-        public virtual DiagnosticSettingCollection GetDiagnosticSettings(ResourceIdentifier scope)
+        /// <summary> Gets an object representing a <see cref="ServiceDiagnosticSettingResource"/> along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="ServiceDiagnosticSettingResource"/> object. </returns>
+        public virtual ServiceDiagnosticSettingResource GetServiceDiagnosticSetting(ResourceIdentifier scope)
         {
-            return new DiagnosticSettingCollection(Client, scope);
-        }
-
-        /// <summary> Gets the active diagnostic settings for the specified resource. <b>WARNING</b>: This method will be deprecated in future releases. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="diagnosticSetting"> The name of the diagnostic setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticSetting"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticSetting"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DiagnosticSettingResource> GetDiagnosticSetting(ResourceIdentifier scope, string diagnosticSetting, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(diagnosticSetting, nameof(diagnosticSetting));
-
-            return GetDiagnosticSettings(scope).Get(diagnosticSetting, cancellationToken);
-        }
-
-        /// <summary> Gets the active diagnostic settings for the specified resource. <b>WARNING</b>: This method will be deprecated in future releases. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="diagnosticSetting"> The name of the diagnostic setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticSetting"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticSetting"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DiagnosticSettingResource>> GetDiagnosticSettingAsync(ResourceIdentifier scope, string diagnosticSetting, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(diagnosticSetting, nameof(diagnosticSetting));
-
-            return await GetDiagnosticSettings(scope).GetAsync(diagnosticSetting, cancellationToken).ConfigureAwait(false);
+            return new ServiceDiagnosticSettingResource(Client, scope.AppendProviderResource("microsoft.insights", "diagnosticSettings", "service"));
         }
 
         /// <summary> Gets an object representing a <see cref="LogProfileResource"/> along with the instance operations that can be performed on it but with no data. </summary>

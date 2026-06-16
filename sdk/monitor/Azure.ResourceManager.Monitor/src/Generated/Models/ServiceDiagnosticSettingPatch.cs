@@ -13,22 +13,22 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Service diagnostic setting resource for patch operations. </summary>
-    public partial class DiagnosticSettingPatch
+    public partial class ServiceDiagnosticSettingPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingPatch"/>. </summary>
-        public DiagnosticSettingPatch()
+        /// <summary> Initializes a new instance of <see cref="ServiceDiagnosticSettingPatch"/>. </summary>
+        public ServiceDiagnosticSettingPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceDiagnosticSettingPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The service diagnostics settings for an update operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticSettingPatch(IDictionary<string, string> tags, DiagnosticSettingsProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceDiagnosticSettingPatch(IDictionary<string, string> tags, DiagnosticSettingsProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;

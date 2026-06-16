@@ -15,61 +15,61 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Service diagnostic setting resource for patch operations. </summary>
-    public partial class DiagnosticSettingPatch : IJsonModel<DiagnosticSettingPatch>
+    public partial class ServiceDiagnosticSettingPatch : IJsonModel<ServiceDiagnosticSettingPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DiagnosticSettingPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ServiceDiagnosticSettingPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceDiagnosticSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDiagnosticSettingPatch(document.RootElement, options);
+                        return DeserializeServiceDiagnosticSettingPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticSettingPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceDiagnosticSettingPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceDiagnosticSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticSettingPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceDiagnosticSettingPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DiagnosticSettingPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServiceDiagnosticSettingPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiagnosticSettingPatch IPersistableModel<DiagnosticSettingPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ServiceDiagnosticSettingPatch IPersistableModel<ServiceDiagnosticSettingPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DiagnosticSettingPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceDiagnosticSettingPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="diagnosticSettingPatch"> The <see cref="DiagnosticSettingPatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(DiagnosticSettingPatch diagnosticSettingPatch)
+        /// <param name="serviceDiagnosticSettingPatch"> The <see cref="ServiceDiagnosticSettingPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ServiceDiagnosticSettingPatch serviceDiagnosticSettingPatch)
         {
-            if (diagnosticSettingPatch == null)
+            if (serviceDiagnosticSettingPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(diagnosticSettingPatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(serviceDiagnosticSettingPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DiagnosticSettingPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceDiagnosticSettingPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceDiagnosticSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticSettingPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceDiagnosticSettingPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiagnosticSettingPatch IJsonModel<DiagnosticSettingPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ServiceDiagnosticSettingPatch IJsonModel<ServiceDiagnosticSettingPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DiagnosticSettingPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ServiceDiagnosticSettingPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiagnosticSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceDiagnosticSettingPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticSettingPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceDiagnosticSettingPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiagnosticSettingPatch(document.RootElement, options);
+            return DeserializeServiceDiagnosticSettingPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DiagnosticSettingPatch DeserializeDiagnosticSettingPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServiceDiagnosticSettingPatch DeserializeServiceDiagnosticSettingPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiagnosticSettingPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
+            return new ServiceDiagnosticSettingPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, additionalBinaryDataProperties);
         }
     }
 }
