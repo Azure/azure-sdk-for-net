@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetCurrentByDatabaseRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken, bool? count, string filter, RequestContext context)
+        internal HttpMessage CreateGetCurrentSensitivityLabelsRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken, bool? count, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetCurrentByDatabaseRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken, bool? count, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetCurrentSensitivityLabelsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken, bool? count, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateSensitivityLabelRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetRecommendedByDatabaseRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken, bool? includeDisabledRecommendations, string filter, RequestContext context)
+        internal HttpMessage CreateGetRecommendedSensitivityLabelsRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken, bool? includeDisabledRecommendations, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetRecommendedByDatabaseRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken, bool? includeDisabledRecommendations, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetRecommendedSensitivityLabelsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken, bool? includeDisabledRecommendations, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByDatabaseRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string filter, RequestContext context)
+        internal HttpMessage CreateGetSensitivityLabelsRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByDatabaseRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetSensitivityLabelsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

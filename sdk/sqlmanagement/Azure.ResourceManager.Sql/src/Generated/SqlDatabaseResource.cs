@@ -1268,13 +1268,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SensitivityLabelData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SensitivityLabelData> GetCurrentByDatabaseAsync(string skipToken = default, bool? count = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SensitivityLabelData> GetCurrentSensitivityLabelsAsync(string skipToken = default, bool? count = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SensitivityLabelsGetCurrentByDatabaseAsyncCollectionResultOfT(
+            return new SensitivityLabelsGetCurrentSensitivityLabelsAsyncCollectionResultOfT(
                 _sensitivityLabelsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1284,7 +1284,7 @@ namespace Azure.ResourceManager.Sql
                 count,
                 filter,
                 context,
-                "SqlDatabaseResource.GetCurrentByDatabase");
+                "SqlDatabaseResource.GetCurrentSensitivityLabels");
         }
 
         /// <summary>
@@ -1313,13 +1313,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SensitivityLabelData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SensitivityLabelData> GetCurrentByDatabase(string skipToken = default, bool? count = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SensitivityLabelData> GetCurrentSensitivityLabels(string skipToken = default, bool? count = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SensitivityLabelsGetCurrentByDatabaseCollectionResultOfT(
+            return new SensitivityLabelsGetCurrentSensitivityLabelsCollectionResultOfT(
                 _sensitivityLabelsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1329,7 +1329,7 @@ namespace Azure.ResourceManager.Sql
                 count,
                 filter,
                 context,
-                "SqlDatabaseResource.GetCurrentByDatabase");
+                "SqlDatabaseResource.GetCurrentSensitivityLabels");
         }
 
         /// <summary>
@@ -1358,13 +1358,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SensitivityLabelData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SensitivityLabelData> GetRecommendedByDatabaseAsync(string skipToken = default, bool? includeDisabledRecommendations = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SensitivityLabelData> GetRecommendedSensitivityLabelsAsync(string skipToken = default, bool? includeDisabledRecommendations = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SensitivityLabelsGetRecommendedByDatabaseAsyncCollectionResultOfT(
+            return new SensitivityLabelsGetRecommendedSensitivityLabelsAsyncCollectionResultOfT(
                 _sensitivityLabelsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1374,7 +1374,7 @@ namespace Azure.ResourceManager.Sql
                 includeDisabledRecommendations,
                 filter,
                 context,
-                "SqlDatabaseResource.GetRecommendedByDatabase");
+                "SqlDatabaseResource.GetRecommendedSensitivityLabels");
         }
 
         /// <summary>
@@ -1403,13 +1403,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SensitivityLabelData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SensitivityLabelData> GetRecommendedByDatabase(string skipToken = default, bool? includeDisabledRecommendations = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SensitivityLabelData> GetRecommendedSensitivityLabels(string skipToken = default, bool? includeDisabledRecommendations = default, string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SensitivityLabelsGetRecommendedByDatabaseCollectionResultOfT(
+            return new SensitivityLabelsGetRecommendedSensitivityLabelsCollectionResultOfT(
                 _sensitivityLabelsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -1419,7 +1419,7 @@ namespace Azure.ResourceManager.Sql
                 includeDisabledRecommendations,
                 filter,
                 context,
-                "SqlDatabaseResource.GetRecommendedByDatabase");
+                "SqlDatabaseResource.GetRecommendedSensitivityLabels");
         }
 
         /// <summary>
@@ -2054,13 +2054,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SensitivityLabelData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SensitivityLabelData> GetByDatabaseAsync(string filter = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SensitivityLabelData> GetSensitivityLabelsAsync(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SensitivityLabelsGetByDatabaseAsyncCollectionResultOfT(
+            return new SensitivityLabelsGetSensitivityLabelsAsyncCollectionResultOfT(
                 _sensitivityLabelsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2068,7 +2068,7 @@ namespace Azure.ResourceManager.Sql
                 Id.Name,
                 filter,
                 context,
-                "SqlDatabaseResource.GetByDatabase");
+                "SqlDatabaseResource.GetSensitivityLabels");
         }
 
         /// <summary>
@@ -2095,13 +2095,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SensitivityLabelData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SensitivityLabelData> GetByDatabase(string filter = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SensitivityLabelData> GetSensitivityLabels(string filter = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SensitivityLabelsGetByDatabaseCollectionResultOfT(
+            return new SensitivityLabelsGetSensitivityLabelsCollectionResultOfT(
                 _sensitivityLabelsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -2109,7 +2109,7 @@ namespace Azure.ResourceManager.Sql
                 Id.Name,
                 filter,
                 context,
-                "SqlDatabaseResource.GetByDatabase");
+                "SqlDatabaseResource.GetSensitivityLabels");
         }
 
         /// <summary>
@@ -2136,11 +2136,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="sensitivityLabelUpdateList"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
-        public virtual async Task<Response> UpdateAsync(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateSensitivityLabelAsync(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
 
-            using DiagnosticScope scope = _sensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.Update");
+            using DiagnosticScope scope = _sensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.UpdateSensitivityLabel");
             scope.Start();
             try
             {
@@ -2148,7 +2148,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sensitivityLabelsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
+                HttpMessage message = _sensitivityLabelsRestClient.CreateUpdateSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -2183,11 +2183,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="sensitivityLabelUpdateList"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sensitivityLabelUpdateList"/> is null. </exception>
-        public virtual Response Update(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
+        public virtual Response UpdateSensitivityLabel(SensitivityLabelUpdateList sensitivityLabelUpdateList, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
 
-            using DiagnosticScope scope = _sensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.Update");
+            using DiagnosticScope scope = _sensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseResource.UpdateSensitivityLabel");
             scope.Start();
             try
             {
@@ -2195,7 +2195,7 @@ namespace Azure.ResourceManager.Sql
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sensitivityLabelsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
+                HttpMessage message = _sensitivityLabelsRestClient.CreateUpdateSensitivityLabelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SensitivityLabelUpdateList.ToRequestContent(sensitivityLabelUpdateList), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal partial class SensitivityLabelsGetCurrentByDatabaseAsyncCollectionResultOfT : AsyncPageable<SensitivityLabelData>
+    internal partial class SensitivityLabelsGetRecommendedSensitivityLabelsAsyncCollectionResultOfT : AsyncPageable<SensitivityLabelData>
     {
         private readonly SensitivityLabels _client;
         private readonly Guid _subscriptionId;
@@ -23,23 +23,23 @@ namespace Azure.ResourceManager.Sql
         private readonly string _serverName;
         private readonly string _databaseName;
         private readonly string _skipToken;
-        private readonly bool? _count;
+        private readonly bool? _includeDisabledRecommendations;
         private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of SensitivityLabelsGetCurrentByDatabaseAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of SensitivityLabelsGetRecommendedSensitivityLabelsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SensitivityLabels client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="skipToken"></param>
-        /// <param name="count"></param>
+        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SensitivityLabelsGetCurrentByDatabaseAsyncCollectionResultOfT(SensitivityLabels client, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken, bool? count, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SensitivityLabelsGetRecommendedSensitivityLabelsAsyncCollectionResultOfT(SensitivityLabels client, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken, bool? includeDisabledRecommendations, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -47,16 +47,16 @@ namespace Azure.ResourceManager.Sql
             _serverName = serverName;
             _databaseName = databaseName;
             _skipToken = skipToken;
-            _count = count;
+            _includeDisabledRecommendations = includeDisabledRecommendations;
             _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of SensitivityLabelsGetCurrentByDatabaseAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of SensitivityLabelsGetRecommendedSensitivityLabelsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of SensitivityLabelsGetCurrentByDatabaseAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of SensitivityLabelsGetRecommendedSensitivityLabelsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<SensitivityLabelData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetCurrentByDatabaseRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _databaseName, _skipToken, _count, _filter, _context) : _client.CreateGetCurrentByDatabaseRequest(_subscriptionId, _resourceGroupName, _serverName, _databaseName, _skipToken, _count, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetRecommendedSensitivityLabelsRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _databaseName, _skipToken, _includeDisabledRecommendations, _filter, _context) : _client.CreateGetRecommendedSensitivityLabelsRequest(_subscriptionId, _resourceGroupName, _serverName, _databaseName, _skipToken, _includeDisabledRecommendations, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

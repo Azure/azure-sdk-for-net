@@ -14,31 +14,34 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal partial class DeletedServersGetAllCollectionResultOfT : Pageable<DeletedServerData>
+    internal partial class SyncGroupsGetSyncDatabaseIdsSyncGroupsCollectionResultOfT : Pageable<SyncDatabaseIdProperties>
     {
-        private readonly DeletedServers _client;
+        private readonly SyncGroups _client;
         private readonly Guid _subscriptionId;
+        private readonly AzureLocation _locationName;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DeletedServersGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DeletedServers client used to send requests. </param>
+        /// <summary> Initializes a new instance of SyncGroupsGetSyncDatabaseIdsSyncGroupsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The SyncGroups client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DeletedServersGetAllCollectionResultOfT(DeletedServers client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SyncGroupsGetSyncDatabaseIdsSyncGroupsCollectionResultOfT(SyncGroups client, Guid subscriptionId, AzureLocation locationName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _locationName = locationName;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DeletedServersGetAllCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of SyncGroupsGetSyncDatabaseIdsSyncGroupsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DeletedServersGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DeletedServerData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of SyncGroupsGetSyncDatabaseIdsSyncGroupsCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<SyncDatabaseIdProperties>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -48,8 +51,8 @@ namespace Azure.ResourceManager.Sql
                 {
                     yield break;
                 }
-                DeletedServerListResult result = DeletedServerListResult.FromResponse(response);
-                yield return Page<DeletedServerData>.FromValues((IReadOnlyList<DeletedServerData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                SyncDatabaseIdListResult result = SyncDatabaseIdListResult.FromResponse(response);
+                yield return Page<SyncDatabaseIdProperties>.FromValues((IReadOnlyList<SyncDatabaseIdProperties>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -63,7 +66,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _context) : _client.CreateGetAllRequest(_subscriptionId, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetSyncDatabaseIdsSyncGroupsRequest(nextLink, _subscriptionId, _locationName, _context) : _client.CreateGetSyncDatabaseIdsSyncGroupsRequest(_subscriptionId, _locationName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

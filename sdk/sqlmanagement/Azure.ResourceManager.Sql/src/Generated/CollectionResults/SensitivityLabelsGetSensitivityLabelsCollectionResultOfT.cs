@@ -14,48 +14,42 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal partial class SensitivityLabelsGetRecommendedByDatabaseCollectionResultOfT : Pageable<SensitivityLabelData>
+    internal partial class SensitivityLabelsGetSensitivityLabelsCollectionResultOfT : Pageable<SensitivityLabelData>
     {
         private readonly SensitivityLabels _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _serverName;
         private readonly string _databaseName;
-        private readonly string _skipToken;
-        private readonly bool? _includeDisabledRecommendations;
         private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of SensitivityLabelsGetRecommendedByDatabaseCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of SensitivityLabelsGetSensitivityLabelsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The SensitivityLabels client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
-        /// <param name="skipToken"></param>
-        /// <param name="includeDisabledRecommendations"> Specifies whether to include disabled recommendations or not. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public SensitivityLabelsGetRecommendedByDatabaseCollectionResultOfT(SensitivityLabels client, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string skipToken, bool? includeDisabledRecommendations, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public SensitivityLabelsGetSensitivityLabelsCollectionResultOfT(SensitivityLabels client, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _serverName = serverName;
             _databaseName = databaseName;
-            _skipToken = skipToken;
-            _includeDisabledRecommendations = includeDisabledRecommendations;
             _filter = filter;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of SensitivityLabelsGetRecommendedByDatabaseCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of SensitivityLabelsGetSensitivityLabelsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of SensitivityLabelsGetRecommendedByDatabaseCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of SensitivityLabelsGetSensitivityLabelsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<SensitivityLabelData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -81,7 +75,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetRecommendedByDatabaseRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _databaseName, _skipToken, _includeDisabledRecommendations, _filter, _context) : _client.CreateGetRecommendedByDatabaseRequest(_subscriptionId, _resourceGroupName, _serverName, _databaseName, _skipToken, _includeDisabledRecommendations, _filter, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetSensitivityLabelsRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _databaseName, _filter, _context) : _client.CreateGetSensitivityLabelsRequest(_subscriptionId, _resourceGroupName, _serverName, _databaseName, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

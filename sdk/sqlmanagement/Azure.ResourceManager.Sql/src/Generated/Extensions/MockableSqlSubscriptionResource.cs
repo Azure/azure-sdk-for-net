@@ -783,13 +783,13 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedServerResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DeletedServerResource> GetDeletedServersAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedServerData, DeletedServerResource>(new DeletedServersGetAllAsyncCollectionResultOfT(DeletedServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetAll"), data => new DeletedServerResource(Client, data));
+            return new AsyncPageableWrapper<DeletedServerData, DeletedServerResource>(new DeletedServersGetDeletedServersAsyncCollectionResultOfT(DeletedServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetDeletedServers"), data => new DeletedServerResource(Client, data));
         }
 
         /// <summary>
@@ -811,13 +811,13 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeletedServerResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedServerResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<DeletedServerResource> GetDeletedServers(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedServerData, DeletedServerResource>(new DeletedServersGetAllCollectionResultOfT(DeletedServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetAll"), data => new DeletedServerResource(Client, data));
+            return new PageableWrapper<DeletedServerData, DeletedServerResource>(new DeletedServersGetDeletedServersCollectionResultOfT(DeletedServersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableSqlSubscriptionResource.GetDeletedServers"), data => new DeletedServerResource(Client, data));
         }
 
         /// <summary>
@@ -1180,13 +1180,13 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SyncDatabaseIdProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SyncDatabaseIdProperties> GetSyncDatabaseIdsAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SyncDatabaseIdProperties> GetSyncDatabaseIdsSyncGroupsAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SyncGroupsGetSyncDatabaseIdsAsyncCollectionResultOfT(SyncGroupsRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableSqlSubscriptionResource.GetSyncDatabaseIds");
+            return new SyncGroupsGetSyncDatabaseIdsSyncGroupsAsyncCollectionResultOfT(SyncGroupsRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableSqlSubscriptionResource.GetSyncDatabaseIdsSyncGroups");
         }
 
         /// <summary>
@@ -1209,13 +1209,13 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <param name="locationName"> The name of the region where the resource is located. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SyncDatabaseIdProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SyncDatabaseIdProperties> GetSyncDatabaseIds(AzureLocation locationName, CancellationToken cancellationToken = default)
+        public virtual Pageable<SyncDatabaseIdProperties> GetSyncDatabaseIdsSyncGroups(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new SyncGroupsGetSyncDatabaseIdsCollectionResultOfT(SyncGroupsRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableSqlSubscriptionResource.GetSyncDatabaseIds");
+            return new SyncGroupsGetSyncDatabaseIdsSyncGroupsCollectionResultOfT(SyncGroupsRestClient, Guid.Parse(Id.SubscriptionId), locationName, context, "MockableSqlSubscriptionResource.GetSyncDatabaseIdsSyncGroups");
         }
 
         /// <summary>
