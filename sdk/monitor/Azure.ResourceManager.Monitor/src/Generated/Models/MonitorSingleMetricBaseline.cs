@@ -82,14 +82,5 @@ namespace Azure.ResourceManager.Monitor.Models
                 return Properties.Namespace;
             }
         }
-
-        /// <summary> The baseline for each time series that was queried. </summary>
-        public IList<MonitorTimeSeriesBaseline> Baselines
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Baselines;
-            }
-        }
     }
 }

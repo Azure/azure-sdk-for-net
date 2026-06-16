@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -23,14 +24,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="EventDataHttpRequestInfo"/>. </summary>
         /// <param name="clientRequestId"> the client request id. </param>
-        /// <param name="clientIpAddress"> the client Ip Address. </param>
+        /// <param name="clientIPAddress"> the client Ip Address. </param>
         /// <param name="method"> the Http request method. </param>
         /// <param name="uri"> the Uri. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventDataHttpRequestInfo(string clientRequestId, string clientIpAddress, string @method, Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventDataHttpRequestInfo(string clientRequestId, IPAddress clientIPAddress, string @method, Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClientRequestId = clientRequestId;
-            ClientIpAddress = clientIpAddress;
+            ClientIPAddress = clientIPAddress;
             Method = @method;
             Uri = uri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string ClientRequestId { get; }
 
         /// <summary> the client Ip Address. </summary>
-        public string ClientIpAddress { get; }
+        public IPAddress ClientIPAddress { get; }
 
         /// <summary> the Http request method. </summary>
         public string Method { get; }

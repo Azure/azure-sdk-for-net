@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 throw new FormatException($"The model {nameof(AzureMonitorPrivateLinkScopeProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkScopeProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(PrivateLinkScopeProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            PrivateLinkScopeProvisioningState? provisioningState = default;
+            PrivateLinkScopeProvisioningState? privateLinkScopeProvisioningState = default;
             IReadOnlyList<MonitorPrivateEndpointConnectionData> privateEndpointConnections = default;
             MonitorPrivateLinkAccessModeSettings accessModeSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    provisioningState = new PrivateLinkScopeProvisioningState(prop.Value.GetString());
+                    privateLinkScopeProvisioningState = new PrivateLinkScopeProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateEndpointConnections"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzureMonitorPrivateLinkScopeProperties(provisioningState, privateEndpointConnections ?? new ChangeTrackingList<MonitorPrivateEndpointConnectionData>(), accessModeSettings, additionalBinaryDataProperties);
+            return new AzureMonitorPrivateLinkScopeProperties(privateLinkScopeProvisioningState, privateEndpointConnections ?? new ChangeTrackingList<MonitorPrivateEndpointConnectionData>(), accessModeSettings, additionalBinaryDataProperties);
         }
     }
 }

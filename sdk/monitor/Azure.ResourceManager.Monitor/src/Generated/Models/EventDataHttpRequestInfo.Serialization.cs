@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.ResourceManager.Monitor;
 
@@ -79,10 +80,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("clientRequestId"u8);
                 writer.WriteStringValue(ClientRequestId);
             }
-            if (Optional.IsDefined(ClientIpAddress))
+            if (Optional.IsDefined(ClientIPAddress))
             {
                 writer.WritePropertyName("clientIpAddress"u8);
-                writer.WriteStringValue(ClientIpAddress);
+                writer.WriteStringValue(ClientIPAddress.ToString());
             }
             if (Optional.IsDefined(Method))
             {
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string clientRequestId = default;
-            string clientIpAddress = default;
+            IPAddress clientIPAddress = default;
             string @method = default;
             Uri uri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -150,7 +151,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("clientIpAddress"u8))
                 {
-                    clientIpAddress = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientIPAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("method"u8))
@@ -172,7 +177,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EventDataHttpRequestInfo(clientRequestId, clientIpAddress, @method, uri, additionalBinaryDataProperties);
+            return new EventDataHttpRequestInfo(clientRequestId, clientIPAddress, @method, uri, additionalBinaryDataProperties);
         }
     }
 }

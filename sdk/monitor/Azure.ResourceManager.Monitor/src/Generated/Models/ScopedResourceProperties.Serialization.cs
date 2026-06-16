@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -89,10 +90,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("subscriptionLocation"u8);
                 writer.WriteStringValue(SubscriptionLocation);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(ScopedResourceProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ScopedResourceProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -137,9 +138,9 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             ScopedResourceKind? kind = default;
-            string linkedResourceId = default;
+            ResourceIdentifier linkedResourceId = default;
             string subscriptionLocation = default;
-            ScopedResourceProvisioningState? provisioningState = default;
+            ScopedResourceProvisioningState? scopedResourceProvisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,7 +155,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("linkedResourceId"u8))
                 {
-                    linkedResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linkedResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subscriptionLocation"u8))
@@ -168,7 +173,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    provisioningState = new ScopedResourceProvisioningState(prop.Value.GetString());
+                    scopedResourceProvisioningState = new ScopedResourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +181,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScopedResourceProperties(kind, linkedResourceId, subscriptionLocation, provisioningState, additionalBinaryDataProperties);
+            return new ScopedResourceProperties(kind, linkedResourceId, subscriptionLocation, scopedResourceProvisioningState, additionalBinaryDataProperties);
         }
     }
 }

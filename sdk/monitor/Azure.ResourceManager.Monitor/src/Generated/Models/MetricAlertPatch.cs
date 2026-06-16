@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The resource type of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </summary>
-        public string TargetResourceType
+        public ResourceType? TargetResourceType
         {
             get
             {
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> The region of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </summary>
-        public string TargetResourceRegion
+        public AzureLocation? TargetResourceRegion
         {
             get
             {

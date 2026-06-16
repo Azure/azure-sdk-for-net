@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="customProperties"> The properties of an alert payload. </param>
         /// <param name="actionProperties"> The properties of an action properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricAlertPropertiesPatch(string description, int? severity, bool? isEnabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, string targetResourceType, string targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, ResolveConfiguration resolveConfiguration, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated, IDictionary<string, string> customProperties, IDictionary<string, string> actionProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricAlertPropertiesPatch(string description, int? severity, bool? isEnabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, ResolveConfiguration resolveConfiguration, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated, IDictionary<string, string> customProperties, IDictionary<string, string> actionProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Severity = severity;
@@ -84,10 +85,10 @@ namespace Azure.ResourceManager.Monitor.Models
         public TimeSpan? WindowSize { get; set; }
 
         /// <summary> The resource type of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </summary>
-        public string TargetResourceType { get; set; }
+        public ResourceType? TargetResourceType { get; set; }
 
         /// <summary> The region of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </summary>
-        public string TargetResourceRegion { get; set; }
+        public AzureLocation? TargetResourceRegion { get; set; }
 
         /// <summary> Defines the specific alert criteria information. </summary>
         public MetricAlertCriteria Criteria { get; set; }

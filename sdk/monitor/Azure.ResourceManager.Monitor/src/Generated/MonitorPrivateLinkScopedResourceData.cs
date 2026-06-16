@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> The resource id of the scoped Azure monitor resource. </summary>
-        public string LinkedResourceId
+        public ResourceIdentifier LinkedResourceId
         {
             get
             {
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary> State of the Azure monitor resource. </summary>
-        public ScopedResourceProvisioningState? ProvisioningState
+        public ScopedResourceProvisioningState? ScopedResourceProvisioningState
         {
             get
             {
-                return Properties is null ? default : Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ScopedResourceProvisioningState;
             }
         }
     }

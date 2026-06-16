@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -117,12 +118,12 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(TargetResourceType))
             {
                 writer.WritePropertyName("targetResourceType"u8);
-                writer.WriteStringValue(TargetResourceType);
+                writer.WriteStringValue(TargetResourceType.Value);
             }
             if (Optional.IsDefined(TargetResourceRegion))
             {
                 writer.WritePropertyName("targetResourceRegion"u8);
-                writer.WriteStringValue(TargetResourceRegion);
+                writer.WriteStringValue(TargetResourceRegion.Value);
             }
             if (Optional.IsDefined(Criteria))
             {
@@ -239,8 +240,8 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<string> scopes = default;
             TimeSpan? evaluationFrequency = default;
             TimeSpan? windowSize = default;
-            string targetResourceType = default;
-            string targetResourceRegion = default;
+            ResourceType? targetResourceType = default;
+            AzureLocation? targetResourceRegion = default;
             MetricAlertCriteria criteria = default;
             bool? isAutoMitigateEnabled = default;
             ResolveConfiguration resolveConfiguration = default;
@@ -316,12 +317,20 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("targetResourceType"u8))
                 {
-                    targetResourceType = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetResourceRegion"u8))
                 {
-                    targetResourceRegion = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceRegion = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("criteria"u8))

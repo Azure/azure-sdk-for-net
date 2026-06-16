@@ -1366,12 +1366,12 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. </param>
+        /// <param name="privateLinkScopeProvisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="accessModeSettings"> Access mode settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessModeSettings"/> is null. </exception>
         /// <returns> A new <see cref="Monitor.MonitorPrivateLinkScopeData"/> instance for mocking. </returns>
-        public static MonitorPrivateLinkScopeData MonitorPrivateLinkScopeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PrivateLinkScopeProvisioningState? provisioningState = default, IEnumerable<MonitorPrivateEndpointConnectionData> privateEndpointConnections = default, MonitorPrivateLinkAccessModeSettings accessModeSettings = default)
+        public static MonitorPrivateLinkScopeData MonitorPrivateLinkScopeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, PrivateLinkScopeProvisioningState? privateLinkScopeProvisioningState = default, IEnumerable<MonitorPrivateEndpointConnectionData> privateEndpointConnections = default, MonitorPrivateLinkAccessModeSettings accessModeSettings = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1382,7 +1382,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                privateEndpointConnections is null ? default : new AzureMonitorPrivateLinkScopeProperties(default, (privateEndpointConnections ?? new ChangeTrackingList<MonitorPrivateEndpointConnectionData>()).ToList(), default, default),
+                privateLinkScopeProvisioningState is null && privateEndpointConnections is null ? default : new AzureMonitorPrivateLinkScopeProperties(privateLinkScopeProvisioningState, (privateEndpointConnections ?? new ChangeTrackingList<MonitorPrivateEndpointConnectionData>()).ToList(), default, default),
                 default);
         }
 
@@ -1422,16 +1422,16 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="kind"> The kind of scoped Azure monitor resource. </param>
         /// <param name="linkedResourceId"> The resource id of the scoped Azure monitor resource. </param>
         /// <param name="subscriptionLocation"> The location of a scoped subscription. Only needs to be specified for metric dataplane subscriptions. </param>
-        /// <param name="provisioningState"> State of the Azure monitor resource. </param>
+        /// <param name="scopedResourceProvisioningState"> State of the Azure monitor resource. </param>
         /// <returns> A new <see cref="Monitor.MonitorPrivateLinkScopedResourceData"/> instance for mocking. </returns>
-        public static MonitorPrivateLinkScopedResourceData MonitorPrivateLinkScopedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScopedResourceKind? kind = default, string linkedResourceId = default, string subscriptionLocation = default, ScopedResourceProvisioningState? provisioningState = default)
+        public static MonitorPrivateLinkScopedResourceData MonitorPrivateLinkScopedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScopedResourceKind? kind = default, ResourceIdentifier linkedResourceId = default, string subscriptionLocation = default, ScopedResourceProvisioningState? scopedResourceProvisioningState = default)
         {
             return new MonitorPrivateLinkScopedResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind is null && linkedResourceId is null && subscriptionLocation is null && provisioningState is null ? default : new ScopedResourceProperties(kind, linkedResourceId, subscriptionLocation, provisioningState, default),
+                kind is null && linkedResourceId is null && subscriptionLocation is null && scopedResourceProvisioningState is null ? default : new ScopedResourceProperties(kind, linkedResourceId, subscriptionLocation, scopedResourceProvisioningState, default),
                 default);
         }
 
@@ -1761,13 +1761,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <param name="clientRequestId"> the client request id. </param>
-        /// <param name="clientIpAddress"> the client Ip Address. </param>
+        /// <param name="clientIPAddress"> the client Ip Address. </param>
         /// <param name="method"> the Http request method. </param>
         /// <param name="uri"> the Uri. </param>
         /// <returns> A new <see cref="Models.EventDataHttpRequestInfo"/> instance for mocking. </returns>
-        public static EventDataHttpRequestInfo EventDataHttpRequestInfo(string clientRequestId = default, string clientIpAddress = default, string @method = default, Uri uri = default)
+        public static EventDataHttpRequestInfo EventDataHttpRequestInfo(string clientRequestId = default, IPAddress clientIPAddress = default, string @method = default, Uri uri = default)
         {
-            return new EventDataHttpRequestInfo(clientRequestId, clientIpAddress, @method, uri, default);
+            return new EventDataHttpRequestInfo(clientRequestId, clientIPAddress, @method, uri, default);
         }
 
         /// <param name="isDimensionRequired"> Flag to indicate whether the dimension is required. </param>
@@ -2553,7 +2553,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="customProperties"> The properties of an alert payload. </param>
         /// <param name="actionProperties"> The properties of an action properties. </param>
         /// <returns> A new <see cref="Models.MetricAlertPatch"/> instance for mocking. </returns>
-        public static MetricAlertPatch MetricAlertPatch(IDictionary<string, string> tags = default, Identity identity = default, string description = default, int? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, string targetResourceType = default, string targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, ResolveConfiguration resolveConfiguration = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default)
+        public static MetricAlertPatch MetricAlertPatch(IDictionary<string, string> tags = default, Identity identity = default, string description = default, int? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, ResolveConfiguration resolveConfiguration = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default, IDictionary<string, string> customProperties = default, IDictionary<string, string> actionProperties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -3332,18 +3332,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EventDataHttpRequestInfo"/>. </summary>
-        /// <param name="clientRequestId"> the client request id. </param>
-        /// <param name="clientIPAddress"> the client Ip Address. </param>
-        /// <param name="method"> the Http request method. </param>
-        /// <param name="uri"> the Uri. </param>
-        /// <returns> A new <see cref="Models.EventDataHttpRequestInfo"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EventDataHttpRequestInfo EventDataHttpRequestInfo(string clientRequestId = default, IPAddress clientIPAddress = default, string @method = default, Uri uri = default)
-        {
-            return new EventDataHttpRequestInfo(clientRequestId, default, @method, uri, default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.MonitorSingleMetricBaseline"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3440,15 +3428,15 @@ namespace Azure.ResourceManager.Monitor.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MetricAlertPatch MetricAlertPatch(IDictionary<string, string> tags = default, string description = default, int? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, ResourceType? targetResourceType = default, AzureLocation? targetResourceRegion = default, MetricAlertCriteria criteria = default, bool? isAutoMitigateEnabled = default, IEnumerable<MetricAlertAction> actions = default, DateTimeOffset? lastUpdatedOn = default, bool? isMigrated = default)
         {
-            return new MetricAlertPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, description is null && severity is null && isEnabled is null && scopes is null && evaluationFrequency is null && windowSize is null && criteria is null && isAutoMitigateEnabled is null && actions is null && lastUpdatedOn is null && isMigrated is null ? default : new MetricAlertPropertiesPatch(
+            return new MetricAlertPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, description is null && severity is null && isEnabled is null && scopes is null && evaluationFrequency is null && windowSize is null && targetResourceType is null && targetResourceRegion is null && criteria is null && isAutoMitigateEnabled is null && actions is null && lastUpdatedOn is null && isMigrated is null ? default : new MetricAlertPropertiesPatch(
                 description,
                 severity,
                 isEnabled,
                 (scopes ?? new ChangeTrackingList<string>()).ToList(),
                 evaluationFrequency,
                 windowSize,
-                default,
-                default,
+                targetResourceType,
+                targetResourceRegion,
                 criteria,
                 isAutoMitigateEnabled,
                 default,
@@ -3667,7 +3655,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                linkedResourceId is null ? default : new ScopedResourceProperties(default, linkedResourceId, default, default, default),
                 default);
         }
 
