@@ -26,10 +26,6 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier Id { get; internal set; }
 
-        /// <summary> This is the gallery image definition identifier. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public GalleryImageIdentifier Identifier => ImageIdentifier;
-
         // Backward compatibility: the previously shipped SDK exposed ArtifactTags as IReadOnlyDictionary.
         // Suppress the generated IDictionary property and keep the read-only return type to avoid a binary break.
         /// <summary> The artifact tags of a shared gallery resource. </summary>

@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
         /// <param name="securityProfile"> The security profile of a gallery image version. </param>
-        /// <param name="restore"> Indicates if this is a soft-delete resource restoration request. </param>
+        /// <param name="isRestoreEnabled"> Indicates if this is a soft-delete resource restoration request. </param>
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageVersionProperties(GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, bool? restore, GalleryImageValidationsProfile validationsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryImageVersionProperties(GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, bool? isRestoreEnabled, GalleryImageValidationsProfile validationsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
             SafetyProfile = safetyProfile;
             ReplicationStatus = replicationStatus;
             SecurityProfile = securityProfile;
-            Restore = restore;
+            IsRestoreEnabled = isRestoreEnabled;
             ValidationsProfile = validationsProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal ImageVersionSecurityProfile SecurityProfile { get; set; }
 
         /// <summary> Indicates if this is a soft-delete resource restoration request. </summary>
-        public bool? Restore { get; set; }
+        public bool? IsRestoreEnabled { get; set; }
 
         /// <summary> This is the validations profile of a Gallery Image Version. </summary>
         public GalleryImageValidationsProfile ValidationsProfile { get; }

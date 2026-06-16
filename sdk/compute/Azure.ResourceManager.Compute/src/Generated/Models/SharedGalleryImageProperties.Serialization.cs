@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStringValue(EndOfLifeOn.Value, "O");
             }
             writer.WritePropertyName("identifier"u8);
-            writer.WriteObjectValue(ImageIdentifier, options);
+            writer.WriteObjectValue(Identifier, options);
             if (Optional.IsDefined(Recommended))
             {
                 writer.WritePropertyName("recommended"u8);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Compute.Models
             SupportedOperatingSystemType osType = default;
             OperatingSystemStateType osState = default;
             DateTimeOffset? endOfLifeOn = default;
-            GalleryImageIdentifier imageIdentifier = default;
+            GalleryImageIdentifier identifier = default;
             RecommendedMachineConfiguration recommended = default;
             Disallowed disallowed = default;
             HyperVGeneration? hyperVGeneration = default;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (prop.NameEquals("identifier"u8))
                 {
-                    imageIdentifier = GalleryImageIdentifier.DeserializeGalleryImageIdentifier(prop.Value, options);
+                    identifier = GalleryImageIdentifier.DeserializeGalleryImageIdentifier(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("recommended"u8))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Compute.Models
                 osType,
                 osState,
                 endOfLifeOn,
-                imageIdentifier,
+                identifier,
                 recommended,
                 disallowed,
                 hyperVGeneration,

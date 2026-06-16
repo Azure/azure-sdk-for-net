@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> This is the gallery image definition identifier. </summary>
-        public GalleryImageIdentifier ImageIdentifier
+        public GalleryImageIdentifier Identifier
         {
             get
             {
-                return Properties is null ? default : Properties.ImageIdentifier;
+                return Properties is null ? default : Properties.Identifier;
             }
         }
 

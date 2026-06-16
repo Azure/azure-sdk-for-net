@@ -5030,11 +5030,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
         /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        /// <param name="restore"> Indicates if this is a soft-delete resource restoration request. </param>
+        /// <param name="isRestoreEnabled"> Indicates if this is a soft-delete resource restoration request. </param>
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
         /// <param name="securityUefiSettings"> Contains UEFI settings for the image version. </param>
         /// <returns> A new <see cref="Compute.GalleryImageVersionData"/> instance for mocking. </returns>
-        public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, bool? restore = default, GalleryImageValidationsProfile validationsProfile = default, GalleryImageVersionUefiSettings securityUefiSettings = default)
+        public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, bool? isRestoreEnabled = default, GalleryImageValidationsProfile validationsProfile = default, GalleryImageVersionUefiSettings securityUefiSettings = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5045,14 +5045,14 @@ namespace Azure.ResourceManager.Compute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && restore is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
+                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && isRestoreEnabled is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
                     publishingProfile,
                     provisioningState,
                     storageProfile,
                     safetyProfile,
                     replicationStatus,
                     new ImageVersionSecurityProfile(securityUefiSettings, default),
-                    restore,
+                    isRestoreEnabled,
                     validationsProfile,
                     default),
                 default);
@@ -5359,12 +5359,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
         /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        /// <param name="restore"> Indicates if this is a soft-delete resource restoration request. </param>
+        /// <param name="isRestoreEnabled"> Indicates if this is a soft-delete resource restoration request. </param>
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
         /// <param name="securityUefiSettings"> Contains UEFI settings for the image version. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryImageVersionPatch"/> instance for mocking. </returns>
-        public static GalleryImageVersionPatch GalleryImageVersionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, bool? restore = default, GalleryImageValidationsProfile validationsProfile = default, GalleryImageVersionUefiSettings securityUefiSettings = default, IDictionary<string, string> tags = default)
+        public static GalleryImageVersionPatch GalleryImageVersionPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GalleryImageVersionPublishingProfile publishingProfile = default, GalleryProvisioningState? provisioningState = default, GalleryImageVersionStorageProfile storageProfile = default, GalleryImageVersionSafetyProfile safetyProfile = default, ReplicationStatus replicationStatus = default, bool? isRestoreEnabled = default, GalleryImageValidationsProfile validationsProfile = default, GalleryImageVersionUefiSettings securityUefiSettings = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5373,14 +5373,14 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && restore is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
+                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && isRestoreEnabled is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
                     publishingProfile,
                     provisioningState,
                     storageProfile,
                     safetyProfile,
                     replicationStatus,
                     new ImageVersionSecurityProfile(securityUefiSettings, default),
-                    restore,
+                    isRestoreEnabled,
                     validationsProfile,
                     default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -6071,7 +6071,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
         /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="imageIdentifier"> This is the gallery image definition identifier. </param>
+        /// <param name="identifier"> This is the gallery image definition identifier. </param>
         /// <param name="recommended"> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </param>
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
         /// <param name="features"> A list of gallery image features. </param>
@@ -6082,13 +6082,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
         /// <param name="disallowedDiskTypes"> A list of disk types. </param>
         /// <returns> A new <see cref="Compute.SharedGalleryImageData"/> instance for mocking. </returns>
-        public static SharedGalleryImageData SharedGalleryImageData(string name = default, AzureLocation? location = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier imageIdentifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, ArchitectureType? architecture = default, Uri privacyStatementUri = default, string eula = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
+        public static SharedGalleryImageData SharedGalleryImageData(string name = default, AzureLocation? location = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier identifier = default, RecommendedMachineConfiguration recommended = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, ArchitectureType? architecture = default, Uri privacyStatementUri = default, string eula = default, IDictionary<string, string> artifactTags = default, IEnumerable<string> disallowedDiskTypes = default)
         {
-            return new SharedGalleryImageData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), osType is null && osState is null && endOfLifeOn is null && imageIdentifier is null && recommended is null && disallowedDiskTypes is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null && artifactTags is null ? default : new SharedGalleryImageProperties(
+            return new SharedGalleryImageData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), osType is null && osState is null && endOfLifeOn is null && identifier is null && recommended is null && disallowedDiskTypes is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null && artifactTags is null ? default : new SharedGalleryImageProperties(
                 osType.GetValueOrDefault(),
                 osState.GetValueOrDefault(),
                 endOfLifeOn,
-                imageIdentifier,
+                identifier,
                 recommended,
                 new Disallowed((disallowedDiskTypes ?? new ChangeTrackingList<string>()).ToList(), default),
                 hyperVGeneration,
@@ -8416,11 +8416,11 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SharedGalleryImageData SharedGalleryImageData(string name = default, AzureLocation? location = default, string uniqueId = default, SupportedOperatingSystemType? osType = default, OperatingSystemStateType? osState = default, DateTimeOffset? endOfLifeOn = default, GalleryImageIdentifier identifier = default, RecommendedMachineConfiguration recommended = default, IEnumerable<string> disallowedDiskTypes = default, HyperVGeneration? hyperVGeneration = default, IEnumerable<GalleryImageFeature> features = default, ImagePurchasePlan purchasePlan = default, ArchitectureType? architecture = default, Uri privacyStatementUri = default, string eula = default, IReadOnlyDictionary<string, string> artifactTags = default)
         {
-            return new SharedGalleryImageData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), osType is null && osState is null && endOfLifeOn is null && recommended is null && disallowedDiskTypes is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null && artifactTags is null ? default : new SharedGalleryImageProperties(
+            return new SharedGalleryImageData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), osType is null && osState is null && endOfLifeOn is null && identifier is null && recommended is null && disallowedDiskTypes is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null && artifactTags is null ? default : new SharedGalleryImageProperties(
                 osType.GetValueOrDefault(),
                 osState.GetValueOrDefault(),
                 endOfLifeOn,
-                default,
+                identifier,
                 recommended,
                 new Disallowed((disallowedDiskTypes ?? new ChangeTrackingList<string>()).ToList(), default),
                 hyperVGeneration,
@@ -8652,14 +8652,14 @@ namespace Azure.ResourceManager.Compute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
+                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && isRestoreEnabled is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
                     publishingProfile,
                     provisioningState,
                     storageProfile,
                     safetyProfile,
                     replicationStatus,
                     new ImageVersionSecurityProfile(securityUefiSettings, default),
-                    default,
+                    isRestoreEnabled,
                     validationsProfile,
                     default),
                 default);
@@ -8688,14 +8688,14 @@ namespace Azure.ResourceManager.Compute.Models
                 name,
                 resourceType,
                 systemData,
-                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && restore is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
+                publishingProfile is null && provisioningState is null && storageProfile is null && safetyProfile is null && replicationStatus is null && securityUefiSettings is null && validationsProfile is null ? default : new GalleryImageVersionProperties(
                     publishingProfile,
                     provisioningState,
                     storageProfile,
                     safetyProfile,
                     replicationStatus,
                     new ImageVersionSecurityProfile(securityUefiSettings, default),
-                    restore,
+                    default,
                     validationsProfile,
                     default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -9754,11 +9754,11 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SharedGalleryImageData SharedGalleryImageData(string name, AzureLocation? location, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, IEnumerable<string> disallowedDiskTypes, HyperVGeneration? hyperVGeneration, IEnumerable<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula)
         {
-            return new SharedGalleryImageData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), osType is null && osState is null && endOfLifeOn is null && recommended is null && disallowedDiskTypes is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null ? default : new SharedGalleryImageProperties(
+            return new SharedGalleryImageData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), osType is null && osState is null && endOfLifeOn is null && identifier is null && recommended is null && disallowedDiskTypes is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null ? default : new SharedGalleryImageProperties(
                 osType.GetValueOrDefault(),
                 osState.GetValueOrDefault(),
                 endOfLifeOn,
-                default,
+                identifier,
                 recommended,
                 new Disallowed((disallowedDiskTypes ?? new ChangeTrackingList<string>()).ToList(), default),
                 hyperVGeneration,
