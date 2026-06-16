@@ -9,6 +9,7 @@ using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
@@ -216,9 +217,16 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
 
     private static void EnsureSystemBaseConstructors(ModelProvider model)
     {
-        if (model.BaseModelProvider is not SystemObjectModelProvider
+        if (model.BaseModelProvider is not SystemObjectModelProvider systemBaseModel
             || model.BaseType is null
             || !model.BaseType.AreNamesEqual(typeof(TrackedResourceData)))
+        {
+            return;
+        }
+
+        var baseProperties = EnumerateBaseModelPropertiesInOrder(systemBaseModel);
+        var baseConstructorPropertyNames = GetFrameworkConstructorPropertyNames(systemBaseModel.SystemType);
+        if (baseProperties.Count == 0 || baseConstructorPropertyNames.Count == 0)
         {
             return;
         }
@@ -227,26 +235,126 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         {
             var signature = constructor.Signature;
             var initializer = signature.Initializer;
-            if (initializer is not { IsBase: true } || initializer.Arguments.Count != 5)
+            if (initializer is not { IsBase: true })
+            {
+                continue;
+            }
+            if (initializer.Arguments.Count == 0 || initializer.Arguments.Count == baseConstructorPropertyNames.Count)
             {
                 continue;
             }
 
-            var arguments = initializer.Arguments.ToList();
-            if (signature.Parameters.Count >= 5
-                && signature.Parameters[3].Name == "location"
-                && signature.Parameters[4].Name == "tags")
-            {
-                arguments = [arguments[0], arguments[1], arguments[2], Default, arguments[4], arguments[3]];
-            }
-            else
-            {
-                arguments.Insert(3, Default);
-            }
+            var argumentsByPropertyName = BuildConstructorArgumentMap(baseProperties, signature.Parameters, initializer.Arguments);
+            var arguments = BuildBaseConstructorArguments(baseConstructorPropertyNames, baseProperties, argumentsByPropertyName);
+
             var newInitializer = new ConstructorInitializer(initializer.IsBase, arguments);
             var newSignature = new ConstructorSignature(signature.Type, signature.Description, signature.Modifiers, signature.Parameters, signature.Attributes, newInitializer);
             constructor.Update(signature: newSignature);
         }
+    }
+
+    private static IReadOnlyList<string> GetFrameworkConstructorPropertyNames(CSharpType baseType)
+    {
+        if (!baseType.IsFrameworkType)
+        {
+            return [];
+        }
+
+        return baseType.FrameworkType
+            .GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+            .OrderByDescending(c => c.GetParameters().Length)
+            .Select(c => c.GetParameters()
+                .Select(p => p.Name?.ToIdentifierName())
+                .Where(name => name is not null)
+                .Cast<string>()
+                .ToArray())
+            .FirstOrDefault(parameters => parameters.Length > 0) ?? [];
+    }
+
+    private static IReadOnlyList<ValueExpression> BuildBaseConstructorArguments(
+        IReadOnlyList<string> targetPropertyNames,
+        IReadOnlyList<PropertyProvider> sourceProperties,
+        IReadOnlyDictionary<string, ValueExpression> argumentsByPropertyName)
+    {
+        var arguments = new List<ValueExpression>(targetPropertyNames.Count);
+        var usedSourcePropertyNames = new HashSet<string>(StringComparer.Ordinal);
+        var sourceIndex = 0;
+
+        for (int i = 0; i < targetPropertyNames.Count; i++)
+        {
+            var targetPropertyName = targetPropertyNames[i];
+            if (argumentsByPropertyName.TryGetValue(targetPropertyName, out var argument))
+            {
+                arguments.Add(argument);
+                usedSourcePropertyNames.Add(targetPropertyName);
+                continue;
+            }
+
+            while (sourceIndex < sourceProperties.Count
+                   && (usedSourcePropertyNames.Contains(sourceProperties[sourceIndex].Name)
+                       || !argumentsByPropertyName.ContainsKey(sourceProperties[sourceIndex].Name)))
+            {
+                sourceIndex++;
+            }
+
+            if (sourceIndex < sourceProperties.Count)
+            {
+                var sourcePropertyName = sourceProperties[sourceIndex].Name;
+                if (!targetPropertyNames.Skip(i + 1).Contains(sourcePropertyName, StringComparer.Ordinal))
+                {
+                    arguments.Add(argumentsByPropertyName[sourcePropertyName]);
+                    usedSourcePropertyNames.Add(sourcePropertyName);
+                    sourceIndex++;
+                    continue;
+                }
+            }
+
+            arguments.Add(Default);
+        }
+
+        return arguments;
+    }
+
+    private static Dictionary<string, ValueExpression> BuildConstructorArgumentMap(IReadOnlyList<PropertyProvider> baseProperties, IReadOnlyList<ParameterProvider> parameters, IReadOnlyList<ValueExpression> arguments)
+    {
+        var basePropertiesByWireName = baseProperties
+            .Where(p => p.WireInfo is not null)
+            .GroupBy(p => p.WireInfo!.SerializedName, StringComparer.Ordinal)
+            .ToDictionary(g => g.Key, g => g.First(), StringComparer.Ordinal);
+        var basePropertiesByName = baseProperties.ToDictionary(p => p.Name, StringComparer.Ordinal);
+        var argumentsByPropertyName = new Dictionary<string, ValueExpression>(StringComparer.Ordinal);
+        var argumentCount = Math.Min(parameters.Count, arguments.Count);
+
+        for (int i = 0; i < argumentCount; i++)
+        {
+            if (TryGetBaseProperty(parameters[i], basePropertiesByName, basePropertiesByWireName, out var property))
+            {
+                argumentsByPropertyName[property.Name] = arguments[i];
+            }
+        }
+
+        return argumentsByPropertyName;
+    }
+
+    private static bool TryGetBaseProperty(
+        ParameterProvider parameter,
+        IReadOnlyDictionary<string, PropertyProvider> basePropertiesByName,
+        IReadOnlyDictionary<string, PropertyProvider> basePropertiesByWireName,
+        out PropertyProvider property)
+    {
+        if (parameter.WireInfo is not null
+            && basePropertiesByWireName.TryGetValue(parameter.WireInfo.SerializedName, out property!))
+        {
+            return true;
+        }
+
+        var parameterName = parameter.Name.TrimStart('@');
+        if (basePropertiesByWireName.TryGetValue(parameterName, out property!))
+        {
+            return true;
+        }
+
+        return basePropertiesByName.TryGetValue(parameterName.ToIdentifierName(), out property!);
     }
 
     private static HashSet<string> EnumerateBaseModelProperties(ModelProvider baseModel)
@@ -262,6 +370,35 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             currentModel = currentModel.BaseModelProvider;
         }
         return basePropertyNames;
+    }
+
+    private static IReadOnlyList<PropertyProvider> EnumerateBaseModelPropertiesInOrder(ModelProvider baseModel)
+    {
+        var properties = new List<PropertyProvider>();
+        var propertyNames = new HashSet<string>(StringComparer.Ordinal);
+
+        foreach (var model in EnumerateBaseModels(baseModel).Reverse())
+        {
+            foreach (var property in model.Properties)
+            {
+                if (propertyNames.Add(property.Name))
+                {
+                    properties.Add(property);
+                }
+            }
+        }
+
+        return properties;
+    }
+
+    private static IEnumerable<ModelProvider> EnumerateBaseModels(ModelProvider baseModel)
+    {
+        ModelProvider? currentModel = baseModel;
+        while (currentModel != null)
+        {
+            yield return currentModel;
+            currentModel = currentModel.BaseModelProvider;
+        }
     }
 
     private static void StripOrphanedVirtualModifiers(ModelProvider baseModel, HashSet<string> removedPropertyNames)
