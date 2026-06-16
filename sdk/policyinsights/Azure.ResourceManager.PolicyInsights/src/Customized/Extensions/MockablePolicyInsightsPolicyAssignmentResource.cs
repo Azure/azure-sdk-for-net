@@ -54,13 +54,17 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 return new PolicyEventsGetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEventsAsyncCollectionResultOfT(
                     PolicyEventsRestClient,
                     Id.SubscriptionId, Id.ResourceGroupName, policyEventType.ToString(), Id.Name,
-                    default, default, default, default, default, default, default, default,
+                    policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                    policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                    policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                     context, diag);
             }
             return new PolicyEventsGetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEventsAsyncCollectionResultOfT(
                 PolicyEventsRestClient,
                 Id.SubscriptionId, policyEventType.ToString(), Id.Name,
-                default, default, default, default, default, default, default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                 context, diag);
         }
 
@@ -74,13 +78,17 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 return new PolicyEventsGetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEventsCollectionResultOfT(
                     PolicyEventsRestClient,
                     Id.SubscriptionId, Id.ResourceGroupName, policyEventType.ToString(), Id.Name,
-                    default, default, default, default, default, default, default, default,
+                    policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                    policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                    policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                     context, diag);
             }
             return new PolicyEventsGetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEventsCollectionResultOfT(
                 PolicyEventsRestClient,
                 Id.SubscriptionId, policyEventType.ToString(), Id.Name,
-                default, default, default, default, default, default, default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                 context, diag);
         }
 
@@ -94,13 +102,17 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 return new PolicyStatesGetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStatesAsyncCollectionResultOfT(
                     PolicyStatesRestClient,
                     Id.SubscriptionId, Id.ResourceGroupName, policyStateType.ToString(), Id.Name,
-                    default, default, default, default, default, default, default, default,
+                    policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                    policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                    policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                     context, diag);
             }
             return new PolicyStatesGetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStatesAsyncCollectionResultOfT(
                 PolicyStatesRestClient,
                 Id.SubscriptionId, policyStateType.ToString(), Id.Name,
-                default, default, default, default, default, default, default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                 context, diag);
         }
 
@@ -114,13 +126,17 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 return new PolicyStatesGetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStatesCollectionResultOfT(
                     PolicyStatesRestClient,
                     Id.SubscriptionId, Id.ResourceGroupName, policyStateType.ToString(), Id.Name,
-                    default, default, default, default, default, default, default, default,
+                    policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                    policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                    policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                     context, diag);
             }
             return new PolicyStatesGetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStatesCollectionResultOfT(
                 PolicyStatesRestClient,
                 Id.SubscriptionId, policyStateType.ToString(), Id.Name,
-                default, default, default, default, default, default, default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                 context, diag);
         }
 
@@ -147,10 +163,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                     Id.ResourceGroupName,
                     policyStateSummaryType.ToString(),
                     Id.Name,
-                    default,
-                    default,
-                    default,
-                    default,
+                    policyQuerySettings?.Top,
+                    policyQuerySettings?.From,
+                    policyQuerySettings?.To,
+                    policyQuerySettings?.Filter,
                     context,
                     "MockablePolicyInsightsPolicyAssignmentResource.SummarizePolicyStates");
             }
@@ -159,10 +175,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 Id.SubscriptionId,
                 policyStateSummaryType.ToString(),
                 Id.Name,
-                default,
-                default,
-                default,
-                default,
+                policyQuerySettings?.Top,
+                policyQuerySettings?.From,
+                policyQuerySettings?.To,
+                policyQuerySettings?.Filter,
                 context,
                 "MockablePolicyInsightsPolicyAssignmentResource.SummarizePolicyStates");
         }
@@ -190,10 +206,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                     Id.ResourceGroupName,
                     policyStateSummaryType.ToString(),
                     Id.Name,
-                    default,
-                    default,
-                    default,
-                    default,
+                    policyQuerySettings?.Top,
+                    policyQuerySettings?.From,
+                    policyQuerySettings?.To,
+                    policyQuerySettings?.Filter,
                     context,
                     "MockablePolicyInsightsPolicyAssignmentResource.SummarizePolicyStates");
             }
@@ -202,10 +218,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 Id.SubscriptionId,
                 policyStateSummaryType.ToString(),
                 Id.Name,
-                default,
-                default,
-                default,
-                default,
+                policyQuerySettings?.Top,
+                policyQuerySettings?.From,
+                policyQuerySettings?.To,
+                policyQuerySettings?.Filter,
                 context,
                 "MockablePolicyInsightsPolicyAssignmentResource.SummarizePolicyStates");
         }

@@ -133,7 +133,9 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new PolicyEventsGetQueryResultsForSubscriptionAsyncCollectionResultOfT(
                 PolicyEventsRestClient, Id.SubscriptionId, policyEventType.ToString(),
-                default, default, default, default, default, default, default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                 context, "MockablePolicyInsightsSubscriptionResource.GetPolicyEventQueryResults");
         }
 
@@ -143,7 +145,9 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new PolicyEventsGetQueryResultsForSubscriptionCollectionResultOfT(
                 PolicyEventsRestClient, Id.SubscriptionId, policyEventType.ToString(),
-                default, default, default, default, default, default, default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                 context, "MockablePolicyInsightsSubscriptionResource.GetPolicyEventQueryResults");
         }
 
@@ -153,7 +157,9 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new PolicyStatesGetQueryResultsForSubscriptionAsyncCollectionResultOfT(
                 PolicyStatesRestClient, Id.SubscriptionId, policyStateType.ToString(),
-                default, default, default, default, default, default, default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                 context, "MockablePolicyInsightsSubscriptionResource.GetPolicyStateQueryResults");
         }
 
@@ -163,7 +169,9 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new PolicyStatesGetQueryResultsForSubscriptionCollectionResultOfT(
                 PolicyStatesRestClient, Id.SubscriptionId, policyStateType.ToString(),
-                default, default, default, default, default, default, default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                 context, "MockablePolicyInsightsSubscriptionResource.GetPolicyStateQueryResults");
         }
 
@@ -198,10 +206,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 PolicyStatesRestClient,
                 Id.SubscriptionId,
                 policyStateSummaryType.ToString(),
-                default,
-                default,
-                default,
-                default,
+                policyQuerySettings?.Top,
+                policyQuerySettings?.From,
+                policyQuerySettings?.To,
+                policyQuerySettings?.Filter,
                 context,
                 "MockablePolicyInsightsSubscriptionResource.SummarizePolicyStates");
         }
@@ -237,10 +245,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 PolicyStatesRestClient,
                 Id.SubscriptionId,
                 policyStateSummaryType.ToString(),
-                default,
-                default,
-                default,
-                default,
+                policyQuerySettings?.Top,
+                policyQuerySettings?.From,
+                policyQuerySettings?.To,
+                policyQuerySettings?.Filter,
                 context,
                 "MockablePolicyInsightsSubscriptionResource.SummarizePolicyStates");
         }
@@ -251,7 +259,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new PolicyTrackedResourcesGetQueryResultsForSubscriptionAsyncCollectionResultOfT(
                 PolicyTrackedResourcesRestClient, Id.SubscriptionId, policyTrackedResourceType.ToString(),
-                default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.Filter,
                 context, "MockablePolicyInsightsSubscriptionResource.GetPolicyTrackedResourceQueryResults");
         }
 
@@ -261,7 +269,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new PolicyTrackedResourcesGetQueryResultsForSubscriptionCollectionResultOfT(
                 PolicyTrackedResourcesRestClient, Id.SubscriptionId, policyTrackedResourceType.ToString(),
-                default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.Filter,
                 context, "MockablePolicyInsightsSubscriptionResource.GetPolicyTrackedResourceQueryResults");
         }
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventType}/queryResults. </description>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </list>
         /// </summary>
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Optional OData query parameters (currently not propagated; mirrors generated behavior). </param>
+        /// <param name="policyQuerySettings"> Optional OData query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 Id.SubscriptionId,
                 policyEventType.ToString(),
                 Id.Name,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
+                policyQuerySettings?.Top,
+                policyQuerySettings?.OrderBy,
+                policyQuerySettings?.Select,
+                policyQuerySettings?.From,
+                policyQuerySettings?.To,
+                policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply,
+                policyQuerySettings?.SkipToken,
                 context,
                 "MockablePolicyInsightsSubscriptionPolicyDefinitionResource.GetPolicyEventQueryResults");
         }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// </list>
         /// </summary>
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
-        /// <param name="policyQuerySettings"> Optional OData query parameters (currently not propagated; mirrors generated behavior). </param>
+        /// <param name="policyQuerySettings"> Optional OData query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyEvent> GetPolicyEventQueryResults(PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
@@ -124,14 +124,14 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 Id.SubscriptionId,
                 policyEventType.ToString(),
                 Id.Name,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
+                policyQuerySettings?.Top,
+                policyQuerySettings?.OrderBy,
+                policyQuerySettings?.Select,
+                policyQuerySettings?.From,
+                policyQuerySettings?.To,
+                policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply,
+                policyQuerySettings?.SkipToken,
                 context,
                 "MockablePolicyInsightsSubscriptionPolicyDefinitionResource.GetPolicyEventQueryResults");
         }
@@ -148,7 +148,9 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 Id.SubscriptionId,
                 policyStateType.ToString(),
                 Id.Name,
-                default, default, default, default, default, default, default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                 context,
                 "MockablePolicyInsightsSubscriptionPolicyDefinitionResource.GetPolicyStateQueryResults");
         }
@@ -162,7 +164,9 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 Id.SubscriptionId,
                 policyStateType.ToString(),
                 Id.Name,
-                default, default, default, default, default, default, default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                 context,
                 "MockablePolicyInsightsSubscriptionPolicyDefinitionResource.GetPolicyStateQueryResults");
         }
@@ -199,10 +203,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 Id.SubscriptionId,
                 policyStateSummaryType.ToString(),
                 Id.Name,
-                default,
-                default,
-                default,
-                default,
+                policyQuerySettings?.Top,
+                policyQuerySettings?.From,
+                policyQuerySettings?.To,
+                policyQuerySettings?.Filter,
                 context,
                 "MockablePolicyInsightsSubscriptionPolicyDefinitionResource.SummarizePolicyStates");
         }
@@ -239,10 +243,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 Id.SubscriptionId,
                 policyStateSummaryType.ToString(),
                 Id.Name,
-                default,
-                default,
-                default,
-                default,
+                policyQuerySettings?.Top,
+                policyQuerySettings?.From,
+                policyQuerySettings?.To,
+                policyQuerySettings?.Filter,
                 context,
                 "MockablePolicyInsightsSubscriptionPolicyDefinitionResource.SummarizePolicyStates");
         }

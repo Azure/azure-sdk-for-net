@@ -53,7 +53,9 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 Id.SubscriptionId,
                 policyEventType.ToString(),
                 Id.Name,
-                default, default, default, default, default, default, default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                 context,
                 "MockablePolicyInsightsSubscriptionPolicySetDefinitionResource.GetPolicyEventQueryResults");
         }
@@ -67,7 +69,9 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 Id.SubscriptionId,
                 policyEventType.ToString(),
                 Id.Name,
-                default, default, default, default, default, default, default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                 context,
                 "MockablePolicyInsightsSubscriptionPolicySetDefinitionResource.GetPolicyEventQueryResults");
         }
@@ -81,7 +85,9 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 Id.SubscriptionId,
                 policyStateType.ToString(),
                 Id.Name,
-                default, default, default, default, default, default, default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                 context,
                 "MockablePolicyInsightsSubscriptionPolicySetDefinitionResource.GetPolicyStateQueryResults");
         }
@@ -95,7 +101,9 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 Id.SubscriptionId,
                 policyStateType.ToString(),
                 Id.Name,
-                default, default, default, default, default, default, default, default,
+                policyQuerySettings?.Top, policyQuerySettings?.OrderBy, policyQuerySettings?.Select,
+                policyQuerySettings?.From, policyQuerySettings?.To, policyQuerySettings?.Filter,
+                policyQuerySettings?.Apply, policyQuerySettings?.SkipToken,
                 context,
                 "MockablePolicyInsightsSubscriptionPolicySetDefinitionResource.GetPolicyStateQueryResults");
         }
@@ -132,10 +140,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 Id.SubscriptionId,
                 policyStateSummaryType.ToString(),
                 Id.Name,
-                default,
-                default,
-                default,
-                default,
+                policyQuerySettings?.Top,
+                policyQuerySettings?.From,
+                policyQuerySettings?.To,
+                policyQuerySettings?.Filter,
                 context,
                 "MockablePolicyInsightsSubscriptionPolicySetDefinitionResource.SummarizePolicyStates");
         }
@@ -172,10 +180,10 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
                 Id.SubscriptionId,
                 policyStateSummaryType.ToString(),
                 Id.Name,
-                default,
-                default,
-                default,
-                default,
+                policyQuerySettings?.Top,
+                policyQuerySettings?.From,
+                policyQuerySettings?.To,
+                policyQuerySettings?.Filter,
                 context,
                 "MockablePolicyInsightsSubscriptionPolicySetDefinitionResource.SummarizePolicyStates");
         }
