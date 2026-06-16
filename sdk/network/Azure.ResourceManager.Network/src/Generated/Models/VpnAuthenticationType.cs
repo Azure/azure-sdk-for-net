@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Radius. </summary>
         public static VpnAuthenticationType Radius { get; } = new VpnAuthenticationType(RadiusValue);
 
-        /// <summary> AAD. </summary>
-        public static VpnAuthenticationType AAD { get; } = new VpnAuthenticationType(AADValue);
-
         /// <summary> Determines if two <see cref="VpnAuthenticationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

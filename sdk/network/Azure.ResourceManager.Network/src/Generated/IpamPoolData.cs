@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Pool resource name. </summary>
         [WirePath("name")]
-        public new string Name { get; }
+        public string Name { get; }
     }
 }

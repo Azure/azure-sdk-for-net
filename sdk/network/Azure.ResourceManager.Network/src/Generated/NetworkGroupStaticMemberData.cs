@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The name of the static member. </summary>
         [WirePath("name")]
-        public new string Name { get; }
+        public string Name { get; }
 
         /// <summary> The system metadata related to this resource. </summary>
         [WirePath("systemData")]
-        public new SystemData SystemData { get; }
+        public SystemData SystemData { get; }
 
         /// <summary> Resource Id. </summary>
         [WirePath("properties.resourceId")]

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility alias for VPN packet capture stop parameters. </summary>
-    [Obsolete]
+    [ObsoleteAttribute("This class is obsolete and will be removed in a future release", false)]
     public partial class VpnPacketCaptureStopParameters : VpnPacketCaptureStopContent
     {
         /// <summary> Initializes a new instance of <see cref="VpnPacketCaptureStopParameters"/>. </summary>

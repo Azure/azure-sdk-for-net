@@ -792,7 +792,9 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(PeerExpressRouteCircuitConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(PeerExpressRouteCircuitConnectionPropertiesFormat))]
     [ModelReaderWriterBuildable(typeof(PeerExpressRouteCircuitConnectionResource))]
+#pragma warning disable CS0618 // global::Azure.ResourceManager.Network.Models.PeerRouteList is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(PeerRouteList))]
+#pragma warning restore CS0618 // global::Azure.ResourceManager.Network.Models.PeerRouteList is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(PerimeterAssociableResourceProperties))]
     [ModelReaderWriterBuildable(typeof(PerimeterAssociableResourcesListResult))]
     [ModelReaderWriterBuildable(typeof(PolicySettings))]
@@ -1041,8 +1043,9 @@ namespace Azure.ResourceManager.Network
     [ModelReaderWriterBuildable(typeof(VirtualHubRouteTableV2Properties))]
     [ModelReaderWriterBuildable(typeof(VirtualHubRouteTableV2Resource))]
     [ModelReaderWriterBuildable(typeof(VirtualHubRouteV2))]
+    [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource))]
-    [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetVmNetworkResource))]
+    [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetNetworkInterfaceResource))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkAddressSpace))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkApplianceData))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkApplianceIPConfiguration))]

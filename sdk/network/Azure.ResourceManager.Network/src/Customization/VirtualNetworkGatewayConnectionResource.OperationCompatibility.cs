@@ -20,9 +20,13 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualNetworkGatewayConnectionResource
     {
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Task<ArmOperation<string>> StartPacketCaptureAsync(WaitUntil waitUntil, VpnPacketCaptureStartParameters content, CancellationToken cancellationToken) => default;
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual ArmOperation<string> StartPacketCapture(WaitUntil waitUntil, VpnPacketCaptureStartParameters content, CancellationToken cancellationToken) => default;
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Task<ArmOperation<string>> StopPacketCaptureAsync(WaitUntil waitUntil, VpnPacketCaptureStopParameters content, CancellationToken cancellationToken) => default;
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual ArmOperation<string> StopPacketCapture(WaitUntil waitUntil, VpnPacketCaptureStopParameters content, CancellationToken cancellationToken) => default;
     }
 }

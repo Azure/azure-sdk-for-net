@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Network
     [CodeGenSuppress("ExpressRouteConnections")]
     public partial class ExpressRouteGatewayData
     {
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public IReadOnlyList<ExpressRouteConnectionData> ExpressRouteConnections => Properties?.ExpressRouteConnections as IReadOnlyList<ExpressRouteConnectionData>;
     }
 }

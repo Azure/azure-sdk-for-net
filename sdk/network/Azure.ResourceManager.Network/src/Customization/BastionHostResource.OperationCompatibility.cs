@@ -20,7 +20,9 @@ namespace Azure.ResourceManager.Network
 {
     public partial class BastionHostResource
     {
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual Task<ArmOperation<BastionHostResource>> UpdateAsync(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken) => default;
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public virtual ArmOperation<BastionHostResource> Update(WaitUntil waitUntil, BastionHostData data, CancellationToken cancellationToken) => default;
     }
 }

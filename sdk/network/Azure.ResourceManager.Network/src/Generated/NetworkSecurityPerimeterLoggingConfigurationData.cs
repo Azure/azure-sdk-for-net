@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
@@ -29,12 +28,6 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name of the NSP logging configuration. Accepts 'instance' as name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NetworkSecurityPerimeterLoggingConfigurationData(NspLoggingConfigurationProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : this(default, name, default, properties, additionalBinaryDataProperties)
-        {
-        }
-
-        internal NetworkSecurityPerimeterLoggingConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, NspLoggingConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : base(id, name, resourceType, null)
         {
             Properties = properties;
             Name = name;
@@ -47,7 +40,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The name of the NSP logging configuration. Accepts 'instance' as name. </summary>
         [WirePath("name")]
-        public new string Name { get; }
+        public string Name { get; }
 
         /// <summary> The log categories to enable in the NSP logging configuration. </summary>
         [WirePath("properties.enabledLogCategories")]

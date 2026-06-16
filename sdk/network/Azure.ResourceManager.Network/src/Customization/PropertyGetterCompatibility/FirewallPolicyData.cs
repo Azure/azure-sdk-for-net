@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.Network
 {
     public partial class FirewallPolicyData
     {
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public global::System.Collections.Generic.IList<global::System.String> SnatPrivateRanges => default;
     }
 }

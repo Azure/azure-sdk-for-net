@@ -10,7 +10,9 @@ namespace Azure.ResourceManager.Network
     public partial class CustomIPPrefixData
     {
         public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> ChildCustomIPPrefixList => default;
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public global::System.Collections.Generic.IReadOnlyList<global::Azure.ResourceManager.Network.CustomIPPrefixData> ChildCustomIPPrefixes => default;
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public global::Azure.ResourceManager.Network.CustomIPPrefixData CustomIPPrefixParent
         {
             get => default;

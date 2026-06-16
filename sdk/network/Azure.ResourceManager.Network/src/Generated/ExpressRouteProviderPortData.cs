@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The name of the provider port. </summary>
         [WirePath("name")]
-        public new string Name { get; }
+        public string Name { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]

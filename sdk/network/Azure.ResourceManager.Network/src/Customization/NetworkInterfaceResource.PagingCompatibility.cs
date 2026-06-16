@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkInterfaceResource
     {
         [ForwardsClientCalls]
-        public virtual AsyncPageable<LoadBalancerResource> GetNetworkInterfaceLoadBalancersAsync(CancellationToken cancellationToken) => GetAllAsync(cancellationToken);
+        public virtual AsyncPageable<LoadBalancerResource> GetNetworkInterfaceLoadBalancersAsync(CancellationToken cancellationToken) => default;
         [ForwardsClientCalls]
-        public virtual Pageable<LoadBalancerResource> GetNetworkInterfaceLoadBalancers(CancellationToken cancellationToken) => GetAll(cancellationToken);
+        public virtual Pageable<LoadBalancerResource> GetNetworkInterfaceLoadBalancers(CancellationToken cancellationToken) => default;
     }
 }

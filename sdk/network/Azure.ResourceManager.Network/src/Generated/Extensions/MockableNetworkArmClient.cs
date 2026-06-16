@@ -912,6 +912,15 @@ namespace Azure.ResourceManager.Network.Mocking
             return new VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource"/> object. </returns>
+        public virtual VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource(ResourceIdentifier id)
+        {
+            VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource.ValidateResourceId(id);
+            return new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ApplicationGatewayWafDynamicManifestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ApplicationGatewayWafDynamicManifestResource"/> object. </returns>
@@ -1269,6 +1278,15 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             RoutingIntentResource.ValidateResourceId(id);
             return new RoutingIntentResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetNetworkInterfaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetNetworkInterfaceResource"/> object. </returns>
+        public virtual VirtualMachineScaleSetNetworkInterfaceResource GetVirtualMachineScaleSetNetworkInterfaceResource(ResourceIdentifier id)
+        {
+            VirtualMachineScaleSetNetworkInterfaceResource.ValidateResourceId(id);
+            return new VirtualMachineScaleSetNetworkInterfaceResource(Client, id);
         }
 
         /// <summary>

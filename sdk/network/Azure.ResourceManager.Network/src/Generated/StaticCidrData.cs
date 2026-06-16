@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> StaticCidr resource name to retrieve. </summary>
         [WirePath("name")]
-        public new string Name { get; }
+        public string Name { get; }
     }
 }

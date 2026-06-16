@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A compatibility type for the former DDoS custom policy protocol settings model. </summary>
-    [Obsolete]
+    [ObsoleteAttribute("This class is obsolete and will be removed in a future release", false)]
     public partial class ProtocolCustomSettings
     {
         /// <summary> Initializes a new instance of <see cref="ProtocolCustomSettings"/>. </summary>

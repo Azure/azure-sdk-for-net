@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Network
     /// <summary>
     /// A class representing a VirtualMachineScaleSetNetworkInterfaceIPConfiguration along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetVmNetworkResource"/> using the GetVirtualMachineScaleSetNetworkInterfaceIPConfigurations method.
+    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineScaleSetNetworkInterfaceResource"/> using the GetVirtualMachineScaleSetNetworkInterfaceIPConfigurations method.
     /// </summary>
     public partial class VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource : ArmResource
     {
@@ -189,6 +189,45 @@ namespace Azure.ResourceManager.Network
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses in the <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource"/>. </summary>
+        /// <returns> An object representing collection of VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses and their operations over a VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource. </returns>
+        public virtual VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressCollection GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses()
+        {
+            return GetCachedClient(client => new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressCollection(client, Id));
+        }
+
+        /// <summary> Get the specified public IP address in a virtual machine scale set. </summary>
+        /// <param name="ipConfigurationName"></param>
+        /// <param name="publicIpAddressName"></param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource>> GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressAsync(string ipConfigurationName, string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
+            Argument.AssertNotNullOrEmpty(publicIpAddressName, nameof(publicIpAddressName));
+
+            return await GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses().GetAsync(ipConfigurationName, publicIpAddressName, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get the specified public IP address in a virtual machine scale set. </summary>
+        /// <param name="ipConfigurationName"></param>
+        /// <param name="publicIpAddressName"></param>
+        /// <param name="expand"> Expands referenced resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> or <paramref name="publicIpAddressName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource> GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddress(string ipConfigurationName, string publicIpAddressName, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ipConfigurationName, nameof(ipConfigurationName));
+            Argument.AssertNotNullOrEmpty(publicIpAddressName, nameof(publicIpAddressName));
+
+            return GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses().Get(ipConfigurationName, publicIpAddressName, expand, cancellationToken);
         }
     }
 }

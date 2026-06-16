@@ -1,0 +1,12 @@
+# Network MPG generation currently emits inherited ARM resource members until the
+# generator fully handles inheritable system model replacements for this package.
+nowarn:CS0108
+
+# Network MPG generation currently emits resource-data serialization methods that
+# intentionally hide inherited serialization methods from ResourceData/TrackedResourceData.
+nowarn:CS0114
+
+# Network compatibility customizations keep obsolete GA members such as
+# EffectiveNetworkSecurityGroup.TagMap, and generated constructors/serialization
+# must continue to reference those members for wire compatibility.
+nowarn:CS0618

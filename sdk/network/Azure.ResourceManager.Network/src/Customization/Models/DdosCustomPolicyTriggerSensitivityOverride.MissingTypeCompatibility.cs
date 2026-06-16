@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> DDoS custom policy trigger sensitivity override. </summary>
-    [Obsolete]
+    [ObsoleteAttribute("This struct is obsolete and will be removed in a future release", false)]
     public readonly partial struct DdosCustomPolicyTriggerSensitivityOverride : IEquatable<DdosCustomPolicyTriggerSensitivityOverride>
     {
         private readonly string _value;

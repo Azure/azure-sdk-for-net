@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
@@ -29,20 +28,6 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name of the network security perimeter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NetworkSecurityPerimeterData(NetworkSecurityPerimeterProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : this(default, name, default, default, default, properties, additionalBinaryDataProperties)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the network security perimeter. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="properties"> The network security perimeter properties. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterData(ResourceIdentifier id, string name, ResourceType resourceType, IDictionary<string, string> tags, AzureLocation location, NetworkSecurityPerimeterProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : base(id, name, resourceType, null, tags, location)
         {
             Properties = properties;
             Name = name;
@@ -55,7 +40,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The name of the network security perimeter. </summary>
         [WirePath("name")]
-        public new string Name { get; }
+        public string Name { get; }
 
         /// <summary> The provisioning state of the scope assignment resource. </summary>
         [WirePath("properties.provisioningState")]

@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
         [WirePath("name")]
-        public new string Name { get; }
+        public string Name { get; }
 
         /// <summary> Identifier of the perimeter associable resource. </summary>
         [WirePath("id")]
-        public new string Id { get; }
+        public string Id { get; }
 
         /// <summary> Resource type. </summary>
         [WirePath("type")]
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Resource type/provider name. </summary>
         [WirePath("properties.resourceType")]
-        public new string ResourceType
+        public string ResourceType
         {
             get
             {

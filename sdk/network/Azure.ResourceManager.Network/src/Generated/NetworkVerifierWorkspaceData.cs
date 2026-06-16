@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The system metadata related to this resource. </summary>
         [WirePath("systemData")]
-        public new SystemData SystemData { get; }
+        public SystemData SystemData { get; }
 
         /// <summary> The name of the resource. </summary>
         [WirePath("name")]
-        public new string Name { get; }
+        public string Name { get; }
     }
 }

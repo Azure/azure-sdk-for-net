@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.Network.Models
 
     public readonly partial struct ApplicationGatewayCustomErrorStatusCode
     {
+        [System.ObsoleteAttribute("This status is obsolete and will be removed in a future release", false)]
         public static ApplicationGatewayCustomErrorStatusCode HttpStatus499 { get; } = new ApplicationGatewayCustomErrorStatusCode("HttpStatus499");
     }
 
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
         public static DHGroup Ecp384 { get; } = ECP384;
     }
 
-    [System.Obsolete]
+    [System.ObsoleteAttribute("This struct is obsolete and will be removed in a future release", false)]
     public readonly partial struct DdosCustomPolicyProtocol
     {
         public static DdosCustomPolicyProtocol Syn { get; } = new DdosCustomPolicyProtocol("Syn");
@@ -228,6 +229,7 @@ namespace Azure.ResourceManager.Network.Models
 
     public readonly partial struct LoadBalancerBackendAddressAdminState
     {
+        [System.ObsoleteAttribute("This state is obsolete and will be removed in a future release", false)]
         public static LoadBalancerBackendAddressAdminState Drain { get; } = new LoadBalancerBackendAddressAdminState("Drain");
     }
 
@@ -288,9 +290,12 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualNetworkGatewayConnectionType VpnClient { get; } = VPNClient;
     }
 
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AAD")]
     public readonly partial struct VpnAuthenticationType
     {
-        public static VpnAuthenticationType Aad { get; } = AAD;
+        [System.ObsoleteAttribute("This value is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
+        public static VpnAuthenticationType AAD { get; } = new VpnAuthenticationType("AAD");
+        public static VpnAuthenticationType Aad { get; } = new VpnAuthenticationType("AAD");
     }
 
     public readonly partial struct VpnClientProtocol

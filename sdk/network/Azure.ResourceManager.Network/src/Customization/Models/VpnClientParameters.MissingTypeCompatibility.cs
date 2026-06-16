@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Compatibility alias for VPN client parameters. </summary>
-    [Obsolete]
+    [ObsoleteAttribute("This class is obsolete and will be removed in a future release", false)]
     public partial class VpnClientParameters : VpnClientContent
     {
         /// <summary> Initializes a new instance of <see cref="VpnClientParameters"/>. </summary>

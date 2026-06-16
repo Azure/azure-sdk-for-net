@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The name of the cloud. </summary>
         [WirePath("name")]
-        public new string Name { get; }
+        public string Name { get; }
 
         /// <summary> The ID of the cloud. </summary>
         [WirePath("id")]
-        public new string Id { get; }
+        public string Id { get; }
 
         /// <summary> The azure resource type. </summary>
         [WirePath("type")]

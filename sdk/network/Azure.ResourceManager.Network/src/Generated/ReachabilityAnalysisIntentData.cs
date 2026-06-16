@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Reachability Analysis Intent name. </summary>
         [WirePath("name")]
-        public new string Name { get; }
+        public string Name { get; }
 
         /// <summary> The system metadata related to this resource. </summary>
         [WirePath("systemData")]
-        public new SystemData SystemData { get; }
+        public SystemData SystemData { get; }
     }
 }

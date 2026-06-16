@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The name of the azureWebCategory. </summary>
         [WirePath("name")]
-        public new string Name { get; }
+        public string Name { get; }
 
         /// <summary> The name of the group that the category belongs to. </summary>
         [WirePath("properties.group")]

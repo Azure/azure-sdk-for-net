@@ -36,8 +36,6 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualMachineScaleSetVmNetworkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualMachineScaleSetVmNetworkClientDiagnostics = CreateClientDiagnostics();
-            _virtualMachineScaleSetVmNetworkRestClient = CreateVirtualMachineScaleSetVmNetworkRestClient();
             ValidateResourceId(id);
         }
 
@@ -65,20 +63,22 @@ namespace Azure.ResourceManager.Network
 
         public virtual AsyncPageable<NetworkInterfaceIPConfigurationData> GetAllIPConfigurationDataAsync(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
         {
-            var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
-            return resourceGroup.GetVirtualMachineScaleSetIpConfigurationsAsync(virtualMachineScaleSetName, virtualmachineIndex, "nic1", cancellationToken: cancellationToken);
+            return new AsyncPageableWrapper<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource, NetworkInterfaceIPConfigurationData>(
+                GetVirtualMachineScaleSetNetworkInterfaceResource(virtualMachineScaleSetName, Id.Name).GetVirtualMachineScaleSetNetworkInterfaceIPConfigurations().GetAllAsync(virtualMachineScaleSetName, virtualmachineIndex, Id.Name, cancellationToken: cancellationToken),
+                resource => resource.Data);
         }
 
         public virtual Pageable<NetworkInterfaceIPConfigurationData> GetAllIPConfigurationData(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
         {
-            var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
-            return resourceGroup.GetVirtualMachineScaleSetIpConfigurations(virtualMachineScaleSetName, virtualmachineIndex, "nic1", cancellationToken: cancellationToken);
+            return new PageableWrapper<VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource, NetworkInterfaceIPConfigurationData>(
+                GetVirtualMachineScaleSetNetworkInterfaceResource(virtualMachineScaleSetName, Id.Name).GetVirtualMachineScaleSetNetworkInterfaceIPConfigurations().GetAll(virtualMachineScaleSetName, virtualmachineIndex, Id.Name, cancellationToken: cancellationToken),
+                resource => resource.Data);
         }
 
         public virtual AsyncPageable<NetworkInterfaceData> GetAllNetworkInterfaceDataAsync(CancellationToken cancellationToken)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new VirtualMachineScaleSetVmNetworkGetVirtualMachineScaleSetVMNetworkInterfacesAsyncCollectionResultOfT(
+            return new VirtualMachineScaleSetNetworkInterfacesGetVirtualMachineScaleSetVMNetworkInterfacesAsyncCollectionResultOfT(
                 CreateVirtualMachineScaleSetVmNetworkRestClient(),
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<NetworkInterfaceData> GetAllNetworkInterfaceData(CancellationToken cancellationToken)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new VirtualMachineScaleSetVmNetworkGetVirtualMachineScaleSetVMNetworkInterfacesCollectionResultOfT(
+            return new VirtualMachineScaleSetNetworkInterfacesGetVirtualMachineScaleSetVMNetworkInterfacesCollectionResultOfT(
                 CreateVirtualMachineScaleSetVmNetworkRestClient(),
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.Network
         public virtual AsyncPageable<PublicIPAddressData> GetAllPublicIPAddressDataAsync(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new PublicIPAddressesGetVirtualMachineScaleSetVMPublicIPAddressesAsyncCollectionResultOfT(
-                CreatePublicIPAddressesRestClient(),
+            return new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesGetVirtualMachineScaleSetVMPublicIPAddressesAsyncCollectionResultOfT(
+                CreateVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient(),
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 virtualMachineScaleSetName,
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.Network
         public virtual Pageable<PublicIPAddressData> GetAllPublicIPAddressData(string virtualMachineScaleSetName, string virtualmachineIndex, CancellationToken cancellationToken)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-            return new PublicIPAddressesGetVirtualMachineScaleSetVMPublicIPAddressesCollectionResultOfT(
-                CreatePublicIPAddressesRestClient(),
+            return new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesGetVirtualMachineScaleSetVMPublicIPAddressesCollectionResultOfT(
+                CreateVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient(),
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 virtualMachineScaleSetName,
@@ -171,14 +171,14 @@ namespace Azure.ResourceManager.Network
         {
             var resource = Client.GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationResource(VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineScaleSetName, Id.Name, networkInterfaceName, ipConfigurationName));
             var response = await resource.GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((NetworkInterfaceIPConfigurationData)response.Value.Data, response.GetRawResponse());
+            return Response.FromValue(response.Value.Data, response.GetRawResponse());
         }
 
         public virtual Response<NetworkInterfaceIPConfigurationData> GetIPConfigurationData(string virtualMachineScaleSetName, string networkInterfaceName, string ipConfigurationName, CancellationToken cancellationToken)
         {
             var resource = Client.GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationResource(VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineScaleSetName, Id.Name, networkInterfaceName, ipConfigurationName));
             var response = resource.Get(cancellationToken: cancellationToken);
-            return Response.FromValue((NetworkInterfaceIPConfigurationData)response.Value.Data, response.GetRawResponse());
+            return Response.FromValue(response.Value.Data, response.GetRawResponse());
         }
 
         public virtual async Task<Response<PublicIPAddressData>> GetPublicIPAddressDataAsync(string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string publicIpAddressName, CancellationToken cancellationToken)
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = CreatePublicIPAddressesRestClient().CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, "ip1", publicIpAddressName, null, context);
+                HttpMessage message = CreateVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient().CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, "ip1", publicIpAddressName, null, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return Response.FromValue(PublicIPAddressData.FromResponse(result), result);
             }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network
             try
             {
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
-                HttpMessage message = CreatePublicIPAddressesRestClient().CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, "ip1", publicIpAddressName, null, context);
+                HttpMessage message = CreateVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient().CreateGetVirtualMachineScaleSetPublicIPAddressRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, "ip1", publicIpAddressName, null, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 return Response.FromValue(PublicIPAddressData.FromResponse(result), result);
             }
@@ -220,10 +220,13 @@ namespace Azure.ResourceManager.Network
         private ClientDiagnostics CreateClientDiagnostics()
             => new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineScaleSetVmNetwork CreateVirtualMachineScaleSetVmNetworkRestClient()
-            => new VirtualMachineScaleSetVmNetwork(CreateClientDiagnostics(), Pipeline, Endpoint, "2018-10-01");
+        private VirtualMachineScaleSetNetworkInterfaces CreateVirtualMachineScaleSetVmNetworkRestClient()
+            => new VirtualMachineScaleSetNetworkInterfaces(CreateClientDiagnostics(), Pipeline, Endpoint, "2018-10-01");
 
-        private PublicIPAddresses CreatePublicIPAddressesRestClient()
-            => new PublicIPAddresses(CreateClientDiagnostics(), Pipeline, Endpoint, "2018-10-01");
+        private VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses CreateVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressesRestClient()
+            => new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddresses(CreateClientDiagnostics(), Pipeline, Endpoint, "2018-10-01");
+
+        private VirtualMachineScaleSetNetworkInterfaceResource GetVirtualMachineScaleSetNetworkInterfaceResource(string virtualMachineScaleSetName, string networkInterfaceName)
+            => Client.GetVirtualMachineScaleSetNetworkInterfaceResource(VirtualMachineScaleSetNetworkInterfaceResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, virtualMachineScaleSetName, Id.Name, networkInterfaceName));
     }
 }

@@ -7,13 +7,31 @@
 
 namespace Azure.ResourceManager.Network.Models
 {
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("DdosCustomPolicyId")]
     public partial class DdosSettings
     {
+        [Azure.ResourceManager.Network.WirePath("ddosCustomPolicy.id")]
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
+        public global::Azure.Core.ResourceIdentifier DdosCustomPolicyId
+        {
+            get => DdosCustomPolicy is null ? default : DdosCustomPolicy.Id;
+            set
+            {
+                if (DdosCustomPolicy is null)
+                {
+                    DdosCustomPolicy = new NetworkSubResource();
+                }
+                DdosCustomPolicy.Id = value;
+            }
+        }
+
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public global::System.Nullable<global::System.Boolean> ProtectedIP
         {
             get => default;
             set { } // Compatibility setter: previous GA surface was settable; generated model treats this service-populated property as read-only.
         }
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public global::System.Nullable<global::Azure.ResourceManager.Network.Models.DdosSettingsProtectionCoverage> ProtectionCoverage
         {
             get => default;

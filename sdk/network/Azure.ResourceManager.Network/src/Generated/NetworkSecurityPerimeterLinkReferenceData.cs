@@ -24,12 +24,6 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name of the NSP linkReference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NetworkSecurityPerimeterLinkReferenceData(NspLinkReferenceProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : this(default, name, default, properties, additionalBinaryDataProperties)
-        {
-        }
-
-        internal NetworkSecurityPerimeterLinkReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, NspLinkReferenceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : base(id, name, resourceType, null)
         {
             Properties = properties;
             Name = name;
@@ -42,7 +36,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The name of the NSP linkReference. </summary>
         [WirePath("name")]
-        public new string Name { get; }
+        public string Name { get; }
 
         /// <summary> The provisioning state of the NSP LinkReference resource. </summary>
         [WirePath("properties.provisioningState")]

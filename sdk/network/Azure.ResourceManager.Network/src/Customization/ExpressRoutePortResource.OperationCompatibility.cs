@@ -21,18 +21,15 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRoutePortResource
     {
         public virtual ExpressRoutePortAuthorizationCollection GetExpressRoutePortAuthorizations()
-        {
-            var resourceGroup = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName));
-            return resourceGroup.GetExpressRoutePortAuthorizations(Id.Name);
-        }
+            => GetCachedClient(client => new ExpressRoutePortAuthorizationCollection(client, Id));
 
         [ForwardsClientCalls]
         public virtual Task<Response<ExpressRoutePortAuthorizationResource>> GetExpressRoutePortAuthorizationAsync(string authorizationName, CancellationToken cancellationToken = default)
-            => GetExpressRoutePortAuthorizations().GetAsync(authorizationName, cancellationToken);
+            => GetExpressRoutePortAuthorizations().GetAsync(Id.Name, authorizationName, cancellationToken);
 
         [ForwardsClientCalls]
         public virtual Response<ExpressRoutePortAuthorizationResource> GetExpressRoutePortAuthorization(string authorizationName, CancellationToken cancellationToken = default)
-            => GetExpressRoutePortAuthorizations().Get(authorizationName, cancellationToken);
+            => GetExpressRoutePortAuthorizations().Get(Id.Name, authorizationName, cancellationToken);
 
         public virtual Task<Response<GenerateExpressRoutePortsLoaResult>> GenerateLoaAsync(GenerateExpressRoutePortsLoaContent content, CancellationToken cancellationToken) => default;
         public virtual Response<GenerateExpressRoutePortsLoaResult> GenerateLoa(GenerateExpressRoutePortsLoaContent content, CancellationToken cancellationToken) => default;

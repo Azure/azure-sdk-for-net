@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
 
@@ -29,12 +28,6 @@ namespace Azure.ResourceManager.Network
         /// <param name="name"> The name of the NSP access rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NetworkSecurityPerimeterAccessRuleData(NspAccessRuleProperties properties, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : this(default, name, default, properties, additionalBinaryDataProperties)
-        {
-        }
-
-        internal NetworkSecurityPerimeterAccessRuleData(ResourceIdentifier id, string name, ResourceType resourceType, NspAccessRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-            : base(id, name, resourceType, null)
         {
             Properties = properties;
             Name = name;
@@ -47,7 +40,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The name of the NSP access rule. </summary>
         [WirePath("name")]
-        public new string Name { get; }
+        public string Name { get; }
 
         /// <summary> The provisioning state of the scope assignment resource. </summary>
         [WirePath("properties.provisioningState")]

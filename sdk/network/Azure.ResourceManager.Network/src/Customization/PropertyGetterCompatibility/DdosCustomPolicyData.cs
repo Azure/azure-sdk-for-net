@@ -10,6 +10,7 @@ namespace Azure.ResourceManager.Network
     public partial class DdosCustomPolicyData
     {
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Resources.Models.WritableSubResource> FrontEndIPConfiguration => default;
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         public global::System.Collections.Generic.IList<global::Azure.ResourceManager.Network.Models.ProtocolCustomSettings> ProtocolCustomSettings => default;
     }
 }

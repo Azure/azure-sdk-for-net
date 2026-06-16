@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Network
     [CodeGenSuppress("PublicIPAddresses")]
     public partial class DdosCustomPolicyData
     {
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]
         [WirePath("properties.publicIPAddresses")] public IReadOnlyList<WritableSubResource> PublicIPAddresses => WritableSubResourceCollectionCompatibility.AsReadOnlyList(Properties?.PublicIPAddresses);
     }
 }

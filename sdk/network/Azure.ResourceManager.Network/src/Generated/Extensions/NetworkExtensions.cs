@@ -1793,6 +1793,24 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource"/> object. </returns>
+        public static VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetVirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddressResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ApplicationGatewayWafDynamicManifestResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -2515,6 +2533,24 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetNetworkInterfaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetVirtualMachineScaleSetNetworkInterfaceResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetNetworkInterfaceResource"/> object. </returns>
+        public static VirtualMachineScaleSetNetworkInterfaceResource GetVirtualMachineScaleSetNetworkInterfaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetVirtualMachineScaleSetNetworkInterfaceResource(id);
+        }
+
+        /// <summary>
         /// Gets the list of SwapResource which identifies the slot type for the specified cloud service. The slot type on a cloud service can either be Staging or Production
         /// <item>
         /// <term> Mocking. </term>
@@ -3220,64 +3256,6 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetExpressRoutePort(expressRoutePortName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of ExpressRoutePortAuthorizations in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetExpressRoutePortAuthorizations(string)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="expressRoutePortName"> The expressRoutePortName for the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ExpressRoutePortAuthorizations and their operations over a ExpressRoutePortAuthorizationResource. </returns>
-        public static ExpressRoutePortAuthorizationCollection GetExpressRoutePortAuthorizations(this ResourceGroupResource resourceGroupResource, string expressRoutePortName)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetExpressRoutePortAuthorizations(expressRoutePortName);
-        }
-
-        /// <summary>
-        /// Gets the specified authorization from the specified express route port.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetExpressRoutePortAuthorizationAsync(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="expressRoutePortName"> The expressRoutePortName for the resource. </param>
-        /// <param name="authorizationName"> The name of the authorization. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ExpressRoutePortAuthorizationResource>> GetExpressRoutePortAuthorizationAsync(this ResourceGroupResource resourceGroupResource, string expressRoutePortName, string authorizationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetExpressRoutePortAuthorizationAsync(expressRoutePortName, authorizationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified authorization from the specified express route port.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetExpressRoutePortAuthorization(string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="expressRoutePortName"> The expressRoutePortName for the resource. </param>
-        /// <param name="authorizationName"> The name of the authorization. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ExpressRoutePortAuthorizationResource> GetExpressRoutePortAuthorization(this ResourceGroupResource resourceGroupResource, string expressRoutePortName, string authorizationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetExpressRoutePortAuthorization(expressRoutePortName, authorizationName, cancellationToken);
         }
 
         /// <summary>
@@ -5352,29 +5330,29 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Gets a collection of VirtualMachineScaleSetVmNetworks in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of VirtualMachineScaleSetNetworkInterfaces in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetVmNetworks(string, string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetNetworkInterfaces(string, string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="virtualMachineScaleSetName"> The virtualMachineScaleSetName for the resource. </param>
         /// <param name="virtualmachineIndex"> The virtualmachineIndex for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of VirtualMachineScaleSetVmNetworks and their operations over a VirtualMachineScaleSetVmNetworkResource. </returns>
-        public static VirtualMachineScaleSetVmNetworkCollection GetVirtualMachineScaleSetVmNetworks(this ResourceGroupResource resourceGroupResource, string virtualMachineScaleSetName, string virtualmachineIndex)
+        /// <returns> An object representing collection of VirtualMachineScaleSetNetworkInterfaces and their operations over a VirtualMachineScaleSetNetworkInterfaceResource. </returns>
+        public static VirtualMachineScaleSetNetworkInterfaceCollection GetVirtualMachineScaleSetNetworkInterfaces(this ResourceGroupResource resourceGroupResource, string virtualMachineScaleSetName, string virtualmachineIndex)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualMachineScaleSetVmNetworks(virtualMachineScaleSetName, virtualmachineIndex);
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualMachineScaleSetNetworkInterfaces(virtualMachineScaleSetName, virtualmachineIndex);
         }
 
         /// <summary>
         /// Get the specified network interface in a virtual machine scale set.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetVmNetworkAsync(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetNetworkInterfaceAsync(string, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -5385,18 +5363,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<VirtualMachineScaleSetVmNetworkResource>> GetVirtualMachineScaleSetVmNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<VirtualMachineScaleSetNetworkInterfaceResource>> GetVirtualMachineScaleSetNetworkInterfaceAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualMachineScaleSetVmNetworkAsync(virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualMachineScaleSetNetworkInterfaceAsync(virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the specified network interface in a virtual machine scale set.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetVmNetwork(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetNetworkInterface(string, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -5407,11 +5385,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<VirtualMachineScaleSetVmNetworkResource> GetVirtualMachineScaleSetVmNetwork(this ResourceGroupResource resourceGroupResource, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
+        public static Response<VirtualMachineScaleSetNetworkInterfaceResource> GetVirtualMachineScaleSetNetworkInterface(this ResourceGroupResource resourceGroupResource, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualMachineScaleSetVmNetwork(virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand, cancellationToken);
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualMachineScaleSetNetworkInterface(virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -5638,50 +5616,6 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualMachineScaleSetPublicIPAddresses(virtualMachineScaleSetName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the specified network interface ip configuration in a virtual machine scale set.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetIpConfigurationsAsync(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="virtualMachineScaleSetName"></param>
-        /// <param name="virtualmachineIndex"></param>
-        /// <param name="networkInterfaceName"></param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkInterfaceIPConfigurationData"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkInterfaceIPConfigurationData> GetVirtualMachineScaleSetIpConfigurationsAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualMachineScaleSetIpConfigurationsAsync(virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the specified network interface ip configuration in a virtual machine scale set.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetVirtualMachineScaleSetIpConfigurations(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="virtualMachineScaleSetName"></param>
-        /// <param name="virtualmachineIndex"></param>
-        /// <param name="networkInterfaceName"></param>
-        /// <param name="expand"> Expands referenced resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkInterfaceIPConfigurationData"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkInterfaceIPConfigurationData> GetVirtualMachineScaleSetIpConfigurations(this ResourceGroupResource resourceGroupResource, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetVirtualMachineScaleSetIpConfigurations(virtualMachineScaleSetName, virtualmachineIndex, networkInterfaceName, expand, cancellationToken);
         }
 
         /// <summary>

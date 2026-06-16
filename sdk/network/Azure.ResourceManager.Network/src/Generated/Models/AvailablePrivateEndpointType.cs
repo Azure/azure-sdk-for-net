@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The name of the service and resource. </summary>
         [WirePath("name")]
-        public new string Name { get; }
+        public string Name { get; }
 
         /// <summary> A unique identifier of the AvailablePrivateEndpoint Type resource. </summary>
         [WirePath("id")]
-        public new string Id { get; }
+        public string Id { get; }
 
         /// <summary> Resource type. </summary>
         [WirePath("type")]

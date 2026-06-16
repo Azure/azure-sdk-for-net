@@ -9,6 +9,7 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class ApplicationGatewaySslProfile
     {
+        [System.ObsoleteAttribute("This property is obsolete and might be removed in a future version, please use `TagToIPAddresses` instead", false)]
         public global::System.Nullable<global::System.Boolean> VerifyClientCertIssuerDN
         {
             get => default;

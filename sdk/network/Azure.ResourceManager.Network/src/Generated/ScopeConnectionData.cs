@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Name for the cross-tenant connection. </summary>
         [WirePath("name")]
-        public new string Name { get; }
+        public string Name { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> The system metadata related to this resource. </summary>
         [WirePath("systemData")]
-        public new SystemData SystemData { get; }
+        public SystemData SystemData { get; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("properties.resourceId")]

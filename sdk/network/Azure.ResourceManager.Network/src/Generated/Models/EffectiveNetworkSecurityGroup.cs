@@ -51,10 +51,6 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("effectiveSecurityRules")]
         public IReadOnlyList<EffectiveNetworkSecurityRule> EffectiveSecurityRules { get; }
 
-        /// <summary> Mapping of tags to list of IP Addresses included within the tag. </summary>
-        [WirePath("tagMap")]
-        public string TagMap { get; }
-
         /// <summary> Resource ID. </summary>
         [WirePath("networkSecurityGroup.id")]
         public ResourceIdentifier NetworkSecurityGroupId
