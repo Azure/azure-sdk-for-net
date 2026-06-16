@@ -145,7 +145,7 @@ namespace Azure.AI.ContentUnderstanding
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCopyAnalyzerRequest(analyzerId, content, allowReplace, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ContentUnderstandingClient.CopyAnalyzerAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ContentUnderstandingClient.CopyAnalyzer", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -191,7 +191,7 @@ namespace Azure.AI.ContentUnderstanding
 
             CopyAnalyzerRequest spreadModel = new CopyAnalyzerRequest(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, default);
             Operation<BinaryData> result = await CopyAnalyzerAsync(waitUntil, analyzerId, spreadModel, allowReplace, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => ContentAnalyzer.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.CopyAnalyzerAsync");
+            return ProtocolOperationHelpers.Convert(result, response => ContentAnalyzer.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.CopyAnalyzer");
         }
 
         /// <summary> Create a new analyzer asynchronously. </summary>
@@ -241,7 +241,7 @@ namespace Azure.AI.ContentUnderstanding
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCreateAnalyzerRequest(analyzerId, content, allowReplace, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzerAsync", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzer", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -281,7 +281,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNull(resource, nameof(resource));
 
             Operation<BinaryData> result = await CreateAnalyzerAsync(waitUntil, analyzerId, resource, allowReplace, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (ContentAnalyzer)response, ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzerAsync");
+            return ProtocolOperationHelpers.Convert(result, response => (ContentAnalyzer)response, ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzer");
         }
 
         /// <summary>

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkFabricCertificateRotationStatus : IUtf8JsonSerializable, IJsonModel<NetworkFabricCertificateRotationStatus>
+    /// <summary> Status of a certificate rotation for a device (Network Device or Terminal Server). </summary>
+    public partial class NetworkFabricCertificateRotationStatus : IJsonModel<NetworkFabricCertificateRotationStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricCertificateRotationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkFabricCertificateRotationStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricCertificateRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkFabricCertificateRotationStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricCertificateRotationStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricCertificateRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricCertificateRotationStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkFabricCertificateRotationStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricCertificateRotationStatus IPersistableModel<NetworkFabricCertificateRotationStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFabricCertificateRotationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkFabricCertificateRotationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricCertificateRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricCertificateRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkFabricCertificateRotationStatus)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expireTime"u8);
@@ -59,15 +99,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("certificateType"u8);
                 writer.WriteStringValue(CertificateType);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,120 +116,92 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        NetworkFabricCertificateRotationStatus IJsonModel<NetworkFabricCertificateRotationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricCertificateRotationStatus IJsonModel<NetworkFabricCertificateRotationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NetworkFabricCertificateRotationStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricCertificateRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricCertificateRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NetworkFabricCertificateRotationStatus)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkFabricCertificateRotationStatus(document.RootElement, options);
         }
 
-        internal static NetworkFabricCertificateRotationStatus DeserializeNetworkFabricCertificateRotationStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkFabricCertificateRotationStatus DeserializeNetworkFabricCertificateRotationStatus(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? expireTime = default;
-            DateTimeOffset? lastRotationTime = default;
+            DateTimeOffset? expireOn = default;
+            DateTimeOffset? lastRotationOn = default;
             NetworkFabricSynchronizationStatus? synchronizationStatus = default;
             NetworkFabricCertificateArchiveReference certificateArchiveReference = default;
             string certificateType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("expireTime"u8))
+                if (prop.NameEquals("expireTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expireTime = property.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastRotationTime"u8))
+                if (prop.NameEquals("lastRotationTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastRotationTime = property.Value.GetDateTimeOffset("O");
+                    lastRotationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("synchronizationStatus"u8))
+                if (prop.NameEquals("synchronizationStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    synchronizationStatus = new NetworkFabricSynchronizationStatus(property.Value.GetString());
+                    synchronizationStatus = new NetworkFabricSynchronizationStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("certificateArchiveReference"u8))
+                if (prop.NameEquals("certificateArchiveReference"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    certificateArchiveReference = NetworkFabricCertificateArchiveReference.DeserializeNetworkFabricCertificateArchiveReference(property.Value, options);
+                    certificateArchiveReference = NetworkFabricCertificateArchiveReference.DeserializeNetworkFabricCertificateArchiveReference(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("certificateType"u8))
+                if (prop.NameEquals("certificateType"u8))
                 {
-                    certificateType = property.Value.GetString();
+                    certificateType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkFabricCertificateRotationStatus(
-                expireTime,
-                lastRotationTime,
+                expireOn,
+                lastRotationOn,
                 synchronizationStatus,
                 certificateArchiveReference,
                 certificateType,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<NetworkFabricCertificateRotationStatus>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricCertificateRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetworkFabricCertificateRotationStatus)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetworkFabricCertificateRotationStatus IPersistableModel<NetworkFabricCertificateRotationStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricCertificateRotationStatus>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkFabricCertificateRotationStatus(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetworkFabricCertificateRotationStatus)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetworkFabricCertificateRotationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
