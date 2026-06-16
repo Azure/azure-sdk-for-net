@@ -5,7 +5,7 @@
 ### Features Added
 
 - Added support for API version `2026-05-01-preview`.
-- Added `BareMetalMachineReimageParameters` with `SafeguardMode` property for the Reimage operation.
+- Added `BareMetalMachineReimageContent` with `SafeguardMode` property for the Reimage operation.
 - Added `ClusterRotateCredentialParameters` for cluster credential rotation operations.
 - Added `BareMetalMachineMonitoringConfigurationStatus` and `StorageApplianceMonitoringConfigurationStatus` models.
 - Added `ClusterContinueUpdateVersionContent` and associated `ClusterContinueUpdateVersionSafeguardMode` for cluster update operations.

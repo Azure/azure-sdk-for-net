@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud
     [ModelReaderWriterBuildable(typeof(BareMetalMachinePatchProperties))]
     [ModelReaderWriterBuildable(typeof(BareMetalMachinePowerOffContent))]
     [ModelReaderWriterBuildable(typeof(BareMetalMachineProperties))]
-    [ModelReaderWriterBuildable(typeof(BareMetalMachineReimageParameters))]
+    [ModelReaderWriterBuildable(typeof(BareMetalMachineReimageContent))]
     [ModelReaderWriterBuildable(typeof(BareMetalMachineReplaceContent))]
     [ModelReaderWriterBuildable(typeof(BareMetalMachineRunCommandContent))]
     [ModelReaderWriterBuildable(typeof(BareMetalMachineRunDataExtractsContent))]
