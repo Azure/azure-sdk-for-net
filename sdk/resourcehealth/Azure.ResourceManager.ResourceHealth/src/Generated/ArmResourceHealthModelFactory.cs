@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Lists actions the user can take based on the current availabilityState of the resource. </summary>
         /// <param name="action"> Recommended action. </param>
         /// <param name="actionUri"> Link to the action. </param>
-        /// <param name="actionUriComment"> the comment for the Action. </param>
-        /// <param name="actionUriText"> Substring of action, it describes which text should host the action URL. </param>
+        /// <param name="actionUriText"> the comment for the Action. </param>
+        /// <param name="actionUriComment"> Substring of action, it describes which text should host the action URL. </param>
         /// <returns> A new <see cref="Models.ResourceHealthRecommendedAction"/> instance for mocking. </returns>
-        public static ResourceHealthRecommendedAction ResourceHealthRecommendedAction(string action = default, Uri actionUri = default, string actionUriComment = default, string actionUriText = default)
+        public static ResourceHealthRecommendedAction ResourceHealthRecommendedAction(string action = default, Uri actionUri = default, string actionUriText = default, string actionUriComment = default)
         {
-            return new ResourceHealthRecommendedAction(action, actionUri, actionUriComment, actionUriText, additionalBinaryDataProperties: null);
+            return new ResourceHealthRecommendedAction(action, actionUri, actionUriText, actionUriComment, additionalBinaryDataProperties: null);
         }
 
         /// <param name="eventStartOn"> Timestamp for when the event started. </param>

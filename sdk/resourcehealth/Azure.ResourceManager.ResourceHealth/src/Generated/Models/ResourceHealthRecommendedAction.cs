@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of <see cref="ResourceHealthRecommendedAction"/>. </summary>
         /// <param name="action"> Recommended action. </param>
         /// <param name="actionUri"> Link to the action. </param>
-        /// <param name="actionUriComment"> the comment for the Action. </param>
-        /// <param name="actionUriText"> Substring of action, it describes which text should host the action URL. </param>
+        /// <param name="actionUriText"> the comment for the Action. </param>
+        /// <param name="actionUriComment"> Substring of action, it describes which text should host the action URL. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHealthRecommendedAction(string action, Uri actionUri, string actionUriComment, string actionUriText, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceHealthRecommendedAction(string action, Uri actionUri, string actionUriText, string actionUriComment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             ActionUri = actionUri;
-            ActionUriComment = actionUriComment;
             ActionUriText = actionUriText;
+            ActionUriComment = actionUriComment;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,5 +41,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         /// <summary> Link to the action. </summary>
         public Uri ActionUri { get; }
+
+        /// <summary> the comment for the Action. </summary>
+        public string ActionUriText { get; }
+
+        /// <summary> Substring of action, it describes which text should host the action URL. </summary>
+        public string ActionUriComment { get; }
     }
 }
