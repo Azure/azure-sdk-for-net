@@ -53,7 +53,10 @@ namespace Azure.Identity
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("Use constructor ManagedIdentityCredential(ManagedIdentityId id) or ManagedIdentityCredential(ManagedIdentityCredentialOptions options).")]
         public ManagedIdentityCredential(string clientId = null, TokenCredentialOptions options = null)
-            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { ManagedIdentityId = string.IsNullOrEmpty(clientId) ? ManagedIdentityId.SystemAssigned : ManagedIdentityId.FromUserAssignedClientId(clientId), Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true), Options = options, DisableMtlsProofOfPossession = ResolveDisableMtlsProofOfPossession(options) }))
+            : this(new ManagedIdentityClient(CreateManagedIdentityClientOptions(
+                options,
+                string.IsNullOrEmpty(clientId) ? ManagedIdentityId.SystemAssigned : ManagedIdentityId.FromUserAssignedClientId(clientId),
+                CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true))))
         {
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
         }
@@ -68,7 +71,10 @@ namespace Azure.Identity
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("Use constructor ManagedIdentityCredential(ManagedIdentityId id) or ManagedIdentityCredential(ManagedIdentityCredentialOptions options).")]
         public ManagedIdentityCredential(ResourceIdentifier resourceId, TokenCredentialOptions options = null)
-            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(resourceId), Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true), Options = options, DisableMtlsProofOfPossession = ResolveDisableMtlsProofOfPossession(options) }))
+            : this(new ManagedIdentityClient(CreateManagedIdentityClientOptions(
+                options,
+                ManagedIdentityId.FromUserAssignedResourceId(resourceId),
+                CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true))))
         {
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             _clientId = resourceId.ToString();
@@ -79,7 +85,10 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="id">The <see cref="ManagedIdentityId"/> specifying which managed identity will be configured.</param>
         public ManagedIdentityCredential(ManagedIdentityId id)
-            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { ManagedIdentityId = id, Pipeline = CredentialPipeline.GetInstance(null, IsManagedIdentityCredential: true), Options = null }))
+            : this(new ManagedIdentityClient(CreateManagedIdentityClientOptions(
+                null,
+                id,
+                CredentialPipeline.GetInstance(null, IsManagedIdentityCredential: true))))
         {
             if (id == null)
             {
@@ -92,22 +101,49 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="options">The options used to configure the credential.</param>
         public ManagedIdentityCredential(ManagedIdentityCredentialOptions options)
-            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { ManagedIdentityId = options.ManagedIdentityId, Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true), Options = options, DisableMtlsProofOfPossession = options.DisableMtlsProofOfPossession }))
+            : this(new ManagedIdentityClient(CreateManagedIdentityClientOptions(
+                options,
+                options.ManagedIdentityId,
+                CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true))))
         {
             Argument.AssertNotNull(options, nameof(options));
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
         }
 
         internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline, TokenCredentialOptions options = null, bool preserveTransport = false)
-            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId(clientId), PreserveTransport = preserveTransport, Options = options, DisableMtlsProofOfPossession = ResolveDisableMtlsProofOfPossession(options) }))
+            : this(new ManagedIdentityClient(CreateManagedIdentityClientOptions(
+                options,
+                ManagedIdentityId.FromUserAssignedClientId(clientId),
+                pipeline,
+                preserveTransport)))
         {
             _clientId = clientId;
         }
 
         internal ManagedIdentityCredential(ResourceIdentifier resourceId, CredentialPipeline pipeline, TokenCredentialOptions options, bool preserveTransport = false)
-            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(resourceId), PreserveTransport = preserveTransport, Options = options, DisableMtlsProofOfPossession = ResolveDisableMtlsProofOfPossession(options) }))
+            : this(new ManagedIdentityClient(CreateManagedIdentityClientOptions(
+                options,
+                ManagedIdentityId.FromUserAssignedResourceId(resourceId),
+                pipeline,
+                preserveTransport)))
         {
             _clientId = resourceId.ToString();
+        }
+
+        private static ManagedIdentityClientOptions CreateManagedIdentityClientOptions(
+            TokenCredentialOptions options,
+            ManagedIdentityId managedIdentityId,
+            CredentialPipeline pipeline,
+            bool preserveTransport = false)
+        {
+            return new ManagedIdentityClientOptions
+            {
+                ManagedIdentityId = managedIdentityId,
+                Pipeline = pipeline,
+                PreserveTransport = preserveTransport,
+                Options = options,
+                DisableMtlsProofOfPossession = ResolveDisableMtlsProofOfPossession(options)
+            };
         }
 
         private static bool ResolveDisableMtlsProofOfPossession(TokenCredentialOptions options)
