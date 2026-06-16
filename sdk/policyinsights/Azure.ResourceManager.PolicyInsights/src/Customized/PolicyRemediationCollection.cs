@@ -32,15 +32,15 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="queryOptions"></param>
+        /// <param name="policyQuerySettings"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyRemediationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyRemediationResource> GetAllAsync(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyRemediationResource> GetAllAsync(PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new AsyncPageableWrapper<PolicyRemediationData, PolicyRemediationResource>(new RemediationsGetForResourceAsyncCollectionResultOfT(
                 _remediationsRestClient, Id.ToString(),
-                queryOptions?.Top, queryOptions?.Filter,
+                policyQuerySettings?.Top, policyQuerySettings?.Filter,
                 context, "PolicyRemediationCollection.GetAll"), data => new PolicyRemediationResource(Client, data));
         }
 
@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="queryOptions"></param>
+        /// <param name="policyQuerySettings"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyRemediationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyRemediationResource> GetAll(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyRemediationResource> GetAll(PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new PageableWrapper<PolicyRemediationData, PolicyRemediationResource>(new RemediationsGetForResourceCollectionResultOfT(
                 _remediationsRestClient, Id.ToString(),
-                queryOptions?.Top, queryOptions?.Filter,
+                policyQuerySettings?.Top, policyQuerySettings?.Filter,
                 context, "PolicyRemediationCollection.GetAll"), data => new PolicyRemediationResource(Client, data));
         }
     }

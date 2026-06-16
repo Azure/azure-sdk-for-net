@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="queryOptions"></param>
+        /// <param name="policyQuerySettings"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RemediationDeployment"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAsync(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<RemediationDeployment> GetDeploymentsAsync(PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new RemediationsGetDeploymentsAsyncCollectionResultOfT(
                 _remediationsRestClient, Id.Parent.ToString(), Id.Name,
-                queryOptions?.Top,
+                policyQuerySettings?.Top,
                 context, "PolicyRemediationResource.GetDeployments");
         }
 
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="queryOptions"></param>
+        /// <param name="policyQuerySettings"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RemediationDeployment"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RemediationDeployment> GetDeployments(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<RemediationDeployment> GetDeployments(PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new RemediationsGetDeploymentsCollectionResultOfT(
                 _remediationsRestClient, Id.Parent.ToString(), Id.Name,
-                queryOptions?.Top,
+                policyQuerySettings?.Top,
                 context, "PolicyRemediationResource.GetDeployments");
         }
     }

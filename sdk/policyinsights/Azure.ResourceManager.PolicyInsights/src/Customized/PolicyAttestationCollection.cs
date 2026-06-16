@@ -32,15 +32,15 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="queryOptions"></param>
+        /// <param name="policyQuerySettings"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyAttestationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyAttestationResource> GetAllAsync(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyAttestationResource> GetAllAsync(PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new AsyncPageableWrapper<PolicyAttestationData, PolicyAttestationResource>(new AttestationsGetForResourceAsyncCollectionResultOfT(
                 _attestationsRestClient, Id.ToString(),
-                queryOptions?.Top, queryOptions?.Filter,
+                policyQuerySettings?.Top, policyQuerySettings?.Filter,
                 context, "PolicyAttestationCollection.GetAll"), data => new PolicyAttestationResource(Client, data));
         }
 
@@ -61,15 +61,15 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="queryOptions"></param>
+        /// <param name="policyQuerySettings"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyAttestationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyAttestationResource> GetAll(PolicyQuerySettings queryOptions = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyAttestationResource> GetAll(PolicyQuerySettings policyQuerySettings = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new PageableWrapper<PolicyAttestationData, PolicyAttestationResource>(new AttestationsGetForResourceCollectionResultOfT(
                 _attestationsRestClient, Id.ToString(),
-                queryOptions?.Top, queryOptions?.Filter,
+                policyQuerySettings?.Top, policyQuerySettings?.Filter,
                 context, "PolicyAttestationCollection.GetAll"), data => new PolicyAttestationResource(Client, data));
         }
     }
