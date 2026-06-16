@@ -7,6 +7,9 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth.Mocking
 {
+    // This file preserves the GA resource-group availability status mockable APIs.
+    // The generator now returns AvailabilityStatusResource pages, so these custom methods
+    // adapt each resource's Data back to the old ResourceHealthAvailabilityStatus model.
     public partial class MockableResourceHealthResourceGroupResource
     {
         /// <summary> Lists current availability status for resources in the resource group. </summary>

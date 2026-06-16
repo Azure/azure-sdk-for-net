@@ -7,6 +7,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
+    // This is required because the generated property is IList<T>, while GA exposed IReadOnlyList<T>,
+    // and @@alternateType cannot change the collection interface type.
     public partial class ResourceHealthMetadataEntityData
     {
         /// <summary> The list of keys on which this entity depends on. </summary>

@@ -8,6 +8,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
+    // This compatibility wrapper preserves the GA model shape while the generated ARM resource now exposes ResourceHealthAvailabilityStatusData.
     /// <summary> Wrapper type that preserves the GA shape of availability status with Location and Properties. </summary>
     public partial class ResourceHealthAvailabilityStatus : ResourceData
     {

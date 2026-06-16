@@ -9,6 +9,7 @@ using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
+    // This serialization bridge lets the GA compatibility model reuse the generated ResourceHealthAvailabilityStatusData wire format.
     public partial class ResourceHealthAvailabilityStatus : IJsonModel<ResourceHealthAvailabilityStatus>, IPersistableModel<ResourceHealthAvailabilityStatus>
     {
         ResourceHealthAvailabilityStatus IJsonModel<ResourceHealthAvailabilityStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

@@ -9,6 +9,9 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth.Mocking
 {
+    // This file preserves the GA subscription availability status mockable APIs.
+    // It wraps generated Data pages as AvailabilityStatusResource pages and adapts them
+    // back to the old ResourceHealthAvailabilityStatus model where required.
     public partial class MockableResourceHealthSubscriptionResource
     {
         /// <summary> Lists current availability status for resources in the subscription. </summary>

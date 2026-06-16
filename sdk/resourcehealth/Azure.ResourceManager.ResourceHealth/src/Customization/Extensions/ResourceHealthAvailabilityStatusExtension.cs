@@ -10,6 +10,9 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
+    // This file preserves the GA ArmClient availability status extension APIs.
+    // These hidden compatibility methods forward to the mockable layer, which adapts
+    // generated resource/data results back to the old ResourceHealthAvailabilityStatus model.
     public static partial class ResourceHealthExtensions
     {
         /// <summary> Lists the all the children and its current health status for a parent resource. </summary>
