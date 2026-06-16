@@ -225,15 +225,15 @@ PublicIPAddressVersion = IPVersion.IPv4,
 PublicIPAllocationMethod = PublicIPAllocationMethod.Dynamic,
 },
 PrivateIPAddressVersion = IPVersion.IPv4,
-ApplicationSecurityGroups = {new WritableSubResource
+ApplicationSecurityGroupResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
 }},
-ApplicationGatewayBackendAddressPools = {new WritableSubResource
+ApplicationGatewayBackendAddressPoolResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
 }},
-LoadBalancerBackendAddressPools = {new WritableSubResource
+LoadBalancerBackendAddressPoolResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
 }},
@@ -271,19 +271,19 @@ PublicIPAddressVersion = IPVersion.IPv4,
 DeleteOption = ComputeDeleteOption.Delete,
 },
 PrivateIPAddressVersion = IPVersion.IPv4,
-ApplicationGatewayBackendAddressPools = {new WritableSubResource
+ApplicationGatewayBackendAddressPoolResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
 }},
-ApplicationSecurityGroups = {new WritableSubResource
+ApplicationSecurityGroupResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
 }},
-LoadBalancerBackendAddressPools = {new WritableSubResource
+LoadBalancerBackendAddressPoolResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
 }},
-LoadBalancerInboundNatPools = {new WritableSubResource
+LoadBalancerInboundNatPoolResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
 }},

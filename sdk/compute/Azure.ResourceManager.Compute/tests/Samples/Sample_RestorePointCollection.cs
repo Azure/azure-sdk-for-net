@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Samples
             string restorePointName = "rpName";
             RestorePointData data = new RestorePointData
             {
-                ExcludeDisks = {new WritableSubResource
+                ExcludedDisks = {new ComputeApiEntityReference
 {
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/disk123"),
 }},

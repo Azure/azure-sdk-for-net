@@ -2840,7 +2840,7 @@ Primary = true,
 IPConfigurations = {new VirtualMachineScaleSetIPConfiguration("{vmss-name}")
 {
 SubnetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/{existing-virtual-network-name}/subnets/{existing-subnet-name}"),
-ApplicationGatewayBackendAddressPools = {new WritableSubResource
+ApplicationGatewayBackendAddressPoolResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/applicationGateways/{existing-application-gateway-name}/backendAddressPools/{existing-backend-address-pool-name}"),
 }},
@@ -2938,11 +2938,11 @@ PublicIPAddressConfiguration = new VirtualMachineScaleSetPublicIPAddressConfigur
 {
 PublicIPAddressVersion = IPVersion.IPv4,
 },
-LoadBalancerBackendAddressPools = {new WritableSubResource
+LoadBalancerBackendAddressPoolResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/loadBalancers/{existing-load-balancer-name}/backendAddressPools/{existing-backend-address-pool-name}"),
 }},
-LoadBalancerInboundNatPools = {new WritableSubResource
+LoadBalancerInboundNatPoolResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/loadBalancers/{existing-load-balancer-name}/inboundNatPools/{existing-nat-pool-name}"),
 }},
@@ -4335,8 +4335,8 @@ PublicIPAddressConfiguration = new VirtualMachineScaleSetPublicIPAddressConfigur
 {
 IdleTimeoutInMinutes = 15,
 },
-ApplicationGatewayBackendAddressPools = {},
-LoadBalancerBackendAddressPools = {},
+ApplicationGatewayBackendAddressPoolResources = {},
+LoadBalancerBackendAddressPoolResources = {},
 }},
 EnableIPForwarding = true,
 }},
@@ -5526,8 +5526,8 @@ PublicIPAddressConfiguration = new VirtualMachineScaleSetPublicIPAddressConfigur
 {
 IdleTimeoutInMinutes = 15,
 },
-ApplicationGatewayBackendAddressPools = {},
-LoadBalancerBackendAddressPools = {},
+ApplicationGatewayBackendAddressPoolResources = {},
+LoadBalancerBackendAddressPoolResources = {},
 }},
 EnableIPForwarding = true,
 }},

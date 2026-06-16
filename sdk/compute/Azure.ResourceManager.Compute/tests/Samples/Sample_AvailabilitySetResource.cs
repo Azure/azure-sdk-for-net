@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute.Samples
                 },
                 PlatformUpdateDomainCount = 20,
                 PlatformFaultDomainCount = 2,
-                VirtualMachines = {new WritableSubResource
+                VirtualMachineResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/availabilitySets/{availabilitySetName}"),
 }},

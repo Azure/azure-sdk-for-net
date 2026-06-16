@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Compute.Samples
             CapacityReservationGroupData data = new CapacityReservationGroupData(new AzureLocation("westus"))
             {
                 Zones = { "1", "2" },
-                SharingSubscriptionIds = {new WritableSubResource
+                SharingSubscriptionResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("/subscriptions/{subscription-id1}"),
-}, new WritableSubResource
+}, new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
 }},
@@ -137,10 +137,10 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
             CapacityReservationGroupData data = new CapacityReservationGroupData(new AzureLocation("westus"))
             {
                 Zones = { "1", "2" },
-                SharingSubscriptionIds = {new WritableSubResource
+                SharingSubscriptionResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("/subscriptions/{subscription-id1}"),
-}, new WritableSubResource
+}, new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("/subscriptions/{subscription-id2}"),
 }},

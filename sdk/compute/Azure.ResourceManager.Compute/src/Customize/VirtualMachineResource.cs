@@ -22,8 +22,16 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineResource
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<VirtualMachineResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachinePatch patch)
+            => await UpdateAsync(waitUntil, patch, (MatchConditions)null).ConfigureAwait(false);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<VirtualMachineResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachinePatch patch, CancellationToken cancellationToken)
             => await UpdateAsync(waitUntil, patch, null, cancellationToken).ConfigureAwait(false);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<VirtualMachineResource> Update(WaitUntil waitUntil, VirtualMachinePatch patch)
+            => Update(waitUntil, patch, (MatchConditions)null);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<VirtualMachineResource> Update(WaitUntil waitUntil, VirtualMachinePatch patch, CancellationToken cancellationToken)

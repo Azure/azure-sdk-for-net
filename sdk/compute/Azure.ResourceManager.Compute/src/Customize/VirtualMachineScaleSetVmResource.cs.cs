@@ -20,8 +20,16 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineScaleSetVmResource
     {
         [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<VirtualMachineScaleSetVmResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineScaleSetVmData data)
+            => await UpdateAsync(waitUntil, data, (MatchConditions)null).ConfigureAwait(false);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<VirtualMachineScaleSetVmResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineScaleSetVmData data, CancellationToken cancellationToken)
             => await UpdateAsync(waitUntil, data, null, cancellationToken).ConfigureAwait(false);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<VirtualMachineScaleSetVmResource> Update(WaitUntil waitUntil, VirtualMachineScaleSetVmData data)
+            => Update(waitUntil, data, (MatchConditions)null);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<VirtualMachineScaleSetVmResource> Update(WaitUntil waitUntil, VirtualMachineScaleSetVmData data, CancellationToken cancellationToken)

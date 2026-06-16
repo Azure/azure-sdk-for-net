@@ -357,19 +357,19 @@ DnsSettings = new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(
 DeleteOption = ComputeDeleteOption.Delete,
 },
 PrivateIPAddressVersion = IPVersion.IPv4,
-ApplicationGatewayBackendAddressPools = {new WritableSubResource
+ApplicationGatewayBackendAddressPoolResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
 }},
-ApplicationSecurityGroups = {new WritableSubResource
+ApplicationSecurityGroupResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
 }},
-LoadBalancerBackendAddressPools = {new WritableSubResource
+LoadBalancerBackendAddressPoolResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
 }},
-LoadBalancerInboundNatPools = {new WritableSubResource
+LoadBalancerInboundNatPoolResources = {new ComputeWriteableSubResourceData
 {
 Id = new ResourceIdentifier("subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/snapshots/mySnapshot"),
 }},

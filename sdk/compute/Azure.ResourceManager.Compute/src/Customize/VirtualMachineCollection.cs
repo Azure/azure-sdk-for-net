@@ -24,8 +24,16 @@ namespace Azure.ResourceManager.Compute
             => GetAll(filter, null, cancellationToken);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<ArmOperation<VirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmName, VirtualMachineData data)
+            => await CreateOrUpdateAsync(waitUntil, vmName, data, (MatchConditions)null).ConfigureAwait(false);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<VirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmName, VirtualMachineData data, CancellationToken cancellationToken)
             => await CreateOrUpdateAsync(waitUntil, vmName, data, null, cancellationToken).ConfigureAwait(false);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual ArmOperation<VirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string vmName, VirtualMachineData data)
+            => CreateOrUpdate(waitUntil, vmName, data, (MatchConditions)null);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<VirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string vmName, VirtualMachineData data, CancellationToken cancellationToken)
