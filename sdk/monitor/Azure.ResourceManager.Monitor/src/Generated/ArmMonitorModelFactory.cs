@@ -43,18 +43,18 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <returns> A new <see cref="Monitor.MonitorPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static MonitorPrivateEndpointConnectionData MonitorPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, MonitorPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        public static MonitorPrivateEndpointConnectionData MonitorPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorPrivateLinkServiceConnectionState connectionState = default, MonitorPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new MonitorPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -2195,30 +2195,30 @@ namespace Azure.ResourceManager.Monitor.Models
         /// The name of the Activity Log event's field that this condition will examine.
         /// The possible values for this field are (case-insensitive): 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties'.
         /// </param>
-        /// <param name="equal"> The value of the event's field will be compared to this value (case-insensitive) to determine if the condition is met. </param>
+        /// <param name="equalsValue"> The value of the event's field will be compared to this value (case-insensitive) to determine if the condition is met. </param>
         /// <param name="containsAny"> The value of the event's field will be compared to the values in this array (case-insensitive) to determine if the condition is met. </param>
         /// <param name="anyOf"> An Activity Log Alert rule condition that is met when at least one of its member leaf conditions are met. </param>
         /// <returns> A new <see cref="Models.ActivityLogAlertAnyOfOrLeafCondition"/> instance for mocking. </returns>
-        public static ActivityLogAlertAnyOfOrLeafCondition ActivityLogAlertAnyOfOrLeafCondition(string @field = default, string equal = default, IEnumerable<string> containsAny = default, IEnumerable<AlertRuleLeafCondition> anyOf = default)
+        public static ActivityLogAlertAnyOfOrLeafCondition ActivityLogAlertAnyOfOrLeafCondition(string @field = default, string equalsValue = default, IEnumerable<string> containsAny = default, IEnumerable<AlertRuleLeafCondition> anyOf = default)
         {
             containsAny ??= new ChangeTrackingList<string>();
             anyOf ??= new ChangeTrackingList<AlertRuleLeafCondition>();
 
-            return new ActivityLogAlertAnyOfOrLeafCondition(@field, equal, (containsAny ?? new ChangeTrackingList<string>()).ToList(), default, (anyOf ?? new ChangeTrackingList<AlertRuleLeafCondition>()).ToList());
+            return new ActivityLogAlertAnyOfOrLeafCondition(@field, equalsValue, (containsAny ?? new ChangeTrackingList<string>()).ToList(), default, (anyOf ?? new ChangeTrackingList<AlertRuleLeafCondition>()).ToList());
         }
 
         /// <param name="field">
         /// The name of the Activity Log event's field that this condition will examine.
         /// The possible values for this field are (case-insensitive): 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties'.
         /// </param>
-        /// <param name="equal"> The value of the event's field will be compared to this value (case-insensitive) to determine if the condition is met. </param>
+        /// <param name="equalsValue"> The value of the event's field will be compared to this value (case-insensitive) to determine if the condition is met. </param>
         /// <param name="containsAny"> The value of the event's field will be compared to the values in this array (case-insensitive) to determine if the condition is met. </param>
         /// <returns> A new <see cref="Models.AlertRuleLeafCondition"/> instance for mocking. </returns>
-        public static AlertRuleLeafCondition AlertRuleLeafCondition(string @field = default, string equal = default, IEnumerable<string> containsAny = default)
+        public static AlertRuleLeafCondition AlertRuleLeafCondition(string @field = default, string equalsValue = default, IEnumerable<string> containsAny = default)
         {
             containsAny ??= new ChangeTrackingList<string>();
 
-            return new AlertRuleLeafCondition(@field, equal, (containsAny ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new AlertRuleLeafCondition(@field, equalsValue, (containsAny ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="actionGroupId"> The resource ID of the Action Group. This cannot be null or empty. </param>
@@ -3647,7 +3647,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), default, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 

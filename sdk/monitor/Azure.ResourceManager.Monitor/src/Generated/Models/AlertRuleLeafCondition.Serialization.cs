@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field);
             }
-            if (Optional.IsDefined(Equal))
+            if (Optional.IsDefined(EqualsValue))
             {
                 writer.WritePropertyName("equals"u8);
-                writer.WriteStringValue(Equal);
+                writer.WriteStringValue(EqualsValue);
             }
             if (Optional.IsCollectionDefined(ContainsAny))
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string @field = default;
-            string equal = default;
+            string equalsValue = default;
             IList<string> containsAny = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("equals"u8))
                 {
-                    equal = prop.Value.GetString();
+                    equalsValue = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("containsAny"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AlertRuleLeafCondition(@field, equal, containsAny ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new AlertRuleLeafCondition(@field, equalsValue, containsAny ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

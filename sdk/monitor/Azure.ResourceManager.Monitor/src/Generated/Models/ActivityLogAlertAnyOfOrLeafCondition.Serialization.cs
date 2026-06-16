@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             string @field = default;
-            string equal = default;
+            string equalsValue = default;
             IList<string> containsAny = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<AlertRuleLeafCondition> anyOf = default;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("equals"u8))
                 {
-                    equal = prop.Value.GetString();
+                    equalsValue = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("containsAny"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ActivityLogAlertAnyOfOrLeafCondition(@field, equal, containsAny ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties, anyOf ?? new ChangeTrackingList<AlertRuleLeafCondition>());
+            return new ActivityLogAlertAnyOfOrLeafCondition(@field, equalsValue, containsAny ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties, anyOf ?? new ChangeTrackingList<AlertRuleLeafCondition>());
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         private readonly string _value;
         /// <summary> Equals. </summary>
-        private const string EqualValue = "Equals";
+        private const string EqualsValueValue = "Equals";
         /// <summary> NotEquals. </summary>
         private const string NotEqualsValue = "NotEquals";
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Equals. </summary>
-        public static ScaleRuleMetricDimensionOperationType Equal { get; } = new ScaleRuleMetricDimensionOperationType(EqualValue);
+        public static ScaleRuleMetricDimensionOperationType EqualsValue { get; } = new ScaleRuleMetricDimensionOperationType(EqualsValueValue);
 
         /// <summary> NotEquals. </summary>
         public static ScaleRuleMetricDimensionOperationType NotEquals { get; } = new ScaleRuleMetricDimensionOperationType(NotEqualsValue);

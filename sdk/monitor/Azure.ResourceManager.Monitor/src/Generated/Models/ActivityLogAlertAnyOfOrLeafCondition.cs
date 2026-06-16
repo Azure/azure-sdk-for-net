@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Monitor.Models
         /// The name of the Activity Log event's field that this condition will examine.
         /// The possible values for this field are (case-insensitive): 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties'.
         /// </param>
-        /// <param name="equal"> The value of the event's field will be compared to this value (case-insensitive) to determine if the condition is met. </param>
+        /// <param name="equalsValue"> The value of the event's field will be compared to this value (case-insensitive) to determine if the condition is met. </param>
         /// <param name="containsAny"> The value of the event's field will be compared to the values in this array (case-insensitive) to determine if the condition is met. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="anyOf"> An Activity Log Alert rule condition that is met when at least one of its member leaf conditions are met. </param>
-        internal ActivityLogAlertAnyOfOrLeafCondition(string @field, string equal, IList<string> containsAny, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<AlertRuleLeafCondition> anyOf) : base(@field, equal, containsAny, additionalBinaryDataProperties)
+        internal ActivityLogAlertAnyOfOrLeafCondition(string @field, string equalsValue, IList<string> containsAny, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<AlertRuleLeafCondition> anyOf) : base(@field, equalsValue, containsAny, additionalBinaryDataProperties)
         {
             AnyOf = anyOf;
         }

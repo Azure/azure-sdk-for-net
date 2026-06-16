@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.Monitor.Models
         /// The name of the Activity Log event's field that this condition will examine.
         /// The possible values for this field are (case-insensitive): 'resourceId', 'category', 'caller', 'level', 'operationName', 'resourceGroup', 'resourceProvider', 'status', 'subStatus', 'resourceType', or anything beginning with 'properties'.
         /// </param>
-        /// <param name="equal"> The value of the event's field will be compared to this value (case-insensitive) to determine if the condition is met. </param>
+        /// <param name="equalsValue"> The value of the event's field will be compared to this value (case-insensitive) to determine if the condition is met. </param>
         /// <param name="containsAny"> The value of the event's field will be compared to the values in this array (case-insensitive) to determine if the condition is met. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertRuleLeafCondition(string @field, string equal, IList<string> containsAny, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertRuleLeafCondition(string @field, string equalsValue, IList<string> containsAny, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Field = @field;
-            Equal = equal;
+            EqualsValue = equalsValue;
             ContainsAny = containsAny;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string Field { get; set; }
 
         /// <summary> The value of the event's field will be compared to this value (case-insensitive) to determine if the condition is met. </summary>
-        public string Equal { get; set; }
+        public string EqualsValue { get; set; }
 
         /// <summary> The value of the event's field will be compared to the values in this array (case-insensitive) to determine if the condition is met. </summary>
         public IList<string> ContainsAny { get; }

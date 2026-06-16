@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         private readonly string _value;
         /// <summary> Equals. </summary>
-        private const string EqualValue = "Equals";
+        private const string EqualsValueValue = "Equals";
         /// <summary> GreaterThan. </summary>
         private const string GreaterThanValue = "GreaterThan";
         /// <summary> GreaterThanOrEqual. </summary>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Equals. </summary>
-        public static MetricCriteriaOperator Equal { get; } = new MetricCriteriaOperator(EqualValue);
+        public static MetricCriteriaOperator EqualsValue { get; } = new MetricCriteriaOperator(EqualsValueValue);
 
         /// <summary> GreaterThan. </summary>
         public static MetricCriteriaOperator GreaterThan { get; } = new MetricCriteriaOperator(GreaterThanValue);
