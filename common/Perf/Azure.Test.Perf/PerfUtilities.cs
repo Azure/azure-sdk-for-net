@@ -58,13 +58,13 @@ namespace Azure.Test.PerfStress
                 // remaining parameter. Preferring the smallest constructor keeps this working if CommandLineParser
                 // changes its constructor signatures (e.g. the 'aliases' parameter added in 2.9.1), since the
                 // minimal constructor is the least likely to change.
-var attrCtorAndParams = typeof(VerbAttribute).GetConstructors()
-    .Select(c => (Ctor: c, Parameters: c.GetParameters()))
-    .Where(x => x.Parameters.Length >= 1 && x.Parameters[0].ParameterType == typeof(string))
-    .OrderBy(x => x.Parameters.Length)
-    .First();
-var attrCtor = attrCtorAndParams.Ctor;
-var ctorParameters = attrCtorAndParams.Parameters;
+               var attrCtorAndParams = typeof(VerbAttribute).GetConstructors()
+                   .Select(c => (Ctor: c, Parameters: c.GetParameters()))
+                   .Where(x => x.Parameters.Length >= 1 && x.Parameters[0].ParameterType == typeof(string))
+                   .OrderBy(x => x.Parameters.Length)
+                   .First();
+               var attrCtor = attrCtorAndParams.Ctor;
+               var ctorParameters = attrCtorAndParams.Parameters;
                 var verbName = GetVerbName(t.Name);
                 var attrArgs = new object[ctorParameters.Length];
                 attrArgs[0] = verbName;
