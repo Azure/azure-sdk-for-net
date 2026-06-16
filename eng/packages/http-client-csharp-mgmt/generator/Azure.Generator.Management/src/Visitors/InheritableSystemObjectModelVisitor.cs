@@ -143,12 +143,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return true;
         }
 
-        if (type.AreNamesEqual(typeof(ResourceData)))
-        {
-            frameworkType = typeof(ResourceData);
-            return true;
-        }
-
         frameworkType = null!;
         return false;
     }
@@ -239,7 +233,16 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             }
 
             var arguments = initializer.Arguments.ToList();
-            arguments.Insert(3, Default);
+            if (signature.Parameters.Count >= 5
+                && signature.Parameters[3].Name == "location"
+                && signature.Parameters[4].Name == "tags")
+            {
+                arguments = [arguments[0], arguments[1], arguments[2], Default, arguments[4], arguments[3]];
+            }
+            else
+            {
+                arguments.Insert(3, Default);
+            }
             var newInitializer = new ConstructorInitializer(initializer.IsBase, arguments);
             var newSignature = new ConstructorSignature(signature.Type, signature.Description, signature.Modifiers, signature.Parameters, signature.Attributes, newInitializer);
             constructor.Update(signature: newSignature);
