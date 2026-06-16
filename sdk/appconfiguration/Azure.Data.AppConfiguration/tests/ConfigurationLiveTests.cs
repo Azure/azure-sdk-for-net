@@ -16,12 +16,10 @@ using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
+    // Test against the latest GA, plus the latest preview when newer than GA.
     [ClientTestFixture(
-        ConfigurationClientOptions.ServiceVersion.V1_0,
-        ConfigurationClientOptions.ServiceVersion.V2023_10_01,
-        ConfigurationClientOptions.ServiceVersion.V2023_11_01,
-        ConfigurationClientOptions.ServiceVersion.V2024_09_01,
-        ConfigurationClientOptions.ServiceVersion.V2026_04_01)]
+        ConfigurationClientOptions.ServiceVersion.V2026_04_01,
+        ConfigurationClientOptions.ServiceVersion.V2026_05_01_Preview)]
     public class ConfigurationLiveTests : RecordedTestBase<AppConfigurationTestEnvironment>
     {
         private readonly ConfigurationClientOptions.ServiceVersion _serviceVersion;
