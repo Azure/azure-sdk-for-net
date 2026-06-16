@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Secrets
 {
     /// <summary></summary>
-    public partial class KeyVaultSecretsClient
+internal partial class KeyVaultSecretsClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier204;

@@ -12,7 +12,7 @@ using Azure.Security.KeyVault.Secrets;
 namespace Azure.Security.KeyVault.Secrets.Models
 {
     /// <summary> A secret consisting of a value, id and its attributes. </summary>
-    public partial class SecretBundle
+internal partial class SecretBundle
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

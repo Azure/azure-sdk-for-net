@@ -14,7 +14,7 @@ using Azure.Security.KeyVault.Secrets;
 namespace Azure.Security.KeyVault.Secrets.Models
 {
     /// <summary> The secret item containing secret metadata. </summary>
-    public partial class SecretItem : IJsonModel<SecretItem>
+internal partial class SecretItem : IJsonModel<SecretItem>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

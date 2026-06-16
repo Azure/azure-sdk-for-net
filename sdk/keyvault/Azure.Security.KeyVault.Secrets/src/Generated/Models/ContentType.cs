@@ -12,7 +12,7 @@ using Azure.Security.KeyVault.Secrets;
 namespace Azure.Security.KeyVault.Secrets.Models
 {
     /// <summary> The media type (MIME type). </summary>
-    public readonly partial struct ContentType : IEquatable<ContentType>
+internal readonly partial struct ContentType : IEquatable<ContentType>
     {
         private readonly string _value;
         /// <summary> The PKCS#12 file format. </summary>

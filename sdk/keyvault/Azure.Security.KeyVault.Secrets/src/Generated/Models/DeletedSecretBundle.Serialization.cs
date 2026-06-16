@@ -15,7 +15,7 @@ using Azure.Security.KeyVault.Secrets;
 namespace Azure.Security.KeyVault.Secrets.Models
 {
     /// <summary> A Deleted Secret consisting of its previous id, attributes and its tags, as well as information on when it will be purged. </summary>
-    public partial class DeletedSecretBundle : IJsonModel<DeletedSecretBundle>
+internal partial class DeletedSecretBundle : IJsonModel<DeletedSecretBundle>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

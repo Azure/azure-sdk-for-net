@@ -14,7 +14,7 @@ using Azure.Security.KeyVault.Secrets;
 namespace Azure.Security.KeyVault.Secrets.Models
 {
     /// <summary> The deleted secret item containing metadata about the deleted secret. </summary>
-    public partial class DeletedSecretItem : IJsonModel<DeletedSecretItem>
+internal partial class DeletedSecretItem : IJsonModel<DeletedSecretItem>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

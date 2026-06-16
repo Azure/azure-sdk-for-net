@@ -12,7 +12,7 @@ using Azure.Security.KeyVault.Secrets;
 namespace Azure.Security.KeyVault.Secrets.Models
 {
     /// <summary> A Deleted Secret consisting of its previous id, attributes and its tags, as well as information on when it will be purged. </summary>
-    public partial class DeletedSecretBundle
+internal partial class DeletedSecretBundle
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

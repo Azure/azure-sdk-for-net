@@ -17,7 +17,7 @@ using Azure.Security.KeyVault.Secrets.Models;
 namespace Azure.Security.KeyVault.Secrets
 {
     /// <summary> The key vault client performs cryptographic key operations and vault operations against the Key Vault service. </summary>
-    public partial class KeyVaultSecretsClient
+internal partial class KeyVaultSecretsClient
     {
         private readonly Uri _endpoint;
         private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
@@ -298,7 +298,7 @@ namespace Azure.Security.KeyVault.Secrets
                 Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = this.CreateUpdateSecretRequest(secretName, content, secretVersion, context);
+                using HttpMessage message = this.CreateUpdateSecretRequest(secretName, secretVersion, content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -333,7 +333,7 @@ namespace Azure.Security.KeyVault.Secrets
                 Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = this.CreateUpdateSecretRequest(secretName, content, secretVersion, context);
+                using HttpMessage message = this.CreateUpdateSecretRequest(secretName, secretVersion, content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)

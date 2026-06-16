@@ -13,7 +13,7 @@ using Azure.Security.KeyVault.Secrets;
 namespace Azure.Security.KeyVault.Secrets.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class KeyVaultSecretsModelFactory
+internal static partial class KeyVaultSecretsModelFactory
     {
         /// <summary> The secret set parameters. </summary>
         /// <param name="value"> The value of the secret. </param>

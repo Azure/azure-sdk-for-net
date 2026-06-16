@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Secrets
 {
     /// <summary> Represents the settings used to configure a <see cref="KeyVaultSecretsClient"/> that can be loaded from an <see cref="IConfigurationSection"/>. </summary>
     [Experimental("SCME0002")]
-    public partial class KeyVaultSecretsClientSettings : ClientSettings
+internal partial class KeyVaultSecretsClientSettings : ClientSettings
     {
         /// <summary> Gets or sets the VaultBaseUrl. </summary>
         public Uri VaultBaseUrl { get; set; }
