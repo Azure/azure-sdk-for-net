@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Compute.Samples
             GalleryImageVersionPatch patch = new GalleryImageVersionPatch
             {
                 StorageProfile = new GalleryImageVersionStorageProfile(),
-                Restore = true,
+                IsRestoreEnabled = true,
             };
             ArmOperation<GalleryImageVersionResource> lro = await galleryImageVersion.UpdateAsync(WaitUntil.Completed, patch);
             GalleryImageVersionResource result = lro.Value;

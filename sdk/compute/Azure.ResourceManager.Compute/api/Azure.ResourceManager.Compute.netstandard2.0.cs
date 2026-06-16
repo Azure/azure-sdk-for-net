@@ -6847,9 +6847,11 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class GalleryImageVersionPatch : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.GalleryImageVersionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Compute.Models.GalleryImageVersionPatch>
     {
         public GalleryImageVersionPatch() { }
+        public bool? IsRestoreEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
+        [System.ObsoleteAttribute("Use IsRestoreEnabled instead.", false)]
         public bool? Restore { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionSafetyProfile SafetyProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionUefiSettings SecurityUefiSettings { get { throw null; } set { } }
