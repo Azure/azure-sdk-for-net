@@ -98,5 +98,5 @@ stableTypes:
 - Azure.AI.Projects.Agents.AgentAdministrationClient
 - Azure.AI.Projects.Agents.AgentAdministrationClientOptions
 - Azure.AI.Projects.Agents.AgentListOrder
-- Azure.AI.Projects.Agents.ServiceVersion
+- Azure.AI.Projects.Agents.AgentAdministrationClientOptions.ServiceVersion
 - Azure.AI.Projects.Agents.ProjectsAgentsModelFactory

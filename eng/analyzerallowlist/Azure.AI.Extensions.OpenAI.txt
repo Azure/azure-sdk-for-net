@@ -9,7 +9,3 @@
 # exists so external consumers explicitly acknowledge experimental usage;
 # acknowledging it once at the assembly level matches intent.
 nowarn:OPENAI001
-# AAIP001 is a warning used in Azure.AI.Projects to mark experimental features.
-# [Experimental] types can be referenced by generated code that make file-local
-# suppressions impractical.
-nowarn:AAIP001

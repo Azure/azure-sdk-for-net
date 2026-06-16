@@ -28,19 +28,16 @@ namespace Extensions.Plugin.Visitors
         private readonly HashSet<string> _attributedTypes = new(StringComparer.Ordinal);
         private readonly HashSet<string> _methodIDs = new(StringComparer.Ordinal);
 
-        private static string TypeId(CSharpType type) => type is null ? null : $"{type.Namespace}.{type.Name}";
-
         private static bool IsExternal(TypeSignatureModifiers modifiers) => modifiers.HasFlag(TypeSignatureModifiers.Public) || modifiers.HasFlag(TypeSignatureModifiers.Protected);
         private static bool IsExternal(MethodSignatureModifiers modifiers) => modifiers.HasFlag(MethodSignatureModifiers.Public) || modifiers.HasFlag(MethodSignatureModifiers.Protected);
 
         /// <inheritdoc />
         protected override TypeProvider VisitType(TypeProvider type)
         {
-            string fullName = TypeId(type.Type);
             if (IsExternal(type.DeclarationModifiers)
-                && !SupportedPackages.IsStable(fullName)
+                && !SupportedPackages.IsStable(type.Type.FullyQualifiedName)
                 && !type.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute)))
-                && _attributedTypes.Add(fullName))
+                && _attributedTypes.Add(type.Type.FullyQualifiedName))
             {
                 type.Update(
                     attributes: [.. type.Attributes,
@@ -62,19 +59,18 @@ namespace Extensions.Plugin.Visitors
             }
 
             // If enclising type is not stable, no need to mark its methods.
-            string enclosingObjectId = TypeId(method.EnclosingType.Type);
+            string enclosingObjectId = method.EnclosingType.Type.FullyQualifiedName;
             if (!SupportedPackages.IsStable(enclosingObjectId))
             {
                 return base.VisitMethod(method);
             }
             string methodId = method.Signature.Parameters
-                .Select(x => TypeId(x.Type))
+                .Select(x => x.Type.FullyQualifiedName)
                 .Aggregate($"{enclosingObjectId}.{method.Signature.Name}->", (x, next) => string.Join(',', [x, next]));
 
             // If method takes in or return experimental class, mark it as experimental.
-            string typeId = TypeId(method.Signature.ReturnType);
-            if ((!SupportedPackages.IsStable(TypeId(method.Signature.ReturnType))
-                || method.Signature.Parameters.Any(x => !SupportedPackages.IsStable(TypeId(x.Type))))
+            if ((!SupportedPackages.IsStable(method.Signature.ReturnType?.FullyQualifiedName)
+                || method.Signature.Parameters.Any(x => !SupportedPackages.IsStable(x.Type.FullyQualifiedName)))
                 && _methodIDs.Add(methodId)
                 )
             {
