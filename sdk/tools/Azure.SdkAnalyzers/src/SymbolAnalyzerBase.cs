@@ -27,7 +27,8 @@ namespace Azure.SdkAnalyzers
 
             return symbol.DeclaredAccessibility == Accessibility.NotApplicable ||
                    symbol.DeclaredAccessibility == Accessibility.Public ||
-                   symbol.DeclaredAccessibility == Accessibility.Protected;
+                   symbol.DeclaredAccessibility == Accessibility.Protected ||
+                   symbol.DeclaredAccessibility == Accessibility.ProtectedOrInternal;
         }
     }
 }

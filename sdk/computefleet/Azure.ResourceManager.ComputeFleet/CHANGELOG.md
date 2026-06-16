@@ -3,8 +3,14 @@
 ## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
+- Upgraded api-version to 2026-04-01-preview.
+- Added `VmNamePrefix` property to `ComputeFleetProperties` for specifying a virtual machine name prefix; only valid when `Mode` is `Launch`.
+- Added `ComputeFleetVmOperationStatus.Launching` enum value.
 
 ### Breaking Changes
+- Renamed `ComputeFleetMode.Instance` to `ComputeFleetMode.Launch` to align with the updated service terminology.
+- Removed `ComputeFleetVmOperationStatus.Canceled` and `ComputeFleetVmOperationStatus.CancelFailedStatusUnknown` enum values.
+- Removed `Cancel` and `CancelAsync` operations from `ComputeFleetResource`.
 
 ### Bugs Fixed
 

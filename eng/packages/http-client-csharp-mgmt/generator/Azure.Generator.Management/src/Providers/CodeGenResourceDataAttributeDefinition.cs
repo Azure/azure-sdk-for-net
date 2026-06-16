@@ -20,8 +20,6 @@ internal sealed class CodeGenResourceDataAttributeDefinition : TypeProvider
     {
         // Custom-code attribute providers are compiled before SourceInputModel is initialized.
         // This generated attribute definition should not itself participate in customization lookup.
-        // TODO: Replace this when the base generator exposes a custom-code attribute provider
-        // extension point. See https://github.com/microsoft/typespec/issues/10980.
         SuppressSourceInputView("_customCodeView");
         SuppressSourceInputView("_lastContractView");
     }

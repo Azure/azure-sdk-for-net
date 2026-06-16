@@ -3,25 +3,20 @@
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    // Backward compatibility shims for the swagger upgrade from package-2023-06-15 to package-2025-07-15.
-    // The new API version added peerAsn as a required constructor parameter and changed the PeerAsn
-    // property type from long? to int. This preserves the v1.1.2 parameterless constructor and
-    // the long? PeerAsn property type.
     public partial class BgpConfiguration
     {
+        // Backward compatibility shim for the TypeSpec migration. The generated constructor requires a
+        // peer ASN, while the shipped SDK allowed parameterless construction. Removing it would break
+        // callers that initialize BgpConfiguration and set optional properties later.
         /// <summary> Initializes a new instance of <see cref="BgpConfiguration"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public BgpConfiguration()
+            : this(default)
         {
-            // Kept for backward compatibility with the pre-2025-07-15 API surface.
         }
-
-        /// <summary> Peer ASN. Example: 65047. </summary>
-        public long? PeerAsn { get; set; }
     }
 }
