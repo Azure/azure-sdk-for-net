@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud
     [ModelReaderWriterBuildable(typeof(ClusterMetricsConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(ClusterPatchProperties))]
     [ModelReaderWriterBuildable(typeof(ClusterProperties))]
-    [ModelReaderWriterBuildable(typeof(ClusterRotateCredentialParameters))]
+    [ModelReaderWriterBuildable(typeof(ClusterRotateCredentialContent))]
     [ModelReaderWriterBuildable(typeof(ClusterScanRuntimeContent))]
     [ModelReaderWriterBuildable(typeof(ClusterSecretArchive))]
     [ModelReaderWriterBuildable(typeof(ClusterUpdateStrategy))]

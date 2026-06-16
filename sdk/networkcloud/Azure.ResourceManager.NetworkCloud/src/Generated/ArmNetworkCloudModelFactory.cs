@@ -1066,12 +1066,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <param name="credentials"> The list of credential names for the credentials to rotate. </param>
-        /// <returns> A new <see cref="Models.ClusterRotateCredentialParameters"/> instance for mocking. </returns>
-        public static ClusterRotateCredentialParameters ClusterRotateCredentialParameters(IEnumerable<string> credentials = default)
+        /// <returns> A new <see cref="Models.ClusterRotateCredentialContent"/> instance for mocking. </returns>
+        public static ClusterRotateCredentialContent ClusterRotateCredentialContent(IEnumerable<string> credentials = default)
         {
             credentials ??= new ChangeTrackingList<string>();
 
-            return new ClusterRotateCredentialParameters((credentials ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ClusterRotateCredentialContent((credentials ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="scanActivity"> The choice of if the scan operation should run the scan. </param>

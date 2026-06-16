@@ -6,7 +6,7 @@
 
 - Added support for API version `2026-05-01-preview`.
 - Added `BareMetalMachineReimageContent` with `SafeguardMode` property for the Reimage operation.
-- Added `ClusterRotateCredentialParameters` for cluster credential rotation operations.
+- Added `ClusterRotateCredentialContent` for cluster credential rotation operations.
 - Added `BareMetalMachineMonitoringConfigurationStatus` and `StorageApplianceMonitoringConfigurationStatus` models.
 - Added `ClusterContinueUpdateVersionContent` and associated `ClusterContinueUpdateVersionSafeguardMode` for cluster update operations.
 - Added `NetworkCloudAccessBridge` resource.
