@@ -8,9 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtCustomBaseRepro.Tests;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtCustomBaseRepro.Tests.Models
 {
     /// <summary> The response of a CustomBaseTypeInheritedResource list operation. </summary>
     internal partial class CustomBaseTypeInheritedResourceListResult

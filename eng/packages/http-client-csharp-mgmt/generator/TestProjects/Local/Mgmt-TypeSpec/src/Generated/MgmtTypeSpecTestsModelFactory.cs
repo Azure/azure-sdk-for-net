@@ -1549,31 +1549,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="description"> Gets or sets the Description. </param>
-        /// <param name="eTag"></param>
-        /// <returns> A new <see cref="Tests.CustomBaseTypeInheritedResourceData"/> instance for mocking. </returns>
-        public static CustomBaseTypeInheritedResourceData CustomBaseTypeInheritedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CustomBaseTypeInheritedResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                description is null ? default : new CustomBaseTypeInheritedResourceProperties(description, default),
-                eTag,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="testCertificateThumbprint"> Gets the Thumbprint. </param>
         /// <returns> A new <see cref="Tests.TestCertificateData"/> instance for mocking. </returns>
         public static TestCertificateData TestCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string testCertificateThumbprint = default)

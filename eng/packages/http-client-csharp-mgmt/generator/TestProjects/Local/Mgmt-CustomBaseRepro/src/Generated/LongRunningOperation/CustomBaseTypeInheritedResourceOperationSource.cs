@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtCustomBaseRepro.Tests
 {
     /// <summary></summary>
     internal partial class CustomBaseTypeInheritedResourceOperationSource : IOperationSource<CustomBaseTypeInheritedResource>

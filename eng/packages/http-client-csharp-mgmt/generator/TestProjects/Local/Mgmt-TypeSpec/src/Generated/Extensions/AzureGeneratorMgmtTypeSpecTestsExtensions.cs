@@ -1226,24 +1226,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CustomBaseTypeInheritedResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetCustomBaseTypeInheritedResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CustomBaseTypeInheritedResource"/> object. </returns>
-        public static CustomBaseTypeInheritedResource GetCustomBaseTypeInheritedResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetCustomBaseTypeInheritedResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="TestCertificateResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -2473,61 +2455,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetCustomBaseTypeResource(customBaseTypeResourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of CustomBaseTypeInheritedResources in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetCustomBaseTypeInheritedResources()"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of CustomBaseTypeInheritedResources and their operations over a CustomBaseTypeInheritedResource. </returns>
-        public static CustomBaseTypeInheritedResourceCollection GetCustomBaseTypeInheritedResources(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetCustomBaseTypeInheritedResources();
-        }
-
-        /// <summary>
-        /// Get a CustomBaseTypeInheritedResource
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetCustomBaseTypeInheritedResourceAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="customBaseTypeInheritedResourceName"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<CustomBaseTypeInheritedResource>> GetCustomBaseTypeInheritedResourceAsync(this ResourceGroupResource resourceGroupResource, string customBaseTypeInheritedResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetCustomBaseTypeInheritedResourceAsync(customBaseTypeInheritedResourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a CustomBaseTypeInheritedResource
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetCustomBaseTypeInheritedResource(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="customBaseTypeInheritedResourceName"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<CustomBaseTypeInheritedResource> GetCustomBaseTypeInheritedResource(this ResourceGroupResource resourceGroupResource, string customBaseTypeInheritedResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetCustomBaseTypeInheritedResource(customBaseTypeInheritedResourceName, cancellationToken);
         }
 
         /// <summary>

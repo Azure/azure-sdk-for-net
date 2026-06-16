@@ -2,14 +2,21 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Providers;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -25,9 +32,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             EnsureFrameworkTypeRegistered(systemType);
         }
 
-        if (type?.BaseModelProvider is not null && type is not SystemObjectModelProvider)
+        if (type is ModelProvider modelProvider && modelProvider is not SystemObjectModelProvider)
         {
-            UpdateRegularModelInheritance(type);
+            EnsureInheritableSystemModel(modelProvider);
         }
         return type;
     }
@@ -40,9 +47,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             EnsureFrameworkTypeRegistered(systemType);
         }
 
-        if (type is ModelProvider model3 && model3.BaseModelProvider is not null && model3 is not SystemObjectModelProvider)
+        if (type is ModelProvider model3 && model3 is not SystemObjectModelProvider)
         {
-            UpdateRegularModelInheritance(model3);
+            EnsureInheritableSystemModel(model3);
         }
 
         return type;
@@ -70,15 +77,84 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
     }
 
-    private HashSet<ModelProvider> _regularUpdated = new();
-
-    private void UpdateRegularModelInheritance(ModelProvider model)
+    internal static void EnsureInheritableSystemModel(ModelProvider model)
     {
-        if (_regularUpdated.Contains(model))
+        EnsureCustomCodeBaseModelProvider(model);
+        if (model.BaseModelProvider is not null)
+        {
+            UpdateRegularModelInheritance(model);
+            EnsureSystemBaseConstructors(model);
+            EnsureSystemBaseSerializationOverride(model);
+        }
+    }
+
+    private static void EnsureCustomCodeBaseModelProvider(ModelProvider model)
+    {
+        var customCodeBaseType = model.CustomCodeView?.BaseType;
+        if (customCodeBaseType is null)
         {
             return;
         }
 
+        if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(customCodeBaseType, out var baseTypeProvider)
+            && baseTypeProvider is SystemObjectModelProvider systemBaseProvider)
+        {
+            ApplySystemBaseProvider(model, customCodeBaseType, systemBaseProvider);
+            return;
+        }
+
+        if (!TryGetFrameworkResourceDataType(customCodeBaseType, out var frameworkBaseType))
+        {
+            return;
+        }
+
+        if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(frameworkBaseType, out var frameworkBaseTypeProvider)
+            && frameworkBaseTypeProvider is SystemObjectModelProvider frameworkSystemBaseProvider)
+        {
+            ApplySystemBaseProvider(model, customCodeBaseType, frameworkSystemBaseProvider);
+            return;
+        }
+
+        if (model is ResourceDataModelProvider resourceDataModel
+            && resourceDataModel.InputModel.BaseModel is not null)
+        {
+            var resourceSystemBaseProvider = new SystemObjectModelProvider(frameworkBaseType, resourceDataModel.InputModel.BaseModel);
+            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[frameworkBaseType] =
+                resourceSystemBaseProvider;
+            ApplySystemBaseProvider(model, customCodeBaseType, resourceSystemBaseProvider);
+        }
+    }
+
+    private static readonly FieldInfo? _baseModelProviderField = typeof(ModelProvider).GetField("_baseModelProvider", BindingFlags.NonPublic | BindingFlags.Instance);
+    private static readonly FieldInfo? _baseTypeProviderField = typeof(ModelProvider).GetField("_baseTypeProvider", BindingFlags.NonPublic | BindingFlags.Instance);
+
+    private static void ApplySystemBaseProvider(ModelProvider model, CSharpType customCodeBaseType, SystemObjectModelProvider systemBaseProvider)
+    {
+        ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[customCodeBaseType] = systemBaseProvider;
+        _baseModelProviderField?.SetValue(model, systemBaseProvider);
+        _baseTypeProviderField?.SetValue(model, systemBaseProvider);
+    }
+
+    private static bool TryGetFrameworkResourceDataType(CSharpType type, out CSharpType frameworkType)
+    {
+        if (type.AreNamesEqual(typeof(TrackedResourceData)))
+        {
+            frameworkType = typeof(TrackedResourceData);
+            return true;
+        }
+
+        if (type.AreNamesEqual(typeof(ResourceData)))
+        {
+            frameworkType = typeof(ResourceData);
+            return true;
+        }
+
+        frameworkType = null!;
+        return false;
+    }
+
+    private static void UpdateRegularModelInheritance(ModelProvider model)
+    {
         var basePropertyNames = EnumerateBaseModelProperties(model.BaseModelProvider!);
         var removedPropertyNames = new HashSet<string>();
         var remainingProperties = new List<PropertyProvider>();
@@ -101,11 +177,73 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
 
         StripOrphanedVirtualModifiers(model.BaseModelProvider!, removedPropertyNames);
-        // Reset cached constructors, serialization, and model factories so they do not keep
-        // references to inherited ARM properties removed from the model surface.
-        model.Update(name: model.Name, properties: remainingProperties.ToArray(), reset: true);
+        if (removedPropertyNames.Count > 0)
+        {
+            // Reset cached constructors, serialization, and model factories so they do not keep
+            // references to inherited ARM properties removed from the model surface.
+            model.Update(name: model.Name, properties: remainingProperties.ToArray(), reset: true);
+        }
+    }
 
-        _regularUpdated.Add(model);
+    private static void EnsureSystemBaseSerializationOverride(ModelProvider model)
+    {
+        if (model.BaseModelProvider is not SystemObjectModelProvider)
+        {
+            return;
+        }
+
+        foreach (var serialization in model.SerializationProviders.OfType<MrwSerializationTypeDefinition>())
+        {
+            foreach (var method in serialization.Methods.Where(m => m.Signature.Name == "JsonModelWriteCore"))
+            {
+                var modifiers = method.Signature.Modifiers;
+                if (modifiers.HasFlag(MethodSignatureModifiers.Override))
+                {
+                    continue;
+                }
+
+                modifiers &= ~MethodSignatureModifiers.Virtual;
+                modifiers |= MethodSignatureModifiers.Override;
+                method.Signature.Update(modifiers: modifiers);
+
+                var arguments = method.Signature.Parameters.Select(p => p.AsArgument()).ToArray();
+                var bodyStatements = new List<MethodBodyStatement> { Base.Invoke(method.Signature.Name, arguments).Terminate() };
+                if (method.BodyStatements is not null)
+                {
+                    bodyStatements.Add(method.BodyStatements);
+                }
+
+                method.Update(
+                    signature: method.Signature,
+                    bodyStatements: bodyStatements);
+            }
+        }
+    }
+
+    private static void EnsureSystemBaseConstructors(ModelProvider model)
+    {
+        if (model.BaseModelProvider is not SystemObjectModelProvider
+            || model.BaseType is null
+            || !model.BaseType.AreNamesEqual(typeof(TrackedResourceData)))
+        {
+            return;
+        }
+
+        foreach (var constructor in model.Constructors)
+        {
+            var signature = constructor.Signature;
+            var initializer = signature.Initializer;
+            if (initializer is not { IsBase: true } || initializer.Arguments.Count != 5)
+            {
+                continue;
+            }
+
+            var arguments = initializer.Arguments.ToList();
+            arguments.Insert(3, Default);
+            var newInitializer = new ConstructorInitializer(initializer.IsBase, arguments);
+            var newSignature = new ConstructorSignature(signature.Type, signature.Description, signature.Modifiers, signature.Parameters, signature.Attributes, newInitializer);
+            constructor.Update(signature: newSignature);
+        }
     }
 
     private static HashSet<string> EnumerateBaseModelProperties(ModelProvider baseModel)

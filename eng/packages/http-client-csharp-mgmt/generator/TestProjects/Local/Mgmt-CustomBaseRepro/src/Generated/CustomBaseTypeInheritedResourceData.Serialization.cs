@@ -8,26 +8,20 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.Generator.MgmtTypeSpec.Tests.Models;
+using Azure.Generator.MgmtCustomBaseRepro.Tests.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtCustomBaseRepro.Tests
 {
     /// <summary> The CustomBaseTypeInheritedResourceData. </summary>
     public partial class CustomBaseTypeInheritedResourceData : TrackedResourceData, IJsonModel<CustomBaseTypeInheritedResourceData>
     {
-        /// <summary> Initializes a new instance of <see cref="CustomBaseTypeInheritedResourceData"/> for deserialization. </summary>
-        internal CustomBaseTypeInheritedResourceData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TrackedResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CustomBaseTypeInheritedResourceData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -49,7 +43,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtCustomBaseReproTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CustomBaseTypeInheritedResourceData)} does not support writing '{options.Format}' format.");
             }
@@ -134,7 +128,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TrackedResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<CustomBaseTypeInheritedResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -155,10 +149,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType resourceType = default;
-            SystemData systemData = default;
+            string @type = default;
             IDictionary<string, string> tags = default;
-            AzureLocation location = default;
+            string location = default;
             CustomBaseTypeInheritedResourceProperties properties = default;
             string eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -180,20 +173,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceType = new ResourceType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("systemData"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -219,7 +199,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(prop.Value.GetString());
+                    location = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -244,8 +224,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return new CustomBaseTypeInheritedResourceData(
                 id,
                 name,
-                resourceType,
-                systemData,
+                @type,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,

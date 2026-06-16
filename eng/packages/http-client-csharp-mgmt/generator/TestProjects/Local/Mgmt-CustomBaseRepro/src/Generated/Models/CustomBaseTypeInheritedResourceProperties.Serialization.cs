@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtCustomBaseRepro.Tests;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtCustomBaseRepro.Tests.Models
 {
     /// <summary> The CustomBaseTypeInheritedResourceProperties. </summary>
     internal partial class CustomBaseTypeInheritedResourceProperties : IJsonModel<CustomBaseTypeInheritedResourceProperties>
@@ -40,7 +40,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtCustomBaseReproTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CustomBaseTypeInheritedResourceProperties)} does not support writing '{options.Format}' format.");
             }

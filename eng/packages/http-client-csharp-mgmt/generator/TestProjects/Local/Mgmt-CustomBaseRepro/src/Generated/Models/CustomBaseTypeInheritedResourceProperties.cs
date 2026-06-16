@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtCustomBaseRepro.Tests;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests.Models
+namespace Azure.Generator.MgmtCustomBaseRepro.Tests.Models
 {
     /// <summary> The CustomBaseTypeInheritedResourceProperties. </summary>
     internal partial class CustomBaseTypeInheritedResourceProperties

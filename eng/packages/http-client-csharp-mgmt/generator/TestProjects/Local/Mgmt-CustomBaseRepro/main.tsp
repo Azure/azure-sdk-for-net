@@ -1,12 +1,29 @@
+import "@azure-tools/typespec-azure-resource-manager";
+import "@azure-tools/typespec-client-generator-core";
+
 using TypeSpec.Http;
 using TypeSpec.Rest;
+using TypeSpec.Versioning;
+using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Legacy;
 
-namespace MgmtTypeSpec;
+@armProviderNamespace
+@service(#{ title: "MgmtCustomBaseReproClient" })
+@versioned(Versions)
+@armCommonTypesVersion(Azure.ResourceManager.CommonTypes.Versions.v5)
+namespace MgmtCustomBaseRepro;
+
+enum Versions {
+  v2024_04_01: "2024-04-01",
+}
 
 model CustomBaseTypeInheritedResourceProperties {
   description?: string;
+}
+
+model CustomBaseTypeInheritedResourceTagsPatch {
+  tags?: Record<string>;
 }
 
 #suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing custom resource pattern"
@@ -42,45 +59,20 @@ model CustomBaseTypeInheritedResource extends ServiceDefinedTrackedResourceWithO
 }
 
 #suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing custom resource pattern"
-alias CustomBaseTypeInheritedResourceOps = LegacyOperations<
-  {
-    ...ApiVersionParameter;
-    ...SubscriptionIdParameter;
-    ...ResourceGroupParameter;
-    ...Provider<CustomBaseTypeInheritedResource>;
-  },
-  {
-    @path
-    @segment("customBaseTypeInheritedResources")
-    customBaseTypeInheritedResourceName: string;
-  },
-  ErrorResponse,
-  "CustomBaseTypeInheritedResource"
->;
-
-#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing custom resource pattern"
 @armResourceOperations
 interface CustomBaseTypeInheritedResources {
-  get is CustomBaseTypeInheritedResourceOps.Read<CustomBaseTypeInheritedResource>;
-  createOrUpdate is ArmResourceCreateOrReplaceAsync<
+  get is ArmResourceRead<CustomBaseTypeInheritedResource>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<CustomBaseTypeInheritedResource, Error = ErrorResponse>;
+  @patch(#{ implicitOptionality: false })
+  updateTags is ArmCustomPatchSync<CustomBaseTypeInheritedResource, PatchModel = CustomBaseTypeInheritedResourceTagsPatch, Error = ErrorResponse>;
+  delete is ArmResourceDeleteWithoutOkAsync<
     CustomBaseTypeInheritedResource,
-    BaseParameters = {
-      ...ApiVersionParameter;
-      ...SubscriptionIdParameter;
-      ...ResourceGroupParameter;
-    },
+    Response = ArmDeletedResponse | ArmDeleteAcceptedLroResponse | ArmDeletedNoContentResponse,
     Error = ErrorResponse
   >;
-  @action("customBaseTypeInheritedResources")
-  list is ArmResourceListByParent<
-    CustomBaseTypeInheritedResource,
-    BaseParameters = {
-      ...ApiVersionParameter;
-      ...SubscriptionIdParameter;
-      ...ResourceGroupParameter;
-    },
-    Error = ErrorResponse
-  >;
+  listByResourceGroup is ArmResourceListByParent<CustomBaseTypeInheritedResource, Error = ErrorResponse>;
+  list is ArmListBySubscription<CustomBaseTypeInheritedResource, Error = ErrorResponse>;
 }
 
 @@Azure.ClientGenerator.Core.Legacy.flattenProperty(CustomBaseTypeInheritedResource.properties);
+@@alternateType(ServiceDefinedTrackedResourceWithOptionalLocation.id, Azure.Core.armResourceIdentifier, "csharp");

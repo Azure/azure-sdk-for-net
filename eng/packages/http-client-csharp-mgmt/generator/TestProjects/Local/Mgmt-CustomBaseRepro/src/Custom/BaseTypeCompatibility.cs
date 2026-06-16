@@ -6,7 +6,7 @@
 using Azure.ResourceManager.Models;
 using Azure.Core;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtCustomBaseRepro.Tests
 {
     /// <summary> Replaces the generated service-defined base with the framework tracked resource base. </summary>
     public partial class CustomBaseTypeInheritedResourceData : TrackedResourceData

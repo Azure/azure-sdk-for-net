@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtCustomBaseRepro.Tests
 {
     /// <summary></summary>
     public partial class CustomBaseTypeInheritedResource : IJsonModel<CustomBaseTypeInheritedResourceData>
@@ -27,11 +27,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         CustomBaseTypeInheritedResourceData IJsonModel<CustomBaseTypeInheritedResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CustomBaseTypeInheritedResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomBaseTypeInheritedResourceData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        BinaryData IPersistableModel<CustomBaseTypeInheritedResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomBaseTypeInheritedResourceData>(Data, options, AzureGeneratorMgmtCustomBaseReproTestsContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CustomBaseTypeInheritedResourceData IPersistableModel<CustomBaseTypeInheritedResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomBaseTypeInheritedResourceData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+        CustomBaseTypeInheritedResourceData IPersistableModel<CustomBaseTypeInheritedResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomBaseTypeInheritedResourceData>(data, options, AzureGeneratorMgmtCustomBaseReproTestsContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CustomBaseTypeInheritedResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

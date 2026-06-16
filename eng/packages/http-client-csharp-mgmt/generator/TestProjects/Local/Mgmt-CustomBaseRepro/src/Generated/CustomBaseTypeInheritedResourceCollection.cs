@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtCustomBaseRepro.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="CustomBaseTypeInheritedResource"/> and their operations.
@@ -40,8 +40,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal CustomBaseTypeInheritedResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(CustomBaseTypeInheritedResource.ResourceType, out string customBaseTypeInheritedResourceApiVersion);
-            _customBaseTypeInheritedResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", CustomBaseTypeInheritedResource.ResourceType.Namespace, Diagnostics);
-            _customBaseTypeInheritedResourcesRestClient = new CustomBaseTypeInheritedResources(_customBaseTypeInheritedResourcesClientDiagnostics, Pipeline, Endpoint, customBaseTypeInheritedResourceApiVersion ?? "2024-05-01");
+            _customBaseTypeInheritedResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtCustomBaseRepro.Tests", CustomBaseTypeInheritedResource.ResourceType.Namespace, Diagnostics);
+            _customBaseTypeInheritedResourcesRestClient = new CustomBaseTypeInheritedResources(_customBaseTypeInheritedResourcesClientDiagnostics, Pipeline, Endpoint, customBaseTypeInheritedResourceApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -68,7 +68,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -119,7 +119,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -127,7 +127,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -186,7 +186,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +227,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -235,7 +235,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,15 +276,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeInheritedResources/customBaseTypeInheritedResources. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CustomBaseTypeInheritedResources_List. </description>
+        /// <description> CustomBaseTypeInheritedResources_ListByResourceGroup. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CustomBaseTypeInheritedResourceData, CustomBaseTypeInheritedResource>(new CustomBaseTypeInheritedResourcesGetAllAsyncCollectionResultOfT(_customBaseTypeInheritedResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomBaseTypeInheritedResourceCollection.GetAll"), data => new CustomBaseTypeInheritedResource(Client, data));
+            return new AsyncPageableWrapper<CustomBaseTypeInheritedResourceData, CustomBaseTypeInheritedResource>(new CustomBaseTypeInheritedResourcesGetByResourceGroupAsyncCollectionResultOfT(_customBaseTypeInheritedResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomBaseTypeInheritedResourceCollection.GetAll"), data => new CustomBaseTypeInheritedResource(Client, data));
         }
 
         /// <summary>
@@ -304,15 +304,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeInheritedResources/customBaseTypeInheritedResources. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CustomBaseTypeInheritedResources_List. </description>
+        /// <description> CustomBaseTypeInheritedResources_ListByResourceGroup. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CustomBaseTypeInheritedResourceData, CustomBaseTypeInheritedResource>(new CustomBaseTypeInheritedResourcesGetAllCollectionResultOfT(_customBaseTypeInheritedResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomBaseTypeInheritedResourceCollection.GetAll"), data => new CustomBaseTypeInheritedResource(Client, data));
+            return new PageableWrapper<CustomBaseTypeInheritedResourceData, CustomBaseTypeInheritedResource>(new CustomBaseTypeInheritedResourcesGetByResourceGroupCollectionResultOfT(_customBaseTypeInheritedResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "CustomBaseTypeInheritedResourceCollection.GetAll"), data => new CustomBaseTypeInheritedResource(Client, data));
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -340,7 +340,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +389,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -397,7 +397,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,7 +446,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -454,7 +454,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -507,7 +507,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -515,7 +515,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>

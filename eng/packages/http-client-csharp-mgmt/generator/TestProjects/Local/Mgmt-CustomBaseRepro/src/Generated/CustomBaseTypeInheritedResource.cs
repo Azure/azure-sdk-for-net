@@ -13,10 +13,11 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtCustomBaseRepro.Tests.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests
+namespace Azure.Generator.MgmtCustomBaseRepro.Tests
 {
     /// <summary>
     /// A class representing a CustomBaseTypeInheritedResource along with the instance operations that can be performed on it.
@@ -29,7 +30,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly CustomBaseTypeInheritedResources _customBaseTypeInheritedResourcesRestClient;
         private readonly CustomBaseTypeInheritedResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "MgmtTypeSpec/customBaseTypeInheritedResources";
+        public static readonly ResourceType ResourceType = "MgmtCustomBaseRepro/customBaseTypeInheritedResources";
 
         /// <summary> Initializes a new instance of CustomBaseTypeInheritedResource for mocking. </summary>
         protected CustomBaseTypeInheritedResource()
@@ -51,8 +52,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal CustomBaseTypeInheritedResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string customBaseTypeInheritedResourceApiVersion);
-            _customBaseTypeInheritedResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _customBaseTypeInheritedResourcesRestClient = new CustomBaseTypeInheritedResources(_customBaseTypeInheritedResourcesClientDiagnostics, Pipeline, Endpoint, customBaseTypeInheritedResourceApiVersion ?? "2024-05-01");
+            _customBaseTypeInheritedResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtCustomBaseRepro.Tests", ResourceType.Namespace, Diagnostics);
+            _customBaseTypeInheritedResourcesRestClient = new CustomBaseTypeInheritedResources(_customBaseTypeInheritedResourcesClientDiagnostics, Pipeline, Endpoint, customBaseTypeInheritedResourceApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -78,7 +79,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="customBaseTypeInheritedResourceName"> The customBaseTypeInheritedResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string customBaseTypeInheritedResourceName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -97,7 +98,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -105,7 +106,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -145,7 +146,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -153,7 +154,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -189,19 +190,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a CustomBaseTypeInheritedResource.
+        /// Update a CustomBaseTypeInheritedResource
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CustomBaseTypeInheritedResources_CreateOrUpdate. </description>
+        /// <description> CustomBaseTypeInheritedResources_UpdateTags. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -209,13 +210,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CustomBaseTypeInheritedResource>> UpdateAsync(WaitUntil waitUntil, CustomBaseTypeInheritedResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<CustomBaseTypeInheritedResource>> UpdateAsync(CustomBaseTypeInheritedResourcePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _customBaseTypeInheritedResourcesClientDiagnostics.CreateScope("CustomBaseTypeInheritedResource.Update");
             scope.Start();
@@ -225,19 +225,119 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customBaseTypeInheritedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CustomBaseTypeInheritedResourceData.ToRequestContent(data), context);
+                HttpMessage message = _customBaseTypeInheritedResourcesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CustomBaseTypeInheritedResourcePatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CustomBaseTypeInheritedResourceData> response = Response.FromValue(CustomBaseTypeInheritedResourceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new CustomBaseTypeInheritedResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a CustomBaseTypeInheritedResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CustomBaseTypeInheritedResources_UpdateTags. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CustomBaseTypeInheritedResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<CustomBaseTypeInheritedResource> Update(CustomBaseTypeInheritedResourcePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _customBaseTypeInheritedResourcesClientDiagnostics.CreateScope("CustomBaseTypeInheritedResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _customBaseTypeInheritedResourcesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CustomBaseTypeInheritedResourcePatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CustomBaseTypeInheritedResourceData> response = Response.FromValue(CustomBaseTypeInheritedResourceData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new CustomBaseTypeInheritedResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a CustomBaseTypeInheritedResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CustomBaseTypeInheritedResources_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-04-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="CustomBaseTypeInheritedResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _customBaseTypeInheritedResourcesClientDiagnostics.CreateScope("CustomBaseTypeInheritedResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _customBaseTypeInheritedResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                TestsArmOperation<CustomBaseTypeInheritedResource> operation = new TestsArmOperation<CustomBaseTypeInheritedResource>(
-                    new CustomBaseTypeInheritedResourceOperationSource(Client),
+                TestsArmOperation operation = new TestsArmOperation(
                     _customBaseTypeInheritedResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation,
+                    OperationFinalStateVia.Location,
                     true);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -249,19 +349,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a CustomBaseTypeInheritedResource.
+        /// Delete a CustomBaseTypeInheritedResource
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtCustomBaseRepro/customBaseTypeInheritedResources/{customBaseTypeInheritedResourceName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CustomBaseTypeInheritedResources_CreateOrUpdate. </description>
+        /// <description> CustomBaseTypeInheritedResources_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-05-01. </description>
+        /// <description> 2024-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -270,14 +370,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CustomBaseTypeInheritedResource> Update(WaitUntil waitUntil, CustomBaseTypeInheritedResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using DiagnosticScope scope = _customBaseTypeInheritedResourcesClientDiagnostics.CreateScope("CustomBaseTypeInheritedResource.Update");
+            using DiagnosticScope scope = _customBaseTypeInheritedResourcesClientDiagnostics.CreateScope("CustomBaseTypeInheritedResource.Delete");
             scope.Start();
             try
             {
@@ -285,19 +381,18 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _customBaseTypeInheritedResourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CustomBaseTypeInheritedResourceData.ToRequestContent(data), context);
+                HttpMessage message = _customBaseTypeInheritedResourcesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                TestsArmOperation<CustomBaseTypeInheritedResource> operation = new TestsArmOperation<CustomBaseTypeInheritedResource>(
-                    new CustomBaseTypeInheritedResourceOperationSource(Client),
+                TestsArmOperation operation = new TestsArmOperation(
                     _customBaseTypeInheritedResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation,
+                    OperationFinalStateVia.Location,
                     true);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
             }
@@ -339,8 +434,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     CustomBaseTypeInheritedResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags[key] = value;
-                    ArmOperation<CustomBaseTypeInheritedResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    CustomBaseTypeInheritedResourcePatch patch = new CustomBaseTypeInheritedResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    Response<CustomBaseTypeInheritedResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -382,8 +482,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     CustomBaseTypeInheritedResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    current.Tags[key] = value;
-                    ArmOperation<CustomBaseTypeInheritedResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    CustomBaseTypeInheritedResourcePatch patch = new CustomBaseTypeInheritedResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    Response<CustomBaseTypeInheritedResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -424,8 +529,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     CustomBaseTypeInheritedResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    ArmOperation<CustomBaseTypeInheritedResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    CustomBaseTypeInheritedResourcePatch patch = new CustomBaseTypeInheritedResourcePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    Response<CustomBaseTypeInheritedResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -466,8 +572,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     CustomBaseTypeInheritedResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    current.Tags.ReplaceWith(tags);
-                    ArmOperation<CustomBaseTypeInheritedResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    CustomBaseTypeInheritedResourcePatch patch = new CustomBaseTypeInheritedResourcePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    Response<CustomBaseTypeInheritedResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -507,8 +614,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     CustomBaseTypeInheritedResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    current.Tags.Remove(key);
-                    ArmOperation<CustomBaseTypeInheritedResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    CustomBaseTypeInheritedResourcePatch patch = new CustomBaseTypeInheritedResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    Response<CustomBaseTypeInheritedResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -548,8 +660,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 else
                 {
                     CustomBaseTypeInheritedResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    current.Tags.Remove(key);
-                    ArmOperation<CustomBaseTypeInheritedResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    CustomBaseTypeInheritedResourcePatch patch = new CustomBaseTypeInheritedResourcePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    Response<CustomBaseTypeInheritedResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
