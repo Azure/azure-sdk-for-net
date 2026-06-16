@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> Represents the properties of the records in the record set. </summary>
-    internal partial class RecordSetProperties
+    public partial class RecordSetProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

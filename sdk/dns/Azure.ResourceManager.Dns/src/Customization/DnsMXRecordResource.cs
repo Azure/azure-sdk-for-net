@@ -11,6 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using CodeGenResourceDataAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenResourceDataAttribute;
 using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.Dns
@@ -20,6 +21,7 @@ namespace Azure.ResourceManager.Dns
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DnsMXRecordResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource"/> using the GetDnsMXRecords method.
     /// </summary>
+    [CodeGenResourceDataAttribute(typeof(DnsMXRecordData))]
     [CodeGenSuppressAttribute("DnsMXRecordResource", typeof(ArmClient), typeof(DnsRecordData))]
     [CodeGenSuppressAttribute("UpdateAsync", typeof(DnsRecordData), typeof(ETag?), typeof(CancellationToken))]
     [CodeGenSuppressAttribute("Update", typeof(DnsRecordData), typeof(ETag?), typeof(CancellationToken))]

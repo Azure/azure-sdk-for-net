@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Dns
     /// Each <see cref="DnsSrvRecordResource"/> in the collection will belong to the same instance of <see cref="DnsZoneResource"/>.
     /// To get a <see cref="DnsSrvRecordCollection"/> instance call the GetDnsSrvRecords method from an instance of <see cref="DnsZoneResource"/>.
     /// </summary>
-    [CodeGenSuppressAttribute("CreateOrUpdateAsync", typeof(WaitUntil), typeof(string), typeof(DnsRecordType), typeof(DnsRecordData), typeof(MatchConditions), typeof(CancellationToken))]
-    [CodeGenSuppressAttribute("CreateOrUpdate", typeof(WaitUntil), typeof(string), typeof(DnsRecordType), typeof(DnsRecordData), typeof(MatchConditions), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("CreateOrUpdateAsync", typeof(WaitUntil), typeof(string), typeof(DnsRecordType), typeof(DnsSrvRecordData), typeof(MatchConditions), typeof(CancellationToken))]
+    [CodeGenSuppressAttribute("CreateOrUpdate", typeof(WaitUntil), typeof(string), typeof(DnsRecordType), typeof(DnsSrvRecordData), typeof(MatchConditions), typeof(CancellationToken))]
     [CodeGenSuppressAttribute("GetAsync", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
     [CodeGenSuppressAttribute("Get", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]
     [CodeGenSuppressAttribute("ExistsAsync", typeof(string), typeof(DnsRecordType), typeof(CancellationToken))]

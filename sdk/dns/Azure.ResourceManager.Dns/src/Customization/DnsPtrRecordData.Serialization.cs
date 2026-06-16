@@ -15,7 +15,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> A class representing the DnsPtrRecord data model. </summary>
-    public partial class DnsPtrRecordData : DnsBaseRecordData
+    public partial class DnsPtrRecordData : DnsBaseRecordData, IJsonModel<DnsPtrRecordData>
     {
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DnsPtrRecordData"/> from. </param>
         internal static new DnsPtrRecordData FromResponse(Response response)
@@ -23,6 +23,9 @@ namespace Azure.ResourceManager.Dns
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDnsPtrRecordData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
+
+        internal static RequestContent ToRequestContent(DnsPtrRecordData dnsPtrRecordData)
+            => dnsPtrRecordData is null ? null : RequestContent.Create(dnsPtrRecordData, ModelSerializationExtensions.WireOptions);
 
         internal static DnsPtrRecordData DeserializeDnsPtrRecordData(JsonElement element, ModelReaderWriterOptions options)
         {
@@ -103,5 +106,28 @@ namespace Azure.ResourceManager.Dns
                 properties,
                 eTag);
         }
+
+        void IJsonModel<DnsPtrRecordData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        DnsPtrRecordData IJsonModel<DnsPtrRecordData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsPtrRecordData(document.RootElement, options);
+        }
+
+        BinaryData IPersistableModel<DnsPtrRecordData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
+
+        DnsPtrRecordData IPersistableModel<DnsPtrRecordData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDnsPtrRecordData(document.RootElement, options);
+        }
+
+        string IPersistableModel<DnsPtrRecordData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

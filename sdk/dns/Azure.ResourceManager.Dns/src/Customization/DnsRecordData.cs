@@ -6,24 +6,29 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> A class representing the Record data model. </summary>
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("_additionalBinaryDataProperties")]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("Properties")]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("ETag")]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("Metadata")]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("TtlInSeconds")]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("Fqdn")]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("ProvisioningState")]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("TargetResource")]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("TrafficManagementProfile")]
+    [CodeGenSuppressAttribute("_additionalBinaryDataProperties")]
+    [CodeGenSuppressAttribute("Properties")]
+    [CodeGenSuppressAttribute("ETag")]
+    [CodeGenSuppressAttribute("Metadata")]
+    [CodeGenSuppressAttribute("TtlInSeconds")]
+    [CodeGenSuppressAttribute("Fqdn")]
+    [CodeGenSuppressAttribute("ProvisioningState")]
+    [CodeGenSuppressAttribute("TargetResource")]
+    [CodeGenSuppressAttribute("TrafficManagementProfile")]
+    [CodeGenSuppressAttribute("Name")]
+    [CodeGenSuppressAttribute("DnsRecordData", typeof(string), typeof(IDictionary<string, BinaryData>))]
+    [CodeGenSuppressAttribute("DnsRecordData", typeof(IDictionary<string, BinaryData>))]
     public partial class DnsRecordData : DnsBaseRecordData
     {
         /// <summary> Initializes a new instance of <see cref="DnsRecordData"/>. </summary>

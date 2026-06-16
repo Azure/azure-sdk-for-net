@@ -15,18 +15,95 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> A class representing the DnsRecord data model. </summary>
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("PersistableModelCreateCore", typeof(BinaryData), typeof(ModelReaderWriterOptions))]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("PersistableModelWriteCore", typeof(ModelReaderWriterOptions))]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("Write", typeof(ModelReaderWriterOptions))]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("Create", typeof(BinaryData), typeof(ModelReaderWriterOptions))]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("GetFormatFromOptions", typeof(ModelReaderWriterOptions))]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("ToRequestContent", typeof(DnsRecordData))]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("JsonModelWriteCore", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("Create", typeof(Utf8JsonReader), typeof(ModelReaderWriterOptions))]
-    [global::Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute("JsonModelCreateCore", typeof(Utf8JsonReader), typeof(ModelReaderWriterOptions))]
-    public partial class DnsRecordData : DnsBaseRecordData
+    public partial class DnsRecordData : DnsBaseRecordData, IJsonModel<DnsRecordData>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual new DnsRecordData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DnsRecordData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDnsRecordData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DnsRecordData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual new BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DnsRecordData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DnsRecordData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DnsRecordData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DnsRecordData IPersistableModel<DnsRecordData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DnsRecordData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dnsRecordData"> The <see cref="DnsRecordData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DnsRecordData dnsRecordData)
+        {
+            if (dnsRecordData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(dnsRecordData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<DnsRecordData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual new void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DnsRecordData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsRecordData)} does not support writing '{format}' format.");
+            }
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DnsRecordData IJsonModel<DnsRecordData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual new DnsRecordData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DnsRecordData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsRecordData)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsRecordData(document.RootElement, options);
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DnsRecordData"/> from. </param>
         internal static new DnsRecordData FromResponse(Response response)
         {

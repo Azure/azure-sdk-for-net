@@ -10,28 +10,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary></summary>
-    public partial class DnsAaaaRecordResource : IJsonModel<DnsBaseRecordData>
+    public partial class DnsAaaaRecordResource : IJsonModel<DnsAaaaRecordData>
     {
-        private static IJsonModel<DnsBaseRecordData> s_dataDeserializationInstance;
+        private static IJsonModel<DnsAaaaRecordData> s_dataDeserializationInstance;
 
-        private static IJsonModel<DnsBaseRecordData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DnsBaseRecordData();
+        private static IJsonModel<DnsAaaaRecordData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DnsAaaaRecordData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DnsBaseRecordData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DnsBaseRecordData>)Data).Write(writer, options);
+        void IJsonModel<DnsAaaaRecordData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DnsAaaaRecordData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DnsBaseRecordData IJsonModel<DnsBaseRecordData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        DnsAaaaRecordData IJsonModel<DnsAaaaRecordData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DnsBaseRecordData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsBaseRecordData>(Data, options, AzureResourceManagerDnsContext.Default);
+        BinaryData IPersistableModel<DnsAaaaRecordData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsAaaaRecordData>(Data, options, AzureResourceManagerDnsContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DnsBaseRecordData IPersistableModel<DnsBaseRecordData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsBaseRecordData>(data, options, AzureResourceManagerDnsContext.Default);
+        DnsAaaaRecordData IPersistableModel<DnsAaaaRecordData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsAaaaRecordData>(data, options, AzureResourceManagerDnsContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DnsBaseRecordData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<DnsAaaaRecordData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

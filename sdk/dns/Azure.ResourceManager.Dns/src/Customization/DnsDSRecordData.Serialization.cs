@@ -15,7 +15,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> A class representing the DnsDSRecord data model. </summary>
-    public partial class DnsDSRecordData : DnsBaseRecordData
+    public partial class DnsDSRecordData : DnsBaseRecordData, IJsonModel<DnsDSRecordData>
     {
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DnsDSRecordData"/> from. </param>
         internal static new DnsDSRecordData FromResponse(Response response)
@@ -23,6 +23,9 @@ namespace Azure.ResourceManager.Dns
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDnsDSRecordData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
+
+        internal static RequestContent ToRequestContent(DnsDSRecordData dnsDSRecordData)
+            => dnsDSRecordData is null ? null : RequestContent.Create(dnsDSRecordData, ModelSerializationExtensions.WireOptions);
 
         internal static DnsDSRecordData DeserializeDnsDSRecordData(JsonElement element, ModelReaderWriterOptions options)
         {
@@ -103,5 +106,28 @@ namespace Azure.ResourceManager.Dns
                 properties,
                 eTag);
         }
+
+        void IJsonModel<DnsDSRecordData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        DnsDSRecordData IJsonModel<DnsDSRecordData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsDSRecordData(document.RootElement, options);
+        }
+
+        BinaryData IPersistableModel<DnsDSRecordData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
+
+        DnsDSRecordData IPersistableModel<DnsDSRecordData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDnsDSRecordData(document.RootElement, options);
+        }
+
+        string IPersistableModel<DnsDSRecordData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

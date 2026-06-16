@@ -15,7 +15,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> A class representing the DnsCaaRecord data model. </summary>
-    public partial class DnsCaaRecordData : DnsBaseRecordData
+    public partial class DnsCaaRecordData : DnsBaseRecordData, IJsonModel<DnsCaaRecordData>
     {
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DnsCaaRecordData"/> from. </param>
         internal static new DnsCaaRecordData FromResponse(Response response)
@@ -23,6 +23,9 @@ namespace Azure.ResourceManager.Dns
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDnsCaaRecordData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
+
+        internal static RequestContent ToRequestContent(DnsCaaRecordData dnsCaaRecordData)
+            => dnsCaaRecordData is null ? null : RequestContent.Create(dnsCaaRecordData, ModelSerializationExtensions.WireOptions);
 
         internal static DnsCaaRecordData DeserializeDnsCaaRecordData(JsonElement element, ModelReaderWriterOptions options)
         {
@@ -103,5 +106,28 @@ namespace Azure.ResourceManager.Dns
                 properties,
                 eTag);
         }
+
+        void IJsonModel<DnsCaaRecordData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        DnsCaaRecordData IJsonModel<DnsCaaRecordData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsCaaRecordData(document.RootElement, options);
+        }
+
+        BinaryData IPersistableModel<DnsCaaRecordData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
+
+        DnsCaaRecordData IPersistableModel<DnsCaaRecordData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDnsCaaRecordData(document.RootElement, options);
+        }
+
+        string IPersistableModel<DnsCaaRecordData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

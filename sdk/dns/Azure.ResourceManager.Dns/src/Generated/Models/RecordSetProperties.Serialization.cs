@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> Represents the properties of the records in the record set. </summary>
-    internal partial class RecordSetProperties : IJsonModel<RecordSetProperties>
+    public partial class RecordSetProperties : IJsonModel<RecordSetProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

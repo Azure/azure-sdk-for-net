@@ -15,7 +15,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Dns
 {
     /// <summary> A class representing the DnsCnameRecord data model. </summary>
-    public partial class DnsCnameRecordData : DnsBaseRecordData
+    public partial class DnsCnameRecordData : DnsBaseRecordData, IJsonModel<DnsCnameRecordData>
     {
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DnsCnameRecordData"/> from. </param>
         internal static new DnsCnameRecordData FromResponse(Response response)
@@ -23,6 +23,9 @@ namespace Azure.ResourceManager.Dns
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDnsCnameRecordData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
+
+        internal static RequestContent ToRequestContent(DnsCnameRecordData dnsCnameRecordData)
+            => dnsCnameRecordData is null ? null : RequestContent.Create(dnsCnameRecordData, ModelSerializationExtensions.WireOptions);
 
         internal static DnsCnameRecordData DeserializeDnsCnameRecordData(JsonElement element, ModelReaderWriterOptions options)
         {
@@ -103,5 +106,28 @@ namespace Azure.ResourceManager.Dns
                 properties,
                 eTag);
         }
+
+        void IJsonModel<DnsCnameRecordData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        DnsCnameRecordData IJsonModel<DnsCnameRecordData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsCnameRecordData(document.RootElement, options);
+        }
+
+        BinaryData IPersistableModel<DnsCnameRecordData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
+
+        DnsCnameRecordData IPersistableModel<DnsCnameRecordData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDnsCnameRecordData(document.RootElement, options);
+        }
+
+        string IPersistableModel<DnsCnameRecordData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
