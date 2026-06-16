@@ -110,6 +110,10 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         if (model is ResourceDataModelProvider resourceDataModel
             && resourceDataModel.InputModel.BaseModel is not null)
         {
+            // Custom code may ask a generated resource model to inherit the framework ResourceData/TrackedResourceData
+            // type instead of the service-defined TypeSpec base. Keep the service-defined base model metadata so the
+            // inherited ARM properties still serialize/deserialize, but do not register this model-specific provider
+            // globally where it could replace unrelated resource bases.
             if (IsPolymorphic(resourceDataModel.InputModel))
             {
                 return;
@@ -346,6 +350,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         return arguments;
     }
 
+    // ResourceData exposes the ARM wire field "type" as the CLR property ResourceType. This is the only
+    // positional bridge we allow when rebuilding framework base constructor calls; other missing arguments
+    // must stay default rather than accidentally consuming unrelated service-defined fields.
     private static bool IsResourceTypeConstructorBridge(string targetPropertyName, PropertyProvider sourceProperty)
         => targetPropertyName == nameof(ResourceData.ResourceType)
             && sourceProperty.WireInfo?.SerializedName == "type";
