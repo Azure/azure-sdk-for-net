@@ -1,15 +1,11 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.2.0-beta.2 (2026-06-16)
 
 ### Other Changes
 
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 - Migrated from AutoRest to TypeSpec-based code generation.
 
 ## 1.2.0-beta.1 (2025-11-05)
