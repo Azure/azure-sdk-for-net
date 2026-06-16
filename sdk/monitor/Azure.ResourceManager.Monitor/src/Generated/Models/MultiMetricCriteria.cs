@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -16,25 +15,6 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/>. </summary>
-        /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>
-        /// <param name="name"> Name of the criteria. </param>
-        /// <param name="metricName"> Name of the metric. </param>
-        /// <param name="timeAggregation"> The criteria time aggregation types. Previously undocumented values might be returned. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="metricName"/> is null. </exception>
-        public MultiMetricCriteria(CriterionType criterionType, string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(metricName, nameof(metricName));
-
-            CriterionType = criterionType;
-            Name = name;
-            MetricName = metricName;
-            TimeAggregation = timeAggregation;
-            Dimensions = new ChangeTrackingList<MetricDimension>();
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-        }
 
         /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/>. </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. Previously undocumented values might be returned. </param>

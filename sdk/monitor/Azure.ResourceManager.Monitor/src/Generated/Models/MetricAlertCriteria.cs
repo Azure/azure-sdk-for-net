@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -16,14 +15,6 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="MetricAlertCriteria"/>. </summary>
-        /// <param name="odataType"> Specifies the type of the alert criteria. Previously undocumented values might be returned. </param>
-        public MetricAlertCriteria(Odatatype odataType)
-        {
-            OdataType = odataType;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-        }
 
         /// <summary> Initializes a new instance of <see cref="MetricAlertCriteria"/>. </summary>
         /// <param name="odataType"> Specifies the type of the alert criteria. Previously undocumented values might be returned. </param>

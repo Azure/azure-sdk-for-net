@@ -12,7 +12,7 @@ using Azure.ResourceManager.Monitor;
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specifies the type of the alert criteria. Previously undocumented values might be returned. </summary>
-    public readonly partial struct Odatatype : IEquatable<Odatatype>
+    internal readonly partial struct Odatatype : IEquatable<Odatatype>
     {
         private readonly string _value;
         /// <summary> Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria. </summary>

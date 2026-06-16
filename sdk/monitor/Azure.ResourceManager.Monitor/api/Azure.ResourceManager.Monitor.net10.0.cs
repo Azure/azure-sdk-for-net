@@ -2774,7 +2774,7 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class DynamicMetricCriteria : Azure.ResourceManager.Monitor.Models.MultiMetricCriteria, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.DynamicMetricCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.DynamicMetricCriteria>
     {
-        public DynamicMetricCriteria(string name, string metricName, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType timeAggregation, Azure.ResourceManager.Monitor.Models.DynamicThresholdOperator @operator, Azure.ResourceManager.Monitor.Models.DynamicThresholdSensitivity alertSensitivity, Azure.ResourceManager.Monitor.Models.DynamicThresholdFailingPeriods failingPeriods) : base (default(Azure.ResourceManager.Monitor.Models.CriterionType), default(string), default(string), default(Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType)) { }
+        public DynamicMetricCriteria(string name, string metricName, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType timeAggregation, Azure.ResourceManager.Monitor.Models.DynamicThresholdOperator @operator, Azure.ResourceManager.Monitor.Models.DynamicThresholdSensitivity alertSensitivity, Azure.ResourceManager.Monitor.Models.DynamicThresholdFailingPeriods failingPeriods) : base (default(string), default(string), default(Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType)) { }
         public Azure.ResourceManager.Monitor.Models.DynamicThresholdSensitivity AlertSensitivity { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.DynamicThresholdFailingPeriods FailingPeriods { get { throw null; } set { } }
         public System.DateTimeOffset? IgnoreDataBefore { get { throw null; } set { } }
@@ -3509,7 +3509,7 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class MetricAlertCriteria : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MetricAlertCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MetricAlertCriteria>
     {
-        public MetricAlertCriteria(Azure.ResourceManager.Monitor.Models.Odatatype odataType) { }
+        public MetricAlertCriteria() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         protected virtual Azure.ResourceManager.Monitor.Models.MetricAlertCriteria JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3523,7 +3523,7 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class MetricAlertMultipleResourceMultipleMetricCriteria : Azure.ResourceManager.Monitor.Models.MetricAlertCriteria, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MetricAlertMultipleResourceMultipleMetricCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MetricAlertMultipleResourceMultipleMetricCriteria>
     {
-        public MetricAlertMultipleResourceMultipleMetricCriteria() : base (default(Azure.ResourceManager.Monitor.Models.Odatatype)) { }
+        public MetricAlertMultipleResourceMultipleMetricCriteria() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MultiMetricCriteria> AllOf { get { throw null; } }
         protected override Azure.ResourceManager.Monitor.Models.MetricAlertCriteria JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3568,7 +3568,7 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class MetricAlertSingleResourceMultipleMetricCriteria : Azure.ResourceManager.Monitor.Models.MetricAlertCriteria, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MetricAlertSingleResourceMultipleMetricCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MetricAlertSingleResourceMultipleMetricCriteria>
     {
-        public MetricAlertSingleResourceMultipleMetricCriteria() : base (default(Azure.ResourceManager.Monitor.Models.Odatatype)) { }
+        public MetricAlertSingleResourceMultipleMetricCriteria() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MetricCriteria> AllOf { get { throw null; } }
         protected override Azure.ResourceManager.Monitor.Models.MetricAlertCriteria JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3626,7 +3626,7 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class MetricCriteria : Azure.ResourceManager.Monitor.Models.MultiMetricCriteria, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MetricCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MetricCriteria>
     {
-        public MetricCriteria(string name, string metricName, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType timeAggregation, Azure.ResourceManager.Monitor.Models.MetricCriteriaOperator @operator, double threshold) : base (default(Azure.ResourceManager.Monitor.Models.CriterionType), default(string), default(string), default(Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType)) { }
+        public MetricCriteria(string name, string metricName, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType timeAggregation, Azure.ResourceManager.Monitor.Models.MetricCriteriaOperator @operator, double threshold) : base (default(string), default(string), default(Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType)) { }
         public Azure.ResourceManager.Monitor.Models.MetricCriteriaOperator Operator { get { throw null; } set { } }
         public double Threshold { get { throw null; } set { } }
         protected override Azure.ResourceManager.Monitor.Models.MultiMetricCriteria JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4866,7 +4866,7 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class MultiMetricCriteria : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MultiMetricCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MultiMetricCriteria>
     {
-        public MultiMetricCriteria(Azure.ResourceManager.Monitor.Models.CriterionType criterionType, string name, string metricName, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType timeAggregation) { }
+        public MultiMetricCriteria(string name, string metricName, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType timeAggregation) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MetricDimension> Dimensions { get { throw null; } }
         public string MetricName { get { throw null; } set { } }
@@ -5064,25 +5064,6 @@ namespace Azure.ResourceManager.Monitor.Models
         Azure.ResourceManager.Monitor.Models.NotificationStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NotificationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NotificationStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.NotificationStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Odatatype : System.IEquatable<Azure.ResourceManager.Monitor.Models.Odatatype>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Odatatype(string value) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.Odatatype MicrosoftAzureMonitorMultipleResourceMultipleMetricCriteria { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.Odatatype MicrosoftAzureMonitorPromQLCriteria { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.Odatatype MicrosoftAzureMonitorSingleResourceMultipleMetricCriteria { get { throw null; } }
-        public static Azure.ResourceManager.Monitor.Models.Odatatype MicrosoftAzureMonitorWebtestLocationAvailabilityCriteria { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Monitor.Models.Odatatype other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Monitor.Models.Odatatype left, Azure.ResourceManager.Monitor.Models.Odatatype right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.Odatatype (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Monitor.Models.Odatatype? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Monitor.Models.Odatatype left, Azure.ResourceManager.Monitor.Models.Odatatype right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.ObsoleteAttribute("This API is no longer supported.", false)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -5406,7 +5387,7 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class PromQLCriteria : Azure.ResourceManager.Monitor.Models.MetricAlertCriteria, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.PromQLCriteria>
     {
-        public PromQLCriteria() : base (default(Azure.ResourceManager.Monitor.Models.Odatatype)) { }
+        public PromQLCriteria() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.MultiPromQLCriteria> AllOf { get { throw null; } }
         public System.TimeSpan? FailingPeriodsFor { get { throw null; } set { } }
         protected override Azure.ResourceManager.Monitor.Models.MetricAlertCriteria JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -6218,7 +6199,7 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class WebtestLocationAvailabilityCriteria : Azure.ResourceManager.Monitor.Models.MetricAlertCriteria, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.WebtestLocationAvailabilityCriteria>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.WebtestLocationAvailabilityCriteria>
     {
-        public WebtestLocationAvailabilityCriteria(Azure.Core.ResourceIdentifier webTestId, Azure.Core.ResourceIdentifier componentId, float failedLocationCount) : base (default(Azure.ResourceManager.Monitor.Models.Odatatype)) { }
+        public WebtestLocationAvailabilityCriteria(Azure.Core.ResourceIdentifier webTestId, Azure.Core.ResourceIdentifier componentId, float failedLocationCount) { }
         public Azure.Core.ResourceIdentifier ComponentId { get { throw null; } set { } }
         public float FailedLocationCount { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier WebTestId { get { throw null; } set { } }
