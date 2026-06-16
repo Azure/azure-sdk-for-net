@@ -97,15 +97,26 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return;
         }
 
-        if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(customCodeBaseType, out var baseTypeProvider)
-            && baseTypeProvider is SystemObjectModelProvider systemBaseProvider)
+        if (!TryGetFrameworkResourceDataType(customCodeBaseType, out var frameworkBaseType))
         {
-            ApplySystemBaseProvider(model, customCodeBaseType, systemBaseProvider);
+            if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(customCodeBaseType, out var baseTypeProvider)
+                && baseTypeProvider is SystemObjectModelProvider systemBaseProvider)
+            {
+                ApplySystemBaseProvider(model, customCodeBaseType, systemBaseProvider);
+            }
             return;
         }
 
-        if (!TryGetFrameworkResourceDataType(customCodeBaseType, out var frameworkBaseType))
+        if (model is ResourceDataModelProvider resourceDataModel
+            && resourceDataModel.InputModel.BaseModel is not null)
         {
+            if (IsPolymorphic(resourceDataModel.InputModel))
+            {
+                return;
+            }
+
+            var resourceSystemBaseProvider = new SystemObjectModelProvider(frameworkBaseType, resourceDataModel.InputModel.BaseModel);
+            ApplySystemBaseProvider(model, customCodeBaseType, resourceSystemBaseProvider, addTypeMapEntry: false);
             return;
         }
 
@@ -113,28 +124,26 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             && frameworkBaseTypeProvider is SystemObjectModelProvider frameworkSystemBaseProvider)
         {
             ApplySystemBaseProvider(model, customCodeBaseType, frameworkSystemBaseProvider);
-            return;
-        }
-
-        if (model is ResourceDataModelProvider resourceDataModel
-            && resourceDataModel.InputModel.BaseModel is not null)
-        {
-            var resourceSystemBaseProvider = new SystemObjectModelProvider(frameworkBaseType, resourceDataModel.InputModel.BaseModel);
-            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[frameworkBaseType] =
-                resourceSystemBaseProvider;
-            ApplySystemBaseProvider(model, customCodeBaseType, resourceSystemBaseProvider);
         }
     }
 
     private static readonly FieldInfo? _baseModelProviderField = typeof(ModelProvider).GetField("_baseModelProvider", BindingFlags.NonPublic | BindingFlags.Instance);
     private static readonly FieldInfo? _baseTypeProviderField = typeof(ModelProvider).GetField("_baseTypeProvider", BindingFlags.NonPublic | BindingFlags.Instance);
 
-    private static void ApplySystemBaseProvider(ModelProvider model, CSharpType customCodeBaseType, SystemObjectModelProvider systemBaseProvider)
+    private static void ApplySystemBaseProvider(ModelProvider model, CSharpType customCodeBaseType, SystemObjectModelProvider systemBaseProvider, bool addTypeMapEntry = true)
     {
-        ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[customCodeBaseType] = systemBaseProvider;
+        if (addTypeMapEntry)
+        {
+            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[customCodeBaseType] = systemBaseProvider;
+        }
         _baseModelProviderField?.SetValue(model, systemBaseProvider);
         _baseTypeProviderField?.SetValue(model, systemBaseProvider);
     }
+
+    private static bool IsPolymorphic(InputModelType model)
+        => model.DiscriminatorProperty is not null
+            || model.DerivedModels.Count > 0
+            || model.DiscriminatedSubtypes.Count > 0;
 
     private static bool TryGetFrameworkResourceDataType(CSharpType type, out CSharpType frameworkType)
     {
@@ -254,9 +263,8 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             {
                 continue;
             }
-            // Empty initializers are intentionally left alone, and matching arity means this visitor already
-            // repaired the initializer during an earlier pass.
-            if (initializer.Arguments.Count == 0 || initializer.Arguments.Count == baseConstructorPropertyNames.Count)
+            // Empty initializers are intentionally left alone.
+            if (initializer.Arguments.Count == 0)
             {
                 continue;
             }
@@ -320,9 +328,10 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             if (sourceIndex < sourceProperties.Count)
             {
                 var sourcePropertyName = sourceProperties[sourceIndex].Name;
-                // Prefer exact target-property matches that appear later. If the current source property has no
-                // exact target later, use it positionally to bridge framework renames like type -> ResourceType.
-                if (!targetPropertyNames.Skip(i + 1).Contains(sourcePropertyName, StringComparer.Ordinal))
+                // Prefer exact target-property matches that appear later. Only use a positional bridge when
+                // source metadata identifies the known ARM resource type wire field for the framework ResourceType slot.
+                if (!targetPropertyNames.Skip(i + 1).Contains(sourcePropertyName, StringComparer.Ordinal)
+                    && IsResourceTypeConstructorBridge(targetPropertyName, sourceProperties[sourceIndex]))
                 {
                     arguments.Add(argumentsByPropertyName[sourcePropertyName]);
                     usedSourcePropertyNames.Add(sourcePropertyName);
@@ -337,6 +346,10 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         return arguments;
     }
 
+    private static bool IsResourceTypeConstructorBridge(string targetPropertyName, PropertyProvider sourceProperty)
+        => targetPropertyName == nameof(ResourceData.ResourceType)
+            && sourceProperty.WireInfo?.SerializedName == "type";
+
     private static Dictionary<string, ValueExpression> BuildConstructorArgumentMap(IReadOnlyList<PropertyProvider> baseProperties, IReadOnlyList<ParameterProvider> parameters, IReadOnlyList<ValueExpression> arguments)
     {
         var basePropertiesByWireName = baseProperties
@@ -345,13 +358,11 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             .ToDictionary(g => g.Key, g => g.First(), StringComparer.Ordinal);
         var basePropertiesByName = baseProperties.ToDictionary(p => p.Name, StringComparer.Ordinal);
         var argumentsByPropertyName = new Dictionary<string, ValueExpression>(StringComparer.Ordinal);
-        var argumentCount = Math.Min(parameters.Count, arguments.Count);
-
-        for (int i = 0; i < argumentCount; i++)
+        foreach (var parameter in parameters)
         {
-            if (TryGetBaseProperty(parameters[i], basePropertiesByName, basePropertiesByWireName, out var property))
+            if (TryGetBaseProperty(parameter, basePropertiesByName, basePropertiesByWireName, out var property))
             {
-                argumentsByPropertyName[property.Name] = arguments[i];
+                argumentsByPropertyName[property.Name] = parameter.AsArgument();
             }
         }
 
