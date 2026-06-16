@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlNetworkSecurityPerimeterProvisioningIssue"/>. </summary>
-        internal SqlNetworkSecurityPerimeterProvisioningIssue()
+        public SqlNetworkSecurityPerimeterProvisioningIssue()
         {
         }
 
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Sql.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public string Name { get; set; }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> Gets or sets the Properties. </summary>
         [WirePath("properties")]
-        public SqlNetworkSecurityPerimeterProvisioningIssueProperties Properties { get; }
+        public SqlNetworkSecurityPerimeterProvisioningIssueProperties Properties { get; set; }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlInstancePoolOperationData"/>. </summary>
-        internal SqlInstancePoolOperationData()
+        public SqlInstancePoolOperationData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal InstancePoolOperationProperties Properties { get; }
+        internal InstancePoolOperationProperties Properties { get; set; }
 
         /// <summary> The name of the instance pool the operation is being performed on. </summary>
         [WirePath("properties.instancePoolName")]

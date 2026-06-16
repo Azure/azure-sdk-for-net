@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlNetworkSecurityPerimeterConfigPerimeter"/>. </summary>
-        internal SqlNetworkSecurityPerimeterConfigPerimeter()
+        public SqlNetworkSecurityPerimeterConfigPerimeter()
         {
         }
 
@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.Sql.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Id. </summary>
+        /// <summary> Gets or sets the Id. </summary>
         [WirePath("id")]
-        public string Id { get; }
+        public string Id { get; set; }
 
-        /// <summary> Gets the PerimeterGuid. </summary>
+        /// <summary> Gets or sets the PerimeterGuid. </summary>
         [WirePath("perimeterGuid")]
-        public string PerimeterGuid { get; }
+        public string PerimeterGuid { get; set; }
 
-        /// <summary> Gets the Location. </summary>
+        /// <summary> Gets or sets the Location. </summary>
         [WirePath("location")]
-        public AzureLocation? Location { get; }
+        public AzureLocation? Location { get; set; }
     }
 }

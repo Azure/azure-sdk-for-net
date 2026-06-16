@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticPoolOperationData"/>. </summary>
-        internal ElasticPoolOperationData()
+        public ElasticPoolOperationData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal ElasticPoolOperationProperties Properties { get; }
+        internal ElasticPoolOperationProperties Properties { get; set; }
 
         /// <summary> The name of the elastic pool the operation is being performed on. </summary>
         [WirePath("properties.elasticPoolName")]

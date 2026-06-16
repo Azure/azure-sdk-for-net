@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlNetworkSecurityPerimeterConfigAccessRuleProperties"/>. </summary>
-        internal SqlNetworkSecurityPerimeterConfigAccessRuleProperties()
+        public SqlNetworkSecurityPerimeterConfigAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.Sql.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Direction. </summary>
+        /// <summary> Gets or sets the Direction. </summary>
         [WirePath("direction")]
-        public string Direction { get; }
+        public string Direction { get; set; }
 
         /// <summary> Gets the AddressPrefixes. </summary>
         [WirePath("addressPrefixes")]

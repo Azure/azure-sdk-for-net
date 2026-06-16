@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImportExportExtensionsOperationResult"/>. </summary>
-        internal ImportExportExtensionsOperationResult()
+        public ImportExportExtensionsOperationResult()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal ImportExportExtensionsOperationResultProperties Properties { get; }
+        internal ImportExportExtensionsOperationResultProperties Properties { get; set; }
 
         /// <summary> Request Id. </summary>
         [WirePath("properties.requestId")]
@@ -137,7 +137,11 @@ namespace Azure.ResourceManager.Sql.Models
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateEndpointConnections;
+                if (Properties is null)
+                {
+                    Properties = new ImportExportExtensionsOperationResultProperties();
+                }
+                return Properties.PrivateEndpointConnections;
             }
         }
     }

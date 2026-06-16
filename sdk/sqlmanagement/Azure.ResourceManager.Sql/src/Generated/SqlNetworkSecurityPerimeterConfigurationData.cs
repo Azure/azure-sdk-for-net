@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlNetworkSecurityPerimeterConfigurationData"/>. </summary>
-        internal SqlNetworkSecurityPerimeterConfigurationData()
+        public SqlNetworkSecurityPerimeterConfigurationData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal NetworkSecurityPerimeterConfigurationProperties Properties { get; }
+        internal NetworkSecurityPerimeterConfigurationProperties Properties { get; set; }
 
         /// <summary> Gets the ProvisioningState. </summary>
         [WirePath("properties.provisioningState")]
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets the NetworkSecurityPerimeter. </summary>
+        /// <summary> Gets or sets the NetworkSecurityPerimeter. </summary>
         [WirePath("properties.networkSecurityPerimeter")]
         public SqlNetworkSecurityPerimeterConfigPerimeter NetworkSecurityPerimeter
         {
@@ -59,9 +59,17 @@ namespace Azure.ResourceManager.Sql
             {
                 return Properties is null ? default : Properties.NetworkSecurityPerimeter;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkSecurityPerimeterConfigurationProperties();
+                }
+                Properties.NetworkSecurityPerimeter = value;
+            }
         }
 
-        /// <summary> Gets the ResourceAssociation. </summary>
+        /// <summary> Gets or sets the ResourceAssociation. </summary>
         [WirePath("properties.resourceAssociation")]
         public SqlNetworkSecurityPerimeterConfigAssociation ResourceAssociation
         {
@@ -69,15 +77,31 @@ namespace Azure.ResourceManager.Sql
             {
                 return Properties is null ? default : Properties.ResourceAssociation;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkSecurityPerimeterConfigurationProperties();
+                }
+                Properties.ResourceAssociation = value;
+            }
         }
 
-        /// <summary> Gets the Profile. </summary>
+        /// <summary> Gets or sets the Profile. </summary>
         [WirePath("properties.profile")]
         public SqlNetworkSecurityPerimeterConfigProfile Profile
         {
             get
             {
                 return Properties is null ? default : Properties.Profile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkSecurityPerimeterConfigurationProperties();
+                }
+                Properties.Profile = value;
             }
         }
 
@@ -87,7 +111,11 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.ProvisioningIssues;
+                if (Properties is null)
+                {
+                    Properties = new NetworkSecurityPerimeterConfigurationProperties();
+                }
+                return Properties.ProvisioningIssues;
             }
         }
     }

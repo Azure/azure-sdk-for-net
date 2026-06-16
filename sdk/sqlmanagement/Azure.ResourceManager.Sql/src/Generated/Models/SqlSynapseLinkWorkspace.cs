@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlSynapseLinkWorkspace"/>. </summary>
-        internal SqlSynapseLinkWorkspace()
+        public SqlSynapseLinkWorkspace()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal SynapseLinkWorkspaceProperties Properties { get; }
+        internal SynapseLinkWorkspaceProperties Properties { get; set; }
 
         /// <summary> List of all synapselink workspaces. </summary>
         [WirePath("properties.workspaces")]
@@ -47,7 +47,11 @@ namespace Azure.ResourceManager.Sql.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Workspaces;
+                if (Properties is null)
+                {
+                    Properties = new SynapseLinkWorkspaceProperties();
+                }
+                return Properties.Workspaces;
             }
         }
     }

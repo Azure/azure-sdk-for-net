@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlServerJobExecutionData"/>. </summary>
-        internal SqlServerJobExecutionData()
+        public SqlServerJobExecutionData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal JobExecutionProperties Properties { get; }
+        internal JobExecutionProperties Properties { get; set; }
 
         /// <summary> The job version number. </summary>
         [WirePath("properties.jobVersion")]
@@ -138,6 +138,14 @@ namespace Azure.ResourceManager.Sql
             get
             {
                 return Properties is null ? default : Properties.CurrentAttempts;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new JobExecutionProperties();
+                }
+                Properties.CurrentAttempts = value;
             }
         }
 

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionUsageData"/>. </summary>
-        internal SubscriptionUsageData()
+        public SubscriptionUsageData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal SubscriptionUsageProperties Properties { get; }
+        internal SubscriptionUsageProperties Properties { get; set; }
 
         /// <summary> User-readable name of the metric. </summary>
         [WirePath("properties.displayName")]

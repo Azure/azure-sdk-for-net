@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
-        internal NetworkSecurityPerimeterConfigurationProperties()
+        public NetworkSecurityPerimeterConfigurationProperties()
         {
             ProvisioningIssues = new ChangeTrackingList<SqlNetworkSecurityPerimeterProvisioningIssue>();
         }
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.Sql.Models
         [WirePath("provisioningState")]
         public string ProvisioningState { get; }
 
-        /// <summary> Gets the NetworkSecurityPerimeter. </summary>
+        /// <summary> Gets or sets the NetworkSecurityPerimeter. </summary>
         [WirePath("networkSecurityPerimeter")]
-        public SqlNetworkSecurityPerimeterConfigPerimeter NetworkSecurityPerimeter { get; }
+        public SqlNetworkSecurityPerimeterConfigPerimeter NetworkSecurityPerimeter { get; set; }
 
-        /// <summary> Gets the ResourceAssociation. </summary>
+        /// <summary> Gets or sets the ResourceAssociation. </summary>
         [WirePath("resourceAssociation")]
-        public SqlNetworkSecurityPerimeterConfigAssociation ResourceAssociation { get; }
+        public SqlNetworkSecurityPerimeterConfigAssociation ResourceAssociation { get; set; }
 
-        /// <summary> Gets the Profile. </summary>
+        /// <summary> Gets or sets the Profile. </summary>
         [WirePath("profile")]
-        public SqlNetworkSecurityPerimeterConfigProfile Profile { get; }
+        public SqlNetworkSecurityPerimeterConfigProfile Profile { get; set; }
 
         /// <summary> Gets the ProvisioningIssues. </summary>
         [WirePath("provisioningIssues")]

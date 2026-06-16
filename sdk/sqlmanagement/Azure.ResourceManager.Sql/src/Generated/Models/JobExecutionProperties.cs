@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="JobExecutionProperties"/>. </summary>
-        internal JobExecutionProperties()
+        public JobExecutionProperties()
         {
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Number of times the job execution has been attempted. </summary>
         [WirePath("currentAttempts")]
-        public int? CurrentAttempts { get; }
+        public int? CurrentAttempts { get; set; }
 
         /// <summary> Start time of the current attempt. </summary>
         [WirePath("currentAttemptStartTime")]

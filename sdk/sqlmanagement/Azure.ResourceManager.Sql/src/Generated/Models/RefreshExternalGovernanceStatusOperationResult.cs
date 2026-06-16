@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RefreshExternalGovernanceStatusOperationResult"/>. </summary>
-        internal RefreshExternalGovernanceStatusOperationResult()
+        public RefreshExternalGovernanceStatusOperationResult()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal RefreshExternalGovernanceStatusOperationResultProperties Properties { get; }
+        internal RefreshExternalGovernanceStatusOperationResultProperties Properties { get; set; }
 
         /// <summary> Request Id. </summary>
         [WirePath("properties.requestId")]

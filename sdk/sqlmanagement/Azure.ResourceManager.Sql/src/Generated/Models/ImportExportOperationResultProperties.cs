@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImportExportOperationResultProperties"/>. </summary>
-        internal ImportExportOperationResultProperties()
+        public ImportExportOperationResultProperties()
         {
             PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionRequestStatus>();
         }

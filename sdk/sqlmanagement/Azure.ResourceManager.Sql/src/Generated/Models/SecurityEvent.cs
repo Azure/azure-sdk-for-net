@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityEvent"/>. </summary>
-        internal SecurityEvent()
+        public SecurityEvent()
         {
         }
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal SecurityEventProperties Properties { get; }
+        internal SecurityEventProperties Properties { get; set; }
 
         /// <summary> The time when the security event occurred. </summary>
         [WirePath("properties.eventTime")]

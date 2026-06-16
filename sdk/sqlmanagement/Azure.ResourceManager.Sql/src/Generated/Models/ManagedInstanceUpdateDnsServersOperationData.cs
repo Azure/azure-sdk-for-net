@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceUpdateDnsServersOperationData"/>. </summary>
-        internal ManagedInstanceUpdateDnsServersOperationData()
+        public ManagedInstanceUpdateDnsServersOperationData()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal VirtualClusterDnsServersProperties Properties { get; }
+        internal VirtualClusterDnsServersProperties Properties { get; set; }
 
         /// <summary> The status of the DNS refresh operation. </summary>
         [WirePath("properties.status")]

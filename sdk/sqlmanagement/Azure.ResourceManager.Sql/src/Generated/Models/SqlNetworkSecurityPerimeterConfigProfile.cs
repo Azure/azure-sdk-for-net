@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlNetworkSecurityPerimeterConfigProfile"/>. </summary>
-        internal SqlNetworkSecurityPerimeterConfigProfile()
+        public SqlNetworkSecurityPerimeterConfigProfile()
         {
             AccessRules = new ChangeTrackingList<SqlNetworkSecurityPerimeterConfigAccessRule>();
         }
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.Sql.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         [WirePath("name")]
-        public string Name { get; }
+        public string Name { get; set; }
 
-        /// <summary> Gets the AccessRulesVersion. </summary>
+        /// <summary> Gets or sets the AccessRulesVersion. </summary>
         [WirePath("accessRulesVersion")]
-        public string AccessRulesVersion { get; }
+        public string AccessRulesVersion { get; set; }
 
         /// <summary> Gets the AccessRules. </summary>
         [WirePath("accessRules")]

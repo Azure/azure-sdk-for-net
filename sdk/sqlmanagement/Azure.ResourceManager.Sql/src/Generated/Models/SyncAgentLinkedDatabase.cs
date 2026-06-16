@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SyncAgentLinkedDatabase"/>. </summary>
-        internal SyncAgentLinkedDatabase()
+        public SyncAgentLinkedDatabase()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal SyncAgentLinkedDatabaseProperties Properties { get; }
+        internal SyncAgentLinkedDatabaseProperties Properties { get; set; }
 
         /// <summary> Type of the sync agent linked database. </summary>
         [WirePath("properties.databaseType")]

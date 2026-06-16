@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlServerDatabaseRestorePointData"/>. </summary>
-        internal SqlServerDatabaseRestorePointData()
+        public SqlServerDatabaseRestorePointData()
         {
         }
 
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal RestorePointProperties Properties { get; }
+        internal RestorePointProperties Properties { get; set; }
 
         /// <summary> Resource location. </summary>
         [WirePath("location")]

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlServerUsage"/>. </summary>
-        internal SqlServerUsage()
+        public SqlServerUsage()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal ServerUsageProperties Properties { get; }
+        internal ServerUsageProperties Properties { get; set; }
 
         /// <summary> User-readable name of the metric. </summary>
         [WirePath("properties.displayName")]

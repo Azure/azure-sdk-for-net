@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlNetworkSecurityPerimeterProvisioningIssueProperties"/>. </summary>
-        internal SqlNetworkSecurityPerimeterProvisioningIssueProperties()
+        public SqlNetworkSecurityPerimeterProvisioningIssueProperties()
         {
             SuggestedResourceIds = new ChangeTrackingList<string>();
             SuggestedAccessRules = new ChangeTrackingList<string>();
@@ -41,17 +41,17 @@ namespace Azure.ResourceManager.Sql.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the IssueType. </summary>
+        /// <summary> Gets or sets the IssueType. </summary>
         [WirePath("issueType")]
-        public string IssueType { get; }
+        public string IssueType { get; set; }
 
-        /// <summary> Gets the Severity. </summary>
+        /// <summary> Gets or sets the Severity. </summary>
         [WirePath("severity")]
-        public string Severity { get; }
+        public string Severity { get; set; }
 
-        /// <summary> Gets the Description. </summary>
+        /// <summary> Gets or sets the Description. </summary>
         [WirePath("description")]
-        public string Description { get; }
+        public string Description { get; set; }
 
         /// <summary> Gets the SuggestedResourceIds. </summary>
         [WirePath("suggestedResourceIds")]

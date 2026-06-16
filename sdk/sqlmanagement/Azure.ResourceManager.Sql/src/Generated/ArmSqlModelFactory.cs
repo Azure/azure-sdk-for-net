@@ -4014,9 +4014,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Gets the ProvisioningState. </param>
-        /// <param name="networkSecurityPerimeter"> Gets the NetworkSecurityPerimeter. </param>
-        /// <param name="resourceAssociation"> Gets the ResourceAssociation. </param>
-        /// <param name="profile"> Gets the Profile. </param>
+        /// <param name="networkSecurityPerimeter"> Gets or sets the NetworkSecurityPerimeter. </param>
+        /// <param name="resourceAssociation"> Gets or sets the ResourceAssociation. </param>
+        /// <param name="profile"> Gets or sets the Profile. </param>
         /// <param name="provisioningIssues"> Gets the ProvisioningIssues. </param>
         /// <returns> A new <see cref="Sql.SqlNetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
         public static SqlNetworkSecurityPerimeterConfigurationData SqlNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, SqlNetworkSecurityPerimeterConfigPerimeter networkSecurityPerimeter = default, SqlNetworkSecurityPerimeterConfigAssociation resourceAssociation = default, SqlNetworkSecurityPerimeterConfigProfile profile = default, IEnumerable<SqlNetworkSecurityPerimeterProvisioningIssue> provisioningIssues = default)
