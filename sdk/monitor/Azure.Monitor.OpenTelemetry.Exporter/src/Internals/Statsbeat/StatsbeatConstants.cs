@@ -108,11 +108,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         internal const string AMS_Url = "http://169.254.169.254/metadata/instance/compute?api-version=2017-08-01&format=json";
 
         /// <summary>
-        /// 24 hrs == 86400000 milliseconds.
-        /// </summary>
-        internal const int GeneralStatsbeatInterval = 86400000;
-
-        /// <summary>
         /// 15 min == 900000 milliseconds. Cadence of the shared statsbeat reader.
         /// </summary>
         internal const int NetworkStatsbeatInterval = 900000;
