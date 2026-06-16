@@ -225,6 +225,8 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
 
         var baseProperties = EnumerateBaseModelPropertiesInOrder(systemBaseModel);
+        // The generated base initializer was built for the service-defined base model. When custom code
+        // replaces that base with a framework model, rebuild the initializer in the framework constructor order.
         var baseConstructorPropertyNames = GetFrameworkConstructorPropertyNames(systemBaseModel.SystemType);
         if (baseProperties.Count == 0 || baseConstructorPropertyNames.Count == 0)
         {
@@ -239,6 +241,8 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             {
                 continue;
             }
+            // Empty initializers are intentionally left alone, and matching arity means this visitor already
+            // repaired the initializer during an earlier pass.
             if (initializer.Arguments.Count == 0 || initializer.Arguments.Count == baseConstructorPropertyNames.Count)
             {
                 continue;
@@ -260,6 +264,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             return [];
         }
 
+        // SystemObjectModelProvider properties come from the service-defined base model, whose property order
+        // can differ from the actual framework type constructor. Reflection gives the constructor shape that
+        // the emitted C# must call.
         return baseType.FrameworkType
             .GetConstructors(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
             .OrderByDescending(c => c.GetParameters().Length)
@@ -300,6 +307,8 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             if (sourceIndex < sourceProperties.Count)
             {
                 var sourcePropertyName = sourceProperties[sourceIndex].Name;
+                // Prefer exact target-property matches that appear later. If the current source property has no
+                // exact target later, use it positionally to bridge framework renames like type -> ResourceType.
                 if (!targetPropertyNames.Skip(i + 1).Contains(sourcePropertyName, StringComparer.Ordinal))
                 {
                     arguments.Add(argumentsByPropertyName[sourcePropertyName]);
@@ -342,6 +351,8 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         IReadOnlyDictionary<string, PropertyProvider> basePropertiesByWireName,
         out PropertyProvider property)
     {
+        // WireInfo is the most reliable link between a constructor parameter and its inherited property,
+        // including cases where the CLR property name differs from the wire name.
         if (parameter.WireInfo is not null
             && basePropertiesByWireName.TryGetValue(parameter.WireInfo.SerializedName, out property!))
         {
@@ -349,6 +360,8 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         }
 
         var parameterName = parameter.Name.TrimStart('@');
+        // Some generated constructor parameters may be escaped C# keywords (for example @type) or may not carry
+        // WireInfo, so fall back to the unescaped wire name and then the generated CLR identifier.
         if (basePropertiesByWireName.TryGetValue(parameterName, out property!))
         {
             return true;
