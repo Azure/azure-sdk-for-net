@@ -14,9 +14,9 @@ using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal partial class EventSubscriptionsGetRegionalByResourceGroupCollectionResultOfT : Pageable<EventGridSubscriptionData>
+    internal partial class EventSubscriptionsResourceGroupScopeGetRegionalByResourceGroupCollectionResultOfT : Pageable<EventGridSubscriptionData>
     {
-        private readonly EventSubscriptions _client;
+        private readonly EventSubscriptionsResourceGroupScope _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _location;
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.EventGrid
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of EventSubscriptionsGetRegionalByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The EventSubscriptions client used to send requests. </param>
+        /// <summary> Initializes a new instance of EventSubscriptionsResourceGroupScopeGetRegionalByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The EventSubscriptionsResourceGroupScope client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="location"> The location name. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public EventSubscriptionsGetRegionalByResourceGroupCollectionResultOfT(EventSubscriptions client, Guid subscriptionId, string resourceGroupName, string location, string filter, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public EventSubscriptionsResourceGroupScopeGetRegionalByResourceGroupCollectionResultOfT(EventSubscriptionsResourceGroupScope client, Guid subscriptionId, string resourceGroupName, string location, string filter, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.EventGrid
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of EventSubscriptionsGetRegionalByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of EventSubscriptionsResourceGroupScopeGetRegionalByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of EventSubscriptionsGetRegionalByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of EventSubscriptionsResourceGroupScopeGetRegionalByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<EventGridSubscriptionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

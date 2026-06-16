@@ -14,31 +14,28 @@ using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal partial class EventSubscriptionsGetGlobalByResourceGroupForTopicTypeCollectionResultOfT : Pageable<EventGridSubscriptionData>
+    internal partial class EventSubscriptionsSubscriptionScopeGetGlobalBySubscriptionForTopicTypeCollectionResultOfT : Pageable<EventGridSubscriptionData>
     {
-        private readonly EventSubscriptions _client;
+        private readonly EventSubscriptionsSubscriptionScope _client;
         private readonly Guid _subscriptionId;
-        private readonly string _resourceGroupName;
         private readonly string _topicTypeName;
         private readonly string _filter;
         private readonly int? _top;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of EventSubscriptionsGetGlobalByResourceGroupForTopicTypeCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The EventSubscriptions client used to send requests. </param>
+        /// <summary> Initializes a new instance of EventSubscriptionsSubscriptionScopeGetGlobalBySubscriptionForTopicTypeCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The EventSubscriptionsSubscriptionScope client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="topicTypeName"> Name of the topic type. </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public EventSubscriptionsGetGlobalByResourceGroupForTopicTypeCollectionResultOfT(EventSubscriptions client, Guid subscriptionId, string resourceGroupName, string topicTypeName, string filter, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public EventSubscriptionsSubscriptionScopeGetGlobalBySubscriptionForTopicTypeCollectionResultOfT(EventSubscriptionsSubscriptionScope client, Guid subscriptionId, string topicTypeName, string filter, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _resourceGroupName = resourceGroupName;
             _topicTypeName = topicTypeName;
             _filter = filter;
             _top = top;
@@ -46,10 +43,10 @@ namespace Azure.ResourceManager.EventGrid
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of EventSubscriptionsGetGlobalByResourceGroupForTopicTypeCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of EventSubscriptionsSubscriptionScopeGetGlobalBySubscriptionForTopicTypeCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of EventSubscriptionsGetGlobalByResourceGroupForTopicTypeCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of EventSubscriptionsSubscriptionScopeGetGlobalBySubscriptionForTopicTypeCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<EventGridSubscriptionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -75,7 +72,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetGlobalByResourceGroupForTopicTypeRequest(nextLink, _subscriptionId, _resourceGroupName, _topicTypeName, _filter, _top, _context) : _client.CreateGetGlobalByResourceGroupForTopicTypeRequest(_subscriptionId, _resourceGroupName, _topicTypeName, _filter, _top, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetGlobalBySubscriptionForTopicTypeRequest(nextLink, _subscriptionId, _topicTypeName, _filter, _top, _context) : _client.CreateGetGlobalBySubscriptionForTopicTypeRequest(_subscriptionId, _topicTypeName, _filter, _top, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

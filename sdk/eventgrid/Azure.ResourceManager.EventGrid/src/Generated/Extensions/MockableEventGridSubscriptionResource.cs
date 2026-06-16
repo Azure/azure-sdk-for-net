@@ -39,6 +39,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         private SystemTopics _systemTopicsRestClient;
         private ClientDiagnostics _topicsClientDiagnostics;
         private Topics _topicsRestClient;
+        private ClientDiagnostics _eventSubscriptionsSubscriptionScopeClientDiagnostics;
+        private EventSubscriptionsSubscriptionScope _eventSubscriptionsSubscriptionScopeRestClient;
 
         /// <summary> Initializes a new instance of MockableEventGridSubscriptionResource for mocking. </summary>
         protected MockableEventGridSubscriptionResource()
@@ -91,6 +93,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         private ClientDiagnostics TopicsClientDiagnostics => _topicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Topics TopicsRestClient => _topicsRestClient ??= new Topics(TopicsClientDiagnostics, Pipeline, Endpoint, "2025-07-15-preview");
+
+        private ClientDiagnostics EventSubscriptionsSubscriptionScopeClientDiagnostics => _eventSubscriptionsSubscriptionScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private EventSubscriptionsSubscriptionScope EventSubscriptionsSubscriptionScopeRestClient => _eventSubscriptionsSubscriptionScopeRestClient ??= new EventSubscriptionsSubscriptionScope(EventSubscriptionsSubscriptionScopeClientDiagnostics, Pipeline, Endpoint, "2025-07-15-preview");
 
         /// <summary>
         /// List all the namespaces under an Azure subscription.
@@ -844,8 +850,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EventSubscriptionsGetGlobalBySubscriptionForTopicTypeAsyncCollectionResultOfT(
-                EventSubscriptionsRestClient,
+            return new EventSubscriptionsSubscriptionScopeGetGlobalBySubscriptionForTopicTypeAsyncCollectionResultOfT(
+                EventSubscriptionsSubscriptionScopeRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 topicTypeName,
                 filter,
@@ -886,8 +892,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EventSubscriptionsGetGlobalBySubscriptionForTopicTypeCollectionResultOfT(
-                EventSubscriptionsRestClient,
+            return new EventSubscriptionsSubscriptionScopeGetGlobalBySubscriptionForTopicTypeCollectionResultOfT(
+                EventSubscriptionsSubscriptionScopeRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 topicTypeName,
                 filter,
@@ -928,8 +934,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EventSubscriptionsGetRegionalBySubscriptionAsyncCollectionResultOfT(
-                EventSubscriptionsRestClient,
+            return new EventSubscriptionsSubscriptionScopeGetRegionalBySubscriptionAsyncCollectionResultOfT(
+                EventSubscriptionsSubscriptionScopeRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 location,
                 filter,
@@ -970,8 +976,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EventSubscriptionsGetRegionalBySubscriptionCollectionResultOfT(
-                EventSubscriptionsRestClient,
+            return new EventSubscriptionsSubscriptionScopeGetRegionalBySubscriptionCollectionResultOfT(
+                EventSubscriptionsSubscriptionScopeRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 location,
                 filter,
@@ -1014,8 +1020,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EventSubscriptionsGetRegionalBySubscriptionForTopicTypeAsyncCollectionResultOfT(
-                EventSubscriptionsRestClient,
+            return new EventSubscriptionsSubscriptionScopeGetRegionalBySubscriptionForTopicTypeAsyncCollectionResultOfT(
+                EventSubscriptionsSubscriptionScopeRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 location,
                 topicTypeName,
@@ -1059,8 +1065,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new EventSubscriptionsGetRegionalBySubscriptionForTopicTypeCollectionResultOfT(
-                EventSubscriptionsRestClient,
+            return new EventSubscriptionsSubscriptionScopeGetRegionalBySubscriptionForTopicTypeCollectionResultOfT(
+                EventSubscriptionsSubscriptionScopeRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 location,
                 topicTypeName,

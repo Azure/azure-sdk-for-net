@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,9 +15,9 @@ using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal partial class EventSubscriptionsGetRegionalBySubscriptionForTopicTypeCollectionResultOfT : Pageable<EventGridSubscriptionData>
+    internal partial class EventSubscriptionsSubscriptionScopeGetRegionalBySubscriptionForTopicTypeAsyncCollectionResultOfT : AsyncPageable<EventGridSubscriptionData>
     {
-        private readonly EventSubscriptions _client;
+        private readonly EventSubscriptionsSubscriptionScope _client;
         private readonly Guid _subscriptionId;
         private readonly string _location;
         private readonly string _topicTypeName;
@@ -25,8 +26,8 @@ namespace Azure.ResourceManager.EventGrid
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of EventSubscriptionsGetRegionalBySubscriptionForTopicTypeCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The EventSubscriptions client used to send requests. </param>
+        /// <summary> Initializes a new instance of EventSubscriptionsSubscriptionScopeGetRegionalBySubscriptionForTopicTypeAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The EventSubscriptionsSubscriptionScope client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The location name. </param>
         /// <param name="topicTypeName"> Name of the topic type. </param>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public EventSubscriptionsGetRegionalBySubscriptionForTopicTypeCollectionResultOfT(EventSubscriptions client, Guid subscriptionId, string location, string topicTypeName, string filter, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public EventSubscriptionsSubscriptionScopeGetRegionalBySubscriptionForTopicTypeAsyncCollectionResultOfT(EventSubscriptionsSubscriptionScope client, Guid subscriptionId, string location, string topicTypeName, string filter, int? top, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -46,16 +47,16 @@ namespace Azure.ResourceManager.EventGrid
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of EventSubscriptionsGetRegionalBySubscriptionForTopicTypeCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of EventSubscriptionsSubscriptionScopeGetRegionalBySubscriptionForTopicTypeAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of EventSubscriptionsGetRegionalBySubscriptionForTopicTypeCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<EventGridSubscriptionData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of EventSubscriptionsSubscriptionScopeGetRegionalBySubscriptionForTopicTypeAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<EventGridSubscriptionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -73,14 +74,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetRegionalBySubscriptionForTopicTypeRequest(nextLink, _subscriptionId, _location, _topicTypeName, _filter, _top, _context) : _client.CreateGetRegionalBySubscriptionForTopicTypeRequest(_subscriptionId, _location, _topicTypeName, _filter, _top, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
