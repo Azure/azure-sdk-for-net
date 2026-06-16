@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Compute
 {
     // Backward compatibility: the previously shipped SDK exposed this type as a direct ResourceData-derived model.
     // The generator honors this partial base declaration and emits generated code with the same base type.
+    // Suppress the generated resource-key helper because the Swagger payload has only the normal ARM name field and
+    // the old SDK did not expose a separate VmssExtensionName property.
     [CodeGenSuppress("VmssExtensionName")]
     public partial class VirtualMachineScaleSetVmExtensionData : ResourceData
     {
