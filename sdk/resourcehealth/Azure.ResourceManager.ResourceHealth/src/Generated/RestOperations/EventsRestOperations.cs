@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    internal partial class AvailabilityStatuses
+    internal partial class Events
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of AvailabilityStatuses for mocking. </summary>
-        protected AvailabilityStatuses()
+        /// <summary> Initializes a new instance of Events for mocking. </summary>
+        protected Events()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailabilityStatuses. </summary>
+        /// <summary> Initializes a new instance of Events. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AvailabilityStatuses(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Events(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,40 +41,13 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAvailabilityStatusRequest(string resourceUri, string filter, string expand, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.ResourceHealth/availabilityStatuses/current", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetAvailabilityStatusResourcesBySubscriptionRequest(string subscriptionId, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateGetBySubscriptionIdRequest(string subscriptionId, string filter, string queryStartTime, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ResourceHealth/availabilityStatuses", false);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -83,9 +56,9 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (expand != null)
+            if (queryStartTime != null)
             {
-                uri.AppendQuery("$expand", expand, true);
+                uri.AppendQuery("queryStartTime", queryStartTime, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -95,7 +68,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateNextGetAvailabilityStatusResourcesBySubscriptionRequest(Uri nextPage, string subscriptionId, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateNextGetBySubscriptionIdRequest(Uri nextPage, string subscriptionId, string filter, string queryStartTime, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -118,13 +91,11 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string resourceUri, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateGetByTenantIdRequest(string filter, string queryStartTime, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.ResourceHealth/availabilityStatuses", false);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -133,9 +104,9 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (expand != null)
+            if (queryStartTime != null)
             {
-                uri.AppendQuery("$expand", expand, true);
+                uri.AppendQuery("queryStartTime", queryStartTime, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -145,7 +116,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string resourceUri, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateNextGetByTenantIdRequest(Uri nextPage, string filter, string queryStartTime, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -168,15 +139,13 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateGetAvailabilityStatusResourcesByResourceGroupRequest(string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateGetHealthEventsOfSingleResourceRequest(string resourceUri, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ResourceHealth/availabilityStatuses", false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ResourceHealth/events", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -184,10 +153,6 @@ namespace Azure.ResourceManager.ResourceHealth
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
-            }
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -197,7 +162,7 @@ namespace Azure.ResourceManager.ResourceHealth
             return message;
         }
 
-        internal HttpMessage CreateNextGetAvailabilityStatusResourcesByResourceGroupRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context)
+        internal HttpMessage CreateNextGetHealthEventsOfSingleResourceRequest(Uri nextPage, string resourceUri, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

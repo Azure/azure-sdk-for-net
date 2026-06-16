@@ -48,23 +48,5 @@ namespace Azure.ResourceManager.ResourceHealth
                 return Properties is null ? default : Properties.RefreshedOn;
             }
         }
-
-        /// <summary> The list of emerging issues of banner type. </summary>
-        public IList<EmergingIssueBannerType> StatusBanners
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StatusBanners;
-            }
-        }
-
-        /// <summary> The list of emerging issues of active event type. </summary>
-        public IList<EmergingIssueActiveEventType> StatusActiveEvents
-        {
-            get
-            {
-                return Properties is null ? default : Properties.StatusActiveEvents;
-            }
-        }
     }
 }

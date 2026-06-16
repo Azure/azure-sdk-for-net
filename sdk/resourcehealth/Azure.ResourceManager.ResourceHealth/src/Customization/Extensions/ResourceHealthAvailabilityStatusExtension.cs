@@ -19,8 +19,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            Pageable<ResourceHealthAvailabilityStatusData> statuses = GetAvailabilityStatusOfChildResource(client, scope, filter, expand, cancellationToken);
-            return new PageableWrapper<ResourceHealthAvailabilityStatusData, ResourceHealthAvailabilityStatus>(statuses, ResourceHealthAvailabilityStatus.FromData);
+            return GetMockableResourceHealthArmClient(client).GetAvailabilityStatuses(scope, filter, expand, cancellationToken);
         }
 
         /// <summary> Lists the all the children and its current health status for a parent resource. </summary>
@@ -30,8 +29,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            AsyncPageable<ResourceHealthAvailabilityStatusData> statuses = GetAvailabilityStatusOfChildResourceAsync(client, scope, filter, expand, cancellationToken);
-            return new AsyncPageableWrapper<ResourceHealthAvailabilityStatusData, ResourceHealthAvailabilityStatus>(statuses, ResourceHealthAvailabilityStatus.FromData);
+            return GetMockableResourceHealthArmClient(client).GetAvailabilityStatusesAsync(scope, filter, expand, cancellationToken);
         }
 
         /// <summary> Gets current availability status for a single resource. </summary>
@@ -41,9 +39,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            AvailabilityStatusResource resource = GetMockableResourceHealthArmClient(client).GetAvailabilityStatus(scope);
-            Response<AvailabilityStatusResource> response = resource.Get(filter, expand, cancellationToken);
-            return Response.FromValue(ResourceHealthAvailabilityStatus.FromData(response.Value.Data), response.GetRawResponse());
+            return GetMockableResourceHealthArmClient(client).GetAvailabilityStatus(scope, filter, expand, cancellationToken);
         }
 
         /// <summary> Gets current availability status for a single resource. </summary>
@@ -53,9 +49,7 @@ namespace Azure.ResourceManager.ResourceHealth
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            AvailabilityStatusResource resource = GetMockableResourceHealthArmClient(client).GetAvailabilityStatus(scope);
-            Response<AvailabilityStatusResource> response = await resource.GetAsync(filter, expand, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(ResourceHealthAvailabilityStatus.FromData(response.Value.Data), response.GetRawResponse());
+            return await GetMockableResourceHealthArmClient(client).GetAvailabilityStatusAsync(scope, filter, expand, cancellationToken).ConfigureAwait(false);
         }
     }
 }

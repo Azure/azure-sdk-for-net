@@ -15,21 +15,21 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    internal partial class TenantResourceHealthEventGetByTenantIdAsyncCollectionResultOfT : AsyncPageable<ResourceHealthEventData>
+    internal partial class EventsGetByTenantIdAsyncCollectionResultOfT : AsyncPageable<ResourceHealthEventData>
     {
-        private readonly TenantResourceHealthEvent _client;
+        private readonly Events _client;
         private readonly string _filter;
         private readonly string _queryStartTime;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of TenantResourceHealthEventGetByTenantIdAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The TenantResourceHealthEvent client used to send requests. </param>
+        /// <summary> Initializes a new instance of EventsGetByTenantIdAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Events client used to send requests. </param>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="queryStartTime"> Specifies from when to return events (default is 3 days), based on the lastUpdateTime property. For example, queryStartTime = 7/24/2020 OR queryStartTime=7%2F24%2F2020. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public TenantResourceHealthEventGetByTenantIdAsyncCollectionResultOfT(TenantResourceHealthEvent client, string filter, string queryStartTime, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public EventsGetByTenantIdAsyncCollectionResultOfT(Events client, string filter, string queryStartTime, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _filter = filter;
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.ResourceHealth
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of TenantResourceHealthEventGetByTenantIdAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of EventsGetByTenantIdAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of TenantResourceHealthEventGetByTenantIdAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of EventsGetByTenantIdAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ResourceHealthEventData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

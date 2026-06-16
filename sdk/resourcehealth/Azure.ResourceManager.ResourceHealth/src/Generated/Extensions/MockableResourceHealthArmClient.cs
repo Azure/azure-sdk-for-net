@@ -71,15 +71,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             return new ChildAvailabilityStatusResource(Client, scope.AppendProviderResource("Microsoft.ResourceHealth", "childAvailabilityStatuses", "current"));
         }
 
-        /// <summary> Gets an object representing a <see cref="ResourceHealthMetadataEntityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResourceHealthMetadataEntityResource"/> object. </returns>
-        public virtual ResourceHealthMetadataEntityResource GetResourceHealthMetadataEntityResource(ResourceIdentifier id)
-        {
-            ResourceHealthMetadataEntityResource.ValidateResourceId(id);
-            return new ResourceHealthMetadataEntityResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="TenantResourceHealthEventImpactedResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="TenantResourceHealthEventImpactedResource"/> object. </returns>
@@ -96,6 +87,15 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         {
             ResourceHealthEventImpactedResource.ValidateResourceId(id);
             return new ResourceHealthEventImpactedResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ResourceHealthMetadataEntityResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceHealthMetadataEntityResource"/> object. </returns>
+        public virtual ResourceHealthMetadataEntityResource GetResourceHealthMetadataEntityResource(ResourceIdentifier id)
+        {
+            ResourceHealthMetadataEntityResource.ValidateResourceId(id);
+            return new ResourceHealthMetadataEntityResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ResourceHealthEventResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatusData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceHealthAvailabilityStatusData> GetAvailabilityStatusOfChildResourceAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceHealthAvailabilityStatusData> GetAvailabilityStatusOfChildResourceDataAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -156,13 +156,13 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ChildResourcesGetAvailabilityStatusOfChildResourceAsyncCollectionResultOfT(
+            return new ChildResourcesGetAvailabilityStatusOfChildResourceDataAsyncCollectionResultOfT(
                 ChildResourcesRestClient,
                 scope.ToString(),
                 filter,
                 expand,
                 context,
-                "MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResource");
+                "MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResourceData");
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatusData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceHealthAvailabilityStatusData> GetAvailabilityStatusOfChildResource(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceHealthAvailabilityStatusData> GetAvailabilityStatusOfChildResourceData(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
@@ -196,13 +196,13 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ChildResourcesGetAvailabilityStatusOfChildResourceCollectionResultOfT(
+            return new ChildResourcesGetAvailabilityStatusOfChildResourceDataCollectionResultOfT(
                 ChildResourcesRestClient,
                 scope.ToString(),
                 filter,
                 expand,
                 context,
-                "MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResource");
+                "MockableResourceHealthArmClient.GetAvailabilityStatusOfChildResourceData");
         }
     }
 }

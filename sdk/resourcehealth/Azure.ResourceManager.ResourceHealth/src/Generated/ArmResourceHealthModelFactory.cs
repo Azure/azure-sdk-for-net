@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Lists actions the user can take based on the current availabilityState of the resource. </summary>
         /// <param name="action"> Recommended action. </param>
         /// <param name="actionUri"> Link to the action. </param>
-        /// <param name="actionUrlComment"> the comment for the Action. </param>
-        /// <param name="actionUrlText"> Substring of action, it describes which text should host the action URL. </param>
+        /// <param name="actionUriComment"> the comment for the Action. </param>
+        /// <param name="actionUriText"> Substring of action, it describes which text should host the action URL. </param>
         /// <returns> A new <see cref="Models.ResourceHealthRecommendedAction"/> instance for mocking. </returns>
-        public static ResourceHealthRecommendedAction ResourceHealthRecommendedAction(string action = default, Uri actionUri = default, string actionUrlComment = default, string actionUrlText = default)
+        public static ResourceHealthRecommendedAction ResourceHealthRecommendedAction(string action = default, Uri actionUri = default, string actionUriComment = default, string actionUriText = default)
         {
-            return new ResourceHealthRecommendedAction(action, actionUri, actionUrlComment, actionUrlText, additionalBinaryDataProperties: null);
+            return new ResourceHealthRecommendedAction(action, actionUri, actionUriComment, actionUriText, additionalBinaryDataProperties: null);
         }
 
         /// <param name="eventStartOn"> Timestamp for when the event started. </param>
@@ -180,6 +180,35 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="targetResourceType"> Resource type within Microsoft cloud. </param>
+        /// <param name="targetResourceId"> Identity for resource within Microsoft cloud. </param>
+        /// <param name="targetRegion"> Impacted resource region name. </param>
+        /// <param name="info"> Additional information. </param>
+        /// <returns> A new <see cref="ResourceHealth.ResourceHealthEventImpactedResourceData"/> instance for mocking. </returns>
+        public static ResourceHealthEventImpactedResourceData ResourceHealthEventImpactedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceType? targetResourceType = default, ResourceIdentifier targetResourceId = default, string targetRegion = default, IEnumerable<ResourceHealthKeyValueItem> info = default)
+        {
+            return new ResourceHealthEventImpactedResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                targetResourceType is null && targetResourceId is null && targetRegion is null && info is null ? default : new EventImpactedResourceProperties(targetResourceType, targetResourceId, targetRegion, (info ?? new ChangeTrackingList<ResourceHealthKeyValueItem>()).ToList(), null));
+        }
+
+        /// <summary> Key value tuple. </summary>
+        /// <param name="key"> Key of tuple. </param>
+        /// <param name="value"> Value of tuple. </param>
+        /// <returns> A new <see cref="Models.ResourceHealthKeyValueItem"/> instance for mocking. </returns>
+        public static ResourceHealthKeyValueItem ResourceHealthKeyValueItem(string key = default, string value = default)
+        {
+            return new ResourceHealthKeyValueItem(key, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="displayName"> The display name. </param>
         /// <param name="dependsOn"> The list of keys on which this entity depends on. </param>
         /// <param name="applicableScenarios"> The list of scenarios applicable to this metadata entity. </param>
@@ -216,35 +245,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 resourceTypes.ToList(),
                 priority,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="targetResourceType"> Resource type within Microsoft cloud. </param>
-        /// <param name="targetResourceId"> Identity for resource within Microsoft cloud. </param>
-        /// <param name="targetRegion"> Impacted resource region name. </param>
-        /// <param name="info"> Additional information. </param>
-        /// <returns> A new <see cref="ResourceHealth.ResourceHealthEventImpactedResourceData"/> instance for mocking. </returns>
-        public static ResourceHealthEventImpactedResourceData ResourceHealthEventImpactedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceType? targetResourceType = default, ResourceIdentifier targetResourceId = default, string targetRegion = default, IEnumerable<ResourceHealthKeyValueItem> info = default)
-        {
-            return new ResourceHealthEventImpactedResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                targetResourceType is null && targetResourceId is null && targetRegion is null && info is null ? default : new EventImpactedResourceProperties(targetResourceType, targetResourceId, targetRegion, (info ?? new ChangeTrackingList<ResourceHealthKeyValueItem>()).ToList(), null));
-        }
-
-        /// <summary> Key value tuple. </summary>
-        /// <param name="key"> Key of tuple. </param>
-        /// <param name="value"> Value of tuple. </param>
-        /// <returns> A new <see cref="Models.ResourceHealthKeyValueItem"/> instance for mocking. </returns>
-        public static ResourceHealthKeyValueItem ResourceHealthKeyValueItem(string key = default, string value = default)
-        {
-            return new ResourceHealthKeyValueItem(key, value, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

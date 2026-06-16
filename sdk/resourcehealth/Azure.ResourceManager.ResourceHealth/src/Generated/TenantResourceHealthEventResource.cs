@@ -24,8 +24,10 @@ namespace Azure.ResourceManager.ResourceHealth
     /// </summary>
     public partial class TenantResourceHealthEventResource : ArmResource
     {
-        private readonly ClientDiagnostics _tenantResourceHealthEventClientDiagnostics;
-        private readonly TenantResourceHealthEvent _tenantResourceHealthEventRestClient;
+        private readonly ClientDiagnostics _eventClientDiagnostics;
+        private readonly Event _eventRestClient;
+        private readonly ClientDiagnostics _securityAdvisoryImpactedResourcesClientDiagnostics;
+        private readonly SecurityAdvisoryImpactedResources _securityAdvisoryImpactedResourcesRestClient;
         private readonly ResourceHealthEventData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/events";
@@ -50,8 +52,10 @@ namespace Azure.ResourceManager.ResourceHealth
         internal TenantResourceHealthEventResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string tenantResourceHealthEventApiVersion);
-            _tenantResourceHealthEventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
-            _tenantResourceHealthEventRestClient = new TenantResourceHealthEvent(_tenantResourceHealthEventClientDiagnostics, Pipeline, Endpoint, tenantResourceHealthEventApiVersion ?? "2025-05-01");
+            _eventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
+            _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Endpoint, tenantResourceHealthEventApiVersion ?? "2025-05-01");
+            _securityAdvisoryImpactedResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResourceHealth", ResourceType.Namespace, Diagnostics);
+            _securityAdvisoryImpactedResourcesRestClient = new SecurityAdvisoryImpactedResources(_securityAdvisoryImpactedResourcesClientDiagnostics, Pipeline, Endpoint, tenantResourceHealthEventApiVersion ?? "2025-05-01");
             ValidateResourceId(id);
         }
 
@@ -115,7 +119,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TenantResourceHealthEventResource>> GetAsync(string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tenantResourceHealthEventClientDiagnostics.CreateScope("TenantResourceHealthEventResource.Get");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("TenantResourceHealthEventResource.Get");
             scope.Start();
             try
             {
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantResourceHealthEventRestClient.CreateGetByTenantIdAndTrackingIdRequest(Id.Name, filter, queryStartTime, context);
+                HttpMessage message = _eventRestClient.CreateGetByTenantIdAndTrackingIdRequest(Id.Name, filter, queryStartTime, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)
@@ -165,7 +169,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TenantResourceHealthEventResource> Get(string filter = default, string queryStartTime = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tenantResourceHealthEventClientDiagnostics.CreateScope("TenantResourceHealthEventResource.Get");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("TenantResourceHealthEventResource.Get");
             scope.Start();
             try
             {
@@ -173,7 +177,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantResourceHealthEventRestClient.CreateGetByTenantIdAndTrackingIdRequest(Id.Name, filter, queryStartTime, context);
+                HttpMessage message = _eventRestClient.CreateGetByTenantIdAndTrackingIdRequest(Id.Name, filter, queryStartTime, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)
@@ -213,7 +217,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TenantResourceHealthEventResource>> FetchDetailsByTenantIdAndTrackingIdAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tenantResourceHealthEventClientDiagnostics.CreateScope("TenantResourceHealthEventResource.FetchDetailsByTenantIdAndTrackingId");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("TenantResourceHealthEventResource.FetchDetailsByTenantIdAndTrackingId");
             scope.Start();
             try
             {
@@ -221,7 +225,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantResourceHealthEventRestClient.CreateFetchDetailsByTenantIdAndTrackingIdRequest(Id.Name, context);
+                HttpMessage message = _eventRestClient.CreateFetchDetailsByTenantIdAndTrackingIdRequest(Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)
@@ -261,7 +265,7 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TenantResourceHealthEventResource> FetchDetailsByTenantIdAndTrackingId(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _tenantResourceHealthEventClientDiagnostics.CreateScope("TenantResourceHealthEventResource.FetchDetailsByTenantIdAndTrackingId");
+            using DiagnosticScope scope = _eventClientDiagnostics.CreateScope("TenantResourceHealthEventResource.FetchDetailsByTenantIdAndTrackingId");
             scope.Start();
             try
             {
@@ -269,7 +273,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tenantResourceHealthEventRestClient.CreateFetchDetailsByTenantIdAndTrackingIdRequest(Id.Name, context);
+                HttpMessage message = _eventRestClient.CreateFetchDetailsByTenantIdAndTrackingIdRequest(Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceHealthEventData> response = Response.FromValue(ResourceHealthEventData.FromResponse(result), result);
                 if (response.Value == null)
@@ -315,7 +319,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new TenantResourceHealthEventGetByTenantIdAndEventIdAsyncCollectionResultOfT(_tenantResourceHealthEventRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetByTenantIdAndEventId");
+            return new SecurityAdvisoryImpactedResourcesGetByTenantIdAndEventIdAsyncCollectionResultOfT(_securityAdvisoryImpactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetByTenantIdAndEventId");
         }
 
         /// <summary>
@@ -348,7 +352,7 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 CancellationToken = cancellationToken
             };
-            return new TenantResourceHealthEventGetByTenantIdAndEventIdCollectionResultOfT(_tenantResourceHealthEventRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetByTenantIdAndEventId");
+            return new SecurityAdvisoryImpactedResourcesGetByTenantIdAndEventIdCollectionResultOfT(_securityAdvisoryImpactedResourcesRestClient, Id.Name, filter, context, "TenantResourceHealthEventResource.GetByTenantIdAndEventId");
         }
 
         /// <summary> Gets a collection of TenantResourceHealthEventImpactedResources in the <see cref="TenantResourceHealthEventResource"/>. </summary>

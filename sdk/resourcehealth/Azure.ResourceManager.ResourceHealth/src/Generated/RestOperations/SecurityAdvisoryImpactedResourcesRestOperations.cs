@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    internal partial class TenantResourceHealthEvent
+    internal partial class SecurityAdvisoryImpactedResources
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of TenantResourceHealthEvent for mocking. </summary>
-        protected TenantResourceHealthEvent()
+        /// <summary> Initializes a new instance of SecurityAdvisoryImpactedResources for mocking. </summary>
+        protected SecurityAdvisoryImpactedResources()
         {
         }
 
-        /// <summary> Initializes a new instance of TenantResourceHealthEvent. </summary>
+        /// <summary> Initializes a new instance of SecurityAdvisoryImpactedResources. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal TenantResourceHealthEvent(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal SecurityAdvisoryImpactedResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByTenantIdAndTrackingIdRequest(string eventTrackingId, string filter, string queryStartTime, RequestContext context)
+        internal HttpMessage CreateGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdRequest(string subscriptionId, string eventTrackingId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.ResourceHealth/events/", false);
             uri.AppendPath(eventTrackingId, true);
+            uri.AppendPath("/listSecurityAdvisoryImpactedResources", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -55,44 +58,15 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (queryStartTime != null)
-            {
-                uri.AppendQuery("queryStartTime", queryStartTime, true);
-            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetByTenantIdRequest(string filter, string queryStartTime, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.ResourceHealth/events", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (queryStartTime != null)
-            {
-                uri.AppendQuery("queryStartTime", queryStartTime, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetByTenantIdRequest(Uri nextPage, string filter, string queryStartTime, RequestContext context)
+        internal HttpMessage CreateNextGetSecurityAdvisoryImpactedResourcesBySubscriptionIdAndEventIdRequest(Uri nextPage, string subscriptionId, string eventTrackingId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -110,7 +84,7 @@ namespace Azure.ResourceManager.ResourceHealth
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
@@ -152,25 +126,6 @@ namespace Azure.ResourceManager.ResourceHealth
             if (_apiVersion != null)
             {
                 uri.UpdateQuery("api-version", _apiVersion);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateFetchDetailsByTenantIdAndTrackingIdRequest(string eventTrackingId, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.ResourceHealth/events/", false);
-            uri.AppendPath(eventTrackingId, true);
-            uri.AppendPath("/fetchEventDetails", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
