@@ -82,3 +82,5 @@ interface CustomBaseTypeInheritedResources {
     Error = ErrorResponse
   >;
 }
+
+@@Azure.ClientGenerator.Core.Legacy.flattenProperty(CustomBaseTypeInheritedResource.properties);

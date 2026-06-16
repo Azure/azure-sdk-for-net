@@ -128,59 +128,6 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void ResourceDataModelWithCustomTrackedResourceBaseOverridesSerializationWhenInputBaseIsMissing()
-        {
-            var trackedResourceModel = InputFactory.Model(
-                "TrackedResource",
-                properties:
-                [
-                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("location", InputPrimitiveType.String),
-                    InputFactory.Property("tags", new InputDictionaryType("dict", InputPrimitiveType.String, InputPrimitiveType.String)),
-                ],
-                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
-
-            var resourceModel = InputFactory.Model(
-                "DdosProtectionPlan",
-                properties:
-                [
-                    InputFactory.Property("properties", InputPrimitiveType.String),
-                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
-                    InputFactory.Property("etag", InputPrimitiveType.String, isReadOnly: true),
-                ],
-                usage: InputModelTypeUsage.Input | InputModelTypeUsage.Output | InputModelTypeUsage.Json);
-            _ = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [trackedResourceModel, resourceModel]);
-            var trackedResourceType = new CSharpType(typeof(TrackedResourceData));
-            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[trackedResourceType] =
-                new SystemObjectModelProvider(trackedResourceType, trackedResourceModel);
-
-            var resourceDataModel = new ResourceDataModelProvider(resourceModel);
-
-            // Reproduce Network's saved-input shape where DdosProtectionPlan has baseModel=null,
-            // but custom C# still declares DdosProtectionPlanData : TrackedResourceData.
-            _ = resourceDataModel.Constructors;
-            _ = resourceDataModel.SerializationProviders.SelectMany(s => s.Methods).ToArray();
-            ManagementMockHelpers.SetCustomCodeView(resourceDataModel, new TrackedResourceDataCustomCodeView());
-
-            var visitor = new TestableInheritableSystemObjectModelVisitor();
-            var result = visitor.InvokePreVisitModel(resourceModel, resourceDataModel);
-
-            Assert.That(result, Is.Not.Null);
-            Assert.That(result!.BaseModelProvider, Is.InstanceOf<SystemObjectModelProvider>());
-
-            var serialization = result.SerializationProviders.OfType<MrwSerializationTypeDefinition>().Single();
-            var jsonModelWriteCore = serialization.Methods.Single(m => m.Signature.Name == "JsonModelWriteCore");
-            Assert.That(jsonModelWriteCore.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Override), Is.True);
-
-            var serializationContent = new TypeProviderWriter(serialization).Write().Content;
-            Assert.That(serializationContent, Does.Contain("protected override void JsonModelWriteCore"));
-            Assert.That(serializationContent, Does.Contain("base.JsonModelWriteCore(writer, options);"));
-        }
-
-        [Test]
         public void ResourceDataReferencesUseRootNamespaceForEquivalentInputModelInstances()
         {
             var (client, models) = InputResourceData.ClientWithResource();
@@ -323,13 +270,6 @@ namespace Azure.Generator.Mgmt.Tests
             protected override string BuildName() => "ResponseTypeData";
             protected override string BuildNamespace() => "Samples.Models";
             protected override string BuildRelativeFilePath() => "ResponseTypeData.cs";
-        }
-
-        private class TrackedResourceDataCustomCodeView : TypeProvider
-        {
-            protected override CSharpType BuildBaseType() => new CSharpType(typeof(TrackedResourceData));
-            protected override string BuildName() => "DdosProtectionPlanData";
-            protected override string BuildRelativeFilePath() => "DdosProtectionPlanData.cs";
         }
     }
 }

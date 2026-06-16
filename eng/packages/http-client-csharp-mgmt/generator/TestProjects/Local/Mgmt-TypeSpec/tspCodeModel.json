@@ -22868,8 +22868,13 @@
           "optional": true,
           "readOnly": false,
           "discriminator": false,
-          "flatten": false,
-          "decorators": [],
+          "flatten": true,
+          "decorators": [
+            {
+              "name": "Azure.ResourceManager.@flattenProperty",
+              "arguments": {}
+            }
+          ],
           "crossLanguageDefinitionId": "MgmtTypeSpec.CustomBaseTypeInheritedResource.properties",
           "serializationOptions": {
             "json": {

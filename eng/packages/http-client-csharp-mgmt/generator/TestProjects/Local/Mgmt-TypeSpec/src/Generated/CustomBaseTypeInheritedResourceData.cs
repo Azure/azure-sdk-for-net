@@ -20,12 +20,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomBaseTypeInheritedResourceData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        public CustomBaseTypeInheritedResourceData(AzureLocation location) : base(location)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CustomBaseTypeInheritedResourceData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -52,7 +46,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> Gets or sets the Description. </summary>
         [WirePath("properties.description")]
-        public string CustomBaseTypeInheritedResourceDescription
+        public string Description
         {
             get
             {

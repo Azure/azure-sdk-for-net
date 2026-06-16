@@ -5,15 +5,11 @@ using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
-using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
-using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -29,14 +25,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             EnsureFrameworkTypeRegistered(systemType);
         }
 
-        if (type is ModelProvider modelProvider && modelProvider is not SystemObjectModelProvider)
+        if (type?.BaseModelProvider is not null && type is not SystemObjectModelProvider)
         {
-            EnsureCustomCodeBaseModelProvider(modelProvider);
-            if (modelProvider.BaseModelProvider is not null)
-            {
-                UpdateRegularModelInheritance(modelProvider);
-                EnsureSystemBaseSerializationOverride(modelProvider);
-            }
+            UpdateRegularModelInheritance(type);
         }
         return type;
     }
@@ -49,14 +40,9 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
             EnsureFrameworkTypeRegistered(systemType);
         }
 
-        if (type is ModelProvider model3 && model3 is not SystemObjectModelProvider)
+        if (type is ModelProvider model3 && model3.BaseModelProvider is not null && model3 is not SystemObjectModelProvider)
         {
-            EnsureCustomCodeBaseModelProvider(model3);
-            if (model3.BaseModelProvider is not null)
-            {
-                UpdateRegularModelInheritance(model3);
-                EnsureSystemBaseSerializationOverride(model3);
-            }
+            UpdateRegularModelInheritance(model3);
         }
 
         return type;
@@ -85,26 +71,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
     }
 
     private HashSet<ModelProvider> _regularUpdated = new();
-
-    private static void EnsureCustomCodeBaseModelProvider(ModelProvider model)
-    {
-        if (model.BaseModelProvider is not null)
-        {
-            return;
-        }
-
-        var customCodeBaseType = model.CustomCodeView?.BaseType;
-        if (customCodeBaseType is null)
-        {
-            return;
-        }
-
-        if (ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap.TryGetValue(customCodeBaseType, out var baseTypeProvider)
-            && baseTypeProvider is SystemObjectModelProvider)
-        {
-            model.Update(name: model.Name, reset: true);
-        }
-    }
 
     private void UpdateRegularModelInheritance(ModelProvider model)
     {
@@ -140,41 +106,6 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
         model.Update(name: model.Name, properties: remainingProperties.ToArray(), reset: true);
 
         _regularUpdated.Add(model);
-    }
-
-    private static void EnsureSystemBaseSerializationOverride(ModelProvider model)
-    {
-        if (model.BaseModelProvider is not SystemObjectModelProvider)
-        {
-            return;
-        }
-
-        foreach (var serialization in model.SerializationProviders.OfType<MrwSerializationTypeDefinition>())
-        {
-            foreach (var method in serialization.Methods.Where(m => m.Signature.Name == "JsonModelWriteCore"))
-            {
-                var modifiers = method.Signature.Modifiers;
-                if (modifiers.HasFlag(MethodSignatureModifiers.Override))
-                {
-                    continue;
-                }
-
-                modifiers &= ~MethodSignatureModifiers.Virtual;
-                modifiers |= MethodSignatureModifiers.Override;
-                method.Signature.Update(modifiers: modifiers);
-
-                var arguments = method.Signature.Parameters.Select(p => p.AsArgument()).ToArray();
-                var bodyStatements = new List<MethodBodyStatement> { Base.Invoke(method.Signature.Name, arguments).Terminate() };
-                if (method.BodyStatements is not null)
-                {
-                    bodyStatements.Add(method.BodyStatements);
-                }
-
-                method.Update(
-                    signature: method.Signature,
-                    bodyStatements: bodyStatements);
-            }
-        }
     }
 
     private static HashSet<string> EnumerateBaseModelProperties(ModelProvider baseModel)

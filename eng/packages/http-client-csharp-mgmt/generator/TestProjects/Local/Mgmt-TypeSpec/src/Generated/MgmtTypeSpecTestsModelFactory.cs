@@ -1551,10 +1551,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="customBaseTypeInheritedResourceDescription"> Gets or sets the Description. </param>
+        /// <param name="description"> Gets or sets the Description. </param>
         /// <param name="eTag"></param>
         /// <returns> A new <see cref="Tests.CustomBaseTypeInheritedResourceData"/> instance for mocking. </returns>
-        public static CustomBaseTypeInheritedResourceData CustomBaseTypeInheritedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string customBaseTypeInheritedResourceDescription = default, string eTag = default)
+        public static CustomBaseTypeInheritedResourceData CustomBaseTypeInheritedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1565,7 +1565,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                customBaseTypeInheritedResourceDescription is null ? default : new CustomBaseTypeInheritedResourceProperties(customBaseTypeInheritedResourceDescription, default),
+                description is null ? default : new CustomBaseTypeInheritedResourceProperties(description, default),
                 eTag,
                 default);
         }
