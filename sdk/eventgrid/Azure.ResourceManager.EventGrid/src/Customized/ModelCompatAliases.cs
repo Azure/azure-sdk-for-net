@@ -66,11 +66,4 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
         }
     }
-
-    public readonly partial struct TlsVersion
-    {
-        public static TlsVersion One0 => _10;
-        public static TlsVersion One1 => _11;
-        public static TlsVersion One2 => _12;
-    }
 }

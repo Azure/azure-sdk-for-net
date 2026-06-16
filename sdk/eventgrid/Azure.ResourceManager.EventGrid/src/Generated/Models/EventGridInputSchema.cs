@@ -38,9 +38,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> CustomEventSchema. </summary>
         public static EventGridInputSchema CustomEventSchema { get; } = new EventGridInputSchema(CustomEventSchemaValue);
 
-        /// <summary> CloudEventSchemaV1_0. </summary>
-        public static EventGridInputSchema CloudEventSchemaV10 { get; } = new EventGridInputSchema(CloudEventSchemaV10Value);
-
         /// <summary> Determines if two <see cref="EventGridInputSchema"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>

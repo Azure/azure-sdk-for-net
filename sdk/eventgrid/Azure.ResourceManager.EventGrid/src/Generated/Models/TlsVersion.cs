@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         private readonly string _value;
         /// <summary> 1.0. </summary>
-        private const string _10Value = "1.0";
+        private const string One0Value = "1.0";
         /// <summary> 1.1. </summary>
-        private const string _11Value = "1.1";
+        private const string One1Value = "1.1";
         /// <summary> 1.2. </summary>
-        private const string _12Value = "1.2";
+        private const string One2Value = "1.2";
 
         /// <summary> Initializes a new instance of <see cref="TlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> 1.0. </summary>
-        public static TlsVersion _10 { get; } = new TlsVersion(_10Value);
+        public static TlsVersion One0 { get; } = new TlsVersion(One0Value);
 
         /// <summary> 1.1. </summary>
-        public static TlsVersion _11 { get; } = new TlsVersion(_11Value);
+        public static TlsVersion One1 { get; } = new TlsVersion(One1Value);
 
         /// <summary> 1.2. </summary>
-        public static TlsVersion _12 { get; } = new TlsVersion(_12Value);
+        public static TlsVersion One2 { get; } = new TlsVersion(One2Value);
 
         /// <summary> Determines if two <see cref="TlsVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

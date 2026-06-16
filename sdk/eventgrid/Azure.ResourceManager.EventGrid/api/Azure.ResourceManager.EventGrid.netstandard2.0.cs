@@ -3272,7 +3272,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public EventDeliverySchema(string value) { throw null; }
-        public static Azure.ResourceManager.EventGrid.Models.EventDeliverySchema CloudEventSchemaV10 { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventDeliverySchema CloudEventSchemaV1_0 { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventDeliverySchema CustomInputSchema { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventDeliverySchema EventGridSchema { get { throw null; } }
@@ -3394,7 +3393,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public EventGridInputSchema(string value) { throw null; }
-        public static Azure.ResourceManager.EventGrid.Models.EventGridInputSchema CloudEventSchemaV10 { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventGridInputSchema CloudEventSchemaV1_0 { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventGridInputSchema CustomEventSchema { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.EventGridInputSchema EventGridSchema { get { throw null; } }
@@ -5739,9 +5737,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.TlsVersion One0 { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.TlsVersion One1 { get { throw null; } }
         public static Azure.ResourceManager.EventGrid.Models.TlsVersion One2 { get { throw null; } }
-        public static Azure.ResourceManager.EventGrid.Models.TlsVersion _10 { get { throw null; } }
-        public static Azure.ResourceManager.EventGrid.Models.TlsVersion _11 { get { throw null; } }
-        public static Azure.ResourceManager.EventGrid.Models.TlsVersion _12 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.EventGrid.Models.TlsVersion other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
