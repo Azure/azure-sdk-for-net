@@ -3010,7 +3010,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="extendedLocations"> The names of extended locations. </param>
         /// <param name="type"> The type of the extended location. </param>
         /// <returns> A new <see cref="Models.ContainerServiceVmSkuLocationInfo"/> instance for mocking. </returns>
-        public static ContainerServiceVmSkuLocationInfo ContainerServiceVmSkuLocationInfo(string location = default, IEnumerable<string> zones = default, IEnumerable<ContainerServiceVmSkuZoneDetails> zoneDetails = default, IEnumerable<string> extendedLocations = default, ContainerServiceExtendedLocationType? @type = default)
+        public static ContainerServiceVmSkuLocationInfo ContainerServiceVmSkuLocationInfo(AzureLocation? location = default, IEnumerable<string> zones = default, IEnumerable<ContainerServiceVmSkuZoneDetails> zoneDetails = default, IEnumerable<string> extendedLocations = default, ContainerServiceExtendedLocationType? @type = default)
         {
             zones ??= new ChangeTrackingList<string>();
             zoneDetails ??= new ChangeTrackingList<ContainerServiceVmSkuZoneDetails>();
