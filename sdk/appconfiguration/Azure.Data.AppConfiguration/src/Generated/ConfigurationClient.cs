@@ -509,50 +509,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Gets a single feature flag. </summary>
-        /// <param name="name"> The name of the feature flag. </param>
-        /// <param name="label"> The label of the feature flag to retrieve. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="tags">
-        /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<FeatureFlag> GetFeatureFlag(string name, string label = default, IEnumerable<FeatureFlagFields> @select = default, string syncToken = default, string acceptDatetime = default, MatchConditions matchConditions = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
-        {
-            Response result = GetFeatureFlag(name, label, @select, syncToken, acceptDatetime, matchConditions, tags, cancellationToken.ToRequestContext());
-            return Response.FromValue((FeatureFlag)result, result);
-        }
-
-        /// <summary> Gets a single feature flag. </summary>
-        /// <param name="name"> The name of the feature flag. </param>
-        /// <param name="label"> The label of the feature flag to retrieve. </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="tags">
-        /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<FeatureFlag>> GetFeatureFlagAsync(string name, string label = default, IEnumerable<FeatureFlagFields> @select = default, string syncToken = default, string acceptDatetime = default, MatchConditions matchConditions = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
-        {
-            Response result = await GetFeatureFlagAsync(name, label, @select, syncToken, acceptDatetime, matchConditions, tags, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((FeatureFlag)result, result);
-        }
-
         /// <summary>
         /// [Protocol Method] Requests the headers and status of the given resource.
         /// <list type="bullet">
@@ -833,38 +789,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Deletes a feature flag. </summary>
-        /// <param name="name"> The name of the feature flag to delete. </param>
-        /// <param name="label"> The label of the feature flag to delete. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<FeatureFlag> DeleteFeatureFlag(string name, string label = default, string syncToken = default, ETag? ifMatch = default, CancellationToken cancellationToken = default)
-        {
-            Response result = DeleteFeatureFlag(name, label, syncToken, ifMatch, cancellationToken.ToRequestContext());
-            return Response.FromValue((FeatureFlag)result, result);
-        }
-
-        /// <summary> Deletes a feature flag. </summary>
-        /// <param name="name"> The name of the feature flag to delete. </param>
-        /// <param name="label"> The label of the feature flag to delete. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<FeatureFlag>> DeleteFeatureFlagAsync(string name, string label = default, string syncToken = default, ETag? ifMatch = default, CancellationToken cancellationToken = default)
-        {
-            Response result = await DeleteFeatureFlagAsync(name, label, syncToken, ifMatch, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((FeatureFlag)result, result);
         }
 
         /// <summary>

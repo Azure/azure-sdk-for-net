@@ -98,6 +98,10 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("GetFeatureFlagsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(MatchConditions), typeof(IEnumerable<>), typeof(CancellationToken))]
     [CodeGenSuppress("GetFeatureFlags", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(MatchConditions), typeof(IEnumerable<>), typeof(RequestContext))]
     [CodeGenSuppress("GetFeatureFlagsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(MatchConditions), typeof(IEnumerable<>), typeof(RequestContext))]
+    [CodeGenSuppress("GetFeatureFlag", typeof(string), typeof(string), typeof(IEnumerable<FeatureFlagFields>), typeof(string), typeof(string), typeof(MatchConditions), typeof(IEnumerable<string>), typeof(CancellationToken))]
+    [CodeGenSuppress("GetFeatureFlagAsync", typeof(string), typeof(string), typeof(IEnumerable<FeatureFlagFields>), typeof(string), typeof(string), typeof(MatchConditions), typeof(IEnumerable<string>), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteFeatureFlag", typeof(string), typeof(string), typeof(string), typeof(ETag?), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteFeatureFlagAsync", typeof(string), typeof(string), typeof(string), typeof(ETag?), typeof(CancellationToken))]
 
     public partial class ConfigurationClient
     {
@@ -873,6 +877,292 @@ namespace Azure.Data.AppConfiguration
                 tags,
                 cancellationToken.ToRequestContext(),
                 "ConfigurationClient.GetFeatureFlags");
+        }
+
+        /// <summary>
+        /// Creates a <see cref="FeatureFlag"/> if the feature flag, uniquely identified by name and label, does not already exist in the configuration store.
+        /// </summary>
+        /// <param name="name">The name of the feature flag.</param>
+        /// <param name="enabled">The enabled state of the feature flag.</param>
+        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the added <see cref="FeatureFlag"/>.</returns>
+        public virtual async Task<Response<FeatureFlag>> AddFeatureFlagAsync(string name, bool? enabled, string label = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            return await AddFeatureFlagAsync(name, new FeatureFlag { Enabled = enabled }, label, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="FeatureFlag"/> if the feature flag, uniquely identified by name and label, does not already exist in the configuration store.
+        /// </summary>
+        /// <param name="name">The name of the feature flag.</param>
+        /// <param name="enabled">The enabled state of the feature flag.</param>
+        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the added <see cref="FeatureFlag"/>.</returns>
+        public virtual Response<FeatureFlag> AddFeatureFlag(string name, bool? enabled, string label = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            return AddFeatureFlag(name, new FeatureFlag { Enabled = enabled }, label, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="FeatureFlag"/> only if the feature flag does not already exist in the configuration store.
+        /// </summary>
+        /// <param name="name">The name of the feature flag.</param>
+        /// <param name="flag">The <see cref="FeatureFlag"/> body to create.</param>
+        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the added <see cref="FeatureFlag"/>.</returns>
+        public virtual async Task<Response<FeatureFlag>> AddFeatureFlagAsync(string name, FeatureFlag flag, string label = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(flag, nameof(flag));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddFeatureFlag)}");
+            scope.AddAttribute(OTelAttributeKey, name);
+            scope.Start();
+
+            try
+            {
+                MatchConditions matchConditions = new MatchConditions { IfNoneMatch = ETag.All };
+                return await PutFeatureFlagAsync(name, flag, label, _syncToken, matchConditions, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="FeatureFlag"/> only if the feature flag does not already exist in the configuration store.
+        /// </summary>
+        /// <param name="name">The name of the feature flag.</param>
+        /// <param name="flag">The <see cref="FeatureFlag"/> body to create.</param>
+        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the added <see cref="FeatureFlag"/>.</returns>
+        public virtual Response<FeatureFlag> AddFeatureFlag(string name, FeatureFlag flag, string label = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(flag, nameof(flag));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(AddFeatureFlag)}");
+            scope.AddAttribute(OTelAttributeKey, name);
+            scope.Start();
+
+            try
+            {
+                MatchConditions matchConditions = new MatchConditions { IfNoneMatch = ETag.All };
+                return PutFeatureFlag(name, flag, label, _syncToken, matchConditions, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="FeatureFlag"/>, uniquely identified by name and label, if it doesn't exist or overwrites the existing feature flag in the configuration store.
+        /// </summary>
+        /// <param name="name">The name of the feature flag.</param>
+        /// <param name="enabled">The enabled state of the feature flag.</param>
+        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the <see cref="FeatureFlag"/> written to the configuration store.</returns>
+        public virtual async Task<Response<FeatureFlag>> SetFeatureFlagAsync(string name, bool? enabled, string label = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            return await SetFeatureFlagAsync(name, new FeatureFlag { Enabled = enabled }, label, onlyIfUnchanged: false, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="FeatureFlag"/>, uniquely identified by name and label, if it doesn't exist or overwrites the existing feature flag in the configuration store.
+        /// </summary>
+        /// <param name="name">The name of the feature flag.</param>
+        /// <param name="enabled">The enabled state of the feature flag.</param>
+        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the <see cref="FeatureFlag"/> written to the configuration store.</returns>
+        public virtual Response<FeatureFlag> SetFeatureFlag(string name, bool? enabled, string label = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            return SetFeatureFlag(name, new FeatureFlag { Enabled = enabled }, label, onlyIfUnchanged: false, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="FeatureFlag"/> if it doesn't exist or overwrites the existing feature flag in the configuration store.
+        /// </summary>
+        /// <param name="name">The name of the feature flag.</param>
+        /// <param name="flag">The <see cref="FeatureFlag"/> body to create or overwrite.</param>
+        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="onlyIfUnchanged">If set to true and the feature flag exists in the configuration store, overwrite it only if the
+        /// passed-in <see cref="FeatureFlag"/> is the same version as the one in the configuration store. The versions are the same if their
+        /// <see cref="FeatureFlag.Etag"/> values match. If they differ, the service returns 412 (precondition failed) and a
+        /// <see cref="RequestFailedException"/> is thrown.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the <see cref="FeatureFlag"/> written to the configuration store.</returns>
+        public virtual async Task<Response<FeatureFlag>> SetFeatureFlagAsync(string name, FeatureFlag flag, string label = default, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(flag, nameof(flag));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetFeatureFlag)}");
+            scope.AddAttribute(OTelAttributeKey, name);
+            scope.Start();
+
+            try
+            {
+                MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = new ETag(flag.Etag) } : default;
+                return await PutFeatureFlagAsync(name, flag, label, _syncToken, matchConditions, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="FeatureFlag"/> if it doesn't exist or overwrites the existing feature flag in the configuration store.
+        /// </summary>
+        /// <param name="name">The name of the feature flag.</param>
+        /// <param name="flag">The <see cref="FeatureFlag"/> body to create or overwrite.</param>
+        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="onlyIfUnchanged">If set to true and the feature flag exists in the configuration store, overwrite it only if the
+        /// passed-in <see cref="FeatureFlag"/> is the same version as the one in the configuration store. The versions are the same if their
+        /// <see cref="FeatureFlag.Etag"/> values match. If they differ, the service returns 412 (precondition failed) and a
+        /// <see cref="RequestFailedException"/> is thrown.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the <see cref="FeatureFlag"/> written to the configuration store.</returns>
+        public virtual Response<FeatureFlag> SetFeatureFlag(string name, FeatureFlag flag, string label = default, bool onlyIfUnchanged = false, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(flag, nameof(flag));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetFeatureFlag)}");
+            scope.AddAttribute(OTelAttributeKey, name);
+            scope.Start();
+
+            try
+            {
+                MatchConditions matchConditions = onlyIfUnchanged ? new MatchConditions { IfMatch = new ETag(flag.Etag) } : default;
+                return PutFeatureFlag(name, flag, label, _syncToken, matchConditions, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a <see cref="FeatureFlag"/> from the configuration store.
+        /// </summary>
+        /// <param name="name">The name of the feature flag.</param>
+        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response indicating the success of the operation.</returns>
+        public virtual async Task<Response> DeleteFeatureFlagAsync(string name, string label = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteFeatureFlag)}");
+            scope.AddAttribute(OTelAttributeKey, name);
+            scope.Start();
+
+            try
+            {
+                return await DeleteFeatureFlagAsync(name, label, _syncToken, ifMatch: default, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a <see cref="FeatureFlag"/> from the configuration store.
+        /// </summary>
+        /// <param name="name">The name of the feature flag.</param>
+        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response indicating the success of the operation.</returns>
+        public virtual Response DeleteFeatureFlag(string name, string label = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(DeleteFeatureFlag)}");
+            scope.AddAttribute(OTelAttributeKey, name);
+            scope.Start();
+
+            try
+            {
+                return DeleteFeatureFlag(name, label, _syncToken, ifMatch: default, cancellationToken.ToRequestContext());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve an existing <see cref="FeatureFlag"/>, uniquely identified by name and label, from the configuration store.
+        /// </summary>
+        /// <param name="name">The name of the feature flag to retrieve.</param>
+        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the retrieved <see cref="FeatureFlag"/>.</returns>
+        public virtual async Task<Response<FeatureFlag>> GetFeatureFlagAsync(string name, string label = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetFeatureFlag)}");
+            scope.AddAttribute(OTelAttributeKey, name);
+            scope.Start();
+
+            try
+            {
+                Response result = await GetFeatureFlagAsync(name, label, @select: default, _syncToken, acceptDatetime: default, matchConditions: default, tags: default, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+                return Response.FromValue((FeatureFlag)result, result);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve an existing <see cref="FeatureFlag"/>, uniquely identified by name and label, from the configuration store.
+        /// </summary>
+        /// <param name="name">The name of the feature flag to retrieve.</param>
+        /// <param name="label">A label used to group this feature flag with others.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A response containing the retrieved <see cref="FeatureFlag"/>.</returns>
+        public virtual Response<FeatureFlag> GetFeatureFlag(string name, string label = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetFeatureFlag)}");
+            scope.AddAttribute(OTelAttributeKey, name);
+            scope.Start();
+
+            try
+            {
+                Response result = GetFeatureFlag(name, label, @select: default, _syncToken, acceptDatetime: default, matchConditions: default, tags: default, cancellationToken.ToRequestContext());
+                return Response.FromValue((FeatureFlag)result, result);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         private (string Name, string Label, string AcceptDatetime, IEnumerable<string> Select, IList<string> Tags) TranslateFeatureFlagSelector(FeatureFlagSelector selector)
