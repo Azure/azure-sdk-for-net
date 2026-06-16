@@ -1624,6 +1624,7 @@ namespace Azure.ResourceManager.Monitor.Models
     public abstract partial class AlertRuleAction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AlertRuleAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AlertRuleAction>
     {
         protected AlertRuleAction() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Monitor.Models.AlertRuleAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AlertRuleAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AlertRuleAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Monitor.Models.AlertRuleAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AlertRuleAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1635,6 +1636,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         protected AlertRuleCondition() { }
         public Azure.ResourceManager.Monitor.Models.RuleDataSource DataSource { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Monitor.Models.AlertRuleCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AlertRuleCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.AlertRuleCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Monitor.Models.AlertRuleCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.AlertRuleCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3267,6 +3269,19 @@ namespace Azure.ResourceManager.Monitor.Models
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.KnownWindowsFirewallLogsDataSourceProfileFilter left, Azure.ResourceManager.Monitor.Models.KnownWindowsFirewallLogsDataSourceProfileFilter right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    public partial class LocationThresholdRuleCondition : Azure.ResourceManager.Monitor.Models.AlertRuleCondition, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.LocationThresholdRuleCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.LocationThresholdRuleCondition>
+    {
+        public LocationThresholdRuleCondition(int failedLocationCount) { }
+        public int FailedLocationCount { get { throw null; } set { } }
+        public System.TimeSpan? WindowSize { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.LocationThresholdRuleCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.LocationThresholdRuleCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.LocationThresholdRuleCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.LocationThresholdRuleCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.LocationThresholdRuleCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.LocationThresholdRuleCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.LocationThresholdRuleCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class LogAnalyticsDestination : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.LogAnalyticsDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.LogAnalyticsDestination>
     {
         public LogAnalyticsDestination() { }
@@ -3407,6 +3422,32 @@ namespace Azure.ResourceManager.Monitor.Models
         Azure.ResourceManager.Monitor.Models.LogsQuotaSpec System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.LogsQuotaSpec>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.LogsQuotaSpec>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.LogsQuotaSpec>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    public partial class ManagementEventAggregationCondition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ManagementEventAggregationCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ManagementEventAggregationCondition>
+    {
+        public ManagementEventAggregationCondition() { }
+        public Azure.ResourceManager.Monitor.Models.MonitorConditionOperator? Operator { get { throw null; } set { } }
+        public double? Threshold { get { throw null; } set { } }
+        public System.TimeSpan? WindowSize { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.ManagementEventAggregationCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ManagementEventAggregationCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ManagementEventAggregationCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.ManagementEventAggregationCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ManagementEventAggregationCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ManagementEventAggregationCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ManagementEventAggregationCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    public partial class ManagementEventRuleCondition : Azure.ResourceManager.Monitor.Models.AlertRuleCondition, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ManagementEventRuleCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ManagementEventRuleCondition>
+    {
+        public ManagementEventRuleCondition() { }
+        public Azure.ResourceManager.Monitor.Models.ManagementEventAggregationCondition Aggregation { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.ManagementEventRuleCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ManagementEventRuleCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ManagementEventRuleCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.ManagementEventRuleCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ManagementEventRuleCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ManagementEventRuleCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ManagementEventRuleCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MetricAlertAction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MetricAlertAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MetricAlertAction>
     {
@@ -5496,11 +5537,57 @@ namespace Azure.ResourceManager.Monitor.Models
         public string MetricNamespace { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public string ResourceLocation { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Monitor.Models.RuleDataSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleDataSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleDataSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Monitor.Models.RuleDataSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleDataSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    public partial class RuleEmailAction : Azure.ResourceManager.Monitor.Models.AlertRuleAction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleEmailAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleEmailAction>
+    {
+        public RuleEmailAction() { }
+        public System.Collections.Generic.IList<string> CustomEmails { get { throw null; } }
+        public bool? SendToServiceOwners { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.RuleEmailAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleEmailAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleEmailAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.RuleEmailAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleEmailAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleEmailAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleEmailAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    public partial class RuleManagementEventDataSource : Azure.ResourceManager.Monitor.Models.RuleDataSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleManagementEventDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleManagementEventDataSource>
+    {
+        public RuleManagementEventDataSource() { }
+        public string ClaimsEmailAddress { get { throw null; } set { } }
+        public string EventName { get { throw null; } set { } }
+        public string EventSource { get { throw null; } set { } }
+        public string Level { get { throw null; } set { } }
+        public string OperationName { get { throw null; } set { } }
+        public string ResourceGroupName { get { throw null; } set { } }
+        public string ResourceProviderName { get { throw null; } set { } }
+        public string Status { get { throw null; } set { } }
+        public string SubStatus { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.RuleManagementEventDataSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleManagementEventDataSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleManagementEventDataSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.RuleManagementEventDataSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleManagementEventDataSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleManagementEventDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleManagementEventDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    public partial class RuleMetricDataSource : Azure.ResourceManager.Monitor.Models.RuleDataSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleMetricDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleMetricDataSource>
+    {
+        public RuleMetricDataSource() { }
+        public string MetricName { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.RuleMetricDataSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleMetricDataSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleMetricDataSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.RuleMetricDataSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleMetricDataSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleMetricDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleMetricDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class RuleResolveConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleResolveConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleResolveConfiguration>
     {
@@ -5516,6 +5603,19 @@ namespace Azure.ResourceManager.Monitor.Models
         Azure.ResourceManager.Monitor.Models.RuleResolveConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleResolveConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleResolveConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleResolveConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    public partial class RuleWebhookAction : Azure.ResourceManager.Monitor.Models.AlertRuleAction, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleWebhookAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleWebhookAction>
+    {
+        public RuleWebhookAction() { }
+        public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
+        public System.Uri ServiceUri { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.RuleWebhookAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleWebhookAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.RuleWebhookAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.RuleWebhookAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleWebhookAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleWebhookAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.RuleWebhookAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScaleRuleMetricDimensionOperationType : System.IEquatable<Azure.ResourceManager.Monitor.Models.ScaleRuleMetricDimensionOperationType>
@@ -5974,6 +6074,30 @@ namespace Azure.ResourceManager.Monitor.Models
         public static implicit operator Azure.ResourceManager.Monitor.Models.SyslogDataSourceStream? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Monitor.Models.SyslogDataSourceStream left, Azure.ResourceManager.Monitor.Models.SyslogDataSourceStream right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    public partial class ThresholdRuleCondition : Azure.ResourceManager.Monitor.Models.AlertRuleCondition, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ThresholdRuleCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ThresholdRuleCondition>
+    {
+        public ThresholdRuleCondition(Azure.ResourceManager.Monitor.Models.MonitorConditionOperator @operator, double threshold) { }
+        public Azure.ResourceManager.Monitor.Models.MonitorConditionOperator Operator { get { throw null; } set { } }
+        public double Threshold { get { throw null; } set { } }
+        public Azure.ResourceManager.Monitor.Models.ThresholdRuleConditionTimeAggregationType? TimeAggregation { get { throw null; } set { } }
+        public System.TimeSpan? WindowSize { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.ThresholdRuleCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ThresholdRuleCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.ThresholdRuleCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Monitor.Models.ThresholdRuleCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ThresholdRuleCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ThresholdRuleCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.ThresholdRuleCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This API is no longer supported.", false)]
+    public enum ThresholdRuleConditionTimeAggregationType
+    {
+        Average = 0,
+        Minimum = 1,
+        Maximum = 2,
+        Total = 3,
+        Last = 4,
     }
     public partial class UserIdentityProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.UserIdentityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.UserIdentityProperties>
     {

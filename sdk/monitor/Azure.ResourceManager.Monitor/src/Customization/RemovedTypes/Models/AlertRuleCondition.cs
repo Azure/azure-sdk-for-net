@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The rule data source. </summary>
         public RuleDataSource DataSource { get; set; }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This API is no longer supported.");
+
         void IJsonModel<AlertRuleCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw new NotSupportedException("This API is no longer supported.");
 
         AlertRuleCondition IJsonModel<AlertRuleCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw new NotSupportedException("This API is no longer supported.");
