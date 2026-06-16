@@ -1,0 +1,7 @@
+directory: specification/keyvault/data-plane/Secrets
+commit: c45023b919d3c5d7d2b5b2e3a81c2484ca6d6e26
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+- specification/keyvault/data-plane/Secrets/common
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
