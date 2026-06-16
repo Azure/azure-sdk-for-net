@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> Move. </summary>
-    internal partial class MoveParam : InternalComputerAction, IJsonModel<MoveParam>
+    public partial class MoveParam : InternalComputerAction, IJsonModel<MoveParam>
     {
         /// <summary> Initializes a new instance of <see cref="MoveParam"/> for deserialization. </summary>
         internal MoveParam()

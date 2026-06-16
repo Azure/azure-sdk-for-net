@@ -16,6 +16,46 @@ namespace Azure.AI.Agents.Persistent
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class AgentsPersistentModelFactory
     {
+        /// <summary> The CreateAgentRequest. </summary>
+        /// <param name="model"> The ID of the model to use. </param>
+        /// <param name="name"> The name of the new agent. </param>
+        /// <param name="description"> The description of the new agent. </param>
+        /// <param name="instructions"> The system instructions for the new agent to use. </param>
+        /// <param name="tools"> The collection of tools to enable for the new agent. </param>
+        /// <param name="toolResources">
+        /// A set of resources that are used by the agent's tools. The resources are specific to the type of tool. For example, the `code_interpreter`
+        /// tool requires a list of file IDs, while the `file_search` tool requires a list of vector store IDs.
+        /// </param>
+        /// <param name="temperature">
+        /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random,
+        /// while lower values like 0.2 will make it more focused and deterministic.
+        /// </param>
+        /// <param name="topP">
+        /// An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass.
+        /// So 0.1 means only the tokens comprising the top 10% probability mass are considered.
+        /// We generally recommend altering this or temperature but not both.
+        /// </param>
+        /// <param name="responseFormat"> The response format of the tool calls used by this agent. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <returns> A new <see cref="Persistent.CreateAgentRequest"/> instance for mocking. </returns>
+        public static CreateAgentRequest CreateAgentRequest(string model = default, string name = default, string description = default, string instructions = default, IEnumerable<ToolDefinition> tools = default, ToolResources toolResources = default, float? temperature = default, float? topP = default, BinaryData responseFormat = default, IDictionary<string, string> metadata = default)
+        {
+            tools ??= new ChangeTrackingList<ToolDefinition>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CreateAgentRequest(
+                model,
+                name,
+                description,
+                instructions,
+                tools.ToList(),
+                toolResources,
+                temperature,
+                topP,
+                responseFormat,
+                metadata,
+                additionalBinaryDataProperties: null);
+        }
 
         /// <summary>
         /// An abstract representation of an input tool definition that an agent can use.
@@ -616,6 +656,77 @@ namespace Azure.AI.Agents.Persistent
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The status of an agent deletion operation. </summary>
+        /// <param name="id"> The ID of the resource specified for deletion. </param>
+        /// <param name="deleted"> A value indicating whether deletion was successful. </param>
+        /// <returns> A new <see cref="Persistent.InternalAgentDeletionStatus"/> instance for mocking. </returns>
+        public static InternalAgentDeletionStatus InternalAgentDeletionStatus(string id = default, bool deleted = default)
+        {
+            return new InternalAgentDeletionStatus(id, deleted, "assistant.deleted", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CreateThreadAndRunRequest. </summary>
+        /// <param name="assistantId"> The ID of the agent for which the thread should be created. </param>
+        /// <param name="thread"> The details used to create the new thread. If no thread is provided, an empty one will be created. </param>
+        /// <param name="overrideModelName"> The overridden model that the agent should use to run the thread. </param>
+        /// <param name="overrideInstructions"> The overridden system instructions the agent should use to run the thread. </param>
+        /// <param name="overrideTools"> The overridden list of enabled tools the agent should use to run the thread. </param>
+        /// <param name="toolResources"> Override the tools the agent can use for this run. This is useful for modifying the behavior on a per-run basis. </param>
+        /// <param name="stream">
+        /// If `true`, returns a stream of events that happen during the Run as server-sent events,
+        /// terminating when the Run enters a terminal state with a `data: [DONE]` message.
+        /// </param>
+        /// <param name="temperature">
+        /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output
+        /// more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// </param>
+        /// <param name="topP">
+        /// An alternative to sampling with temperature, called nucleus sampling, where the model
+        /// considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens
+        /// comprising the top 10% probability mass are considered.
+        /// We generally recommend altering this or temperature but not both.
+        /// </param>
+        /// <param name="maxPromptTokens">
+        /// The maximum number of prompt tokens that may be used over the course of the run. The run will make a best effort to use only
+        /// the number of prompt tokens specified, across multiple turns of the run. If the run exceeds the number of prompt tokens specified,
+        /// the run will end with status `incomplete`. See `incomplete_details` for more info.
+        /// </param>
+        /// <param name="maxCompletionTokens">
+        /// The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort to use only
+        /// the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of completion tokens
+        /// specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
+        /// </param>
+        /// <param name="truncationStrategy"> The strategy to use for dropping messages as the context windows moves forward. </param>
+        /// <param name="toolChoice"> Controls whether or not and which tool is called by the model. </param>
+        /// <param name="responseFormat"> Specifies the format that the model must output. </param>
+        /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <returns> A new <see cref="Persistent.CreateThreadAndRunRequest"/> instance for mocking. </returns>
+        public static CreateThreadAndRunRequest CreateThreadAndRunRequest(string assistantId = default, PersistentAgentThreadCreationOptions thread = default, string overrideModelName = default, string overrideInstructions = default, IEnumerable<ToolDefinition> overrideTools = default, ToolResources toolResources = default, bool? stream = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, bool? parallelToolCalls = default, IDictionary<string, string> metadata = default)
+        {
+            overrideTools ??= new ChangeTrackingList<ToolDefinition>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CreateThreadAndRunRequest(
+                assistantId,
+                thread,
+                overrideModelName,
+                overrideInstructions,
+                overrideTools.ToList(),
+                toolResources,
+                stream,
+                temperature,
+                topP,
+                maxPromptTokens,
+                maxCompletionTokens,
+                truncationStrategy,
+                toolChoice,
+                responseFormat,
+                parallelToolCalls,
+                metadata,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The details used to create a new agent thread. </summary>
         /// <param name="messages"> The initial messages to associate with the new thread. </param>
         /// <param name="toolResources">
@@ -1046,6 +1157,23 @@ namespace Azure.AI.Agents.Persistent
             return new RunCompletionUsage(completionTokens, promptTokens, totalTokens, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The CreateThreadRequest. </summary>
+        /// <param name="messages"> The initial messages to associate with the new thread. </param>
+        /// <param name="toolResources">
+        /// A set of resources that are made available to the agent's tools in this thread. The resources are specific to the
+        /// type of tool. For example, the `code_interpreter` tool requires a list of file IDs, while the `file_search` tool requires
+        /// a list of vector store IDs.
+        /// </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <returns> A new <see cref="Persistent.CreateThreadRequest"/> instance for mocking. </returns>
+        public static CreateThreadRequest CreateThreadRequest(IEnumerable<ThreadMessageOptions> messages = default, ToolResources toolResources = default, IDictionary<string, string> metadata = default)
+        {
+            messages ??= new ChangeTrackingList<ThreadMessageOptions>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CreateThreadRequest(messages.ToList(), toolResources, metadata, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Information about a single thread associated with an agent. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="createdAt"> The Unix timestamp, in seconds, representing when this object was created. </param>
@@ -1067,6 +1195,39 @@ namespace Azure.AI.Agents.Persistent
                 toolResources,
                 metadata,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The status of a thread deletion operation. </summary>
+        /// <param name="id"> The ID of the resource specified for deletion. </param>
+        /// <param name="deleted"> A value indicating whether deletion was successful. </param>
+        /// <returns> A new <see cref="Persistent.ThreadDeletionStatus"/> instance for mocking. </returns>
+        public static ThreadDeletionStatus ThreadDeletionStatus(string id = default, bool deleted = default)
+        {
+            return new ThreadDeletionStatus(id, deleted, "thread.deleted", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CreateMessageRequest. </summary>
+        /// <param name="role">
+        /// The role of the entity that is creating the message. Allowed values include:
+        /// `user`, which indicates the message is sent by an actual user (and should be
+        /// used in most cases to represent user-generated messages), and `assistant`,
+        /// which indicates the message is generated by the agent (use this value to insert
+        /// messages from the agent into the conversation).
+        /// </param>
+        /// <param name="content">
+        /// The content of the initial message. This may be a basic string (if you only
+        /// need text) or an array of typed content blocks (for example, text, image_file,
+        /// image_url, and so on).
+        /// </param>
+        /// <param name="attachments"> A list of files attached to the message, and the tools they should be added to. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <returns> A new <see cref="Persistent.CreateMessageRequest"/> instance for mocking. </returns>
+        public static CreateMessageRequest CreateMessageRequest(MessageRole role = default, BinaryData content = default, IEnumerable<MessageAttachment> attachments = default, IDictionary<string, string> metadata = default)
+        {
+            attachments ??= new ChangeTrackingList<MessageAttachment>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CreateMessageRequest(role, content, attachments.ToList(), metadata, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A single, existing message within an agent thread. </summary>
@@ -1163,6 +1324,96 @@ namespace Azure.AI.Agents.Persistent
         public static MessageTextUriCitationDetails MessageTextUriCitationDetails(string uri = default, string title = default)
         {
             return new MessageTextUriCitationDetails(uri, title, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The status of a thread message deletion operation. </summary>
+        /// <param name="id"> The ID of the resource specified for deletion. </param>
+        /// <param name="deleted"> A value indicating whether deletion was successful. </param>
+        /// <returns> A new <see cref="Persistent.MessageDeletionStatus"/> instance for mocking. </returns>
+        public static MessageDeletionStatus MessageDeletionStatus(string id = default, bool deleted = default)
+        {
+            return new MessageDeletionStatus(id, deleted, "thread.message.deleted", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CreateRunRequest. </summary>
+        /// <param name="assistantId"> The ID of the agent that should run the thread. </param>
+        /// <param name="overrideModelName"> The overridden model name that the agent should use to run the thread. </param>
+        /// <param name="overrideInstructions"> The overridden system instructions that the agent should use to run the thread. </param>
+        /// <param name="additionalInstructions">
+        /// Additional instructions to append at the end of the instructions for the run. This is useful for modifying the behavior
+        /// on a per-run basis without overriding other instructions.
+        /// </param>
+        /// <param name="additionalMessages"> Adds additional messages to the thread before creating the run. </param>
+        /// <param name="overrideTools"> The overridden list of enabled tools that the agent should use to run the thread. </param>
+        /// <param name="toolResources"> The overridden enabled tool resources that the agent should use to run the thread. </param>
+        /// <param name="stream">
+        /// If `true`, returns a stream of events that happen during the Run as server-sent events,
+        /// terminating when the Run enters a terminal state with a `data: [DONE]` message.
+        /// </param>
+        /// <param name="temperature">
+        /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output
+        /// more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// </param>
+        /// <param name="topP">
+        /// An alternative to sampling with temperature, called nucleus sampling, where the model
+        /// considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens
+        /// comprising the top 10% probability mass are considered.
+        /// We generally recommend altering this or temperature but not both.
+        /// </param>
+        /// <param name="maxPromptTokens">
+        /// The maximum number of prompt tokens that may be used over the course of the run. The run will make a best effort to use only
+        /// the number of prompt tokens specified, across multiple turns of the run. If the run exceeds the number of prompt tokens specified,
+        /// the run will end with status `incomplete`. See `incomplete_details` for more info.
+        /// </param>
+        /// <param name="maxCompletionTokens">
+        /// The maximum number of completion tokens that may be used over the course of the run. The run will make a best effort
+        /// to use only the number of completion tokens specified, across multiple turns of the run. If the run exceeds the number of
+        /// completion tokens specified, the run will end with status `incomplete`. See `incomplete_details` for more info.
+        /// </param>
+        /// <param name="truncationStrategy"> The strategy to use for dropping messages as the context windows moves forward. </param>
+        /// <param name="toolChoice"> Controls whether or not and which tool is called by the model. </param>
+        /// <param name="responseFormat"> Specifies the format that the model must output. </param>
+        /// <param name="parallelToolCalls"> If `true` functions will run in parallel during tool use. </param>
+        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <returns> A new <see cref="Persistent.CreateRunRequest"/> instance for mocking. </returns>
+        public static CreateRunRequest CreateRunRequest(string assistantId = default, string overrideModelName = default, string overrideInstructions = default, string additionalInstructions = default, IEnumerable<ThreadMessageOptions> additionalMessages = default, IEnumerable<ToolDefinition> overrideTools = default, ToolResources toolResources = default, bool? stream = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, bool? parallelToolCalls = default, IDictionary<string, string> metadata = default)
+        {
+            additionalMessages ??= new ChangeTrackingList<ThreadMessageOptions>();
+            overrideTools ??= new ChangeTrackingList<ToolDefinition>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CreateRunRequest(
+                assistantId,
+                overrideModelName,
+                overrideInstructions,
+                additionalInstructions,
+                additionalMessages.ToList(),
+                overrideTools.ToList(),
+                toolResources,
+                stream,
+                temperature,
+                topP,
+                maxPromptTokens,
+                maxCompletionTokens,
+                truncationStrategy,
+                toolChoice,
+                responseFormat,
+                parallelToolCalls,
+                metadata,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The SubmitToolOutputsToRunRequest. </summary>
+        /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
+        /// <param name="toolApprovals"> A list of tool approvals allowing data to be sent to tools. </param>
+        /// <param name="stream"> If true, returns a stream of events that happen during the Run as SSE, terminating at `[DONE]`. </param>
+        /// <returns> A new <see cref="Persistent.SubmitToolOutputsToRunRequest"/> instance for mocking. </returns>
+        public static SubmitToolOutputsToRunRequest SubmitToolOutputsToRunRequest(IEnumerable<StructuredToolOutput> toolOutputs = default, IEnumerable<ToolApproval> toolApprovals = default, bool? stream = default)
+        {
+            toolOutputs ??= new ChangeTrackingList<StructuredToolOutput>();
+            toolApprovals ??= new ChangeTrackingList<ToolApproval>();
+
+            return new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), toolApprovals.ToList(), stream, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1716,6 +1967,17 @@ namespace Azure.AI.Agents.Persistent
                 status,
                 statusDetails,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The UploadFileRequest. </summary>
+        /// <param name="data"> The file data, in bytes. </param>
+        /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
+        /// <param name="filename"> The name of the file. </param>
+        /// <returns> A new <see cref="Persistent.UploadFileRequest"/> instance for mocking. </returns>
+        [Experimental("SCME0004")]
+        public static UploadFileRequest UploadFileRequest(FileBinaryContent data = default, PersistentAgentFilePurpose purpose = default, string filename = default)
+        {
+            return new UploadFileRequest(data, purpose, filename);
         }
 
         /// <summary> A vector store is a collection of processed files can be used by the `file_search` tool. </summary>

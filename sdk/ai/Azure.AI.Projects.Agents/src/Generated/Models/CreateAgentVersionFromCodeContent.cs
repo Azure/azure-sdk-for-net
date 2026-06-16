@@ -10,7 +10,7 @@ using System.IO;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> Multipart request body for updating or versioning a code-based agent (POST /agents/{name} and POST /agents/{name}/versions). </summary>
-    internal partial class CreateAgentVersionFromCodeContent
+    public partial class CreateAgentVersionFromCodeContent
     {
         /// <summary> Initializes a new instance of <see cref="CreateAgentVersionFromCodeContent"/>. </summary>
         /// <param name="metadata"> JSON metadata including description and hosted definition. </param>

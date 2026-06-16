@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for a Microsoft Fabric tool as used to configure an agent. </summary>
-    internal partial class MicrosoftFabricPreviewTool : InternalTool, IJsonModel<MicrosoftFabricPreviewTool>
+    public partial class MicrosoftFabricPreviewTool : InternalTool, IJsonModel<MicrosoftFabricPreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="MicrosoftFabricPreviewTool"/> for deserialization. </summary>
         internal MicrosoftFabricPreviewTool()

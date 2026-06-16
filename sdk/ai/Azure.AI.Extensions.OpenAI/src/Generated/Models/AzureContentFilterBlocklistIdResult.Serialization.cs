@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A content filter blocklist ID result. </summary>
-    internal partial class AzureContentFilterBlocklistIdResult : IJsonModel<AzureContentFilterBlocklistIdResult>
+    public partial class AzureContentFilterBlocklistIdResult : IJsonModel<AzureContentFilterBlocklistIdResult>
     {
         /// <summary> Initializes a new instance of <see cref="AzureContentFilterBlocklistIdResult"/> for deserialization. </summary>
         internal AzureContentFilterBlocklistIdResult()

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Summary text. </summary>
-    internal partial class SummaryTextContent : MessageContent
+    public partial class SummaryTextContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="SummaryTextContent"/>. </summary>
         /// <param name="text"> A summary of the reasoning output from the model so far. </param>

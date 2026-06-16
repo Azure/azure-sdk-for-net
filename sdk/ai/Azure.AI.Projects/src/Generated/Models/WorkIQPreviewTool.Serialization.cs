@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A WorkIQ server-side tool. </summary>
-    internal partial class WorkIQPreviewTool : InternalTool, IJsonModel<WorkIQPreviewTool>
+    public partial class WorkIQPreviewTool : InternalTool, IJsonModel<WorkIQPreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="WorkIQPreviewTool"/> for deserialization. </summary>
         internal WorkIQPreviewTool()

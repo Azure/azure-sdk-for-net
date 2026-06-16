@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A content filter evaluation result for a specific source in the response. </summary>
-    internal partial class ContentFilterResult : IJsonModel<ContentFilterResult>
+    public partial class ContentFilterResult : IJsonModel<ContentFilterResult>
     {
         /// <summary> Initializes a new instance of <see cref="ContentFilterResult"/> for deserialization. </summary>
         internal ContentFilterResult()

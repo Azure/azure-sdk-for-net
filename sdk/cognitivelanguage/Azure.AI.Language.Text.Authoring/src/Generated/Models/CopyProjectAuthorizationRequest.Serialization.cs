@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.AI.Language.Text.Authoring
 {
     /// <summary> The CopyProjectAuthorizationRequest. </summary>
-    internal partial class CopyProjectAuthorizationRequest : IJsonModel<CopyProjectAuthorizationRequest>
+    public partial class CopyProjectAuthorizationRequest : IJsonModel<CopyProjectAuthorizationRequest>
     {
         /// <summary> Initializes a new instance of <see cref="CopyProjectAuthorizationRequest"/> for deserialization. </summary>
         internal CopyProjectAuthorizationRequest()

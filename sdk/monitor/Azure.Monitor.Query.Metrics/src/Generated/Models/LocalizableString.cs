@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Monitor.Query.Metrics.Models
 {
     /// <summary> The localizable string class. </summary>
-    internal partial class LocalizableString
+    public partial class LocalizableString
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

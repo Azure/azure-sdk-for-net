@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Namespace. </summary>
-    internal partial class NamespaceToolParam : InternalTool, IJsonModel<NamespaceToolParam>
+    public partial class NamespaceToolParam : InternalTool, IJsonModel<NamespaceToolParam>
     {
         /// <summary> Initializes a new instance of <see cref="NamespaceToolParam"/> for deserialization. </summary>
         internal NamespaceToolParam()

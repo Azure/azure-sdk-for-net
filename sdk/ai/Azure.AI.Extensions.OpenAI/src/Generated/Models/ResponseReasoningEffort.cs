@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum ResponseReasoningEffort
+    public enum ResponseReasoningEffort
     {
         /// <summary> None. </summary>
         None,

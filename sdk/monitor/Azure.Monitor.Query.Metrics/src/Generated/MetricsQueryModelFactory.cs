@@ -55,6 +55,24 @@ namespace Azure.Monitor.Query.Metrics.Models
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The localizable string class. </summary>
+        /// <param name="value"> The invariant value. </param>
+        /// <param name="localizedValue"> The display name. </param>
+        /// <returns> A new <see cref="Models.LocalizableString"/> instance for mocking. </returns>
+        public static LocalizableString LocalizableString(string value = default, string localizedValue = default)
+        {
+            return new LocalizableString(value, localizedValue, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents a metric metadata value. </summary>
+        /// <param name="name"> The name of the metadata. </param>
+        /// <param name="value"> The value of the metadata. </param>
+        /// <returns> A new <see cref="Models.MetadataValue"/> instance for mocking. </returns>
+        public static MetadataValue MetadataValue(LocalizableString name = default, string value = default)
+        {
+            return new MetadataValue(name, value, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Represents a metric value. </summary>
         /// <param name="timeStamp"> The timestamp for the metric value in ISO 8601 format. </param>
         /// <param name="average"> The average value in the time range. </param>

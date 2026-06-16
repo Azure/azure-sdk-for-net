@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Content filter results for the Responses API. </summary>
-    internal partial class AzureContentFilterResultsForResponses : IJsonModel<AzureContentFilterResultsForResponses>
+    public partial class AzureContentFilterResultsForResponses : IJsonModel<AzureContentFilterResultsForResponses>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

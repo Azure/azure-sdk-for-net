@@ -8,7 +8,7 @@
 namespace Azure.Data.AppConfiguration
 {
     /// <summary></summary>
-    internal enum CreateSnapshotRequestContentType
+    public enum CreateSnapshotRequestContentType
     {
         /// <summary> ApplicationVndMicrosoftAppconfigSnapshotJson. </summary>
         ApplicationVndMicrosoftAppconfigSnapshotJson,

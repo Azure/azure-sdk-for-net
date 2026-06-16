@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The HybridSearchOptions. </summary>
-    internal partial class HybridSearchOptions : IJsonModel<HybridSearchOptions>
+    public partial class HybridSearchOptions : IJsonModel<HybridSearchOptions>
     {
         /// <summary> Initializes a new instance of <see cref="HybridSearchOptions"/> for deserialization. </summary>
         internal HybridSearchOptions()

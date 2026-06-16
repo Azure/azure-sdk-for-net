@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
-    internal partial class AzureFunctionTool : InternalTool, IJsonModel<AzureFunctionTool>
+    public partial class AzureFunctionTool : InternalTool, IJsonModel<AzureFunctionTool>
     {
         /// <summary> Initializes a new instance of <see cref="AzureFunctionTool"/> for deserialization. </summary>
         internal AzureFunctionTool()

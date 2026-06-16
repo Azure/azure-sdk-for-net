@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> File path. </summary>
-    internal partial class FilePath : InternalAnnotation, IJsonModel<FilePath>
+    public partial class FilePath : InternalAnnotation, IJsonModel<FilePath>
     {
         /// <summary> Initializes a new instance of <see cref="FilePath"/> for deserialization. </summary>
         internal FilePath()

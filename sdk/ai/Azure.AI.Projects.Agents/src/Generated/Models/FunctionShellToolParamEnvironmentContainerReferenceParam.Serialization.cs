@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> The FunctionShellToolParamEnvironmentContainerReferenceParam. </summary>
-    internal partial class FunctionShellToolParamEnvironmentContainerReferenceParam : FunctionShellToolParamEnvironment, IJsonModel<FunctionShellToolParamEnvironmentContainerReferenceParam>
+    public partial class FunctionShellToolParamEnvironmentContainerReferenceParam : FunctionShellToolParamEnvironment, IJsonModel<FunctionShellToolParamEnvironmentContainerReferenceParam>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellToolParamEnvironmentContainerReferenceParam"/> for deserialization. </summary>
         internal FunctionShellToolParamEnvironmentContainerReferenceParam()

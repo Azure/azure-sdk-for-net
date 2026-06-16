@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    internal enum EasyInputMessageRole
+    public enum EasyInputMessageRole
     {
         /// <summary> User. </summary>
         User,

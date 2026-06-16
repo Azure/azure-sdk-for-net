@@ -14,7 +14,7 @@ using Azure;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The status of a thread deletion operation. </summary>
-    internal partial class ThreadDeletionStatus : IJsonModel<ThreadDeletionStatus>
+    public partial class ThreadDeletionStatus : IJsonModel<ThreadDeletionStatus>
     {
         /// <summary> Initializes a new instance of <see cref="ThreadDeletionStatus"/> for deserialization. </summary>
         internal ThreadDeletionStatus()

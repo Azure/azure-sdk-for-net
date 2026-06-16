@@ -33,6 +33,7 @@ namespace Azure.AI.AnomalyDetector
     [ModelReaderWriterBuildable(typeof(UnivariateChangePointDetectionOptions))]
     [ModelReaderWriterBuildable(typeof(UnivariateChangePointDetectionResult))]
     [ModelReaderWriterBuildable(typeof(UnivariateDetectionOptions))]
+    [ModelReaderWriterBuildable(typeof(UnivariateEntireDetectionResult))]
     [ModelReaderWriterBuildable(typeof(UnivariateLastDetectionResult))]
     [ModelReaderWriterBuildable(typeof(VariableState))]
     [ModelReaderWriterBuildable(typeof(VariableValues))]

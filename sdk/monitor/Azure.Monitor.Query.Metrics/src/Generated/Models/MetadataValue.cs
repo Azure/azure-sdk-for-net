@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Monitor.Query.Metrics.Models
 {
     /// <summary> Represents a metric metadata value. </summary>
-    internal partial class MetadataValue
+    public partial class MetadataValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

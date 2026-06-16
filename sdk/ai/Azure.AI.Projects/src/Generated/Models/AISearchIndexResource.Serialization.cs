@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> A AI Search Index resource. </summary>
-    internal partial class AISearchIndexResource : IJsonModel<AISearchIndexResource>
+    public partial class AISearchIndexResource : IJsonModel<AISearchIndexResource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

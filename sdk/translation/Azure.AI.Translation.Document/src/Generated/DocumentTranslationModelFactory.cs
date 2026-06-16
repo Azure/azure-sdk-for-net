@@ -38,6 +38,24 @@ namespace Azure.AI.Translation.Document
             return new DocumentTranslationInput(source, targets.ToList(), storageUriKind, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Document filter. </summary>
+        /// <param name="prefix">
+        /// A case-sensitive prefix string to filter documents in the source path for
+        /// translation. 
+        /// For example, when using a Azure storage blob Uri, use the prefix
+        /// to restrict sub folders for translation.
+        /// </param>
+        /// <param name="suffix">
+        /// A case-sensitive suffix string to filter documents in the source path for
+        /// translation. 
+        /// This is most often use for file extensions
+        /// </param>
+        /// <returns> A new <see cref="Document.DocumentFilter"/> instance for mocking. </returns>
+        public static DocumentFilter DocumentFilter(string prefix = default, string suffix = default)
+        {
+            return new DocumentFilter(prefix, suffix, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Destination for the finished translated documents. </summary>
         /// <param name="targetUri"> Location of the folder / container with your documents. </param>
         /// <param name="categoryId"> Category / custom system for translation request. </param>
@@ -81,6 +99,34 @@ namespace Azure.AI.Translation.Document
         public static BatchOptions BatchOptions(bool? translateTextWithinImage = default)
         {
             return new BatchOptions(translateTextWithinImage, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Status Summary. </summary>
+        /// <param name="total"> Total count. </param>
+        /// <param name="failed"> Failed count. </param>
+        /// <param name="success"> Number of Success. </param>
+        /// <param name="inProgress"> Number of in progress. </param>
+        /// <param name="notYetStarted"> Count of not yet started. </param>
+        /// <param name="cancelled"> Number of cancelled. </param>
+        /// <param name="totalCharacterCharged"> Total characters charged by the API. </param>
+        /// <param name="totalImageScansSucceeded"> Total image scans charged by the API. </param>
+        /// <param name="totalImageScansFailed"> Total image scans failed. </param>
+        /// <param name="totalImageCharged"> Total images charged by the API. </param>
+        /// <returns> A new <see cref="Document.TranslationStatusSummary"/> instance for mocking. </returns>
+        public static TranslationStatusSummary TranslationStatusSummary(int total = default, int failed = default, int success = default, int inProgress = default, int notYetStarted = default, int cancelled = default, long totalCharacterCharged = default, int? totalImageScansSucceeded = default, int? totalImageScansFailed = default, long? totalImageCharged = default)
+        {
+            return new TranslationStatusSummary(
+                total,
+                failed,
+                success,
+                inProgress,
+                notYetStarted,
+                cancelled,
+                totalCharacterCharged,
+                totalImageScansSucceeded,
+                totalImageScansFailed,
+                totalImageCharged,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> List of supported file formats. </summary>

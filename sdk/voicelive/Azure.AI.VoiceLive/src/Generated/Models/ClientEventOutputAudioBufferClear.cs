@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Client request to clear the avatar output buffer. </summary>
-    internal partial class ClientEventOutputAudioBufferClear : ClientEvent
+    public partial class ClientEventOutputAudioBufferClear : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventOutputAudioBufferClear"/>. </summary>
         public ClientEventOutputAudioBufferClear() : base(ClientEventType.OutputAudioBufferClear)

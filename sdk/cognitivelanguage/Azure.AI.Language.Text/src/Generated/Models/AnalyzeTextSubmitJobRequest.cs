@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The AnalyzeTextSubmitJobRequest. </summary>
-    internal partial class AnalyzeTextSubmitJobRequest
+    public partial class AnalyzeTextSubmitJobRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

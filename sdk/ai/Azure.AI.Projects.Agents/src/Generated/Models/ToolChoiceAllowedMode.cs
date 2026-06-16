@@ -5,7 +5,7 @@
 namespace OpenAI
 {
     /// <summary></summary>
-    internal enum ToolChoiceAllowedMode
+    public enum ToolChoiceAllowedMode
     {
         /// <summary> Auto. </summary>
         Auto,

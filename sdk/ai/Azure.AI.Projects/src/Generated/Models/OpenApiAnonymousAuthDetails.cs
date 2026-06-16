@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Security details for OpenApi anonymous authentication. </summary>
-    internal partial class OpenApiAnonymousAuthDetails : OpenApiAuthDetails
+    public partial class OpenApiAnonymousAuthDetails : OpenApiAuthDetails
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiAnonymousAuthDetails"/>. </summary>
         public OpenApiAnonymousAuthDetails() : base(OpenApiAuthType.Anonymous)

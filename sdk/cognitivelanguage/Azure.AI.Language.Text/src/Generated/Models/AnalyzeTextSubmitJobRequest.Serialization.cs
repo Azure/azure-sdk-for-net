@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.AI.Language.Text
 {
     /// <summary> The AnalyzeTextSubmitJobRequest. </summary>
-    internal partial class AnalyzeTextSubmitJobRequest : IJsonModel<AnalyzeTextSubmitJobRequest>
+    public partial class AnalyzeTextSubmitJobRequest : IJsonModel<AnalyzeTextSubmitJobRequest>
     {
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextSubmitJobRequest"/> for deserialization. </summary>
         internal AnalyzeTextSubmitJobRequest()

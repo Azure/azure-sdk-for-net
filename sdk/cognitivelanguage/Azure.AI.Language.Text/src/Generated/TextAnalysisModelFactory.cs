@@ -1790,6 +1790,26 @@ namespace Azure.AI.Language.Text
             return new SummaryContext(offset, length, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The AnalyzeTextSubmitJobRequest. </summary>
+        /// <param name="displayName"> Name for the task. </param>
+        /// <param name="textInput"> Contains the input to be analyzed. </param>
+        /// <param name="actions"> List of tasks to be performed as part of the LRO. </param>
+        /// <param name="defaultLanguage"> Default language to use for records requesting automatic language detection. </param>
+        /// <param name="cancelAfter"> Optional duration in seconds after which the job will be canceled if not completed. </param>
+        /// <returns> A new <see cref="Text.AnalyzeTextSubmitJobRequest"/> instance for mocking. </returns>
+        public static AnalyzeTextSubmitJobRequest AnalyzeTextSubmitJobRequest(string displayName = default, MultiLanguageTextInput textInput = default, IEnumerable<AnalyzeTextOperationAction> actions = default, string defaultLanguage = default, float? cancelAfter = default)
+        {
+            actions ??= new ChangeTrackingList<AnalyzeTextOperationAction>();
+
+            return new AnalyzeTextSubmitJobRequest(
+                displayName,
+                textInput,
+                actions.ToList(),
+                defaultLanguage,
+                cancelAfter,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary>
         /// The long running task to be performed by the service on the input documents.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.CustomEntitiesOperationAction"/>, <see cref="Text.CustomSingleLabelClassificationOperationAction"/>, <see cref="Text.CustomMultiLabelClassificationOperationAction"/>, <see cref="Text.EntityLinkingOperationAction"/>, <see cref="Text.EntitiesOperationAction"/>, <see cref="Text.HealthcareOperationAction"/>, <see cref="Text.KeyPhraseOperationAction"/>, <see cref="Text.PiiOperationAction"/>, <see cref="Text.SentimentAnalysisOperationAction"/>, <see cref="Text.ExtractiveSummarizationOperationAction"/>, and <see cref="Text.AbstractiveSummarizationOperationAction"/>.

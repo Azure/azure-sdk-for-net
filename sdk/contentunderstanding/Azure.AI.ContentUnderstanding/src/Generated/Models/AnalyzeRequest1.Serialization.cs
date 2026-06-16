@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> The AnalyzeRequest1. </summary>
-    internal partial class AnalyzeRequest1 : IJsonModel<AnalyzeRequest1>
+    public partial class AnalyzeRequest1 : IJsonModel<AnalyzeRequest1>
     {
         /// <summary> Initializes a new instance of <see cref="AnalyzeRequest1"/> for deserialization. </summary>
         internal AnalyzeRequest1()

@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary> The weight type of the model. </summary>
-    internal readonly partial struct FoundryModelWeightType : IEquatable<FoundryModelWeightType>
+    public readonly partial struct FoundryModelWeightType : IEquatable<FoundryModelWeightType>
     {
         private readonly string _value;
         /// <summary> Full weight model. </summary>

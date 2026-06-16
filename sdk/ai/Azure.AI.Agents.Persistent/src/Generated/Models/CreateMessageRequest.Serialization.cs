@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The CreateMessageRequest. </summary>
-    internal partial class CreateMessageRequest : IJsonModel<CreateMessageRequest>
+    public partial class CreateMessageRequest : IJsonModel<CreateMessageRequest>
     {
         /// <summary> Initializes a new instance of <see cref="CreateMessageRequest"/> for deserialization. </summary>
         internal CreateMessageRequest()

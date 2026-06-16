@@ -23,5 +23,28 @@ namespace Azure.Monitor.Query.Logs.Models
         {
             return new LogsTableColumn(name, @type, additionalBinaryDataProperties: null);
         }
+
+        /// <summary> Response to a batch query. </summary>
+        /// <param name="responses"> An array of responses corresponding to each individual request in a batch. </param>
+        /// <returns> A new <see cref="Models.BatchResponse"/> instance for mocking. </returns>
+        public static BatchResponse BatchResponse(IEnumerable<BatchQueryResponse> responses = default)
+        {
+            responses ??= new ChangeTrackingList<BatchQueryResponse>();
+
+            return new BatchResponse(responses.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Contains the batch query response and the headers, id, and status of the request. </summary>
+        /// <param name="id"> Unique ID corresponding to each request in the batch. </param>
+        /// <param name="status"> The HTTP status code of the response. </param>
+        /// <param name="body"> Contains the tables, columns &amp; rows resulting from a query. </param>
+        /// <param name="headers"> Dictionary of &lt;string&gt;. </param>
+        /// <returns> A new <see cref="Models.BatchQueryResponse"/> instance for mocking. </returns>
+        public static BatchQueryResponse BatchQueryResponse(string id = default, int? status = default, LogsBatchQueryResult body = default, IDictionary<string, string> headers = default)
+        {
+            headers ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BatchQueryResponse(id, status, body, headers, additionalBinaryDataProperties: null);
+        }
     }
 }

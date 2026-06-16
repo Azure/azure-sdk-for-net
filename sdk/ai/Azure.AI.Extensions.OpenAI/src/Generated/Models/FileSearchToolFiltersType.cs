@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum FileSearchToolFiltersType
+    public enum FileSearchToolFiltersType
     {
         /// <summary> Eq. </summary>
         Eq,

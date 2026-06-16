@@ -9,7 +9,7 @@ using System.Linq;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The ItemFieldToolSearchOutput. </summary>
-    internal partial class ItemFieldToolSearchOutput : ItemField
+    public partial class ItemFieldToolSearchOutput : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldToolSearchOutput"/>. </summary>
         /// <param name="id"> The unique ID of the tool search output item. </param>
