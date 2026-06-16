@@ -204,7 +204,7 @@ internal class InheritableSystemObjectModelVisitor : ScmLibraryVisitor
                 var bodyStatements = new List<MethodBodyStatement> { Base.Invoke(method.Signature.Name, arguments).Terminate() };
                 if (method.BodyStatements is not null)
                 {
-                    bodyStatements.Add(method.BodyStatements);
+                    bodyStatements.AddRange(method.BodyStatements);
                 }
 
                 method.Update(
