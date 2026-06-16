@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 throw new FormatException($"The model {nameof(EventSubscriptionFullUri)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EndpointUri))
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpointUrl"u8);
-                writer.WriteStringValue(EndpointUri);
+                writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -129,13 +129,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            string endpointUri = default;
+            Uri endpoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("endpointUrl"u8))
                 {
-                    endpointUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endpoint = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -143,7 +147,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EventSubscriptionFullUri(endpointUri, additionalBinaryDataProperties);
+            return new EventSubscriptionFullUri(endpoint, additionalBinaryDataProperties);
         }
     }
 }

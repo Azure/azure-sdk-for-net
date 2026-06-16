@@ -2587,7 +2587,6 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static Azure.ResourceManager.EventGrid.Models.EventHubEventSubscriptionDestination EventHubEventSubscriptionDestination(Azure.Core.ResourceIdentifier resourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> deliveryAttributeMappings = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.EventSubscriptionDestination EventSubscriptionDestination(string endpointType = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.EventSubscriptionFilter EventSubscriptionFilter(string subjectBeginsWith = null, string subjectEndsWith = null, System.Collections.Generic.IEnumerable<string> includedEventTypes = null, bool? isSubjectCaseSensitive = default(bool?), bool? isAdvancedFilteringOnArraysEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventGrid.Models.AdvancedFilter> advancedFilters = null) { throw null; }
-        public static Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri EventSubscriptionFullUri(string endpointUri = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri EventSubscriptionFullUri(System.Uri endpoint = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentity EventSubscriptionIdentity(Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentityType? identityType = default(Azure.ResourceManager.EventGrid.Models.EventSubscriptionIdentityType?), string userAssignedIdentity = null, string federatedClientId = null) { throw null; }
         public static Azure.ResourceManager.EventGrid.Models.EventSubscriptionRetryPolicy EventSubscriptionRetryPolicy(int? maxDeliveryAttempts = default(int?), int? eventTimeToLiveInMinutes = default(int?)) { throw null; }
@@ -3804,7 +3803,6 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         internal EventSubscriptionFullUri() { }
         public System.Uri Endpoint { get { throw null; } }
-        public string EndpointUri { get { throw null; } }
         protected virtual Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.EventGrid.Models.EventSubscriptionFullUri PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

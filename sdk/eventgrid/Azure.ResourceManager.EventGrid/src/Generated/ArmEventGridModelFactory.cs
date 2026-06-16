@@ -609,11 +609,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new WebhookUpdatePartnerDestinationInfo(default, default, endpointUri is null && endpointBaseUri is null && clientAuthentication is null ? default : new WebhookPartnerDestinationProperties(endpointUri, endpointBaseUri, clientAuthentication, default));
         }
 
-        /// <param name="endpointUri"> The URL that represents the endpoint of the destination of an event subscription. </param>
+        /// <param name="endpoint"> The URL that represents the endpoint of the destination of an event subscription. </param>
         /// <returns> A new <see cref="Models.EventSubscriptionFullUri"/> instance for mocking. </returns>
-        public static EventSubscriptionFullUri EventSubscriptionFullUri(string endpointUri = default)
+        public static EventSubscriptionFullUri EventSubscriptionFullUri(Uri endpoint = default)
         {
-            return new EventSubscriptionFullUri(endpointUri, default);
+            return new EventSubscriptionFullUri(endpoint, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2489,15 +2489,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                     expireOnIfNotActivated,
                     default),
                 default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.EventSubscriptionFullUri"/>. </summary>
-        /// <param name="endpoint"> The URL that represents the endpoint of the destination of an event subscription. </param>
-        /// <returns> A new <see cref="Models.EventSubscriptionFullUri"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EventSubscriptionFullUri EventSubscriptionFullUri(Uri endpoint = default)
-        {
-            return new EventSubscriptionFullUri(default, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventGrid.EventGridDomainData"/>. </summary>
