@@ -72,7 +72,7 @@ Console.WriteLine($"Appended transaction with Id: {transactionId}");
 Since Azure confidential ledger is a distributed system, rare transient failures may cause writes to be lost. For entries that must be preserved, it is advisable to verify that the write became durable. Note: It may be necessary to call `GetTransactionStatus` multiple times until it returns a "Committed" status. However, when calling `PostLedgerEntry`, a successful result indicates that the status is "Committed".
 
 ```C# Snippet:GetStatus
-Response statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+Response statusResponse = ledgerClient.GetTransactionStatus(transactionId, new RequestContext());
 
 string status = JsonDocument.Parse(statusResponse.Content)
     .RootElement
@@ -84,7 +84,7 @@ Console.WriteLine($"Transaction status: {status}");
 // Wait for the entry to be committed
 while (status == "Pending")
 {
-    statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+    statusResponse = ledgerClient.GetTransactionStatus(transactionId, new RequestContext());
     status = JsonDocument.Parse(statusResponse.Content)
         .RootElement
         .GetProperty("state")
@@ -107,7 +107,7 @@ No additional configuration is required to enable this behavior.
 State changes to the a confidential ledger are saved in a data structure called a Merkle tree. To cryptographically verify that writes were correctly saved, a Merkle proof, or receipt, can be retrieved for any transaction id.
 
 ```C# Snippet:GetReceipt
-Response receiptResponse = ledgerClient.GetReceipt(transactionId);
+Response receiptResponse = ledgerClient.GetReceipt(transactionId, new RequestContext());
 string receiptJson = new StreamReader(receiptResponse.ContentStream).ReadToEnd();
 
 Console.WriteLine(receiptJson);
@@ -149,7 +149,7 @@ bool loaded = false;
 while (!loaded)
 {
     // Provide both the transactionId and collectionId.
-    getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
+    getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId, new RequestContext());
     rootElement = JsonDocument.Parse(getByCollectionResponse.Content).RootElement;
     loaded = rootElement.GetProperty("state").GetString() != "Loading";
 }
@@ -162,7 +162,7 @@ string contents = rootElement
 Console.WriteLine(contents); // "Hello world!"
 
 // Now just provide the transactionId.
-getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId);
+getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, null, new RequestContext());
 
 string collectionId2 = JsonDocument.Parse(getByCollectionResponse.Content)
     .RootElement
@@ -197,7 +197,7 @@ transactionId = firstPostOperation.Id;
 status = "Pending";
 while (status == "Pending")
 {
-    statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+    statusResponse = ledgerClient.GetTransactionStatus(transactionId, new RequestContext());
     status = JsonDocument.Parse(statusResponse.Content)
         .RootElement
         .GetProperty("state")
@@ -205,7 +205,7 @@ while (status == "Pending")
 }
 
 // The ledger entry written at the transactionId in firstResponse is retrieved from the default collection.
-Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
+Response getResponse = ledgerClient.GetLedgerEntry(transactionId, null, new RequestContext());
 
 // Try until the entry is available.
 loaded = false;
@@ -222,7 +222,7 @@ while (!loaded)
     }
     else
     {
-        getResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
+        getResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId, new RequestContext());
     }
 }
 
@@ -235,7 +235,7 @@ string firstEntryContents = JsonDocument.Parse(getResponse.Content)
 Console.WriteLine(firstEntryContents); // "Hello world 0"
 
 // This will return the latest entry available in the default collection.
-getResponse = ledgerClient.GetCurrentLedgerEntry();
+getResponse = ledgerClient.GetCurrentLedgerEntry(null, new RequestContext());
 
 // Try until the entry is available.
 loaded = false;
@@ -252,7 +252,7 @@ while (!loaded)
     }
     else
     {
-        getResponse = ledgerClient.GetCurrentLedgerEntry();
+        getResponse = ledgerClient.GetCurrentLedgerEntry(null, new RequestContext());
     }
 }
 
@@ -261,7 +261,7 @@ Console.WriteLine($"The latest ledger entry from the default collection is {late
 // The ledger entry written at collectionTransactionId is retrieved from the collection 'collection'.
 string collectionTransactionId = collectionPostOperation.Id;
 
-getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
+getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection", new RequestContext());
 // Try until the entry is available.
 loaded = false;
 element = default;
@@ -277,14 +277,14 @@ while (!loaded)
     }
     else
     {
-        getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
+        getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection", new RequestContext());
     }
 }
 
 Console.WriteLine(collectionEntry); // "Hello world collection 0"
 
 // This will return the latest entry available in the collection.
-getResponse = ledgerClient.GetCurrentLedgerEntry("my collection");
+getResponse = ledgerClient.GetCurrentLedgerEntry("my collection", new RequestContext());
 string latestCollection = JsonDocument.Parse(getResponse.Content)
     .RootElement
     .GetProperty("contents")
@@ -338,7 +338,7 @@ ledgerClient.CreateOrUpdateLedgerUser(
 One may want to validate details about the confidential ledger for a variety of reasons. For example, you may want to view details about how Microsoft may manage your confidential ledger as part of [Confidential Consortium Framework governance](https://microsoft.github.io/CCF/main/governance/index.html), or verify that your confidential ledger is indeed running in SGX enclaves. A number of client methods are provided for these use cases.
 
 ```C# Snippet:Consortium
-Pageable<BinaryData> consortiumResponse = ledgerClient.GetConsortiumMembers();
+Pageable<BinaryData> consortiumResponse = ledgerClient.GetConsortiumMembers(new RequestContext());
 foreach (var page in consortiumResponse)
 {
     string membersJson = page.ToString();
@@ -348,13 +348,13 @@ foreach (var page in consortiumResponse)
 
 // The constitution is a collection of JavaScript code that defines actions available to members,
 // and vets proposals by members to execute those actions.
-Response constitutionResponse = ledgerClient.GetConstitution();
+Response constitutionResponse = ledgerClient.GetConstitution(new RequestContext());
 string constitutionJson = new StreamReader(constitutionResponse.ContentStream).ReadToEnd();
 
 Console.WriteLine(constitutionJson);
 
 // Enclave quotes contain material that can be used to cryptographically verify the validity and contents of an enclave.
-Response enclavesResponse = ledgerClient.GetEnclaveQuotes();
+Response enclavesResponse = ledgerClient.GetEnclaveQuotes(new RequestContext());
 string enclavesJson = new StreamReader(enclavesResponse.ContentStream).ReadToEnd();
 
 Console.WriteLine(enclavesJson);
