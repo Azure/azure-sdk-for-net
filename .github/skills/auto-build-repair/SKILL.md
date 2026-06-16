@@ -1,12 +1,12 @@
 ---
 name: auto-build-repair
-description: Headless, bounded repair of custom-code build failures in an already-generated Azure SDK for .NET PR. Patches ONLY custom (non-generated) code until the package builds, using the generator-agent MCP build-fix tools. Used by the Copilot cloud agent on release-planner-created "Auto SDK PRs" labeled `auto-sdk-build-fix`. Never edits spec inputs (client.tsp/tspconfig.yaml) and never moves the pinned spec commit.
+description: "Headless, bounded repair of custom-code build failures in an already-generated Azure SDK PR. Thin wrapper over the shared azure-sdk-mcp:azsdk_customized_code_update engine in repair mode. WHEN: Copilot cloud agent runs on a release-planner Auto SDK PR labeled `auto-sdk-build-fix` that fails to build because of custom (non-generated) code. DO NOT USE FOR: full TypeSpec migrations, spec edits, API design review, manual fixing. INVOKES: azure-sdk-mcp:azsdk_customized_code_update."
 ---
 # Auto Build Repair
 
-Purpose-built, **headless** skill that repairs an **already-generated Azure SDK for .NET pull request** whose build fails because of **custom (non-generated) code** that has drifted from the regenerated surface.
+Purpose-built, **headless** skill that repairs an **already-generated Azure SDK pull request** whose build fails because of **custom (non-generated) code** that has drifted from the regenerated surface.
 
-This is NOT a migration. The SDK PR already exists, the TypeSpec source is already pinned via `tsp-location.yaml`, and most of the diff is generated code. Your only job is to patch the package's **custom code** (and commit any deterministic regenerated `Generated/` output) until the package builds — then stop.
+This is NOT a migration. The SDK PR already exists, the TypeSpec source is already pinned via `tsp-location.yaml`, and most of the diff is generated code. Your only job is to drive the shared **`azure-sdk-mcp:azsdk_customized_code_update`** engine — in **repair** mode — until the package builds, then stop. **Do not hand-edit code and do not use any other fix engine** (e.g. the per-language generator-agent); the cross-language design centralizes the fix loop in this one shared tool.
 
 ## When Invoked
 
@@ -14,112 +14,83 @@ The Copilot cloud agent runs this skill on an **Auto SDK PR** created by the rel
 
 **This skill runs non-interactively in an ephemeral environment. Never prompt the user for input** (no spec repo path, no confirmations). If you cannot proceed within scope, stop and emit structured guidance (see [Stop Conditions](#stop-conditions)).
 
+## The engine: `azure-sdk-mcp:azsdk_customized_code_update`
+
+This skill is a **thin wrapper**. All classification → fix → regenerate → rebuild logic lives inside the shared `azure-sdk-mcp:azsdk_customized_code_update` tool, which already handles .NET (partial classes / `[CodeGen*]`), Python (`_patch.py`), and Java (`*Customization.java`). Do **not** replicate its behavior by editing files yourself, and do **not** invoke a per-language generator-agent — the design deliberately uses this single shared engine.
+
+Invoke it in **`repair` mode**, which:
+- operates against `packagePath` with the TypeSpec source pulled at the **pinned `tsp-location.yaml` commit** (no manual spec checkout);
+- **forbids spec-input edits** — never edits `client.tsp` / `tspconfig.yaml` and never moves the pinned commit;
+- **allows regeneration**, so a custom-code fix may deterministically change `Generated/`;
+- runs **fully non-interactively** (no prompts) and returns a **structured result**;
+- if the only viable fix is a spec/decorator change, **stops and returns guidance** rather than attempting it.
+
+### Call shape
+
+```
+azure-sdk-mcp:azsdk_customized_code_update(
+  mode:                 "repair",        // forbids spec-input edits, keeps regeneration
+  packagePath:          "<failing SDK package dir>",
+  customizationRequest: "<the build errors / failure context from the PR>",
+  // tspProjectPath resolves from the pinned tsp-location.yaml commit; do not point it at an edited spec.
+  maxIterations:        <bound>,         // pass the configured iteration bound (default if absent)
+  wallClockBudget:      <bound>          // pass the configured time budget (default if absent)
+)
+```
+
+Pass the **build error output** as `customizationRequest`. Pass `packagePath` for the single failing package (it is already scoped — do not widen to other packages). Supply `maxIterations` / `wallClockBudget` from the repair flow's bounds; otherwise rely on the tool defaults.
+
+> The repair-specific inputs (`mode: "repair"`, `maxIterations`, `wallClockBudget`, structured result, diff manifest) are the additive, backward-compatible changes proposed for the shared tool in the design (§6). Until they ship, invoke the closest available form and still honor the scope rules below.
+
 ## Scope — read this first
 
 | Allowed | Forbidden |
 |---------|-----------|
-| Edit the failing package's **custom (non-generated) code** (`.cs` partial classes, `[CodeGen*]` attributes, backward-compat shims). | Edit any **spec input**: `client.tsp`, `tspconfig.yaml`, `main.tsp`, or any TypeSpec source. |
-| **Regenerate** `Generated/` from the **unchanged pinned** `tsp-location.yaml` commit, and **commit** the deterministic result. | **Move the pinned spec commit** in `tsp-location.yaml` (the `commit`/`repo`/`directory` fields). |
-| Add/adjust customization files under the package's `Custom/` (or equivalent) folders. | Hand-edit files under `Generated/`. |
-| Add backward-compat shims for ApiCompat breaks. | Touch `.github/`, `eng/`, shared props/targets, pipeline files, package metadata, or secrets. |
+| Drive `azsdk_customized_code_update` (repair mode) to patch the failing package's **custom (non-generated) code**. | Edit any **spec input**: `client.tsp`, `tspconfig.yaml`, `main.tsp`, or any TypeSpec source. |
+| Let the tool **regenerate** `Generated/` from the **unchanged pinned** commit, and **commit** the deterministic result. | **Move the pinned spec commit** in `tsp-location.yaml` (the `commit`/`repo`/`directory` fields). |
+| Commit the tool's custom-code changes + regenerated output as reviewable commits. | Hand-edit code (custom or generated) to "help" the tool; let the engine own the edits. |
+| Re-invoke the tool on an already-partially-repaired branch (it is idempotent). | Touch `.github/`, `eng/`, shared props/targets, pipeline files, package metadata, or secrets. |
 
-**Custom code only.** If the only viable fix is a spec/decorator (Phase-A) change — e.g. a naming fix that must live in `client.tsp` via `@@clientName`, or `@@access` — that belongs in a **separate spec-repo PR** and is **out of scope**. Stop and report (see [Stop Conditions](#stop-conditions)); do not attempt it.
+**Custom code only.** If the only viable fix is a spec/decorator (Phase-A) change — e.g. a naming fix that must live in `client.tsp` via `@@clientName`, or `@@access` — that belongs in a **separate spec-repo PR** and is **out of scope**. The tool will stop and return guidance; surface it (see [Stop Conditions](#stop-conditions)) and do not attempt it.
 
-**Regeneration is expected, not a violation.** Fixing custom code that carries generator signals (`[CodeGenType]`, `[CodeGenSuppress]`, `[CodeGenMember]`, `[CodeGenSerialization]`) legitimately changes `Generated/` as a deterministic downstream effect. You **must commit** the regenerated `Generated/` so the repo's existing generated-code-diff check (`eng/scripts/CodeChecks.ps1` → `/t:GenerateCode` + `git diff --exit-code`) stays green. The guard is "`Generated/` is *reproducible from unchanged inputs*", not "`Generated/` is frozen".
-
-## MCP Server (generator-agent)
-
-This skill uses the deterministic build-fix tools from the `generator-agent` MCP server (`sdk/tools/Azure.GeneratorAgent`), already provisioned in the cloud-agent environment. Use **only** the build-fix-loop subset below — do not invoke migration-only tools (`pregen_cleanup`, `migrate_test_samples`, `finalize_migration`, `commit_iteration`, `validate_tsp_config`).
-
-| Tool | When to Use | What It Does |
-|------|-------------|--------------|
-| `discover_project` | First step — to resolve package paths and `tsp-location.yaml` fields | Returns project context (plane, package/service name, custom code folder, Generated/ paths, pinned commit). Ignore any spec-repo prompt — this flow never needs a local spec checkout. |
-| `snapshot_generated` | Immediately after the first regeneration, before the fix loop | SHA-256 snapshot of `Generated/`, enabling auto-verification in later `build_and_classify` calls. |
-| `build_and_classify` | First step of **every** iteration | Runs `dotnet build`, classifies each error as deterministic vs requires-reasoning. |
-| `classify_errors` | Re-classify after partial fixes | Classifies errors against the deterministic fix registry. |
-| `batch_fix` | After deterministic errors are identified | Applies multiple deterministic fixes in one call. |
-| `add_using_directive` | `CS0246`/`CS0103` for a known type | Adds a missing `using`. |
-| `remove_using_directive` | `CS0246` for stale `*.Rest.*` / `Autorest.*` namespaces | Removes matching `using` directives. |
-| `nullable_annotation_fix` | `CS8625`/`CS8600` | Adds `?` nullable annotation. |
-| `rename_codegen_type` | `CS0246` for a `[CodeGenType]` that no longer matches the generated name | Updates `[CodeGenType]` to match generated type. |
-| `add_codegen_suppress` | `CS0111` (custom + generated member clash) | Adds `[CodeGenSuppress]` to the custom partial. |
-| `fetch_to_fromlro` | `CS0103`/`CS1061` for custom LRO `Fetch` calls | Replaces `Fetch(response)` with `Model.FromLroResponse(response)`. |
-| `verify_generated_unchanged` | After the fix loop completes | Confirms no `Generated/` files were hand-modified outside regeneration. |
-
-Prefer MCP tools for deterministic fixes; only hand-edit custom code for errors classified as requires-reasoning.
+**Regeneration is expected, not a violation.** Fixing custom code that carries generator signals legitimately changes `Generated/` as a deterministic downstream effect. The regenerated `Generated/` **must be committed** so the repo's existing generated-code-diff check (.NET: `eng/scripts/CodeChecks.ps1` → `/t:GenerateCode` + `git diff --exit-code`) stays green. The guard is "`Generated/` is *reproducible from unchanged inputs*", not "`Generated/` is frozen".
 
 ## Bounds
 
-- **Max 10 build-fix iterations.** If the error count is not decreasing after 3 consecutive iterations, stop and report.
-- Stay within the cloud-agent wall-clock budget. If exhausted, commit progress made so far and report remaining errors.
-- Do not expand scope to other packages — `discover_project` already targets the single failing package.
+- Pass the configured `maxIterations` / `wallClockBudget` to the tool; do not loop the tool unbounded yourself.
+- If the tool reports it is still failing after exhausting bounds, **commit progress made so far and report** — do not switch to manual fixing.
+- Do not expand scope to other packages — `packagePath` already targets the single failing package.
 
-## Repair Loop
+## Workflow
 
 ```
-SETUP:
-  0. Call `discover_project` to resolve the package path, custom-code folder, and pinned tsp-location.yaml fields.
-  1. Regenerate once from the PINNED commit:  dotnet build /t:GenerateCode
-     (remote mode — uses the commit already in tsp-location.yaml; do NOT pass a local spec repo,
-      do NOT change tsp-location.yaml).
-  2. Call `snapshot_generated` to lock down Generated/.
-
-LOOP (max 10 iterations):
-  3. Call `build_and_classify`.
-  4. IF zero errors → EXIT LOOP (go to FINALIZE).
-  5. IF error count not decreasing after 3 iterations → STOP and report (see Stop Conditions).
-  6. Split errors into deterministic vs requires-reasoning.
-  7. Apply ALL deterministic fixes via `batch_fix` / targeted fixers.
-  8. For requires-reasoning errors, edit ONLY custom code (see Drift & ApiCompat patterns below).
-     IF the only viable fix is a spec/decorator change → STOP and report (out of scope).
-  9. IF you changed any `[CodeGen*]` attribute or added/removed/renamed a custom file carrying
-     generator signals → regenerate:  dotnet build /t:GenerateCode  (pinned commit, no spec edits).
-     Customization-only `.cs` edits with no generator attributes → no regeneration needed.
- 10. GOTO 3.
-
-FINALIZE:
- 11. Call `verify_generated_unchanged` to confirm no hand edits leaked into Generated/.
- 12. Ensure the regenerated Generated/ is committed alongside the custom-code edits.
+1. Identify the failing `packagePath` and collect the build-error output from the PR.
+2. Call azure-sdk-mcp:azsdk_customized_code_update with:
+      mode = "repair", packagePath, customizationRequest = <build errors>, plus bounds.
+   The tool classifies, patches ONLY custom code, regenerates from the pinned commit, and rebuilds.
+3. Inspect the tool's structured result:
+      - SUCCESS (build green) → ensure custom-code edits AND regenerated Generated/ are committed. Go to 5.
+      - STILL FAILING but progressing and bounds remain → re-invoke (step 2) with the updated error context (idempotent).
+      - OUT OF SCOPE / generator bug / bounds exhausted → STOP (see Stop Conditions).
+4. Never hand-edit to finish the job; if the tool cannot, it is a stop condition.
+5. Summarize the result (see below). Fixes land as reviewable commits — no auto-merge.
 ```
-
-> **Generated/ auto-guard**: once a snapshot exists, every `build_and_classify` verifies that no `Generated/` files were hand-modified; the deterministic fixers also refuse to write inside `Generated/`. Let regeneration (`/t:GenerateCode`) — not manual edits — produce any `Generated/` change.
-
-## Customization-drift patterns (custom code only)
-
-These are the common drift failures. All fixes live in the package's custom code; never edit `Generated/` or the spec.
-
-- **Stale reference to a renamed/removed generated symbol** — custom code references a model/property/method that the new surface renamed or dropped. Update the custom reference to the new name, or delete the custom member if the generated type no longer exists, then regenerate if a `[CodeGen*]` attribute was involved.
-- **`[CodeGenType]` name mismatch** — the value must exactly match the generated class name (use `rename_codegen_type`); a mismatch silently breaks partial-class merging and produces spurious "missing member" errors.
-- **Duplicate member (`CS0111`)** — custom partial and generated code both define a member; add `[CodeGenSuppress("Member")]` to the custom partial (use `add_codegen_suppress`).
-- **Stale `using` / namespace** — add the missing `using` (`add_using_directive`) or remove obsolete `*.Rest.*` / `Autorest.*` usings (`remove_using_directive`).
-- **LRO `Fetch`** — replace with `Model.FromLroResponse(response)` (`fetch_to_fromlro`).
-- **Stale custom file** — a custom `FooResource.cs` exists but `Generated/FooResource.cs` was renamed/removed: rename the custom file to match, or remove it, then regenerate.
-
-## ApiCompat breaks (GA libraries)
-
-ApiCompat surfaces breaking changes vs the last shipped API. Fix with backward-compat shims in custom code (e.g. `Custom/BackwardCompat/<Type>.cs`), each marked `[EditorBrowsable(EditorBrowsableState.Never)]` with a comment explaining the shim. For async forwarding overloads, always `await ... .ConfigureAwait(false)`.
-
-**Hard rules — no exceptions:**
-- ⛔ NEVER create or modify `ApiCompatBaseline.txt` to suppress ApiCompat errors.
-- ⛔ NEVER remove or change `ApiCompatVersion` in the `.csproj`.
-
-(For detailed shim recipes, the `dpg-migration` / `mitigate-breaking-changes` skills document the per-rule patterns; reuse those recipes but stay within custom-code scope.)
 
 ## Stop Conditions
 
-Stop and emit a **structured, machine-readable summary** (do not keep retrying or escalate to a human prompt) when any of these hold:
+When the tool returns one of these, **surface its structured guidance** and stop — do not keep retrying or escalate to a human prompt:
 
-- **Out of scope (spec change required)** — the only real fix is a `client.tsp`/`tspconfig.yaml` decorator or spec edit (e.g. `@@clientName`, `@@access`, `AZC0030`/`AZC0012` naming). Report: "requires a spec-repo PR" with the offending errors. Leave the PR red for a human to route.
-- **Suspected generator bug** — `Generated/` has structural errors that persist after removing all custom-code influence and regenerating from the unchanged pinned commit. Do NOT suppress; report with the minimal repro.
-- **Bounds exhausted** — 10 iterations reached, or error count not decreasing after 3 iterations, or wall-clock budget hit. Commit progress and report remaining errors.
+- **Out of scope (spec change required)** — the only real fix is a `client.tsp`/`tspconfig.yaml` decorator or spec edit (e.g. `@@clientName`, `@@access`, `AZC0030`/`AZC0012` naming). Report "requires a spec-repo PR" with the offending errors. Leave the PR red for a human to route.
+- **Suspected generator bug** — `Generated/` has structural errors that persist after the tool removes custom-code influence and regenerates from the unchanged pinned commit. Do NOT suppress; report with the minimal repro.
+- **Bounds exhausted** — `maxIterations` / `wallClockBudget` reached without a green build. Commit progress and report remaining errors.
 
-On success, summarize: errors fixed (with deterministic-vs-reasoning split), files changed (generated-vs-custom split), final build status, and confirmation that no spec inputs or the pinned commit were touched.
+On success, summarize from the tool's structured result: errors fixed (deterministic-vs-reasoning split), files changed (generated-vs-custom split), final build status, and confirmation that no spec inputs or the pinned commit were touched.
 
 ## Hard Rules (recap)
 
-1. Never edit `client.tsp`, `tspconfig.yaml`, or any TypeSpec/spec input.
-2. Never move the pinned spec commit in `tsp-location.yaml`.
-3. Never hand-edit `Generated/`; only `/t:GenerateCode` may change it, and you must commit that result.
+1. Drive **`azure-sdk-mcp:azsdk_customized_code_update`** in `repair` mode; do not hand-edit code and do not use any other fix engine.
+2. Never edit `client.tsp`, `tspconfig.yaml`, or any TypeSpec/spec input; never move the pinned spec commit in `tsp-location.yaml`.
+3. Commit the tool's regenerated `Generated/` alongside the custom-code edits (the guard is reproducibility, not freezing).
 4. Never touch `.github/`, `eng/`, shared props/targets, pipelines, metadata, or secrets.
-5. Never prompt the user; run fully headless.
+5. Never prompt the user; run fully headless, honoring the configured bounds.
 6. Never auto-merge — fixes land as reviewable commits for human review.
