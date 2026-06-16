@@ -1,13 +1,4 @@
 <Solution>
-  <Configurations>
-    <Platform Name="Any CPU" />
-    <Platform Name="x64" />
-    <Platform Name="x86" />
-  </Configurations>
-  <Project Path="src/Azure.ResourceManager.NewRelicObservability.csproj" Type="e4457495-adde-4fd9-b097-e5898df50e33">
-    <Platform Project="AnyCPU" />
-  </Project>
-  <Project Path="tests/Azure.ResourceManager.NewRelicObservability.Tests.csproj" Type="e4457495-adde-4fd9-b097-e5898df50e33">
-    <Platform Project="AnyCPU" />
-  </Project>
+  <Project Path="src/Azure.ResourceManager.NewRelicObservability.csproj" />
+  <Project Path="tests/Azure.ResourceManager.NewRelicObservability.Tests.csproj" />
 </Solution>
