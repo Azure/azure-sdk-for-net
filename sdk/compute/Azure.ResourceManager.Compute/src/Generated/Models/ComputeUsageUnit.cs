@@ -11,7 +11,7 @@ using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary></summary>
+    /// <summary> The unit for Compute usage values. </summary>
     public readonly partial struct ComputeUsageUnit : IEquatable<ComputeUsageUnit>
     {
         private readonly string _value;
