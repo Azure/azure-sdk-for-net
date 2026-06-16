@@ -148,7 +148,9 @@ namespace Azure.Identity
 
         private static bool ResolveDisableMtlsProofOfPossession(TokenCredentialOptions options)
         {
+#pragma warning disable AZID0004 // Internal usage of experimental mTLS proof-of-possession API
             return options is ManagedIdentityCredentialOptions managedIdentityCredentialOptions && managedIdentityCredentialOptions.DisableMtlsProofOfPossession;
+#pragma warning restore AZID0004
         }
 
         internal ManagedIdentityCredential(ManagedIdentityClient client)
