@@ -1649,6 +1649,45 @@ namespace Azure.ResourceManager.Compute.Models
                 default), default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Describes the properties of a virtual machine scale set virtual machine. </param>
+        /// <param name="instanceId"> The virtual machine instance ID. </param>
+        /// <param name="sku"> The virtual machine SKU. </param>
+        /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click <b>Want to deploy programmatically, Get Started -&gt;</b>. Enter any required information and then click <b>Save</b>. </param>
+        /// <param name="resources"> The virtual machine child extension resources. </param>
+        /// <param name="zones"> The virtual machine zones. </param>
+        /// <param name="identity"> The identity of the virtual machine, if configured. </param>
+        /// <param name="etag"> Etag is property returned in Update/Get response of the VMSS VM, so that customer can supply it in the header to ensure optimistic updates. </param>
+        /// <returns> A new <see cref="Compute.VirtualMachineScaleSetVmData"/> instance for mocking. </returns>
+        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualMachineScaleSetVmProperties properties = default, string instanceId = default, ComputeSku sku = default, ComputePlan plan = default, IEnumerable<VirtualMachineExtensionData> resources = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, string etag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            resources ??= new ChangeTrackingList<VirtualMachineExtensionData>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new VirtualMachineScaleSetVmData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                instanceId,
+                sku,
+                plan,
+                (resources ?? new ChangeTrackingList<VirtualMachineExtensionData>()).ToList(),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                identity,
+                etag,
+                default);
+        }
+
         /// <param name="latestModelApplied"> Specifies whether the latest model has been applied to the virtual machine. </param>
         /// <param name="vmId"> Azure VM unique ID. </param>
         /// <param name="instanceView"> The virtual machine instance view. </param>
@@ -8299,6 +8338,27 @@ namespace Azure.ResourceManager.Compute.Models
                 default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryData"/>. </summary>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="uniqueId"> The unique id of this community gallery. </param>
+        /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
+        /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
+        /// <param name="communityMetadata"> The metadata of community gallery. </param>
+        /// <returns> A new <see cref="Compute.CommunityGalleryData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunityGalleryData CommunityGalleryData(string name = default, AzureLocation? location = default, ResourceType? resourceType = default, string uniqueId = default, string disclaimer = default, IReadOnlyDictionary<string, string> artifactTags = default, CommunityGalleryMetadata communityMetadata = default)
+        {
+            return new CommunityGalleryData(
+                name,
+                location,
+                resourceType,
+                uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, default),
+                default,
+                disclaimer is null && artifactTags is null && communityMetadata is null ? default : new CommunityGalleryProperties(disclaimer, new ChangeTrackingDictionary<string, string>(artifactTags ?? new ChangeTrackingDictionary<string, string>()), communityMetadata, default));
+        }
+
         /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryImageData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
@@ -8346,6 +8406,37 @@ namespace Azure.ResourceManager.Compute.Models
                     default));
         }
 
+        /// <summary> Initializes a new instance of <see cref="Compute.CommunityGalleryImageVersionData"/>. </summary>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="uniqueId"> The unique id of this community gallery. </param>
+        /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
+        /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
+        /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
+        /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
+        /// <returns> A new <see cref="Compute.CommunityGalleryImageVersionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name = default, AzureLocation? location = default, ResourceType? resourceType = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? isExcludedFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, string disclaimer = default, IReadOnlyDictionary<string, string> artifactTags = default)
+        {
+            return new CommunityGalleryImageVersionData(
+                name,
+                location,
+                resourceType,
+                uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, default),
+                default,
+                publishedOn is null && endOfLifeOn is null && isExcludedFromLatest is null && storageProfile is null && disclaimer is null && artifactTags is null ? default : new CommunityGalleryImageVersionProperties(
+                    publishedOn,
+                    endOfLifeOn,
+                    isExcludedFromLatest,
+                    storageProfile,
+                    disclaimer,
+                    new ChangeTrackingDictionary<string, string>(artifactTags ?? new ChangeTrackingDictionary<string, string>()),
+                    default));
+        }
+
         /// <summary> Initializes a new instance of <see cref="Compute.SharedGalleryImageData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
@@ -8380,6 +8471,28 @@ namespace Azure.ResourceManager.Compute.Models
                 architecture,
                 privacyStatementUri,
                 eula,
+                new ChangeTrackingDictionary<string, string>(artifactTags ?? new ChangeTrackingDictionary<string, string>()),
+                default));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Compute.SharedGalleryImageVersionData"/>. </summary>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="uniqueId"> The unique id of this shared gallery. </param>
+        /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
+        /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
+        /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
+        /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
+        /// <returns> A new <see cref="Compute.SharedGalleryImageVersionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name = default, AzureLocation? location = default, string uniqueId = default, DateTimeOffset? publishedOn = default, DateTimeOffset? endOfLifeOn = default, bool? isExcludedFromLatest = default, SharedGalleryImageVersionStorageProfile storageProfile = default, IReadOnlyDictionary<string, string> artifactTags = default)
+        {
+            return new SharedGalleryImageVersionData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), publishedOn is null && endOfLifeOn is null && isExcludedFromLatest is null && storageProfile is null && artifactTags is null ? default : new SharedGalleryImageVersionProperties(
+                publishedOn,
+                endOfLifeOn,
+                isExcludedFromLatest,
+                storageProfile,
                 new ChangeTrackingDictionary<string, string>(artifactTags ?? new ChangeTrackingDictionary<string, string>()),
                 default));
         }
@@ -9720,6 +9833,111 @@ namespace Azure.ResourceManager.Compute.Models
                 eula,
                 default,
                 default));
+        }
+
+        /// <param name="name"></param>
+        /// <param name="location"></param>
+        /// <param name="uniqueId"></param>
+        /// <param name="publishedOn"></param>
+        /// <param name="endOfLifeOn"></param>
+        /// <param name="isExcludedFromLatest"></param>
+        /// <param name="storageProfile"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SharedGalleryImageVersionData SharedGalleryImageVersionData(string name, AzureLocation? location, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile)
+        {
+            return new SharedGalleryImageVersionData(name, location, default, uniqueId is null ? default : new SharedGalleryIdentifier(uniqueId, default), publishedOn is null && endOfLifeOn is null && isExcludedFromLatest is null && storageProfile is null ? default : new SharedGalleryImageVersionProperties(
+                publishedOn,
+                endOfLifeOn,
+                isExcludedFromLatest,
+                storageProfile,
+                default,
+                default));
+        }
+
+        /// <param name="name"></param>
+        /// <param name="location"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="uniqueId"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunityGalleryData CommunityGalleryData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId)
+        {
+            return new CommunityGalleryData(
+                name,
+                location,
+                resourceType,
+                uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, default),
+                default,
+                default);
+        }
+
+        /// <param name="name"></param>
+        /// <param name="location"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="uniqueId"></param>
+        /// <param name="osType"></param>
+        /// <param name="osState"></param>
+        /// <param name="endOfLifeOn"></param>
+        /// <param name="imageIdentifier"></param>
+        /// <param name="recommended"></param>
+        /// <param name="disallowedDiskTypes"></param>
+        /// <param name="hyperVGeneration"></param>
+        /// <param name="features"></param>
+        /// <param name="purchasePlan"></param>
+        /// <param name="architecture"></param>
+        /// <param name="privacyStatementUri"></param>
+        /// <param name="eula"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunityGalleryImageData CommunityGalleryImageData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, CommunityGalleryImageIdentifier imageIdentifier, RecommendedMachineConfiguration recommended, IEnumerable<string> disallowedDiskTypes, HyperVGeneration? hyperVGeneration, IEnumerable<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula)
+        {
+            return new CommunityGalleryImageData(
+                name,
+                location,
+                resourceType,
+                uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, default),
+                default,
+                osType is null && osState is null && endOfLifeOn is null && imageIdentifier is null && recommended is null && disallowedDiskTypes is null && hyperVGeneration is null && features is null && purchasePlan is null && architecture is null && privacyStatementUri is null && eula is null ? default : new CommunityGalleryImageProperties(
+                    osType.GetValueOrDefault(),
+                    osState.GetValueOrDefault(),
+                    endOfLifeOn,
+                    imageIdentifier,
+                    recommended,
+                    new Disallowed((disallowedDiskTypes ?? new ChangeTrackingList<string>()).ToList(), default),
+                    hyperVGeneration,
+                    (features ?? new ChangeTrackingList<GalleryImageFeature>()).ToList(),
+                    purchasePlan,
+                    architecture,
+                    privacyStatementUri,
+                    eula,
+                    default,
+                    default,
+                    default));
+        }
+
+        /// <param name="name"></param>
+        /// <param name="location"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="uniqueId"></param>
+        /// <param name="publishedOn"></param>
+        /// <param name="endOfLifeOn"></param>
+        /// <param name="isExcludedFromLatest"></param>
+        /// <param name="storageProfile"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CommunityGalleryImageVersionData CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile)
+        {
+            return new CommunityGalleryImageVersionData(
+                name,
+                location,
+                resourceType,
+                uniqueId is null ? default : new CommunityGalleryIdentifier(uniqueId, default),
+                default,
+                publishedOn is null && endOfLifeOn is null && isExcludedFromLatest is null && storageProfile is null ? default : new CommunityGalleryImageVersionProperties(
+                    publishedOn,
+                    endOfLifeOn,
+                    isExcludedFromLatest,
+                    storageProfile,
+                    default,
+                    default,
+                    default));
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.GalleryData"/>. </summary>

@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.ResourceManager.Compute.Models;
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.Compute
         // Backward compatibility: the generated Compute-local property is named SharingSubscriptionResources and uses
         // ComputeWriteableSubResourceData. Restore the old SharingSubscriptionIds property with ARM common WritableSubResource.
         /// <summary> Specifies an array of subscription resource IDs that capacity reservation group is shared with. </summary>
-        public IList<WritableSubResource> SharingSubscriptionIds => SharingSubscriptionResources.ToWritableSubResources();
+        [Obsolete("Use SharingSubscriptionResources instead. This compatibility property cannot be used for mutation.", false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IList<WritableSubResource> SharingSubscriptionIds => throw new NotSupportedException("Use SharingSubscriptionResources instead.");
     }
 }

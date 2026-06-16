@@ -14,11 +14,5 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public static IReadOnlyList<SubResource> ToSubResources(this IReadOnlyList<ComputeSubResourceData> values)
             => values?.Select(value => ResourceManagerModelFactory.SubResource(value.Id)).ToArray();
-
-        public static IList<WritableSubResource> ToWritableSubResources(this IEnumerable<ComputeWriteableSubResourceData> values)
-            => values?.Select(value => new WritableSubResource { Id = value.Id }).ToList();
-
-        public static IList<WritableSubResource> ToWritableSubResources(this IEnumerable<ComputeApiEntityReference> values)
-            => values?.Select(value => new WritableSubResource { Id = value.Id }).ToList();
     }
 }
