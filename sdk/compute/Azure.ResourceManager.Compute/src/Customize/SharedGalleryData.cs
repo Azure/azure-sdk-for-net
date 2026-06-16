@@ -11,7 +11,10 @@ namespace Azure.ResourceManager.Compute
 {
     // Backward compatibility: the previously shipped SDK exposed this data type in the root namespace.
     // The generated TypeSpec model is otherwise placed under Models; CodeGenType keeps the public API shape.
+    // Suppress the generated parent resource-key helper because the Swagger payload has no parentName property
+    // and the old SDK did not expose it.
     [CodeGenType("SharedGalleryData")]
+    [CodeGenSuppress("ParentName")]
     public partial class SharedGalleryData
     {
         // we also must add back this property to avoid breaking changes, but its payload never have this property.
