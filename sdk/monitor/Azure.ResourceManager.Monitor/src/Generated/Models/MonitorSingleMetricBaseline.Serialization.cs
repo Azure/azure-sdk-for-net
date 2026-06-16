@@ -8,13 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The baseline results of a single metric. </summary>
-    public partial class MonitorSingleMetricBaseline : IJsonModel<MonitorSingleMetricBaseline>
+    public partial class MonitorSingleMetricBaseline : ResourceData, IJsonModel<MonitorSingleMetricBaseline>
     {
         /// <summary> Initializes a new instance of <see cref="MonitorSingleMetricBaseline"/> for deserialization. </summary>
         internal MonitorSingleMetricBaseline()
@@ -23,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MonitorSingleMetricBaseline PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MonitorSingleMetricBaseline>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorSingleMetricBaseline IPersistableModel<MonitorSingleMetricBaseline>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MonitorSingleMetricBaseline IPersistableModel<MonitorSingleMetricBaseline>.Create(BinaryData data, ModelReaderWriterOptions options) => (MonitorSingleMetricBaseline)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MonitorSingleMetricBaseline>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -72,19 +75,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MonitorSingleMetricBaseline>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MonitorSingleMetricBaseline)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -106,11 +104,11 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorSingleMetricBaseline IJsonModel<MonitorSingleMetricBaseline>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MonitorSingleMetricBaseline IJsonModel<MonitorSingleMetricBaseline>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MonitorSingleMetricBaseline)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MonitorSingleMetricBaseline JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MonitorSingleMetricBaseline>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -129,26 +127,44 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            string id = default;
-            string @type = default;
+            ResourceIdentifier id = default;
             string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
             MetricBaselinesProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMonitorContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -161,7 +177,13 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MonitorSingleMetricBaseline(id, @type, name, properties, additionalBinaryDataProperties);
+            return new MonitorSingleMetricBaseline(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                additionalBinaryDataProperties);
         }
     }
 }

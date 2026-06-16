@@ -1517,12 +1517,12 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="statistic"> the metric statistic type. How the metrics from multiple instances are combined. </param>
         /// <param name="timeWindow"> the range of time in which instance data is collected. This value must be greater than the delay in metric collection, which can vary from resource-to-resource. Must be between 12 hours and 5 minutes. </param>
         /// <param name="timeAggregation"> time aggregation type. How the data that is collected should be combined over time. The default value is Average. </param>
-        /// <param name="operator"> the operator that is used to compare the metric data and the threshold. </param>
+        /// <param name="comparisonOperator"> the operator that is used to compare the metric data and the threshold. </param>
         /// <param name="threshold"> the threshold of the metric that triggers the scale action. </param>
         /// <param name="dimensions"> List of dimension conditions. For example: [{"DimensionName":"AppName","Operator":"Equals","Values":["App1"]},{"DimensionName":"Deployment","Operator":"Equals","Values":["default"]}]. </param>
         /// <param name="isDividedPerInstance"> a value indicating whether metric should divide per instance. </param>
         /// <returns> A new <see cref="Models.MetricTrigger"/> instance for mocking. </returns>
-        public static MetricTrigger MetricTrigger(string metricName = default, string metricNamespace = default, ResourceIdentifier metricResourceId = default, AzureLocation? metricResourceLocation = default, TimeSpan timeGrain = default, MetricStatisticType statistic = default, TimeSpan timeWindow = default, MetricTriggerTimeAggregationType timeAggregation = default, MetricTriggerComparisonOperation @operator = default, double threshold = default, IEnumerable<AutoscaleRuleMetricDimension> dimensions = default, bool? isDividedPerInstance = default)
+        public static MetricTrigger MetricTrigger(string metricName = default, string metricNamespace = default, ResourceIdentifier metricResourceId = default, AzureLocation? metricResourceLocation = default, TimeSpan timeGrain = default, MetricStatisticType statistic = default, TimeSpan timeWindow = default, MetricTriggerTimeAggregationType timeAggregation = default, MetricTriggerComparisonOperator comparisonOperator = default, double threshold = default, IEnumerable<AutoscaleRuleMetricDimension> dimensions = default, bool? isDividedPerInstance = default)
         {
             dimensions ??= new ChangeTrackingList<AutoscaleRuleMetricDimension>();
 
@@ -1535,7 +1535,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 statistic,
                 timeWindow,
                 timeAggregation,
-                @operator,
+                comparisonOperator,
                 threshold,
                 (dimensions ?? new ChangeTrackingList<AutoscaleRuleMetricDimension>()).ToList(),
                 isDividedPerInstance,
@@ -1852,18 +1852,20 @@ namespace Azure.ResourceManager.Monitor.Models
                 default);
         }
 
-        /// <param name="id"> The ID of the metric namespace. </param>
-        /// <param name="type"> The type of the namespace. </param>
-        /// <param name="name"> The escaped name of the namespace. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="classification"> Kind of namespace. </param>
         /// <param name="metricNamespaceNameValue"> The metric namespace name. </param>
         /// <returns> A new <see cref="Models.MonitorMetricNamespace"/> instance for mocking. </returns>
-        public static MonitorMetricNamespace MonitorMetricNamespace(string id = default, string @type = default, string name = default, MonitorNamespaceClassification? classification = default, string metricNamespaceNameValue = default)
+        public static MonitorMetricNamespace MonitorMetricNamespace(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorNamespaceClassification? classification = default, string metricNamespaceNameValue = default)
         {
             return new MonitorMetricNamespace(
                 id,
-                @type,
                 name,
+                resourceType,
+                systemData,
                 classification,
                 metricNamespaceNameValue is null ? default : new MetricNamespaceName(metricNamespaceNameValue, default),
                 default);
@@ -2586,14 +2588,21 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MetricAlertStatusCollection((value ?? new ChangeTrackingList<MetricAlertStatus>()).ToList(), default);
         }
 
-        /// <param name="name"> The status name. </param>
-        /// <param name="id"> The alert rule arm id. </param>
-        /// <param name="type"> The extended resource type name. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The alert status properties of the metric alert status. </param>
         /// <returns> A new <see cref="Models.MetricAlertStatus"/> instance for mocking. </returns>
-        public static MetricAlertStatus MetricAlertStatus(string name = default, string id = default, string @type = default, MetricAlertStatusProperties properties = default)
+        public static MetricAlertStatus MetricAlertStatus(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MetricAlertStatusProperties properties = default)
         {
-            return new MetricAlertStatus(name, id, @type, properties, default);
+            return new MetricAlertStatus(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <param name="dimensions"> An object describing the type of the dimensions. </param>
@@ -2611,6 +2620,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="createdWithApiVersion"> The api-version used when creating this alert rule. </param>
         /// <param name="isLegacyLogAnalyticsRule"> True if alert rule is legacy Log Analytic rule. </param>
         /// <param name="description"> The description of the scheduled query rule. </param>
@@ -2631,12 +2642,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resolveConfiguration"> Defines the configuration for resolving fired alerts. Relevant only for rules of kinds LogAlert and SimpleLogAlert. </param>
         /// <param name="criteriaAllOf"> A list of conditions to evaluate against the specified scopes. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> Indicates the type of scheduled query rule. The default is LogAlert. </param>
         /// <param name="eTag"> Resource entity tag (ETag). </param>
         /// <returns> A new <see cref="Monitor.ScheduledQueryRuleData"/> instance for mocking. </returns>
-        public static ScheduledQueryRuleData ScheduledQueryRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string createdWithApiVersion = default, bool? isLegacyLogAnalyticsRule = default, string description = default, string displayName = default, AlertSeverity? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, TimeSpan? overrideQueryTimeRange = default, IEnumerable<string> targetResourceTypes = default, TimeSpan? muteActionsDuration = default, ScheduledQueryRuleActions actions = default, bool? isWorkspaceAlertsStorageConfigured = default, bool? checkWorkspaceAlertsStorageConfigured = default, bool? skipQueryValidation = default, bool? autoMitigate = default, RuleResolveConfiguration resolveConfiguration = default, IEnumerable<ScheduledQueryRuleCondition> criteriaAllOf = default, Identity identity = default, IDictionary<string, string> tags = default, string location = default, ScheduledQueryRuleKind? kind = default, ETag? eTag = default)
+        public static ScheduledQueryRuleData ScheduledQueryRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string createdWithApiVersion = default, bool? isLegacyLogAnalyticsRule = default, string description = default, string displayName = default, AlertSeverity? severity = default, bool? isEnabled = default, IEnumerable<string> scopes = default, TimeSpan? evaluationFrequency = default, TimeSpan? windowSize = default, TimeSpan? overrideQueryTimeRange = default, IEnumerable<string> targetResourceTypes = default, TimeSpan? muteActionsDuration = default, ScheduledQueryRuleActions actions = default, bool? isWorkspaceAlertsStorageConfigured = default, bool? checkWorkspaceAlertsStorageConfigured = default, bool? skipQueryValidation = default, bool? autoMitigate = default, RuleResolveConfiguration resolveConfiguration = default, IEnumerable<ScheduledQueryRuleCondition> criteriaAllOf = default, Identity identity = default, ScheduledQueryRuleKind? kind = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2645,6 +2654,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 name,
                 resourceType,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 isLegacyLogAnalyticsRule is null && isEnabled is null && overrideQueryTimeRange is null && criteriaAllOf is null && isWorkspaceAlertsStorageConfigured is null && checkWorkspaceAlertsStorageConfigured is null && skipQueryValidation is null && autoMitigate is null ? default : new ScheduledQueryRuleProperties(
                     default,
                     isLegacyLogAnalyticsRule,
@@ -2667,8 +2678,6 @@ namespace Azure.ResourceManager.Monitor.Models
                     default,
                     default),
                 identity,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 kind,
                 eTag,
                 default);
@@ -2798,18 +2807,25 @@ namespace Azure.ResourceManager.Monitor.Models
                 default), default);
         }
 
-        /// <param name="id"> The metric baseline Id. </param>
-        /// <param name="type"> The resource type of the metric baseline resource. </param>
-        /// <param name="name"> The name of the metric for which the baselines were retrieved. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="namespace"> The namespace of the metrics been queried. </param>
         /// <param name="baselines"> The baseline for each time series that was queried. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/> or <paramref name="baselines"/> is null. </exception>
         /// <returns> A new <see cref="Models.MonitorSingleMetricBaseline"/> instance for mocking. </returns>
-        public static MonitorSingleMetricBaseline MonitorSingleMetricBaseline(string id = default, string @type = default, string name = default, string timespan = default, TimeSpan interval = default, string @namespace = default, IEnumerable<MonitorTimeSeriesBaseline> baselines = default)
+        public static MonitorSingleMetricBaseline MonitorSingleMetricBaseline(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string timespan = default, TimeSpan interval = default, string @namespace = default, IEnumerable<MonitorTimeSeriesBaseline> baselines = default)
         {
-            return new MonitorSingleMetricBaseline(id, @type, name, default, default);
+            return new MonitorSingleMetricBaseline(
+                id,
+                name,
+                resourceType,
+                systemData,
+                default,
+                default);
         }
 
         /// <param name="aggregation"> The aggregation type of the metric. </param>
@@ -3332,22 +3348,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MonitorSingleMetricBaseline"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
-        /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
-        /// <param name="namespace"> The namespace of the metrics been queried. </param>
-        /// <param name="baselines"> The baseline for each time series that was queried. </param>
-        /// <returns> A new <see cref="Models.MonitorSingleMetricBaseline"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MonitorSingleMetricBaseline MonitorSingleMetricBaseline(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string timespan = default, TimeSpan interval = default, string @namespace = default, IEnumerable<MonitorTimeSeriesBaseline> baselines = default)
-        {
-            return new MonitorSingleMetricBaseline(default, default, name, timespan is null && @namespace is null && baselines is null ? default : new MetricBaselinesProperties(timespan, interval, @namespace, (baselines ?? new ChangeTrackingList<MonitorTimeSeriesBaseline>()).ToList(), default), default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Monitor.MetricAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3448,19 +3448,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 default), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MetricAlertStatus"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The alert status properties of the metric alert status. </param>
-        /// <returns> A new <see cref="Models.MetricAlertStatus"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MetricAlertStatus MetricAlertStatus(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MetricAlertStatusProperties properties = default)
-        {
-            return new MetricAlertStatus(name, default, default, properties, default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Monitor.ScheduledQueryRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -3497,6 +3484,8 @@ namespace Azure.ResourceManager.Monitor.Models
                 name,
                 resourceType,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 createdWithApiVersion is null && isLegacyLogAnalyticsRule is null && description is null && displayName is null && severity is null && isEnabled is null && scopes is null && evaluationFrequency is null && windowSize is null && overrideQueryTimeRange is null && targetResourceTypes is null && criteriaAllOf is null && muteActionsDuration is null && actions is null && isWorkspaceAlertsStorageConfigured is null && checkWorkspaceAlertsStorageConfigured is null && skipQueryValidation is null && autoMitigate is null ? default : new ScheduledQueryRuleProperties(
                     createdWithApiVersion,
                     isLegacyLogAnalyticsRule,
@@ -3518,8 +3507,6 @@ namespace Azure.ResourceManager.Monitor.Models
                     autoMitigate,
                     default,
                     default),
-                default,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 kind,
                 etag,
@@ -3571,26 +3558,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 autoMitigate,
                 default,
                 default), default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MonitorMetricNamespace"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="classification"> Kind of namespace. </param>
-        /// <param name="metricNamespaceNameValue"> Properties which include the fully qualified namespace name. </param>
-        /// <returns> A new <see cref="Models.MonitorMetricNamespace"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MonitorMetricNamespace MonitorMetricNamespace(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorNamespaceClassification? classification = default, string metricNamespaceNameValue = default)
-        {
-            return new MonitorMetricNamespace(
-                default,
-                default,
-                name,
-                classification,
-                metricNamespaceNameValue is null ? default : new MetricNamespaceName(metricNamespaceNameValue, default),
-                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Monitor.MonitorPrivateLinkScopeData"/>. </summary>

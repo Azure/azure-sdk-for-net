@@ -11,6 +11,8 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
+    // TypeSpec no longer models the legacy AlertRule action hierarchy.
+    // Keep this obsolete derived type so the stable AlertRuleAction polymorphic API remains loadable.
     /// <summary> An alert rule webhook action. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This API is no longer supported.", false)]

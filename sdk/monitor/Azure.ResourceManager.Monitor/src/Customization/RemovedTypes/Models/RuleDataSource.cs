@@ -11,6 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
+    // TypeSpec no longer models legacy AlertRule data sources, but stable APIs exposed this polymorphic base type.
+    // Keep the obsolete base and its model interfaces so old derived data-source types remain compatible.
     /// <summary> The alert rule data source. </summary>
     [PersistableModelProxy(typeof(UnknownRuleDataSource))]
     [Obsolete("This API is no longer supported.", false)]

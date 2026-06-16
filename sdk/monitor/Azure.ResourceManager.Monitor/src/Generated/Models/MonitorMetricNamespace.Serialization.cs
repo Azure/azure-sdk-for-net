@@ -8,17 +8,20 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Metric namespace class specifies the metadata for a metric namespace. </summary>
-    public partial class MonitorMetricNamespace : IJsonModel<MonitorMetricNamespace>
+    public partial class MonitorMetricNamespace : ResourceData, IJsonModel<MonitorMetricNamespace>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MonitorMetricNamespace PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MonitorMetricNamespace>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -51,7 +54,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorMetricNamespace IPersistableModel<MonitorMetricNamespace>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MonitorMetricNamespace IPersistableModel<MonitorMetricNamespace>.Create(BinaryData data, ModelReaderWriterOptions options) => (MonitorMetricNamespace)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MonitorMetricNamespace>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -67,28 +70,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MonitorMetricNamespace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MonitorMetricNamespace)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Classification))
             {
                 writer.WritePropertyName("classification"u8);
@@ -118,11 +107,11 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonitorMetricNamespace IJsonModel<MonitorMetricNamespace>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MonitorMetricNamespace IJsonModel<MonitorMetricNamespace>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MonitorMetricNamespace)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MonitorMetricNamespace JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MonitorMetricNamespace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -141,9 +130,10 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            string id = default;
-            string @type = default;
+            ResourceIdentifier id = default;
             string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
             MonitorNamespaceClassification? classification = default;
             MetricNamespaceName properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -151,17 +141,34 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMonitorContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("classification"u8))
@@ -189,8 +196,9 @@ namespace Azure.ResourceManager.Monitor.Models
             }
             return new MonitorMetricNamespace(
                 id,
-                @type,
                 name,
+                resourceType,
+                systemData,
                 classification,
                 properties,
                 additionalBinaryDataProperties);

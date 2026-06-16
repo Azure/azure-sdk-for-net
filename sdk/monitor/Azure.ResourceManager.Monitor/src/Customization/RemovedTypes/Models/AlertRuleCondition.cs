@@ -10,6 +10,8 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
+    // TypeSpec no longer models legacy AlertRule conditions, but stable APIs exposed this polymorphic base type.
+    // Keep the obsolete base and its model interfaces so old derived condition types remain compatible.
     /// <summary> An alert rule condition. </summary>
     [PersistableModelProxy(typeof(UnknownRuleCondition))]
     [Obsolete("This API is no longer supported.", false)]

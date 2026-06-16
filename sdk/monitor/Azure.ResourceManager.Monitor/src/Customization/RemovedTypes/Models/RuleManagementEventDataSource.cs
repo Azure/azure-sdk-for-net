@@ -10,6 +10,8 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
+    // TypeSpec no longer models the legacy AlertRule data-source hierarchy.
+    // Keep this obsolete derived type so the stable RuleDataSource polymorphic API remains loadable.
     /// <summary> A management event alert rule data source. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This API is no longer supported.", false)]

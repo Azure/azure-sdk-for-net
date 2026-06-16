@@ -7,51 +7,36 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The baseline results of a single metric. </summary>
-    public partial class MonitorSingleMetricBaseline
+    public partial class MonitorSingleMetricBaseline : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MonitorSingleMetricBaseline"/>. </summary>
-        /// <param name="id"> The metric baseline Id. </param>
-        /// <param name="type"> The resource type of the metric baseline resource. </param>
-        /// <param name="name"> The name of the metric for which the baselines were retrieved. </param>
         /// <param name="properties"> The metric baseline properties of the metric. </param>
-        internal MonitorSingleMetricBaseline(string id, string @type, string name, MetricBaselinesProperties properties)
+        internal MonitorSingleMetricBaseline(MetricBaselinesProperties properties)
         {
-            Id = id;
-            Type = @type;
-            Name = name;
             Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorSingleMetricBaseline"/>. </summary>
-        /// <param name="id"> The metric baseline Id. </param>
-        /// <param name="type"> The resource type of the metric baseline resource. </param>
-        /// <param name="name"> The name of the metric for which the baselines were retrieved. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The metric baseline properties of the metric. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorSingleMetricBaseline(string id, string @type, string name, MetricBaselinesProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorSingleMetricBaseline(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MetricBaselinesProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Type = @type;
-            Name = name;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The metric baseline Id. </summary>
-        public string Id { get; }
-
-        /// <summary> The resource type of the metric baseline resource. </summary>
-        public string Type { get; }
-
-        /// <summary> The name of the metric for which the baselines were retrieved. </summary>
-        public string Name { get; }
 
         /// <summary> The metric baseline properties of the metric. </summary>
         internal MetricBaselinesProperties Properties { get; }

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("timeAggregation"u8);
             writer.WriteStringValue(TimeAggregation.ToSerialString());
             writer.WritePropertyName("operator"u8);
-            writer.WriteStringValue(Operator.ToSerialString());
+            writer.WriteStringValue(ComparisonOperator.ToSerialString());
             writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
             if (Optional.IsCollectionDefined(Dimensions))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Monitor.Models
             MetricStatisticType statistic = default;
             TimeSpan timeWindow = default;
             MetricTriggerTimeAggregationType timeAggregation = default;
-            MetricTriggerComparisonOperation @operator = default;
+            MetricTriggerComparisonOperator comparisonOperator = default;
             double threshold = default;
             IList<AutoscaleRuleMetricDimension> dimensions = default;
             bool? isDividedPerInstance = default;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (prop.NameEquals("operator"u8))
                 {
-                    @operator = prop.Value.GetString().ToMetricTriggerComparisonOperation();
+                    comparisonOperator = prop.Value.GetString().ToMetricTriggerComparisonOperator();
                     continue;
                 }
                 if (prop.NameEquals("threshold"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 statistic,
                 timeWindow,
                 timeAggregation,
-                @operator,
+                comparisonOperator,
                 threshold,
                 dimensions ?? new ChangeTrackingList<AutoscaleRuleMetricDimension>(),
                 isDividedPerInstance,

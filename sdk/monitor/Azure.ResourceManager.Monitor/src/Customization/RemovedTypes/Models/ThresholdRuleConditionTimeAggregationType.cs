@@ -8,6 +8,8 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
+    // TypeSpec no longer models the legacy AlertRule threshold condition shape.
+    // Keep this obsolete enum because ThresholdRuleCondition exposed it in the stable API.
     /// <summary> The threshold rule condition time aggregation type. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This API is no longer supported.", false)]

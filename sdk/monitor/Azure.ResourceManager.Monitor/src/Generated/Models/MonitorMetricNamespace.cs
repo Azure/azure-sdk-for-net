@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Metric namespace class specifies the metadata for a metric namespace. </summary>
-    public partial class MonitorMetricNamespace
+    public partial class MonitorMetricNamespace : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,30 +24,19 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorMetricNamespace"/>. </summary>
-        /// <param name="id"> The ID of the metric namespace. </param>
-        /// <param name="type"> The type of the namespace. </param>
-        /// <param name="name"> The escaped name of the namespace. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="classification"> Kind of namespace. </param>
         /// <param name="properties"> Properties which include the fully qualified namespace name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorMetricNamespace(string id, string @type, string name, MonitorNamespaceClassification? classification, MetricNamespaceName properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorMetricNamespace(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorNamespaceClassification? classification, MetricNamespaceName properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Type = @type;
-            Name = name;
             Classification = classification;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The ID of the metric namespace. </summary>
-        public string Id { get; }
-
-        /// <summary> The type of the namespace. </summary>
-        public string Type { get; }
-
-        /// <summary> The escaped name of the namespace. </summary>
-        public string Name { get; }
 
         /// <summary> Kind of namespace. </summary>
         public MonitorNamespaceClassification? Classification { get; }

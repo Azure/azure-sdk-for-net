@@ -10,6 +10,8 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
+    // TypeSpec no longer models the legacy AlertRule condition hierarchy.
+    // Keep this obsolete aggregation payload for ManagementEventRuleCondition compatibility.
     /// <summary> A management event aggregation condition. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This API is no longer supported.", false)]

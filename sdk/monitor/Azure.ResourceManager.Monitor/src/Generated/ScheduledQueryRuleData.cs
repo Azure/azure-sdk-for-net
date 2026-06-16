@@ -15,20 +15,16 @@ using Azure.ResourceManager.Monitor.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> The scheduled query rule resource. </summary>
-    public partial class ScheduledQueryRuleData : ResourceData
+    public partial class ScheduledQueryRuleData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
-        public ScheduledQueryRuleData(string location)
+        public ScheduledQueryRuleData(AzureLocation location) : base(location)
         {
-            Argument.AssertNotNull(location, nameof(location));
 
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Location = location;
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleData"/>. </summary>
@@ -36,19 +32,17 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The rule properties of the resource. </param>
-        /// <param name="identity"> The identity of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The rule properties of the resource. </param>
+        /// <param name="identity"> The identity of the resource. </param>
         /// <param name="kind"> Indicates the type of scheduled query rule. The default is LogAlert. </param>
         /// <param name="eTag"> Resource entity tag (ETag). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledQueryRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScheduledQueryRuleProperties properties, Models.Identity identity, IDictionary<string, string> tags, string location, ScheduledQueryRuleKind? kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ScheduledQueryRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ScheduledQueryRuleProperties properties, Models.Identity identity, ScheduledQueryRuleKind? kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             Identity = identity;
-            Tags = tags;
-            Location = location;
             Kind = kind;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -59,12 +53,6 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> The identity of the resource. </summary>
         public Models.Identity Identity { get; set; }
-
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
 
         /// <summary> Indicates the type of scheduled query rule. The default is LogAlert. </summary>
         public ScheduledQueryRuleKind? Kind { get; set; }

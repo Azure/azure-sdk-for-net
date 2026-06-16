@@ -18,7 +18,7 @@ using Azure.ResourceManager.Monitor.Models;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary> The scheduled query rule resource. </summary>
-    public partial class ScheduledQueryRuleData : ResourceData, IJsonModel<ScheduledQueryRuleData>
+    public partial class ScheduledQueryRuleData : TrackedResourceData, IJsonModel<ScheduledQueryRuleData>
     {
         /// <summary> Initializes a new instance of <see cref="ScheduledQueryRuleData"/> for deserialization. </summary>
         internal ScheduledQueryRuleData()
@@ -108,24 +108,6 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity, options);
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -182,10 +164,10 @@ namespace Azure.ResourceManager.Monitor
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             ScheduledQueryRuleProperties properties = default;
             Models.Identity identity = default;
-            IDictionary<string, string> tags = default;
-            string location = default;
             ScheduledQueryRuleKind? kind = default;
             ETag? eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -223,20 +205,6 @@ namespace Azure.ResourceManager.Monitor
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMonitorContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    properties = ScheduledQueryRuleProperties.DeserializeScheduledQueryRuleProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("identity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = Models.Identity.DeserializeIdentity(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -260,7 +228,21 @@ namespace Azure.ResourceManager.Monitor
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    properties = ScheduledQueryRuleProperties.DeserializeScheduledQueryRuleProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = Models.Identity.DeserializeIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
@@ -291,10 +273,10 @@ namespace Azure.ResourceManager.Monitor
                 name,
                 resourceType,
                 systemData,
-                properties,
-                identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
+                identity,
                 kind,
                 eTag,
                 additionalBinaryDataProperties);

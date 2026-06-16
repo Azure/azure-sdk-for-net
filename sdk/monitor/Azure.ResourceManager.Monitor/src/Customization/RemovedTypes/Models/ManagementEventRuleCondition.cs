@@ -10,6 +10,8 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
+    // TypeSpec no longer models the legacy AlertRule condition hierarchy.
+    // Keep this obsolete derived type so the stable AlertRuleCondition polymorphic API remains loadable.
     /// <summary> A management event rule condition. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This API is no longer supported.", false)]

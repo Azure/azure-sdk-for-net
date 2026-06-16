@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="statistic"> the metric statistic type. How the metrics from multiple instances are combined. </param>
         /// <param name="timeWindow"> the range of time in which instance data is collected. This value must be greater than the delay in metric collection, which can vary from resource-to-resource. Must be between 12 hours and 5 minutes. </param>
         /// <param name="timeAggregation"> time aggregation type. How the data that is collected should be combined over time. The default value is Average. </param>
-        /// <param name="operator"> the operator that is used to compare the metric data and the threshold. </param>
+        /// <param name="comparisonOperator"> the operator that is used to compare the metric data and the threshold. </param>
         /// <param name="threshold"> the threshold of the metric that triggers the scale action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricName"/> or <paramref name="metricResourceId"/> is null. </exception>
-        public MetricTrigger(string metricName, ResourceIdentifier metricResourceId, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperation @operator, double threshold)
+        public MetricTrigger(string metricName, ResourceIdentifier metricResourceId, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperator comparisonOperator, double threshold)
         {
             Argument.AssertNotNull(metricName, nameof(metricName));
             Argument.AssertNotNull(metricResourceId, nameof(metricResourceId));
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Statistic = statistic;
             TimeWindow = timeWindow;
             TimeAggregation = timeAggregation;
-            Operator = @operator;
+            ComparisonOperator = comparisonOperator;
             Threshold = threshold;
             Dimensions = new ChangeTrackingList<AutoscaleRuleMetricDimension>();
         }
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="statistic"> the metric statistic type. How the metrics from multiple instances are combined. </param>
         /// <param name="timeWindow"> the range of time in which instance data is collected. This value must be greater than the delay in metric collection, which can vary from resource-to-resource. Must be between 12 hours and 5 minutes. </param>
         /// <param name="timeAggregation"> time aggregation type. How the data that is collected should be combined over time. The default value is Average. </param>
-        /// <param name="operator"> the operator that is used to compare the metric data and the threshold. </param>
+        /// <param name="comparisonOperator"> the operator that is used to compare the metric data and the threshold. </param>
         /// <param name="threshold"> the threshold of the metric that triggers the scale action. </param>
         /// <param name="dimensions"> List of dimension conditions. For example: [{"DimensionName":"AppName","Operator":"Equals","Values":["App1"]},{"DimensionName":"Deployment","Operator":"Equals","Values":["default"]}]. </param>
         /// <param name="isDividedPerInstance"> a value indicating whether metric should divide per instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricTrigger(string metricName, string metricNamespace, ResourceIdentifier metricResourceId, AzureLocation? metricResourceLocation, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperation @operator, double threshold, IList<AutoscaleRuleMetricDimension> dimensions, bool? isDividedPerInstance, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricTrigger(string metricName, string metricNamespace, ResourceIdentifier metricResourceId, AzureLocation? metricResourceLocation, TimeSpan timeGrain, MetricStatisticType statistic, TimeSpan timeWindow, MetricTriggerTimeAggregationType timeAggregation, MetricTriggerComparisonOperator comparisonOperator, double threshold, IList<AutoscaleRuleMetricDimension> dimensions, bool? isDividedPerInstance, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MetricName = metricName;
             MetricNamespace = metricNamespace;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Statistic = statistic;
             TimeWindow = timeWindow;
             TimeAggregation = timeAggregation;
-            Operator = @operator;
+            ComparisonOperator = comparisonOperator;
             Threshold = threshold;
             Dimensions = dimensions;
             IsDividedPerInstance = isDividedPerInstance;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public MetricTriggerTimeAggregationType TimeAggregation { get; set; }
 
         /// <summary> the operator that is used to compare the metric data and the threshold. </summary>
-        public MetricTriggerComparisonOperation Operator { get; set; }
+        public MetricTriggerComparisonOperator ComparisonOperator { get; set; }
 
         /// <summary> the threshold of the metric that triggers the scale action. </summary>
         public double Threshold { get; set; }

@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> An alert status. </summary>
-    public partial class MetricAlertStatus
+    public partial class MetricAlertStatus : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,28 +24,17 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetricAlertStatus"/>. </summary>
-        /// <param name="name"> The status name. </param>
-        /// <param name="id"> The alert rule arm id. </param>
-        /// <param name="type"> The extended resource type name. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The alert status properties of the metric alert status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MetricAlertStatus(string name, string id, string @type, MetricAlertStatusProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MetricAlertStatus(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MetricAlertStatusProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Name = name;
-            Id = id;
-            Type = @type;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The status name. </summary>
-        public string Name { get; }
-
-        /// <summary> The alert rule arm id. </summary>
-        public string Id { get; }
-
-        /// <summary> The extended resource type name. </summary>
-        public string Type { get; }
 
         /// <summary> The alert status properties of the metric alert status. </summary>
         public MetricAlertStatusProperties Properties { get; }
