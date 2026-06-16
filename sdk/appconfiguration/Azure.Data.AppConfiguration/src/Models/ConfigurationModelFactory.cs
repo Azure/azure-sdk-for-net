@@ -9,10 +9,14 @@ namespace Azure.Data.AppConfiguration
 {
     // CUSTOM:
     // - Renamed.
+    // - Suppressed the generated `ConfigurationSetting` factory overload because it collides
+    //   with the custom one below: calls that name only the shared parameters
+    //   (key, value, label, contentType, eTag) become ambiguous (CS0121).
     /// <summary>
     /// Configuration Setting model factory that enables mocking for the AppConfiguration client library.
     /// </summary>
     [CodeGenType("AppConfigurationModelFactory")]
+    [CodeGenSuppress("ConfigurationSetting", typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(IDictionary<string, string>), typeof(string), typeof(bool?), typeof(ETag))]
     public static partial class ConfigurationModelFactory
     {
         /// <summary>
