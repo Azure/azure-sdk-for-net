@@ -11,7 +11,7 @@ using System.ClientModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary></summary>
-    internal partial class UploadFileRequest
+    public partial class UploadFileRequest
     {
         /// <summary> Initializes a new instance of <see cref="UploadFileRequest"/> for deserialization. </summary>
         internal UploadFileRequest()

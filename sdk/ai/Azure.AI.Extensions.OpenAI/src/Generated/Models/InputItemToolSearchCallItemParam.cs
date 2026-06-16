@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The InputItemToolSearchCallItemParam. </summary>
-    internal partial class InputItemToolSearchCallItemParam : InputItem
+    public partial class InputItemToolSearchCallItemParam : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemToolSearchCallItemParam"/>. </summary>
         /// <param name="arguments"> The arguments supplied to the tool search call. </param>

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Kind of media content. </summary>
-    internal readonly partial struct AnalysisContentKind : IEquatable<AnalysisContentKind>
+    public readonly partial struct AnalysisContentKind : IEquatable<AnalysisContentKind>
     {
         private readonly string _value;
         /// <summary> Document content, such as pdf, image, txt, etc. </summary>

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> Type of chunking strategy. </summary>
-    internal readonly partial struct VectorStoreChunkingStrategyResponseType : IEquatable<VectorStoreChunkingStrategyResponseType>
+    public readonly partial struct VectorStoreChunkingStrategyResponseType : IEquatable<VectorStoreChunkingStrategyResponseType>
     {
         private readonly string _value;
         private const string OtherValue = "other";

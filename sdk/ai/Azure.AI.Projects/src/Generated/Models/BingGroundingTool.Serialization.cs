@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
-    internal partial class BingGroundingTool : InternalTool, IJsonModel<BingGroundingTool>
+    public partial class BingGroundingTool : InternalTool, IJsonModel<BingGroundingTool>
     {
         /// <summary> Initializes a new instance of <see cref="BingGroundingTool"/> for deserialization. </summary>
         internal BingGroundingTool()

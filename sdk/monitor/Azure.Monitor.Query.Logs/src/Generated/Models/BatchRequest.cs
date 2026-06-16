@@ -13,7 +13,7 @@ using Azure.Monitor.Query.Logs;
 namespace Azure.Monitor.Query.Logs.Models
 {
     /// <summary> An array of requests. </summary>
-    internal partial class BatchRequest
+    public partial class BatchRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

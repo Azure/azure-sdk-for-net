@@ -14,7 +14,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// text or structured JSON data. Learn more:
     /// <list type="bullet"><item><description>[Text inputs and outputs](/docs/guides/text)</description></item><item><description>[Structured Outputs](/docs/guides/structured-outputs)</description></item></list>
     /// </summary>
-    internal partial class ResponseTextParam : IJsonModel<ResponseTextParam>
+    public partial class ResponseTextParam : IJsonModel<ResponseTextParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> The ContainerNetworkPolicyAllowlistParam. </summary>
-    internal partial class ContainerNetworkPolicyAllowlistParam : ContainerNetworkPolicyParam, IJsonModel<ContainerNetworkPolicyAllowlistParam>
+    public partial class ContainerNetworkPolicyAllowlistParam : ContainerNetworkPolicyParam, IJsonModel<ContainerNetworkPolicyAllowlistParam>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkPolicyAllowlistParam"/> for deserialization. </summary>
         internal ContainerNetworkPolicyAllowlistParam()

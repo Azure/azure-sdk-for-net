@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> Custom tool. </summary>
-    internal partial class ToolChoiceCustom : InternalToolChoiceParam, IJsonModel<ToolChoiceCustom>
+    public partial class ToolChoiceCustom : InternalToolChoiceParam, IJsonModel<ToolChoiceCustom>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceCustom"/> for deserialization. </summary>
         internal ToolChoiceCustom()

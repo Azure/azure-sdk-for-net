@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum ResponseReasoningSummary
+    public enum ResponseReasoningSummary
     {
         /// <summary> Auto. </summary>
         Auto,

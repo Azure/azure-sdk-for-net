@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Client event types used in VoiceLive protocol. </summary>
-    internal readonly partial struct ClientEventType : IEquatable<ClientEventType>
+    public readonly partial struct ClientEventType : IEquatable<ClientEventType>
     {
         private readonly string _value;
         private const string SessionUpdateValue = "session.update";

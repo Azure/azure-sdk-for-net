@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.Messages
 {
     /// <summary> The type of the communication messages channel. </summary>
-    internal readonly partial struct CommunicationMessagesChannel : IEquatable<CommunicationMessagesChannel>
+    public readonly partial struct CommunicationMessagesChannel : IEquatable<CommunicationMessagesChannel>
     {
         private readonly string _value;
         /// <summary> The WhatsApp communication messages channel type. </summary>

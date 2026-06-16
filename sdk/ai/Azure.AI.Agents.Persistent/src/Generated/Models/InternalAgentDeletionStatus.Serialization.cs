@@ -14,7 +14,7 @@ using Azure;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The status of an agent deletion operation. </summary>
-    internal partial class InternalAgentDeletionStatus : IJsonModel<InternalAgentDeletionStatus>
+    public partial class InternalAgentDeletionStatus : IJsonModel<InternalAgentDeletionStatus>
     {
         /// <summary> Initializes a new instance of <see cref="InternalAgentDeletionStatus"/> for deserialization. </summary>
         internal InternalAgentDeletionStatus()

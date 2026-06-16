@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Signals that the streamed input text content for the specified item is complete. </summary>
-    internal partial class ClientEventInputTextDone : ClientEvent, IJsonModel<ClientEventInputTextDone>
+    public partial class ClientEventInputTextDone : ClientEvent, IJsonModel<ClientEventInputTextDone>
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputTextDone"/> for deserialization. </summary>
         internal ClientEventInputTextDone()

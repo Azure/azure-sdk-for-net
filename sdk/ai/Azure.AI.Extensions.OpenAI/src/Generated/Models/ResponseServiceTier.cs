@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum ResponseServiceTier
+    public enum ResponseServiceTier
     {
         /// <summary> Auto. </summary>
         Auto,

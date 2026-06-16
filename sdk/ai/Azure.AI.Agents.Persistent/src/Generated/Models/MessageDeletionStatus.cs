@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Agents.Persistent
 {
     /// <summary> The status of a thread message deletion operation. </summary>
-    internal partial class MessageDeletionStatus
+    public partial class MessageDeletionStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

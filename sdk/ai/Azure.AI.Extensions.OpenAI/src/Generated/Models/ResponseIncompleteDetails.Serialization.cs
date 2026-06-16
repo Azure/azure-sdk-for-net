@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The ResponseIncompleteDetails. </summary>
-    internal partial class ResponseIncompleteDetails : IJsonModel<ResponseIncompleteDetails>
+    public partial class ResponseIncompleteDetails : IJsonModel<ResponseIncompleteDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

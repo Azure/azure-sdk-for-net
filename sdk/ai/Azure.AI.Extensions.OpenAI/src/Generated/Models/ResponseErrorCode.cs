@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The error code for the response. </summary>
-    internal enum ResponseErrorCode
+    public enum ResponseErrorCode
     {
         /// <summary> ServerError. </summary>
         ServerError,

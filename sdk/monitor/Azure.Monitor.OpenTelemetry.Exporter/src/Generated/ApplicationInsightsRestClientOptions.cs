@@ -13,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     /// <summary> Client options for <see cref="ApplicationInsightsRestClient"/>. </summary>
-    internal partial class ApplicationInsightsRestClientOptions : ClientOptions
+    public partial class ApplicationInsightsRestClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2_1;
 

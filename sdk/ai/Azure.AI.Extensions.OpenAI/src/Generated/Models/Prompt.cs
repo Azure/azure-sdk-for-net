@@ -11,7 +11,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// Reference to a prompt template and its variables.
     /// [Learn more](/docs/guides/text?api-mode=responses#reusable-prompts).
     /// </summary>
-    internal partial class Prompt
+    public partial class Prompt
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

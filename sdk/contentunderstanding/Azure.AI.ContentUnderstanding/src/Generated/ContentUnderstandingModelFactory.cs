@@ -15,6 +15,17 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ContentUnderstandingModelFactory
     {
+        /// <summary> The AnalyzeRequest1. </summary>
+        /// <param name="inputs"> Inputs to analyze.  Currently, only pro mode supports multiple inputs. </param>
+        /// <param name="modelDeployments"> Specify the default mapping of model names to LLM/embedding deployments in Microsoft Foundry. For details and current semantics, see https://aka.ms/cudoc-quickstart-rest. </param>
+        /// <returns> A new <see cref="ContentUnderstanding.AnalyzeRequest1"/> instance for mocking. </returns>
+        public static AnalyzeRequest1 AnalyzeRequest1(IEnumerable<AnalysisInput> inputs = default, IDictionary<string, string> modelDeployments = default)
+        {
+            inputs ??= new ChangeTrackingList<AnalysisInput>();
+            modelDeployments ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AnalyzeRequest1(inputs.ToList(), modelDeployments, additionalBinaryDataProperties: null);
+        }
 
         /// <summary> Additional input to analyze. </summary>
         /// <param name="uri"> The URL of the input to analyze.  Only one of url or data should be specified. </param>

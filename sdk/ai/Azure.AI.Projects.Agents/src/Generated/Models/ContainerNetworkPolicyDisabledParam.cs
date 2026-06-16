@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace OpenAI
 {
     /// <summary> The ContainerNetworkPolicyDisabledParam. </summary>
-    internal partial class ContainerNetworkPolicyDisabledParam : ContainerNetworkPolicyParam
+    public partial class ContainerNetworkPolicyDisabledParam : ContainerNetworkPolicyParam
     {
         /// <summary> Initializes a new instance of <see cref="ContainerNetworkPolicyDisabledParam"/>. </summary>
         public ContainerNetworkPolicyDisabledParam() : base(ContainerNetworkPolicyParamType.Disabled)

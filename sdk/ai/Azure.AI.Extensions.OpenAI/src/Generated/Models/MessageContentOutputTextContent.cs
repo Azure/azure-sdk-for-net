@@ -10,7 +10,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Output text. </summary>
-    internal partial class MessageContentOutputTextContent : InternalMessageContent
+    public partial class MessageContentOutputTextContent : InternalMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentOutputTextContent"/>. </summary>
         /// <param name="text"> The text output from the model. </param>

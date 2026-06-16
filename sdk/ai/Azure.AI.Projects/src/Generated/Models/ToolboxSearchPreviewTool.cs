@@ -12,7 +12,7 @@ namespace Azure.AI.Projects
     /// When present, deferred tools are hidden from `tools/list` and only
     /// discoverable via `search_tools` queries at runtime.
     /// </summary>
-    internal partial class ToolboxSearchPreviewTool : InternalTool
+    public partial class ToolboxSearchPreviewTool : InternalTool
     {
         /// <summary> Initializes a new instance of <see cref="ToolboxSearchPreviewTool"/>. </summary>
         public ToolboxSearchPreviewTool() : base(ToolType.ToolboxSearchPreview)

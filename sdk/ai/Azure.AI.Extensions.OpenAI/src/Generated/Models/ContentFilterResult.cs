@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A content filter evaluation result for a specific source in the response. </summary>
-    internal partial class ContentFilterResult
+    public partial class ContentFilterResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> The WebSearchToolFilters. </summary>
-    internal partial class WebSearchToolFilters
+    public partial class WebSearchToolFilters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

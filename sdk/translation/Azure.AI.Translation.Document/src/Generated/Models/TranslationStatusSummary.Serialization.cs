@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Status Summary. </summary>
-    internal partial class TranslationStatusSummary : IJsonModel<TranslationStatusSummary>
+    public partial class TranslationStatusSummary : IJsonModel<TranslationStatusSummary>
     {
         /// <summary> Initializes a new instance of <see cref="TranslationStatusSummary"/> for deserialization. </summary>
         internal TranslationStatusSummary()

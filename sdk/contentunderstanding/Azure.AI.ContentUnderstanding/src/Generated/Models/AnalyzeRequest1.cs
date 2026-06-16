@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> The AnalyzeRequest1. </summary>
-    internal partial class AnalyzeRequest1
+    public partial class AnalyzeRequest1
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Ratings for the intensity and risk level of harmful content. </summary>
-    internal readonly partial struct AzureContentFilterSeverity : IEquatable<AzureContentFilterSeverity>
+    public readonly partial struct AzureContentFilterSeverity : IEquatable<AzureContentFilterSeverity>
     {
         private readonly string _value;
         /// <summary> Content appropriate for most audiences. </summary>

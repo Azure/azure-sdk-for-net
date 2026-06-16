@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Streams a delta of input text content into the specified item. </summary>
-    internal partial class ClientEventInputTextDelta : ClientEvent
+    public partial class ClientEventInputTextDelta : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputTextDelta"/>. </summary>
         /// <param name="id"> The ID of the item the text delta is being appended to. </param>

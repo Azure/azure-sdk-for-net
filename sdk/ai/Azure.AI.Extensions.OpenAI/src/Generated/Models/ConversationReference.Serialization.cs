@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Conversation. </summary>
-    internal partial class ConversationReference : IJsonModel<ConversationReference>
+    public partial class ConversationReference : IJsonModel<ConversationReference>
     {
         /// <summary> Initializes a new instance of <see cref="ConversationReference"/> for deserialization. </summary>
         internal ConversationReference()
