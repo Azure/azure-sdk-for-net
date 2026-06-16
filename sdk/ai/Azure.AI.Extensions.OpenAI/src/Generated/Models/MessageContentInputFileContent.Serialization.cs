@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Input file. </summary>
-    internal partial class MessageContentInputFileContent : InternalMessageContent, IJsonModel<MessageContentInputFileContent>
+    public partial class MessageContentInputFileContent : InternalMessageContent, IJsonModel<MessageContentInputFileContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

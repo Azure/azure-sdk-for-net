@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Container Reference. </summary>
-    internal partial class ContainerReferenceResource : FunctionShellCallEnvironment, IJsonModel<ContainerReferenceResource>
+    public partial class ContainerReferenceResource : FunctionShellCallEnvironment, IJsonModel<ContainerReferenceResource>
     {
         /// <summary> Initializes a new instance of <see cref="ContainerReferenceResource"/> for deserialization. </summary>
         internal ContainerReferenceResource()

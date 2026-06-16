@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.Messages
 {
     /// <summary> The type of the template parameter. </summary>
-    internal readonly partial struct MessageTemplateValueKind : IEquatable<MessageTemplateValueKind>
+    public readonly partial struct MessageTemplateValueKind : IEquatable<MessageTemplateValueKind>
     {
         private readonly string _value;
         /// <summary> The text template parameter type. </summary>

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Available expression languages that can be configured. </summary>
-    internal readonly partial struct ExpressionRouterRuleLanguage : IEquatable<ExpressionRouterRuleLanguage>
+    public readonly partial struct ExpressionRouterRuleLanguage : IEquatable<ExpressionRouterRuleLanguage>
     {
         private readonly string _value;
         /// <summary> PowerFx. </summary>

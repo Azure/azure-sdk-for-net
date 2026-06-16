@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> The ContainerAutoParam. </summary>
-    internal partial class ContainerAutoParam : FunctionShellToolParamEnvironment, IJsonModel<ContainerAutoParam>
+    public partial class ContainerAutoParam : FunctionShellToolParamEnvironment, IJsonModel<ContainerAutoParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for an openapi function. </summary>
-    internal partial class OpenApiFunctionDefinition : IJsonModel<OpenApiFunctionDefinition>
+    public partial class OpenApiFunctionDefinition : IJsonModel<OpenApiFunctionDefinition>
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiFunctionDefinition"/> for deserialization. </summary>
         internal OpenApiFunctionDefinition()

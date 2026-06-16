@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.Vision.ImageAnalysis
 {
     /// <summary> The visual features supported by the Image Analysis service. </summary>
-    internal readonly partial struct VisualFeaturesImpl : IEquatable<VisualFeaturesImpl>
+    public readonly partial struct VisualFeaturesImpl : IEquatable<VisualFeaturesImpl>
     {
         private readonly string _value;
         /// <summary> Extract content tags for thousands of recognizable objects, living beings, scenery, and actions that appear in the image. </summary>

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Text. </summary>
-    internal partial class TextResponseFormatConfigurationResponseFormatText : TextResponseFormatConfiguration
+    public partial class TextResponseFormatConfigurationResponseFormatText : TextResponseFormatConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="TextResponseFormatConfigurationResponseFormatText"/>. </summary>
         internal TextResponseFormatConfigurationResponseFormatText() : base("text")

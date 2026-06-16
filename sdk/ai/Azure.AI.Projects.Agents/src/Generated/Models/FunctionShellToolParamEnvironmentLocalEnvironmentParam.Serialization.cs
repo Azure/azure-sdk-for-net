@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> The FunctionShellToolParamEnvironmentLocalEnvironmentParam. </summary>
-    internal partial class FunctionShellToolParamEnvironmentLocalEnvironmentParam : FunctionShellToolParamEnvironment, IJsonModel<FunctionShellToolParamEnvironmentLocalEnvironmentParam>
+    public partial class FunctionShellToolParamEnvironmentLocalEnvironmentParam : FunctionShellToolParamEnvironment, IJsonModel<FunctionShellToolParamEnvironmentLocalEnvironmentParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

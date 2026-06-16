@@ -10,7 +10,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> DoubleClick. </summary>
-    internal partial class DoubleClickAction : InternalComputerAction
+    public partial class DoubleClickAction : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="DoubleClickAction"/>. </summary>
         /// <param name="x"> The x-coordinate where the double click occurred. </param>

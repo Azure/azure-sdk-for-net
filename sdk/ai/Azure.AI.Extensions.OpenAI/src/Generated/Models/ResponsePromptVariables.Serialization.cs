@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Prompt Variables. </summary>
-    internal partial class ResponsePromptVariables : IJsonModel<ResponsePromptVariables>
+    public partial class ResponsePromptVariables : IJsonModel<ResponsePromptVariables>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

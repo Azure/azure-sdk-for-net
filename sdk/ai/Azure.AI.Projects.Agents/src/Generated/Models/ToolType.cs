@@ -9,7 +9,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary></summary>
-    internal readonly partial struct ToolType : IEquatable<ToolType>
+    public readonly partial struct ToolType : IEquatable<ToolType>
     {
         private readonly string _value;
         private const string FunctionValue = "function";

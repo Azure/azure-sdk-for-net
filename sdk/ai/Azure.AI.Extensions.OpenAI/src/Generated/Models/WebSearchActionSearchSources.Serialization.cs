@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The WebSearchActionSearchSources. </summary>
-    internal partial class WebSearchActionSearchSources : IJsonModel<WebSearchActionSearchSources>
+    public partial class WebSearchActionSearchSources : IJsonModel<WebSearchActionSearchSources>
     {
         /// <summary> Initializes a new instance of <see cref="WebSearchActionSearchSources"/> for deserialization. </summary>
         internal WebSearchActionSearchSources()

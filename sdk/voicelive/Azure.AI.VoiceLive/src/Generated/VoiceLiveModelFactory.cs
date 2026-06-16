@@ -850,6 +850,33 @@ namespace Azure.AI.VoiceLive
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Streams a delta of input text content into the specified item. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="id"> The ID of the item the text delta is being appended to. </param>
+        /// <param name="delta"> The text delta to append. </param>
+        /// <param name="contentIndex"> The index of the content part within the item the delta applies to. </param>
+        /// <returns> A new <see cref="VoiceLive.ClientEventInputTextDelta"/> instance for mocking. </returns>
+        public static ClientEventInputTextDelta ClientEventInputTextDelta(string eventId = default, string id = default, string delta = default, int? contentIndex = default)
+        {
+            return new ClientEventInputTextDelta(
+                ClientEventType.InputTextDelta,
+                eventId,
+                additionalBinaryDataProperties: null,
+                id,
+                delta,
+                contentIndex);
+        }
+
+        /// <summary> Signals that the streamed input text content for the specified item is complete. </summary>
+        /// <param name="eventId"></param>
+        /// <param name="id"> The ID of the item whose text content has finished streaming. </param>
+        /// <param name="contentIndex"> The index of the content part within the item. </param>
+        /// <returns> A new <see cref="VoiceLive.ClientEventInputTextDone"/> instance for mocking. </returns>
+        public static ClientEventInputTextDone ClientEventInputTextDone(string eventId = default, string id = default, int? contentIndex = default)
+        {
+            return new ClientEventInputTextDone(ClientEventType.InputTextDone, eventId, additionalBinaryDataProperties: null, id, contentIndex);
+        }
+
         /// <summary>
         /// Base for any response item; discriminated by `type`.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VoiceLive.MessageItem"/>, <see cref="VoiceLive.FunctionCallItem"/>, and <see cref="VoiceLive.FunctionCallOutputItem"/>.
@@ -1004,6 +1031,99 @@ namespace Azure.AI.VoiceLive
                 callId,
                 output,
                 status);
+        }
+
+        /// <summary> Create a new VoiceLive response with these parameters. </summary>
+        /// <param name="commit"> Whether to commit the response to the conversation. Defaults to true. </param>
+        /// <param name="cancelPrevious"> Whether to cancel any ongoing generation before starting this one. Defaults to true. </param>
+        /// <param name="appendInputItems"> Input items to append to the conversation context before generating a response. </param>
+        /// <param name="inputItems">
+        /// Input items to be used as the context for this response.
+        /// An empty array clears previous context.
+        /// </param>
+        /// <param name="modalities">
+        /// The set of modalities the model can respond with. To disable audio,
+        /// set this to ["text"].
+        /// </param>
+        /// <param name="instructions">
+        /// The default system instructions (i.e. system message) prepended to model
+        /// calls. This field allows the client to guide the model on desired
+        /// responses. The model can be instructed on response content and format,
+        /// (e.g. "be extremely succinct", "act friendly", "here are examples of good
+        /// responses") and on audio behavior (e.g. "talk quickly", "inject emotion
+        /// into your voice", "laugh frequently"). The instructions are not guaranteed
+        /// to be followed by the model, but they provide guidance to the model on the
+        /// desired behavior.
+        /// Note that the server sets default instructions which will be used if this
+        /// field is not set and are visible in the `session.created` event at the
+        /// start of the session.
+        /// </param>
+        /// <param name="voice"> supported voice identifiers and configurations. </param>
+        /// <param name="outputAudioFormat"> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </param>
+        /// <param name="tools"> Tools (functions) available to the model. </param>
+        /// <param name="toolChoice">
+        /// How the model chooses tools. Options are `auto`, `none`, `required`, or
+        /// specify a function, like `{"type": "function", "function": {"name": "my_function"}}`.
+        /// </param>
+        /// <param name="temperature"> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </param>
+        /// <param name="maxOutputTokens">
+        /// Maximum number of output tokens for a single assistant response,
+        /// inclusive of tool calls. Provide an integer between 1 and 4096 to
+        /// limit output tokens, or `inf` for the maximum available tokens for a
+        /// given model. Defaults to `inf`.
+        /// </param>
+        /// <param name="preGeneratedAssistantMessage">
+        /// Create the response with pre-generated assistant message. The message item would be
+        /// added into the conversation history and returned with synthesized audio output in the created response.
+        /// </param>
+        /// <param name="reasoningEffort">
+        /// Constrains effort on reasoning for reasoning models. Check model documentation for supported values for each model.
+        /// Reducing reasoning effort can result in faster responses and fewer tokens used on reasoning in a response.
+        /// </param>
+        /// <param name="metadata">
+        /// Set of up to 16 key-value pairs that can be attached to an object.
+        /// This can be useful for storing additional information about the object in a structured format.
+        /// Keys can be a maximum of 64 characters long and values can be a maximum of 512 characters long.
+        /// </param>
+        /// <param name="interimResponse"> Configuration for interim response generation during latency or tool calls. </param>
+        /// <param name="invokeInput"> Input data to invoke the hosted agent. This feature is in preview. </param>
+        /// <returns> A new <see cref="VoiceLive.ResponseCreateParams"/> instance for mocking. </returns>
+        public static ResponseCreateParams ResponseCreateParams(bool? commit = default, bool? cancelPrevious = default, IEnumerable<ConversationRequestItem> appendInputItems = default, IEnumerable<ConversationRequestItem> inputItems = default, IEnumerable<InteractionModality> modalities = default, string instructions = default, BinaryData voice = default, OutputAudioFormat? outputAudioFormat = default, IEnumerable<VoiceLiveToolDefinition> tools = default, string toolChoice = default, float? temperature = default, BinaryData maxOutputTokens = default, AssistantMessageItem preGeneratedAssistantMessage = default, ReasoningEffort? reasoningEffort = default, IDictionary<string, string> metadata = default, BinaryData interimResponse = default, IDictionary<string, BinaryData> invokeInput = default)
+        {
+            appendInputItems ??= new ChangeTrackingList<ConversationRequestItem>();
+            inputItems ??= new ChangeTrackingList<ConversationRequestItem>();
+            modalities ??= new ChangeTrackingList<InteractionModality>();
+            tools ??= new ChangeTrackingList<VoiceLiveToolDefinition>();
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            invokeInput ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new ResponseCreateParams(
+                commit,
+                cancelPrevious,
+                appendInputItems.ToList(),
+                inputItems.ToList(),
+                modalities.ToList(),
+                instructions,
+                voice,
+                outputAudioFormat,
+                tools.ToList(),
+                toolChoice,
+                temperature,
+                maxOutputTokens,
+                preGeneratedAssistantMessage,
+                reasoningEffort,
+                metadata,
+                interimResponse,
+                invokeInput,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Client request to clear the avatar output buffer. </summary>
+        /// <param name="eventId"></param>
+        /// <returns> A new <see cref="VoiceLive.ClientEventOutputAudioBufferClear"/> instance for mocking. </returns>
+        public static ClientEventOutputAudioBufferClear ClientEventOutputAudioBufferClear(string eventId = default)
+        {
+            return new ClientEventOutputAudioBufferClear(ClientEventType.OutputAudioBufferClear, eventId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Details for a cancelled response. </summary>

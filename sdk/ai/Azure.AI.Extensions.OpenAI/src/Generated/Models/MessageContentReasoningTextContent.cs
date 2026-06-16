@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Reasoning text. </summary>
-    internal partial class MessageContentReasoningTextContent : InternalMessageContent
+    public partial class MessageContentReasoningTextContent : InternalMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentReasoningTextContent"/>. </summary>
         /// <param name="text"> The reasoning text from the model. </param>

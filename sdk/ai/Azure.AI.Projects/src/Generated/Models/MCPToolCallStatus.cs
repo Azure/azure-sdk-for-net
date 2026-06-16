@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    internal enum MCPToolCallStatus
+    public enum MCPToolCallStatus
     {
         /// <summary> InProgress. </summary>
         InProgress,

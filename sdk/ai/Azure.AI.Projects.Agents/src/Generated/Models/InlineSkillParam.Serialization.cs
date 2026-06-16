@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> The InlineSkillParam. </summary>
-    internal partial class InlineSkillParam : ContainerSkill, IJsonModel<InlineSkillParam>
+    public partial class InlineSkillParam : ContainerSkill, IJsonModel<InlineSkillParam>
     {
         /// <summary> Initializes a new instance of <see cref="InlineSkillParam"/> for deserialization. </summary>
         internal InlineSkillParam()

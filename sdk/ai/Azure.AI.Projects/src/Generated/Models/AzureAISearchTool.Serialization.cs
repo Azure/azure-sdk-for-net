@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for an Azure AI search tool as used to configure an agent. </summary>
-    internal partial class AzureAISearchTool : InternalTool, IJsonModel<AzureAISearchTool>
+    public partial class AzureAISearchTool : InternalTool, IJsonModel<AzureAISearchTool>
     {
         /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/> for deserialization. </summary>
         internal AzureAISearchTool()

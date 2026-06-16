@@ -13,7 +13,7 @@ namespace Azure.AI.Projects
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RealtimeMCPProtocolError"/>, <see cref="RealtimeMCPToolExecutionError"/>, and <see cref="RealtimeMCPHTTPError"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRealtimeMCPError))]
-    internal abstract partial class RealtimeMCPError : IJsonModel<RealtimeMCPError>
+    public abstract partial class RealtimeMCPError : IJsonModel<RealtimeMCPError>
     {
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPError"/> for deserialization. </summary>
         internal RealtimeMCPError()

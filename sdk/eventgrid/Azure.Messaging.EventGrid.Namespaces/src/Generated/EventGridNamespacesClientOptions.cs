@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Configures logging for the client options. </summary>
         partial void ConfigureLogging();
 
-        internal enum ServiceVersion
+        public enum ServiceVersion
         {
             /// <summary> V2023_11_01. </summary>
             V2023_11_01 = 1,

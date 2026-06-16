@@ -14,7 +14,7 @@ using Azure;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Response for the transliteration API. </summary>
-    internal partial class TransliterateResult : IJsonModel<TransliterateResult>
+    public partial class TransliterateResult : IJsonModel<TransliterateResult>
     {
         /// <summary> Initializes a new instance of <see cref="TransliterateResult"/> for deserialization. </summary>
         internal TransliterateResult()

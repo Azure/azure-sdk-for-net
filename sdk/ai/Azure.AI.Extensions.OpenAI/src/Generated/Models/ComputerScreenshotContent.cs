@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Computer screenshot. </summary>
-    internal partial class ComputerScreenshotContent : InternalMessageContent
+    public partial class ComputerScreenshotContent : InternalMessageContent
     {
         /// <summary> Initializes a new instance of <see cref="ComputerScreenshotContent"/>. </summary>
         /// <param name="imageUrl"></param>

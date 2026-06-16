@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> Custom tool call output. </summary>
-    internal partial class InputItemCustomToolCallOutput : InputItem
+    public partial class InputItemCustomToolCallOutput : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemCustomToolCallOutput"/>. </summary>
         /// <param name="callId"> The call ID, used to map this custom tool call output to a custom tool call. </param>
@@ -62,7 +62,7 @@ namespace Azure.AI.Projects
         /// <description> <see cref="string"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="FunctionAndCustomToolCallOutput"/>. </description>
+        /// <description> <see cref="IList{T}"/> where <c>T</c> is of type <see cref="Projects.FunctionAndCustomToolCallOutput"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

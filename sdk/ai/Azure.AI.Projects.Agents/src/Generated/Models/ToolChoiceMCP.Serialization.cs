@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> MCP tool. </summary>
-    internal partial class ToolChoiceMCP : InternalToolChoiceParam, IJsonModel<ToolChoiceMCP>
+    public partial class ToolChoiceMCP : InternalToolChoiceParam, IJsonModel<ToolChoiceMCP>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceMCP"/> for deserialization. </summary>
         internal ToolChoiceMCP()

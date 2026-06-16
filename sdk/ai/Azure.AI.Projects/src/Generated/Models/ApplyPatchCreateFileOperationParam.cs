@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Apply patch create file operation. </summary>
-    internal partial class ApplyPatchCreateFileOperationParam : ApplyPatchOperationParam
+    public partial class ApplyPatchCreateFileOperationParam : ApplyPatchOperationParam
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchCreateFileOperationParam"/>. </summary>
         /// <param name="path"> Path of the file to create relative to the workspace root. </param>

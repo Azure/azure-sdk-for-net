@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.AI.Vision.ImageAnalysis
 {
     /// <summary> An object holding the publicly reachable URL of an image to analyze. </summary>
-    internal partial class ImageUrl : IJsonModel<ImageUrl>
+    public partial class ImageUrl : IJsonModel<ImageUrl>
     {
         /// <summary> Initializes a new instance of <see cref="ImageUrl"/> for deserialization. </summary>
         internal ImageUrl()

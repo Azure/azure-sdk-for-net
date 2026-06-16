@@ -5,7 +5,7 @@
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    internal enum WebSearchToolSearchContextSize
+    public enum WebSearchToolSearchContextSize
     {
         /// <summary> Low. </summary>
         Low,

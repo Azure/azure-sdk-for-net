@@ -353,6 +353,16 @@ namespace Azure.AI.Language.Text.Authoring
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The CopyProjectAuthorizationRequest. </summary>
+        /// <param name="projectKind"> Represents the project kind. </param>
+        /// <param name="storageInputContainerName"> The name of the storage container. </param>
+        /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
+        /// <returns> A new <see cref="Authoring.CopyProjectAuthorizationRequest"/> instance for mocking. </returns>
+        public static CopyProjectAuthorizationRequest CopyProjectAuthorizationRequest(TextAuthoringProjectKind projectKind = default, string storageInputContainerName = default, bool? allowOverwrite = default)
+        {
+            return new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Represents the options for copying an existing project to another Azure resource. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="targetProjectName"> The project name to be copied-into. </param>

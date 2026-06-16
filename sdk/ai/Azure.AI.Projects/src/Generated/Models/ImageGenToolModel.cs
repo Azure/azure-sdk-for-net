@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Azure.AI.Projects
 {
     /// <summary></summary>
-    internal readonly partial struct ImageGenToolModel : IEquatable<ImageGenToolModel>
+    public readonly partial struct ImageGenToolModel : IEquatable<ImageGenToolModel>
     {
         private readonly string _value;
         private const string GptImage1Value = "gpt-image-1";
