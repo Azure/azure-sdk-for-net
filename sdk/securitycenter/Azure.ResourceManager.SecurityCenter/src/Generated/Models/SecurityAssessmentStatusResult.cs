@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The SecurityAssessmentStatusResult. </summary>
+    /// <summary> C# compatibility replacement for the security assessment status result shape. </summary>
     public partial class SecurityAssessmentStatusResult : SecurityAssessmentStatus
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatusResult"/>. </summary>

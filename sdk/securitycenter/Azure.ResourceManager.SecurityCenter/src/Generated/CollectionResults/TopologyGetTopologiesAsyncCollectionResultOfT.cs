@@ -15,34 +15,31 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    internal partial class AllowedConnectionsGetByHomeRegionAsyncCollectionResultOfT : AsyncPageable<AllowedConnectionsResourceData>
+    internal partial class TopologyGetTopologiesAsyncCollectionResultOfT : AsyncPageable<SecurityTopologyResource>
     {
-        private readonly AllowedConnections _client;
+        private readonly Topology _client;
         private readonly Guid _subscriptionId;
-        private readonly string _ascLocation;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of AllowedConnectionsGetByHomeRegionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The AllowedConnections client used to send requests. </param>
+        /// <summary> Initializes a new instance of TopologyGetTopologiesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Topology client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AllowedConnectionsGetByHomeRegionAsyncCollectionResultOfT(AllowedConnections client, Guid subscriptionId, string ascLocation, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public TopologyGetTopologiesAsyncCollectionResultOfT(Topology client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _ascLocation = ascLocation;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of AllowedConnectionsGetByHomeRegionAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of TopologyGetTopologiesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of AllowedConnectionsGetByHomeRegionAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<AllowedConnectionsResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of TopologyGetTopologiesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<SecurityTopologyResource>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,8 +49,8 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     yield break;
                 }
-                AllowedConnectionsList result = AllowedConnectionsList.FromResponse(response);
-                yield return Page<AllowedConnectionsResourceData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                TopologyList result = TopologyList.FromResponse(response);
+                yield return Page<SecurityTopologyResource>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -68,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByHomeRegionRequest(nextLink, _subscriptionId, _ascLocation, _context) : _client.CreateGetByHomeRegionRequest(_subscriptionId, _ascLocation, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetTopologiesRequest(nextLink, _subscriptionId, _context) : _client.CreateGetTopologiesRequest(_subscriptionId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

@@ -11,23 +11,23 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The TopologyList. </summary>
-    internal partial class TopologyList
+    /// <summary> The SecuritySolutionList. </summary>
+    internal partial class SecuritySolutionList
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TopologyList"/>. </summary>
-        internal TopologyList()
+        /// <summary> Initializes a new instance of <see cref="SecuritySolutionList"/>. </summary>
+        internal SecuritySolutionList()
         {
-            Value = new ChangeTrackingList<SecurityTopologyResource>();
+            Value = new ChangeTrackingList<SecuritySolution>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TopologyList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuritySolutionList"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TopologyList(IReadOnlyList<SecurityTopologyResource> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecuritySolutionList(IList<SecuritySolution> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Gets the Value. </summary>
-        public IReadOnlyList<SecurityTopologyResource> Value { get; }
+        public IList<SecuritySolution> Value { get; }
 
         /// <summary> Gets the NextLink. </summary>
         public string NextLink { get; }

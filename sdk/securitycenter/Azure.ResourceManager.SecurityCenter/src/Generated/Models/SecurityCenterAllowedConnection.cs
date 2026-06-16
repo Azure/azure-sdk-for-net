@@ -9,22 +9,21 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter.Models;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The resource whose properties describes the allowed traffic between Azure resources. </summary>
-    public partial class AllowedConnectionsResourceData : ResourceData
+    public partial class SecurityCenterAllowedConnection : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AllowedConnectionsResourceData"/>. </summary>
-        internal AllowedConnectionsResourceData()
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterAllowedConnection"/>. </summary>
+        internal SecurityCenterAllowedConnection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AllowedConnectionsResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityCenterAllowedConnection"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes the allowed traffic between Azure resources. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        internal AllowedConnectionsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AllowedConnectionsResourceProperties properties, string location) : base(id, name, resourceType, systemData)
+        internal SecurityCenterAllowedConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AllowedConnectionsResourceProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter
         internal AllowedConnectionsResourceProperties Properties { get; }
 
         /// <summary> Location where the resource is stored. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> The UTC time on which the allowed connections resource was calculated. </summary>
         public DateTimeOffset? CalculatedOn

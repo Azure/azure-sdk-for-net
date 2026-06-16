@@ -12,14 +12,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The SecuritySolutionsReferenceData. </summary>
+    /// <summary> C# compatibility replacement for the security solutions reference data shape. </summary>
     public partial class SecuritySolutionsReferenceData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecuritySolutionsReferenceData"/>. </summary>
-        /// <param name="properties"></param>
+        /// <param name="properties"> The security solutions reference data properties. </param>
         internal SecuritySolutionsReferenceData(SecuritySolutionsReferenceDataProperties properties)
         {
             Properties = properties;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> Location where the resource is stored. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> The security solutions reference data properties. </param>
         internal SecuritySolutionsReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, SecuritySolutionsReferenceDataProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Location where the resource is stored. </summary>
         public AzureLocation? Location { get; }
 
-        /// <summary> Gets the Properties. </summary>
+        /// <summary> The security solutions reference data properties. </summary>
         public SecuritySolutionsReferenceDataProperties Properties { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,45 +15,42 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    internal partial class DiscoveredSecuritySolutionsGetByHomeRegionCollectionResultOfT : Pageable<DiscoveredSecuritySolutionData>
+    internal partial class AllowedConnectionsGetAllowedConnectionsAsyncCollectionResultOfT : AsyncPageable<SecurityCenterAllowedConnection>
     {
-        private readonly DiscoveredSecuritySolutions _client;
+        private readonly AllowedConnections _client;
         private readonly Guid _subscriptionId;
-        private readonly string _ascLocation;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DiscoveredSecuritySolutionsGetByHomeRegionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DiscoveredSecuritySolutions client used to send requests. </param>
+        /// <summary> Initializes a new instance of AllowedConnectionsGetAllowedConnectionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The AllowedConnections client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DiscoveredSecuritySolutionsGetByHomeRegionCollectionResultOfT(DiscoveredSecuritySolutions client, Guid subscriptionId, string ascLocation, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AllowedConnectionsGetAllowedConnectionsAsyncCollectionResultOfT(AllowedConnections client, Guid subscriptionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _ascLocation = ascLocation;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DiscoveredSecuritySolutionsGetByHomeRegionCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of AllowedConnectionsGetAllowedConnectionsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DiscoveredSecuritySolutionsGetByHomeRegionCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DiscoveredSecuritySolutionData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of AllowedConnectionsGetAllowedConnectionsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<SecurityCenterAllowedConnection>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
-                DiscoveredSecuritySolutionList result = DiscoveredSecuritySolutionList.FromResponse(response);
-                yield return Page<DiscoveredSecuritySolutionData>.FromValues((IReadOnlyList<DiscoveredSecuritySolutionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                AllowedConnectionsList result = AllowedConnectionsList.FromResponse(response);
+                yield return Page<SecurityCenterAllowedConnection>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
                 if (string.IsNullOrEmpty(nextPageString))
                 {
@@ -65,14 +63,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByHomeRegionRequest(nextLink, _subscriptionId, _ascLocation, _context) : _client.CreateGetByHomeRegionRequest(_subscriptionId, _ascLocation, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllowedConnectionsRequest(nextLink, _subscriptionId, _context) : _client.CreateGetAllowedConnectionsRequest(_subscriptionId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

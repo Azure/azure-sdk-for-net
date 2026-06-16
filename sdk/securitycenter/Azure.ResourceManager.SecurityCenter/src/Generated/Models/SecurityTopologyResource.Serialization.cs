@@ -10,71 +10,58 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter.Models;
+using Azure.ResourceManager.SecurityCenter;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class DiscoveredSecuritySolutionData : ResourceData, IJsonModel<DiscoveredSecuritySolutionData>
+    public partial class SecurityTopologyResource : ResourceData, IJsonModel<SecurityTopologyResource>
     {
-        /// <summary> Initializes a new instance of <see cref="DiscoveredSecuritySolutionData"/> for deserialization. </summary>
-        internal DiscoveredSecuritySolutionData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiscoveredSecuritySolutionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityTopologyResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDiscoveredSecuritySolutionData(document.RootElement, options);
+                        return DeserializeSecurityTopologyResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveredSecuritySolutionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiscoveredSecuritySolutionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityTopologyResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DiscoveredSecuritySolutionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DiscoveredSecuritySolutionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SecurityTopologyResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiscoveredSecuritySolutionData IPersistableModel<DiscoveredSecuritySolutionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DiscoveredSecuritySolutionData)PersistableModelCreateCore(data, options);
+        SecurityTopologyResource IPersistableModel<SecurityTopologyResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (SecurityTopologyResource)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DiscoveredSecuritySolutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DiscoveredSecuritySolutionData"/> from. </param>
-        internal static DiscoveredSecuritySolutionData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDiscoveredSecuritySolutionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<SecurityTopologyResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DiscoveredSecuritySolutionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityTopologyResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,41 +72,44 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiscoveredSecuritySolutionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityTopologyResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveredSecuritySolutionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties, options);
+            if (options.Format != "W" && Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DiscoveredSecuritySolutionData IJsonModel<DiscoveredSecuritySolutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DiscoveredSecuritySolutionData)JsonModelCreateCore(ref reader, options);
+        SecurityTopologyResource IJsonModel<SecurityTopologyResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SecurityTopologyResource)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DiscoveredSecuritySolutionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityTopologyResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiscoveredSecuritySolutionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityTopologyResource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDiscoveredSecuritySolutionData(document.RootElement, options);
+            return DeserializeSecurityTopologyResource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DiscoveredSecuritySolutionData DeserializeDiscoveredSecuritySolutionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static SecurityTopologyResource DeserializeSecurityTopologyResource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -130,8 +120,8 @@ namespace Azure.ResourceManager.SecurityCenter
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DiscoveredSecuritySolutionProperties properties = default;
-            string location = default;
+            TopologyResourceProperties properties = default;
+            AzureLocation? location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -168,12 +158,16 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    properties = DiscoveredSecuritySolutionProperties.DeserializeDiscoveredSecuritySolutionProperties(prop.Value, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = TopologyResourceProperties.DeserializeTopologyResourceProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -181,7 +175,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiscoveredSecuritySolutionData(
+            return new SecurityTopologyResource(
                 id,
                 name,
                 resourceType,

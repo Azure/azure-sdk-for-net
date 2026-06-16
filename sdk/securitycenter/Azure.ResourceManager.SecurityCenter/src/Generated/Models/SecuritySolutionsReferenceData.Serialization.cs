@@ -16,7 +16,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The SecuritySolutionsReferenceData. </summary>
+    /// <summary> C# compatibility replacement for the security solutions reference data shape. </summary>
     public partial class SecuritySolutionsReferenceData : ResourceData, IJsonModel<SecuritySolutionsReferenceData>
     {
         /// <summary> Initializes a new instance of <see cref="SecuritySolutionsReferenceData"/> for deserialization. </summary>

@@ -10,66 +10,58 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter.Models;
+using Azure.ResourceManager.SecurityCenter;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The resource whose properties describes the allowed traffic between Azure resources. </summary>
-    public partial class AllowedConnectionsResourceData : ResourceData, IJsonModel<AllowedConnectionsResourceData>
+    public partial class SecurityCenterAllowedConnection : ResourceData, IJsonModel<SecurityCenterAllowedConnection>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AllowedConnectionsResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityCenterAllowedConnection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAllowedConnectionsResourceData(document.RootElement, options);
+                        return DeserializeSecurityCenterAllowedConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AllowedConnectionsResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterAllowedConnection)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AllowedConnectionsResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityCenterAllowedConnection>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AllowedConnectionsResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterAllowedConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AllowedConnectionsResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SecurityCenterAllowedConnection>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AllowedConnectionsResourceData IPersistableModel<AllowedConnectionsResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AllowedConnectionsResourceData)PersistableModelCreateCore(data, options);
+        SecurityCenterAllowedConnection IPersistableModel<SecurityCenterAllowedConnection>.Create(BinaryData data, ModelReaderWriterOptions options) => (SecurityCenterAllowedConnection)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AllowedConnectionsResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AllowedConnectionsResourceData"/> from. </param>
-        internal static AllowedConnectionsResourceData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAllowedConnectionsResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<SecurityCenterAllowedConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AllowedConnectionsResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityCenterAllowedConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +72,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AllowedConnectionsResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityCenterAllowedConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AllowedConnectionsResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterAllowedConnection)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Properties))
@@ -94,30 +86,30 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W")
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AllowedConnectionsResourceData IJsonModel<AllowedConnectionsResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AllowedConnectionsResourceData)JsonModelCreateCore(ref reader, options);
+        SecurityCenterAllowedConnection IJsonModel<SecurityCenterAllowedConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SecurityCenterAllowedConnection)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AllowedConnectionsResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityCenterAllowedConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AllowedConnectionsResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterAllowedConnection)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAllowedConnectionsResourceData(document.RootElement, options);
+            return DeserializeSecurityCenterAllowedConnection(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AllowedConnectionsResourceData DeserializeAllowedConnectionsResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static SecurityCenterAllowedConnection DeserializeSecurityCenterAllowedConnection(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AllowedConnectionsResourceProperties properties = default;
-            string location = default;
+            AzureLocation? location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -175,7 +167,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -183,7 +175,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AllowedConnectionsResourceData(
+            return new SecurityCenterAllowedConnection(
                 id,
                 name,
                 resourceType,

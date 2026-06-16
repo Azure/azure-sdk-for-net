@@ -17,7 +17,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The ExternalSecuritySolution. </summary>
+    /// <summary> C# compatibility replacement for the external security solution resource shape. </summary>
     public partial class ExternalSecuritySolution : ResourceData, IJsonModel<ExternalSecuritySolution>
     {
         /// <param name="data"> The data to parse. </param>

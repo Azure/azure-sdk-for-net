@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (DiscoveredSecuritySolutionData item in Value)
+                foreach (DiscoveredSecuritySolution item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IList<DiscoveredSecuritySolutionData> value = default;
+            IList<DiscoveredSecuritySolution> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<DiscoveredSecuritySolutionData> array = new List<DiscoveredSecuritySolutionData>();
+                    List<DiscoveredSecuritySolution> array = new List<DiscoveredSecuritySolution>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DiscoveredSecuritySolutionData.DeserializeDiscoveredSecuritySolutionData(item, options));
+                        array.Add(DiscoveredSecuritySolution.DeserializeDiscoveredSecuritySolution(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiscoveredSecuritySolutionList(value ?? new ChangeTrackingList<DiscoveredSecuritySolutionData>(), nextLink, additionalBinaryDataProperties);
+            return new DiscoveredSecuritySolutionList(value ?? new ChangeTrackingList<DiscoveredSecuritySolution>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

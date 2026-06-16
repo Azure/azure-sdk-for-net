@@ -13,7 +13,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The SecurityAssessmentStatusResult. </summary>
+    /// <summary> C# compatibility replacement for the security assessment status result shape. </summary>
     public partial class SecurityAssessmentStatusResult : SecurityAssessmentStatus, IJsonModel<SecurityAssessmentStatusResult>
     {
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentStatusResult"/> for deserialization. </summary>

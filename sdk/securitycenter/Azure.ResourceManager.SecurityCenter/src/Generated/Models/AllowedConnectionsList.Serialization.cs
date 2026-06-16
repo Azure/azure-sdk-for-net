@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (AllowedConnectionsResourceData item in Value)
+                foreach (SecurityCenterAllowedConnection item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IReadOnlyList<AllowedConnectionsResourceData> value = default;
+            IReadOnlyList<SecurityCenterAllowedConnection> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<AllowedConnectionsResourceData> array = new List<AllowedConnectionsResourceData>();
+                    List<SecurityCenterAllowedConnection> array = new List<SecurityCenterAllowedConnection>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AllowedConnectionsResourceData.DeserializeAllowedConnectionsResourceData(item, options));
+                        array.Add(SecurityCenterAllowedConnection.DeserializeSecurityCenterAllowedConnection(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AllowedConnectionsList(value ?? new ChangeTrackingList<AllowedConnectionsResourceData>(), nextLink, additionalBinaryDataProperties);
+            return new AllowedConnectionsList(value ?? new ChangeTrackingList<SecurityCenterAllowedConnection>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

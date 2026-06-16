@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The ExternalSecuritySolution. </summary>
+    /// <summary> C# compatibility replacement for the external security solution resource shape. </summary>
     public partial class ExternalSecuritySolution : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties"></param>
-        /// <param name="kind"></param>
-        /// <param name="location"></param>
+        /// <param name="properties"> The external security solution properties. </param>
+        /// <param name="kind"> The external security solution kind. </param>
+        /// <param name="location"> The resource location. </param>
         internal ExternalSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData properties, ExternalSecuritySolutionKind? kind, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary>
-        /// Gets the Properties.
+        /// The external security solution properties.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// </summary>
         public BinaryData Properties { get; }
 
-        /// <summary> Gets the Location. </summary>
+        /// <summary> The resource location. </summary>
         public AzureLocation? Location { get; }
     }
 }
