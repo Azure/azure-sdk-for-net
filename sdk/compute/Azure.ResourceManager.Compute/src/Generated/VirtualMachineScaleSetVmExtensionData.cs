@@ -31,13 +31,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine Extension. </param>
         /// <param name="location"> The location of the extension. </param>
-        /// <param name="vmssExtensionName"> The name of the virtual machine extension. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVmExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualMachineExtensionProperties properties, AzureLocation? location, string vmssExtensionName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal VirtualMachineScaleSetVmExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualMachineExtensionProperties properties, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
-            VmssExtensionName = vmssExtensionName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,9 +44,6 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The location of the extension. </summary>
         public AzureLocation? Location { get; set; }
-
-        /// <summary> The name of the virtual machine extension. </summary>
-        public string VmssExtensionName { get; }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
         public string ForceUpdateTag

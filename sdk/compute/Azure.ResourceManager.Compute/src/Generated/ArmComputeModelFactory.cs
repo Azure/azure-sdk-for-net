@@ -741,9 +741,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
         /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
-        /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
         /// <returns> A new <see cref="Compute.VirtualMachineScaleSetExtensionData"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetExtensionData VirtualMachineScaleSetExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string forceUpdateTag = default, string publisher = default, string extensionType = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, BinaryData settings = default, BinaryData protectedSettings = default, string provisioningState = default, IEnumerable<string> provisionAfterExtensions = default, bool? suppressFailures = default, KeyVaultSecretReference keyVaultProtectedSettings = default, string vmssExtensionName = default)
+        public static VirtualMachineScaleSetExtensionData VirtualMachineScaleSetExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string forceUpdateTag = default, string publisher = default, string extensionType = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, BinaryData settings = default, BinaryData protectedSettings = default, string provisioningState = default, IEnumerable<string> provisionAfterExtensions = default, bool? suppressFailures = default, KeyVaultSecretReference keyVaultProtectedSettings = default)
         {
             return new VirtualMachineScaleSetExtensionData(
                 id,
@@ -764,7 +763,6 @@ namespace Azure.ResourceManager.Compute.Models
                     suppressFailures,
                     keyVaultProtectedSettings,
                     default),
-                vmssExtensionName,
                 default);
         }
 
@@ -2222,9 +2220,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="location"> The location of the extension. </param>
-        /// <param name="vmssExtensionName"> The name of the virtual machine extension. </param>
         /// <returns> A new <see cref="Compute.VirtualMachineScaleSetVmExtensionData"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmExtensionData VirtualMachineScaleSetVmExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string forceUpdateTag = default, string publisher = default, string extensionType = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, BinaryData settings = default, BinaryData protectedSettings = default, string provisioningState = default, VirtualMachineExtensionInstanceView instanceView = default, bool? suppressFailures = default, KeyVaultSecretReference keyVaultProtectedSettings = default, IEnumerable<string> provisionAfterExtensions = default, AzureLocation? location = default, string vmssExtensionName = default)
+        public static VirtualMachineScaleSetVmExtensionData VirtualMachineScaleSetVmExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string forceUpdateTag = default, string publisher = default, string extensionType = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, BinaryData settings = default, BinaryData protectedSettings = default, string provisioningState = default, VirtualMachineExtensionInstanceView instanceView = default, bool? suppressFailures = default, KeyVaultSecretReference keyVaultProtectedSettings = default, IEnumerable<string> provisionAfterExtensions = default, AzureLocation? location = default)
         {
             return new VirtualMachineScaleSetVmExtensionData(
                 id,
@@ -2247,7 +2244,6 @@ namespace Azure.ResourceManager.Compute.Models
                     (provisionAfterExtensions ?? new ChangeTrackingList<string>()).ToList(),
                     default),
                 location,
-                vmssExtensionName,
                 default);
         }
 
@@ -7326,50 +7322,6 @@ namespace Azure.ResourceManager.Compute.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineScaleSetExtensionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="forceUpdateTag"> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </param>
-        /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="extensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
-        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
-        /// <param name="settings"> Json formatted public settings for the extension. </param>
-        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
-        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
-        /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
-        /// <returns> A new <see cref="Compute.VirtualMachineScaleSetExtensionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualMachineScaleSetExtensionData VirtualMachineScaleSetExtensionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string forceUpdateTag = default, string publisher = default, string extensionType = default, string typeHandlerVersion = default, bool? autoUpgradeMinorVersion = default, bool? enableAutomaticUpgrade = default, BinaryData settings = default, BinaryData protectedSettings = default, string provisioningState = default, IEnumerable<string> provisionAfterExtensions = default, bool? suppressFailures = default, KeyVaultSecretReference keyVaultProtectedSettings = default)
-        {
-            return new VirtualMachineScaleSetExtensionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                forceUpdateTag is null && publisher is null && extensionType is null && typeHandlerVersion is null && autoUpgradeMinorVersion is null && enableAutomaticUpgrade is null && settings is null && protectedSettings is null && provisioningState is null && provisionAfterExtensions is null && suppressFailures is null && keyVaultProtectedSettings is null ? default : new VirtualMachineScaleSetExtensionProperties(
-                    forceUpdateTag,
-                    publisher,
-                    extensionType,
-                    typeHandlerVersion,
-                    autoUpgradeMinorVersion,
-                    enableAutomaticUpgrade,
-                    settings,
-                    protectedSettings,
-                    provisioningState,
-                    (provisionAfterExtensions ?? new ChangeTrackingList<string>()).ToList(),
-                    suppressFailures,
-                    keyVaultProtectedSettings,
-                    default),
-                default,
-                default);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Compute.VirtualMachineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -7882,7 +7834,6 @@ namespace Azure.ResourceManager.Compute.Models
                     (provisionAfterExtensions ?? new ChangeTrackingList<string>()).ToList(),
                     default),
                 location,
-                default,
                 default);
         }
 

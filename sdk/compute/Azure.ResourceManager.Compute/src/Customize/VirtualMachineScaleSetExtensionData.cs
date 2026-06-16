@@ -10,11 +10,13 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Compute
 {
     // Backward compatibility: the previously shipped SDK exposed this type as a direct ResourceData-derived model.
     // Without restoring the direct base type, VMSS extension inline request bodies no longer serialize the extension name.
+    [CodeGenSuppress("VmssExtensionName")]
     public partial class VirtualMachineScaleSetExtensionData : ResourceData
     {
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)

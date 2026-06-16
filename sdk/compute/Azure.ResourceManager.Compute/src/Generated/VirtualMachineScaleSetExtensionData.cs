@@ -30,20 +30,15 @@ namespace Azure.ResourceManager.Compute
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine Scale Set Extension. </param>
-        /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualMachineScaleSetExtensionProperties properties, string vmssExtensionName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal VirtualMachineScaleSetExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VirtualMachineScaleSetExtensionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
-            VmssExtensionName = vmssExtensionName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes the properties of a Virtual Machine Scale Set Extension. </summary>
         internal VirtualMachineScaleSetExtensionProperties Properties { get; set; }
-
-        /// <summary> The name of the VM scale set extension. </summary>
-        public string VmssExtensionName { get; }
 
         /// <summary> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </summary>
         public string ForceUpdateTag

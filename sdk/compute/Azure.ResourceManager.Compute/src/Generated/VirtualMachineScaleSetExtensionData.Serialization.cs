@@ -116,7 +116,6 @@ namespace Azure.ResourceManager.Compute
             ResourceType resourceType = default;
             SystemData systemData = default;
             VirtualMachineScaleSetExtensionProperties properties = default;
-            string vmssExtensionName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,7 +171,6 @@ namespace Azure.ResourceManager.Compute
                 resourceType,
                 systemData,
                 properties,
-                vmssExtensionName,
                 additionalBinaryDataProperties);
         }
     }

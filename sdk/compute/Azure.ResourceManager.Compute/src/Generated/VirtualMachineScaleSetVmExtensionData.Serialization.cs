@@ -154,7 +154,6 @@ namespace Azure.ResourceManager.Compute
             SystemData systemData = default;
             VirtualMachineExtensionProperties properties = default;
             AzureLocation? location = default;
-            string vmssExtensionName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -220,7 +219,6 @@ namespace Azure.ResourceManager.Compute
                 systemData,
                 properties,
                 location,
-                vmssExtensionName,
                 additionalBinaryDataProperties);
         }
     }
