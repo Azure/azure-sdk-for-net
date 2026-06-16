@@ -56,6 +56,24 @@ namespace Azure.Generator.MgmtCustomBaseRepro.Tests
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="CustomResourceDataInheritedResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtCustomBaseReproTestsArmClient.GetCustomResourceDataInheritedResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CustomResourceDataInheritedResource"/> object. </returns>
+        public static CustomResourceDataInheritedResource GetCustomResourceDataInheritedResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtCustomBaseReproTestsArmClient(client).GetCustomResourceDataInheritedResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of CustomBaseTypeInheritedResources in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -108,6 +126,61 @@ namespace Azure.Generator.MgmtCustomBaseRepro.Tests
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableAzureGeneratorMgmtCustomBaseReproTestsResourceGroupResource(resourceGroupResource).GetCustomBaseTypeInheritedResource(customBaseTypeInheritedResourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of CustomResourceDataInheritedResources in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtCustomBaseReproTestsResourceGroupResource.GetCustomResourceDataInheritedResources()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of CustomResourceDataInheritedResources and their operations over a CustomResourceDataInheritedResource. </returns>
+        public static CustomResourceDataInheritedResourceCollection GetCustomResourceDataInheritedResources(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtCustomBaseReproTestsResourceGroupResource(resourceGroupResource).GetCustomResourceDataInheritedResources();
+        }
+
+        /// <summary>
+        /// Get a CustomResourceDataInheritedResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtCustomBaseReproTestsResourceGroupResource.GetCustomResourceDataInheritedResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="customResourceDataInheritedResourceName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<CustomResourceDataInheritedResource>> GetCustomResourceDataInheritedResourceAsync(this ResourceGroupResource resourceGroupResource, string customResourceDataInheritedResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAzureGeneratorMgmtCustomBaseReproTestsResourceGroupResource(resourceGroupResource).GetCustomResourceDataInheritedResourceAsync(customResourceDataInheritedResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a CustomResourceDataInheritedResource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtCustomBaseReproTestsResourceGroupResource.GetCustomResourceDataInheritedResource(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="customResourceDataInheritedResourceName"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<CustomResourceDataInheritedResource> GetCustomResourceDataInheritedResource(this ResourceGroupResource resourceGroupResource, string customResourceDataInheritedResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtCustomBaseReproTestsResourceGroupResource(resourceGroupResource).GetCustomResourceDataInheritedResource(customResourceDataInheritedResourceName, cancellationToken);
         }
 
         /// <summary>

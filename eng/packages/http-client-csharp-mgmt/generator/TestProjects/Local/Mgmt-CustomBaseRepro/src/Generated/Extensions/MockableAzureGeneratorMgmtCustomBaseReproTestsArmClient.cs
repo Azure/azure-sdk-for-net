@@ -34,5 +34,14 @@ namespace Azure.Generator.MgmtCustomBaseRepro.Tests.Mocking
             CustomBaseTypeInheritedResource.ValidateResourceId(id);
             return new CustomBaseTypeInheritedResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="CustomResourceDataInheritedResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CustomResourceDataInheritedResource"/> object. </returns>
+        public virtual CustomResourceDataInheritedResource GetCustomResourceDataInheritedResource(ResourceIdentifier id)
+        {
+            CustomResourceDataInheritedResource.ValidateResourceId(id);
+            return new CustomResourceDataInheritedResource(Client, id);
+        }
     }
 }

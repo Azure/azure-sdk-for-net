@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.Generator.MgmtCustomBaseRepro.Tests.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtCustomBaseRepro.Tests
 {
@@ -20,7 +21,11 @@ namespace Azure.Generator.MgmtCustomBaseRepro.Tests
     [ModelReaderWriterBuildable(typeof(CustomBaseTypeInheritedResourceListResult))]
     [ModelReaderWriterBuildable(typeof(CustomBaseTypeInheritedResourcePatch))]
     [ModelReaderWriterBuildable(typeof(CustomBaseTypeInheritedResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(CustomResourceDataInheritedResource))]
+    [ModelReaderWriterBuildable(typeof(CustomResourceDataInheritedResourceData))]
+    [ModelReaderWriterBuildable(typeof(CustomResourceDataInheritedResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureGeneratorMgmtCustomBaseReproTestsContext : ModelReaderWriterContext
     {
     }

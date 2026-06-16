@@ -11,6 +11,7 @@ using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.Generator.MgmtCustomBaseRepro.Tests;
+using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtCustomBaseRepro.Tests.Models
 {
@@ -47,6 +48,15 @@ namespace Azure.Generator.MgmtCustomBaseRepro.Tests.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new CustomBaseTypeInheritedResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="description"> Gets or sets the Description. </param>
+        /// <param name="name"></param>
+        /// <param name="eTag"></param>
+        /// <returns> A new <see cref="Tests.CustomResourceDataInheritedResourceData"/> instance for mocking. </returns>
+        public static CustomResourceDataInheritedResourceData CustomResourceDataInheritedResourceData(string description = default, string name = default, string eTag = default)
+        {
+            return new CustomResourceDataInheritedResourceData(description is null ? default : new CustomResourceDataInheritedResourceProperties(description, default), name, eTag, default);
         }
     }
 }

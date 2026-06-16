@@ -26,6 +26,10 @@ model CustomBaseTypeInheritedResourceTagsPatch {
   tags?: Record<string>;
 }
 
+model CustomResourceDataInheritedResourceProperties {
+  description?: string;
+}
+
 #suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing custom resource pattern"
 #suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
 #suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
@@ -42,6 +46,28 @@ model ServiceDefinedTrackedResourceWithOptionalLocation {
   tags?: Record<string>;
 }
 
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Testing custom resource pattern"
+model ServiceDefinedResource {
+  @visibility(Lifecycle.Read)
+  id?: Azure.Core.armResourceIdentifier;
+  @visibility(Lifecycle.Read)
+  name?: string;
+  @visibility(Lifecycle.Read)
+  type?: string;
+  @visibility(Lifecycle.Read)
+  systemData?: Azure.ResourceManager.CommonTypes.SystemData;
+}
+
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Testing custom resource pattern"
+@Azure.ResourceManager.Legacy.customAzureResource(#{ isAzureResource: true })
+model ServiceDefinedProxyResource extends ServiceDefinedResource {}
+
 #suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Testing custom resource pattern"
 #suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing custom resource pattern"
 #suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
@@ -53,6 +79,22 @@ model CustomBaseTypeInheritedResource extends ServiceDefinedTrackedResourceWithO
   @path
   @key("customBaseTypeInheritedResourceName")
   @segment("customBaseTypeInheritedResources")
+  name: string;
+  @visibility(Lifecycle.Read)
+  etag?: string;
+}
+
+#suppress "@azure-tools/typespec-azure-core/composition-over-inheritance" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-no-key" "Testing custom resource pattern"
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-custom-resource-usage-discourage" "Testing custom resource pattern"
+@Http.Private.includeInapplicableMetadataInPayload(false)
+model CustomResourceDataInheritedResource extends ServiceDefinedProxyResource {
+  properties?: CustomResourceDataInheritedResourceProperties;
+  @visibility(Lifecycle.Read)
+  @path
+  @key("customResourceDataInheritedResourceName")
+  @segment("customResourceDataInheritedResources")
   name: string;
   @visibility(Lifecycle.Read)
   etag?: string;
@@ -74,5 +116,13 @@ interface CustomBaseTypeInheritedResources {
   list is ArmListBySubscription<CustomBaseTypeInheritedResource, Error = ErrorResponse>;
 }
 
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "Testing custom resource pattern"
+@armResourceOperations
+interface CustomResourceDataInheritedResources {
+  get is ArmResourceRead<CustomResourceDataInheritedResource>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<CustomResourceDataInheritedResource, Error = ErrorResponse>;
+}
+
 @@Azure.ClientGenerator.Core.Legacy.flattenProperty(CustomBaseTypeInheritedResource.properties);
+@@Azure.ClientGenerator.Core.Legacy.flattenProperty(CustomResourceDataInheritedResource.properties);
 @@alternateType(ServiceDefinedTrackedResourceWithOptionalLocation.id, Azure.Core.armResourceIdentifier, "csharp");
