@@ -9,7 +9,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> JSON schema. </summary>
-    internal partial class TextResponseFormatJsonSchema : TextResponseFormatConfiguration
+    public partial class TextResponseFormatJsonSchema : TextResponseFormatConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="TextResponseFormatJsonSchema"/>. </summary>
         /// <param name="name">

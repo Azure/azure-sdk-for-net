@@ -9,7 +9,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> Type. </summary>
-    internal partial class TypeParam : InternalComputerAction
+    public partial class TypeParam : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="TypeParam"/>. </summary>
         /// <param name="text"> The text to type. </param>

@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for a sharepoint tool as used to configure an agent. </summary>
-    internal partial class SharepointPreviewTool : InternalTool, IJsonModel<SharepointPreviewTool>
+    public partial class SharepointPreviewTool : InternalTool, IJsonModel<SharepointPreviewTool>
     {
         /// <summary> Initializes a new instance of <see cref="SharepointPreviewTool"/> for deserialization. </summary>
         internal SharepointPreviewTool()

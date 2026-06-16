@@ -11,7 +11,7 @@ using OpenAI;
 namespace Azure.AI.Projects
 {
     /// <summary> Wait. </summary>
-    internal partial class WaitParam : InternalComputerAction, IJsonModel<WaitParam>
+    public partial class WaitParam : InternalComputerAction, IJsonModel<WaitParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

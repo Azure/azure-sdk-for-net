@@ -9,7 +9,7 @@ namespace Azure.AI.Projects
     /// For models like `gpt-5.3-codex` and beyond, when sending follow-up requests, preserve and resend
     /// phase on all assistant messages — dropping it can degrade performance. Not used for user messages.
     /// </summary>
-    internal enum MessagePhase
+    public enum MessagePhase
     {
         /// <summary> Commentary. </summary>
         Commentary,

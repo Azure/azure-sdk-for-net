@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A collection of filtering results for configured custom blocklists. </summary>
-    internal partial class AzureContentFilterBlocklistResult
+    public partial class AzureContentFilterBlocklistResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

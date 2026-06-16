@@ -9,7 +9,7 @@ using OpenAI;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Screenshot. </summary>
-    internal partial class ScreenshotParam : InternalComputerAction
+    public partial class ScreenshotParam : InternalComputerAction
     {
         /// <summary> Initializes a new instance of <see cref="ScreenshotParam"/>. </summary>
         public ScreenshotParam() : base(ComputerActionType.Screenshot)

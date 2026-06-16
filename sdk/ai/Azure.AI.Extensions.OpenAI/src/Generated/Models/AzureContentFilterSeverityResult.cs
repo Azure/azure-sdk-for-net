@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A content filter result indicating severity level and whether content was filtered. </summary>
-    internal partial class AzureContentFilterSeverityResult
+    public partial class AzureContentFilterSeverityResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

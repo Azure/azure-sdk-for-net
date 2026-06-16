@@ -10,7 +10,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary> The input definition information for an OpenAPI tool as used to configure an agent. </summary>
-    internal partial class OpenApiTool : InternalTool, IJsonModel<OpenApiTool>
+    public partial class OpenApiTool : InternalTool, IJsonModel<OpenApiTool>
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiTool"/> for deserialization. </summary>
         internal OpenApiTool()

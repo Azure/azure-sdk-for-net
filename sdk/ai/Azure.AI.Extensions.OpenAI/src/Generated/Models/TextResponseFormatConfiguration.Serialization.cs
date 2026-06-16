@@ -20,7 +20,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// ensures the message the model generates is valid JSON. Using `json_schema`
     /// is preferred for models that support it.
     /// </summary>
-    internal partial class TextResponseFormatConfiguration : IJsonModel<TextResponseFormatConfiguration>
+    public partial class TextResponseFormatConfiguration : IJsonModel<TextResponseFormatConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="TextResponseFormatConfiguration"/> for deserialization. </summary>
         internal TextResponseFormatConfiguration()

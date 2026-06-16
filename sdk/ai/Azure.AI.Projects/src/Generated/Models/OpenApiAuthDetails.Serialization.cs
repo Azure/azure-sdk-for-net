@@ -13,7 +13,7 @@ namespace Azure.AI.Projects
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenApiAnonymousAuthDetails"/>, <see cref="OpenApiProjectConnectionAuthDetails"/>, and <see cref="OpenApiManagedAuthDetails"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownOpenApiAuthDetails))]
-    internal abstract partial class OpenApiAuthDetails : IJsonModel<OpenApiAuthDetails>
+    public abstract partial class OpenApiAuthDetails : IJsonModel<OpenApiAuthDetails>
     {
         /// <summary> Initializes a new instance of <see cref="OpenApiAuthDetails"/> for deserialization. </summary>
         internal OpenApiAuthDetails()

@@ -5,7 +5,7 @@
 namespace OpenAI
 {
     /// <summary></summary>
-    internal enum FileSearchToolFiltersType1
+    public enum FileSearchToolFiltersType1
     {
         /// <summary> And. </summary>
         And,

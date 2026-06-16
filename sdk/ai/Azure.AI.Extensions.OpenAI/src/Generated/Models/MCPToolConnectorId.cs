@@ -5,7 +5,7 @@
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    internal enum MCPToolConnectorId
+    public enum MCPToolConnectorId
     {
         /// <summary> ConnectorDropbox. </summary>
         ConnectorDropbox,
