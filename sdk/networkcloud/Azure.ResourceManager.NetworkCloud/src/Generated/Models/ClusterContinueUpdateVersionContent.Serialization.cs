@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("machineGroupTargetingMode"u8);
                 writer.WriteStringValue(MachineGroupTargetingMode.Value.ToString());
             }
+            if (Optional.IsDefined(SafeguardMode))
+            {
+                writer.WritePropertyName("safeguardMode"u8);
+                writer.WriteStringValue(SafeguardMode.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,6 +138,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             ClusterContinueUpdateVersionMachineGroupTargetingMode? machineGroupTargetingMode = default;
+            ClusterContinueUpdateVersionSafeguardMode? safeguardMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,12 +151,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     machineGroupTargetingMode = new ClusterContinueUpdateVersionMachineGroupTargetingMode(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("safeguardMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    safeguardMode = new ClusterContinueUpdateVersionSafeguardMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClusterContinueUpdateVersionContent(machineGroupTargetingMode, additionalBinaryDataProperties);
+            return new ClusterContinueUpdateVersionContent(machineGroupTargetingMode, safeguardMode, additionalBinaryDataProperties);
         }
     }
 }

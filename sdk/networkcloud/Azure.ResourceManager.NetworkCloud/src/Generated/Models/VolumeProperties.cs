@@ -30,17 +30,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="sizeInMiB"> The requested storage allocation for the volume in Mebibytes. </param>
         /// <param name="storageApplianceId"> The resource ID of the storage appliance that hosts the volume. </param>
         /// <param name="allocatedInSizeMiB"> The allocated size of the volume in Mebibytes. </param>
+        /// <param name="assignedStorageApplianceId"> The assigned resource ID of the storage appliance that hosts the volume. </param>
         /// <param name="attachedTo"> The list of resource IDs that attach the volume. It may include virtual machines and Hybrid AKS clusters. </param>
         /// <param name="detailedStatus"> The more detailed status of the volume. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
         /// <param name="serialNumber"> The unique identifier of the volume. </param>
         /// <param name="provisioningState"> The provisioning state of the volume. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeProperties(long sizeInMiB, ResourceIdentifier storageApplianceId, long? allocatedInSizeMiB, IReadOnlyList<string> attachedTo, VolumeDetailedStatus? detailedStatus, string detailedStatusMessage, string serialNumber, VolumeProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VolumeProperties(long sizeInMiB, ResourceIdentifier storageApplianceId, long? allocatedInSizeMiB, ResourceIdentifier assignedStorageApplianceId, IReadOnlyList<string> attachedTo, VolumeDetailedStatus? detailedStatus, string detailedStatusMessage, string serialNumber, VolumeProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SizeInMiB = sizeInMiB;
             StorageApplianceId = storageApplianceId;
             AllocatedInSizeMiB = allocatedInSizeMiB;
+            AssignedStorageApplianceId = assignedStorageApplianceId;
             AttachedTo = attachedTo;
             DetailedStatus = detailedStatus;
             DetailedStatusMessage = detailedStatusMessage;
@@ -57,6 +59,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> The allocated size of the volume in Mebibytes. </summary>
         public long? AllocatedInSizeMiB { get; }
+
+        /// <summary> The assigned resource ID of the storage appliance that hosts the volume. </summary>
+        public ResourceIdentifier AssignedStorageApplianceId { get; }
 
         /// <summary> The list of resource IDs that attach the volume. It may include virtual machines and Hybrid AKS clusters. </summary>
         public IReadOnlyList<string> AttachedTo { get; } = new ChangeTrackingList<string>();
