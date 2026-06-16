@@ -4,7 +4,9 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
@@ -14,6 +16,6 @@ namespace Azure.ResourceManager.Compute
         // Backward compatibility: the generated Compute-local property is named AssociatedVirtualMachineResources and
         // uses ComputeSubResourceData. Restore the old VirtualMachinesAssociated property with ARM common SubResource.
         /// <summary> A list of all virtual machine resource ids that are associated with the capacity reservation. </summary>
-        public IReadOnlyList<SubResource> VirtualMachinesAssociated => AssociatedVirtualMachineResources.ToSubResources();
+        public IReadOnlyList<SubResource> VirtualMachinesAssociated => AssociatedVirtualMachineResources?.Select(value => ResourceManagerModelFactory.SubResource(value.Id)).ToArray();
     }
 }

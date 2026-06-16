@@ -4,7 +4,9 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
@@ -14,6 +16,6 @@ namespace Azure.ResourceManager.Compute
         // Backward compatibility: the generated Compute-local property is named VirtualMachineResources and uses
         // ComputeSubResourceData. Restore the old VirtualMachines property with ARM common SubResource.
         /// <summary> A list of references to all virtual machines in the dedicated host. </summary>
-        public IReadOnlyList<SubResource> VirtualMachines => VirtualMachineResources.ToSubResources();
+        public IReadOnlyList<SubResource> VirtualMachines => VirtualMachineResources?.Select(value => ResourceManagerModelFactory.SubResource(value.Id)).ToArray();
     }
 }

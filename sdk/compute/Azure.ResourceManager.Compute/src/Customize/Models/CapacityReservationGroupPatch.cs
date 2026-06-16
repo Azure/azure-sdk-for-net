@@ -6,6 +6,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -22,12 +24,12 @@ namespace Azure.ResourceManager.Compute.Models
         // Backward compatibility: the generated Compute-local property is named CapacityReservationResources and uses
         // ComputeSubResourceData. Restore the old CapacityReservations property with ARM common SubResource.
         /// <summary> A list of all capacity reservation resource ids that belong to capacity reservation group. </summary>
-        public IReadOnlyList<SubResource> CapacityReservations => CapacityReservationResources.ToSubResources();
+        public IReadOnlyList<SubResource> CapacityReservations => CapacityReservationResources?.Select(value => ResourceManagerModelFactory.SubResource(value.Id)).ToArray();
 
         // Backward compatibility: the generated Compute-local property is named AssociatedVirtualMachineResources and
         // uses ComputeSubResourceData. Restore the old VirtualMachinesAssociated property with ARM common SubResource.
         /// <summary> A list of references to all virtual machines associated to the capacity reservation group. </summary>
-        public IReadOnlyList<SubResource> VirtualMachinesAssociated => AssociatedVirtualMachineResources.ToSubResources();
+        public IReadOnlyList<SubResource> VirtualMachinesAssociated => AssociatedVirtualMachineResources?.Select(value => ResourceManagerModelFactory.SubResource(value.Id)).ToArray();
 
         // Backward compatibility: the generated Compute-local property is named SharingSubscriptionResources and uses
         // ComputeWriteableSubResourceData. Restore the old SharingSubscriptionIds property with ARM common WritableSubResource.
