@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
         /// <param name="partnerProperties"> partner properties. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NapsterOrganizationProperties(NapsterMarketplaceDetails marketplace, NapsterUserDetails user, NapsterProvisioningState? provisioningState, NapsterPartnerProperties partnerProperties, NapsterSingleSignOnPropertiesV2 singleSignOnProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NapsterOrganizationProperties(NapsterMarketplaceDetails marketplace, NapsterUserDetails user, NapsterProvisioningState? provisioningState, NapsterPartnerProperties partnerProperties, NapsterSingleSignOnProperties singleSignOnProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Marketplace = marketplace;
             User = user;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
         internal NapsterPartnerProperties PartnerProperties { get; set; }
 
         /// <summary> Single sign-on properties. </summary>
-        public NapsterSingleSignOnPropertiesV2 SingleSignOnProperties { get; set; }
+        public NapsterSingleSignOnProperties SingleSignOnProperties { get; set; }
 
         /// <summary> Application name. </summary>
         public string PartnerApplication

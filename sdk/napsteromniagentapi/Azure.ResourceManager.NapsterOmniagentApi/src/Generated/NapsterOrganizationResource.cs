@@ -20,15 +20,15 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NapsterOmniagentApi
 {
     /// <summary>
-    /// A class representing a NapsterOrganizationResource along with the instance operations that can be performed on it.
+    /// A class representing a NapsterOrganization along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NapsterOrganizationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNapsterOrganizationResources method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNapsterOrganizations method.
     /// </summary>
     public partial class NapsterOrganizationResource : ArmResource
     {
         private readonly ClientDiagnostics _organizationsClientDiagnostics;
         private readonly Organizations _organizationsRestClient;
-        private readonly NapsterOrganizationResourceData _data;
+        private readonly NapsterOrganizationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Napster.CompanionAPI/organizations";
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// <summary> Initializes a new instance of <see cref="NapsterOrganizationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NapsterOrganizationResource(ArmClient client, NapsterOrganizationResourceData data) : this(client, data.Id)
+        internal NapsterOrganizationResource(ArmClient client, NapsterOrganizationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NapsterOrganizationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string napsterOrganizationResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string napsterOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NapsterOmniagentApi", ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, napsterOrganizationResourceApiVersion ?? "2025-12-24-preview");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, napsterOrganizationApiVersion ?? "2025-12-24-preview");
             ValidateResourceId(id);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual NapsterOrganizationResourceData Data
+        public virtual NapsterOrganizationData Data
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 };
                 HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NapsterOrganizationResourceData> response = Response.FromValue(NapsterOrganizationResourceData.FromResponse(result), result);
+                Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 };
                 HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NapsterOrganizationResourceData> response = Response.FromValue(NapsterOrganizationResourceData.FromResponse(result), result);
+                Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<NapsterOrganizationResource>> UpdateAsync(WaitUntil waitUntil, NapsterOrganizationResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NapsterOrganizationResource>> UpdateAsync(WaitUntil waitUntil, NapsterOrganizationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NapsterOrganizationResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _organizationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NapsterOrganizationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NapsterOmniagentApiArmOperation<NapsterOrganizationResource> operation = new NapsterOmniagentApiArmOperation<NapsterOrganizationResource>(
                     new NapsterOrganizationResourceOperationSource(Client),
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<NapsterOrganizationResource> Update(WaitUntil waitUntil, NapsterOrganizationResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NapsterOrganizationResource> Update(WaitUntil waitUntil, NapsterOrganizationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NapsterOrganizationResourcePatch.ToRequestContent(patch), context);
+                HttpMessage message = _organizationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, NapsterOrganizationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NapsterOmniagentApiArmOperation<NapsterOrganizationResource> operation = new NapsterOmniagentApiArmOperation<NapsterOrganizationResource>(
                     new NapsterOrganizationResourceOperationSource(Client),
@@ -644,13 +644,13 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                     };
                     HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<NapsterOrganizationResourceData> response = Response.FromValue(NapsterOrganizationResourceData.FromResponse(result), result);
+                    Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new NapsterOrganizationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NapsterOrganizationResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NapsterOrganizationResourcePatch patch = new NapsterOrganizationResourcePatch();
+                    NapsterOrganizationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NapsterOrganizationPatch patch = new NapsterOrganizationPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -692,13 +692,13 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                     };
                     HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<NapsterOrganizationResourceData> response = Response.FromValue(NapsterOrganizationResourceData.FromResponse(result), result);
+                    Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new NapsterOrganizationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NapsterOrganizationResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NapsterOrganizationResourcePatch patch = new NapsterOrganizationResourcePatch();
+                    NapsterOrganizationData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NapsterOrganizationPatch patch = new NapsterOrganizationPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -739,13 +739,13 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                     };
                     HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<NapsterOrganizationResourceData> response = Response.FromValue(NapsterOrganizationResourceData.FromResponse(result), result);
+                    Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new NapsterOrganizationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NapsterOrganizationResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NapsterOrganizationResourcePatch patch = new NapsterOrganizationResourcePatch();
+                    NapsterOrganizationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NapsterOrganizationPatch patch = new NapsterOrganizationPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<NapsterOrganizationResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -782,13 +782,13 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                     };
                     HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<NapsterOrganizationResourceData> response = Response.FromValue(NapsterOrganizationResourceData.FromResponse(result), result);
+                    Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new NapsterOrganizationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NapsterOrganizationResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NapsterOrganizationResourcePatch patch = new NapsterOrganizationResourcePatch();
+                    NapsterOrganizationData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NapsterOrganizationPatch patch = new NapsterOrganizationPatch();
                     patch.Tags.ReplaceWith(tags);
                     ArmOperation<NapsterOrganizationResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -824,13 +824,13 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                     };
                     HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<NapsterOrganizationResourceData> response = Response.FromValue(NapsterOrganizationResourceData.FromResponse(result), result);
+                    Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new NapsterOrganizationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NapsterOrganizationResourceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    NapsterOrganizationResourcePatch patch = new NapsterOrganizationResourcePatch();
+                    NapsterOrganizationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    NapsterOrganizationPatch patch = new NapsterOrganizationPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -870,13 +870,13 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                     };
                     HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<NapsterOrganizationResourceData> response = Response.FromValue(NapsterOrganizationResourceData.FromResponse(result), result);
+                    Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                     return Response.FromValue(new NapsterOrganizationResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    NapsterOrganizationResourceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    NapsterOrganizationResourcePatch patch = new NapsterOrganizationResourcePatch();
+                    NapsterOrganizationData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    NapsterOrganizationPatch patch = new NapsterOrganizationPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

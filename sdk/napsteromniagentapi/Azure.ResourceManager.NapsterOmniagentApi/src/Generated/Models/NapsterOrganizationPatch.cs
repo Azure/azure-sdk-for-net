@@ -13,22 +13,22 @@ using Azure.ResourceManager.NapsterOmniagentApi;
 namespace Azure.ResourceManager.NapsterOmniagentApi.Models
 {
     /// <summary> The type used for update operations of the Organization Resource. </summary>
-    public partial class NapsterOrganizationResourcePatch
+    public partial class NapsterOrganizationPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NapsterOrganizationResourcePatch"/>. </summary>
-        public NapsterOrganizationResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="NapsterOrganizationPatch"/>. </summary>
+        public NapsterOrganizationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NapsterOrganizationResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NapsterOrganizationPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NapsterOrganizationResourcePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NapsterOrganizationPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;

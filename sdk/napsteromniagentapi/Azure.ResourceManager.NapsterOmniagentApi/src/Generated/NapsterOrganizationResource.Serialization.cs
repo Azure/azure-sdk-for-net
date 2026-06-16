@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.NapsterOmniagentApi
 {
     /// <summary></summary>
-    public partial class NapsterOrganizationResource : IJsonModel<NapsterOrganizationResourceData>
+    public partial class NapsterOrganizationResource : IJsonModel<NapsterOrganizationData>
     {
-        private static IJsonModel<NapsterOrganizationResourceData> s_dataDeserializationInstance;
+        private static IJsonModel<NapsterOrganizationData> s_dataDeserializationInstance;
 
-        private static IJsonModel<NapsterOrganizationResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NapsterOrganizationResourceData();
+        private static IJsonModel<NapsterOrganizationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NapsterOrganizationData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NapsterOrganizationResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NapsterOrganizationResourceData>)Data).Write(writer, options);
+        void IJsonModel<NapsterOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NapsterOrganizationData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NapsterOrganizationResourceData IJsonModel<NapsterOrganizationResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        NapsterOrganizationData IJsonModel<NapsterOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NapsterOrganizationResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NapsterOrganizationResourceData>(Data, options, AzureResourceManagerNapsterOmniagentApiContext.Default);
+        BinaryData IPersistableModel<NapsterOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NapsterOrganizationData>(Data, options, AzureResourceManagerNapsterOmniagentApiContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NapsterOrganizationResourceData IPersistableModel<NapsterOrganizationResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NapsterOrganizationResourceData>(data, options, AzureResourceManagerNapsterOmniagentApiContext.Default);
+        NapsterOrganizationData IPersistableModel<NapsterOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NapsterOrganizationData>(data, options, AzureResourceManagerNapsterOmniagentApiContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NapsterOrganizationResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<NapsterOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

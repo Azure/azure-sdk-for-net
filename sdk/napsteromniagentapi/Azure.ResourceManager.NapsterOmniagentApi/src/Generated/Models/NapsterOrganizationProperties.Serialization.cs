@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
             NapsterUserDetails user = default;
             NapsterProvisioningState? provisioningState = default;
             NapsterPartnerProperties partnerProperties = default;
-            NapsterSingleSignOnPropertiesV2 singleSignOnProperties = default;
+            NapsterSingleSignOnProperties singleSignOnProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
                     {
                         continue;
                     }
-                    singleSignOnProperties = NapsterSingleSignOnPropertiesV2.DeserializeNapsterSingleSignOnPropertiesV2(prop.Value, options);
+                    singleSignOnProperties = NapsterSingleSignOnProperties.DeserializeNapsterSingleSignOnProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

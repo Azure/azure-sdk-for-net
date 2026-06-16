@@ -17,61 +17,61 @@ using Azure.ResourceManager.NapsterOmniagentApi;
 namespace Azure.ResourceManager.NapsterOmniagentApi.Models
 {
     /// <summary> The type used for update operations of the Organization Resource. </summary>
-    public partial class NapsterOrganizationResourcePatch : IJsonModel<NapsterOrganizationResourcePatch>
+    public partial class NapsterOrganizationPatch : IJsonModel<NapsterOrganizationPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NapsterOrganizationResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NapsterOrganizationPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNapsterOrganizationResourcePatch(document.RootElement, options);
+                        return DeserializeNapsterOrganizationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NapsterOrganizationResourcePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NapsterOrganizationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNapsterOmniagentApiContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NapsterOrganizationResourcePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NapsterOrganizationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NapsterOrganizationResourcePatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NapsterOrganizationPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NapsterOrganizationResourcePatch IPersistableModel<NapsterOrganizationResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NapsterOrganizationPatch IPersistableModel<NapsterOrganizationPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NapsterOrganizationResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NapsterOrganizationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="napsterOrganizationResourcePatch"> The <see cref="NapsterOrganizationResourcePatch"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NapsterOrganizationResourcePatch napsterOrganizationResourcePatch)
+        /// <param name="napsterOrganizationPatch"> The <see cref="NapsterOrganizationPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NapsterOrganizationPatch napsterOrganizationPatch)
         {
-            if (napsterOrganizationResourcePatch == null)
+            if (napsterOrganizationPatch == null)
             {
                 return null;
             }
-            return RequestContent.Create(napsterOrganizationResourcePatch, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(napsterOrganizationPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NapsterOrganizationResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NapsterOrganizationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NapsterOrganizationResourcePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NapsterOrganizationPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -127,24 +127,24 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NapsterOrganizationResourcePatch IJsonModel<NapsterOrganizationResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NapsterOrganizationPatch IJsonModel<NapsterOrganizationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NapsterOrganizationResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NapsterOrganizationPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NapsterOrganizationResourcePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NapsterOrganizationPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNapsterOrganizationResourcePatch(document.RootElement, options);
+            return DeserializeNapsterOrganizationPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NapsterOrganizationResourcePatch DeserializeNapsterOrganizationResourcePatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static NapsterOrganizationPatch DeserializeNapsterOrganizationPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NapsterOrganizationResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, additionalBinaryDataProperties);
+            return new NapsterOrganizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, additionalBinaryDataProperties);
         }
     }
 }

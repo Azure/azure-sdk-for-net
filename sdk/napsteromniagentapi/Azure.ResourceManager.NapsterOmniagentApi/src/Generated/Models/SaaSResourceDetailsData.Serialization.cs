@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
                 throw new FormatException($"The model {nameof(SaaSResourceDetailsData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(SaasId))
+            if (Optional.IsDefined(SaaSId))
             {
                 writer.WritePropertyName("saasId"u8);
-                writer.WriteStringValue(SaasId);
+                writer.WriteStringValue(SaaSId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            string saasId = default;
+            string saaSId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
                 }
                 if (prop.NameEquals("saasId"u8))
                 {
-                    saasId = prop.Value.GetString();
+                    saaSId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
                 name,
                 resourceType,
                 systemData,
-                saasId,
+                saaSId,
                 additionalBinaryDataProperties);
         }
     }

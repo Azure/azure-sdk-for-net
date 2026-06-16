@@ -18,10 +18,10 @@ using Azure.ResourceManager.NapsterOmniagentApi.Models;
 namespace Azure.ResourceManager.NapsterOmniagentApi
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class NapsterOrganizationResourceData : TrackedResourceData, IJsonModel<NapsterOrganizationResourceData>
+    public partial class NapsterOrganizationData : TrackedResourceData, IJsonModel<NapsterOrganizationData>
     {
-        /// <summary> Initializes a new instance of <see cref="NapsterOrganizationResourceData"/> for deserialization. </summary>
-        internal NapsterOrganizationResourceData()
+        /// <summary> Initializes a new instance of <see cref="NapsterOrganizationData"/> for deserialization. </summary>
+        internal NapsterOrganizationData()
         {
         }
 
@@ -29,62 +29,62 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNapsterOrganizationResourceData(document.RootElement, options);
+                        return DeserializeNapsterOrganizationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NapsterOrganizationResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NapsterOrganizationData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNapsterOmniagentApiContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NapsterOrganizationResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NapsterOrganizationData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NapsterOrganizationResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NapsterOrganizationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NapsterOrganizationResourceData IPersistableModel<NapsterOrganizationResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NapsterOrganizationResourceData)PersistableModelCreateCore(data, options);
+        NapsterOrganizationData IPersistableModel<NapsterOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (NapsterOrganizationData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NapsterOrganizationResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NapsterOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="napsterOrganizationResourceData"> The <see cref="NapsterOrganizationResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(NapsterOrganizationResourceData napsterOrganizationResourceData)
+        /// <param name="napsterOrganizationData"> The <see cref="NapsterOrganizationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NapsterOrganizationData napsterOrganizationData)
         {
-            if (napsterOrganizationResourceData == null)
+            if (napsterOrganizationData == null)
             {
                 return null;
             }
-            return RequestContent.Create(napsterOrganizationResourceData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(napsterOrganizationData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NapsterOrganizationResourceData"/> from. </param>
-        internal static NapsterOrganizationResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NapsterOrganizationData"/> from. </param>
+        internal static NapsterOrganizationData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNapsterOrganizationResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeNapsterOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NapsterOrganizationResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NapsterOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NapsterOrganizationResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NapsterOrganizationData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -130,24 +130,24 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NapsterOrganizationResourceData IJsonModel<NapsterOrganizationResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NapsterOrganizationResourceData)JsonModelCreateCore(ref reader, options);
+        NapsterOrganizationData IJsonModel<NapsterOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NapsterOrganizationData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NapsterOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NapsterOrganizationResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NapsterOrganizationData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNapsterOrganizationResourceData(document.RootElement, options);
+            return DeserializeNapsterOrganizationData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NapsterOrganizationResourceData DeserializeNapsterOrganizationResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static NapsterOrganizationData DeserializeNapsterOrganizationData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NapsterOrganizationResourceData(
+            return new NapsterOrganizationData(
                 id,
                 name,
                 resourceType,

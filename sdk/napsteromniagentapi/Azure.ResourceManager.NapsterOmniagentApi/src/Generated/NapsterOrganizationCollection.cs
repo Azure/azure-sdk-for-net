@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
     /// <summary>
     /// A class representing a collection of <see cref="NapsterOrganizationResource"/> and their operations.
     /// Each <see cref="NapsterOrganizationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="NapsterOrganizationResourceCollection"/> instance call the GetNapsterOrganizationResources method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="NapsterOrganizationCollection"/> instance call the GetNapsterOrganizations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class NapsterOrganizationResourceCollection : ArmCollection, IEnumerable<NapsterOrganizationResource>, IAsyncEnumerable<NapsterOrganizationResource>
+    public partial class NapsterOrganizationCollection : ArmCollection, IEnumerable<NapsterOrganizationResource>, IAsyncEnumerable<NapsterOrganizationResource>
     {
         private readonly ClientDiagnostics _organizationsClientDiagnostics;
         private readonly Organizations _organizationsRestClient;
 
-        /// <summary> Initializes a new instance of NapsterOrganizationResourceCollection for mocking. </summary>
-        protected NapsterOrganizationResourceCollection()
+        /// <summary> Initializes a new instance of NapsterOrganizationCollection for mocking. </summary>
+        protected NapsterOrganizationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NapsterOrganizationResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NapsterOrganizationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal NapsterOrganizationResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NapsterOrganizationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NapsterOrganizationResource.ResourceType, out string napsterOrganizationResourceApiVersion);
+            TryGetApiVersion(NapsterOrganizationResource.ResourceType, out string napsterOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NapsterOmniagentApi", NapsterOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, napsterOrganizationResourceApiVersion ?? "2025-12-24-preview");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, napsterOrganizationApiVersion ?? "2025-12-24-preview");
             ValidateResourceId(id);
         }
 
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<NapsterOrganizationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string organizationName, NapsterOrganizationResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NapsterOrganizationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string organizationName, NapsterOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, NapsterOrganizationResourceData.ToRequestContent(data), context);
+                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, NapsterOrganizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NapsterOmniagentApiArmOperation<NapsterOrganizationResource> operation = new NapsterOmniagentApiArmOperation<NapsterOrganizationResource>(
                     new NapsterOrganizationResourceOperationSource(Client),
@@ -136,12 +136,12 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<NapsterOrganizationResource> CreateOrUpdate(WaitUntil waitUntil, string organizationName, NapsterOrganizationResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NapsterOrganizationResource> CreateOrUpdate(WaitUntil waitUntil, string organizationName, NapsterOrganizationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationResourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, NapsterOrganizationResourceData.ToRequestContent(data), context);
+                HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, NapsterOrganizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NapsterOmniagentApiArmOperation<NapsterOrganizationResource> operation = new NapsterOmniagentApiArmOperation<NapsterOrganizationResource>(
                     new NapsterOrganizationResourceOperationSource(Client),
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationResourceCollection.Get");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationCollection.Get");
             scope.Start();
             try
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 };
                 HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NapsterOrganizationResourceData> response = Response.FromValue(NapsterOrganizationResourceData.FromResponse(result), result);
+                Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationResourceCollection.Get");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationCollection.Get");
             scope.Start();
             try
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 };
                 HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NapsterOrganizationResourceData> response = Response.FromValue(NapsterOrganizationResourceData.FromResponse(result), result);
+                Response<NapsterOrganizationData> response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NapsterOrganizationResourceData, NapsterOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NapsterOrganizationResourceCollection.GetAll"), data => new NapsterOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NapsterOrganizationCollection.GetAll"), data => new NapsterOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NapsterOrganizationResourceData, NapsterOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NapsterOrganizationResourceCollection.GetAll"), data => new NapsterOrganizationResource(Client, data));
+            return new PageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "NapsterOrganizationCollection.GetAll"), data => new NapsterOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationResourceCollection.Exists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationCollection.Exists");
             scope.Start();
             try
             {
@@ -361,14 +361,14 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<NapsterOrganizationResourceData> response = default;
+                Response<NapsterOrganizationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NapsterOrganizationResourceData.FromResponse(result), result);
+                        response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NapsterOrganizationResourceData)null, result);
+                        response = Response.FromValue((NapsterOrganizationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationResourceCollection.Exists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationCollection.Exists");
             scope.Start();
             try
             {
@@ -418,14 +418,14 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<NapsterOrganizationResourceData> response = default;
+                Response<NapsterOrganizationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NapsterOrganizationResourceData.FromResponse(result), result);
+                        response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NapsterOrganizationResourceData)null, result);
+                        response = Response.FromValue((NapsterOrganizationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -475,14 +475,14 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<NapsterOrganizationResourceData> response = default;
+                Response<NapsterOrganizationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NapsterOrganizationResourceData.FromResponse(result), result);
+                        response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NapsterOrganizationResourceData)null, result);
+                        response = Response.FromValue((NapsterOrganizationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NapsterOrganizationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -536,14 +536,14 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                 HttpMessage message = _organizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<NapsterOrganizationResourceData> response = default;
+                Response<NapsterOrganizationData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(NapsterOrganizationResourceData.FromResponse(result), result);
+                        response = Response.FromValue(NapsterOrganizationData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((NapsterOrganizationResourceData)null, result);
+                        response = Response.FromValue((NapsterOrganizationData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

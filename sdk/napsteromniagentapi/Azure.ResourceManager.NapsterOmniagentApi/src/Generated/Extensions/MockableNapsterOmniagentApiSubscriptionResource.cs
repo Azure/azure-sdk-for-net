@@ -65,13 +65,13 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NapsterOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NapsterOrganizationResource> GetNapsterOrganizationResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NapsterOrganizationResource> GetNapsterOrganizationsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<NapsterOrganizationResourceData, NapsterOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizationResources"), data => new NapsterOrganizationResource(Client, data));
+            return new AsyncPageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new OrganizationsGetBySubscriptionAsyncCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizations"), data => new NapsterOrganizationResource(Client, data));
         }
 
         /// <summary>
@@ -93,13 +93,13 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NapsterOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NapsterOrganizationResource> GetNapsterOrganizationResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<NapsterOrganizationResource> GetNapsterOrganizations(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<NapsterOrganizationResourceData, NapsterOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizationResources"), data => new NapsterOrganizationResource(Client, data));
+            return new PageableWrapper<NapsterOrganizationData, NapsterOrganizationResource>(new OrganizationsGetBySubscriptionCollectionResultOfT(OrganizationsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizations"), data => new NapsterOrganizationResource(Client, data));
         }
 
         /// <summary>

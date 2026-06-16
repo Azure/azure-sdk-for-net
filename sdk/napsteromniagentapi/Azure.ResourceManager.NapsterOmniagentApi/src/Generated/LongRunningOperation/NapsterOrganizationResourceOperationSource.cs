@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         NapsterOrganizationResource IOperationSource<NapsterOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            NapsterOrganizationResourceData data = NapsterOrganizationResourceData.DeserializeNapsterOrganizationResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            NapsterOrganizationData data = NapsterOrganizationData.DeserializeNapsterOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NapsterOrganizationResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         async ValueTask<NapsterOrganizationResource> IOperationSource<NapsterOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            NapsterOrganizationResourceData data = NapsterOrganizationResourceData.DeserializeNapsterOrganizationResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            NapsterOrganizationData data = NapsterOrganizationData.DeserializeNapsterOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NapsterOrganizationResource(_client, data);
         }
     }

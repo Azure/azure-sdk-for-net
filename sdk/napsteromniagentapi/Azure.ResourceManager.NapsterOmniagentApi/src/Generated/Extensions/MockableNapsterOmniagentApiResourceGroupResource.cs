@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
         {
         }
 
-        /// <summary> Gets a collection of NapsterOrganizationResources in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <returns> An object representing collection of NapsterOrganizationResources and their operations over a NapsterOrganizationResource. </returns>
-        public virtual NapsterOrganizationResourceCollection GetNapsterOrganizationResources()
+        /// <summary> Gets a collection of NapsterOrganizations in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NapsterOrganizations and their operations over a NapsterOrganizationResource. </returns>
+        public virtual NapsterOrganizationCollection GetNapsterOrganizations()
         {
-            return GetCachedClient(client => new NapsterOrganizationResourceCollection(client, Id));
+            return GetCachedClient(client => new NapsterOrganizationCollection(client, Id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NapsterOrganizationResource>> GetNapsterOrganizationResourceAsync(string organizationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NapsterOrganizationResource>> GetNapsterOrganizationAsync(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            return await GetNapsterOrganizationResources().GetAsync(organizationName, cancellationToken).ConfigureAwait(false);
+            return await GetNapsterOrganizations().GetAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NapsterOrganizationResource> GetNapsterOrganizationResource(string organizationName, CancellationToken cancellationToken = default)
+        public virtual Response<NapsterOrganizationResource> GetNapsterOrganization(string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            return GetNapsterOrganizationResources().Get(organizationName, cancellationToken);
+            return GetNapsterOrganizations().Get(organizationName, cancellationToken);
         }
     }
 }

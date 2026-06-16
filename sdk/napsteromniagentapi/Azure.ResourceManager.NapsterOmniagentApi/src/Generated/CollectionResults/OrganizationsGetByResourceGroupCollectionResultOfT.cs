@@ -14,7 +14,7 @@ using Azure.ResourceManager.NapsterOmniagentApi.Models;
 
 namespace Azure.ResourceManager.NapsterOmniagentApi
 {
-    internal partial class OrganizationsGetByResourceGroupCollectionResultOfT : Pageable<NapsterOrganizationResourceData>
+    internal partial class OrganizationsGetByResourceGroupCollectionResultOfT : Pageable<NapsterOrganizationData>
     {
         private readonly Organizations _client;
         private readonly Guid _subscriptionId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of OrganizationsGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<NapsterOrganizationResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<NapsterOrganizationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
                     yield break;
                 }
                 OrganizationResourceListResult result = OrganizationResourceListResult.FromResponse(response);
-                yield return Page<NapsterOrganizationResourceData>.FromValues((IReadOnlyList<NapsterOrganizationResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<NapsterOrganizationData>.FromValues((IReadOnlyList<NapsterOrganizationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

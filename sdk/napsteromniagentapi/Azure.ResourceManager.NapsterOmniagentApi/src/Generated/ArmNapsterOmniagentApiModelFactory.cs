@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="NapsterOmniagentApi.NapsterOrganizationResourceData"/> instance for mocking. </returns>
-        public static NapsterOrganizationResourceData NapsterOrganizationResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NapsterOrganizationProperties properties = default, string organizationName = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="NapsterOmniagentApi.NapsterOrganizationData"/> instance for mocking. </returns>
+        public static NapsterOrganizationData NapsterOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NapsterOrganizationProperties properties = default, string organizationName = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NapsterOrganizationResourceData(
+            return new NapsterOrganizationData(
                 id,
                 name,
                 resourceType,
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerApplication"/> is null. </exception>
         /// <returns> A new <see cref="Models.NapsterOrganizationProperties"/> instance for mocking. </returns>
-        public static NapsterOrganizationProperties NapsterOrganizationProperties(NapsterMarketplaceDetails marketplace = default, NapsterUserDetails user = default, NapsterProvisioningState? provisioningState = default, string partnerApplication = default, NapsterSingleSignOnPropertiesV2 singleSignOnProperties = default)
+        public static NapsterOrganizationProperties NapsterOrganizationProperties(NapsterMarketplaceDetails marketplace = default, NapsterUserDetails user = default, NapsterProvisioningState? provisioningState = default, string partnerApplication = default, NapsterSingleSignOnProperties singleSignOnProperties = default)
         {
             return new NapsterOrganizationProperties(
                 marketplace,
@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
         /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
         /// <param name="uri"> URL for SSO to be used by the partner to redirect the user to their system. </param>
         /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
-        /// <returns> A new <see cref="Models.NapsterSingleSignOnPropertiesV2"/> instance for mocking. </returns>
-        public static NapsterSingleSignOnPropertiesV2 NapsterSingleSignOnPropertiesV2(NapsterSingleSignOnType @type = default, NapsterSingleSignOnState? state = default, string enterpriseAppId = default, string uri = default, IEnumerable<string> aadDomains = default)
+        /// <returns> A new <see cref="Models.NapsterSingleSignOnProperties"/> instance for mocking. </returns>
+        public static NapsterSingleSignOnProperties NapsterSingleSignOnProperties(NapsterSingleSignOnType @type = default, NapsterSingleSignOnState? state = default, string enterpriseAppId = default, string uri = default, IEnumerable<string> aadDomains = default)
         {
             aadDomains ??= new ChangeTrackingList<string>();
 
-            return new NapsterSingleSignOnPropertiesV2(
+            return new NapsterSingleSignOnProperties(
                 @type,
                 state,
                 enterpriseAppId,
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.NapsterOrganizationResourcePatch"/> instance for mocking. </returns>
-        public static NapsterOrganizationResourcePatch NapsterOrganizationResourcePatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="Models.NapsterOrganizationPatch"/> instance for mocking. </returns>
+        public static NapsterOrganizationPatch NapsterOrganizationPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NapsterOrganizationResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
+            return new NapsterOrganizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
         /// <param name="saaSId"> SaaS resource id. </param>
@@ -166,16 +166,16 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="saasId"> Id of the Marketplace SaaS Resource. </param>
+        /// <param name="saaSId"> Id of the Marketplace SaaS Resource. </param>
         /// <returns> A new <see cref="Models.SaaSResourceDetailsData"/> instance for mocking. </returns>
-        public static SaaSResourceDetailsData SaaSResourceDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string saasId = default)
+        public static SaaSResourceDetailsData SaaSResourceDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string saaSId = default)
         {
             return new SaaSResourceDetailsData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                saasId,
+                saaSId,
                 default);
         }
     }

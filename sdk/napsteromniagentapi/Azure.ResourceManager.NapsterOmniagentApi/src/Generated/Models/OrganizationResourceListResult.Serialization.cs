@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (NapsterOrganizationResourceData item in Value)
+            foreach (NapsterOrganizationData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.NapsterOmniagentApi.Models
             {
                 return null;
             }
-            IList<NapsterOrganizationResourceData> value = default;
+            IList<NapsterOrganizationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<NapsterOrganizationResourceData> array = new List<NapsterOrganizationResourceData>();
+                    List<NapsterOrganizationData> array = new List<NapsterOrganizationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NapsterOrganizationResourceData.DeserializeNapsterOrganizationResourceData(item, options));
+                        array.Add(NapsterOrganizationData.DeserializeNapsterOrganizationData(item, options));
                     }
                     value = array;
                     continue;

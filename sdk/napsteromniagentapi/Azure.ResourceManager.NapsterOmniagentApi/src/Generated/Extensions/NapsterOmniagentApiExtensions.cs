@@ -57,27 +57,27 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         }
 
         /// <summary>
-        /// Gets a collection of NapsterOrganizationResources in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of NapsterOrganizations in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNapsterOmniagentApiResourceGroupResource.GetNapsterOrganizationResources()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNapsterOmniagentApiResourceGroupResource.GetNapsterOrganizations()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of NapsterOrganizationResources and their operations over a NapsterOrganizationResource. </returns>
-        public static NapsterOrganizationResourceCollection GetNapsterOrganizationResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NapsterOrganizations and their operations over a NapsterOrganizationResource. </returns>
+        public static NapsterOrganizationCollection GetNapsterOrganizations(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNapsterOmniagentApiResourceGroupResource(resourceGroupResource).GetNapsterOrganizationResources();
+            return GetMockableNapsterOmniagentApiResourceGroupResource(resourceGroupResource).GetNapsterOrganizations();
         }
 
         /// <summary>
         /// Get a OrganizationResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNapsterOmniagentApiResourceGroupResource.GetNapsterOrganizationResourceAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNapsterOmniagentApiResourceGroupResource.GetNapsterOrganizationAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -85,18 +85,18 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NapsterOrganizationResource>> GetNapsterOrganizationResourceAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NapsterOrganizationResource>> GetNapsterOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableNapsterOmniagentApiResourceGroupResource(resourceGroupResource).GetNapsterOrganizationResourceAsync(organizationName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNapsterOmniagentApiResourceGroupResource(resourceGroupResource).GetNapsterOrganizationAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get a OrganizationResource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNapsterOmniagentApiResourceGroupResource.GetNapsterOrganizationResource(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNapsterOmniagentApiResourceGroupResource.GetNapsterOrganization(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -104,47 +104,47 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<NapsterOrganizationResource> GetNapsterOrganizationResource(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
+        public static Response<NapsterOrganizationResource> GetNapsterOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableNapsterOmniagentApiResourceGroupResource(resourceGroupResource).GetNapsterOrganizationResource(organizationName, cancellationToken);
+            return GetMockableNapsterOmniagentApiResourceGroupResource(resourceGroupResource).GetNapsterOrganization(organizationName, cancellationToken);
         }
 
         /// <summary>
         /// List OrganizationResource resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizationResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizationsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NapsterOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NapsterOrganizationResource> GetNapsterOrganizationResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<NapsterOrganizationResource> GetNapsterOrganizationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNapsterOmniagentApiSubscriptionResource(subscriptionResource).GetNapsterOrganizationResourcesAsync(cancellationToken);
+            return GetMockableNapsterOmniagentApiSubscriptionResource(subscriptionResource).GetNapsterOrganizationsAsync(cancellationToken);
         }
 
         /// <summary>
         /// List OrganizationResource resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizationResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableNapsterOmniagentApiSubscriptionResource.GetNapsterOrganizations(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="NapsterOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NapsterOrganizationResource> GetNapsterOrganizationResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<NapsterOrganizationResource> GetNapsterOrganizations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableNapsterOmniagentApiSubscriptionResource(subscriptionResource).GetNapsterOrganizationResources(cancellationToken);
+            return GetMockableNapsterOmniagentApiSubscriptionResource(subscriptionResource).GetNapsterOrganizations(cancellationToken);
         }
 
         /// <summary>
