@@ -19,7 +19,7 @@ Phases:
 
 Migration notes for base phases:
 - Phase 2: migration often introduces generic C# names such as `Scope`, `GroupScope`, `Sensitivity`, `ManagedRuleSetException`; flag contextual naming issues and prefer `@@clientName(..., "csharp")` when defined in TypeSpec.
-- Phase 3: migration breaking changes are expected but still must be mitigated. `ApiCompatBaseline.txt` entries remain forbidden.
+- Phase 3: migration breaking changes are expected but still must be mitigated. ApiCompat baseline entries remain forbidden except targeted `WirePathAttribute` removal entries in the centralized baseline file.
 
 ## Phase 4: Migration Customization Review
 
@@ -74,6 +74,11 @@ Migration PRs can show many additive public APIs after regeneration. Classify ea
 
 Use operation IDs, generated XML docs, request paths, resource type/parent hierarchy, and previous GA API listings to distinguish real additions from renamed existing APIs. Do not keep both old and new names unless there is an approved deliberate reason.
 
+Duplicate API detection:
+- Scan for duplicate model/type shapes (`Foo`, `FooResource`, `FooData`, `FooGenerated`, `FooContent`), duplicate extensible enums with the same wire values or case-only members, and duplicate methods/overloads for the same operation ID, route, resource type, and wire parameters.
+- Compare each suspected duplicate with the previous GA API. Baseline duplicates may be acceptable, but new migration-only duplicates should be cleaned up unless deliberately retained with a customization/TypeSpec justification.
+- Prefer renaming/suppressing the generated shape so only the shipped or approved C# API remains public. Use `@@clientName(..., "csharp")`, `[CodeGenType]`, `[CodeGenMember]`, or `[CodeGenSuppress]` as appropriate.
+
 ## Output Format
 
 Follow base skill output rules: one PR review, safe-output tools in GitHub Agentic Workflow mode, no direct GitHub writes from agentic workflows, no execution of untrusted PR code, and no inline comments on `api/*.cs`.
@@ -84,5 +89,5 @@ Review body must include:
 - Phase 1-3 results from the base skill.
 - Phase 4 customization result, grouped by 4.1-4.10.
 - Phase 5 decorator-preference result.
-- Phase 6 new API triage result, including accepted real additions and flagged rename/drift counts.
+- Phase 6 new API triage result, including accepted real additions, flagged rename/drift counts, and duplicate model/enum/operation counts.
 - Final counts for critical issues, should-fix issues, and suggestions.

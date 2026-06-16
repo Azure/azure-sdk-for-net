@@ -10,6 +10,20 @@ compatibility: "azure-sdk-mcp server, SDK package merged on release branch. Supp
 
 # SDK Release
 
+This skill checks release readiness and triggers the Azure SDK release pipeline for packages that are already prepared, guiding the user through prerequisite validation, readiness review, and the final pipeline launch with required approval steps.
+
+## Triggers
+
+USE FOR: release SDK, trigger release, check release readiness, release pipeline, publish package, ship SDK
+WHEN: "release SDK", "trigger release", "check release readiness", "release pipeline", "publish package", "ship SDK"
+DO NOT USE FOR: SDK development, code generation, pipeline debugging, release plan creation
+
+## Rules
+
+- Requires the `azure-sdk-mcp` server; there is no CLI fallback for the release workflow.
+- Collect `packageName` and `language`, then run the readiness check before attempting to trigger release.
+- If release is triggered, show the pipeline link and remind the user that the release stage still requires approval.
+
 ## MCP Tools
 
 | Tool                              | Purpose                                                     |
