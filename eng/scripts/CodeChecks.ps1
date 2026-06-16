@@ -163,19 +163,22 @@ try {
     }
 
     Write-Host "Validating that TypeSpec-generated libraries don't declare IncludeAutorestDependency"
-    Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory `
-        | Resolve-Path `
+    $serviceRoot = Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory | Resolve-Path
+    $serviceRoot `
         | % { Get-ChildItem $_ -Filter "*.csproj" -Recurse } `
         | % {
             $csproj = $_
             if (Select-String -Path $csproj.FullName -Pattern '<IncludeAutorestDependency>' -Quiet) {
                 # Walk up from the project file looking for a tsp-location.yaml, which marks
                 # a TypeSpec-generated library. Such libraries must not pull in the AutoRest dependency.
+                # The search is bounded by the service directory root rather than a fixed depth, so it
+                # works regardless of how deeply the project file is nested under the library folder.
                 $dir = $csproj.Directory
                 $tspLocation = $null
-                for ($i = 0; $i -lt 4 -and $dir -ne $null; $i++) {
+                while ($dir -ne $null) {
                     $candidate = Join-Path $dir.FullName "tsp-location.yaml"
                     if (Test-Path $candidate) { $tspLocation = $candidate; break }
+                    if ($dir.FullName -eq $serviceRoot.Path) { break }
                     $dir = $dir.Parent
                 }
                 if ($tspLocation) {

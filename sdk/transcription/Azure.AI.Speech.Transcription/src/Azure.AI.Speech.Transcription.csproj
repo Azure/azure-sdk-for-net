@@ -8,7 +8,6 @@
     <PackageTags>Azure.AI.Speech.Transcription</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <!-- Disable AutoRest dependency since this SDK uses @typespec/http-client-csharp -->
   </PropertyGroup>
 
   <ItemGroup>
