@@ -30,7 +30,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                        credential: Credential,
                        clientCertificate: null,
                        identityServiceCert: serviceCert.Cert);
-                var result = await client.GetEnclaveQuotesAsync(new());
+                var result = await client.GetEnclaveQuotesAsync(new RequestContext());
                 var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
                 return (int)HttpStatusCode.OK == result.Status;

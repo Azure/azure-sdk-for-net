@@ -5,8 +5,8 @@
       <example>
 This sample shows how to call GetConstitutionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<Constitution> response = await client.GetConstitutionAsync();
 ]]></code></example>
@@ -15,8 +15,8 @@ Response<Constitution> response = await client.GetConstitutionAsync();
       <example>
 This sample shows how to call GetConstitution.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<Constitution> response = client.GetConstitution();
 ]]></code></example>
@@ -25,8 +25,8 @@ Response<Constitution> response = client.GetConstitution();
       <example>
 This sample shows how to call GetConstitutionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.GetConstitutionAsync(null);
 
@@ -39,8 +39,8 @@ Console.WriteLine(result.GetProperty("script").ToString());
       <example>
 This sample shows how to call GetConstitution and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.GetConstitution(null);
 
@@ -53,8 +53,8 @@ Console.WriteLine(result.GetProperty("script").ToString());
       <example>
 This sample shows how to call GetEnclaveQuotesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<ConfidentialLedgerEnclaves> response = await client.GetEnclaveQuotesAsync();
 ]]></code></example>
@@ -63,8 +63,8 @@ Response<ConfidentialLedgerEnclaves> response = await client.GetEnclaveQuotesAsy
       <example>
 This sample shows how to call GetEnclaveQuotes.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<ConfidentialLedgerEnclaves> response = client.GetEnclaveQuotes();
 ]]></code></example>
@@ -73,8 +73,8 @@ Response<ConfidentialLedgerEnclaves> response = client.GetEnclaveQuotes();
       <example>
 This sample shows how to call GetEnclaveQuotesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.GetEnclaveQuotesAsync(null);
 
@@ -89,8 +89,8 @@ Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetPr
       <example>
 This sample shows how to call GetEnclaveQuotes and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.GetEnclaveQuotes(null);
 
@@ -105,8 +105,8 @@ Console.WriteLine(result.GetProperty("enclaveQuotes").GetProperty("<key>").GetPr
       <example>
 This sample shows how to call CreateLedgerEntryAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 LedgerEntry entry = new LedgerEntry("New ledger entry contents.")
 {
@@ -152,8 +152,8 @@ Response<LedgerWriteResult> response = await client.CreateLedgerEntryAsync(entry
       <example>
 This sample shows how to call CreateLedgerEntry.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 LedgerEntry entry = new LedgerEntry("New ledger entry contents.")
 {
@@ -199,8 +199,8 @@ Response<LedgerWriteResult> response = client.CreateLedgerEntry(entry);
       <example>
 This sample shows how to call CreateLedgerEntryAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -266,8 +266,8 @@ Console.WriteLine(result.GetProperty("collectionId").ToString());
       <example>
 This sample shows how to call CreateLedgerEntry and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -333,8 +333,8 @@ Console.WriteLine(result.GetProperty("collectionId").ToString());
       <example>
 This sample shows how to call GetLedgerEntryAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<LedgerQueryResult> response = await client.GetLedgerEntryAsync("2.15");
 ]]></code></example>
@@ -343,8 +343,8 @@ Response<LedgerQueryResult> response = await client.GetLedgerEntryAsync("2.15");
       <example>
 This sample shows how to call GetLedgerEntry.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<LedgerQueryResult> response = client.GetLedgerEntry("2.15");
 ]]></code></example>
@@ -353,8 +353,8 @@ Response<LedgerQueryResult> response = client.GetLedgerEntry("2.15");
       <example>
 This sample shows how to call GetLedgerEntryAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.GetLedgerEntryAsync("2.15", null, null);
 
@@ -366,8 +366,8 @@ Console.WriteLine(result.GetProperty("state").ToString());
       <example>
 This sample shows how to call GetLedgerEntry and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.GetLedgerEntry("2.15", null, null);
 
@@ -379,8 +379,8 @@ Console.WriteLine(result.GetProperty("state").ToString());
       <example>
 This sample shows how to call GetReceiptAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<TransactionReceipt> response = await client.GetReceiptAsync("2.15");
 ]]></code></example>
@@ -389,8 +389,8 @@ Response<TransactionReceipt> response = await client.GetReceiptAsync("2.15");
       <example>
 This sample shows how to call GetReceipt.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<TransactionReceipt> response = client.GetReceipt("2.15");
 ]]></code></example>
@@ -399,8 +399,8 @@ Response<TransactionReceipt> response = client.GetReceipt("2.15");
       <example>
 This sample shows how to call GetReceiptAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.GetReceiptAsync("2.15", null);
 
@@ -413,8 +413,8 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
       <example>
 This sample shows how to call GetReceipt and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.GetReceipt("2.15", null);
 
@@ -427,8 +427,8 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
       <example>
 This sample shows how to call GetTransactionStatusAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<TransactionStatus> response = await client.GetTransactionStatusAsync("4.2");
 ]]></code></example>
@@ -437,8 +437,8 @@ Response<TransactionStatus> response = await client.GetTransactionStatusAsync("4
       <example>
 This sample shows how to call GetTransactionStatus.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<TransactionStatus> response = client.GetTransactionStatus("4.2");
 ]]></code></example>
@@ -447,8 +447,8 @@ Response<TransactionStatus> response = client.GetTransactionStatus("4.2");
       <example>
 This sample shows how to call GetTransactionStatusAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.GetTransactionStatusAsync("4.2", null);
 
@@ -461,8 +461,8 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
       <example>
 This sample shows how to call GetTransactionStatus and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.GetTransactionStatus("4.2", null);
 
@@ -475,8 +475,8 @@ Console.WriteLine(result.GetProperty("transactionId").ToString());
       <example>
 This sample shows how to call GetCurrentLedgerEntryAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<LedgerEntry> response = await client.GetCurrentLedgerEntryAsync();
 ]]></code></example>
@@ -485,8 +485,8 @@ Response<LedgerEntry> response = await client.GetCurrentLedgerEntryAsync();
       <example>
 This sample shows how to call GetCurrentLedgerEntry.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<LedgerEntry> response = client.GetCurrentLedgerEntry();
 ]]></code></example>
@@ -495,8 +495,8 @@ Response<LedgerEntry> response = client.GetCurrentLedgerEntry();
       <example>
 This sample shows how to call GetCurrentLedgerEntryAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.GetCurrentLedgerEntryAsync(null, null);
 
@@ -508,8 +508,8 @@ Console.WriteLine(result.GetProperty("contents").ToString());
       <example>
 This sample shows how to call GetCurrentLedgerEntry and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.GetCurrentLedgerEntry(null, null);
 
@@ -521,8 +521,8 @@ Console.WriteLine(result.GetProperty("contents").ToString());
       <example>
 This sample shows how to call DeleteUserAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.DeleteUserAsync("AAD object id");
 
@@ -533,8 +533,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteUser.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.DeleteUser("AAD object id");
 
@@ -545,8 +545,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetUserAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<LedgerUser> response = await client.GetUserAsync("AAD object id");
 ]]></code></example>
@@ -555,8 +555,8 @@ Response<LedgerUser> response = await client.GetUserAsync("AAD object id");
       <example>
 This sample shows how to call GetUser.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<LedgerUser> response = client.GetUser("AAD object id");
 ]]></code></example>
@@ -565,8 +565,8 @@ Response<LedgerUser> response = client.GetUser("AAD object id");
       <example>
 This sample shows how to call GetUserAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.GetUserAsync("AAD object id", null);
 
@@ -578,8 +578,8 @@ Console.WriteLine(result.GetProperty("assignedRole").ToString());
       <example>
 This sample shows how to call GetUser and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.GetUser("AAD object id", null);
 
@@ -591,8 +591,8 @@ Console.WriteLine(result.GetProperty("assignedRole").ToString());
       <example>
 This sample shows how to call CreateOrUpdateUserAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -608,8 +608,8 @@ Console.WriteLine(result.GetProperty("assignedRole").ToString());
       <example>
 This sample shows how to call CreateOrUpdateUser and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -625,8 +625,8 @@ Console.WriteLine(result.GetProperty("assignedRole").ToString());
       <example>
 This sample shows how to call DeleteLedgerUserAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.DeleteLedgerUserAsync("AAD object id");
 
@@ -637,8 +637,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteLedgerUser.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.DeleteLedgerUser("AAD object id");
 
@@ -649,8 +649,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetLedgerUserAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<LedgerUserMultipleRoles> response = await client.GetLedgerUserAsync("AAD object id");
 ]]></code></example>
@@ -659,8 +659,8 @@ Response<LedgerUserMultipleRoles> response = await client.GetLedgerUserAsync("AA
       <example>
 This sample shows how to call GetLedgerUser.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<LedgerUserMultipleRoles> response = client.GetLedgerUser("AAD object id");
 ]]></code></example>
@@ -669,8 +669,8 @@ Response<LedgerUserMultipleRoles> response = client.GetLedgerUser("AAD object id
       <example>
 This sample shows how to call GetLedgerUserAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.GetLedgerUserAsync("AAD object id", null);
 
@@ -682,8 +682,8 @@ Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
       <example>
 This sample shows how to call GetLedgerUser and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.GetLedgerUser("AAD object id", null);
 
@@ -695,8 +695,8 @@ Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
       <example>
 This sample shows how to call CreateOrUpdateLedgerUserAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -716,8 +716,8 @@ Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
       <example>
 This sample shows how to call CreateOrUpdateLedgerUser and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -737,8 +737,8 @@ Console.WriteLine(result.GetProperty("assignedRoles")[0].ToString());
       <example>
 This sample shows how to call GetUserDefinedEndpointAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<Bundle> response = await client.GetUserDefinedEndpointAsync();
 ]]></code></example>
@@ -747,8 +747,8 @@ Response<Bundle> response = await client.GetUserDefinedEndpointAsync();
       <example>
 This sample shows how to call GetUserDefinedEndpoint.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<Bundle> response = client.GetUserDefinedEndpoint();
 ]]></code></example>
@@ -757,8 +757,8 @@ Response<Bundle> response = client.GetUserDefinedEndpoint();
       <example>
 This sample shows how to call GetUserDefinedEndpointAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.GetUserDefinedEndpointAsync(null);
 
@@ -772,8 +772,8 @@ Console.WriteLine(result.GetProperty("modules")[0].GetProperty("name").ToString(
       <example>
 This sample shows how to call GetUserDefinedEndpoint and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.GetUserDefinedEndpoint(null);
 
@@ -787,8 +787,8 @@ Console.WriteLine(result.GetProperty("modules")[0].GetProperty("name").ToString(
       <example>
 This sample shows how to call CreateUserDefinedEndpointAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Bundle bundle = new Bundle(new Metadata(new Dictionary<string, MethodToEndpointProperties>
 {
@@ -810,8 +810,8 @@ Response response = await client.CreateUserDefinedEndpointAsync(bundle);
       <example>
 This sample shows how to call CreateUserDefinedEndpoint.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Bundle bundle = new Bundle(new Metadata(new Dictionary<string, MethodToEndpointProperties>
 {
@@ -833,8 +833,8 @@ Response response = client.CreateUserDefinedEndpoint(bundle);
       <example>
 This sample shows how to call CreateUserDefinedEndpointAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -873,8 +873,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CreateUserDefinedEndpoint.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -913,8 +913,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetRuntimeOptionsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<JsRuntimeOptions> response = await client.GetRuntimeOptionsAsync();
 ]]></code></example>
@@ -923,8 +923,8 @@ Response<JsRuntimeOptions> response = await client.GetRuntimeOptionsAsync();
       <example>
 This sample shows how to call GetRuntimeOptions.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<JsRuntimeOptions> response = client.GetRuntimeOptions();
 ]]></code></example>
@@ -933,8 +933,8 @@ Response<JsRuntimeOptions> response = client.GetRuntimeOptions();
       <example>
 This sample shows how to call GetRuntimeOptionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.GetRuntimeOptionsAsync(null);
 
@@ -946,8 +946,8 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetRuntimeOptions and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.GetRuntimeOptions(null);
 
@@ -959,8 +959,8 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call UpdateRuntimeOptionsStableAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -977,8 +977,8 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call UpdateRuntimeOptionsStable and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -995,8 +995,8 @@ Console.WriteLine(result.ToString());
       <example>
 This sample shows how to call GetUserDefinedEndpointsModuleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<ModuleDef> response = await client.GetUserDefinedEndpointsModuleAsync("TESTJS");
 ]]></code></example>
@@ -1005,8 +1005,8 @@ Response<ModuleDef> response = await client.GetUserDefinedEndpointsModuleAsync("
       <example>
 This sample shows how to call GetUserDefinedEndpointsModule.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<ModuleDef> response = client.GetUserDefinedEndpointsModule("TESTJS");
 ]]></code></example>
@@ -1015,8 +1015,8 @@ Response<ModuleDef> response = client.GetUserDefinedEndpointsModule("TESTJS");
       <example>
 This sample shows how to call GetUserDefinedEndpointsModuleAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.GetUserDefinedEndpointsModuleAsync("TESTJS", null);
 
@@ -1029,8 +1029,8 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call GetUserDefinedEndpointsModule and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.GetUserDefinedEndpointsModule("TESTJS", null);
 
@@ -1043,8 +1043,8 @@ Console.WriteLine(result.GetProperty("name").ToString());
       <example>
 This sample shows how to call DeleteUserDefinedFunctionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.DeleteUserDefinedFunctionAsync("myFunction");
 
@@ -1055,8 +1055,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteUserDefinedFunction.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.DeleteUserDefinedFunction("myFunction");
 
@@ -1067,8 +1067,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetUserDefinedFunctionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<UserDefinedFunction> response = await client.GetUserDefinedFunctionAsync("myFunction");
 ]]></code></example>
@@ -1077,8 +1077,8 @@ Response<UserDefinedFunction> response = await client.GetUserDefinedFunctionAsyn
       <example>
 This sample shows how to call GetUserDefinedFunction.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<UserDefinedFunction> response = client.GetUserDefinedFunction("myFunction");
 ]]></code></example>
@@ -1087,8 +1087,8 @@ Response<UserDefinedFunction> response = client.GetUserDefinedFunction("myFuncti
       <example>
 This sample shows how to call GetUserDefinedFunctionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.GetUserDefinedFunctionAsync("myFunction", null);
 
@@ -1100,8 +1100,8 @@ Console.WriteLine(result.GetProperty("code").ToString());
       <example>
 This sample shows how to call GetUserDefinedFunction and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.GetUserDefinedFunction("myFunction", null);
 
@@ -1113,8 +1113,8 @@ Console.WriteLine(result.GetProperty("code").ToString());
       <example>
 This sample shows how to call CreateUserDefinedFunctionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 UserDefinedFunction userDefinedFunction = new UserDefinedFunction("export function main() { return true }");
 Response<UserDefinedFunction> response = await client.CreateUserDefinedFunctionAsync("myFunction", userDefinedFunction);
@@ -1124,8 +1124,8 @@ Response<UserDefinedFunction> response = await client.CreateUserDefinedFunctionA
       <example>
 This sample shows how to call CreateUserDefinedFunction.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 UserDefinedFunction userDefinedFunction = new UserDefinedFunction("export function main() { return true }");
 Response<UserDefinedFunction> response = client.CreateUserDefinedFunction("myFunction", userDefinedFunction);
@@ -1135,8 +1135,8 @@ Response<UserDefinedFunction> response = client.CreateUserDefinedFunction("myFun
       <example>
 This sample shows how to call CreateUserDefinedFunctionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1152,8 +1152,8 @@ Console.WriteLine(result.GetProperty("code").ToString());
       <example>
 This sample shows how to call CreateUserDefinedFunction and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1169,8 +1169,8 @@ Console.WriteLine(result.GetProperty("code").ToString());
       <example>
 This sample shows how to call ExecuteUserDefinedFunctionAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<UserDefinedFunctionExecutionResponse> response = await client.ExecuteUserDefinedFunctionAsync("myFunction");
 ]]></code></example>
@@ -1179,8 +1179,8 @@ Response<UserDefinedFunctionExecutionResponse> response = await client.ExecuteUs
       <example>
 This sample shows how to call ExecuteUserDefinedFunction.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<UserDefinedFunctionExecutionResponse> response = client.ExecuteUserDefinedFunction("myFunction");
 ]]></code></example>
@@ -1189,8 +1189,8 @@ Response<UserDefinedFunctionExecutionResponse> response = client.ExecuteUserDefi
       <example>
 This sample shows how to call ExecuteUserDefinedFunctionAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1220,8 +1220,8 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call ExecuteUserDefinedFunction and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1251,8 +1251,8 @@ Console.WriteLine(result.GetProperty("status").ToString());
       <example>
 This sample shows how to call GetUserDefinedRoleAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<UserDefinedRole> response = await client.GetUserDefinedRoleAsync("administrator");
 ]]></code></example>
@@ -1261,8 +1261,8 @@ Response<UserDefinedRole> response = await client.GetUserDefinedRoleAsync("admin
       <example>
 This sample shows how to call GetUserDefinedRole.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response<UserDefinedRole> response = client.GetUserDefinedRole("administrator");
 ]]></code></example>
@@ -1271,8 +1271,8 @@ Response<UserDefinedRole> response = client.GetUserDefinedRole("administrator");
       <example>
 This sample shows how to call GetUserDefinedRoleAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.GetUserDefinedRoleAsync("administrator", null);
 
@@ -1284,8 +1284,8 @@ Console.WriteLine(result.GetProperty("role")[0].ToString());
       <example>
 This sample shows how to call GetUserDefinedRole and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.GetUserDefinedRole("administrator", null);
 
@@ -1297,8 +1297,8 @@ Console.WriteLine(result.GetProperty("role")[0].ToString());
       <example>
 This sample shows how to call CreateUserDefinedRoleStableAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 UserDefinedRoles body = new UserDefinedRoles(new Role[]
 {
@@ -1320,8 +1320,8 @@ Response<UserDefinedRoles> response = await client.CreateUserDefinedRoleStableAs
       <example>
 This sample shows how to call CreateUserDefinedRoleStable.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 UserDefinedRoles body = new UserDefinedRoles(new Role[]
 {
@@ -1343,8 +1343,8 @@ Response<UserDefinedRoles> response = client.CreateUserDefinedRoleStable(body);
       <example>
 This sample shows how to call CreateUserDefinedRoleStableAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1380,8 +1380,8 @@ Console.WriteLine(result.GetProperty("roles")[0].ToString());
       <example>
 This sample shows how to call CreateUserDefinedRoleStable and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1417,8 +1417,8 @@ Console.WriteLine(result.GetProperty("roles")[0].ToString());
       <example>
 This sample shows how to call UpdateUserDefinedRoleStableAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1444,8 +1444,8 @@ Console.WriteLine(result.GetProperty("roles")[0].ToString());
       <example>
 This sample shows how to call UpdateUserDefinedRoleStable and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1471,8 +1471,8 @@ Console.WriteLine(result.GetProperty("roles")[0].ToString());
       <example>
 This sample shows how to call DeleteUserDefinedRoleStableAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = await client.DeleteUserDefinedRoleStableAsync("reader");
 
@@ -1483,8 +1483,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteUserDefinedRoleStable.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 Response response = client.DeleteUserDefinedRoleStable("reader");
 
@@ -1495,8 +1495,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetConsortiumMembersAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 await foreach (ConsortiumMember item in client.GetConsortiumMembersAsync())
 {
@@ -1507,8 +1507,8 @@ await foreach (ConsortiumMember item in client.GetConsortiumMembersAsync())
       <example>
 This sample shows how to call GetConsortiumMembers.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 foreach (ConsortiumMember item in client.GetConsortiumMembers())
 {
@@ -1519,8 +1519,8 @@ foreach (ConsortiumMember item in client.GetConsortiumMembers())
       <example>
 This sample shows how to call GetConsortiumMembersAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 await foreach (BinaryData item in client.GetConsortiumMembersAsync(null))
 {
@@ -1534,8 +1534,8 @@ await foreach (BinaryData item in client.GetConsortiumMembersAsync(null))
       <example>
 This sample shows how to call GetConsortiumMembers and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 foreach (BinaryData item in client.GetConsortiumMembers(null))
 {
@@ -1549,8 +1549,8 @@ foreach (BinaryData item in client.GetConsortiumMembers(null))
       <example>
 This sample shows how to call GetCollectionsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 await foreach (Collection item in client.GetCollectionsAsync())
 {
@@ -1561,8 +1561,8 @@ await foreach (Collection item in client.GetCollectionsAsync())
       <example>
 This sample shows how to call GetCollections.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 foreach (Collection item in client.GetCollections())
 {
@@ -1573,8 +1573,8 @@ foreach (Collection item in client.GetCollections())
       <example>
 This sample shows how to call GetCollectionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 await foreach (BinaryData item in client.GetCollectionsAsync(null))
 {
@@ -1587,8 +1587,8 @@ await foreach (BinaryData item in client.GetCollectionsAsync(null))
       <example>
 This sample shows how to call GetCollections and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 foreach (BinaryData item in client.GetCollections(null))
 {
@@ -1601,8 +1601,8 @@ foreach (BinaryData item in client.GetCollections(null))
       <example>
 This sample shows how to call GetTagsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 await foreach (string item in client.GetTagsAsync())
 {
@@ -1613,8 +1613,8 @@ await foreach (string item in client.GetTagsAsync())
       <example>
 This sample shows how to call GetTags.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 foreach (string item in client.GetTags())
 {
@@ -1625,8 +1625,8 @@ foreach (string item in client.GetTags())
       <example>
 This sample shows how to call GetTagsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 await foreach (BinaryData item in client.GetTagsAsync("myCollection", null))
 {
@@ -1639,8 +1639,8 @@ await foreach (BinaryData item in client.GetTagsAsync("myCollection", null))
       <example>
 This sample shows how to call GetTags and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 foreach (BinaryData item in client.GetTags("myCollection", null))
 {
@@ -1653,8 +1653,8 @@ foreach (BinaryData item in client.GetTags("myCollection", null))
       <example>
 This sample shows how to call GetLedgerEntriesAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 await foreach (LedgerEntry item in client.GetLedgerEntriesAsync())
 {
@@ -1665,8 +1665,8 @@ await foreach (LedgerEntry item in client.GetLedgerEntriesAsync())
       <example>
 This sample shows how to call GetLedgerEntries.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 foreach (LedgerEntry item in client.GetLedgerEntries())
 {
@@ -1677,8 +1677,8 @@ foreach (LedgerEntry item in client.GetLedgerEntries())
       <example>
 This sample shows how to call GetLedgerEntriesAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 await foreach (BinaryData item in client.GetLedgerEntriesAsync(null, "2.15", "2.20", null, null))
 {
@@ -1691,8 +1691,8 @@ await foreach (BinaryData item in client.GetLedgerEntriesAsync(null, "2.15", "2.
       <example>
 This sample shows how to call GetLedgerEntries and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 foreach (BinaryData item in client.GetLedgerEntries(null, "2.15", "2.20", null, null))
 {
@@ -1705,8 +1705,8 @@ foreach (BinaryData item in client.GetLedgerEntries(null, "2.15", "2.20", null, 
       <example>
 This sample shows how to call GetUsersAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 await foreach (LedgerUser item in client.GetUsersAsync())
 {
@@ -1717,8 +1717,8 @@ await foreach (LedgerUser item in client.GetUsersAsync())
       <example>
 This sample shows how to call GetUsers.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 foreach (LedgerUser item in client.GetUsers())
 {
@@ -1729,8 +1729,8 @@ foreach (LedgerUser item in client.GetUsers())
       <example>
 This sample shows how to call GetUsersAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 await foreach (BinaryData item in client.GetUsersAsync(null))
 {
@@ -1743,8 +1743,8 @@ await foreach (BinaryData item in client.GetUsersAsync(null))
       <example>
 This sample shows how to call GetUsers and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 foreach (BinaryData item in client.GetUsers(null))
 {
@@ -1757,8 +1757,8 @@ foreach (BinaryData item in client.GetUsers(null))
       <example>
 This sample shows how to call GetLedgerUsersAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 await foreach (LedgerUserMultipleRoles item in client.GetLedgerUsersAsync())
 {
@@ -1769,8 +1769,8 @@ await foreach (LedgerUserMultipleRoles item in client.GetLedgerUsersAsync())
       <example>
 This sample shows how to call GetLedgerUsers.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 foreach (LedgerUserMultipleRoles item in client.GetLedgerUsers())
 {
@@ -1781,8 +1781,8 @@ foreach (LedgerUserMultipleRoles item in client.GetLedgerUsers())
       <example>
 This sample shows how to call GetLedgerUsersAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 await foreach (BinaryData item in client.GetLedgerUsersAsync(null))
 {
@@ -1795,8 +1795,8 @@ await foreach (BinaryData item in client.GetLedgerUsersAsync(null))
       <example>
 This sample shows how to call GetLedgerUsers and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 foreach (BinaryData item in client.GetLedgerUsers(null))
 {
@@ -1809,8 +1809,8 @@ foreach (BinaryData item in client.GetLedgerUsers(null))
       <example>
 This sample shows how to call GetUserDefinedFunctionsAsync.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 await foreach (UserDefinedFunction item in client.GetUserDefinedFunctionsAsync())
 {
@@ -1821,8 +1821,8 @@ await foreach (UserDefinedFunction item in client.GetUserDefinedFunctionsAsync()
       <example>
 This sample shows how to call GetUserDefinedFunctions.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 foreach (UserDefinedFunction item in client.GetUserDefinedFunctions())
 {
@@ -1833,8 +1833,8 @@ foreach (UserDefinedFunction item in client.GetUserDefinedFunctions())
       <example>
 This sample shows how to call GetUserDefinedFunctionsAsync and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 await foreach (BinaryData item in client.GetUserDefinedFunctionsAsync(null))
 {
@@ -1847,8 +1847,8 @@ await foreach (BinaryData item in client.GetUserDefinedFunctionsAsync(null))
       <example>
 This sample shows how to call GetUserDefinedFunctions and parse the result.
 <code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+TokenCredential credential = new DefaultAzureCredential();
+ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
 foreach (BinaryData item in client.GetUserDefinedFunctions(null))
 {

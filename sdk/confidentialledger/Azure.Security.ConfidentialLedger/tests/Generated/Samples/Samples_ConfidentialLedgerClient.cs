@@ -22,8 +22,8 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetConstitution_GetConstitution()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.GetConstitution(null);
 
@@ -36,8 +36,8 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetConstitution_GetConstitution_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.GetConstitutionAsync(null);
 
@@ -50,8 +50,8 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetConstitution_GetConstitution_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<Constitution> response = client.GetConstitution();
         }
@@ -60,8 +60,8 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetConstitution_GetConstitution_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<Constitution> response = await client.GetConstitutionAsync();
         }
@@ -70,8 +70,8 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetEnclaveQuotes_GetEnclaveQuotes()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.GetEnclaveQuotes(null);
 
@@ -86,8 +86,8 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetEnclaveQuotes_GetEnclaveQuotes_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.GetEnclaveQuotesAsync(null);
 
@@ -102,8 +102,8 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetEnclaveQuotes_GetEnclaveQuotes_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<ConfidentialLedgerEnclaves> response = client.GetEnclaveQuotes();
         }
@@ -112,8 +112,8 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetEnclaveQuotes_GetEnclaveQuotes_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<ConfidentialLedgerEnclaves> response = await client.GetEnclaveQuotesAsync();
         }
@@ -122,8 +122,8 @@ namespace Azure.Security.ConfidentialLedger.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_CreateLedgerEntry_CreateLedgerEntry()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -189,8 +189,8 @@ return_exception_details = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_CreateLedgerEntry_CreateLedgerEntry_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -256,8 +256,8 @@ return_exception_details = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_CreateLedgerEntry_CreateLedgerEntry_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             LedgerEntry entry = new LedgerEntry("New ledger entry contents.")
             {
@@ -303,8 +303,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_CreateLedgerEntry_CreateLedgerEntry_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             LedgerEntry entry = new LedgerEntry("New ledger entry contents.")
             {
@@ -350,8 +350,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetLedgerEntry_GetLedgerEntry()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.GetLedgerEntry("2.15", null, null);
 
@@ -363,8 +363,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetLedgerEntry_GetLedgerEntry_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.GetLedgerEntryAsync("2.15", null, null);
 
@@ -376,8 +376,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetLedgerEntry_GetLedgerEntry_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<LedgerQueryResult> response = client.GetLedgerEntry("2.15");
         }
@@ -386,8 +386,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetLedgerEntry_GetLedgerEntry_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<LedgerQueryResult> response = await client.GetLedgerEntryAsync("2.15");
         }
@@ -396,8 +396,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetReceipt_GetReceipt()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.GetReceipt("2.15", null);
 
@@ -410,8 +410,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetReceipt_GetReceipt_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.GetReceiptAsync("2.15", null);
 
@@ -424,8 +424,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetReceipt_GetReceipt_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<TransactionReceipt> response = client.GetReceipt("2.15");
         }
@@ -434,8 +434,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetReceipt_GetReceipt_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<TransactionReceipt> response = await client.GetReceiptAsync("2.15");
         }
@@ -444,8 +444,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetTransactionStatus_GetTransactionStatus()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.GetTransactionStatus("4.2", null);
 
@@ -458,8 +458,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetTransactionStatus_GetTransactionStatus_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.GetTransactionStatusAsync("4.2", null);
 
@@ -472,8 +472,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetTransactionStatus_GetTransactionStatus_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<TransactionStatus> response = client.GetTransactionStatus("4.2");
         }
@@ -482,8 +482,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetTransactionStatus_GetTransactionStatus_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<TransactionStatus> response = await client.GetTransactionStatusAsync("4.2");
         }
@@ -492,8 +492,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetCurrentLedgerEntry_GetCurrentLedgerEntry()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.GetCurrentLedgerEntry(null, null);
 
@@ -505,8 +505,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetCurrentLedgerEntry_GetCurrentLedgerEntry_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.GetCurrentLedgerEntryAsync(null, null);
 
@@ -518,8 +518,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetCurrentLedgerEntry_GetCurrentLedgerEntry_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<LedgerEntry> response = client.GetCurrentLedgerEntry();
         }
@@ -528,8 +528,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetCurrentLedgerEntry_GetCurrentLedgerEntry_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<LedgerEntry> response = await client.GetCurrentLedgerEntryAsync();
         }
@@ -538,8 +538,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_DeleteUser_DeleteUser()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.DeleteUser("AAD object id");
 
@@ -550,8 +550,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_DeleteUser_DeleteUser_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.DeleteUserAsync("AAD object id");
 
@@ -562,8 +562,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetUser_GetUser()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.GetUser("AAD object id", null);
 
@@ -575,8 +575,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetUser_GetUser_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.GetUserAsync("AAD object id", null);
 
@@ -588,8 +588,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetUser_GetUser_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<LedgerUser> response = client.GetUser("AAD object id");
         }
@@ -598,8 +598,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetUser_GetUser_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<LedgerUser> response = await client.GetUserAsync("AAD object id");
         }
@@ -608,8 +608,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_CreateOrUpdateUser_CreateOrUpdateUser()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -625,8 +625,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_CreateOrUpdateUser_CreateOrUpdateUser_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -642,8 +642,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_DeleteLedgerUser_DeleteLedgerUser()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.DeleteLedgerUser("AAD object id");
 
@@ -654,8 +654,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_DeleteLedgerUser_DeleteLedgerUser_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.DeleteLedgerUserAsync("AAD object id");
 
@@ -666,8 +666,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetLedgerUser_GetLedgerUser()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.GetLedgerUser("AAD object id", null);
 
@@ -679,8 +679,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetLedgerUser_GetLedgerUser_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.GetLedgerUserAsync("AAD object id", null);
 
@@ -692,8 +692,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetLedgerUser_GetLedgerUser_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<LedgerUserMultipleRoles> response = client.GetLedgerUser("AAD object id");
         }
@@ -702,8 +702,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetLedgerUser_GetLedgerUser_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<LedgerUserMultipleRoles> response = await client.GetLedgerUserAsync("AAD object id");
         }
@@ -712,8 +712,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_CreateOrUpdateLedgerUser_CreateOrUpdateLedgerUser()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -733,8 +733,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_CreateOrUpdateLedgerUser_CreateOrUpdateLedgerUser_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -754,8 +754,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetUserDefinedEndpoint_GetUserDefinedEndpoint()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.GetUserDefinedEndpoint(null);
 
@@ -769,8 +769,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetUserDefinedEndpoint_GetUserDefinedEndpoint_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.GetUserDefinedEndpointAsync(null);
 
@@ -784,8 +784,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetUserDefinedEndpoint_GetUserDefinedEndpoint_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<Bundle> response = client.GetUserDefinedEndpoint();
         }
@@ -794,8 +794,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetUserDefinedEndpoint_GetUserDefinedEndpoint_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<Bundle> response = await client.GetUserDefinedEndpointAsync();
         }
@@ -804,8 +804,8 @@ ReturnExceptionDetails = true,
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_CreateUserDefinedEndpoint_CreateUserDefinedEndpoint()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -844,8 +844,8 @@ module = "TESTJS",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_CreateUserDefinedEndpoint_CreateUserDefinedEndpoint_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -884,8 +884,8 @@ module = "TESTJS",
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_CreateUserDefinedEndpoint_CreateUserDefinedEndpoint_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Bundle bundle = new Bundle(new Metadata(new Dictionary<string, MethodToEndpointProperties>
             {
@@ -907,8 +907,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_CreateUserDefinedEndpoint_CreateUserDefinedEndpoint_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Bundle bundle = new Bundle(new Metadata(new Dictionary<string, MethodToEndpointProperties>
             {
@@ -930,8 +930,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetRuntimeOptions_GetRuntimeOptions()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.GetRuntimeOptions(null);
 
@@ -943,8 +943,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetRuntimeOptions_GetRuntimeOptions_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.GetRuntimeOptionsAsync(null);
 
@@ -956,8 +956,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetRuntimeOptions_GetRuntimeOptions_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<JsRuntimeOptions> response = client.GetRuntimeOptions();
         }
@@ -966,8 +966,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetRuntimeOptions_GetRuntimeOptions_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<JsRuntimeOptions> response = await client.GetRuntimeOptionsAsync();
         }
@@ -976,8 +976,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_UpdateRuntimeOptionsStable_UpdateRuntimeOptions()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -994,8 +994,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_UpdateRuntimeOptionsStable_UpdateRuntimeOptions_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1012,8 +1012,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetUserDefinedEndpointsModule_GetUserDefinedEndpointsModule()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.GetUserDefinedEndpointsModule("TESTJS", null);
 
@@ -1026,8 +1026,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetUserDefinedEndpointsModule_GetUserDefinedEndpointsModule_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.GetUserDefinedEndpointsModuleAsync("TESTJS", null);
 
@@ -1040,8 +1040,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetUserDefinedEndpointsModule_GetUserDefinedEndpointsModule_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<ModuleDef> response = client.GetUserDefinedEndpointsModule("TESTJS");
         }
@@ -1050,8 +1050,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetUserDefinedEndpointsModule_GetUserDefinedEndpointsModule_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<ModuleDef> response = await client.GetUserDefinedEndpointsModuleAsync("TESTJS");
         }
@@ -1060,8 +1060,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_DeleteUserDefinedFunction_DeleteUserDefinedFunction()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.DeleteUserDefinedFunction("myFunction");
 
@@ -1072,8 +1072,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_DeleteUserDefinedFunction_DeleteUserDefinedFunction_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.DeleteUserDefinedFunctionAsync("myFunction");
 
@@ -1084,8 +1084,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetUserDefinedFunction_GetUserDefinedFunction()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.GetUserDefinedFunction("myFunction", null);
 
@@ -1097,8 +1097,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetUserDefinedFunction_GetUserDefinedFunction_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.GetUserDefinedFunctionAsync("myFunction", null);
 
@@ -1110,8 +1110,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetUserDefinedFunction_GetUserDefinedFunction_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<UserDefinedFunction> response = client.GetUserDefinedFunction("myFunction");
         }
@@ -1120,8 +1120,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetUserDefinedFunction_GetUserDefinedFunction_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<UserDefinedFunction> response = await client.GetUserDefinedFunctionAsync("myFunction");
         }
@@ -1130,8 +1130,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_CreateUserDefinedFunction_CreateOrUpdateLedgerUserDefinedFunction()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1147,8 +1147,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_CreateUserDefinedFunction_CreateOrUpdateLedgerUserDefinedFunction_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1164,8 +1164,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_CreateUserDefinedFunction_CreateOrUpdateLedgerUserDefinedFunction_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             UserDefinedFunction userDefinedFunction = new UserDefinedFunction("export function main() { return true }");
             Response<UserDefinedFunction> response = client.CreateUserDefinedFunction("myFunction", userDefinedFunction);
@@ -1175,8 +1175,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_CreateUserDefinedFunction_CreateOrUpdateLedgerUserDefinedFunction_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             UserDefinedFunction userDefinedFunction = new UserDefinedFunction("export function main() { return true }");
             Response<UserDefinedFunction> response = await client.CreateUserDefinedFunctionAsync("myFunction", userDefinedFunction);
@@ -1186,8 +1186,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_ExecuteUserDefinedFunction_ExecuteUserDefinedFunction()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1217,8 +1217,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_ExecuteUserDefinedFunction_ExecuteUserDefinedFunction_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1248,8 +1248,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_ExecuteUserDefinedFunction_ExecuteUserDefinedFunction_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<UserDefinedFunctionExecutionResponse> response = client.ExecuteUserDefinedFunction("myFunction");
         }
@@ -1258,8 +1258,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_ExecuteUserDefinedFunction_ExecuteUserDefinedFunction_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<UserDefinedFunctionExecutionResponse> response = await client.ExecuteUserDefinedFunctionAsync("myFunction");
         }
@@ -1268,8 +1268,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetUserDefinedRole_GetUserDefinedRole()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.GetUserDefinedRole("administrator", null);
 
@@ -1281,8 +1281,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetUserDefinedRole_GetUserDefinedRole_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.GetUserDefinedRoleAsync("administrator", null);
 
@@ -1294,8 +1294,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetUserDefinedRole_GetUserDefinedRole_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<UserDefinedRole> response = client.GetUserDefinedRole("administrator");
         }
@@ -1304,8 +1304,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetUserDefinedRole_GetUserDefinedRole_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response<UserDefinedRole> response = await client.GetUserDefinedRoleAsync("administrator");
         }
@@ -1314,8 +1314,8 @@ new ModuleDef("TESTJS", "test.js")
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_CreateUserDefinedRoleStable_CreatedUserDefinedRole()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1351,8 +1351,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_CreateUserDefinedRoleStable_CreatedUserDefinedRole_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1388,8 +1388,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_CreateUserDefinedRoleStable_CreatedUserDefinedRole_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             UserDefinedRoles body = new UserDefinedRoles(new Role[]
             {
@@ -1411,8 +1411,8 @@ RoleActions = {"Microsoft.ConfidentialLedger/ledger/users/write", "Microsoft.Con
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_CreateUserDefinedRoleStable_CreatedUserDefinedRole_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             UserDefinedRoles body = new UserDefinedRoles(new Role[]
             {
@@ -1434,8 +1434,8 @@ RoleActions = {"Microsoft.ConfidentialLedger/ledger/users/write", "Microsoft.Con
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_UpdateUserDefinedRoleStable_UpdateUserDefinedRole()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1461,8 +1461,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_UpdateUserDefinedRoleStable_UpdateUserDefinedRole_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -1488,8 +1488,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_DeleteUserDefinedRoleStable_DeleteUserDefinedRole()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = client.DeleteUserDefinedRoleStable("reader");
 
@@ -1500,8 +1500,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_DeleteUserDefinedRoleStable_DeleteUserDefinedRole_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             Response response = await client.DeleteUserDefinedRoleStableAsync("reader");
 
@@ -1512,8 +1512,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetConsortiumMembers_ListConsortiumMembers()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             foreach (BinaryData item in client.GetConsortiumMembers(null))
             {
@@ -1527,8 +1527,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetConsortiumMembers_ListConsortiumMembers_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             await foreach (BinaryData item in client.GetConsortiumMembersAsync(null))
             {
@@ -1542,8 +1542,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetConsortiumMembers_ListConsortiumMembers_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             foreach (ConsortiumMember item in client.GetConsortiumMembers())
             {
@@ -1554,8 +1554,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetConsortiumMembers_ListConsortiumMembers_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             await foreach (ConsortiumMember item in client.GetConsortiumMembersAsync())
             {
@@ -1566,8 +1566,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetCollections_ListCollections()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             foreach (BinaryData item in client.GetCollections(null))
             {
@@ -1580,8 +1580,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetCollections_ListCollections_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             await foreach (BinaryData item in client.GetCollectionsAsync(null))
             {
@@ -1594,8 +1594,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetCollections_ListCollections_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             foreach (Collection item in client.GetCollections())
             {
@@ -1606,8 +1606,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetCollections_ListCollections_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             await foreach (Collection item in client.GetCollectionsAsync())
             {
@@ -1618,8 +1618,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetTags_ListTags()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             foreach (BinaryData item in client.GetTags("myCollection", null))
             {
@@ -1632,8 +1632,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetTags_ListTags_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             await foreach (BinaryData item in client.GetTagsAsync("myCollection", null))
             {
@@ -1646,8 +1646,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetTags_ListTags_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             foreach (string item in client.GetTags())
             {
@@ -1658,8 +1658,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetTags_ListTags_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             await foreach (string item in client.GetTagsAsync())
             {
@@ -1670,8 +1670,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetLedgerEntries_ListLedgerEntries()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             foreach (BinaryData item in client.GetLedgerEntries(null, "2.15", "2.20", null, null))
             {
@@ -1684,8 +1684,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetLedgerEntries_ListLedgerEntries_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             await foreach (BinaryData item in client.GetLedgerEntriesAsync(null, "2.15", "2.20", null, null))
             {
@@ -1698,8 +1698,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetLedgerEntries_ListLedgerEntries_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             foreach (LedgerEntry item in client.GetLedgerEntries())
             {
@@ -1710,8 +1710,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetLedgerEntries_ListLedgerEntries_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             await foreach (LedgerEntry item in client.GetLedgerEntriesAsync())
             {
@@ -1722,8 +1722,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetUsers_ListUsers()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             foreach (BinaryData item in client.GetUsers(null))
             {
@@ -1736,8 +1736,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetUsers_ListUsers_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             await foreach (BinaryData item in client.GetUsersAsync(null))
             {
@@ -1750,8 +1750,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetUsers_ListUsers_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             foreach (LedgerUser item in client.GetUsers())
             {
@@ -1762,8 +1762,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetUsers_ListUsers_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             await foreach (LedgerUser item in client.GetUsersAsync())
             {
@@ -1774,8 +1774,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetLedgerUsers_ListLedgerUsers()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             foreach (BinaryData item in client.GetLedgerUsers(null))
             {
@@ -1788,8 +1788,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetLedgerUsers_ListLedgerUsers_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             await foreach (BinaryData item in client.GetLedgerUsersAsync(null))
             {
@@ -1802,8 +1802,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetLedgerUsers_ListLedgerUsers_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             foreach (LedgerUserMultipleRoles item in client.GetLedgerUsers())
             {
@@ -1814,8 +1814,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetLedgerUsers_ListLedgerUsers_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             await foreach (LedgerUserMultipleRoles item in client.GetLedgerUsersAsync())
             {
@@ -1826,8 +1826,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetUserDefinedFunctions_ListUserDefinedFunctions()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             foreach (BinaryData item in client.GetUserDefinedFunctions(null))
             {
@@ -1840,8 +1840,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetUserDefinedFunctions_ListUserDefinedFunctions_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             await foreach (BinaryData item in client.GetUserDefinedFunctionsAsync(null))
             {
@@ -1854,8 +1854,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public void Example_ConfidentialLedger_GetUserDefinedFunctions_ListUserDefinedFunctions_Convenience()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             foreach (UserDefinedFunction item in client.GetUserDefinedFunctions())
             {
@@ -1866,8 +1866,8 @@ roleActions = new object[]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ConfidentialLedger_GetUserDefinedFunctions_ListUserDefinedFunctions_Convenience_Async()
         {
-            Uri endpoint = new Uri("<endpoint>");
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint);
+            TokenCredential credential = new DefaultAzureCredential();
+            ConfidentialLedgerClient client = new ConfidentialLedgerClient(null, credential);
 
             await foreach (UserDefinedFunction item in client.GetUserDefinedFunctionsAsync())
             {

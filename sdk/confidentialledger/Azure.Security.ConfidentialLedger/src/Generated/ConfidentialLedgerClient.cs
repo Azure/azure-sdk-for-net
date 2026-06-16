@@ -34,28 +34,6 @@ namespace Azure.Security.ConfidentialLedger
         {
         }
 
-        /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
-        /// <param name="endpoint"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public ConfidentialLedgerClient(Uri endpoint) : this(endpoint, new ConfidentialLedgerClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of ConfidentialLedgerClient. </summary>
-        /// <param name="endpoint"> The Confidential Ledger URL, for example https://contoso.confidentialledger.azure.com. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public ConfidentialLedgerClient(Uri endpoint, ConfidentialLedgerClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            options ??= new ConfidentialLedgerClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
-        }
-
         /// <summary> Gets the constitution used for governance. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
