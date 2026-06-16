@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.TestCase
             var sOS = await GetSentinelOnboardingStateResourceAsync(operationalInsights);
             //1.CreateOrUpdate
             var collection = GetIncidentCollectionAsync(operationalInsights);
-            var name = Recording.GenerateAssetName("incidents-");
-            var name2 = Recording.GenerateAssetName("incidents-");
-            var name3 = Recording.GenerateAssetName("incidents-");
+            var name = GenerateAssetNameFromRecording("incidents-", "incidents");
+            var name2 = GenerateAssetNameFromRecording("incidents-", "incidents");
+            var name3 = GenerateAssetNameFromRecording("incidents-", "incidents");
             var input = ResourceDataHelpers.GetIncidentData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             SecurityInsightsIncidentResource incident1 = lro.Value;
