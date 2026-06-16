@@ -1857,7 +1857,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.LogProfileCollection LogProfileCollection(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.LogProfileData> value = null, string nextLink = null) { throw null; }
         public static Azure.ResourceManager.Monitor.LogProfileData LogProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier storageAccountId = null, Azure.Core.ResourceIdentifier serviceBusRuleId = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<string> categories = null, Azure.ResourceManager.Monitor.Models.RetentionPolicy retentionPolicy = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.LogProfilePatch LogProfilePatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.ResourceIdentifier storageAccountId = null, Azure.Core.ResourceIdentifier serviceBusRuleId = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null, System.Collections.Generic.IEnumerable<string> categories = null, Azure.ResourceManager.Monitor.Models.RetentionPolicy retentionPolicy = null) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.LogSettings LogSettings(string category = null, bool isEnabled = false, Azure.ResourceManager.Monitor.Models.RetentionPolicy retentionPolicy = null) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.LogSettings LogSettings(string category = null, string categoryGroup = null, bool isEnabled = false, Azure.ResourceManager.Monitor.Models.RetentionPolicy retentionPolicy = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.LogsQuotaSpec LogsQuotaSpec(string maxSizePerMinuteInGB = null, string maxRequestsPerMinute = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MetricAlertAction MetricAlertAction(Azure.Core.ResourceIdentifier actionGroupId = null, System.Collections.Generic.IDictionary<string, string> webHookProperties = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MetricAlertCriteria MetricAlertCriteria(string odataType = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
@@ -1872,7 +1872,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static Azure.ResourceManager.Monitor.Models.MetricAlertStatusProperties MetricAlertStatusProperties(System.Collections.Generic.IReadOnlyDictionary<string, string> dimensions = null, string status = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MetricCriteria MetricCriteria(string name = null, string metricName = null, string metricNamespace = null, Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType timeAggregation = default(Azure.ResourceManager.Monitor.Models.MetricCriteriaTimeAggregationType), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.MetricDimension> dimensions = null, bool? skipMetricValidation = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null, Azure.ResourceManager.Monitor.Models.MetricCriteriaOperator @operator = default(Azure.ResourceManager.Monitor.Models.MetricCriteriaOperator), double threshold = 0) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MetricDimension MetricDimension(string name = null, string @operator = null, System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
-        public static Azure.ResourceManager.Monitor.Models.MetricSettings MetricSettings(System.TimeSpan? timeGrain = default(System.TimeSpan?), bool isEnabled = false, Azure.ResourceManager.Monitor.Models.RetentionPolicy retentionPolicy = null) { throw null; }
+        public static Azure.ResourceManager.Monitor.Models.MetricSettings MetricSettings(System.TimeSpan? timeGrain = default(System.TimeSpan?), string category = null, bool isEnabled = false, Azure.ResourceManager.Monitor.Models.RetentionPolicy retentionPolicy = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MetricTrigger MetricTrigger(string metricName = null, string metricNamespace = null, Azure.Core.ResourceIdentifier metricResourceId = null, Azure.Core.AzureLocation? metricResourceLocation = default(Azure.Core.AzureLocation?), System.TimeSpan timeGrain = default(System.TimeSpan), Azure.ResourceManager.Monitor.Models.MetricStatisticType statistic = Azure.ResourceManager.Monitor.Models.MetricStatisticType.Average, System.TimeSpan timeWindow = default(System.TimeSpan), Azure.ResourceManager.Monitor.Models.MetricTriggerTimeAggregationType timeAggregation = Azure.ResourceManager.Monitor.Models.MetricTriggerTimeAggregationType.Average, Azure.ResourceManager.Monitor.Models.MetricTriggerComparisonOperator comparisonOperator = Azure.ResourceManager.Monitor.Models.MetricTriggerComparisonOperator.Equals, double threshold = 0, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Monitor.Models.AutoscaleRuleMetricDimension> dimensions = null, bool? isDividedPerInstance = default(bool?)) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MicrosoftFabricDestination MicrosoftFabricDestination(string tenantId = null, string artifactId = null, string databaseName = null, string ingestionUri = null, string name = null) { throw null; }
         public static Azure.ResourceManager.Monitor.Models.MonitorArmRoleReceiver MonitorArmRoleReceiver(string name = null, string roleId = null, bool? useCommonAlertSchema = default(bool?)) { throw null; }
@@ -2076,7 +2076,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public AutoscaleSettingPatch() { }
         public string AutoscaleSettingName { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.AutoscaleNotification> Notifications { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.AutoscaleNotification> Notifications { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.PredictiveAutoscalePolicy PredictiveAutoscalePolicy { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.AutoscaleProfile> Profiles { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
@@ -3437,6 +3437,7 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         public LogSettings(bool isEnabled) { }
         public string Category { get { throw null; } set { } }
+        public string CategoryGroup { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.RetentionPolicy RetentionPolicy { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Monitor.Models.LogSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3695,7 +3696,8 @@ namespace Azure.ResourceManager.Monitor.Models
     }
     public partial class MetricSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Monitor.Models.MetricSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Monitor.Models.MetricSettings>
     {
-        public MetricSettings(System.TimeSpan? timeGrain, bool isEnabled) { }
+        public MetricSettings(bool isEnabled) { }
+        public string Category { get { throw null; } set { } }
         public bool IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Monitor.Models.RetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public System.TimeSpan? TimeGrain { get { throw null; } set { } }
@@ -3723,7 +3725,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public MetricTrigger(string metricName, Azure.Core.ResourceIdentifier metricResourceId, System.TimeSpan timeGrain, Azure.ResourceManager.Monitor.Models.MetricStatisticType statistic, System.TimeSpan timeWindow, Azure.ResourceManager.Monitor.Models.MetricTriggerTimeAggregationType timeAggregation, Azure.ResourceManager.Monitor.Models.MetricTriggerComparisonOperation @operator, double threshold) { }
         public MetricTrigger(string metricName, Azure.Core.ResourceIdentifier metricResourceId, System.TimeSpan timeGrain, Azure.ResourceManager.Monitor.Models.MetricStatisticType statistic, System.TimeSpan timeWindow, Azure.ResourceManager.Monitor.Models.MetricTriggerTimeAggregationType timeAggregation, Azure.ResourceManager.Monitor.Models.MetricTriggerComparisonOperator comparisonOperator, double threshold) { }
         public Azure.ResourceManager.Monitor.Models.MetricTriggerComparisonOperator ComparisonOperator { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.AutoscaleRuleMetricDimension> Dimensions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Monitor.Models.AutoscaleRuleMetricDimension> Dimensions { get { throw null; } set { } }
         public bool? IsDividedPerInstance { get { throw null; } set { } }
         public string MetricName { get { throw null; } set { } }
         public string MetricNamespace { get { throw null; } set { } }

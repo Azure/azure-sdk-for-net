@@ -2036,12 +2036,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <param name="timeGrain"> the timegrain of the metric in ISO8601 format. </param>
-        /// <param name="isEnabled"> a value indicating whether this timegrain is enabled. </param>
-        /// <param name="retentionPolicy"> the retention policy for this timegrain. </param>
+        /// <param name="category"> Name of a Diagnostic Metric category for a resource type this setting is applied to. To obtain the list of Diagnostic metric categories for a resource, first perform a GET diagnostic settings operation. </param>
+        /// <param name="isEnabled"> a value indicating whether this category is enabled. </param>
+        /// <param name="retentionPolicy"> the retention policy for this category. </param>
         /// <returns> A new <see cref="Models.MetricSettings"/> instance for mocking. </returns>
-        public static MetricSettings MetricSettings(TimeSpan? timeGrain = default, bool isEnabled = default, RetentionPolicy retentionPolicy = default)
+        public static MetricSettings MetricSettings(TimeSpan? timeGrain = default, string category = default, bool isEnabled = default, RetentionPolicy retentionPolicy = default)
         {
-            return new MetricSettings(timeGrain, isEnabled, retentionPolicy, default);
+            return new MetricSettings(timeGrain, category, isEnabled, retentionPolicy, default);
         }
 
         /// <param name="isEnabled"> a value indicating whether the retention policy is enabled. </param>
@@ -2053,12 +2054,13 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <param name="category"> Name of a Diagnostic Log category for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </param>
+        /// <param name="categoryGroup"> Name of a Diagnostic Log category group for a resource type this setting is applied to. To obtain the list of Diagnostic Log categories for a resource, first perform a GET diagnostic settings operation. </param>
         /// <param name="isEnabled"> a value indicating whether this log is enabled. </param>
         /// <param name="retentionPolicy"> the retention policy for this log. </param>
         /// <returns> A new <see cref="Models.LogSettings"/> instance for mocking. </returns>
-        public static LogSettings LogSettings(string category = default, bool isEnabled = default, RetentionPolicy retentionPolicy = default)
+        public static LogSettings LogSettings(string category = default, string categoryGroup = default, bool isEnabled = default, RetentionPolicy retentionPolicy = default)
         {
-            return new LogSettings(category, isEnabled, retentionPolicy, default);
+            return new LogSettings(category, categoryGroup, isEnabled, retentionPolicy, default);
         }
 
         /// <param name="tags"> Resource tags. </param>

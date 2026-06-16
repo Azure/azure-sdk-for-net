@@ -54,19 +54,6 @@ namespace Azure.ResourceManager.Monitor.Models
             }
         }
 
-        /// <summary> the collection of notifications. </summary>
-        public IList<AutoscaleNotification> Notifications
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new AutoscaleSettingProperties();
-                }
-                return Properties.Notifications;
-            }
-        }
-
         /// <summary> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is 'false'. </summary>
         public bool? IsEnabled
         {

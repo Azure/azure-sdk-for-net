@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -12,6 +13,8 @@ namespace Azure.ResourceManager.Monitor.Models
 #pragma warning disable CS0618 // This partial class intentionally exposes obsolete compatibility members.
     public partial class MetricTrigger
     {
+        private IList<AutoscaleRuleMetricDimension> _dimensions;
+
         // TypeSpec now generates ComparisonOperator with a new enum to avoid preserving the old enum's numeric values.
         // Keep the old Operator surface backed by the generated property for binary/source compatibility.
         /// <summary> Initializes a new instance of <see cref="MetricTrigger"/>. </summary>
@@ -37,6 +40,20 @@ namespace Azure.ResourceManager.Monitor.Models
         {
             get => MetricTriggerComparisonOperationHelper.ToLegacyComparisonOperation(ComparisonOperator);
             set => ComparisonOperator = MetricTriggerComparisonOperationHelper.FromLegacyComparisonOperation(value);
+        }
+
+        /// <summary> List of dimension conditions. </summary>
+        public IList<AutoscaleRuleMetricDimension> Dimensions
+        {
+            get
+            {
+                if (_dimensions is null)
+                {
+                    _dimensions = new ChangeTrackingList<AutoscaleRuleMetricDimension>();
+                }
+                return _dimensions;
+            }
+            set => _dimensions = value;
         }
     }
 #pragma warning restore CS0618

@@ -105,9 +105,6 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the threshold of the metric that triggers the scale action. </summary>
         public double Threshold { get; set; }
 
-        /// <summary> List of dimension conditions. For example: [{"DimensionName":"AppName","Operator":"Equals","Values":["App1"]},{"DimensionName":"Deployment","Operator":"Equals","Values":["default"]}]. </summary>
-        public IList<AutoscaleRuleMetricDimension> Dimensions { get; }
-
         /// <summary> a value indicating whether metric should divide per instance. </summary>
         public bool? IsDividedPerInstance { get; set; }
     }

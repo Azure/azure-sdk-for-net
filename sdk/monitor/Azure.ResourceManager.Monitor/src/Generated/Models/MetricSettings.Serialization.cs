@@ -79,8 +79,16 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 throw new FormatException($"The model {nameof(MetricSettings)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("timeGrain"u8);
-            writer.WriteStringValue(TimeGrain.Value, "P");
+            if (Optional.IsDefined(TimeGrain))
+            {
+                writer.WritePropertyName("timeGrain"u8);
+                writer.WriteStringValue(TimeGrain.Value, "P");
+            }
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category);
+            }
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsDefined(RetentionPolicy))
@@ -131,6 +139,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 return null;
             }
             TimeSpan? timeGrain = default;
+            string category = default;
             bool isEnabled = default;
             RetentionPolicy retentionPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -138,7 +147,16 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (prop.NameEquals("timeGrain"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     timeGrain = prop.Value.GetTimeSpan("P");
+                    continue;
+                }
+                if (prop.NameEquals("category"u8))
+                {
+                    category = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("enabled"u8))
@@ -160,7 +178,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MetricSettings(timeGrain, isEnabled, retentionPolicy, additionalBinaryDataProperties);
+            return new MetricSettings(timeGrain, category, isEnabled, retentionPolicy, additionalBinaryDataProperties);
         }
     }
 }
