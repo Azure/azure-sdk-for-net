@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByDatabaseRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, RequestContext context)
+        internal HttpMessage CreateGetDatabaseOperationsRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByDatabaseRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, RequestContext context)
+        internal HttpMessage CreateNextGetDatabaseOperationsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateCancelRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, Guid operationId, RequestContext context)
+        internal HttpMessage CreateCancelDatabaseOperationRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, Guid operationId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

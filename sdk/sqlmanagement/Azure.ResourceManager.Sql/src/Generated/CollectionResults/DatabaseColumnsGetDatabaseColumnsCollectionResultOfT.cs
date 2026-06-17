@@ -14,40 +14,55 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    internal partial class DatabaseOperationsGetByDatabaseCollectionResultOfT : Pageable<DatabaseOperationData>
+    internal partial class DatabaseColumnsGetDatabaseColumnsCollectionResultOfT : Pageable<DatabaseColumnData>
     {
-        private readonly DatabaseOperations _client;
+        private readonly DatabaseColumns _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _serverName;
         private readonly string _databaseName;
+        private readonly IEnumerable<string> _schema;
+        private readonly IEnumerable<string> _table;
+        private readonly IEnumerable<string> _column;
+        private readonly IEnumerable<string> _orderBy;
+        private readonly string _skiptoken;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
 
-        /// <summary> Initializes a new instance of DatabaseOperationsGetByDatabaseCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DatabaseOperations client used to send requests. </param>
+        /// <summary> Initializes a new instance of DatabaseColumnsGetDatabaseColumnsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The DatabaseColumns client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="schema"></param>
+        /// <param name="table"></param>
+        /// <param name="column"></param>
+        /// <param name="orderBy"></param>
+        /// <param name="skiptoken"> An opaque token that identifies a starting point in the collection. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public DatabaseOperationsGetByDatabaseCollectionResultOfT(DatabaseOperations client, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public DatabaseColumnsGetDatabaseColumnsCollectionResultOfT(DatabaseColumns client, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, IEnumerable<string> schema, IEnumerable<string> table, IEnumerable<string> column, IEnumerable<string> orderBy, string skiptoken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
             _serverName = serverName;
             _databaseName = databaseName;
+            _schema = schema;
+            _table = table;
+            _column = column;
+            _orderBy = orderBy;
+            _skiptoken = skiptoken;
             _context = context;
             _diagnosticScope = diagnosticScope;
         }
 
-        /// <summary> Gets the pages of DatabaseOperationsGetByDatabaseCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DatabaseColumnsGetDatabaseColumnsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DatabaseOperationsGetByDatabaseCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DatabaseOperationData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of DatabaseColumnsGetDatabaseColumnsCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<DatabaseColumnData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -57,8 +72,8 @@ namespace Azure.ResourceManager.Sql
                 {
                     yield break;
                 }
-                DatabaseOperationListResult result = DatabaseOperationListResult.FromResponse(response);
-                yield return Page<DatabaseOperationData>.FromValues((IReadOnlyList<DatabaseOperationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                DatabaseColumnListResult result = DatabaseColumnListResult.FromResponse(response);
+                yield return Page<DatabaseColumnData>.FromValues((IReadOnlyList<DatabaseColumnData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -72,7 +87,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByDatabaseRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _databaseName, _context) : _client.CreateGetByDatabaseRequest(_subscriptionId, _resourceGroupName, _serverName, _databaseName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetDatabaseColumnsRequest(nextLink, _subscriptionId, _resourceGroupName, _serverName, _databaseName, _schema, _table, _column, _orderBy, _skiptoken, _context) : _client.CreateGetDatabaseColumnsRequest(_subscriptionId, _resourceGroupName, _serverName, _databaseName, _schema, _table, _column, _orderBy, _skiptoken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

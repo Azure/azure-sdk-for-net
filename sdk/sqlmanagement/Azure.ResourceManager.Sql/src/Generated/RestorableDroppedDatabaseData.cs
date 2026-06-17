@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal RestorableDroppedDatabaseProperties Properties { get; }
+        internal RestorableDroppedDatabaseProperties Properties { get; set; }
 
         /// <summary> The name and tier of the SKU. </summary>
         [WirePath("sku")]
-        public SqlSku Sku { get; }
+        public SqlSku Sku { get; set; }
 
         /// <summary> The name of the database. </summary>
         [WirePath("properties.databaseName")]
@@ -110,7 +110,11 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.Keys;
+                if (Properties is null)
+                {
+                    Properties = new RestorableDroppedDatabaseProperties();
+                }
+                return Properties.Keys;
             }
         }
     }

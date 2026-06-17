@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateGetByDatabaseRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, IEnumerable<string> schema, IEnumerable<string> table, IEnumerable<string> column, IEnumerable<string> orderBy, string skiptoken, RequestContext context)
+        internal HttpMessage CreateGetDatabaseColumnsRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, IEnumerable<string> schema, IEnumerable<string> table, IEnumerable<string> column, IEnumerable<string> orderBy, string skiptoken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateNextGetByDatabaseRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, IEnumerable<string> schema, IEnumerable<string> table, IEnumerable<string> column, IEnumerable<string> orderBy, string skiptoken, RequestContext context)
+        internal HttpMessage CreateNextGetDatabaseColumnsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, IEnumerable<string> schema, IEnumerable<string> table, IEnumerable<string> column, IEnumerable<string> orderBy, string skiptoken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        internal HttpMessage CreateCreateRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateRestorePointRequest(Guid subscriptionId, string resourceGroupName, string serverName, string databaseName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -1466,18 +1466,26 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets SQL Vulnerability Assessment policy. </summary>
         /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vulnerabilityAssessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vulnerabilityAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SqlServerSqlVulnerabilityAssessmentResource>> GetSqlServerSqlVulnerabilityAssessmentAsync(SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerSqlVulnerabilityAssessmentResource>> GetSqlServerSqlVulnerabilityAssessmentAsync(string vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vulnerabilityAssessmentName, nameof(vulnerabilityAssessmentName));
+
             return await GetSqlServerSqlVulnerabilityAssessments().GetAsync(vulnerabilityAssessmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets SQL Vulnerability Assessment policy. </summary>
         /// <param name="vulnerabilityAssessmentName"> The name of the SQL Vulnerability Assessment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vulnerabilityAssessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vulnerabilityAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SqlServerSqlVulnerabilityAssessmentResource> GetSqlServerSqlVulnerabilityAssessment(SqlVulnerabilityAssessmentName vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerSqlVulnerabilityAssessmentResource> GetSqlServerSqlVulnerabilityAssessment(string vulnerabilityAssessmentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(vulnerabilityAssessmentName, nameof(vulnerabilityAssessmentName));
+
             return GetSqlServerSqlVulnerabilityAssessments().Get(vulnerabilityAssessmentName, cancellationToken);
         }
 
