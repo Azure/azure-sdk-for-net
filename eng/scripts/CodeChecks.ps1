@@ -163,15 +163,24 @@ try {
     }
 
     Write-Host "Validating IncludeAutorestDependency usage"
-    # Known TypeSpec-migrated libraries that still legitimately declare IncludeAutorestDependency because
-    # their hand-written custom code relies on AutoRest-provided types (e.g. Autorest.CSharp.Core.GeneratorPageableHelpers
-    # or CodeGenMemberAttribute) that the management TypeSpec emitter does not yet emit. These are tracked tech
-    # debt and must be removed from this list once the emitter emits those types (see Azure.ResourceManager.PostgreSql
+    # Known libraries that still legitimately declare IncludeAutorestDependency because their hand-written
+    # custom code (or frozen, formerly-generated code) relies on AutoRest-provided types such as
+    # Autorest.CSharp.Core.GeneratorPageableHelpers or the CodeGen* attributes (CodeGenMember, CodeGenType,
+    # CodeGenClient, CodeGenSuppress, CodeGenModel). These types are not emitted by the current TypeSpec
+    # generators, so the AutoRest package is still required to compile. This is tracked tech debt: entries
+    # must be removed from this list once the generators emit those types (see Azure.ResourceManager.PostgreSql
     # for the target GeneratorPageableHelpers bridge pattern). Do NOT add new entries here.
     $autorestDependencyExceptions = @(
+        # Management libraries with hand-written custom code using AutoRest types
         "Azure.ResourceManager.MySql",
         "Azure.ResourceManager.OracleDatabase",
-        "Azure.ResourceManager.PaloAltoNetworks.Ngfw"
+        "Azure.ResourceManager.PaloAltoNetworks.Ngfw",
+        # Data-plane libraries with generation disabled whose frozen code uses AutoRest CodeGen* attributes
+        "Azure.AI.Inference",
+        "Azure.AI.OpenAI",
+        "Azure.AI.OpenAI.Assistants",
+        "Azure.AI.Personalizer",
+        "Azure.AI.Vision.Face"
     )
     $serviceRoot = Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory | Resolve-Path
     $serviceRoot `
