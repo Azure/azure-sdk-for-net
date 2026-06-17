@@ -39,5 +39,8 @@ namespace Azure.ResourceManager.IotHub
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The etag. </summary>
+        public ETag? ETag { get; }
     }
 }

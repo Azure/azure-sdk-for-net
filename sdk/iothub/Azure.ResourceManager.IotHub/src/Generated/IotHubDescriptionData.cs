@@ -55,6 +55,9 @@ namespace Azure.ResourceManager.IotHub
         /// <summary> IotHub properties. </summary>
         public IotHubProperties Properties { get; set; }
 
+        /// <summary> The Etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </summary>
+        public ETag? ETag { get; set; }
+
         /// <summary> IotHub SKU info. </summary>
         public IotHubSkuInfo Sku { get; set; }
     }

@@ -42,5 +42,8 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary> The description of an X509 CA Certificate. </summary>
         public IotHubCertificateProperties Properties { get; set; }
+
+        /// <summary> The entity tag. </summary>
+        public ETag? ETag { get; }
     }
 }
