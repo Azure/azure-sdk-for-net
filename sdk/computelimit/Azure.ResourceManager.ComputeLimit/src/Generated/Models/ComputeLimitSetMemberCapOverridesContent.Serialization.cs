@@ -15,66 +15,66 @@ using Azure.ResourceManager.ComputeLimit;
 namespace Azure.ResourceManager.ComputeLimit.Models
 {
     /// <summary> Request body for the `setMemberCapOverrides` action. </summary>
-    public partial class SetMemberCapOverridesRequest : IJsonModel<SetMemberCapOverridesRequest>
+    public partial class ComputeLimitSetMemberCapOverridesContent : IJsonModel<ComputeLimitSetMemberCapOverridesContent>
     {
-        /// <summary> Initializes a new instance of <see cref="SetMemberCapOverridesRequest"/> for deserialization. </summary>
-        internal SetMemberCapOverridesRequest()
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitSetMemberCapOverridesContent"/> for deserialization. </summary>
+        internal ComputeLimitSetMemberCapOverridesContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SetMemberCapOverridesRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeLimitSetMemberCapOverridesContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SetMemberCapOverridesRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitSetMemberCapOverridesContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSetMemberCapOverridesRequest(document.RootElement, options);
+                        return DeserializeComputeLimitSetMemberCapOverridesContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SetMemberCapOverridesRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeLimitSetMemberCapOverridesContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SetMemberCapOverridesRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitSetMemberCapOverridesContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeLimitContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SetMemberCapOverridesRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeLimitSetMemberCapOverridesContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SetMemberCapOverridesRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ComputeLimitSetMemberCapOverridesContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SetMemberCapOverridesRequest IPersistableModel<SetMemberCapOverridesRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ComputeLimitSetMemberCapOverridesContent IPersistableModel<ComputeLimitSetMemberCapOverridesContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SetMemberCapOverridesRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeLimitSetMemberCapOverridesContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="setMemberCapOverridesRequest"> The <see cref="SetMemberCapOverridesRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SetMemberCapOverridesRequest setMemberCapOverridesRequest)
+        /// <param name="computeLimitSetMemberCapOverridesContent"> The <see cref="ComputeLimitSetMemberCapOverridesContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ComputeLimitSetMemberCapOverridesContent computeLimitSetMemberCapOverridesContent)
         {
-            if (setMemberCapOverridesRequest == null)
+            if (computeLimitSetMemberCapOverridesContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(setMemberCapOverridesRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(computeLimitSetMemberCapOverridesContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SetMemberCapOverridesRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeLimitSetMemberCapOverridesContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SetMemberCapOverridesRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitSetMemberCapOverridesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SetMemberCapOverridesRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeLimitSetMemberCapOverridesContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("memberCapOverrides"u8);
             writer.WriteStartArray();
@@ -116,24 +116,24 @@ namespace Azure.ResourceManager.ComputeLimit.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SetMemberCapOverridesRequest IJsonModel<SetMemberCapOverridesRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ComputeLimitSetMemberCapOverridesContent IJsonModel<ComputeLimitSetMemberCapOverridesContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SetMemberCapOverridesRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeLimitSetMemberCapOverridesContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SetMemberCapOverridesRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ComputeLimitSetMemberCapOverridesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SetMemberCapOverridesRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeLimitSetMemberCapOverridesContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSetMemberCapOverridesRequest(document.RootElement, options);
+            return DeserializeComputeLimitSetMemberCapOverridesContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SetMemberCapOverridesRequest DeserializeSetMemberCapOverridesRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static ComputeLimitSetMemberCapOverridesContent DeserializeComputeLimitSetMemberCapOverridesContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ComputeLimit.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SetMemberCapOverridesRequest(memberCapOverrides, additionalBinaryDataProperties);
+            return new ComputeLimitSetMemberCapOverridesContent(memberCapOverrides, additionalBinaryDataProperties);
         }
     }
 }

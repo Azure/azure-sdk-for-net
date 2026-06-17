@@ -13,33 +13,33 @@ using Azure.ResourceManager.ComputeLimit;
 namespace Azure.ResourceManager.ComputeLimit.Models
 {
     /// <summary> Request body for the `setMemberCapOverrides` action. </summary>
-    public partial class SetMemberCapOverridesRequest
+    public partial class ComputeLimitSetMemberCapOverridesContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SetMemberCapOverridesRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitSetMemberCapOverridesContent"/>. </summary>
         /// <param name="memberCapOverrides">
         /// The full set of per-member cap overrides to persist for this resource.
         /// This call replaces the existing set entirely; supply an empty array
         /// (`[]`) to clear all overrides.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="memberCapOverrides"/> is null. </exception>
-        public SetMemberCapOverridesRequest(IEnumerable<MemberCap> memberCapOverrides)
+        public ComputeLimitSetMemberCapOverridesContent(IEnumerable<MemberCap> memberCapOverrides)
         {
             Argument.AssertNotNull(memberCapOverrides, nameof(memberCapOverrides));
 
             MemberCapOverrides = memberCapOverrides.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SetMemberCapOverridesRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeLimitSetMemberCapOverridesContent"/>. </summary>
         /// <param name="memberCapOverrides">
         /// The full set of per-member cap overrides to persist for this resource.
         /// This call replaces the existing set entirely; supply an empty array
         /// (`[]`) to clear all overrides.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SetMemberCapOverridesRequest(IList<MemberCap> memberCapOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeLimitSetMemberCapOverridesContent(IList<MemberCap> memberCapOverrides, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MemberCapOverrides = memberCapOverrides;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

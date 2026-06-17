@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.ComputeLimit.Models
         /// This call replaces the existing set entirely; supply an empty array
         /// (`[]`) to clear all overrides.
         /// </param>
-        /// <returns> A new <see cref="Models.SetMemberCapOverridesRequest"/> instance for mocking. </returns>
-        public static SetMemberCapOverridesRequest SetMemberCapOverridesRequest(IEnumerable<MemberCap> memberCapOverrides = default)
+        /// <returns> A new <see cref="Models.ComputeLimitSetMemberCapOverridesContent"/> instance for mocking. </returns>
+        public static ComputeLimitSetMemberCapOverridesContent ComputeLimitSetMemberCapOverridesContent(IEnumerable<MemberCap> memberCapOverrides = default)
         {
             memberCapOverrides ??= new ChangeTrackingList<MemberCap>();
 
-            return new SetMemberCapOverridesRequest((memberCapOverrides ?? new ChangeTrackingList<MemberCap>()).ToList(), default);
+            return new ComputeLimitSetMemberCapOverridesContent((memberCapOverrides ?? new ChangeTrackingList<MemberCap>()).ToList(), default);
         }
 
         /// <param name="subscriptionId"> The member subscription identifier this cap applies to. </param>
