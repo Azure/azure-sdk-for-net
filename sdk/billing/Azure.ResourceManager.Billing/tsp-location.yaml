@@ -1,4 +1,4 @@
 directory: specification/billing/resource-manager/Microsoft.Billing/Billing
-commit: cbcdab92b3a8286bab2c91ce3856e431f06f191a
+commit: 2fce21234526186603474cc6c08e4e9a33f2f339
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
