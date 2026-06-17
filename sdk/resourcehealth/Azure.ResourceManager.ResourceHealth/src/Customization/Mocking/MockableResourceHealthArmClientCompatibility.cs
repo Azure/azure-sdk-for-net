@@ -70,20 +70,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             return new GetHistoricalAvailabilityStatusesOfChildResourceCollectionResult(ChildAvailabilityStatusesRestClient, scope.ToString(), filter, expand, CreateRequestContext(cancellationToken));
         }
 
-        /// <summary> Gets current availability status for a child resource. </summary>
-        public virtual async Task<Response<ResourceHealthAvailabilityStatus>> GetAvailabilityStatusOfChildResourceAsync(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Response response = await GetChildResponseAsync(scope, filter, expand, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(ResourceHealthAvailabilityStatus.FromResponse(response), response);
-        }
-
-        /// <summary> Gets current availability status for a child resource. </summary>
-        public virtual Response<ResourceHealthAvailabilityStatus> GetAvailabilityStatusOfChildResource(ResourceIdentifier scope, string filter = default, string expand = default, CancellationToken cancellationToken = default)
-        {
-            Response response = GetChildResponse(scope, filter, expand, cancellationToken);
-            return Response.FromValue(ResourceHealthAvailabilityStatus.FromResponse(response), response);
-        }
-
         private async Task<Response> GetChildResponseAsync(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(scope, nameof(scope));
