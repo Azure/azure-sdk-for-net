@@ -104,24 +104,6 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
             return Response.FromValue(ResourceHealthAvailabilityStatus.FromResponse(response), response);
         }
 
-        private async Task<Response> GetSingleResponseAsync(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-            RequestContext context = CreateRequestContext(cancellationToken);
-            HttpMessage message = AvailabilityStatusesRestClient.CreateGetAvailabilityStatusRequest(scope.ToString(), filter, expand, context);
-            using DiagnosticScope scopeDiagnostics = AvailabilityStatusesRestClient.ClientDiagnostics.CreateScope("MockableResourceHealthArmClient.GetAvailabilityStatus");
-            scopeDiagnostics.Start();
-            try
-            {
-                return await AvailabilityStatusesRestClient.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scopeDiagnostics.Failed(e);
-                throw;
-            }
-        }
-
         private async Task<Response> GetChildResponseAsync(ResourceIdentifier scope, string filter, string expand, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(scope, nameof(scope));
