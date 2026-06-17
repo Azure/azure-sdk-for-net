@@ -60,5 +60,8 @@ namespace Azure.ResourceManager.IotHub
 
         /// <summary> IotHub SKU info. </summary>
         public IotHubSkuInfo Sku { get; set; }
+
+        /// <summary> The managed identities for the IotHub. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }
