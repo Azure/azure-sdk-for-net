@@ -1,0 +1,1 @@
+CannotChangeAttribute : Attribute 'Azure.ResourceManager.Network.WirePathAttribute' on 'Azure.ResourceManager.Network.ApplicationGatewayData.EnableFips' changed from '[WirePathAttribute("properties.enableFips")]' in the contract to '[WirePathAttribute("properties.enableFIPS")]' in the implementation.
