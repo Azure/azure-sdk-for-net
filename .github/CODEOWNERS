@@ -206,7 +206,7 @@
 # ServiceOwners: @Azure/azure-sdk-write-communication
 
 # PRLabel: %Communication - Call Automation
-/sdk/communication/Azure.Communication.CallAutomation/    @fhaghbin-msft @juntuchen-msft @minwoolee-msft @v-dharmarajv
+/sdk/communication/Azure.Communication.CallAutomation/    @juntuchen-msft @minwoolee-msft
 
 # PRLabel: %Communication - Chat
 /sdk/communication/Azure.Communication.Chat/    @LuChen-Microsoft
