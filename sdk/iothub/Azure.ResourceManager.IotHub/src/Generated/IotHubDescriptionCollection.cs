@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.IotHub
                 HttpMessage message = _iotHubResourceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, IotHubDescriptionData.ToRequestContent(data), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotHubArmOperation<IotHubDescriptionResource> operation = new IotHubArmOperation<IotHubDescriptionResource>(
-                    new IotHubDescriptionOperationSource(Client),
+                    new IotHubDescriptionResourceOperationSource(Client),
                     _iotHubResourceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.IotHub
                 HttpMessage message = _iotHubResourceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, IotHubDescriptionData.ToRequestContent(data), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotHubArmOperation<IotHubDescriptionResource> operation = new IotHubArmOperation<IotHubDescriptionResource>(
-                    new IotHubDescriptionOperationSource(Client),
+                    new IotHubDescriptionResourceOperationSource(Client),
                     _iotHubResourceClientDiagnostics,
                     Pipeline,
                     message.Request,

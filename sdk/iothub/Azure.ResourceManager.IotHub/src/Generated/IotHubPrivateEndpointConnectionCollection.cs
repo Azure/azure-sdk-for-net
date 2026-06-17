@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.IotHub
     /// Each <see cref="IotHubPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="IotHubDescriptionResource"/>.
     /// To get a <see cref="IotHubPrivateEndpointConnectionCollection"/> instance call the GetIotHubPrivateEndpointConnections method from an instance of <see cref="IotHubDescriptionResource"/>.
     /// </summary>
-    public partial class IotHubPrivateEndpointConnectionCollection : ArmCollection
+    public partial class IotHubPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<IotHubPrivateEndpointConnectionResource>, IAsyncEnumerable<IotHubPrivateEndpointConnectionResource>
     {
         private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
         private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
@@ -47,6 +49,17 @@ namespace Azure.ResourceManager.IotHub
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotHubDescriptionResource.ResourceType), nameof(id));
             }
+        }
+
+        IEnumerator<IotHubPrivateEndpointConnectionResource> IEnumerable<IotHubPrivateEndpointConnectionResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<IotHubPrivateEndpointConnectionResource> IAsyncEnumerable<IotHubPrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

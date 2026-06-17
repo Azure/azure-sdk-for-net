@@ -30,20 +30,17 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The description of an X509 CA Certificate. </param>
         /// <param name="eTag"> The entity tag. </param>
-        internal IotHubCertificateDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IotHubCertificateProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubCertificateDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IotHubCertificateProperties properties, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The description of an X509 CA Certificate. </summary>
         public IotHubCertificateProperties Properties { get; set; }
-
-        /// <summary> The entity tag. </summary>
-        public ETag? ETag { get; }
     }
 }

@@ -15,13 +15,13 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.IotHub
 {
     /// <summary></summary>
-    internal partial class IotHubPrivateEndpointConnectionOperationSource : IOperationSource<IotHubPrivateEndpointConnectionResource>
+    internal partial class IotHubDescriptionResourceOperationSource : IOperationSource<IotHubDescriptionResource>
     {
         private readonly ArmClient _client;
 
         /// <summary></summary>
         /// <param name="client"></param>
-        internal IotHubPrivateEndpointConnectionOperationSource(ArmClient client)
+        internal IotHubDescriptionResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        IotHubPrivateEndpointConnectionResource IOperationSource<IotHubPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        IotHubDescriptionResource IOperationSource<IotHubDescriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            IotHubPrivateEndpointConnectionData data = IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new IotHubPrivateEndpointConnectionResource(_client, data);
+            IotHubDescriptionData data = IotHubDescriptionData.DeserializeIotHubDescriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new IotHubDescriptionResource(_client, data);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<IotHubPrivateEndpointConnectionResource> IOperationSource<IotHubPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<IotHubDescriptionResource> IOperationSource<IotHubDescriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            IotHubPrivateEndpointConnectionData data = IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return new IotHubPrivateEndpointConnectionResource(_client, data);
+            IotHubDescriptionData data = IotHubDescriptionData.DeserializeIotHubDescriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new IotHubDescriptionResource(_client, data);
         }
     }
 }

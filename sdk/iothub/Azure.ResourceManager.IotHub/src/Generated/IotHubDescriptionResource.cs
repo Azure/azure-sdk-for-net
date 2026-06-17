@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.IotHub
     {
         private readonly ClientDiagnostics _iotHubResourceClientDiagnostics;
         private readonly IotHubResource _iotHubResourceRestClient;
-        private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
-        private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
         private readonly IotHubDescriptionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Devices/IotHubs";
@@ -56,8 +54,6 @@ namespace Azure.ResourceManager.IotHub
             TryGetApiVersion(ResourceType, out string iotHubDescriptionApiVersion);
             _iotHubResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotHub", ResourceType.Namespace, Diagnostics);
             _iotHubResourceRestClient = new IotHubResource(_iotHubResourceClientDiagnostics, Pipeline, Endpoint, iotHubDescriptionApiVersion ?? "2026-03-01-preview");
-            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotHub", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, iotHubDescriptionApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -233,7 +229,7 @@ namespace Azure.ResourceManager.IotHub
                 HttpMessage message = _iotHubResourceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, IotHubDescriptionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotHubArmOperation<IotHubDescriptionResource> operation = new IotHubArmOperation<IotHubDescriptionResource>(
-                    new IotHubDescriptionOperationSource(Client),
+                    new IotHubDescriptionResourceOperationSource(Client),
                     _iotHubResourceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -292,7 +288,7 @@ namespace Azure.ResourceManager.IotHub
                 HttpMessage message = _iotHubResourceRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, IotHubDescriptionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotHubArmOperation<IotHubDescriptionResource> operation = new IotHubArmOperation<IotHubDescriptionResource>(
-                    new IotHubDescriptionOperationSource(Client),
+                    new IotHubDescriptionResourceOperationSource(Client),
                     _iotHubResourceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -347,7 +343,7 @@ namespace Azure.ResourceManager.IotHub
                 HttpMessage message = _iotHubResourceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotHubArmOperation<IotHubDescriptionResource> operation = new IotHubArmOperation<IotHubDescriptionResource>(
-                    new IotHubDescriptionOperationSource(Client),
+                    new IotHubDescriptionResourceOperationSource(Client),
                     _iotHubResourceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -402,7 +398,7 @@ namespace Azure.ResourceManager.IotHub
                 HttpMessage message = _iotHubResourceRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotHubArmOperation<IotHubDescriptionResource> operation = new IotHubArmOperation<IotHubDescriptionResource>(
-                    new IotHubDescriptionOperationSource(Client),
+                    new IotHubDescriptionResourceOperationSource(Client),
                     _iotHubResourceClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -1629,82 +1625,6 @@ namespace Azure.ResourceManager.IotHub
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List private endpoint connection properties
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/privateEndpointConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="IotHubDescriptionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotHubPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IotHubPrivateEndpointConnectionResource> GetIotHubPrivateEndpointConnectionsAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<IotHubPrivateEndpointConnectionData, IotHubPrivateEndpointConnectionResource>(new MicrosoftDevicesPrivateEndpointConnectionsListAsyncCollectionResultOfT(
-                _privateEndpointConnectionsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "IotHubDescriptionResource.GetIotHubPrivateEndpointConnections"), data => new IotHubPrivateEndpointConnectionResource(Client, data));
-        }
-
-        /// <summary>
-        /// List private endpoint connection properties
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/IotHubs/{resourceName}/privateEndpointConnections. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PrivateEndpointConnections_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="IotHubDescriptionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotHubPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IotHubPrivateEndpointConnectionResource> GetIotHubPrivateEndpointConnections(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<IotHubPrivateEndpointConnectionData, IotHubPrivateEndpointConnectionResource>(new MicrosoftDevicesPrivateEndpointConnectionsListCollectionResultOfT(
-                _privateEndpointConnectionsRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                context,
-                "IotHubDescriptionResource.GetIotHubPrivateEndpointConnections"), data => new IotHubPrivateEndpointConnectionResource(Client, data));
         }
 
         /// <summary> Add a tag to the current resource. </summary>

@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.IotHub
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotHubArmOperation<IotHubPrivateEndpointConnectionResource> operation = new IotHubArmOperation<IotHubPrivateEndpointConnectionResource>(
-                    new IotHubPrivateEndpointConnectionOperationSource(Client),
+                    new IotHubPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.IotHub
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotHubArmOperation<IotHubPrivateEndpointConnectionResource> operation = new IotHubArmOperation<IotHubPrivateEndpointConnectionResource>(
-                    new IotHubPrivateEndpointConnectionOperationSource(Client),
+                    new IotHubPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.IotHub
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IotHubPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotHubArmOperation<IotHubPrivateEndpointConnectionResource> operation = new IotHubArmOperation<IotHubPrivateEndpointConnectionResource>(
-                    new IotHubPrivateEndpointConnectionOperationSource(Client),
+                    new IotHubPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.IotHub
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IotHubPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotHubArmOperation<IotHubPrivateEndpointConnectionResource> operation = new IotHubArmOperation<IotHubPrivateEndpointConnectionResource>(
-                    new IotHubPrivateEndpointConnectionOperationSource(Client),
+                    new IotHubPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
