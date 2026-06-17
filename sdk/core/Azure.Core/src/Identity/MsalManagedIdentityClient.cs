@@ -17,6 +17,8 @@ namespace Azure.Identity
 {
     internal class MsalManagedIdentityClient
     {
+        // Keep these as contract strings because KeyAttestation is an optional package.
+        // Referencing its types/members with typeof/nameof would reintroduce compile-time coupling.
         private const string ManagedIdentityAttestationExtensionTypeName = "Microsoft.Identity.Client.KeyAttestation.ManagedIdentityAttestationExtensions, Microsoft.Identity.Client.KeyAttestation";
         private const string WithAttestationSupportMethodName = "WithAttestationSupport";
         private static readonly string[] s_cp1Capabilities = ["CP1"];
@@ -64,31 +66,48 @@ namespace Azure.Identity
 
         private static Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> ResolveWithAttestationSupport()
         {
+            if (!TryCreateWithAttestationSupport(out Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> withAttestationSupport))
+            {
+                return null;
+            }
+
+            return withAttestationSupport;
+        }
+
+        private static bool TryCreateWithAttestationSupport(out Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> withAttestationSupport)
+        {
+            withAttestationSupport = null;
+
             try
             {
+                // Use Type.GetType and MethodInfo because they can be analyzed by the ILLinker and are
+                // AOT friendly.
                 Type extensionType = Type.GetType(ManagedIdentityAttestationExtensionTypeName, throwOnError: false);
+                if (extensionType == null)
+                {
+                    return false;
+                }
 
-                MethodInfo withAttestationSupport = extensionType?.GetMethod(
+                MethodInfo extensionMethod = extensionType.GetMethod(
                     WithAttestationSupportMethodName,
                     BindingFlags.Public | BindingFlags.Static,
                     binder: null,
                     types: [typeof(AcquireTokenForManagedIdentityParameterBuilder)],
                     modifiers: null);
 
-                if (withAttestationSupport == null)
+                if (extensionMethod == null)
                 {
-                    AzureIdentityEventSource.Singleton.LogMsalInformational(
-                        "Managed identity attestation extension not available. Token binding will not be used.");
-                    return null;
+                    return false;
                 }
 
-                return (Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder>)withAttestationSupport.CreateDelegate(typeof(Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder>));
+                withAttestationSupport = (Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder>)extensionMethod.CreateDelegate(typeof(Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder>));
+                return true;
             }
             catch (Exception ex)
             {
                 AzureIdentityEventSource.Singleton.LogMsalInformational(
                     $"Exception occurred while resolving managed identity attestation extension: {ex.Message}");
-                return null;
+                return false;
             }
         }
 
