@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Extensions.OpenAI;
 
 namespace OpenAI
 {
+    [Experimental("AAIP001")]
     internal abstract partial class InternalComputerAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

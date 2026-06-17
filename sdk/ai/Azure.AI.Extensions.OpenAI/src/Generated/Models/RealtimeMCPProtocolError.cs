@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Realtime MCP protocol error. </summary>
-    [Experimental("AAIP001")]
     internal partial class RealtimeMCPProtocolError : RealtimeMCPError
     {
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPProtocolError"/>. </summary>

@@ -857,6 +857,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <returns> A new <see cref="OpenAI.ResponsesLocalShellToolParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ResponsesLocalShellToolParam ResponsesLocalShellToolParam(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
@@ -874,6 +875,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <returns> A new <see cref="OpenAI.ResponsesFunctionShellToolParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ResponsesFunctionShellToolParam ResponsesFunctionShellToolParam(ResponsesFunctionShellToolParamEnvironment environment = default, string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
@@ -893,6 +895,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="OpenAI.ResponsesFunctionShellToolParamEnvironment"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ResponsesFunctionShellToolParamEnvironment ResponsesFunctionShellToolParamEnvironment(string @type = default)
         {
             return new UnknownFunctionShellToolParamEnvironment(new FunctionShellToolParamEnvironmentType(@type), additionalBinaryDataProperties: null);
@@ -901,6 +904,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> The ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam. </summary>
         /// <param name="skills"> An optional list of skills. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam(IEnumerable<LocalSkillParam> skills = default)
         {
             skills ??= new ChangeTrackingList<LocalSkillParam>();
@@ -922,6 +926,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> The ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam. </summary>
         /// <param name="containerId"> The ID of the referenced container. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam(string containerId = default)
         {
             return new ResponsesFunctionShellToolParamEnvironmentContainerReferenceParam(FunctionShellToolParamEnvironmentType.ContainerReference, additionalBinaryDataProperties: null, containerId);
@@ -933,6 +938,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="skills"> An optional list of skills referenced by id or inline data. </param>
         /// <param name="networkPolicy"></param>
         /// <returns> A new <see cref="OpenAI.ResponsesContainerAutoParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ResponsesContainerAutoParam ResponsesContainerAutoParam(IEnumerable<string> fileIds = default, ResponsesContainerMemoryLimit? memoryLimit = default, IEnumerable<ContainerSkill> skills = default, ResponsesContainerNetworkPolicyParam networkPolicy = default)
         {
             fileIds ??= new ChangeTrackingList<string>();
@@ -995,6 +1001,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="format"> The input format for the custom tool. Default is unconstrained text. </param>
         /// <param name="shouldDeferLoading"> Whether this tool should be deferred and discovered via tool search. </param>
         /// <returns> A new <see cref="OpenAI.ResponsesCustomToolParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ResponsesCustomToolParam ResponsesCustomToolParam(string name = default, string description = default, ResponsesCustomToolParamFormat format = default, bool? shouldDeferLoading = default)
         {
             return new ResponsesCustomToolParam(
@@ -1012,6 +1019,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="OpenAI.ResponsesCustomToolParamFormat"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ResponsesCustomToolParamFormat ResponsesCustomToolParamFormat(string @type = default)
         {
             return new UnknownCustomToolParamFormat(new CustomToolParamFormatType(@type), additionalBinaryDataProperties: null);
@@ -1019,6 +1027,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Text format. </summary>
         /// <returns> A new <see cref="OpenAI.ResponsesCustomTextFormatParam"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ResponsesCustomTextFormatParam ResponsesCustomTextFormatParam()
         {
             return new ResponsesCustomTextFormatParam(CustomToolParamFormatType.Text, additionalBinaryDataProperties: null);
@@ -1170,7 +1179,6 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="internalConsentLink"> The link the user can use to perform OAuth consent. </param>
         /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
         /// <returns> A new <see cref="OpenAI.OAuthConsentRequestResponseItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, string internalConsentLink = default, string serverLabel = default)
         {
             return new OAuthConsentRequestResponseItem(
@@ -1840,6 +1848,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="output"> A JSON string of the output of the local shell tool call. </param>
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.OutputItemLocalShellToolCallOutput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static OutputItemLocalShellToolCallOutput OutputItemLocalShellToolCallOutput(string id = default, AgentReference agentReference = default, string responseId = default, string output = default, ItemLocalShellToolCallOutputStatus? status = default)
         {
             return new OutputItemLocalShellToolCallOutput(
@@ -1888,6 +1897,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// </param>
         /// <param name="createdBy"> The identifier of the actor that created the item. </param>
         /// <returns> A new <see cref="OpenAI.OutputItemCustomToolCallOutputResource"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static OutputItemCustomToolCallOutputResource OutputItemCustomToolCallOutputResource(string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, BinaryData output = default, ResponsesFunctionCallOutputStatus status = default, string createdBy = default)
         {
             return new OutputItemCustomToolCallOutputResource(

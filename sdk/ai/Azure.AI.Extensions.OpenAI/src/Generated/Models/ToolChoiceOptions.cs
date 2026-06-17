@@ -4,6 +4,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace OpenAI
 {
@@ -33,19 +34,23 @@ namespace OpenAI
         /// <summary> Determines if two <see cref="ToolChoiceOptions"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator ==(ToolChoiceOptions left, ToolChoiceOptions right) => left.Equals(right);
 
         /// <summary> Determines if two <see cref="ToolChoiceOptions"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
+        [Experimental("AAIP001")]
         public static bool operator !=(ToolChoiceOptions left, ToolChoiceOptions right) => !left.Equals(right);
 
         /// <summary> Converts a string to a <see cref="ToolChoiceOptions"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator ToolChoiceOptions(string value) => new ToolChoiceOptions(value);
 
         /// <summary> Converts a string to a <see cref="ToolChoiceOptions"/>. </summary>
         /// <param name="value"> The value. </param>
+        [Experimental("AAIP001")]
         public static implicit operator ToolChoiceOptions?(string value) => value == null ? null : new ToolChoiceOptions(value);
 
         /// <inheritdoc/>
@@ -53,6 +58,7 @@ namespace OpenAI
         public override bool Equals(object obj) => obj is ToolChoiceOptions other && Equals(other);
 
         /// <inheritdoc/>
+        [Experimental("AAIP001")]
         public bool Equals(ToolChoiceOptions other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

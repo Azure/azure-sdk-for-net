@@ -2,9 +2,12 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
+    [Experimental("AAIP001")]
     public enum ItemLocalShellToolCallOutputStatus
     {
         /// <summary> InProgress. </summary>

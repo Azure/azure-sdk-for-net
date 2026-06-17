@@ -3,12 +3,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     internal static partial class ClickButtonTypeExtensions
     {
         /// <param name="value"> The value to serialize. </param>
+        [Experimental("AAIP001")]
         public static string ToSerialString(this ClickButtonType value) => value switch
         {
             ClickButtonType.Left => "left",
@@ -20,6 +22,7 @@ namespace Azure.AI.Extensions.OpenAI
         };
 
         /// <param name="value"> The value to deserialize. </param>
+        [Experimental("AAIP001")]
         public static ClickButtonType ToClickButtonType(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "left"))

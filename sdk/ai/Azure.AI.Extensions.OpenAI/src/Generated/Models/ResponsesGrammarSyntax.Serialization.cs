@@ -3,12 +3,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     internal static partial class ResponsesGrammarSyntaxExtensions
     {
         /// <param name="value"> The value to serialize. </param>
+        [Experimental("AAIP001")]
         public static string ToSerialString(this ResponsesGrammarSyntax value) => value switch
         {
             ResponsesGrammarSyntax.Lark => "lark",
@@ -17,6 +19,7 @@ namespace Azure.AI.Extensions.OpenAI
         };
 
         /// <param name="value"> The value to deserialize. </param>
+        [Experimental("AAIP001")]
         public static ResponsesGrammarSyntax ToResponsesGrammarSyntax(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "lark"))

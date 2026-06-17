@@ -5,12 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Prompt Variables. </summary>
-    [Experimental("AAIP001")]
     internal partial class ResponsePromptVariables
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

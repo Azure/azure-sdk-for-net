@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.Extensions.OpenAI;
 
@@ -14,6 +15,7 @@ namespace OpenAI
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         protected virtual InternalVectorStoreFileAttributes PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalVectorStoreFileAttributes>)this).GetFormatFromOptions(options) : options.Format;
@@ -47,6 +49,7 @@ namespace OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         InternalVectorStoreFileAttributes IPersistableModel<InternalVectorStoreFileAttributes>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -104,10 +107,12 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         InternalVectorStoreFileAttributes IJsonModel<InternalVectorStoreFileAttributes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         protected virtual InternalVectorStoreFileAttributes JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalVectorStoreFileAttributes>)this).GetFormatFromOptions(options) : options.Format;
@@ -121,6 +126,7 @@ namespace OpenAI
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         internal static InternalVectorStoreFileAttributes DeserializeInternalVectorStoreFileAttributes(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)

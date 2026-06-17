@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Item reference. </summary>
-    [Experimental("AAIP001")]
     internal partial class ItemReferenceParam : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="ItemReferenceParam"/>. </summary>

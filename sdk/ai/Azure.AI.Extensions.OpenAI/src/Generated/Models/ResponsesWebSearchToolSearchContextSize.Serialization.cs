@@ -3,12 +3,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     internal static partial class ResponsesWebSearchToolSearchContextSizeExtensions
     {
         /// <param name="value"> The value to serialize. </param>
+        [Experimental("AAIP001")]
         public static string ToSerialString(this ResponsesWebSearchToolSearchContextSize value) => value switch
         {
             ResponsesWebSearchToolSearchContextSize.Low => "low",
@@ -18,6 +20,7 @@ namespace Azure.AI.Extensions.OpenAI
         };
 
         /// <param name="value"> The value to deserialize. </param>
+        [Experimental("AAIP001")]
         public static ResponsesWebSearchToolSearchContextSize ToResponsesWebSearchToolSearchContextSize(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "low"))

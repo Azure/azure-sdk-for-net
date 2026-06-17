@@ -3,12 +3,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     internal static partial class ItemLocalShellToolCallOutputStatusExtensions
     {
         /// <param name="value"> The value to serialize. </param>
+        [Experimental("AAIP001")]
         public static string ToSerialString(this ItemLocalShellToolCallOutputStatus value) => value switch
         {
             ItemLocalShellToolCallOutputStatus.InProgress => "in_progress",
@@ -18,6 +20,7 @@ namespace Azure.AI.Extensions.OpenAI
         };
 
         /// <param name="value"> The value to deserialize. </param>
+        [Experimental("AAIP001")]
         public static ItemLocalShellToolCallOutputStatus ToItemLocalShellToolCallOutputStatus(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "in_progress"))

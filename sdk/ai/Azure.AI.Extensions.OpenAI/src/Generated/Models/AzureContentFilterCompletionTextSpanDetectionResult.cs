@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A content filter detection result with completion text span details. </summary>
-    [Experimental("AAIP001")]
     internal partial class AzureContentFilterCompletionTextSpanDetectionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

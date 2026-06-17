@@ -4,13 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using OpenAI;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> File citation. </summary>
-    [Experimental("AAIP001")]
     internal partial class FileCitationBody : InternalAnnotation
     {
         /// <summary> Initializes a new instance of <see cref="FileCitationBody"/>. </summary>

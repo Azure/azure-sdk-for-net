@@ -15,9 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="stable-types_OpenAI.yaml" LogicalName="stable-types_OpenAI.yaml" />
     <EmbeddedResource Include="stable-types_Azure.AI.Extensions.OpenAI.yaml" LogicalName="stable-types_Azure.AI.Extensions.OpenAI.yaml" />
     <EmbeddedResource Include="stable-types_Azure.AI.Projects.Agents.yaml" LogicalName="stable-types_Azure.AI.Projects.Agents.yaml" />
     <EmbeddedResource Include="stable-types_Azure.AI.Projects.yaml" LogicalName="stable-types_Azure.AI.Projects.yaml" />
+    <EmbeddedResource Include="ignore-methods.yaml" LogicalName="ignore-methods.yaml" />
   </ItemGroup>
 
   <!-- Copy output to package dist path for npm package consumption -->

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam. </summary>
+    [Experimental("AAIP001")]
     public partial class ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam : ResponsesFunctionShellToolParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesFunctionShellToolParamEnvironmentLocalEnvironmentParam"/>. </summary>

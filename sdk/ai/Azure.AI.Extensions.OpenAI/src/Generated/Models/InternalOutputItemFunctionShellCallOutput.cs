@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Extensions.OpenAI
 {
+    [Experimental("AAIP001")]
     internal partial class InternalOutputItemFunctionShellCallOutput : AgentResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="InternalOutputItemFunctionShellCallOutput"/>. </summary>

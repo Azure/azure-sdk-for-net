@@ -9,6 +9,7 @@ using OpenAI;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
+#pragma warning disable AAIP001
 
 [CodeGenType("AgentResponseItem")]
 public abstract partial class AgentResponseItem

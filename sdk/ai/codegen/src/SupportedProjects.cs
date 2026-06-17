@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.TypeSpec.Generator.Primitives;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,19 +18,25 @@ internal class SupportedPackages
         _stableTypes = new(LoadStableTypes(_name));
     }
 
+    private static SupportedPackages s_cachedOpenAI;
     private static SupportedPackages s_cachedAzureAIProjects;
     private static SupportedPackages s_cachedAzureAIExtensionsOpenAI;
     private static SupportedPackages s_cachedAzureAIProjectsAgents;
 
+    public static SupportedPackages OpenAI { get => Volatile.Read(ref s_cachedOpenAI) ?? Interlocked.CompareExchange(ref s_cachedOpenAI, new SupportedPackages("OpenAI"), null) ?? s_cachedOpenAI; }
     public static SupportedPackages AzureAIProjects { get => Volatile.Read(ref s_cachedAzureAIProjects) ?? Interlocked.CompareExchange(ref s_cachedAzureAIProjects, new SupportedPackages("Azure.AI.Projects"), null) ?? s_cachedAzureAIProjects; }
-    public static SupportedPackages AzureAIProjectsAgents { get => Volatile.Read(ref s_cachedAzureAIExtensionsOpenAI) ?? Interlocked.CompareExchange(ref s_cachedAzureAIExtensionsOpenAI, new SupportedPackages("Azure.AI.Extensions.OpenAI"), null) ?? s_cachedAzureAIExtensionsOpenAI; }
-    public static SupportedPackages AzureAIExtensionsOpenAI { get => Volatile.Read(ref s_cachedAzureAIProjectsAgents) ?? Interlocked.CompareExchange(ref s_cachedAzureAIProjectsAgents, new SupportedPackages("Azure.AI.Projects.Agents"), null) ?? s_cachedAzureAIProjectsAgents; }
+    public static SupportedPackages AzureAIExtensionsOpenAI { get => Volatile.Read(ref s_cachedAzureAIExtensionsOpenAI) ?? Interlocked.CompareExchange(ref s_cachedAzureAIExtensionsOpenAI, new SupportedPackages("Azure.AI.Extensions.OpenAI"), null) ?? s_cachedAzureAIExtensionsOpenAI; }
+    public static SupportedPackages AzureAIProjectsAgents { get => Volatile.Read(ref s_cachedAzureAIProjectsAgents) ?? Interlocked.CompareExchange(ref s_cachedAzureAIProjectsAgents, new SupportedPackages("Azure.AI.Projects.Agents"), null) ?? s_cachedAzureAIProjectsAgents; }
 
     public static bool IsStable(string type)
     {
         if (type is null)
         {
             return true;
+        }
+        if (type.StartsWith(OpenAI.ToString()))
+        {
+            return OpenAI._stableTypes.Value.Contains(type);
         }
         if (type.StartsWith(AzureAIProjectsAgents.ToString()))
         {

@@ -6,10 +6,12 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
 namespace Azure.AI.Extensions.OpenAI
 {
+    [Experimental("AAIP001")]
     internal partial class InternalProjectsClient
     {
         private readonly Uri _endpoint;
@@ -69,6 +71,7 @@ namespace Azure.AI.Extensions.OpenAI
         public ClientPipeline Pipeline { get; }
 
         /// <summary> Initializes a new instance of Responses. </summary>
+        [Experimental("AAIP001")]
         public virtual Responses GetResponsesClient()
         {
             return Volatile.Read(ref _cachedResponses) ?? Interlocked.CompareExchange(ref _cachedResponses, new Responses(Pipeline, _endpoint), null) ?? _cachedResponses;

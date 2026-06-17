@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -75,6 +76,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="promptCacheKey"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual ClientResult<CompactResource> CompactResponseConversation(ModelIdsCompaction? model, BinaryData input = default, string previousResponseId = default, string instructions = default, string promptCacheKey = default, CancellationToken cancellationToken = default)
         {
             CompactResponseMethodPublicBody spreadModel = new CompactResponseMethodPublicBody(
@@ -96,6 +98,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="promptCacheKey"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<CompactResource>> CompactResponseConversationAsync(ModelIdsCompaction? model, BinaryData input = default, string previousResponseId = default, string instructions = default, string promptCacheKey = default, CancellationToken cancellationToken = default)
         {
             CompactResponseMethodPublicBody spreadModel = new CompactResponseMethodPublicBody(

@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The MCPListToolsToolAnnotations. </summary>
-    [Experimental("AAIP001")]
     internal partial class MCPListToolsToolAnnotations
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

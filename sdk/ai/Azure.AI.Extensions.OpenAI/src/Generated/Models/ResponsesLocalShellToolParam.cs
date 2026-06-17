@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Local shell tool. </summary>
+    [Experimental("AAIP001")]
     public partial class ResponsesLocalShellToolParam : ResponsesTool
     {
         /// <summary> Initializes a new instance of <see cref="ResponsesLocalShellToolParam"/>. </summary>

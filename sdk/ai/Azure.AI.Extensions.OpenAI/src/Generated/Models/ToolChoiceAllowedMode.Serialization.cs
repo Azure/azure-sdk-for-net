@@ -3,12 +3,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     internal static partial class ToolChoiceAllowedModeExtensions
     {
         /// <param name="value"> The value to serialize. </param>
+        [Experimental("AAIP001")]
         public static string ToSerialString(this ToolChoiceAllowedMode value) => value switch
         {
             ToolChoiceAllowedMode.Auto => "auto",
@@ -17,6 +19,7 @@ namespace Azure.AI.Extensions.OpenAI
         };
 
         /// <param name="value"> The value to deserialize. </param>
+        [Experimental("AAIP001")]
         public static ToolChoiceAllowedMode ToToolChoiceAllowedMode(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "auto"))

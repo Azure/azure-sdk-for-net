@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Function tool call. </summary>
-    [Experimental("AAIP001")]
     internal partial class InputItemFunctionToolCall : InputItem
     {
         /// <summary> Initializes a new instance of <see cref="InputItemFunctionToolCall"/>. </summary>

@@ -119,6 +119,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResponsesTool DeserializeResponsesTool(JsonElement element, ModelReaderWriterOptions options)
         {
+#pragma warning disable AAIP001 // The method returns both experimental an non experimental types.
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -188,6 +189,7 @@ namespace Azure.AI.Extensions.OpenAI
                 }
             }
             return UnknownTool.DeserializeUnknownTool(element, options);
+#pragma warning restore AAIP001 // The method returns both experimental an non experimental types.
         }
     }
 }

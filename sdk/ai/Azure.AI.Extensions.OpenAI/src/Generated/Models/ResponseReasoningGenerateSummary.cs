@@ -2,12 +2,9 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    [Experimental("AAIP001")]
     internal enum ResponseReasoningGenerateSummary
     {
         /// <summary> Auto. </summary>

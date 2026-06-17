@@ -4,9 +4,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
+    [Experimental("AAIP001")]
     internal abstract partial class InternalFunctionAndCustomToolCallOutput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

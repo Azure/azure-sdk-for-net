@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Extensions.OpenAI
 {
+    [Experimental("AAIP001")]
     internal partial class InternalProjectsClientOptions : ClientPipelineOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V1;

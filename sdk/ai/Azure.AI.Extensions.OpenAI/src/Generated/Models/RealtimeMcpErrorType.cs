@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary></summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct RealtimeMcpErrorType : IEquatable<RealtimeMcpErrorType>
     {
         private readonly string _value;

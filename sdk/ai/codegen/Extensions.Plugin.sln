@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions.Plugin", "src\Ex
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Extensions.Plugin", "test\Test.Extensions.Plugin.csproj", "{B7C595B3-200D-226E-B256-98995BB38CD6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3B841509-5B8B-4744-A905-8781EDB66511}"
+	ProjectSection(SolutionItems) = preProject
+		gnore-methods.yaml = gnore-methods.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

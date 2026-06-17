@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -96,6 +97,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+        [Experimental("AAIP001")]
         internal static UnknownRealtimeMCPError DeserializeUnknownRealtimeMCPError(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)

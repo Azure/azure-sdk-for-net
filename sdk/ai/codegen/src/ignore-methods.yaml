@@ -1,0 +1,5 @@
+# This file contains the list of methods, which must ignore the AAIP001 warning.
+ignoredMethods:
+- Azure.AI.Extensions.OpenAI.ResponsesTool.DeserializeResponsesTool
+- Azure.AI.Extensions.OpenAI.InputItem.DeserializeInputItem
+- Azure.AI.Extensions.OpenAI.AgentResponseItem.DeserializeAgentResponseItem

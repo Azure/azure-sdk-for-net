@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Conversation. </summary>
-    [Experimental("AAIP001")]
     internal partial class ConversationReference
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

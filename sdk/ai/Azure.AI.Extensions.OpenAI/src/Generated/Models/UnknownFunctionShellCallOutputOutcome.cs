@@ -4,9 +4,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
+    [Experimental("AAIP001")]
     internal partial class UnknownFunctionShellCallOutputOutcome : FunctionShellCallOutputOutcome
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFunctionShellCallOutputOutcome"/>. </summary>

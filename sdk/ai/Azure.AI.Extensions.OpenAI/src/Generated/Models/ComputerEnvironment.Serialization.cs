@@ -3,12 +3,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     internal static partial class ComputerEnvironmentExtensions
     {
         /// <param name="value"> The value to serialize. </param>
+        [Experimental("AAIP001")]
         public static string ToSerialString(this ComputerEnvironment value) => value switch
         {
             ComputerEnvironment.Windows => "windows",
@@ -20,6 +22,7 @@ namespace Azure.AI.Extensions.OpenAI
         };
 
         /// <param name="value"> The value to deserialize. </param>
+        [Experimental("AAIP001")]
         public static ComputerEnvironment ToComputerEnvironment(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "windows"))

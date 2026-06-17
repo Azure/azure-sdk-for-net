@@ -4,9 +4,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
+    [Experimental("AAIP001")]
     internal partial class UnknownFunctionShellCallItemParamEnvironment : FunctionShellCallItemParamEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFunctionShellCallItemParamEnvironment"/>. </summary>

@@ -4,12 +4,10 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> Ratings for the intensity and risk level of harmful content. </summary>
-    [Experimental("AAIP001")]
     internal readonly partial struct AzureContentFilterSeverity : IEquatable<AzureContentFilterSeverity>
     {
         private readonly string _value;
