@@ -1278,8 +1278,8 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(publicCtor.Signature.Parameters, Is.Empty);
 
             var rendered = new TypeProviderWriter(parentModelProvider).Write().Content;
-            Assert.That(rendered, Does.Contain("Wrapper = new RequiredSafeFlattenWrapper();"));
-            Assert.That(rendered, Does.Contain("return Wrapper.Value;"));
+            Assert.That(rendered, Does.Contain("Wrapper = new global::Samples.Models.RequiredSafeFlattenWrapper();"));
+            Assert.That(rendered, Does.Contain("Wrapper.Value"));
         }
 
         /// <summary>
