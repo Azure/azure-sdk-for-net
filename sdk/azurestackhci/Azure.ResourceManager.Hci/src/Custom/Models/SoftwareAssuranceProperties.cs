@@ -20,6 +20,6 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> TimeStamp denoting the latest SA benefit applicability is validated. </summary>
         [Obsolete("This property is now deprecated. Please use the new property `LastUpdatedOn` moving forward.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public DateTimeOffset? LastUpdated => throw new NotSupportedException("This property is obsolete, use LastUpdatedOn instead.");
+        public DateTimeOffset? LastUpdated { get; set; }
     }
 }
