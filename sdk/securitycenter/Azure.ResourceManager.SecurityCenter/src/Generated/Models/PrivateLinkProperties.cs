@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="privateLinkResources"> List of private link resources available for connection. For Defender services, this typically includes the 'containers' group with 'api' and regional data endpoints. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkProperties(ProvisioningState? provisioningState, IReadOnlyList<SecurityCenterPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<PrivateLinkGroupResourceData> privateLinkResources, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateLinkProperties(SecurityCenterProvisioningState? provisioningState, IReadOnlyList<SecurityCenterPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<PrivateLinkGroupResourceData> privateLinkResources, SecurityCenterPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The current provisioning state of the private link resource. Indicates whether the resource is being created, updated, deleted, or has completed successfully. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SecurityCenterProvisioningState? ProvisioningState { get; }
 
         /// <summary> List of private endpoint connections associated with this private link. Each connection represents a private endpoint from a customer's virtual network. </summary>
         public IReadOnlyList<SecurityCenterPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<SecurityCenterPrivateEndpointConnectionData>();
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IReadOnlyList<PrivateLinkGroupResourceData> PrivateLinkResources { get; } = new ChangeTrackingList<PrivateLinkGroupResourceData>();
 
         /// <summary> This determines if traffic is allowed over public network. By default it is disabled. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public SecurityCenterPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

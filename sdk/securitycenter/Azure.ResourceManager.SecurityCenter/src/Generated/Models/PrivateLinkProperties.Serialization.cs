@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            SecurityCenterProvisioningState? provisioningState = default;
             IReadOnlyList<SecurityCenterPrivateEndpointConnectionData> privateEndpointConnections = default;
             IReadOnlyList<PrivateLinkGroupResourceData> privateLinkResources = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            SecurityCenterPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new SecurityCenterProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("privateEndpointConnections"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new SecurityCenterPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

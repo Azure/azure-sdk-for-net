@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefenderCspmJFrogOfferingMdcContainersImageAssessment"/>. </summary>
-        /// <param name="enabled"> Is Microsoft Defender container image assessment enabled. </param>
+        /// <param name="isMdcContainersImageAssessmentEnabled"> Is Microsoft Defender container image assessment enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderCspmJFrogOfferingMdcContainersImageAssessment(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefenderCspmJFrogOfferingMdcContainersImageAssessment(bool? isMdcContainersImageAssessmentEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsMdcContainersImageAssessmentEnabled = isMdcContainersImageAssessmentEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Is Microsoft Defender container image assessment enabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsMdcContainersImageAssessmentEnabled { get; set; }
     }
 }

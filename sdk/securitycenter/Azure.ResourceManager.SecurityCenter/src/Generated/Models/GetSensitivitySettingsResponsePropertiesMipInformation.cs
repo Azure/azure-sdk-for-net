@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="GetSensitivitySettingsResponsePropertiesMipInformation"/>. </summary>
         internal GetSensitivitySettingsResponsePropertiesMipInformation()
         {
-            Labels = new ChangeTrackingList<Label>();
+            Labels = new ChangeTrackingList<InformationProtectionSensitivityLabel>();
             CustomInfoTypes = new ChangeTrackingList<InfoType>();
             BuiltInInfoTypes = new ChangeTrackingList<BuiltInInfoType>();
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="customInfoTypes"> List of custom user-defined information types. </param>
         /// <param name="builtInInfoTypes"> List of pre-configured sensitive information types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetSensitivitySettingsResponsePropertiesMipInformation(MipIntegrationStatus? mipIntegrationStatus, IList<Label> labels, IList<InfoType> customInfoTypes, IList<BuiltInInfoType> builtInInfoTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetSensitivitySettingsResponsePropertiesMipInformation(MipIntegrationStatus? mipIntegrationStatus, IList<InformationProtectionSensitivityLabel> labels, IList<InfoType> customInfoTypes, IList<BuiltInInfoType> builtInInfoTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MipIntegrationStatus = mipIntegrationStatus;
             Labels = labels;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public MipIntegrationStatus? MipIntegrationStatus { get; }
 
         /// <summary> List of Microsoft information protection sensitivity labels. </summary>
-        public IList<Label> Labels { get; }
+        public IList<InformationProtectionSensitivityLabel> Labels { get; }
 
         /// <summary> List of custom user-defined information types. </summary>
         public IList<InfoType> CustomInfoTypes { get; }

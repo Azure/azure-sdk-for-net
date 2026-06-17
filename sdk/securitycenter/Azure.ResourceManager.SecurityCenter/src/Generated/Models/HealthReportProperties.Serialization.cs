@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();
-                foreach (Issue item in Issues)
+                foreach (SecurityHealthIssue item in Issues)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            ResourceDetails resourceDetails = default;
+            SecurityCloudResourceDetails resourceDetails = default;
             EnvironmentDetails environmentDetails = default;
             HealthDataClassification healthDataClassification = default;
             HealthReportStatus status = default;
             IList<string> affectedDefendersPlans = default;
             IList<string> affectedDefendersSubPlans = default;
             IReadOnlyDictionary<string, string> reportAdditionalData = default;
-            IList<Issue> issues = default;
+            IList<SecurityHealthIssue> issues = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    resourceDetails = ResourceDetails.DeserializeResourceDetails(prop.Value, options);
+                    resourceDetails = SecurityCloudResourceDetails.DeserializeSecurityCloudResourceDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("environmentDetails"u8))
@@ -308,10 +308,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<Issue> array = new List<Issue>();
+                    List<SecurityHealthIssue> array = new List<SecurityHealthIssue>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Issue.DeserializeIssue(item, options));
+                        array.Add(SecurityHealthIssue.DeserializeSecurityHealthIssue(item, options));
                     }
                     issues = array;
                     continue;
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 affectedDefendersPlans ?? new ChangeTrackingList<string>(),
                 affectedDefendersSubPlans ?? new ChangeTrackingList<string>(),
                 reportAdditionalData ?? new ChangeTrackingDictionary<string, string>(),
-                issues ?? new ChangeTrackingList<Issue>(),
+                issues ?? new ChangeTrackingList<SecurityHealthIssue>(),
                 additionalBinaryDataProperties);
         }
     }

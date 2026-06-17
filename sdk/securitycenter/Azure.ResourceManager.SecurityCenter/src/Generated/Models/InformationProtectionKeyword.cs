@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="InformationProtectionKeyword"/>. </summary>
         /// <param name="pattern"> The keyword pattern. </param>
-        /// <param name="custom"> Indicates whether the keyword is custom or not. </param>
+        /// <param name="isCustom"> Indicates whether the keyword is custom or not. </param>
         /// <param name="canBeNumeric"> Indicates whether the keyword can be applied on numeric types or not. </param>
-        /// <param name="excluded"> Indicates whether the keyword is excluded or not. </param>
+        /// <param name="isExcluded"> Indicates whether the keyword is excluded or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InformationProtectionKeyword(string pattern, bool? custom, bool? canBeNumeric, bool? excluded, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InformationProtectionKeyword(string pattern, bool? isCustom, bool? canBeNumeric, bool? isExcluded, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Pattern = pattern;
-            Custom = custom;
+            IsCustom = isCustom;
             CanBeNumeric = canBeNumeric;
-            Excluded = excluded;
+            IsExcluded = isExcluded;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string Pattern { get; set; }
 
         /// <summary> Indicates whether the keyword is custom or not. </summary>
-        public bool? Custom { get; set; }
+        public bool? IsCustom { get; set; }
 
         /// <summary> Indicates whether the keyword can be applied on numeric types or not. </summary>
         public bool? CanBeNumeric { get; set; }
 
         /// <summary> Indicates whether the keyword is excluded or not. </summary>
-        public bool? Excluded { get; set; }
+        public bool? IsExcluded { get; set; }
     }
 }

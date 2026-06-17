@@ -312,12 +312,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="assessment"> Calculated assessment on a pre-defined assessment metadata. </param>
+        /// <param name="content"> Calculated assessment on a pre-defined assessment metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessment"/> is null. </exception>
-        public virtual async Task<ArmOperation<SecurityAssessmentResource>> UpdateAsync(WaitUntil waitUntil, SecurityAssessmentGenerated assessment, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<SecurityAssessmentResource>> UpdateAsync(WaitUntil waitUntil, SecurityAssessmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(assessment, nameof(assessment));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("SecurityAssessmentResource.Update");
             scope.Start();
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, SecurityAssessmentGenerated.ToRequestContent(assessment), context);
+                HttpMessage message = _assessmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, SecurityAssessmentCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SecurityAssessmentData> response = Response.FromValue(SecurityAssessmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -368,12 +368,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="assessment"> Calculated assessment on a pre-defined assessment metadata. </param>
+        /// <param name="content"> Calculated assessment on a pre-defined assessment metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assessment"/> is null. </exception>
-        public virtual ArmOperation<SecurityAssessmentResource> Update(WaitUntil waitUntil, SecurityAssessmentGenerated assessment, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<SecurityAssessmentResource> Update(WaitUntil waitUntil, SecurityAssessmentCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(assessment, nameof(assessment));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _assessmentsClientDiagnostics.CreateScope("SecurityAssessmentResource.Update");
             scope.Start();
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _assessmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, SecurityAssessmentGenerated.ToRequestContent(assessment), context);
+                HttpMessage message = _assessmentsRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), Id.Name, SecurityAssessmentCreateOrUpdateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SecurityAssessmentData> response = Response.FromValue(SecurityAssessmentData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

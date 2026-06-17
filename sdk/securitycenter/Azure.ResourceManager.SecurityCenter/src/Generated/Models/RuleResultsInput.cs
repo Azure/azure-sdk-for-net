@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RuleResultsInput"/>. </summary>
-        /// <param name="latestScan"> Take results from latest scan. </param>
+        /// <param name="isLatestScan"> Take results from latest scan. </param>
         /// <param name="results">
         /// Expected results to be inserted into the baseline.
         /// Leave this field empty if latestScan == true.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuleResultsInput(bool? latestScan, IList<IList<string>> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RuleResultsInput(bool? isLatestScan, IList<IList<string>> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LatestScan = latestScan;
+            IsLatestScan = isLatestScan;
             Results = results;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Take results from latest scan. </summary>
-        public bool? LatestScan { get; set; }
+        public bool? IsLatestScan { get; set; }
 
         /// <summary>
         /// Expected results to be inserted into the baseline.

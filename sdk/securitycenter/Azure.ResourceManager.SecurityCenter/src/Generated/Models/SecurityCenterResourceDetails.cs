@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenterResourceDetails"/>. </summary>
         /// <param name="source"> The platform where the assessed resource resides. </param>
-        private protected SecurityCenterResourceDetails(Source source)
+        private protected SecurityCenterResourceDetails(SecurityCenterResourceSource source)
         {
             Source = source;
         }
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="SecurityCenterResourceDetails"/>. </summary>
         /// <param name="source"> The platform where the assessed resource resides. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityCenterResourceDetails(Source source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecurityCenterResourceDetails(SecurityCenterResourceSource source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The platform where the assessed resource resides. </summary>
-        internal Source Source { get; set; }
+        internal SecurityCenterResourceSource Source { get; set; }
     }
 }

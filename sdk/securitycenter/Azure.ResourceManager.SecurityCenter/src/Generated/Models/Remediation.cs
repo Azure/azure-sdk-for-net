@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="Remediation"/>. </summary>
         /// <param name="description"> Remediation description. </param>
         /// <param name="scripts"> Remediation script. </param>
-        /// <param name="automated"> Is remediation automated. </param>
+        /// <param name="isAutomated"> Is remediation automated. </param>
         /// <param name="portalLink"> Optional link to remediate in Azure Portal. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Remediation(string description, IList<string> scripts, bool? automated, string portalLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Remediation(string description, IList<string> scripts, bool? isAutomated, string portalLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Scripts = scripts;
-            Automated = automated;
+            IsAutomated = isAutomated;
             PortalLink = portalLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IList<string> Scripts { get; }
 
         /// <summary> Is remediation automated. </summary>
-        public bool? Automated { get; }
+        public bool? IsAutomated { get; }
 
         /// <summary> Optional link to remediate in Azure Portal. </summary>
         public string PortalLink { get; }

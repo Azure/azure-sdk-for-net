@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             SecurityFamily securityFamily = default;
-            ProvisioningState provisioningState = default;
+            SecurityCenterProvisioningState provisioningState = default;
             string template = default;
             string protectionStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (prop.NameEquals("provisioningState"u8))
                 {
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new SecurityCenterProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("template"u8))

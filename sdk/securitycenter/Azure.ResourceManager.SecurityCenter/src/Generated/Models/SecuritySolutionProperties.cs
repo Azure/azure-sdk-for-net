@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="provisioningState"> The security family provisioning State. </param>
         /// <param name="template"> The security solutions' template. </param>
         /// <param name="protectionStatus"> The security solutions' status. </param>
-        internal SecuritySolutionProperties(SecurityFamily securityFamily, ProvisioningState provisioningState, string template, string protectionStatus)
+        internal SecuritySolutionProperties(SecurityFamily securityFamily, SecurityCenterProvisioningState provisioningState, string template, string protectionStatus)
         {
             SecurityFamily = securityFamily;
             ProvisioningState = provisioningState;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="template"> The security solutions' template. </param>
         /// <param name="protectionStatus"> The security solutions' status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecuritySolutionProperties(SecurityFamily securityFamily, ProvisioningState provisioningState, string template, string protectionStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecuritySolutionProperties(SecurityFamily securityFamily, SecurityCenterProvisioningState provisioningState, string template, string protectionStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecurityFamily = securityFamily;
             ProvisioningState = provisioningState;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public SecurityFamily SecurityFamily { get; }
 
         /// <summary> The security family provisioning State. </summary>
-        public ProvisioningState ProvisioningState { get; }
+        public SecurityCenterProvisioningState ProvisioningState { get; }
 
         /// <summary> The security solutions' template. </summary>
         public string Template { get; }

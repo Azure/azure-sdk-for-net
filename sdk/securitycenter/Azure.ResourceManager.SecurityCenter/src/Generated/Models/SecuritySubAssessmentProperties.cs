@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentProperties"/>. </summary>
-        internal SecuritySubAssessmentProperties()
+        public SecuritySubAssessmentProperties()
         {
         }
 
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string DisplayName { get; }
 
         /// <summary> Status of the sub-assessment. </summary>
-        public SubAssessmentStatus Status { get; }
+        public SubAssessmentStatus Status { get; set; }
 
         /// <summary> Information on how to remediate this sub-assessment. </summary>
         public string Remediation { get; }
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public DateTimeOffset? TimeGenerated { get; }
 
         /// <summary> Details of the resource that was assessed. </summary>
-        public SecurityCenterResourceDetails ResourceDetails { get; }
+        public SecurityCenterResourceDetails ResourceDetails { get; set; }
 
         /// <summary> Details of the sub-assessment. </summary>
-        public SecuritySubAssessmentAdditionalInfo AdditionalData { get; }
+        public SecuritySubAssessmentAdditionalInfo AdditionalData { get; set; }
     }
 }

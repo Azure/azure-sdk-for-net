@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="reason"> The reason for dismissing the alert. </param>
         /// <param name="state"> Possible states of the rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertType"/> or <paramref name="reason"/> is null. </exception>
-        public AlertsSuppressionRuleProperties(string alertType, string reason, RuleState state)
+        public AlertsSuppressionRuleProperties(string alertType, string reason, SecurityAlertsSuppressionRuleState state)
         {
             Argument.AssertNotNull(alertType, nameof(alertType));
             Argument.AssertNotNull(reason, nameof(reason));
@@ -34,18 +34,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="AlertsSuppressionRuleProperties"/>. </summary>
         /// <param name="alertType"> Type of the alert to automatically suppress. For all alert types, use '*'. </param>
-        /// <param name="lastModifiedUtc"> The last time this rule was modified. </param>
-        /// <param name="expirationDateUtc"> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </param>
+        /// <param name="lastModifiedOn"> The last time this rule was modified. </param>
+        /// <param name="expireOn"> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </param>
         /// <param name="reason"> The reason for dismissing the alert. </param>
         /// <param name="state"> Possible states of the rule. </param>
         /// <param name="comment"> Any comment regarding the rule. </param>
         /// <param name="suppressionAlertsScope"> The suppression conditions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertsSuppressionRuleProperties(string alertType, DateTimeOffset? lastModifiedUtc, DateTimeOffset? expirationDateUtc, string reason, RuleState state, string comment, SuppressionAlertsScope suppressionAlertsScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AlertsSuppressionRuleProperties(string alertType, DateTimeOffset? lastModifiedOn, DateTimeOffset? expireOn, string reason, SecurityAlertsSuppressionRuleState state, string comment, SuppressionAlertsScope suppressionAlertsScope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertType = alertType;
-            LastModifiedUtc = lastModifiedUtc;
-            ExpirationDateUtc = expirationDateUtc;
+            LastModifiedOn = lastModifiedOn;
+            ExpireOn = expireOn;
             Reason = reason;
             State = state;
             Comment = comment;
@@ -57,16 +57,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string AlertType { get; set; }
 
         /// <summary> The last time this rule was modified. </summary>
-        public DateTimeOffset? LastModifiedUtc { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </summary>
-        public DateTimeOffset? ExpirationDateUtc { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
 
         /// <summary> The reason for dismissing the alert. </summary>
         public string Reason { get; set; }
 
         /// <summary> Possible states of the rule. </summary>
-        public RuleState State { get; set; }
+        public SecurityAlertsSuppressionRuleState State { get; set; }
 
         /// <summary> Any comment regarding the rule. </summary>
         public string Comment { get; set; }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     SuppressionAlertsScope = new SuppressionAlertsScope();
                 }
-                return SuppressionAlertsScope.AllOf;
+                return SuppressionAlertsScope.SuppressionAlertsScopeAllOf;
             }
         }
     }

@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isEnabled"> Indicates whether Defender for Storage is enabled on this storage account. </param>
         /// <param name="malwareScanning"> Properties of Malware Scanning. </param>
         /// <param name="sensitiveDataDiscovery"> Properties of Sensitive Data Discovery. </param>
-        /// <param name="overrideSubscriptionLevelSettings"> Indicates whether the settings defined for this storage account should override the settings defined for the subscription. </param>
+        /// <param name="isOverrideSubscriptionLevelSettings"> Indicates whether the settings defined for this storage account should override the settings defined for the subscription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DefenderForStorageSettingProperties(bool? isEnabled, MalwareScanningProperties malwareScanning, SensitiveDataDiscoveryProperties sensitiveDataDiscovery, bool? overrideSubscriptionLevelSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DefenderForStorageSettingProperties(bool? isEnabled, MalwareScanningProperties malwareScanning, SensitiveDataDiscoveryProperties sensitiveDataDiscovery, bool? isOverrideSubscriptionLevelSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             MalwareScanning = malwareScanning;
             SensitiveDataDiscovery = sensitiveDataDiscovery;
-            OverrideSubscriptionLevelSettings = overrideSubscriptionLevelSettings;
+            IsOverrideSubscriptionLevelSettings = isOverrideSubscriptionLevelSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public SensitiveDataDiscoveryProperties SensitiveDataDiscovery { get; set; }
 
         /// <summary> Indicates whether the settings defined for this storage account should override the settings defined for the subscription. </summary>
-        public bool? OverrideSubscriptionLevelSettings { get; set; }
+        public bool? IsOverrideSubscriptionLevelSettings { get; set; }
     }
 }

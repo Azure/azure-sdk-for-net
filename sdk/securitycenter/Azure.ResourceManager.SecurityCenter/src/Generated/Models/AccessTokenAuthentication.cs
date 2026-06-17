@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The environment authentication details. </summary>
-    public partial class AccessTokenAuthentication : Authentication
+    public partial class AccessTokenAuthentication : SecurityConnectorAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="AccessTokenAuthentication"/>. </summary>
         public AccessTokenAuthentication() : base(AuthenticationType.AccessToken)

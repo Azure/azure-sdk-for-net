@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            SettingKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            SettingKind kind = default;
             DataExportSettingProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                kind,
                 additionalBinaryDataProperties,
+                kind,
                 properties);
         }
     }

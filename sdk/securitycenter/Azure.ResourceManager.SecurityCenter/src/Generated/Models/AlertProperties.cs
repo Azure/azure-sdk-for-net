@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AlertProperties"/>. </summary>
-        internal AlertProperties()
+        public AlertProperties()
         {
             ResourceIdentifiers = new ChangeTrackingList<SecurityAlertResourceIdentifier>();
             RemediationSteps = new ChangeTrackingList<string>();
@@ -169,6 +169,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IReadOnlyList<string> SubTechniques { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Changing set of properties depending on the supportingEvidence type. </summary>
-        public SecurityAlertSupportingEvidence SupportingEvidence { get; }
+        public SecurityAlertSupportingEvidence SupportingEvidence { get; set; }
     }
 }

@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SecuritySolutionsReferenceDataList>> GetByHomeRegionAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecuritySolutionsReferenceInfoList>> GetByHomeRegionAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _securitySolutionsReferenceDataClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetByHomeRegion");
             scope.Start();
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _securitySolutionsReferenceDataRestClient.CreateGetByHomeRegionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SecuritySolutionsReferenceDataList> response = Response.FromValue(SecuritySolutionsReferenceDataList.FromResponse(result), result);
+                Response<SecuritySolutionsReferenceInfoList> response = Response.FromValue(SecuritySolutionsReferenceInfoList.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SecuritySolutionsReferenceDataList> GetByHomeRegion(CancellationToken cancellationToken = default)
+        public virtual Response<SecuritySolutionsReferenceInfoList> GetByHomeRegion(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _securitySolutionsReferenceDataClientDiagnostics.CreateScope("SecurityCenterLocationResource.GetByHomeRegion");
             scope.Start();
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _securitySolutionsReferenceDataRestClient.CreateGetByHomeRegionRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SecuritySolutionsReferenceDataList> response = Response.FromValue(SecuritySolutionsReferenceDataList.FromResponse(result), result);
+                Response<SecuritySolutionsReferenceInfoList> response = Response.FromValue(SecuritySolutionsReferenceInfoList.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

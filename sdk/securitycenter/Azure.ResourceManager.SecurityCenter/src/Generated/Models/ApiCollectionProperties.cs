@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="numberOfApiEndpointsWithSensitiveDataExposed"> The number of API endpoints in this API collection which are exposing sensitive data in their requests and/or responses. </param>
         /// <param name="sensitivityLabel"> The highest priority sensitivity label from Microsoft Purview in this API collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCollectionProperties(ProvisioningState? provisioningState, string displayName, ResourceIdentifier discoveredVia, Uri baseUri, long? numberOfApiEndpoints, long? numberOfInactiveApiEndpoints, long? numberOfUnauthenticatedApiEndpoints, long? numberOfExternalApiEndpoints, long? numberOfApiEndpointsWithSensitiveDataExposed, string sensitivityLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiCollectionProperties(SecurityCenterProvisioningState? provisioningState, string displayName, ResourceIdentifier discoveredVia, Uri baseUri, long? numberOfApiEndpoints, long? numberOfInactiveApiEndpoints, long? numberOfUnauthenticatedApiEndpoints, long? numberOfExternalApiEndpoints, long? numberOfApiEndpointsWithSensitiveDataExposed, string sensitivityLabel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Gets the provisioning state of the API collection. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public SecurityCenterProvisioningState? ProvisioningState { get; }
 
         /// <summary> The display name of the API collection. </summary>
         public string DisplayName { get; }

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            string nativeResourceId = default;
+            ResourceIdentifier nativeResourceId = default;
             string environmentHierarchyId = default;
             string organizationalHierarchyId = default;
             string subscriptionId = default;
@@ -151,7 +152,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 if (prop.NameEquals("nativeResourceId"u8))
                 {
-                    nativeResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nativeResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("environmentHierarchyId"u8))

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
-                foreach (Label item in Labels)
+                foreach (InformationProtectionSensitivityLabel item in Labels)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             MipIntegrationStatus? mipIntegrationStatus = default;
-            IList<Label> labels = default;
+            IList<InformationProtectionSensitivityLabel> labels = default;
             IList<InfoType> customInfoTypes = default;
             IList<BuiltInInfoType> builtInInfoTypes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<Label> array = new List<Label>();
+                    List<InformationProtectionSensitivityLabel> array = new List<InformationProtectionSensitivityLabel>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Label.DeserializeLabel(item, options));
+                        array.Add(InformationProtectionSensitivityLabel.DeserializeInformationProtectionSensitivityLabel(item, options));
                     }
                     labels = array;
                     continue;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GetSensitivitySettingsResponsePropertiesMipInformation(mipIntegrationStatus, labels ?? new ChangeTrackingList<Label>(), customInfoTypes ?? new ChangeTrackingList<InfoType>(), builtInInfoTypes ?? new ChangeTrackingList<BuiltInInfoType>(), additionalBinaryDataProperties);
+            return new GetSensitivitySettingsResponsePropertiesMipInformation(mipIntegrationStatus, labels ?? new ChangeTrackingList<InformationProtectionSensitivityLabel>(), customInfoTypes ?? new ChangeTrackingList<InfoType>(), builtInInfoTypes ?? new ChangeTrackingList<BuiltInInfoType>(), additionalBinaryDataProperties);
         }
     }
 }

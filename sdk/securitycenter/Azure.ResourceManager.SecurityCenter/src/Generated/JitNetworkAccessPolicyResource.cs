@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="ascLocation"> The ascLocation. </param>
         /// <param name="jitNetworkAccessPolicyName"> The jitNetworkAccessPolicyName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string jitNetworkAccessPolicyName)
         {
             string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/jitNetworkAccessPolicies/{jitNetworkAccessPolicyName}";
             return new ResourceIdentifier(resourceId);
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<JitNetworkAccessContent>> InitiateAsync(JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JitNetworkAccessRequestInfo>> InitiateAsync(JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateInitiateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, JitNetworkAccessPolicyInitiateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<JitNetworkAccessContent> response = Response.FromValue(JitNetworkAccessContent.FromResponse(result), result);
+                Response<JitNetworkAccessRequestInfo> response = Response.FromValue(JitNetworkAccessRequestInfo.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="content"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<JitNetworkAccessContent> Initiate(JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<JitNetworkAccessRequestInfo> Initiate(JitNetworkAccessPolicyInitiateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _jitNetworkAccessPoliciesRestClient.CreateInitiateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, JitNetworkAccessPolicyInitiateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<JitNetworkAccessContent> response = Response.FromValue(JitNetworkAccessContent.FromResponse(result), result);
+                Response<JitNetworkAccessRequestInfo> response = Response.FromValue(JitNetworkAccessRequestInfo.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

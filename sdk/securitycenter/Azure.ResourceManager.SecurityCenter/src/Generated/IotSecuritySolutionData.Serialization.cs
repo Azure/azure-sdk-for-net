@@ -18,13 +18,8 @@ using Azure.ResourceManager.SecurityCenter.Models;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> IoT Security solution configuration and resource information. </summary>
-    public partial class IotSecuritySolutionData : TrackedResourceData, IJsonModel<IotSecuritySolutionData>
+    public partial class IotSecuritySolutionData : ResourceData, IJsonModel<IotSecuritySolutionData>
     {
-        /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionData"/> for deserialization. </summary>
-        internal IotSecuritySolutionData()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -106,20 +101,26 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    if (item.Value == null)
                     {
-                        JsonSerializer.Serialize(writer, document.RootElement);
+                        writer.WriteNullValue();
+                        continue;
                     }
-#endif
+                    writer.WriteStringValue(item.Value);
                 }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location);
             }
         }
 
@@ -152,10 +153,10 @@ namespace Azure.ResourceManager.SecurityCenter
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
-            IoTSecuritySolutionProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IoTSecuritySolutionProperties properties = default;
+            IDictionary<string, string> tags = default;
+            string location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -190,6 +191,15 @@ namespace Azure.ResourceManager.SecurityCenter
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = IoTSecuritySolutionProperties.DeserializeIoTSecuritySolutionProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -213,16 +223,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = IoTSecuritySolutionProperties.DeserializeIoTSecuritySolutionProperties(prop.Value, options);
+                    location = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -235,10 +236,10 @@ namespace Azure.ResourceManager.SecurityCenter
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
+                additionalBinaryDataProperties,
                 properties,
-                additionalBinaryDataProperties);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location);
         }
     }
 }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="IotSecurityAggregatedRecommendationResource"/> and their operations.
-    /// Each <see cref="IotSecurityAggregatedRecommendationResource"/> in the collection will belong to the same instance of <see cref="IoTSecuritySolutionAnalyticsModelResource"/>.
-    /// To get a <see cref="IotSecurityAggregatedRecommendationCollection"/> instance call the GetIotSecurityAggregatedRecommendations method from an instance of <see cref="IoTSecuritySolutionAnalyticsModelResource"/>.
+    /// Each <see cref="IotSecurityAggregatedRecommendationResource"/> in the collection will belong to the same instance of <see cref="IotSecuritySolutionAnalyticsModelResource"/>.
+    /// To get a <see cref="IotSecurityAggregatedRecommendationCollection"/> instance call the GetIotSecurityAggregatedRecommendations method from an instance of <see cref="IotSecuritySolutionAnalyticsModelResource"/>.
     /// </summary>
     public partial class IotSecurityAggregatedRecommendationCollection : ArmCollection, IEnumerable<IotSecurityAggregatedRecommendationResource>, IAsyncEnumerable<IotSecurityAggregatedRecommendationResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.SecurityCenter
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != IoTSecuritySolutionAnalyticsModelResource.ResourceType)
+            if (id.ResourceType != IotSecuritySolutionAnalyticsModelResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IoTSecuritySolutionAnalyticsModelResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, IotSecuritySolutionAnalyticsModelResource.ResourceType), nameof(id));
             }
         }
 

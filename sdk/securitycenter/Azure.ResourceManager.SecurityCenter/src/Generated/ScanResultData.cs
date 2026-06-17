@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> A vulnerability assessment scan result properties for a single rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScanResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ScanResultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> A vulnerability assessment scan result properties for a single rule. </param>
+        internal ScanResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ScanResultProperties properties) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary> A vulnerability assessment scan result properties for a single rule. </summary>

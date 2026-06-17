@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 throw new FormatException($"The model {nameof(GovernanceRuleOwnerSource)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(SourceType.Value.ToString());
             }
             if (Optional.IsDefined(Value))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            GovernanceRuleOwnerSourceType? @type = default;
+            GovernanceRuleOwnerSourceType? sourceType = default;
             string value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    @type = new GovernanceRuleOwnerSourceType(prop.Value.GetString());
+                    sourceType = new GovernanceRuleOwnerSourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GovernanceRuleOwnerSource(@type, value, additionalBinaryDataProperties);
+            return new GovernanceRuleOwnerSource(sourceType, value, additionalBinaryDataProperties);
         }
     }
 }

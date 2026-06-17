@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal DefenderCspmJFrogOfferingMdcContainersImageAssessment MdcContainersImageAssessment { get; set; }
 
         /// <summary> Is Microsoft Defender container image assessment enabled. </summary>
-        public bool? MdcContainersImageAssessmentEnabled
+        public bool? IsMdcContainersImageAssessmentEnabled
         {
             get
             {
-                return MdcContainersImageAssessment is null ? default : MdcContainersImageAssessment.Enabled;
+                return MdcContainersImageAssessment is null ? default : MdcContainersImageAssessment.IsMdcContainersImageAssessmentEnabled;
             }
             set
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     MdcContainersImageAssessment = new DefenderCspmJFrogOfferingMdcContainersImageAssessment();
                 }
-                MdcContainersImageAssessment.Enabled = value;
+                MdcContainersImageAssessment.IsMdcContainersImageAssessmentEnabled = value;
             }
         }
     }

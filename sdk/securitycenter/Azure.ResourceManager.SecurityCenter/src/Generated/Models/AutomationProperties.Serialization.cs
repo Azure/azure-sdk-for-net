@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
-                foreach (AutomationScope item in Scopes)
+                foreach (SecurityAutomationScope item in Scopes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("sources"u8);
                 writer.WriteStartArray();
-                foreach (AutomationSource item in Sources)
+                foreach (SecurityAutomationSource item in Sources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
-                foreach (AutomationAction item in Actions)
+                foreach (SecurityAutomationAction item in Actions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             string description = default;
             bool? isEnabled = default;
-            IList<AutomationScope> scopes = default;
-            IList<AutomationSource> sources = default;
-            IList<AutomationAction> actions = default;
+            IList<SecurityAutomationScope> scopes = default;
+            IList<SecurityAutomationSource> sources = default;
+            IList<SecurityAutomationAction> actions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<AutomationScope> array = new List<AutomationScope>();
+                    List<SecurityAutomationScope> array = new List<SecurityAutomationScope>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AutomationScope.DeserializeAutomationScope(item, options));
+                        array.Add(SecurityAutomationScope.DeserializeSecurityAutomationScope(item, options));
                     }
                     scopes = array;
                     continue;
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<AutomationSource> array = new List<AutomationSource>();
+                    List<SecurityAutomationSource> array = new List<SecurityAutomationSource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AutomationSource.DeserializeAutomationSource(item, options));
+                        array.Add(SecurityAutomationSource.DeserializeSecurityAutomationSource(item, options));
                     }
                     sources = array;
                     continue;
@@ -212,10 +212,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<AutomationAction> array = new List<AutomationAction>();
+                    List<SecurityAutomationAction> array = new List<SecurityAutomationAction>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AutomationAction.DeserializeAutomationAction(item, options));
+                        array.Add(SecurityAutomationAction.DeserializeSecurityAutomationAction(item, options));
                     }
                     actions = array;
                     continue;
@@ -228,9 +228,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new AutomationProperties(
                 description,
                 isEnabled,
-                scopes ?? new ChangeTrackingList<AutomationScope>(),
-                sources ?? new ChangeTrackingList<AutomationSource>(),
-                actions ?? new ChangeTrackingList<AutomationAction>(),
+                scopes ?? new ChangeTrackingList<SecurityAutomationScope>(),
+                sources ?? new ChangeTrackingList<SecurityAutomationSource>(),
+                actions ?? new ChangeTrackingList<SecurityAutomationAction>(),
                 additionalBinaryDataProperties);
         }
     }

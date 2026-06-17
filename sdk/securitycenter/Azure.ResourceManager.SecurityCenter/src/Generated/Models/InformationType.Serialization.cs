@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (Optional.IsDefined(Custom))
+            if (Optional.IsDefined(IsCustom))
             {
                 writer.WritePropertyName("custom"u8);
-                writer.WriteBooleanValue(Custom.Value);
+                writer.WriteBooleanValue(IsCustom.Value);
             }
             if (Optional.IsCollectionDefined(Keywords))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             int? order = default;
             string recommendedLabelId = default;
             bool? enabled = default;
-            bool? custom = default;
+            bool? isCustom = default;
             IList<InformationProtectionKeyword> keywords = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    custom = prop.Value.GetBoolean();
+                    isCustom = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("keywords"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 order,
                 recommendedLabelId,
                 enabled,
-                custom,
+                isCustom,
                 keywords ?? new ChangeTrackingList<InformationProtectionKeyword>(),
                 additionalBinaryDataProperties);
         }

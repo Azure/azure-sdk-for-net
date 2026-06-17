@@ -542,9 +542,9 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAllSecuritySolutionsReferenceData_GetSecuritySolutions()
+        public async Task GetAllSecuritySolutionsReferenceInfo_GetSecuritySolutions()
         {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/SecuritySolutionsReferenceData/GetSecuritySolutionsReferenceDataSubscription_example.json
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/SecuritySolutionsReferenceInfo/GetSecuritySolutionsReferenceDataSubscription_example.json
             // this example is just showing the usage of "securitySolutionsReferenceData_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (SecuritySolutionsReferenceData item in subscriptionResource.GetAllSecuritySolutionsReferenceDataAsync())
+            await foreach (SecuritySolutionsReferenceInfo item in subscriptionResource.GetAllSecuritySolutionsReferenceInfoAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            AutoProvision autoProvision = default;
+            AutoProvisionState autoProvision = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("autoProvision"u8))
                 {
-                    autoProvision = new AutoProvision(prop.Value.GetString());
+                    autoProvision = new AutoProvisionState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

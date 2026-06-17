@@ -29,15 +29,15 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityOperatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Models.Identity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="identity"> Identity for the resource. </param>
+        internal SecurityOperatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityConnectorIdentity identity) : base(id, name, resourceType, systemData)
         {
-            Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Identity = identity;
         }
 
         /// <summary> Identity for the resource. </summary>
-        public Models.Identity Identity { get; }
+        public SecurityConnectorIdentity Identity { get; }
     }
 }

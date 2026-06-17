@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         private readonly string _value;
         /// <summary> CEF. </summary>
-        private const string CEFValue = "CEF";
+        private const string CefValue = "CEF";
         /// <summary> ATA. </summary>
-        private const string ATAValue = "ATA";
+        private const string AtaValue = "ATA";
         /// <summary> AAD. </summary>
-        private const string AADValue = "AAD";
+        private const string AadValue = "AAD";
 
         /// <summary> Initializes a new instance of <see cref="ExternalSecuritySolutionKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> CEF. </summary>
-        public static ExternalSecuritySolutionKind CEF { get; } = new ExternalSecuritySolutionKind(CEFValue);
+        public static ExternalSecuritySolutionKind Cef { get; } = new ExternalSecuritySolutionKind(CefValue);
 
         /// <summary> ATA. </summary>
-        public static ExternalSecuritySolutionKind ATA { get; } = new ExternalSecuritySolutionKind(ATAValue);
+        public static ExternalSecuritySolutionKind Ata { get; } = new ExternalSecuritySolutionKind(AtaValue);
 
         /// <summary> AAD. </summary>
-        public static ExternalSecuritySolutionKind AAD { get; } = new ExternalSecuritySolutionKind(AADValue);
+        public static ExternalSecuritySolutionKind Aad { get; } = new ExternalSecuritySolutionKind(AadValue);
 
         /// <summary> Determines if two <see cref="ExternalSecuritySolutionKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

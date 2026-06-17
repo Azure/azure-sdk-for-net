@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (SecurityConnectorGovernanceRuleData item in Value)
+                foreach (GovernanceRuleData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IReadOnlyList<SecurityConnectorGovernanceRuleData> value = default;
+            IReadOnlyList<GovernanceRuleData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<SecurityConnectorGovernanceRuleData> array = new List<SecurityConnectorGovernanceRuleData>();
+                    List<GovernanceRuleData> array = new List<GovernanceRuleData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SecurityConnectorGovernanceRuleData.DeserializeSecurityConnectorGovernanceRuleData(item, options));
+                        array.Add(GovernanceRuleData.DeserializeGovernanceRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GovernanceRuleList(value ?? new ChangeTrackingList<SecurityConnectorGovernanceRuleData>(), nextLink, additionalBinaryDataProperties);
+            return new GovernanceRuleList(value ?? new ChangeTrackingList<GovernanceRuleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

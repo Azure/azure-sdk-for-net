@@ -79,20 +79,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (Optional.IsDefined(Custom))
+            if (Optional.IsDefined(IsCustom))
             {
                 writer.WritePropertyName("custom"u8);
-                writer.WriteBooleanValue(Custom.Value);
+                writer.WriteBooleanValue(IsCustom.Value);
             }
             if (Optional.IsDefined(CanBeNumeric))
             {
                 writer.WritePropertyName("canBeNumeric"u8);
                 writer.WriteBooleanValue(CanBeNumeric.Value);
             }
-            if (Optional.IsDefined(Excluded))
+            if (Optional.IsDefined(IsExcluded))
             {
                 writer.WritePropertyName("excluded"u8);
-                writer.WriteBooleanValue(Excluded.Value);
+                writer.WriteBooleanValue(IsExcluded.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             string pattern = default;
-            bool? custom = default;
+            bool? isCustom = default;
             bool? canBeNumeric = default;
-            bool? excluded = default;
+            bool? isExcluded = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    custom = prop.Value.GetBoolean();
+                    isCustom = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("canBeNumeric"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    excluded = prop.Value.GetBoolean();
+                    isExcluded = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InformationProtectionKeyword(pattern, custom, canBeNumeric, excluded, additionalBinaryDataProperties);
+            return new InformationProtectionKeyword(pattern, isCustom, canBeNumeric, isExcluded, additionalBinaryDataProperties);
         }
     }
 }

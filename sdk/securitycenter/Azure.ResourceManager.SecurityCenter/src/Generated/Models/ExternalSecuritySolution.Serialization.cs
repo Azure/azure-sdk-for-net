@@ -86,18 +86,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 throw new FormatException($"The model {nameof(ExternalSecuritySolution)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Properties);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Properties))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -107,21 +95,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
         }
 
@@ -154,10 +127,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            BinaryData properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ExternalSecuritySolutionKind? kind = default;
             AzureLocation? location = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -192,15 +164,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
                 if (prop.NameEquals("kind"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -229,10 +192,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                properties,
+                additionalBinaryDataProperties,
                 kind,
-                location,
-                additionalBinaryDataProperties);
+                location);
         }
     }
 }

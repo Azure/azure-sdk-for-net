@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityTaskProperties"/>. </summary>
-        internal SecurityTaskProperties()
+        public SecurityTaskProperties()
         {
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
@@ -27,16 +26,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="SecurityTaskProperties"/>. </summary>
         /// <param name="taskName"> Name of the task type. </param>
         /// <param name="additionalProperties"></param>
-        internal SecurityTaskProperties(string taskName, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal SecurityTaskProperties(string taskName, IDictionary<string, BinaryData> additionalProperties)
         {
             TaskName = taskName;
-            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>(additionalProperties);
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> Name of the task type. </summary>
         public string TaskName { get; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IReadOnlyDictionary<string, BinaryData> AdditionalProperties => new ReadOnlyDictionary<string, BinaryData>(_additionalBinaryDataProperties);
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

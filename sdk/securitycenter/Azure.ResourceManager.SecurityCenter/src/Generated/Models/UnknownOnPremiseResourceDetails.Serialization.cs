@@ -56,10 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OnPremiseResourceDetails IPersistableModel<OnPremiseResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return (OnPremiseResourceDetails)PersistableModelCreateCore(data, options);
-        }
+        OnPremiseResourceDetails IPersistableModel<OnPremiseResourceDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownOnPremiseResourceDetails)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<OnPremiseResourceDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -87,10 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OnPremiseResourceDetails IJsonModel<OnPremiseResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return (OnPremiseResourceDetails)JsonModelCreateCore(ref reader, options);
-        }
+        OnPremiseResourceDetails IJsonModel<OnPremiseResourceDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownOnPremiseResourceDetails)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -113,17 +107,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Source source = default;
+            SecurityCenterResourceSource source = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier workspaceId = default;
-            Guid vmuuid = default;
+            Guid vmUuid = default;
             string sourceComputerId = default;
             string machineName = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("source"u8))
                 {
-                    source = new Source(prop.Value.GetString());
+                    source = new SecurityCenterResourceSource(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("workspaceId"u8))
@@ -133,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (prop.NameEquals("vmuuid"u8))
                 {
-                    vmuuid = new Guid(prop.Value.GetString());
+                    vmUuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceComputerId"u8))
@@ -155,7 +149,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 source,
                 additionalBinaryDataProperties,
                 workspaceId,
-                vmuuid,
+                vmUuid,
                 sourceComputerId,
                 machineName);
         }

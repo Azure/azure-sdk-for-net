@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="sourceResourceType"> The governance rule source, what the rule affects, e.g. Assessments. </param>
         /// <param name="excludedScopes"> Excluded scopes, filter out the descendants of the scope (on management scopes). </param>
         /// <param name="conditionSets"> The governance rule conditionSets - see examples. </param>
-        /// <param name="includeMemberScopes"> Defines whether the rule is management scope rule (master connector as a single scope or management scope). </param>
+        /// <param name="isIncludeMemberScopes"> Defines whether the rule is management scope rule (master connector as a single scope or management scope). </param>
         /// <param name="ownerSource"> The owner source for the governance rule - e.g. Manually by user@contoso.com - see example. </param>
         /// <param name="governanceEmailNotification"> The email notifications settings for the governance rule, states whether to disable notifications for mangers and owners. </param>
         /// <param name="metadata"> The governance rule metadata. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GovernanceRuleProperties(string tenantId, string displayName, string description, string remediationTimeframe, bool? isGracePeriod, int rulePriority, bool? isDisabled, GovernanceRuleType ruleType, GovernanceRuleSourceResourceType sourceResourceType, IList<string> excludedScopes, IList<BinaryData> conditionSets, bool? includeMemberScopes, GovernanceRuleOwnerSource ownerSource, GovernanceRuleEmailNotification governanceEmailNotification, GovernanceRuleMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GovernanceRuleProperties(string tenantId, string displayName, string description, string remediationTimeframe, bool? isGracePeriod, int rulePriority, bool? isDisabled, GovernanceRuleType ruleType, GovernanceRuleSourceResourceType sourceResourceType, IList<string> excludedScopes, IList<BinaryData> conditionSets, bool? isIncludeMemberScopes, GovernanceRuleOwnerSource ownerSource, GovernanceRuleEmailNotification governanceEmailNotification, GovernanceRuleMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             DisplayName = displayName;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             SourceResourceType = sourceResourceType;
             ExcludedScopes = excludedScopes;
             ConditionSets = conditionSets;
-            IncludeMemberScopes = includeMemberScopes;
+            IsIncludeMemberScopes = isIncludeMemberScopes;
             OwnerSource = ownerSource;
             GovernanceEmailNotification = governanceEmailNotification;
             Metadata = metadata;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IList<BinaryData> ConditionSets { get; } = new ChangeTrackingList<BinaryData>();
 
         /// <summary> Defines whether the rule is management scope rule (master connector as a single scope or management scope). </summary>
-        public bool? IncludeMemberScopes { get; set; }
+        public bool? IsIncludeMemberScopes { get; set; }
 
         /// <summary> The owner source for the governance rule - e.g. Manually by user@contoso.com - see example. </summary>
         public GovernanceRuleOwnerSource OwnerSource { get; set; }

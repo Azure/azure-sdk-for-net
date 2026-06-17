@@ -14,11 +14,11 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The environment authentication details. </summary>
-    public partial class AccessTokenAuthentication : Authentication, IJsonModel<AccessTokenAuthentication>
+    public partial class AccessTokenAuthentication : SecurityConnectorAuthentication, IJsonModel<AccessTokenAuthentication>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Authentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SecurityConnectorAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AccessTokenAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Authentication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SecurityConnectorAuthentication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AccessTokenAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

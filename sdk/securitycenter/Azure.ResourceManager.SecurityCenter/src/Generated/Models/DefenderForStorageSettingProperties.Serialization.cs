@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("sensitiveDataDiscovery"u8);
                 writer.WriteObjectValue(SensitiveDataDiscovery, options);
             }
-            if (Optional.IsDefined(OverrideSubscriptionLevelSettings))
+            if (Optional.IsDefined(IsOverrideSubscriptionLevelSettings))
             {
                 writer.WritePropertyName("overrideSubscriptionLevelSettings"u8);
-                writer.WriteBooleanValue(OverrideSubscriptionLevelSettings.Value);
+                writer.WriteBooleanValue(IsOverrideSubscriptionLevelSettings.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             bool? isEnabled = default;
             MalwareScanningProperties malwareScanning = default;
             SensitiveDataDiscoveryProperties sensitiveDataDiscovery = default;
-            bool? overrideSubscriptionLevelSettings = default;
+            bool? isOverrideSubscriptionLevelSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    overrideSubscriptionLevelSettings = prop.Value.GetBoolean();
+                    isOverrideSubscriptionLevelSettings = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DefenderForStorageSettingProperties(isEnabled, malwareScanning, sensitiveDataDiscovery, overrideSubscriptionLevelSettings, additionalBinaryDataProperties);
+            return new DefenderForStorageSettingProperties(isEnabled, malwareScanning, sensitiveDataDiscovery, isOverrideSubscriptionLevelSettings, additionalBinaryDataProperties);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="tenantId"> The tenant Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnvironmentDetails(string nativeResourceId, string environmentHierarchyId, string organizationalHierarchyId, string subscriptionId, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnvironmentDetails(ResourceIdentifier nativeResourceId, string environmentHierarchyId, string organizationalHierarchyId, string subscriptionId, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NativeResourceId = nativeResourceId;
             EnvironmentHierarchyId = environmentHierarchyId;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The native resource id of the resource (in case of Azure - the resource Id, in case of MC - the native resource id). </summary>
-        public string NativeResourceId { get; }
+        public ResourceIdentifier NativeResourceId { get; }
 
         /// <summary> The hierarchy id of the connector (in case of Azure - the subscription Id, in case of MC - the hierarchyId id). </summary>
         public string EnvironmentHierarchyId { get; }

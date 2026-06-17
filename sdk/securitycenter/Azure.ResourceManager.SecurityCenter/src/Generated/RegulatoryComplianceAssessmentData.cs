@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RegulatoryComplianceAssessmentData"/>. </summary>
-        internal RegulatoryComplianceAssessmentData()
+        public RegulatoryComplianceAssessmentData()
         {
         }
 
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Regulatory compliance assessment data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RegulatoryComplianceAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RegulatoryComplianceAssessmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Regulatory compliance assessment data. </param>
+        internal RegulatoryComplianceAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RegulatoryComplianceAssessmentProperties properties) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary> Regulatory compliance assessment data. </summary>
-        internal RegulatoryComplianceAssessmentProperties Properties { get; }
+        internal RegulatoryComplianceAssessmentProperties Properties { get; set; }
 
         /// <summary> The description of the regulatory compliance assessment. </summary>
         public string Description
@@ -73,6 +73,14 @@ namespace Azure.ResourceManager.SecurityCenter
             get
             {
                 return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegulatoryComplianceAssessmentProperties();
+                }
+                Properties.State = value;
             }
         }
 

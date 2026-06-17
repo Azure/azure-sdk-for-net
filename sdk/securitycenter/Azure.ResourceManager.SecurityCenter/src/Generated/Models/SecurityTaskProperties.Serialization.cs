@@ -7,7 +7,7 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.ResourceManager.SecurityCenter;
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             string taskName = default;
-            ChangeTrackingDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("name"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            return new SecurityTaskProperties(taskName, new ReadOnlyDictionary<string, BinaryData>(additionalProperties));
+            return new SecurityTaskProperties(taskName, additionalProperties);
         }
     }
 }

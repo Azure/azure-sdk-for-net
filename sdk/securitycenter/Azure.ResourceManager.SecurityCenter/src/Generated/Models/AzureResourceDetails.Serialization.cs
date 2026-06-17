@@ -107,14 +107,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Source source = default;
+            SecurityCenterResourceSource source = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("source"u8))
                 {
-                    source = new Source(prop.Value.GetString());
+                    source = new SecurityCenterResourceSource(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionItemProperties"/>. </summary>
         internal SecureScoreControlDefinitionItemProperties()
         {
-            AssessmentDefinitions = new ChangeTrackingList<AzureResourceLink>();
+            AssessmentDefinitions = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionItemProperties"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="source"> Source object from which the control was created. </param>
         /// <param name="assessmentDefinitions"> Array of assessments metadata IDs that are included in this security control. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecureScoreControlDefinitionItemProperties(string displayName, string description, int? maxScore, SecureScoreControlDefinitionSource source, IReadOnlyList<AzureResourceLink> assessmentDefinitions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecureScoreControlDefinitionItemProperties(string displayName, string description, int? maxScore, SecureScoreControlDefinitionSource source, IReadOnlyList<SubResource> assessmentDefinitions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         internal SecureScoreControlDefinitionSource Source { get; }
 
         /// <summary> Array of assessments metadata IDs that are included in this security control. </summary>
-        public IReadOnlyList<AzureResourceLink> AssessmentDefinitions { get; } = new ChangeTrackingList<AzureResourceLink>();
+        public IReadOnlyList<SubResource> AssessmentDefinitions { get; } = new ChangeTrackingList<SubResource>();
 
         /// <summary> The type of security control (for example, BuiltIn). </summary>
-        public ControlType? SourceType
+        public SecurityControlType? SourceType
         {
             get
             {

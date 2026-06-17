@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListCustomAlertRule IPersistableModel<ListCustomAlertRule>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return (ListCustomAlertRule)PersistableModelCreateCore(data, options);
-        }
+        ListCustomAlertRule IPersistableModel<ListCustomAlertRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownListCustomAlertRule)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ListCustomAlertRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,10 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ListCustomAlertRule IJsonModel<ListCustomAlertRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return (ListCustomAlertRule)JsonModelCreateCore(ref reader, options);
-        }
+        ListCustomAlertRule IJsonModel<ListCustomAlertRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownListCustomAlertRule)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

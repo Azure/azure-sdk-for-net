@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="order"> The order of the sensitivity label. </param>
         /// <param name="enabled"> Indicates whether the label is enabled or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SensitivityLabel(string displayName, string description, Rank? rank, int? order, bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SensitivityLabel(string displayName, string description, SensitivityLabelRank? rank, int? order, bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string Description { get; set; }
 
         /// <summary> The rank of the sensitivity label. </summary>
-        public Rank? Rank { get; set; }
+        public SensitivityLabelRank? Rank { get; set; }
 
         /// <summary> The order of the sensitivity label. </summary>
         public int? Order { get; set; }

@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="JitNetworkAccessPolicyVirtualMachine"/>. </summary>
         /// <param name="id"> Resource ID of the virtual machine that is linked to this policy. </param>
         /// <param name="ports"> Port configurations for the virtual machine. </param>
-        /// <param name="publicIpAddress"> Public IP address of the Azure Firewall that is linked to this policy, if applicable. </param>
+        /// <param name="publicIPAddress"> Public IP address of the Azure Firewall that is linked to this policy, if applicable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JitNetworkAccessPolicyVirtualMachine(ResourceIdentifier id, IList<JitNetworkAccessPortRule> ports, string publicIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JitNetworkAccessPolicyVirtualMachine(ResourceIdentifier id, IList<JitNetworkAccessPortRule> ports, string publicIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Ports = ports;
-            PublicIpAddress = publicIpAddress;
+            PublicIPAddress = publicIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IList<JitNetworkAccessPortRule> Ports { get; }
 
         /// <summary> Public IP address of the Azure Firewall that is linked to this policy, if applicable. </summary>
-        public string PublicIpAddress { get; set; }
+        public string PublicIPAddress { get; set; }
     }
 }

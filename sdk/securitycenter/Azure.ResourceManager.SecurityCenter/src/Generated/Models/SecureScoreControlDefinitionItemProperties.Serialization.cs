@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("assessmentDefinitions"u8);
                 writer.WriteStartArray();
-                foreach (AzureResourceLink item in AssessmentDefinitions)
+                foreach (SubResource item in AssessmentDefinitions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string description = default;
             int? maxScore = default;
             SecureScoreControlDefinitionSource source = default;
-            IReadOnlyList<AzureResourceLink> assessmentDefinitions = default;
+            IReadOnlyList<SubResource> assessmentDefinitions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<AzureResourceLink> array = new List<AzureResourceLink>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AzureResourceLink.DeserializeAzureResourceLink(item, options));
+                        array.Add(SubResource.DeserializeSubResource(item, options));
                     }
                     assessmentDefinitions = array;
                     continue;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 description,
                 maxScore,
                 source,
-                assessmentDefinitions ?? new ChangeTrackingList<AzureResourceLink>(),
+                assessmentDefinitions ?? new ChangeTrackingList<SubResource>(),
                 additionalBinaryDataProperties);
         }
     }

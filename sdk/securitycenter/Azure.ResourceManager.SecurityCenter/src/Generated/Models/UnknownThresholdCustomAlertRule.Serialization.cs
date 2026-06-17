@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ThresholdCustomAlertRule IPersistableModel<ThresholdCustomAlertRule>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return (ThresholdCustomAlertRule)PersistableModelCreateCore(data, options);
-        }
+        ThresholdCustomAlertRule IPersistableModel<ThresholdCustomAlertRule>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownThresholdCustomAlertRule)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ThresholdCustomAlertRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,10 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ThresholdCustomAlertRule IJsonModel<ThresholdCustomAlertRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return (ThresholdCustomAlertRule)JsonModelCreateCore(ref reader, options);
-        }
+        ThresholdCustomAlertRule IJsonModel<ThresholdCustomAlertRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownThresholdCustomAlertRule)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

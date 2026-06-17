@@ -31,21 +31,21 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Properties specific to the private link resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityCenterPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PrivateLinkProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal SecurityCenterPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, PrivateLinkProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary> Properties specific to the private link resource. </summary>
         internal PrivateLinkProperties Properties { get; set; }
 
         /// <summary> The current provisioning state of the private link resource. Indicates whether the resource is being created, updated, deleted, or has completed successfully. </summary>
-        public ProvisioningState? ProvisioningState
+        public SecurityCenterProvisioningState? ProvisioningState
         {
             get
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> This determines if traffic is allowed over public network. By default it is disabled. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess
+        public SecurityCenterPublicNetworkAccess? PublicNetworkAccess
         {
             get
             {

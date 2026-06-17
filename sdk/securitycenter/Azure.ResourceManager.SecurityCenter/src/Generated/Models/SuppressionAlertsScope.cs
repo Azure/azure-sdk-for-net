@@ -19,25 +19,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SuppressionAlertsScope"/>. </summary>
-        /// <param name="allOf"> All the conditions inside need to be true in order to suppress the alert. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="allOf"/> is null. </exception>
-        public SuppressionAlertsScope(IEnumerable<SuppressionAlertsScopeElement> allOf)
+        /// <param name="suppressionAlertsScopeAllOf"> All the conditions inside need to be true in order to suppress the alert. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="suppressionAlertsScopeAllOf"/> is null. </exception>
+        public SuppressionAlertsScope(IEnumerable<SuppressionAlertsScopeElement> suppressionAlertsScopeAllOf)
         {
-            Argument.AssertNotNull(allOf, nameof(allOf));
+            Argument.AssertNotNull(suppressionAlertsScopeAllOf, nameof(suppressionAlertsScopeAllOf));
 
-            AllOf = allOf.ToList();
+            SuppressionAlertsScopeAllOf = suppressionAlertsScopeAllOf.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SuppressionAlertsScope"/>. </summary>
-        /// <param name="allOf"> All the conditions inside need to be true in order to suppress the alert. </param>
+        /// <param name="suppressionAlertsScopeAllOf"> All the conditions inside need to be true in order to suppress the alert. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SuppressionAlertsScope(IList<SuppressionAlertsScopeElement> allOf, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SuppressionAlertsScope(IList<SuppressionAlertsScopeElement> suppressionAlertsScopeAllOf, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AllOf = allOf;
+            SuppressionAlertsScopeAllOf = suppressionAlertsScopeAllOf;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> All the conditions inside need to be true in order to suppress the alert. </summary>
-        public IList<SuppressionAlertsScopeElement> AllOf { get; }
+        public IList<SuppressionAlertsScopeElement> SuppressionAlertsScopeAllOf { get; } = new ChangeTrackingList<SuppressionAlertsScopeElement>();
     }
 }

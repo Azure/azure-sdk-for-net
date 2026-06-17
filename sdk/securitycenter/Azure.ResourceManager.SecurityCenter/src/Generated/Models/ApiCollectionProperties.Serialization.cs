@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            SecurityCenterProvisioningState? provisioningState = default;
             string displayName = default;
             ResourceIdentifier discoveredVia = default;
             Uri baseUri = default;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(prop.Value.GetString());
+                    provisioningState = new SecurityCenterProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))

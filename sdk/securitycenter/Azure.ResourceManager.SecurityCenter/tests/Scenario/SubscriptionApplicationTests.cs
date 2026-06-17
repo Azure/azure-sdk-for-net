@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 {
     internal class SubscriptionApplicationTests : SecurityCenterManagementTestBase
     {
-        private ApplicationCollection _subAppCollection => DefaultSubscription.GetApplications();
+        private SubscriptionSecurityApplicationCollection _subAppCollection => DefaultSubscription.GetSubscriptionSecurityApplications();
         public SubscriptionApplicationTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             }
         }
 
-        private async Task<ApplicationResource> CreateSubscriptionApplicationResource(string applicationId)
+        private async Task<SubscriptionSecurityApplicationResource> CreateSubscriptionApplicationResource(string applicationId)
         {
             SecurityConnectorApplicationData data = new SecurityConnectorApplicationData()
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             Assert.IsFalse(flag);
         }
 
-        private void ValidateSubscriptionApplication(ApplicationResource subApp, string applicationId)
+        private void ValidateSubscriptionApplication(SubscriptionSecurityApplicationResource subApp, string applicationId)
         {
             Assert.IsNotNull(subApp);
             Assert.IsNotNull(subApp.Data.Id);

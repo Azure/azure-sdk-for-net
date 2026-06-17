@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Automated))
+            if (Optional.IsDefined(IsAutomated))
             {
                 writer.WritePropertyName("automated"u8);
-                writer.WriteBooleanValue(Automated.Value);
+                writer.WriteBooleanValue(IsAutomated.Value);
             }
             if (Optional.IsDefined(PortalLink))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             string description = default;
             IList<string> scripts = default;
-            bool? automated = default;
+            bool? isAutomated = default;
             string portalLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    automated = prop.Value.GetBoolean();
+                    isAutomated = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("portalLink"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Remediation(description, scripts ?? new ChangeTrackingList<string>(), automated, portalLink, additionalBinaryDataProperties);
+            return new Remediation(description, scripts ?? new ChangeTrackingList<string>(), isAutomated, portalLink, additionalBinaryDataProperties);
         }
     }
 }

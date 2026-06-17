@@ -81,15 +81,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("alertType"u8);
             writer.WriteStringValue(AlertType);
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedUtc))
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
-                writer.WriteStringValue(LastModifiedUtc.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpirationDateUtc))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateUtc"u8);
-                writer.WriteStringValue(ExpirationDateUtc.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WritePropertyName("reason"u8);
             writer.WriteStringValue(Reason);
@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             string alertType = default;
-            DateTimeOffset? lastModifiedUtc = default;
-            DateTimeOffset? expirationDateUtc = default;
+            DateTimeOffset? lastModifiedOn = default;
+            DateTimeOffset? expireOn = default;
             string reason = default;
-            RuleState state = default;
+            SecurityAlertsSuppressionRuleState state = default;
             string comment = default;
             SuppressionAlertsScope suppressionAlertsScope = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    lastModifiedUtc = prop.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expirationDateUtc"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    expirationDateUtc = prop.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (prop.NameEquals("state"u8))
                 {
-                    state = prop.Value.GetString().ToRuleState();
+                    state = prop.Value.GetString().ToSecurityAlertsSuppressionRuleState();
                     continue;
                 }
                 if (prop.NameEquals("comment"u8))
@@ -211,8 +211,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             return new AlertsSuppressionRuleProperties(
                 alertType,
-                lastModifiedUtc,
-                expirationDateUtc,
+                lastModifiedOn,
+                expireOn,
                 reason,
                 state,
                 comment,

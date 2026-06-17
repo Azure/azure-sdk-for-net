@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecuritySubAssessmentData"/>. </summary>
-        internal SecuritySubAssessmentData()
+        public SecuritySubAssessmentData()
         {
         }
 
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Describes properties of an sub-assessment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecuritySubAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecuritySubAssessmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Describes properties of an sub-assessment. </param>
+        internal SecuritySubAssessmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecuritySubAssessmentProperties properties) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary> Describes properties of an sub-assessment. </summary>
-        internal SecuritySubAssessmentProperties Properties { get; }
+        internal SecuritySubAssessmentProperties Properties { get; set; }
 
         /// <summary> Vulnerability ID. </summary>
         public string VulnerabilityId
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.SecurityCenter
             get
             {
                 return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecuritySubAssessmentProperties();
+                }
+                Properties.Status = value;
             }
         }
 
@@ -119,6 +127,14 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return Properties is null ? default : Properties.ResourceDetails;
             }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecuritySubAssessmentProperties();
+                }
+                Properties.ResourceDetails = value;
+            }
         }
 
         /// <summary> Details of the sub-assessment. </summary>
@@ -127,6 +143,14 @@ namespace Azure.ResourceManager.SecurityCenter
             get
             {
                 return Properties is null ? default : Properties.AdditionalData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecuritySubAssessmentProperties();
+                }
+                Properties.AdditionalData = value;
             }
         }
     }

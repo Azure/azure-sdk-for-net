@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="additionalExtensionProperties"> Property values associated with the extension. </param>
         /// <param name="operationStatus"> Optional. A status describing the success/failure of the extension's enablement/disablement operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Extension(string name, IsEnabled isEnabled, IDictionary<string, BinaryData> additionalExtensionProperties, OperationStatus operationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Extension(string name, IsEnabled isEnabled, IDictionary<string, BinaryData> additionalExtensionProperties, SecurityCenterOperationStatus operationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             IsEnabled = isEnabled;
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IDictionary<string, BinaryData> AdditionalExtensionProperties { get; }
 
         /// <summary> Optional. A status describing the success/failure of the extension's enablement/disablement operation. </summary>
-        public OperationStatus OperationStatus { get; }
+        public SecurityCenterOperationStatus OperationStatus { get; }
     }
 }

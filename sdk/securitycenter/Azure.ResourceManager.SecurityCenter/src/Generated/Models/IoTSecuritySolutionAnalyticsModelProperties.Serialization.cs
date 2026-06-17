@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("devicesMetrics"u8);
                 writer.WriteStartArray();
-                foreach (IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem item in DevicesMetrics)
+                foreach (IotSecuritySolutionAnalyticsModelDevicesMetrics item in DevicesMetrics)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("topAlertedDevices"u8);
                 writer.WriteStartArray();
-                foreach (IoTSecurityAlertedDevice item in TopAlertedDevices)
+                foreach (IotSecurityAlertedDevice item in TopAlertedDevices)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("mostPrevalentDeviceAlerts"u8);
                 writer.WriteStartArray();
-                foreach (IoTSecurityDeviceAlert item in MostPrevalentDeviceAlerts)
+                foreach (IotSecurityDeviceAlert item in MostPrevalentDeviceAlerts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("mostPrevalentDeviceRecommendations"u8);
                 writer.WriteStartArray();
-                foreach (IoTSecurityDeviceRecommendation item in MostPrevalentDeviceRecommendations)
+                foreach (IotSecurityDeviceRecommendation item in MostPrevalentDeviceRecommendations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IoTSeverityMetrics metrics = default;
+            IotSeverityMetrics metrics = default;
             long? unhealthyDeviceCount = default;
-            IReadOnlyList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> devicesMetrics = default;
-            IList<IoTSecurityAlertedDevice> topAlertedDevices = default;
-            IList<IoTSecurityDeviceAlert> mostPrevalentDeviceAlerts = default;
-            IList<IoTSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations = default;
+            IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> devicesMetrics = default;
+            IList<IotSecurityAlertedDevice> topAlertedDevices = default;
+            IList<IotSecurityDeviceAlert> mostPrevalentDeviceAlerts = default;
+            IList<IotSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    metrics = IoTSeverityMetrics.DeserializeIoTSeverityMetrics(prop.Value, options);
+                    metrics = IotSeverityMetrics.DeserializeIotSeverityMetrics(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("unhealthyDeviceCount"u8))
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem> array = new List<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem>();
+                    List<IotSecuritySolutionAnalyticsModelDevicesMetrics> array = new List<IotSecuritySolutionAnalyticsModelDevicesMetrics>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem.DeserializeIoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem(item, options));
+                        array.Add(IotSecuritySolutionAnalyticsModelDevicesMetrics.DeserializeIotSecuritySolutionAnalyticsModelDevicesMetrics(item, options));
                     }
                     devicesMetrics = array;
                     continue;
@@ -213,10 +213,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<IoTSecurityAlertedDevice> array = new List<IoTSecurityAlertedDevice>();
+                    List<IotSecurityAlertedDevice> array = new List<IotSecurityAlertedDevice>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IoTSecurityAlertedDevice.DeserializeIoTSecurityAlertedDevice(item, options));
+                        array.Add(IotSecurityAlertedDevice.DeserializeIotSecurityAlertedDevice(item, options));
                     }
                     topAlertedDevices = array;
                     continue;
@@ -227,10 +227,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<IoTSecurityDeviceAlert> array = new List<IoTSecurityDeviceAlert>();
+                    List<IotSecurityDeviceAlert> array = new List<IotSecurityDeviceAlert>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IoTSecurityDeviceAlert.DeserializeIoTSecurityDeviceAlert(item, options));
+                        array.Add(IotSecurityDeviceAlert.DeserializeIotSecurityDeviceAlert(item, options));
                     }
                     mostPrevalentDeviceAlerts = array;
                     continue;
@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    List<IoTSecurityDeviceRecommendation> array = new List<IoTSecurityDeviceRecommendation>();
+                    List<IotSecurityDeviceRecommendation> array = new List<IotSecurityDeviceRecommendation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IoTSecurityDeviceRecommendation.DeserializeIoTSecurityDeviceRecommendation(item, options));
+                        array.Add(IotSecurityDeviceRecommendation.DeserializeIotSecurityDeviceRecommendation(item, options));
                     }
                     mostPrevalentDeviceRecommendations = array;
                     continue;
@@ -257,10 +257,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IoTSecuritySolutionAnalyticsModelProperties(
                 metrics,
                 unhealthyDeviceCount,
-                devicesMetrics ?? new ChangeTrackingList<IoTSecuritySolutionAnalyticsModelPropertiesDevicesMetricsItem>(),
-                topAlertedDevices ?? new ChangeTrackingList<IoTSecurityAlertedDevice>(),
-                mostPrevalentDeviceAlerts ?? new ChangeTrackingList<IoTSecurityDeviceAlert>(),
-                mostPrevalentDeviceRecommendations ?? new ChangeTrackingList<IoTSecurityDeviceRecommendation>(),
+                devicesMetrics ?? new ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>(),
+                topAlertedDevices ?? new ChangeTrackingList<IotSecurityAlertedDevice>(),
+                mostPrevalentDeviceAlerts ?? new ChangeTrackingList<IotSecurityDeviceAlert>(),
+                mostPrevalentDeviceRecommendations ?? new ChangeTrackingList<IotSecurityDeviceRecommendation>(),
                 additionalBinaryDataProperties);
         }
     }

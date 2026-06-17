@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, AzureLocation ascLocation, string jitNetworkAccessPolicyName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
-            uri.AppendPath(ascLocation, true);
+            uri.AppendPath(ascLocation.ToString(), true);
             uri.AppendPath("/jitNetworkAccessPolicies/", false);
             uri.AppendPath(jitNetworkAccessPolicyName, true);
             if (_apiVersion != null)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, AzureLocation ascLocation, string jitNetworkAccessPolicyName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
-            uri.AppendPath(ascLocation, true);
+            uri.AppendPath(ascLocation.ToString(), true);
             uri.AppendPath("/jitNetworkAccessPolicies/", false);
             uri.AppendPath(jitNetworkAccessPolicyName, true);
             if (_apiVersion != null)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, AzureLocation ascLocation, string jitNetworkAccessPolicyName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
-            uri.AppendPath(ascLocation, true);
+            uri.AppendPath(ascLocation.ToString(), true);
             uri.AppendPath("/jitNetworkAccessPolicies/", false);
             uri.AppendPath(jitNetworkAccessPolicyName, true);
             if (_apiVersion != null)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateGetByResourceGroupAndRegionRequest(Guid subscriptionId, string resourceGroupName, string ascLocation, RequestContext context)
+        internal HttpMessage CreateGetByResourceGroupAndRegionRequest(Guid subscriptionId, string resourceGroupName, AzureLocation ascLocation, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
-            uri.AppendPath(ascLocation, true);
+            uri.AppendPath(ascLocation.ToString(), true);
             uri.AppendPath("/jitNetworkAccessPolicies", false);
             if (_apiVersion != null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateNextGetByResourceGroupAndRegionRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string ascLocation, RequestContext context)
+        internal HttpMessage CreateNextGetByResourceGroupAndRegionRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, AzureLocation ascLocation, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -160,14 +160,14 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateGetByRegionRequest(Guid subscriptionId, string ascLocation, RequestContext context)
+        internal HttpMessage CreateGetByRegionRequest(Guid subscriptionId, AzureLocation ascLocation, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
-            uri.AppendPath(ascLocation, true);
+            uri.AppendPath(ascLocation.ToString(), true);
             uri.AppendPath("/jitNetworkAccessPolicies", false);
             if (_apiVersion != null)
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateNextGetByRegionRequest(Uri nextPage, Guid subscriptionId, string ascLocation, RequestContext context)
+        internal HttpMessage CreateNextGetByRegionRequest(Uri nextPage, Guid subscriptionId, AzureLocation ascLocation, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        internal HttpMessage CreateInitiateRequest(Guid subscriptionId, string resourceGroupName, string ascLocation, string jitNetworkAccessPolicyName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateInitiateRequest(Guid subscriptionId, string resourceGroupName, AzureLocation ascLocation, string jitNetworkAccessPolicyName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SecurityCenter
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Security/locations/", false);
-            uri.AppendPath(ascLocation, true);
+            uri.AppendPath(ascLocation.ToString(), true);
             uri.AppendPath("/jitNetworkAccessPolicies/", false);
             uri.AppendPath(jitNetworkAccessPolicyName, true);
             uri.AppendPath("/", false);
@@ -229,6 +229,92 @@ namespace Azure.ResourceManager.SecurityCenter
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetJitNetworkAccessPoliciesRequest(Guid subscriptionId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/providers/Microsoft.Security/jitNetworkAccessPolicies", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetJitNetworkAccessPoliciesRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetJitNetworkAccessPoliciesByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Security/jitNetworkAccessPolicies", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetJitNetworkAccessPoliciesByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

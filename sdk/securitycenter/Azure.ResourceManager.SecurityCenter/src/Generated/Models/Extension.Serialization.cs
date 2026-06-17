@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string name = default;
             IsEnabled isEnabled = default;
             IDictionary<string, BinaryData> additionalExtensionProperties = default;
-            OperationStatus operationStatus = default;
+            SecurityCenterOperationStatus operationStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    operationStatus = OperationStatus.DeserializeOperationStatus(prop.Value, options);
+                    operationStatus = SecurityCenterOperationStatus.DeserializeSecurityCenterOperationStatus(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

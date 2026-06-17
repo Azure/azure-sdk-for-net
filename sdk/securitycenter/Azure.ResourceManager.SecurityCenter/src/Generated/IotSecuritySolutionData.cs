@@ -14,15 +14,15 @@ using Azure.ResourceManager.SecurityCenter.Models;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary> IoT Security solution configuration and resource information. </summary>
-    public partial class IotSecuritySolutionData : TrackedResourceData
+    public partial class IotSecuritySolutionData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        public IotSecuritySolutionData(AzureLocation location) : base(location)
+        public IotSecuritySolutionData()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionData"/>. </summary>
@@ -30,18 +30,26 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Security Solution data. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Security Solution data. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IoTSecuritySolutionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal IotSecuritySolutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IoTSecuritySolutionProperties properties, IDictionary<string, string> tags, string location) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            Tags = tags;
+            Location = location;
         }
 
         /// <summary> Security Solution data. </summary>
         internal IoTSecuritySolutionProperties Properties { get; set; }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The geo-location where the resource lives. </summary>
+        public string Location { get; set; }
 
         /// <summary> Workspace resource ID. </summary>
         public string Workspace
@@ -95,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> List of additional options for exporting to workspace data. </summary>
-        public IList<ExportData> Export
+        public IList<IotSecuritySolutionExportOption> Export
         {
             get
             {
@@ -108,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Disabled data sources. Disabling these data sources compromises the system. </summary>
-        public IList<DataSource> DisabledDataSources
+        public IList<IotSecuritySolutionDataSource> DisabledDataSources
         {
             get
             {
@@ -177,11 +185,11 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Unmasked IP address logging status. </summary>
-        public UnmaskedIpLoggingStatus? UnmaskedIpLoggingStatus
+        public UnmaskedIPLoggingStatus? UnmaskedIPLoggingStatus
         {
             get
             {
-                return Properties is null ? default : Properties.UnmaskedIpLoggingStatus;
+                return Properties is null ? default : Properties.UnmaskedIPLoggingStatus;
             }
             set
             {
@@ -189,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     Properties = new IoTSecuritySolutionProperties();
                 }
-                Properties.UnmaskedIpLoggingStatus = value;
+                Properties.UnmaskedIPLoggingStatus = value;
             }
         }
 

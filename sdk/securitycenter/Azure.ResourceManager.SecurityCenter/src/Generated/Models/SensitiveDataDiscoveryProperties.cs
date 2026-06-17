@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isEnabled"> Indicates whether Sensitive Data Discovery should be enabled. </param>
         /// <param name="operationStatus"> Upon failure or partial success. Additional data describing Sensitive Data Discovery enable/disable operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SensitiveDataDiscoveryProperties(bool? isEnabled, OperationStatus operationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SensitiveDataDiscoveryProperties(bool? isEnabled, SecurityCenterOperationStatus operationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             OperationStatus = operationStatus;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public bool? IsEnabled { get; set; }
 
         /// <summary> Upon failure or partial success. Additional data describing Sensitive Data Discovery enable/disable operation. </summary>
-        public OperationStatus OperationStatus { get; }
+        public SecurityCenterOperationStatus OperationStatus { get; }
     }
 }

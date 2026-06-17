@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class AzureResourceDetails : SecurityCenterResourceDetails
     {
         /// <summary> Initializes a new instance of <see cref="AzureResourceDetails"/>. </summary>
-        public AzureResourceDetails() : base(Source.Azure)
+        public AzureResourceDetails() : base(SecurityCenterResourceSource.Azure)
         {
         }
 
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="source"> The platform where the assessed resource resides. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> Azure resource Id of the assessed resource. </param>
-        internal AzureResourceDetails(Source source, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id) : base(source, additionalBinaryDataProperties)
+        internal AzureResourceDetails(SecurityCenterResourceSource source, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id) : base(source, additionalBinaryDataProperties)
         {
             Id = id;
         }

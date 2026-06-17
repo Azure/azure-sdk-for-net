@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _devOpsConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation<DevOpsConfigurationResource> operation = new SecurityCenterArmOperation<DevOpsConfigurationResource>(
-                    new DevOpsConfigurationResourceOperationSource(Client),
+                    new DevOpsConfigurationOperationSource(Client),
                     _devOpsConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _devOpsConfigurationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation<DevOpsConfigurationResource> operation = new SecurityCenterArmOperation<DevOpsConfigurationResource>(
-                    new DevOpsConfigurationResourceOperationSource(Client),
+                    new DevOpsConfigurationOperationSource(Client),
                     _devOpsConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _devOpsConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation<DevOpsConfigurationResource> operation = new SecurityCenterArmOperation<DevOpsConfigurationResource>(
-                    new DevOpsConfigurationResourceOperationSource(Client),
+                    new DevOpsConfigurationOperationSource(Client),
                     _devOpsConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _devOpsConfigurationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, DevOpsConfigurationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation<DevOpsConfigurationResource> operation = new SecurityCenterArmOperation<DevOpsConfigurationResource>(
-                    new DevOpsConfigurationResourceOperationSource(Client),
+                    new DevOpsConfigurationOperationSource(Client),
                     _devOpsConfigurationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _devOpsOperationResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, operationResultId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default), result);
+                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerContext.Default), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _devOpsOperationResultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, operationResultId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default), result);
+                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerContext.Default), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GovernanceRuleOwnerSource"/>. </summary>
-        /// <param name="type"> The owner type for the governance rule owner source. </param>
+        /// <param name="sourceType"> The owner type for the governance rule owner source. </param>
         /// <param name="value"> The source value e.g. tag key like owner name or email address. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GovernanceRuleOwnerSource(GovernanceRuleOwnerSourceType? @type, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GovernanceRuleOwnerSource(GovernanceRuleOwnerSourceType? sourceType, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            SourceType = sourceType;
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The owner type for the governance rule owner source. </summary>
-        public GovernanceRuleOwnerSourceType? Type { get; set; }
+        public GovernanceRuleOwnerSourceType? SourceType { get; set; }
 
         /// <summary> The source value e.g. tag key like owner name or email address. </summary>
         public string Value { get; set; }

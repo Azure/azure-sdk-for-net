@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="partnersData"> Data regarding 3rd party partner integration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The result of the assessment. </param>
-        internal SecurityAssessmentProperties(SecurityAssessmentPropertiesBaseRisk risk, SecurityCenterResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartnerInfo partnersData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityAssessmentStatus status) : base(risk, resourceDetails, displayName, additionalData, links, metadata, partnersData, additionalBinaryDataProperties)
+        internal SecurityAssessmentProperties(SecurityAssessmentPropertiesBaseRisk risk, SecurityCenterResourceDetails resourceDetails, string displayName, IDictionary<string, string> additionalData, AssessmentLinks links, SecurityAssessmentMetadataProperties metadata, SecurityAssessmentPartner partnersData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityAssessmentStatus status) : base(risk, resourceDetails, displayName, additionalData, links, metadata, partnersData, additionalBinaryDataProperties)
         {
             Status = status;
         }

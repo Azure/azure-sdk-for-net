@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IoTSecurityAggregatedAlertProperties"/>. </summary>
-        internal IoTSecurityAggregatedAlertProperties()
+        public IoTSecurityAggregatedAlertProperties()
         {
-            TopDevicesList = new ChangeTrackingList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem>();
+            TopDevicesList = new ChangeTrackingList<IotSecurityAggregatedAlertTopDevice>();
         }
 
         /// <summary> Initializes a new instance of <see cref="IoTSecurityAggregatedAlertProperties"/>. </summary>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="logAnalyticsQuery"> Log analytics query for getting the list of affected devices/alerts. </param>
         /// <param name="topDevicesList"> 10 devices with the highest number of occurrences of this alert type, on this day. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IoTSecurityAggregatedAlertProperties(string alertType, string alertDisplayName, DateTimeOffset? aggregatedDateUtc, string vendorName, ReportedSeverity? reportedSeverity, string remediationSteps, string description, long? count, string effectedResourceType, string systemSource, string actionTaken, string logAnalyticsQuery, IReadOnlyList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem> topDevicesList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IoTSecurityAggregatedAlertProperties(string alertType, string alertDisplayName, DateTimeOffset? aggregatedDateUtc, string vendorName, ReportedSeverity? reportedSeverity, string remediationSteps, string description, long? count, string effectedResourceType, string systemSource, string actionTaken, string logAnalyticsQuery, IReadOnlyList<IotSecurityAggregatedAlertTopDevice> topDevicesList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertType = alertType;
             AlertDisplayName = alertDisplayName;
@@ -93,6 +93,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string LogAnalyticsQuery { get; }
 
         /// <summary> 10 devices with the highest number of occurrences of this alert type, on this day. </summary>
-        public IReadOnlyList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem> TopDevicesList { get; } = new ChangeTrackingList<IoTSecurityAggregatedAlertPropertiesTopDevicesListItem>();
+        public IReadOnlyList<IotSecurityAggregatedAlertTopDevice> TopDevicesList { get; } = new ChangeTrackingList<IotSecurityAggregatedAlertTopDevice>();
     }
 }

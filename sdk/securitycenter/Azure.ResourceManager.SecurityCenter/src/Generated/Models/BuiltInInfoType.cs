@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="BuiltInInfoType"/>. </summary>
         /// <param name="name"> Display name of the info type. </param>
         /// <param name="id"> Id of the info type. </param>
-        /// <param name="type"> Category of the built-in info type. </param>
+        /// <param name="dns"> Category of the built-in info type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BuiltInInfoType(string name, string id, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BuiltInInfoType(string name, string id, string dns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;
-            Type = @type;
+            Dns = dns;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public string Id { get; }
 
         /// <summary> Category of the built-in info type. </summary>
-        public string Type { get; }
+        public string Dns { get; }
     }
 }

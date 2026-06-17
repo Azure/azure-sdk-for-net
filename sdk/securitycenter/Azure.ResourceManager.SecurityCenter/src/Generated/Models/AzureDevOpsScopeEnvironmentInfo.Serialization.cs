@@ -14,11 +14,11 @@ using Azure.ResourceManager.SecurityCenter;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The AzureDevOps scope connector's environment data. </summary>
-    public partial class AzureDevOpsScopeEnvironmentInfo : SecurityConnectorEnvironmentInfo, IJsonModel<AzureDevOpsScopeEnvironmentInfo>
+    public partial class AzureDevOpsScopeEnvironmentInfo : SecurityConnectorEnvironment, IJsonModel<AzureDevOpsScopeEnvironmentInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SecurityConnectorEnvironmentInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SecurityConnectorEnvironment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsScopeEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override SecurityConnectorEnvironmentInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SecurityConnectorEnvironment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsScopeEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

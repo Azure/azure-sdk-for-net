@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LatestScan))
+            if (Optional.IsDefined(IsLatestScan))
             {
                 writer.WritePropertyName("latestScan"u8);
-                writer.WriteBooleanValue(LatestScan.Value);
+                writer.WriteBooleanValue(IsLatestScan.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             IList<IList<string>> results = default;
-            bool? latestScan = default;
+            bool? isLatestScan = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    latestScan = prop.Value.GetBoolean();
+                    isLatestScan = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RuleResultsProperties(results ?? new ChangeTrackingList<IList<string>>(), latestScan, additionalBinaryDataProperties);
+            return new RuleResultsProperties(results ?? new ChangeTrackingList<IList<string>>(), isLatestScan, additionalBinaryDataProperties);
         }
     }
 }

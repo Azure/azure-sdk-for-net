@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="order"> The order of the information type. </param>
         /// <param name="recommendedLabelId"> The recommended label id to be associated with this information type. </param>
         /// <param name="enabled"> Indicates whether the information type is enabled or not. </param>
-        /// <param name="custom"> Indicates whether the information type is custom or not. </param>
+        /// <param name="isCustom"> Indicates whether the information type is custom or not. </param>
         /// <param name="keywords"> The information type keywords. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InformationType(string displayName, string description, int? order, string recommendedLabelId, bool? enabled, bool? custom, IList<InformationProtectionKeyword> keywords, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InformationType(string displayName, string description, int? order, string recommendedLabelId, bool? enabled, bool? isCustom, IList<InformationProtectionKeyword> keywords, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Description = description;
             Order = order;
             RecommendedLabelId = recommendedLabelId;
             Enabled = enabled;
-            Custom = custom;
+            IsCustom = isCustom;
             Keywords = keywords;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public bool? Enabled { get; set; }
 
         /// <summary> Indicates whether the information type is custom or not. </summary>
-        public bool? Custom { get; set; }
+        public bool? IsCustom { get; set; }
 
         /// <summary> The information type keywords. </summary>
         public IList<InformationProtectionKeyword> Keywords { get; }

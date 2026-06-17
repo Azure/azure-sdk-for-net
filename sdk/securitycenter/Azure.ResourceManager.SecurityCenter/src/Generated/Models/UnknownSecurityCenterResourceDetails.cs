@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="UnknownSecurityCenterResourceDetails"/>. </summary>
         /// <param name="source"> The platform where the assessed resource resides. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSecurityCenterResourceDetails(Source source, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(source != default ? source : "unknown", additionalBinaryDataProperties)
+        internal UnknownSecurityCenterResourceDetails(SecurityCenterResourceSource source, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(source != default ? source : "unknown", additionalBinaryDataProperties)
         {
         }
     }

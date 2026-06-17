@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="SecureScoreControlDefinitionSource"/>. </summary>
         /// <param name="sourceType"> The type of security control (for example, BuiltIn). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecureScoreControlDefinitionSource(ControlType? sourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecureScoreControlDefinitionSource(SecurityControlType? sourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceType = sourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of security control (for example, BuiltIn). </summary>
-        public ControlType? SourceType { get; }
+        public SecurityControlType? SourceType { get; }
     }
 }

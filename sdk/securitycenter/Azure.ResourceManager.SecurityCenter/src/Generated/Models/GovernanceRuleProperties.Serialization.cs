@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 #endif
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(IncludeMemberScopes))
+            if (Optional.IsDefined(IsIncludeMemberScopes))
             {
                 writer.WritePropertyName("includeMemberScopes"u8);
-                writer.WriteBooleanValue(IncludeMemberScopes.Value);
+                writer.WriteBooleanValue(IsIncludeMemberScopes.Value);
             }
             writer.WritePropertyName("ownerSource"u8);
             writer.WriteObjectValue(OwnerSource, options);
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             GovernanceRuleSourceResourceType sourceResourceType = default;
             IList<string> excludedScopes = default;
             IList<BinaryData> conditionSets = default;
-            bool? includeMemberScopes = default;
+            bool? isIncludeMemberScopes = default;
             GovernanceRuleOwnerSource ownerSource = default;
             GovernanceRuleEmailNotification governanceEmailNotification = default;
             GovernanceRuleMetadata metadata = default;
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    includeMemberScopes = prop.Value.GetBoolean();
+                    isIncludeMemberScopes = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("ownerSource"u8))
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 sourceResourceType,
                 excludedScopes ?? new ChangeTrackingList<string>(),
                 conditionSets,
-                includeMemberScopes,
+                isIncludeMemberScopes,
                 ownerSource,
                 governanceEmailNotification,
                 metadata,

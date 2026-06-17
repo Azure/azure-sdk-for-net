@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> describes AlertsSuppressionRule properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAlertsSuppressionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertsSuppressionRuleProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> describes AlertsSuppressionRule properties. </param>
+        internal SecurityAlertsSuppressionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertsSuppressionRuleProperties properties) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary> describes AlertsSuppressionRule properties. </summary>
@@ -58,20 +58,20 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The last time this rule was modified. </summary>
-        public DateTimeOffset? LastModifiedUtc
+        public DateTimeOffset? LastModifiedOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastModifiedUtc;
+                return Properties is null ? default : Properties.LastModifiedOn;
             }
         }
 
         /// <summary> Expiration date of the rule, if value is not provided or provided as null there will no expiration at all. </summary>
-        public DateTimeOffset? ExpirationDateUtc
+        public DateTimeOffset? ExpireOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpirationDateUtc;
+                return Properties is null ? default : Properties.ExpireOn;
             }
             set
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     Properties = new AlertsSuppressionRuleProperties();
                 }
-                Properties.ExpirationDateUtc = value;
+                Properties.ExpireOn = value;
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Possible states of the rule. </summary>
-        public RuleState? State
+        public SecurityAlertsSuppressionRuleState? State
         {
             get
             {

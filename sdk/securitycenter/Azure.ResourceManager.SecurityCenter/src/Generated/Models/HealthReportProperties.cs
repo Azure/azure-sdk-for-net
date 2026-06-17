@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AffectedDefendersPlans = new ChangeTrackingList<string>();
             AffectedDefendersSubPlans = new ChangeTrackingList<string>();
             ReportAdditionalData = new ChangeTrackingDictionary<string, string>();
-            Issues = new ChangeTrackingList<Issue>();
+            Issues = new ChangeTrackingList<SecurityHealthIssue>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthReportProperties"/>. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="reportAdditionalData"> Additional data for the given health report, this field can include more details on the resource and the health scenario. </param>
         /// <param name="issues"> A collection of the issues in the report. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthReportProperties(ResourceDetails resourceDetails, EnvironmentDetails environmentDetails, HealthDataClassification healthDataClassification, HealthReportStatus status, IList<string> affectedDefendersPlans, IList<string> affectedDefendersSubPlans, IReadOnlyDictionary<string, string> reportAdditionalData, IList<Issue> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthReportProperties(SecurityCloudResourceDetails resourceDetails, EnvironmentDetails environmentDetails, HealthDataClassification healthDataClassification, HealthReportStatus status, IList<string> affectedDefendersPlans, IList<string> affectedDefendersSubPlans, IReadOnlyDictionary<string, string> reportAdditionalData, IList<SecurityHealthIssue> issues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceDetails = resourceDetails;
             EnvironmentDetails = environmentDetails;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The resource details of the health report. </summary>
-        public ResourceDetails ResourceDetails { get; }
+        public SecurityCloudResourceDetails ResourceDetails { get; }
 
         /// <summary> The environment details of the resource. </summary>
         public EnvironmentDetails EnvironmentDetails { get; }
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IReadOnlyDictionary<string, string> ReportAdditionalData { get; } = new ChangeTrackingDictionary<string, string>();
 
         /// <summary> A collection of the issues in the report. </summary>
-        public IList<Issue> Issues { get; } = new ChangeTrackingList<Issue>();
+        public IList<SecurityHealthIssue> Issues { get; } = new ChangeTrackingList<SecurityHealthIssue>();
     }
 }

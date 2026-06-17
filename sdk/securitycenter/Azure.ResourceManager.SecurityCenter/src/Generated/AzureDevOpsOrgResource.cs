@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _azureDevOpsOrgsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, AzureDevOpsOrgData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation<AzureDevOpsOrgResource> operation = new SecurityCenterArmOperation<AzureDevOpsOrgResource>(
-                    new AzureDevOpsOrgResourceOperationSource(Client),
+                    new AzureDevOpsOrgOperationSource(Client),
                     _azureDevOpsOrgsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _azureDevOpsOrgsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, AzureDevOpsOrgData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation<AzureDevOpsOrgResource> operation = new SecurityCenterArmOperation<AzureDevOpsOrgResource>(
-                    new AzureDevOpsOrgResourceOperationSource(Client),
+                    new AzureDevOpsOrgOperationSource(Client),
                     _azureDevOpsOrgsClientDiagnostics,
                     Pipeline,
                     message.Request,

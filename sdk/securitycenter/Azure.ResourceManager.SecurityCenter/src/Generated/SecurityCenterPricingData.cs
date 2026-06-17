@@ -29,19 +29,19 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Pricing data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityCenterPricingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PricingProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Pricing data. </param>
+        internal SecurityCenterPricingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PricingProperties properties) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary> Pricing data. </summary>
         internal PricingProperties Properties { get; set; }
 
         /// <summary> Indicates whether the Defender plan is enabled on the selected scope. Microsoft Defender for Cloud is provided in two pricing tiers: free and standard. The standard tier offers advanced security capabilities, while the free tier offers basic security features. </summary>
-        public PricingTier? PricingTier
+        public SecurityCenterPricingTier? PricingTier
         {
             get
             {
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> Optional. True if the plan is deprecated. If there are replacing plans they will appear in `replacedBy` property. </summary>
-        public bool? Deprecated
+        public bool? IsDeprecated
         {
             get
             {
-                return Properties is null ? default : Properties.Deprecated;
+                return Properties is null ? default : Properties.IsDeprecated;
             }
         }
 

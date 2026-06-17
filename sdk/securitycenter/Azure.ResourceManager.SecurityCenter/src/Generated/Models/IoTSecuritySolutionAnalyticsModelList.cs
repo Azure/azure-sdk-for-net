@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="IoTSecuritySolutionAnalyticsModelList"/>. </summary>
         /// <param name="value"> The IoTSecuritySolutionAnalyticsModel items on this page. </param>
-        internal IoTSecuritySolutionAnalyticsModelList(IEnumerable<IoTSecuritySolutionAnalyticsModelData> value)
+        internal IoTSecuritySolutionAnalyticsModelList(IEnumerable<IotSecuritySolutionAnalyticsModelData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="value"> The IoTSecuritySolutionAnalyticsModel items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IoTSecuritySolutionAnalyticsModelList(IList<IoTSecuritySolutionAnalyticsModelData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IoTSecuritySolutionAnalyticsModelList(IList<IotSecuritySolutionAnalyticsModelData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The IoTSecuritySolutionAnalyticsModel items on this page. </summary>
-        public IList<IoTSecuritySolutionAnalyticsModelData> Value { get; }
+        public IList<IotSecuritySolutionAnalyticsModelData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

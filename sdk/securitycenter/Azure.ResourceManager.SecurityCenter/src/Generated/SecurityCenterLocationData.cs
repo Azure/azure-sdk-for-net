@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityCenterLocationData"/>. </summary>
-        internal SecurityCenterLocationData()
+        public SecurityCenterLocationData()
         {
         }
 
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> An empty set of properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityCenterLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BinaryData properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> An empty set of properties. </param>
+        internal SecurityCenterLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData properties) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary>
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Properties { get; }
+        public BinaryData Properties { get; set; }
     }
 }

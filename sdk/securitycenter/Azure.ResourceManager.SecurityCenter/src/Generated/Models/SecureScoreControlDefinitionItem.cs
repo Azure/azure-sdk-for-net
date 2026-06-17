@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Security Control Definition Properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecureScoreControlDefinitionItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecureScoreControlDefinitionItemProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Security Control Definition Properties. </param>
+        internal SecureScoreControlDefinitionItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecureScoreControlDefinitionItemProperties properties) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary> Security Control Definition Properties. </summary>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Array of assessments metadata IDs that are included in this security control. </summary>
-        public IReadOnlyList<AzureResourceLink> AssessmentDefinitions
+        public IReadOnlyList<SubResource> AssessmentDefinitions
         {
             get
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> The type of security control (for example, BuiltIn). </summary>
-        public ControlType? SourceType
+        public SecurityControlType? SourceType
         {
             get
             {

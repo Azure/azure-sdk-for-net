@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAllSecuritySolutionsReferenceDataByHomeRegion_GetSecuritySolutionsFromASecurityDataLocation()
+        public async Task GetAllSecuritySolutionsReferenceInfoByHomeRegion_GetSecuritySolutionsFromASecurityDataLocation()
         {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/SecuritySolutionsReferenceData/GetSecuritySolutionsReferenceDataSubscriptionLocation_example.json
-            // this example is just showing the usage of "SecuritySolutionsReferenceData_ListByHomeRegion" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2020-01-01/examples/SecuritySolutionsReferenceInfo/GetSecuritySolutionsReferenceDataSubscriptionLocation_example.json
+            // this example is just showing the usage of "SecuritySolutionsReferenceInfo_ListByHomeRegion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecurityCenterLocationResource securityCenterLocation = client.GetSecurityCenterLocationResource(securityCenterLocationResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (SecuritySolutionsReferenceData item in securityCenterLocation.GetAllSecuritySolutionsReferenceDataByHomeRegionAsync())
+            await foreach (SecuritySolutionsReferenceInfo item in securityCenterLocation.GetAllSecuritySolutionsReferenceInfoByHomeRegionAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

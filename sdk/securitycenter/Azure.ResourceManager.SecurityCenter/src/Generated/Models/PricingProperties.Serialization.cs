@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Deprecated))
+            if (options.Format != "W" && Optional.IsDefined(IsDeprecated))
             {
                 writer.WritePropertyName("deprecated"u8);
-                writer.WriteBooleanValue(Deprecated.Value);
+                writer.WriteBooleanValue(IsDeprecated.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ReplacedBy))
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            PricingTier pricingTier = default;
+            SecurityCenterPricingTier pricingTier = default;
             string subPlan = default;
             TimeSpan? freeTrialRemainingTime = default;
             DateTimeOffset? enablementOn = default;
@@ -197,14 +197,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             string inheritedFrom = default;
             ResourcesCoverageStatus? resourcesCoverageStatus = default;
             IList<Extension> extensions = default;
-            bool? deprecated = default;
+            bool? isDeprecated = default;
             IReadOnlyList<string> replacedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("pricingTier"u8))
                 {
-                    pricingTier = new PricingTier(prop.Value.GetString());
+                    pricingTier = new SecurityCenterPricingTier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subPlan"u8))
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    deprecated = prop.Value.GetBoolean();
+                    isDeprecated = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("replacedBy"u8))
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 inheritedFrom,
                 resourcesCoverageStatus,
                 extensions ?? new ChangeTrackingList<Extension>(),
-                deprecated,
+                isDeprecated,
                 replacedBy ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }

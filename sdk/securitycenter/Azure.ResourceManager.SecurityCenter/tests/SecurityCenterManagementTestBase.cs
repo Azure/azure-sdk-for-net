@@ -224,10 +224,11 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 
         protected async Task<IotSecuritySolutionResource> CreateIotSecuritySolution(ResourceGroupResource resourceGroup, string iotHubId, string solutionModelName)
         {
-            IotSecuritySolutionData data = new IotSecuritySolutionData(resourceGroup.Data.Location)
+            IotSecuritySolutionData data = new IotSecuritySolutionData()
             {
+                Location = resourceGroup.Data.Location,
                 Status = SecuritySolutionStatus.Enabled,
-                UnmaskedIpLoggingStatus = UnmaskedIpLoggingStatus.Enabled,
+                UnmaskedIPLoggingStatus = UnmaskedIPLoggingStatus.Enabled,
                 DisplayName = solutionModelName,
                 IotHubs =
                 {
@@ -235,8 +236,8 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
                 },
                 RecommendationsConfiguration =
                 {
-                    new RecommendationConfigurationProperties(IotSecurityRecommendationType.IoTOpenPorts, RecommendationConfigStatus.Disabled),
-                    new RecommendationConfigurationProperties(IotSecurityRecommendationType.IoTSharedCredentials, RecommendationConfigStatus.Disabled),
+                    new RecommendationConfigurationProperties(IotSecurityRecommendationType.IotOpenPorts, RecommendationConfigStatus.Disabled),
+                    new RecommendationConfigurationProperties(IotSecurityRecommendationType.IotSharedCredentials, RecommendationConfigStatus.Disabled),
                 }
             };
             var iotSecuritySolutionModel = await resourceGroup.GetIotSecuritySolutions().CreateOrUpdateAsync(WaitUntil.Completed, solutionModelName, data);

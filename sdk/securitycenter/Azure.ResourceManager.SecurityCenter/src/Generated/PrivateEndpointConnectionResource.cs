@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityCenterPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecurityCenterArmOperation<PrivateEndpointConnectionResource> operation = new SecurityCenterArmOperation<PrivateEndpointConnectionResource>(
-                    new PrivateEndpointConnectionResourceOperationSource(Client),
+                    new PrivateEndpointConnectionOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityCenterPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecurityCenterArmOperation<PrivateEndpointConnectionResource> operation = new SecurityCenterArmOperation<PrivateEndpointConnectionResource>(
-                    new PrivateEndpointConnectionResourceOperationSource(Client),
+                    new PrivateEndpointConnectionOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

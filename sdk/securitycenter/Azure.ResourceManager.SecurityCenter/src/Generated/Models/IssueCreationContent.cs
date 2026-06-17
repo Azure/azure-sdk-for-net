@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of <see cref="IssueCreationContent"/>. </summary>
         /// <param name="securityAssessmentResourceId"> The security assessment resource id that the issue will be opened based on. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IssueCreationContent(string securityAssessmentResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IssueCreationContent(ResourceIdentifier securityAssessmentResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecurityAssessmentResourceId = securityAssessmentResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The security assessment resource id that the issue will be opened based on. </summary>
-        public string SecurityAssessmentResourceId { get; set; }
+        public ResourceIdentifier SecurityAssessmentResourceId { get; set; }
     }
 }

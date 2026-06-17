@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The AzureDevOps scope connector's environment data. </summary>
-    public partial class AzureDevOpsScopeEnvironmentInfo : SecurityConnectorEnvironmentInfo
+    public partial class AzureDevOpsScopeEnvironmentInfo : SecurityConnectorEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="AzureDevOpsScopeEnvironmentInfo"/>. </summary>
         public AzureDevOpsScopeEnvironmentInfo() : base(EnvironmentType.AzureDevOpsScope)

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 throw new FormatException($"The model {nameof(DefenderCspmJFrogOfferingMdcContainersImageAssessment)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsMdcContainersImageAssessmentEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsMdcContainersImageAssessmentEnabled.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            bool? enabled = default;
+            bool? isMdcContainersImageAssessmentEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    enabled = prop.Value.GetBoolean();
+                    isMdcContainersImageAssessmentEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DefenderCspmJFrogOfferingMdcContainersImageAssessment(enabled, additionalBinaryDataProperties);
+            return new DefenderCspmJFrogOfferingMdcContainersImageAssessment(isMdcContainersImageAssessmentEnabled, additionalBinaryDataProperties);
         }
     }
 }

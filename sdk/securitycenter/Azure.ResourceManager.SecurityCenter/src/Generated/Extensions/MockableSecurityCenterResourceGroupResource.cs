@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         private Alerts _alertsRestClient;
         private ClientDiagnostics _externalSecuritySolutionsClientDiagnostics;
         private ExternalSecuritySolutions _externalSecuritySolutionsRestClient;
+        private ClientDiagnostics _jitNetworkAccessPoliciesClientDiagnostics;
+        private JitNetworkAccessPolicies _jitNetworkAccessPoliciesRestClient;
         private ClientDiagnostics _apiCollectionsClientDiagnostics;
         private APICollections _apiCollectionsRestClient;
 
@@ -48,16 +50,20 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
 
         private ExternalSecuritySolutions ExternalSecuritySolutionsRestClient => _externalSecuritySolutionsRestClient ??= new ExternalSecuritySolutions(ExternalSecuritySolutionsClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
 
+        private ClientDiagnostics JitNetworkAccessPoliciesClientDiagnostics => _jitNetworkAccessPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private JitNetworkAccessPolicies JitNetworkAccessPoliciesRestClient => _jitNetworkAccessPoliciesRestClient ??= new JitNetworkAccessPolicies(JitNetworkAccessPoliciesClientDiagnostics, Pipeline, Endpoint, "2020-01-01");
+
         private ClientDiagnostics APICollectionsClientDiagnostics => _apiCollectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityCenter.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private APICollections APICollectionsRestClient => _apiCollectionsRestClient ??= new APICollections(APICollectionsClientDiagnostics, Pipeline, Endpoint, "2023-11-15");
 
         /// <summary> Gets a collection of ResourceGroupSecurityAlerts in the <see cref="ResourceGroupResource"/>. </summary>
-        /// <param name="location"> The location for the resource. </param>
+        /// <param name="ascLocation"> The ascLocation for the resource. </param>
         /// <returns> An object representing collection of ResourceGroupSecurityAlerts and their operations over a ResourceGroupSecurityAlertResource. </returns>
-        public virtual ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(AzureLocation location)
+        public virtual ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(AzureLocation ascLocation)
         {
-            return GetCachedClient(client => new ResourceGroupSecurityAlertCollection(client, Id, location));
+            return GetCachedClient(client => new ResourceGroupSecurityAlertCollection(client, Id, ascLocation));
         }
 
         /// <summary>
@@ -65,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{location}/alerts/{alertName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -77,17 +83,17 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the resource. </param>
+        /// <param name="ascLocation"> The ascLocation for the resource. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(AzureLocation location, string alertName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupSecurityAlertResource>> GetResourceGroupSecurityAlertAsync(AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
-            return await GetResourceGroupSecurityAlerts(location).GetAsync(alertName, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupSecurityAlerts(ascLocation).GetAsync(alertName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -95,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{location}/alerts/{alertName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -107,17 +113,17 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the resource. </param>
+        /// <param name="ascLocation"> The ascLocation for the resource. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(AzureLocation location, string alertName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupSecurityAlertResource> GetResourceGroupSecurityAlert(AzureLocation ascLocation, string alertName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertName, nameof(alertName));
 
-            return GetResourceGroupSecurityAlerts(location).Get(alertName, cancellationToken);
+            return GetResourceGroupSecurityAlerts(ascLocation).Get(alertName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityAutomations in the <see cref="ResourceGroupResource"/>. </summary>
@@ -253,7 +259,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of JitNetworkAccessPolicies in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="ascLocation"> The ascLocation for the resource. </param>
         /// <returns> An object representing collection of JitNetworkAccessPolicies and their operations over a JitNetworkAccessPolicyResource. </returns>
-        public virtual JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(string ascLocation)
+        public virtual JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(AzureLocation ascLocation)
         {
             return GetCachedClient(client => new JitNetworkAccessPolicyCollection(client, Id, ascLocation));
         }
@@ -281,7 +287,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jitNetworkAccessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<JitNetworkAccessPolicyResource>> GetJitNetworkAccessPolicyAsync(string ascLocation, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<JitNetworkAccessPolicyResource>> GetJitNetworkAccessPolicyAsync(AzureLocation ascLocation, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jitNetworkAccessPolicyName, nameof(jitNetworkAccessPolicyName));
 
@@ -311,7 +317,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="jitNetworkAccessPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jitNetworkAccessPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicy(string ascLocation, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<JitNetworkAccessPolicyResource> GetJitNetworkAccessPolicy(AzureLocation ascLocation, string jitNetworkAccessPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jitNetworkAccessPolicyName, nameof(jitNetworkAccessPolicyName));
 
@@ -451,7 +457,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <summary> Gets a collection of ResourceGroupSecurityTasks in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="ascLocation"> The ascLocation for the resource. </param>
         /// <returns> An object representing collection of ResourceGroupSecurityTasks and their operations over a ResourceGroupSecurityTaskResource. </returns>
-        public virtual ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(string ascLocation)
+        public virtual ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(AzureLocation ascLocation)
         {
             return GetCachedClient(client => new ResourceGroupSecurityTaskCollection(client, Id, ascLocation));
         }
@@ -479,7 +485,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(string ascLocation, string taskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGroupSecurityTaskResource>> GetResourceGroupSecurityTaskAsync(AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
@@ -509,7 +515,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(string ascLocation, string taskName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGroupSecurityTaskResource> GetResourceGroupSecurityTask(AzureLocation ascLocation, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
@@ -605,13 +611,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkName"></param>
+        /// <param name="privateLinkName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(SecurityPrivateLinkInfo privateLinkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(string privateLinkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(privateLinkName, nameof(privateLinkName));
+            Argument.AssertNotNullOrEmpty(privateLinkName, nameof(privateLinkName));
 
             return await GetPrivateLinkResources().GetAsync(privateLinkName, cancellationToken).ConfigureAwait(false);
         }
@@ -633,13 +640,14 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateLinkName"></param>
+        /// <param name="privateLinkName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateLinkResource> GetPrivateLinkResource(SecurityPrivateLinkInfo privateLinkName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateLinkResource> GetPrivateLinkResource(string privateLinkName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(privateLinkName, nameof(privateLinkName));
+            Argument.AssertNotNullOrEmpty(privateLinkName, nameof(privateLinkName));
 
             return GetPrivateLinkResources().Get(privateLinkName, cancellationToken);
         }
@@ -720,11 +728,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> or <paramref name="externalSecuritySolutionsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> or <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ExternalSecuritySolution>> GetAsync(string ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="externalSecuritySolutionsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ExternalSecuritySolution>> GetAsync(AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
 
             using DiagnosticScope scope = ExternalSecuritySolutionsClientDiagnostics.CreateScope("MockableSecurityCenterResourceGroupResource.Get");
@@ -771,11 +778,10 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="externalSecuritySolutionsName"> Name of an external security solution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ascLocation"/> or <paramref name="externalSecuritySolutionsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ascLocation"/> or <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ExternalSecuritySolution> Get(string ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="externalSecuritySolutionsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="externalSecuritySolutionsName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ExternalSecuritySolution> Get(AzureLocation ascLocation, string externalSecuritySolutionsName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(ascLocation, nameof(ascLocation));
             Argument.AssertNotNullOrEmpty(externalSecuritySolutionsName, nameof(externalSecuritySolutionsName));
 
             using DiagnosticScope scope = ExternalSecuritySolutionsClientDiagnostics.CreateScope("MockableSecurityCenterResourceGroupResource.Get");
@@ -800,6 +806,62 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/jitNetworkAccessPolicies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JitNetworkAccessPoliciesOperationGroup_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesByResourceGroupAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetJitNetworkAccessPoliciesByResourceGroupAsyncCollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroup"), data => new JitNetworkAccessPolicyResource(Client, data));
+        }
+
+        /// <summary>
+        /// Policies for protecting resources using Just-in-Time access control for the subscription, location
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/jitNetworkAccessPolicies. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> JitNetworkAccessPoliciesOperationGroup_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-01-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="JitNetworkAccessPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<JitNetworkAccessPolicyResource> GetJitNetworkAccessPoliciesByResourceGroup(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<JitNetworkAccessPolicyData, JitNetworkAccessPolicyResource>(new JitNetworkAccessPoliciesGetJitNetworkAccessPoliciesByResourceGroupCollectionResultOfT(JitNetworkAccessPoliciesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableSecurityCenterResourceGroupResource.GetJitNetworkAccessPoliciesByResourceGroup"), data => new JitNetworkAccessPolicyResource(Client, data));
         }
 
         /// <summary>

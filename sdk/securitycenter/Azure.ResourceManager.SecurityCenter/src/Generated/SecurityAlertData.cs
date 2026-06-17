@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> describes security alert properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> describes security alert properties. </param>
+        internal SecurityAlertData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertProperties properties) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary> describes security alert properties. </summary>
-        internal AlertProperties Properties { get; }
+        internal AlertProperties Properties { get; set; }
 
         /// <summary> Schema version. </summary>
         public string Version
@@ -130,7 +130,11 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.ResourceIdentifiers;
+                if (Properties is null)
+                {
+                    Properties = new AlertProperties();
+                }
+                return Properties.ResourceIdentifiers;
             }
         }
 
@@ -139,7 +143,11 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.RemediationSteps;
+                if (Properties is null)
+                {
+                    Properties = new AlertProperties();
+                }
+                return Properties.RemediationSteps;
             }
         }
 
@@ -166,7 +174,11 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.ExtendedLinks;
+                if (Properties is null)
+                {
+                    Properties = new AlertProperties();
+                }
+                return Properties.ExtendedLinks;
             }
         }
 
@@ -211,7 +223,11 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.Entities;
+                if (Properties is null)
+                {
+                    Properties = new AlertProperties();
+                }
+                return Properties.Entities;
             }
         }
 
@@ -238,7 +254,11 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.ExtendedProperties;
+                if (Properties is null)
+                {
+                    Properties = new AlertProperties();
+                }
+                return Properties.ExtendedProperties;
             }
         }
 
@@ -256,7 +276,11 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.Techniques;
+                if (Properties is null)
+                {
+                    Properties = new AlertProperties();
+                }
+                return Properties.Techniques;
             }
         }
 
@@ -265,7 +289,11 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.SubTechniques;
+                if (Properties is null)
+                {
+                    Properties = new AlertProperties();
+                }
+                return Properties.SubTechniques;
             }
         }
     }

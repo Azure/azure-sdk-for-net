@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="RuleResultsProperties"/>. </summary>
         /// <param name="results"> Expected results in the baseline. </param>
-        /// <param name="latestScan"> Take results from latest scan. </param>
+        /// <param name="isLatestScan"> Take results from latest scan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RuleResultsProperties(IList<IList<string>> results, bool? latestScan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RuleResultsProperties(IList<IList<string>> results, bool? isLatestScan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Results = results;
-            LatestScan = latestScan;
+            IsLatestScan = isLatestScan;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IList<IList<string>> Results { get; }
 
         /// <summary> Take results from latest scan. </summary>
-        public bool? LatestScan { get; }
+        public bool? IsLatestScan { get; }
     }
 }

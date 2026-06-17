@@ -243,35 +243,21 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return await GetGovernanceAssignments(scope).GetAsync(assignmentKey, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="SecurityConnectorGovernanceRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="GovernanceRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SecurityConnectorGovernanceRuleResource"/> object. </returns>
-        public virtual SecurityConnectorGovernanceRuleResource GetSecurityConnectorGovernanceRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="GovernanceRuleResource"/> object. </returns>
+        public virtual GovernanceRuleResource GetGovernanceRuleResource(ResourceIdentifier id)
         {
-            SecurityConnectorGovernanceRuleResource.ValidateResourceId(id);
-            return new SecurityConnectorGovernanceRuleResource(Client, id);
+            GovernanceRuleResource.ValidateResourceId(id);
+            return new GovernanceRuleResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="SecurityConnectorGovernanceRuleCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="GovernanceRuleCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="SecurityConnectorGovernanceRuleResource"/> objects. </returns>
-        public virtual SecurityConnectorGovernanceRuleCollection GetSecurityConnectorGovernanceRules(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="GovernanceRuleResource"/> objects. </returns>
+        public virtual GovernanceRuleCollection GetGovernanceRules(ResourceIdentifier scope)
         {
-            return new SecurityConnectorGovernanceRuleCollection(Client, scope);
-        }
-
-        /// <summary> Get a specific governance rule for the requested scope by ruleId. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SecurityConnectorGovernanceRuleResource> GetSecurityConnectorGovernanceRule(ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
-
-            return GetSecurityConnectorGovernanceRules(scope).Get(ruleId, cancellationToken);
+            return new GovernanceRuleCollection(Client, scope);
         }
 
         /// <summary> Get a specific governance rule for the requested scope by ruleId. </summary>
@@ -281,11 +267,25 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityConnectorGovernanceRuleResource>> GetSecurityConnectorGovernanceRuleAsync(ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
+        public virtual Response<GovernanceRuleResource> GetGovernanceRule(ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
 
-            return await GetSecurityConnectorGovernanceRules(scope).GetAsync(ruleId, cancellationToken).ConfigureAwait(false);
+            return GetGovernanceRules(scope).Get(ruleId, cancellationToken);
+        }
+
+        /// <summary> Get a specific governance rule for the requested scope by ruleId. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleId"> The governance rule key - unique key for the standard governance rule (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GovernanceRuleResource>> GetGovernanceRuleAsync(ResourceIdentifier scope, string ruleId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+
+            return await GetGovernanceRules(scope).GetAsync(ruleId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="HealthReportResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -986,13 +986,13 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return await GetApiCollections(scope).GetAsync(apiId, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="ApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SubscriptionSecurityApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ApplicationResource"/> object. </returns>
-        public virtual ApplicationResource GetApplicationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SubscriptionSecurityApplicationResource"/> object. </returns>
+        public virtual SubscriptionSecurityApplicationResource GetSubscriptionSecurityApplicationResource(ResourceIdentifier id)
         {
-            ApplicationResource.ValidateResourceId(id);
-            return new ApplicationResource(Client, id);
+            SubscriptionSecurityApplicationResource.ValidateResourceId(id);
+            return new SubscriptionSecurityApplicationResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SecurityAssessmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -1096,13 +1096,13 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return await GetDefenderForStorageSettings(scope).GetAsync(settingName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="IoTSecuritySolutionAnalyticsModelResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="IotSecuritySolutionAnalyticsModelResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IoTSecuritySolutionAnalyticsModelResource"/> object. </returns>
-        public virtual IoTSecuritySolutionAnalyticsModelResource GetIoTSecuritySolutionAnalyticsModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotSecuritySolutionAnalyticsModelResource"/> object. </returns>
+        public virtual IotSecuritySolutionAnalyticsModelResource GetIotSecuritySolutionAnalyticsModelResource(ResourceIdentifier id)
         {
-            IoTSecuritySolutionAnalyticsModelResource.ValidateResourceId(id);
-            return new IoTSecuritySolutionAnalyticsModelResource(Client, id);
+            IotSecuritySolutionAnalyticsModelResource.ValidateResourceId(id);
+            return new IotSecuritySolutionAnalyticsModelResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="IotSecuritySolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

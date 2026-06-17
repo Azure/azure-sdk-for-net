@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 throw new FormatException($"The model {nameof(RuleResultsInput)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(LatestScan))
+            if (Optional.IsDefined(IsLatestScan))
             {
                 writer.WritePropertyName("latestScan"u8);
-                writer.WriteBooleanValue(LatestScan.Value);
+                writer.WriteBooleanValue(IsLatestScan.Value);
             }
             if (Optional.IsCollectionDefined(Results))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            bool? latestScan = default;
+            bool? isLatestScan = default;
             IList<IList<string>> results = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    latestScan = prop.Value.GetBoolean();
+                    isLatestScan = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("results"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RuleResultsInput(latestScan, results ?? new ChangeTrackingList<IList<string>>(), additionalBinaryDataProperties);
+            return new RuleResultsInput(isLatestScan, results ?? new ChangeTrackingList<IList<string>>(), additionalBinaryDataProperties);
         }
     }
 }

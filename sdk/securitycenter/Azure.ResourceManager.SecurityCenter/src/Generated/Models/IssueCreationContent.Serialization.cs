@@ -132,13 +132,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            string securityAssessmentResourceId = default;
+            ResourceIdentifier securityAssessmentResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("securityAssessmentResourceId"u8))
                 {
-                    securityAssessmentResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityAssessmentResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

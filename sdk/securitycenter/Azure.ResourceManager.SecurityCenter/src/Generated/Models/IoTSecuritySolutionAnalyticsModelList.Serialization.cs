@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (IoTSecuritySolutionAnalyticsModelData item in Value)
+            foreach (IotSecuritySolutionAnalyticsModelData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            IList<IoTSecuritySolutionAnalyticsModelData> value = default;
+            IList<IotSecuritySolutionAnalyticsModelData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<IoTSecuritySolutionAnalyticsModelData> array = new List<IoTSecuritySolutionAnalyticsModelData>();
+                    List<IotSecuritySolutionAnalyticsModelData> array = new List<IotSecuritySolutionAnalyticsModelData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IoTSecuritySolutionAnalyticsModelData.DeserializeIoTSecuritySolutionAnalyticsModelData(item, options));
+                        array.Add(IotSecuritySolutionAnalyticsModelData.DeserializeIotSecuritySolutionAnalyticsModelData(item, options));
                     }
                     value = array;
                     continue;

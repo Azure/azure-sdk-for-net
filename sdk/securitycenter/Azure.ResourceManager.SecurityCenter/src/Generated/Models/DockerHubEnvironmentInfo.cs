@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The Docker Hub connector environment data. </summary>
-    public partial class DockerHubEnvironmentInfo : SecurityConnectorEnvironmentInfo
+    public partial class DockerHubEnvironmentInfo : SecurityConnectorEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="DockerHubEnvironmentInfo"/>. </summary>
         public DockerHubEnvironmentInfo() : base(EnvironmentType.DockerHubOrganization)
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="authentication"> The Docker Hub organization authentication details. </param>
         /// <param name="scanInterval"> Scan interval in hours (value should be between 1-hour to 24-hours). </param>
-        internal DockerHubEnvironmentInfo(EnvironmentType environmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties, Authentication authentication, long? scanInterval) : base(environmentType, additionalBinaryDataProperties)
+        internal DockerHubEnvironmentInfo(EnvironmentType environmentType, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityConnectorAuthentication authentication, long? scanInterval) : base(environmentType, additionalBinaryDataProperties)
         {
             Authentication = authentication;
             ScanInterval = scanInterval;
         }
 
         /// <summary> The Docker Hub organization authentication details. </summary>
-        public Authentication Authentication { get; set; }
+        public SecurityConnectorAuthentication Authentication { get; set; }
 
         /// <summary> Scan interval in hours (value should be between 1-hour to 24-hours). </summary>
         public long? ScanInterval { get; set; }

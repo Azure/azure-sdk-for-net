@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             string displayName = default;
             string description = default;
-            Rank? rank = default;
+            SensitivityLabelRank? rank = default;
             int? order = default;
             bool? enabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    rank = prop.Value.GetString().ToRank();
+                    rank = prop.Value.GetString().ToSensitivityLabelRank();
                     continue;
                 }
                 if (prop.NameEquals("order"u8))

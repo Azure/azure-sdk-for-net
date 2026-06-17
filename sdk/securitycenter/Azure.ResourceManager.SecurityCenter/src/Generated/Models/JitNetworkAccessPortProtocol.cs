@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         private readonly string _value;
         /// <summary> TCP. </summary>
-        private const string TCPValue = "TCP";
+        private const string TcpValue = "TCP";
         /// <summary> UDP. </summary>
-        private const string UDPValue = "UDP";
+        private const string UdpValue = "UDP";
         /// <summary> *. </summary>
         private const string AllValue = "*";
 
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> TCP. </summary>
-        public static JitNetworkAccessPortProtocol TCP { get; } = new JitNetworkAccessPortProtocol(TCPValue);
+        public static JitNetworkAccessPortProtocol Tcp { get; } = new JitNetworkAccessPortProtocol(TcpValue);
 
         /// <summary> UDP. </summary>
-        public static JitNetworkAccessPortProtocol UDP { get; } = new JitNetworkAccessPortProtocol(UDPValue);
+        public static JitNetworkAccessPortProtocol Udp { get; } = new JitNetworkAccessPortProtocol(UdpValue);
 
         /// <summary> *. </summary>
         public static JitNetworkAccessPortProtocol All { get; } = new JitNetworkAccessPortProtocol(AllValue);

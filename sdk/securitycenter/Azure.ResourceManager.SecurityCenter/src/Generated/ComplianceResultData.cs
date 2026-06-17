@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SecurityCenter
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComplianceResultData"/>. </summary>
-        internal ComplianceResultData()
+        public ComplianceResultData()
         {
         }
 
@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Compliance result data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComplianceResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComplianceResultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> Compliance result data. </param>
+        internal ComplianceResultData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComplianceResultProperties properties) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary> Compliance result data. </summary>
-        internal ComplianceResultProperties Properties { get; }
+        internal ComplianceResultProperties Properties { get; set; }
 
         /// <summary> The status of the resource regarding a single assessment. </summary>
         public SecurityAssessmentResourceStatus? ResourceStatus
